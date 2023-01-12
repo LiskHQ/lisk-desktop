@@ -42,7 +42,7 @@ function UnlockDialogButton({ address }) {
 
   return (
     <DialogLink component="lockedBalance">
-      <PrimaryButton disabled={hasUnlocks}>{t('Unlock stakes')}</PrimaryButton>
+      <PrimaryButton disabled={!hasUnlocks}>{t('Unlock stakes')}</PrimaryButton>
     </DialogLink>
   );
 }

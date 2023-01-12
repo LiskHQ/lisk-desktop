@@ -2,27 +2,29 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
-import {
-  selectActiveTokenAccount,
-  selectActiveToken,
-} from 'src/redux/selectors';
+import { selectActiveTokenAccount, selectActiveToken } from 'src/redux/selectors';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import TxComposer from '@transaction/components/TxComposer';
+import { useUnlocks } from '@pos/validator/hooks/queries';
 import getUnlockButtonTitle from '../../utils/getUnlockButtonTitle';
 import useUnlockableCalculator from '../../hooks/useUnlockableCalculator';
 import BalanceTable from './BalanceTable';
 import styles from './unlockBalance.css';
 
-const UnlockBalanceForm = ({
-  nextStep,
-}) => {
+// eslint-disable-next-line max-statements
+const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const activeToken = useSelector(selectActiveToken);
   const { data: latestBlock } = useLatestBlock();
   const [unlockObjects, lockedInVotes, unlockableBalance] = useUnlockableCalculator();
   const wallet = useSelector(selectActiveTokenAccount);
+  console.log('wallet', wallet);
+  const { data: unlocks } = useUnlocks({
+    config: { params: { address: wallet?.summary?.address } },
+  });
+  console.log('unlocks', unlocks);
 
   const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -38,7 +40,7 @@ const UnlockBalanceForm = ({
     isValid: unlockableBalance > 0,
   };
   const commandParams = {
-    unlockObjects
+    unlockObjects,
   };
 
   return (
@@ -56,7 +58,7 @@ const UnlockBalanceForm = ({
           <BoxContent className={styles.container}>
             <p>
               {t(
-                'Below are the details of your staked balances and rewards, as well as the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.',
+                'Below are the details of your staked balances and rewards, as well as the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.'
               )}
             </p>
             <BalanceTable

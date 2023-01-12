@@ -1,10 +1,10 @@
 import validators from '@tests/constants/validators';
-/* eslint-disable  max-lines, import/prefer-default-export */
-export const mockValidators = {
+
+export const getMockValidators = (address) => ({
   meta: {
     count: 2,
     offset: 0,
     total: 30,
   },
-  data: validators,
-};
+  data: address ? validators.filter((validator) => validator.address === address) : validators,
+});
