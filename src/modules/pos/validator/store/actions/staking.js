@@ -121,7 +121,7 @@ export const stakesRetrieved = () => async (dispatch, getState) => {
       type: actionTypes.stakesRetrieved,
       data: stakes.data.map((vote) => ({
         ...vote,
-        commission: mapValidatorToAddress[vote.delegateAddress].commission,
+        commission: mapValidatorToAddress[vote.delegateAddress]?.commission,
       })),
     });
   } catch (exp) {

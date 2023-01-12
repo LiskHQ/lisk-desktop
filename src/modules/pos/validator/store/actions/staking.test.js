@@ -256,6 +256,7 @@ describe('actions: staking', () => {
       const expectedAction = {
         type: actionTypes.stakesRetrieved,
         data: stakes,
+        
       };
       validatorApi.getStakes.mockImplementation(() => Promise.resolve({ data: stakes }));
       validatorApi.getValidatorList.mockImplementation(() => Promise.resolve({ data: mockValidators.data }));

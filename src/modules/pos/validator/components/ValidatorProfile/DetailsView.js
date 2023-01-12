@@ -38,7 +38,7 @@ const DetailsView = ({ data }) => {
     {
       icon: 'weight',
       label: t('Validator weight'),
-      value: <TokenAmount val={data.totalStakeReceived} token={tokenMap.LSK.key} />,
+      value: <TokenAmount val={data.validatorWeight} token={tokenMap.LSK.key} />,
     },
     {
       icon: 'commissionsIcon',

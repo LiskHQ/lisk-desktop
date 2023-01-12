@@ -142,7 +142,7 @@ export const getStakes = ({ params = {} }) =>
     params: getValidatorProps({ address: params.address, publicKey: params.publicKey }),
   });
 
-// we need to refactor this function when service has made modifications to this endpoint
+// @TODO: we need to refactor this function when service has made modifications to this endpoint
 /**
  * Retrieves validators by address
  *

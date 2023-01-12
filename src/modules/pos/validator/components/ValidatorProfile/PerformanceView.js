@@ -166,7 +166,7 @@ const PerformanceView = ({ data }) => {
               <div>
                 <span>{t('Rewards')}</span>
                 <a>
-                  See breakdown
+                  {t('See breakdown')}
                   <Icon name="arrowBlueRight" />
                 </a>
               </div>
