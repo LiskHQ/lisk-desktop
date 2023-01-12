@@ -14,7 +14,6 @@ const SentStakeRow = ({ data: stakes, stakeEdited, token }) => {
   });
   const { name, rank, validatorWeight, commission } = !isLoadingValidators ? validators?.data[0] : {};
 
-
   return (
     <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
       <div className={`transaction-event-row ${styles.container}`}>

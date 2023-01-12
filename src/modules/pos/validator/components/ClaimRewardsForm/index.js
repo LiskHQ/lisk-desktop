@@ -10,6 +10,37 @@ import { QueryTable } from '@theme/QueryTable';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './ClaimRewardsForm.css';
 
+const RewardsClaimableRow = ({ reward, tokenId }) => {
+  const token = { id: tokenId, chainName: 'Lisk', symbol: 'LSK' };
+  const amountInFiat = reward;
+
+  return (
+    <div>
+      <div>{token.chainName}</div>
+      <div>
+        {reward}
+        {token.symbol}
+      </div>
+      <div>{amountInFiat}</div>
+    </div>
+  );
+};
+
+const rewardsClaimableHeader = (t) => [
+  {
+    title: t('Token'),
+    classList: `${grid['col-xs-3']}`,
+  },
+  {
+    title: t('Reward amount'),
+    classList: `${grid['col-xs-4']}`,
+  },
+  {
+    title: t('Fiat'),
+    classList: `${grid['col-xs-1']}`,
+  },
+];
+
 const ClaimRewardsForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
@@ -73,34 +104,3 @@ const ClaimRewardsForm = ({ nextStep }) => {
 };
 
 export default ClaimRewardsForm;
-
-const RewardsClaimableRow = ({ reward, tokenId }) => {
-  const token = { id: tokenId, chainName: 'Lisk', symbol: 'LSK' };
-  const amountInFiat = reward;
-
-  return (
-    <div>
-      <div>{token.chainName}</div>
-      <div>
-        {reward}
-        {token.symbol}
-      </div>
-      <div>{amountInFiat}</div>
-    </div>
-  );
-};
-
-const rewardsClaimableHeader = (t) => [
-  {
-    title: t('Token'),
-    classList: `${grid['col-xs-3']}`,
-  },
-  {
-    title: t('Reward amount'),
-    classList: `${grid['col-xs-4']}`,
-  },
-  {
-    title: t('Fiat'),
-    classList: `${grid['col-xs-1']}`,
-  },
-];
