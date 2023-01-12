@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import {
-  calculateBalanceLockedInVotes,
+  calculateBalanceLockedInStakes,
   calculateUnlockableBalance,
 } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
@@ -46,7 +46,7 @@ describe('unlock transaction Status', () => {
 
   const props = {
     t: key => key,
-    lockedInVotes: calculateBalanceLockedInVotes(staking),
+    lockedInVotes: calculateBalanceLockedInStakes(staking),
     unlockableBalance: calculateUnlockableBalance(account.pos.pendingUnlocks, currentBlockHeight),
     currentBlockHeight,
     account,
@@ -95,7 +95,7 @@ describe('unlock transaction Status', () => {
     const customProps = {
       ...props,
       account: customAccount,
-      lockedInVotes: calculateBalanceLockedInVotes(customStaking),
+      lockedInVotes: calculateBalanceLockedInStakes(customStaking),
       unlockableBalance: calculateUnlockableBalance(
         customAccount.pos.pendingUnlocks,
         currentBlockHeight,

@@ -7,7 +7,7 @@ import {
   extractAddressFromPublicKey,
   calculateUnlockableBalance,
   getUnlockableUnlockObjects,
-  calculateBalanceLockedInVotes,
+  calculateBalanceLockedInStakes,
   extractAddressFromPassphrase,
   calculateRemainingAndSignedMembers,
 } from './account';
@@ -124,7 +124,7 @@ describe('Utils: Account', () => {
       expect(calculateUnlockableBalance(undefined, currentBlockHeight)).toEqual(0);
     });
 
-    describe('calculateBalanceLockedInVotes', () => {
+    describe('calculateBalanceLockedInStakes', () => {
       it('should get correct available balance', () => {
         const votes = {
           lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 5000000000 },
@@ -132,11 +132,11 @@ describe('Utils: Account', () => {
           lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: { confirmed: 2000000000 },
         };
 
-        expect(calculateBalanceLockedInVotes(votes)).toEqual(10000000000);
+        expect(calculateBalanceLockedInStakes(votes)).toEqual(10000000000);
       });
 
       it('should return 0 when unlocking is undefined', () => {
-        expect(calculateBalanceLockedInVotes({})).toEqual(0);
+        expect(calculateBalanceLockedInStakes({})).toEqual(0);
       });
     });
 
