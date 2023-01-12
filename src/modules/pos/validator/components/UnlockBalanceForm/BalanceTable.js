@@ -11,38 +11,34 @@ const BalanceTable = ({
   lockedInVotes,
   unlockableBalance,
   currentBlockHeight,
-  account,
+  pendingUnlocks,
 }) => (
   <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-    {(lockedInVotes !== 0 || account?.pos?.pendingUnlocks?.length > 0 || unlockableBalance !== 0)
-      && (
+    {(lockedInVotes !== 0 || pendingUnlocks?.length > 0 || unlockableBalance !== 0) && (
       <li>
         <p className={styles.columnTitle}>{t('Amount')}</p>
         <p className={styles.columnTitle}>{t('Status')}</p>
       </li>
-      )}
-    {lockedInVotes !== 0
-      && (
-        <li>
-          <p className="locked-balance">
-            <TokenAmount val={lockedInVotes} token={tokenMap.LSK.key} />
-          </p>
-          <p>
-            <Icon name="lock" />
-            {t('locked')}
-          </p>
-        </li>
-      )}
-    {account?.pos?.pendingUnlocks?.length > 0
-      && (
+    )}
+    {lockedInVotes !== 0 && (
+      <li>
+        <p className="locked-balance">
+          <TokenAmount val={lockedInVotes} token={tokenMap.LSK.key} />
+        </p>
+        <p>
+          <Icon name="lock" />
+          {t('locked')}
+        </p>
+      </li>
+    )}
+    {pendingUnlocks?.length > 0 && (
       <UnlockingList
-        pendingUnlocks={account?.pos?.pendingUnlocks}
+        pendingUnlocks={pendingUnlocks}
         currentBlockHeight={currentBlockHeight}
         t={t}
       />
-      )}
-    {unlockableBalance !== 0
-      && (
+    )}
+    {unlockableBalance !== 0 && (
       <li>
         <p className="available-balance">
           <TokenAmount val={unlockableBalance} token={tokenMap.LSK.key} />
@@ -52,7 +48,7 @@ const BalanceTable = ({
           {t('available to unlock')}
         </p>
       </li>
-      )}
+    )}
   </ul>
 );
 
