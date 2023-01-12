@@ -48,7 +48,7 @@ export const mountWithRouter = (Component, props, routeConfig = {}) =>
  * @returns {Object} Mounted component
  */
 const defaultHistoryProps = {
-  listen: () => {},
+  listen: () => { },
   location: {
     pathname: '',
   },
@@ -267,5 +267,23 @@ export const renderWithStore = (Component, props, store) =>
   render(
     <Provider store={configureStore()(store)}>
       <Component {...props} />
+    </Provider>
+  );
+
+/**
+ * render's components that requires access Redux store with react router
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ * @param {Object} store - A fake Redux store object
+ *
+ * @returns {Object} Mounted component
+ */
+export const renderWithRouterAndStore = (Component, props, store) =>
+  render(
+    <Provider store={configureStore()(store)}>
+      <MemoryRouter initialEntries={[props?.history ?? defaultHistoryProps]}>
+        <Component {...props} />
+      </MemoryRouter>
     </Provider>
   );

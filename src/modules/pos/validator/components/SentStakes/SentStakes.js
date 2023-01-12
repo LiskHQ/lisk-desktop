@@ -26,7 +26,6 @@ function useStakerAddress(searchParam) {
 function ClaimRewardsDialogButton({ address }) {
   const { t } = useTranslation();
   const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
-  console.log('rewardsClaimable', rewardsClaimable);
   const hasClaimAbleRewards = rewardsClaimable?.meta?.total > 0;
 
   return (
@@ -39,7 +38,6 @@ function ClaimRewardsDialogButton({ address }) {
 function UnlockDialogButton({ address }) {
   const { t } = useTranslation();
   const { data: unlocks } = useUnlocks({ config: { params: { address } } });
-  console.log('unlocks', unlocks);
   const hasUnlocks = unlocks?.data?.pendingUnlocks?.find((pendingUnlock) => pendingUnlock.unlockable);
 
   return (
