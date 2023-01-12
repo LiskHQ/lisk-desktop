@@ -112,7 +112,7 @@ export const stakesRetrieved = () => async (dispatch, getState) => {
     const validators = await getValidatorList({
       addresses: votes.data.map(({ delegateAddress }) => delegateAddress),
     });
-    const mapValidatorToAddress = validators.reduce((result, validator) => ({...result, [validator.address]: validator}), {})
+    const mapValidatorToAddress = validators.data.reduce((result, validator) => ({...result, [validator.address]: validator}), {})
 
     dispatch({
       type: actionTypes.stakesRetrieved,

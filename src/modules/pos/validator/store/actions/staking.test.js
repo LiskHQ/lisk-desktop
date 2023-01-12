@@ -18,11 +18,13 @@ import {
   stakesRetrieved,
   balanceUnlocked,
 } from './staking';
+import { mockValidators } from '../../__fixtures__';
 
 jest.mock('@transaction/api');
 
 jest.mock('../../api', () => ({
-  getVotes: jest.fn(),
+  getStakes: jest.fn(),
+  getValidatorList: jest.fn(),
 }));
 
 jest.mock('@wallet/utils/api', () => ({
@@ -63,7 +65,7 @@ describe('actions: staking', () => {
           sequence: {
             nonce: '1',
           },
-          votes: [{ delegateAddress: '123L', amount: 1e9 }],
+          stakes: [{ delegateAddress: '123L', amount: 1e9 }],
         },
       },
     },
@@ -82,7 +84,7 @@ describe('actions: staking', () => {
     signatures: [],
     fee: '0',
     params: {
-      votes: [
+      stakes: [
         {
           delegateAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
           amount: 1e10,
@@ -247,15 +249,16 @@ describe('actions: staking', () => {
   });
 
   describe('stakesRetrieved', () => {
-    it('should call getVotes and dispatch stake results', async () => {
-      const votes = [
+    it('should call getStakes and dispatch stake results', async () => {
+      const stakes = [
         { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: 'genesis', amount: 1e8 },
       ];
       const expectedAction = {
         type: actionTypes.stakesRetrieved,
-        data: votes,
+        data: stakes,
       };
-      validatorApi.getStakes.mockImplementation(() => Promise.resolve({ data: votes }));
+      validatorApi.getStakes.mockImplementation(() => Promise.resolve({ data: stakes }));
+      validatorApi.getValidatorList.mockImplementation(() => Promise.resolve({ data: mockValidators.data }));
       await stakesRetrieved()(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(expectedAction);

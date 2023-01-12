@@ -13,6 +13,7 @@ import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditStake from './index';
 import { useValidators, useSentStakes, usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
+import { extractValidatorCommission } from '../../utils';
 
 jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
@@ -80,10 +81,12 @@ describe('EditStake', () => {
     renderWithRouterAndStore(EditStake, updatedProps, { staking: stakingStoreValue, });
 
     expect(screen.getByText('Add to staking queue')).toBeTruthy();
-    expect(screen.getByText(address)).toBeTruthy();
+    expect(screen.getByText(validator.address)).toBeTruthy();
     expect(screen.getByText(validator.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
     expect(screen.getByText('Available balance:')).toBeTruthy();
+    expect(screen.getByText('Commission:')).toBeTruthy();
+    expect(screen.getByText(`${extractValidatorCommission(validator.commission)}%`)).toBeTruthy();
     expect(
       screen.getByText(
         `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${token.symbol
@@ -112,6 +115,7 @@ describe('EditStake', () => {
           address: validatorAddress,
           name: validator.name,
           amount: toRawLsk(20),
+          validator,
         },
       ]);
     });
@@ -174,6 +178,7 @@ describe('EditStake', () => {
           address: validatorAddress,
           name: validator.name,
           amount: toRawLsk(20),
+          validator,
         },
       ]);
     });
