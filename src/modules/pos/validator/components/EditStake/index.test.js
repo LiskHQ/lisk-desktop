@@ -40,17 +40,17 @@ jest.mock('@auth/hooks/queries');
 describe('EditStake', () => {
   const validatorAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
   const stakingStoreValue = {
-    'lskn3kjdanry8v272fyqky8nx7nc358sedo8rzmw2': {
+    lskn3kjdanry8v272fyqky8nx7nc358sedo8rzmw2: {
       confirmed: 1000000000,
-      name: "genesis_66",
+      name: 'genesis_66',
       unconfirmed: 3000000000,
     },
-    'lsknm4djcs98mpu87m9cjsawy7eqp8cpk4v7u8gdz': {
+    lsknm4djcs98mpu87m9cjsawy7eqp8cpk4v7u8gdz: {
       confirmed: 2000000000,
-      name: "genesis_8",
+      name: 'genesis_8',
       unconfirmed: 4000000000,
-    }
-  }
+    },
+  };
   const props = {
     history: { location: { search: `?address=${validatorAddress}` }, push: jest.fn() },
     stakeEdited: jest.fn(),
@@ -78,7 +78,7 @@ describe('EditStake', () => {
     const validator = mockValidators.data[0];
     const token = mockTokensBalance.data[0];
 
-    renderWithRouterAndStore(EditStake, updatedProps, { staking: stakingStoreValue, });
+    renderWithRouterAndStore(EditStake, updatedProps, { staking: stakingStoreValue });
 
     expect(screen.getByText('Add to staking queue')).toBeTruthy();
     expect(screen.getByText(validator.address)).toBeTruthy();
@@ -89,7 +89,8 @@ describe('EditStake', () => {
     expect(screen.getByText(`${extractValidatorCommission(validator.commission)}%`)).toBeTruthy();
     expect(
       screen.getByText(
-        `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${token.symbol
+        `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
+          token.symbol
         }`
       )
     ).toBeTruthy();
@@ -112,8 +113,6 @@ describe('EditStake', () => {
     await waitFor(() => {
       expect(props.stakeEdited).toHaveBeenCalledWith([
         {
-          address: validatorAddress,
-          name: validator.name,
           amount: toRawLsk(20),
           validator,
         },
@@ -175,8 +174,6 @@ describe('EditStake', () => {
     await waitFor(() => {
       expect(props.stakeEdited).toHaveBeenCalledWith([
         {
-          address: validatorAddress,
-          name: validator.name,
           amount: toRawLsk(20),
           validator,
         },

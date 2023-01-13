@@ -4,6 +4,7 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
 import { mockValidators } from '../../__fixtures__';
 import ValidatorSummary from './ValidatorSummary';
+import { extractValidatorCommission } from '../../utils';
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
@@ -32,12 +33,12 @@ describe('ValidatorSummary', () => {
         'This validator is among the first 101 validators in validator weight ranking.'
       )
     ).toBeTruthy();
-    expect(screen.getByText('CMB :')).toBeTruthy();
-    expect(screen.getByTestId('cmb').innerHTML).toEqual(
-      props.validator.consecutiveMissedBlocks.toString()
+    expect(screen.getByText('Commission :')).toBeTruthy();
+    expect(screen.getByTestId('commission').innerHTML).toEqual(
+      `${extractValidatorCommission(props.validator.commission)}%`
     );
     expect(screen.getByText(props.weight)).toBeTruthy();
-    expect(screen.getByText('Last forged :')).toBeTruthy();
+    expect(screen.getByText('Last generated :')).toBeTruthy();
     expect(screen.getByText('22 Aug 2022')).toBeTruthy();
     expect(screen.getByAltText('starDark')).toBeTruthy();
     expect(screen.getByAltText('weightDark')).toBeTruthy();

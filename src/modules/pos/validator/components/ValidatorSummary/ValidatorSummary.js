@@ -53,7 +53,7 @@ const ValidatorSummary = ({ validator, status, weight }) => {
           </div>
           <div>
             <span>{t('Commission :')}</span>
-            <span data-testid="cmb">{extractValidatorCommission(commission)}%</span>
+            <span data-testid="commission">{extractValidatorCommission(commission)}%</span>
           </div>
           <div>
             <span>{t('Last generated :')}</span>

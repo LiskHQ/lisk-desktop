@@ -47,7 +47,6 @@ const staking = (state = {}, action) => {
             commission:
               state[validator.address]?.commision || action.data[0]?.validator?.commission,
           };
-          console.log('---->>', mergedStakes, validator, amount)
           return mergedStakes;
         }, {}),
       };
