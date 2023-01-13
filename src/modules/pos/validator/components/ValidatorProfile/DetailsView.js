@@ -11,15 +11,52 @@ import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './ValidatorProfile.css';
+import { extractValidatorCommission } from '../../utils';
 
 const DetailsView = ({ data }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { rank } = data;
   const status = data.status || '';
+  // @TODO: this is wrong we need to get this value from the validator's endpoint.
   const {
     data: { timestamp: latestBlockTimestamp },
   } = useLatestBlock();
+
+  const onEditCommision = () => {};
+
+  const displayList = [
+    {
+      icon: 'star',
+      label: t('Rank'),
+      value: rank || '-',
+    },
+    {
+      icon: 'clockActive',
+      label: t('Round state'),
+      value: status.toLowerCase(),
+    },
+    {
+      icon: 'weight',
+      label: t('Validator weight'),
+      value: <TokenAmount val={data.validatorWeight} token={tokenMap.LSK.key} />,
+    },
+    {
+      icon: 'commissionsIcon',
+      label: t('Commission'),
+      value: `${extractValidatorCommission(data.commission)}%`,
+      onEdit: onEditCommision,
+    },
+    {
+      icon: 'calendar',
+      label: t('Last generated block'),
+      value: latestBlockTimestamp ? (
+        <DateTimeFromTimestamp fulltime className="date" time={latestBlockTimestamp} />
+      ) : (
+        '-'
+      ),
+    },
+  ];
 
   return (
     <Box
@@ -29,42 +66,22 @@ const DetailsView = ({ data }) => {
         <h1 className={styles.heading}>{t('Details')}</h1>
       </BoxHeader>
       <BoxContent className={`${styles.details} details`}>
-        <div className={`${grid.row} ${styles.itemContainer}`}>
-          <Icon name="star" className={styles.icon} />
-          <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>{t('Rank')}</div>
-            <div className={styles.value}>{rank || '-'}</div>
-          </div>
-        </div>
-        <div className={`${grid.row} ${styles.itemContainer}`}>
-          <Icon name="clockActive" className={styles.icon} />
-          <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>{t('Status')}</div>
-            <div className={`${styles.value} ${styles.capitalized}`}>{status.toLowerCase()}</div>
-          </div>
-        </div>
-        <div className={`${grid.row} ${styles.itemContainer}`}>
-          <Icon name="weight" className={styles.icon} />
-          <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>{t('Validator weight')}</div>
-            <div className={styles.value}>
-              <TokenAmount val={data.totalStakeReceived} token={tokenMap.LSK.key} />
+        {displayList.map(({ icon, label, value, onEdit }) => (
+          <div key={label} className={`${grid.row} ${styles.itemContainer}`}>
+            <Icon name={icon} className={styles.icon} />
+            <div className={`${grid.col} ${styles.item}`}>
+              <div className={`${styles.title} ${theme}`}>
+                <span>{label} </span>
+                {onEdit && typeof onEdit === 'function' && (
+                  <button onClick={onEdit} className={styles.editBtn}>
+                    <Icon name="editActiveIcon" />
+                  </button>
+                )}
+              </div>
+              <div className={styles.value}>{value}</div>
             </div>
           </div>
-        </div>
-        <div className={`${grid.row} ${styles.itemContainer}`}>
-          <Icon name="calendar" className={styles.icon} />
-          <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>{t('Last block forged')}</div>
-            <div className={styles.value}>
-              {latestBlockTimestamp ? (
-                <DateTimeFromTimestamp fulltime className="date" time={latestBlockTimestamp} />
-              ) : (
-                '-'
-              )}
-            </div>
-          </div>
-        </div>
+        ))}
       </BoxContent>
     </Box>
   );

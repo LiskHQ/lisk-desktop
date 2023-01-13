@@ -71,11 +71,22 @@
       color: var(--color-content-light);
     }
 
-    & > p:nth-child(2) ~ p {
-      @mixin contentNormal;
-
-      margin-top: -3px;
+    & > p:nth-child(3) {
       color: var(--color-blue-gray) !important;
+      margin-top: -3px;
+
+      &,
+      & ~ p {
+        @mixin contentNormal;
+      }
+    }
+
+    & > p:nth-child(4) {
+      margin-top: -5px;
+
+      & > span {
+        color: var(--color-content-light);
+      }
     }
   }
 

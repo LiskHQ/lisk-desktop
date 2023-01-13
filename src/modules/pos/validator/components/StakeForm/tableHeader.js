@@ -6,6 +6,10 @@ const header = (t) => [
     classList: styles.infoColumn,
   },
   {
+    title: t('Commission (%)'),
+    classList: styles.amountColumn,
+  },
+  {
     title: t('Stake amount'),
     classList: styles.amountColumn,
   },

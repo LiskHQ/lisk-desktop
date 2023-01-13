@@ -12,6 +12,7 @@ import arrowLeftInactive from '@setup/react/assets/images/icons/arrow-left-inact
 import arrowLeftTailed from '@setup/react/assets/images/icons/arrow-left-tailed.svg';
 import arrowLeftTailedDark from '@setup/react/assets/images/icons/arrow-left-tailed-dark.svg';
 import arrowRight from '@setup/react/assets/images/icons/arrow-right.svg';
+import arrowBlueRight from '@setup/react/assets/images/icons/arrow-blue-right.svg';
 import arrowRightActive from '@setup/react/assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '@setup/react/assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '@setup/react/assets/images/icons/arrow-right-with-stroke.svg';
@@ -231,6 +232,8 @@ import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-
 import transferArrow from '@setup/react/assets/images/icons/transfer-arrow.svg';
 import receivedTransactionIcon from '@setup/react/assets/images/icons/received_transaction_icon.svg';
 import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
+import commissionsIcon from '@setup/react/assets/images/icons/commissions.svg';
+import editActiveIcon from '@setup/react/assets/images/icons/editActive.svg';
 
 export const icons = {
   academy,
@@ -460,6 +463,9 @@ export const icons = {
   transferArrow,
   receivedTransactionIcon,
   sentTransactionIcon,
+  commissionsIcon,
+  editActiveIcon,
+  arrowBlueRight,
   multisigKeys,
   multisigKeysDark,
 };

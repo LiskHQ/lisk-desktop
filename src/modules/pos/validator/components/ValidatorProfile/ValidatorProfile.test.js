@@ -62,14 +62,15 @@ describe('Validator Profile', () => {
     expect(screen.getByText('Stakers')).toBeTruthy();
 
     expect(screen.getByText('Rank')).toBeTruthy();
-    expect(screen.getAllByText('Status')).toHaveLength(2);
+    expect(screen.getAllByText('Round state')).toHaveLength(1);
     expect(screen.getByText('Validator weight')).toBeTruthy();
-    expect(screen.getByText('Last block forged')).toBeTruthy();
+    expect(screen.getByText('Last generated block')).toBeTruthy();
 
-    expect(screen.getByText('Last forged block')).toBeTruthy();
-    expect(screen.getByText('Forged blocks')).toBeTruthy();
-    expect(screen.getByText('Rewards (LSK)')).toBeTruthy();
+    expect(screen.getByText('Last generated block height')).toBeTruthy();
+    expect(screen.getByText('Blocks generated')).toBeTruthy();
+    expect(screen.getByText('Rewards')).toBeTruthy();
     expect(screen.getByText('Consecutive missed blocks')).toBeTruthy();
+    expect(screen.getByText('See breakdown')).toBeTruthy();
 
     expect(
       screen.getByText('This validator is among the first 101 validators by validator weight.')
@@ -90,8 +91,6 @@ describe('Validator Profile', () => {
       )
     ).toBeTruthy();
     expect(screen.getByTestId('date-timestamp')).toBeTruthy();
-
-    expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getByTestId('addressFilter')).toBeTruthy();
     mockReceivedStakes.data.stakers.forEach(({ name }) => {
       expect(screen.getByText(name)).toBeTruthy();

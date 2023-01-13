@@ -1,5 +1,6 @@
 import {
   ValidatorWeight,
+  ValidatorCommission,
   ValidatorDetails,
   RoundState,
   ValidatorStatus,
@@ -9,8 +10,8 @@ import {
 import styles from './Schemas.css';
 
 const minimal = [ValidatorDetails, ValidatorStatus];
-const hosted = [ValidatorDetails, ValidatorWeight];
-const full = [ValidatorDetails, ValidatorWeight, ValidatorRank, ForgingTime, RoundState];
+const hosted = [ValidatorDetails, ValidatorWeight, ValidatorCommission];
+const full = [ValidatorDetails, ValidatorWeight, ValidatorCommission, ValidatorRank, ForgingTime, RoundState];
 
 const LayoutSchema = {
   active: {

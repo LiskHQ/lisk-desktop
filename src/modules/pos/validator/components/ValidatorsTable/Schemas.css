@@ -68,8 +68,8 @@
     }
 
     & > *:nth-child(1) {
-      flex-basis: 41.66666667%;
-      max-width: 41.66666667%;
+      flex-basis: 25%;
+      max-width: 25%;
     }
 
     & > *:nth-child(2) {
@@ -93,6 +93,8 @@
 
     & > *:last-child {
       justify-content: flex-end;
+      flex-basis: 16.66666667%;
+      max-width: 16.66666667%;
     }
   }
 
