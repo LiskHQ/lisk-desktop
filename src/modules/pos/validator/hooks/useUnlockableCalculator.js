@@ -6,7 +6,7 @@ import { useCurrentAccount } from '@account/hooks';
 const useUnlockableCalculator = () => {
   const [currentAccount] = useCurrentAccount();
   const { data: unlocks } = useUnlocks({
-    config: { params: { address: currentAccount?.metaData?.address } },
+    config: { params: { address: currentAccount?.metadata?.address } },
   });
   const pendingUnlocks = unlocks?.data?.pendingUnlocks;
 
