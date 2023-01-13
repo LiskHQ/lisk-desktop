@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
 import Converter from 'src/modules/common/components/converter';
 import styles from './TokenRow.css';
-import { Token, Balance, LockedBalance } from './components';
+import { Token, Balance } from './components';
 
-const TokenRow = ({ data: token, address }) => {
+const TokenRow = ({ data: token }) => {
   const {
     symbol: tokenSymbol,
     chainUrl,
@@ -24,8 +24,8 @@ const TokenRow = ({ data: token, address }) => {
         <Token chainName={chainName} chainLogo={chainUrl} tokenSymbol={tokenSymbol} />
         <Balance amount={fromRawLsk(+availableBalance + totalLockedBalance)} />
         <Balance amount={fromRawLsk(availableBalance)} />
+        <Balance amount={fromRawLsk(totalLockedBalance)} />
         <Balance amount={<Converter value={fromRawLsk(availableBalance)} />} />
-        <LockedBalance amount={fromRawLsk(totalLockedBalance)} address={address} />
       </div>
     </div>
   );
