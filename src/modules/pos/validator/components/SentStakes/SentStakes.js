@@ -5,7 +5,7 @@ import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
 import { PrimaryButton } from 'src/theme/buttons';
 import BoxContent from 'src/theme/box/content';
-import Table from 'src/theme/table';
+import { QueryTable } from 'src/theme/QueryTable';
 import BoxHeader from 'src/theme/box/header';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
@@ -38,7 +38,7 @@ const SentStakes = ({ history }) => {
   });
   const dposToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
-  const { data, isLoading } = useSentStakes(queryParam);
+  const { data } = useSentStakes(queryParam);
   const stakingAvailable = useMemo(() => 10 - data?.meta?.total || 0, [address]);
 
   return (
@@ -60,10 +60,10 @@ const SentStakes = ({ history }) => {
         </Heading>
       </BoxHeader>
       <BoxContent>
-        <Table
+        <QueryTable
           showHeader
-          data={data?.data?.stakes || []}
-          isLoading={isLoading}
+          queryHook={useSentStakes}
+          transformResponse={(resp) => resp?.stakes || []}
           queryConfig={queryParam}
           row={SentStakesRow}
           header={header(t)}
