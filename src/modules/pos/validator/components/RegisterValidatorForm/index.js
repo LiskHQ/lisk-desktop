@@ -25,21 +25,22 @@ const getTooltips = (field, t) => {
 // eslint-disable-next-line max-statements
 const RegisterValidatorForm = ({ nextStep, prevState }) => {
   const { t } = useTranslation();
-  const [name, setName] = useValidatorName(prevState?.rawTx?.params.name);
+  const { params } = prevState?.transactionJSON || {};
+  const [name, setName] = useValidatorName(params?.name);
   const [generatorKey, setGenKey] = useValidatorKey(
     'generatorKey',
     t('Please enter a valid generator key value'),
-    prevState?.rawTx?.params.generatorKey
+    params?.generatorKey
   );
   const [blsKey, setBlsKey] = useValidatorKey(
     'blsKey',
     t('Please enter a valid bls key value'),
-    prevState?.rawTx?.params.blsKey
+    params?.blsKey
   );
   const [proofOfPossession, setPop] = useValidatorKey(
     'proofOfPossession',
     t('Please enter a valid proof of possession value'),
-    prevState?.rawTx?.params.proofOfPossession
+    params?.proofOfPossession
   );
 
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
