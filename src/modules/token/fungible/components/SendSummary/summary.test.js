@@ -41,17 +41,6 @@ describe('Summary', () => {
         sendingChain: mockBlockchainApplications[0],
         recipientChain: mockBlockchainApplications[1],
       },
-      rawTx: {
-        params: {
-          recipient: { address: wallets.genesis.summary.address },
-          amount: 112300000,
-          data: 'message',
-          token: mockAppTokens[0],
-        },
-        moduleCommand: 'token:transfer',
-        sendingChain: mockBlockchainApplications[0],
-        recipientChain: mockBlockchainApplications[1],
-      },
       t: i18n.t,
       selectedPriority: { title: 'Normal', value: 1 },
       fees: {
@@ -71,6 +60,7 @@ describe('Summary', () => {
           amount: 112300000,
           data: 'transfer message',
           token: { tokenID: '00000000' },
+          recipient: { address: wallets.genesis.summary.address },
         },
         fields: {
           sendingChain: mockBlockchainApplications[0],
@@ -113,12 +103,12 @@ describe('Summary', () => {
       <Summary
         {...{
           ...props,
-          rawTx: {
-            ...props.rawTx,
+          formProps: {
+            ...props.formProps,
             params: {
-              ...props.rawTx.params,
+              ...props.formProps.params,
               recipient: {
-                ...props.rawTx.params.recipient,
+                ...props.formProps.params.recipient,
                 title,
               },
             },

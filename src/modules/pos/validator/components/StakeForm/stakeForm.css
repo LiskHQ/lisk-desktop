@@ -11,7 +11,6 @@
     padding: 0;
     margin: 4px var(--reverse-margin) var(--horizontal-padding-l) var(--reverse-margin);
     border-radius: 0;
-    border-bottom: 1px solid var(--color-platinum);
   }
 
   & .toggle {
@@ -33,6 +32,12 @@
   & .emptyState + div {
     display: none;
   }
+}
+
+.tableHeader::after {
+  left: 0px;
+  right: 0px;
+  width: 100%;
 }
 
 .headerContainer {
@@ -58,7 +63,7 @@
 }
 
 .infoColumn {
-  width: 50%;
+  width: 35%;
   padding: 0;
 }
 
@@ -73,11 +78,16 @@
   align-items: center;
 }
 
+.commissionsColumn,
 .newAmountColumn {
   padding: 0;
   display: flex;
   flex: 1;
   color: var(--color-maastricht-blue);
+}
+
+.commissionsColumn {
+  margin-left: 10px;
 }
 
 .delegateInfoContainer {
@@ -86,7 +96,7 @@
   flex-direction: row;
   align-items: center;
   margin-left: 16px;
-  width: calc(50% - 16px);
+  width: calc(33% - 13px);
 }
 
 .delegateInfo {
@@ -125,6 +135,7 @@
   flex-direction: row;
   margin-bottom: 6px;
   padding: 16px 0;
+  border-bottom: 1px solid var(--color-platinum);
 
   &:last-child {
     margin-bottom: 0;
@@ -135,6 +146,10 @@
 
     margin-right: 8px;
     font-size: var(--font-size-h6);
+
+    &:last-of-type {
+      margin-left: 25px;
+    }
   }
 
   & img.editIcon {
@@ -264,7 +279,7 @@
   }
 }
 
-.validatorAddress {
+.delegateAddress {
   @mixin contentLarge;
 }
 
@@ -274,6 +289,8 @@
   justify-content: center;
   position: relative;
   color: var(--color-blue-gray);
+  margin-right: 10px;
+  margin-left: 4px;
 
   &::before {
     content: '';

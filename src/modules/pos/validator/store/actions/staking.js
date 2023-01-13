@@ -6,7 +6,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { signTransaction } from '@transaction/api';
 import txActionTypes from '@transaction/store/actionTypes';
 import { joinModuleAndCommand } from '@transaction/utils';
-import { getVotes } from '../../api';
+import { getStakes, getValidatorList } from '../../api';
 import actionTypes from './actionTypes';
 import { useSentStakes } from '../../hooks/queries';
 
@@ -74,44 +74,55 @@ export const stakeEdited = (data) => async (dispatch) =>
  */
 export const stakesSubmitted =
   (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
-    async (dispatch, getState) => {
-      const state = getState();
-      const activeWallet = selectActiveTokenAccount(state);
-      const [error, tx] = await to(
-        signTransaction({
-          transactionJSON,
-          wallet: activeWallet,
-          schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
-          chainID: state.network.networks.LSK.chainID,
-          privateKey,
-          senderAccount,
-        })
-      );
-      if (error) {
-        dispatch({
-          type: txActionTypes.transactionSignError,
-          data: error,
-        });
-      } else {
-        dispatch({ type: actionTypes.stakesSubmitted });
-        dispatch({
-          type: txActionTypes.transactionCreatedSuccess,
-          data: tx,
-        });
-      }
-    };
+  async (dispatch, getState) => {
+    const state = getState();
+    const activeWallet = selectActiveTokenAccount(state);
+    const [error, tx] = await to(
+      signTransaction({
+        transactionJSON,
+        wallet: activeWallet,
+        schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
+        chainID: state.network.networks.LSK.chainID,
+        privateKey,
+        senderAccount,
+      })
+    );
+    if (error) {
+      dispatch({
+        type: txActionTypes.transactionSignError,
+        data: error,
+      });
+    } else {
+      dispatch({ type: actionTypes.stakesSubmitted });
+      dispatch({
+        type: txActionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    }
+  };
 
 /**
  * Fetches the list of votes of the host wallet.
  */
 export const stakesRetrieved = () => async (dispatch, getState) => {
   const { network, account } = getState();
-  const address = account.current?.metadata?.address;
+  const currentAddress = account.current?.metadata?.address;
   try {
-    const votes = await getVotes({ network, params: { address } });
+    const stakes = await getStakes({ network, params: { address: currentAddress } });
+    const validators = await getValidatorList({
+      addresses: stakes.data.map(({ address }) => address),
+    });
+    const mapValidatorToAddress = validators.data.reduce(
+      (result, validator) => ({ ...result, [validator.address]: validator.commission }),
+      {}
+    );
+
     dispatch({
       type: actionTypes.stakesRetrieved,
-      data: votes.data,
+      data: stakes.data.map((stake) => ({
+        ...stake,
+        commission: mapValidatorToAddress[stake.delegateAddress],
+      })),
     });
   } catch (exp) {
     dispatch({
@@ -123,13 +134,11 @@ export const stakesRetrieved = () => async (dispatch, getState) => {
   }
 };
 
-
-export const useStakesRetrieved = address => {
+export const useStakesRetrieved = (address) => {
   const dispatch = useDispatch();
-  const {
-    data: sentStakes,
-    isSuccess: isSentStakesSuccess,
-  } = useSentStakes({ config: { params: { address } } });
+  const { data: sentStakes, isSuccess: isSentStakesSuccess } = useSentStakes({
+    config: { params: { address } },
+  });
 
   useEffect(() => {
     if (!isSentStakesSuccess) {

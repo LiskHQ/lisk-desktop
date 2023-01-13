@@ -204,7 +204,7 @@
 }
 
 header {
-  & .validatorHeader {
+  & .validatorHeader:first-of-type {
     padding-left: 45px;
   }
 }

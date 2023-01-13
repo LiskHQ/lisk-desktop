@@ -66,11 +66,11 @@ describe('Multisignature editor component', () => {
     wrapper = mountWithQueryClient(Form, {
       ...props,
       prevState: {
-        numberOfSignatures: 3,
-        rawTx: {
+        transactionJSON: {
           params: {
             mandatoryKeys: [{}, {}],
             optionalKeys: [{}, {}, {}],
+            numberOfSignatures: 3,
           },
         },
       },
@@ -128,7 +128,7 @@ describe('Multisignature editor component', () => {
     const propsWithPrev = {
       ...props,
       prevState: {
-        rawTx: {
+        transactionJSON: {
           params: {
             numberOfSignatures: 2,
             optionalKeys: [wallets.genesis.summary.publicKey],

@@ -1,7 +1,8 @@
 import actionTypes from '../actions/actionTypes';
 import staking from './staking';
 
-describe('Reducer: staking(state, action)', () => { // eslint-disable-line max-statements
+describe('Reducer: staking(state, action)', () => {
+  // eslint-disable-line max-statements
   const validator1 = {
     address: '100001L',
   };
@@ -64,10 +65,12 @@ describe('Reducer: staking(state, action)', () => { // eslint-disable-line max-s
     it('should add validator with stake amount if does not exist among votes', () => {
       const action = {
         type: actionTypes.stakeEdited,
-        data: [{
-          ...validator1,
-          amount: dirtyVotes[validator1.address].unconfirmed,
-        }],
+        data: [
+          {
+            validator: validator1,
+            amount: dirtyVotes[validator1.address].unconfirmed,
+          },
+        ],
       };
       const expectedState = {
         [validator1.address]: {
@@ -83,10 +86,12 @@ describe('Reducer: staking(state, action)', () => { // eslint-disable-line max-s
     it('should change stake amount if validators exist among votes', () => {
       const action = {
         type: actionTypes.stakeEdited,
-        data: [{
-          ...validator1,
-          amount: dirtyVotes[validator1.address].unconfirmed,
-        }],
+        data: [
+          {
+            validator: validator1,
+            amount: dirtyVotes[validator1.address].unconfirmed,
+          },
+        ],
       };
       const expectedState = {
         [validator1.address]: {

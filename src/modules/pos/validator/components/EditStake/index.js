@@ -30,6 +30,7 @@ import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
 import { useValidators, usePosConstants, useSentStakes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
+import { extractValidatorCommission } from '../../utils';
 import { useStakesRetrieved } from '../../store/actions/staking';
 
 const getTitles = (t) => ({
@@ -130,9 +131,8 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     }
     stakeEdited([
       {
-        address,
+        validator,
         amount: toRawLsk(stakeAmount.value),
-        name: validator.name,
       },
     ]);
 
@@ -144,9 +144,8 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   const removeVote = () => {
     stakeEdited([
       {
-        address,
+        validator,
         amount: toRawLsk(0),
-        name: validator.name,
       },
     ]);
     removeSearchParamsFromUrl(history, ['modal']);
@@ -182,7 +181,10 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
               <BoxInfoText className={styles.accountInfo}>
                 <WalletVisual size={40} address={address} />
                 <p>{validator.name}</p>
-                <p>{address}</p>
+                <p>{validator.address}</p>
+                <p>
+                  Commission: <span>{extractValidatorCommission(validator.commission)}%</span>
+                </p>
               </BoxInfoText>
               <label className={styles.fieldGroup}>
                 <p className={styles.availableBalance}>

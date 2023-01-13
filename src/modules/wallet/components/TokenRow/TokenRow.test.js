@@ -20,6 +20,5 @@ describe('TokenRow', () => {
     expect(screen.queryByText(`${fromRawLsk(+availableBalance + lockedBalance)}`));
     expect( screen.getByText(/~10\.00/g)).toBeTruthy();
     expect(screen.getByAltText(symbol)).toBeTruthy();
-    expect(screen.getByAltText('arrowRightInactive')).toBeTruthy();
   });
 });

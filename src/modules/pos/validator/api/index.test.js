@@ -226,7 +226,7 @@ describe('API: LSK Delegates', () => {
         meta: { ...mockSentStakes.meta, count: 20 },
       };
       setApiResponseData(expectedResponse, client.rest);
-      await expect(validator.getVotes({ params, network })).resolves.toEqual(expectedResponse);
+      await expect(validator.getStakes({ params, network })).resolves.toEqual(expectedResponse);
     });
   });
 

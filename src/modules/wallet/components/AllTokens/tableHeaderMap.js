@@ -14,11 +14,11 @@ export default (t) => [
     classList: `${grid['col-xs-2']}`,
   },
   {
-    title: t('Fiat balance'),
+    title: t('Locked balance'),
     classList: `${grid['col-xs-2']}`,
   },
   {
-    title: t('Locked balance'),
+    title: t('Fiat balance'),
     classList: `${grid['col-xs-3']}`,
   },
 ];

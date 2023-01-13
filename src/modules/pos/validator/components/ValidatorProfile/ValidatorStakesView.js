@@ -62,9 +62,7 @@ const ValidatorStakesView = ({ address }) => {
             </span>
           )}
         </BoxHeader>
-        <BoxContent
-          className={`${grid.col} ${grid['col-xs-12']} ${styles.stakesContainer}`}
-        >
+        <BoxContent className={`${grid.col} ${grid['col-xs-12']} ${styles.stakesContainer}`}>
           <QueryTable
             queryHook={useReceivedStakes}
             queryConfig={{ config: { params: filters } }}

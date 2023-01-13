@@ -115,7 +115,7 @@ describe('Form', () => {
 
   it('should render properly with data from prevState', () => {
     const { address } = accounts.genesis.summary;
-    const rawTx = {
+    const formProps = {
       params: {
         recipient: {
           address,
@@ -131,11 +131,11 @@ describe('Form', () => {
 
     const wrapper = mountWithQueryClient(Form, {
       ...props,
-      prevState: { rawTx },
+      prevState: { formProps },
     });
     expect(wrapper.find('input.recipient')).toHaveValue(address);
-    expect(wrapper.find('.amount input')).toHaveValue(fromRawLsk(rawTx.params.amount));
-    expect(wrapper.find('textarea[name="reference"]')).toHaveValue(rawTx.params.data);
+    expect(wrapper.find('.amount input')).toHaveValue(fromRawLsk(formProps.params.amount));
+    expect(wrapper.find('textarea[name="reference"]')).toHaveValue(formProps.params.data);
   });
 
   it('should go to next step when submit button is clicked', async () => {

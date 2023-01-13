@@ -14,13 +14,14 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import AmountField from 'src/modules/common/components/amountField';
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import styles from './stakeForm.css';
+import { extractValidatorCommission } from '../../utils';
 
 const componentState = Object.freeze({ editing: 1, notEditing: 2 });
 const token = tokenMap.LSK.key;
 
 const StakeRow = ({
   t = (s) => s,
-  data: { address, username, confirmed, unconfirmed },
+  data: { address, commission, username, confirmed, unconfirmed },
   index,
   history,
 }) => {
@@ -68,12 +69,17 @@ const StakeRow = ({
           <span className={styles.validatorAddress}>{truncatedAddress}</span>
         </div>
       </div>
-      <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
-        {!!confirmed && <TokenAmount val={confirmed} token={token} />}
+      <span className={`${styles.commissionsColumn} ${styles.centerContent}`}>
+        {extractValidatorCommission(commission)}%
       </span>
       {state === componentState.notEditing ? (
         <>
           <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
+            {!!confirmed && (
+              <span className={`${styles.oldAmountColumn}`}>
+                <TokenAmount val={confirmed} token={token} />
+              </span>
+            )}
             {!!unconfirmed && <TokenAmount val={unconfirmed} token={token} />}
           </span>
           <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
