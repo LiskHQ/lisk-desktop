@@ -65,7 +65,7 @@ describe('actions: staking', () => {
           sequence: {
             nonce: '1',
           },
-          stakes: [{ delegateAddress: '123L', amount: 1e9 }],
+          stakes: [{ validatorAddress: '123L', amount: 1e9 }],
         },
       },
     },
@@ -86,7 +86,7 @@ describe('actions: staking', () => {
     params: {
       stakes: [
         {
-          delegateAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
+          validatorAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
           amount: 1e10,
         },
       ],
@@ -103,7 +103,7 @@ describe('actions: staking', () => {
     it('should create an action to add data to toggle the stake status for any given delegate', async () => {
       const data = [
         {
-          delegateAddress: 'dummy',
+          validatorAddress: 'dummy',
           amount: 1e10,
         },
       ];
@@ -256,10 +256,11 @@ describe('actions: staking', () => {
       const expectedAction = {
         type: actionTypes.stakesRetrieved,
         data: stakes,
-        
       };
       validatorApi.getStakes.mockImplementation(() => Promise.resolve({ data: stakes }));
-      validatorApi.getValidatorList.mockImplementation(() => Promise.resolve({ data: mockValidators.data }));
+      validatorApi.getValidatorList.mockImplementation(() =>
+        Promise.resolve({ data: mockValidators.data })
+      );
       await stakesRetrieved()(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(expectedAction);

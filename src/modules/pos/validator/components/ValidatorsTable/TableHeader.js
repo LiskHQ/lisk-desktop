@@ -18,6 +18,8 @@ export const getStatusClass = (activeTab) => {
 
 export const getValidatorWeightClass = (activeTab) => {
   switch (activeTab) {
+    case 'active':
+      return `${grid['col-xs-2']} ${styles.validatorHeader}`;
     case 'sanctioned':
       return 'hidden';
     case 'watched':
@@ -30,6 +32,7 @@ export const getValidatorWeightClass = (activeTab) => {
 export const getValidatorRankClass = (activeTab) => {
   switch (activeTab) {
     case 'active':
+      return `${grid['col-xs-2']} ${styles.validatorHeader}`;
     case 'watched':
       return `${grid['col-xs-1']} ${styles.rank}`;
     case 'standby':
@@ -61,8 +64,23 @@ export const getForgingTimeClass = (activeTab) => {
   }
 };
 
+export const getValidatorCommissionClass = (activeTab) => {
+  switch (activeTab) {
+    case 'active':
+      return `${grid['col-xs-2']} ${styles.validatorHeader}`;
+    case 'standby':
+      return `${grid['col-xs-2']} ${styles.validatorHeader}`;
+    default:
+      return `hidden`;
+  }
+};
+
 export const getValidatorDetailsClass = (activeTab) => {
   switch (activeTab) {
+    case 'active':
+      return `${grid['col-xs-3']} ${styles.validatorHeader}`;
+    case 'standby':
+      return `${grid['col-xs-3']} ${styles.validatorHeader}`;
     case 'watched':
       return `${grid['col-xs-4']} ${styles.validatorHeader}`;
     default:
@@ -85,12 +103,16 @@ export default (activeTab, changeSort, t) => [
       position: 'top',
     },
   },
+    {
+      title: t('Commission (%)'),
+      classList: getValidatorCommissionClass(activeTab),
+    },
   {
     title: t('Rank'),
     classList: getValidatorRankClass(activeTab),
   },
   {
-    title: t('Forging time'),
+    title: t('Generation time'),
     classList: getForgingTimeClass(activeTab),
     sort: {
       fn: changeSort,

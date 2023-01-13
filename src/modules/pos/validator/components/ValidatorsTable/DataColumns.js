@@ -20,6 +20,7 @@ import {
   getValidatorRankClass,
 } from './TableHeader';
 import ValidatorSummary from '../ValidatorSummary/ValidatorSummary';
+import { extractValidatorCommission } from '../../utils';
 
 const roundStates = {
   forging: 'Forging',
@@ -74,6 +75,19 @@ export const ValidatorWeight = () => {
   return (
     <span className={getValidatorWeightClass(activeTab)}>
       <span>{formatted}</span>
+    </span>
+  );
+};
+
+export const ValidatorCommission = () => {
+  const {
+    data: { commission },
+    activeTab,
+  } = useContext(ValidatorRowContext);
+
+  return (
+    <span className={getValidatorWeightClass(activeTab)}>
+      <span>{extractValidatorCommission(commission).toFixed(2)}%</span>
     </span>
   );
 };

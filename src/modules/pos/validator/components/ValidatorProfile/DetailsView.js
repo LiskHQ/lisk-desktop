@@ -18,6 +18,7 @@ const DetailsView = ({ data }) => {
   const { t } = useTranslation();
   const { rank } = data;
   const status = data.status || '';
+  // @TODO: this is wrong we need to get this value from the validator's endpoint.
   const {
     data: { timestamp: latestBlockTimestamp },
   } = useLatestBlock();

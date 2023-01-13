@@ -106,22 +106,22 @@ export const stakesSubmitted =
  */
 export const stakesRetrieved = () => async (dispatch, getState) => {
   const { network, account } = getState();
-  const address = account.current?.metadata?.address;
+  const currentAddress = account.current?.metadata?.address;
   try {
-    const stakes = await getStakes({ network, params: { address } });
+    const stakes = await getStakes({ network, params: { address: currentAddress } });
     const validators = await getValidatorList({
-      addresses: stakes.data.map(({ delegateAddress }) => delegateAddress),
+      addresses: stakes.data.map(({ address }) => address),
     });
     const mapValidatorToAddress = validators.data.reduce(
-      (result, validator) => ({ ...result, [validator.address]: validator }),
+      (result, validator) => ({ ...result, [validator.address]: validator.commission }),
       {}
     );
 
     dispatch({
       type: actionTypes.stakesRetrieved,
-      data: stakes.data.map((vote) => ({
-        ...vote,
-        commission: mapValidatorToAddress[vote.delegateAddress]?.commission,
+      data: stakes.data.map((stake) => ({
+        ...stake,
+        commission: mapValidatorToAddress[stake.delegateAddress],
       })),
     });
   } catch (exp) {

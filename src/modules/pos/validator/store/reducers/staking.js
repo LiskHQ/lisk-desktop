@@ -32,20 +32,22 @@ const staking = (state = {}, action) => {
     case actionTypes.stakeEdited:
       return {
         ...state,
-        ...action.data.reduce((mergedStakes, stake) => {
+        ...action.data.reduce((mergedStakes, { amount, validator }) => {
           // When added new stake using launch protocol
           let unconfirmed = '';
           // when added, removed, or edited stake
-          if (stake.amount !== undefined) unconfirmed = stake.amount;
+          if (amount !== undefined) unconfirmed = amount;
           // when the launch protocol includes an existing stake
-          else if (state[stake.address]) unconfirmed = state[stake.address].unconfirmed;
+          else if (state[validator.address]) unconfirmed = state[validator.address].unconfirmed;
 
-          mergedStakes[stake.address] = {
+          mergedStakes[validator.address] = {
             unconfirmed,
-            confirmed: state[stake.address] ? state[stake.address].confirmed : 0,
-            name: state[stake.address]?.name || stake.name,
-            commission: state[stake.address]?.commision || action.data[0]?.validator?.commission,
+            confirmed: state[validator.address] ? state[validator.address].confirmed : 0,
+            name: state[validator.address]?.name || validator.name,
+            commission:
+              state[validator.address]?.commision || action.data[0]?.validator?.commission,
           };
+          console.log('---->>', mergedStakes, validator, amount)
           return mergedStakes;
         }, {}),
       };
@@ -104,8 +106,8 @@ const staking = (state = {}, action) => {
      * This action is used to discard a stake from the staking queue
      */
     case actionTypes.stakeDiscarded:
-      delete clonedState[action.data.address]
-      return clonedState
+      delete clonedState[action.data.address];
+      return clonedState;
     /**
      * Resets the stake dictionary after the user signs out.
      */

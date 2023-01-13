@@ -10,9 +10,10 @@ import WalletVisual from 'src/modules/wallet/components/walletVisual';
 import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './ValidatorSummary.css';
+import { extractValidatorCommission } from '../../utils';
 
 const ValidatorSummary = ({ validator, status, weight }) => {
-  const { address, name, rank, consecutiveMissedBlocks, nextForgingTime } = validator;
+  const { address, name, rank, commission, nextForgingTime } = validator;
   const { t } = useTranslation();
 
   return (
@@ -51,11 +52,11 @@ const ValidatorSummary = ({ validator, status, weight }) => {
             <span>{weight}</span>
           </div>
           <div>
-            <span>{t('CMB :')}</span>
-            <span data-testid="cmb">{consecutiveMissedBlocks}</span>
+            <span>{t('Commission :')}</span>
+            <span data-testid="cmb">{extractValidatorCommission(commission)}%</span>
           </div>
           <div>
-            <span>{t('Last forged :')}</span>
+            <span>{t('Last generated :')}</span>
             <span>
               <DateTimeFromTimestamp time={nextForgingTime} />
             </span>

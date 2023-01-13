@@ -69,15 +69,17 @@ const StakeRow = ({
           <span className={styles.validatorAddress}>{truncatedAddress}</span>
         </div>
       </div>
-      <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
-        {!!confirmed && <TokenAmount val={confirmed} token={token} />}
-      </span>
-      <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
-          {extractValidatorCommission(commission)}%
+      <span className={`${styles.commissionsColumn} ${styles.centerContent}`}>
+        {extractValidatorCommission(commission)}%
       </span>
       {state === componentState.notEditing ? (
         <>
           <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
+            {!!confirmed && (
+              <span className={`${styles.oldAmountColumn}`}>
+                <TokenAmount val={confirmed} token={token} />
+              </span>
+            )}
             {!!unconfirmed && <TokenAmount val={unconfirmed} token={token} />}
           </span>
           <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>

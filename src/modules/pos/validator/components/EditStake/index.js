@@ -132,9 +132,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     stakeEdited([
       {
         validator,
-        address,
         amount: toRawLsk(stakeAmount.value),
-        name: validator.name,
       },
     ]);
 
@@ -147,9 +145,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     stakeEdited([
       {
         validator,
-        address,
         amount: toRawLsk(0),
-        name: validator.name,
       },
     ]);
     removeSearchParamsFromUrl(history, ['modal']);
