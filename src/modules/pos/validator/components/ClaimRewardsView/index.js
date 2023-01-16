@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Dialog from 'src/theme/dialog/dialog';
-import MultiStep from '@common/components/MultiStep';
+import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import ClaimRewardsForm from '../ClaimRewardsForm';
 
@@ -13,7 +13,7 @@ const ClaimRewardsView = () => {
 
   return (
     <Dialog hasClose>
-      <MultiStep ref={multiStepRef} key="ClaimRewardsView">
+      <MultiStep>
         <ClaimRewardsForm onClaimRewards={onClaimRewards} />
         <TxSignatureCollector />
       </MultiStep>
