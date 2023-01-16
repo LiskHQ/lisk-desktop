@@ -1,8 +1,7 @@
 import { POS_REWARDS_CLAIMABLE } from 'src/const/queries';
-import {
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from '@common/hooks';
+import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 
 /**
  * Creates a custom hook to fetch claimable rewards by address
@@ -20,8 +19,9 @@ import { useCustomQuery } from '@common/hooks';
  * @returns the query object
  */
 
-export const useRewardsClaimable = ({ config: customConfig = {}, options } = { }) => {
-  const hasRequiredParams = customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
+export const useRewardsClaimable = ({ config: customConfig = {}, options } = {}) => {
+  const hasRequiredParams =
+    customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
 
   const config = {
     url: `/api/${API_VERSION}/pos/rewards/claimable`,
@@ -32,9 +32,35 @@ export const useRewardsClaimable = ({ config: customConfig = {}, options } = { }
   return useCustomQuery({
     keys: [POS_REWARDS_CLAIMABLE],
     config,
-    options:   {
+    options: {
       ...options,
-      enabled: !!hasRequiredParams,
+      enabled: !!hasRequiredParams && !(options?.enabled === false),
     },
+  });
+};
+
+export const useRewardsClaimableWithTokenMeta = (address) => {
+  const { data: appsMetaTokens } = useAppsMetaTokens();
+
+  const options = {
+    select: (data) => {
+      const rewardsWithToken = data.data?.map((rewardsClaimable) => {
+        const token = appsMetaTokens?.data?.find(
+          (metaToken) => (metaToken.tokenID === rewardsClaimable.tokenID)
+        );
+
+        return {
+          ...rewardsClaimable,
+          ...token,
+        };
+      });
+      return { ...data, data: { data: rewardsWithToken } };
+    },
+    enabled: !!appsMetaTokens?.data,
+  };
+
+  return useRewardsClaimable({
+    config: { params: { address } },
+    options,
   });
 };
