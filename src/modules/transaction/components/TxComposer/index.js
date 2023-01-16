@@ -65,7 +65,7 @@ const TxComposer = ({
     }
   }, [selectedPriority, transactionJSON.params]);
 
-  const minRequiredBalance = getMinRequiredBalance(transactionJSON, status.fee);
+  const minRequiredBalance = getMinRequiredBalance(transactionJSON, status.fee, formProps);
   const { recipientChain, sendingChain } = formProps;
 
   const composedFees = {
