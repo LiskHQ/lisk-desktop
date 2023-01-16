@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRewardsClaimable } from '@pos/reward/hooks/queries';
+import { useRewardsClaimableWithTokenMeta } from '@pos/reward/hooks/queries';
 import classNames from 'classnames';
 import BoxHeader from '@theme/box/header';
 import { useTranslation } from 'react-i18next';
@@ -10,36 +10,38 @@ import { QueryTable } from '@theme/QueryTable';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './ClaimRewardsForm.css';
 
-const RewardsClaimableRow = ({ reward, tokenId }) => {
-  const token = { id: tokenId, chainName: 'Lisk', symbol: 'LSK' };
-  const amountInFiat = reward;
-
-  return (
-    <div>
-      <div>{token.chainName}</div>
-      <div>
-        {reward}
-        {token.symbol}
-      </div>
-      <div>{amountInFiat}</div>
-    </div>
-  );
-};
-
 const rewardsClaimableHeader = (t) => [
   {
-    title: t('Token'),
+    title: t && t('Token'),
     classList: `${grid['col-xs-3']}`,
   },
   {
-    title: t('Reward amount'),
+    title: t && t('Reward amount'),
     classList: `${grid['col-xs-4']}`,
   },
   {
-    title: t('Fiat'),
+    title: t && t('Fiat'),
     classList: `${grid['col-xs-1']}`,
   },
 ];
+
+const RewardsClaimableRow = ({ data }) => {
+  const { tokenName, logo, reward, symbol } = data;
+  const amountInFiat = reward;
+
+  return (
+    <div className={classNames(styles.rewardsClaimableRow)}>
+      <div className={classNames(styles.logoContainer, rewardsClaimableHeader()[0].classList)}>
+        <img className={styles.logo} src={logo?.png} />
+        <span className={styles.tokenName}>{tokenName}</span>
+      </div>
+      <div className={classNames(rewardsClaimableHeader()[1].classList)}>
+        {`${reward} ${symbol}`}
+      </div>
+      <div className={classNames(rewardsClaimableHeader()[2].classList)}>{amountInFiat}</div>
+    </div>
+  );
+};
 
 const ClaimRewardsForm = ({ nextStep }) => {
   const { t } = useTranslation();
@@ -56,7 +58,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
   };
 
   const unlockBalanceFormProps = {
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.claimRewards,
     isValid: 12 > 0,
   };
 
@@ -71,16 +73,17 @@ const ClaimRewardsForm = ({ nextStep }) => {
           <BoxHeader>
             <h2 className={styles.title}>{t('Claim rewards')}</h2>
           </BoxHeader>
-          <div>
-            <p className={styles.description}>
-              {t(
-                'Below are the details of your reward balances, you can continue to claim your rewards and they will be transferred to your wallet balance.'
-              )}
-            </p>
+          <p className={styles.description}>
+            {t(
+              'Below are the details of your reward balances, you can continue to claim your rewards and they will be transferred to your wallet balance.'
+            )}
+          </p>
+          <div className={styles.tableContainer}>
             <QueryTable
               showHeader
-              queryHook={useRewardsClaimable}
-              queryConfig={{ config: { params: { address } } }}
+              queryHook={useRewardsClaimableWithTokenMeta}
+              transformResponse={(resp) => resp?.data || []}
+              queryConfig={address}
               row={RewardsClaimableRow}
               header={rewardsClaimableHeader(t)}
               headerClassName={styles.tableHeader}
