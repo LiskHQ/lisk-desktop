@@ -20,7 +20,7 @@ const UnlockBalance = ({ account, t, transactionJSON = {} }) => (
         <label>{t('Amount to unlock')}</label>
         <label className="amount-label">
           <TokenAmount
-            val={transactionJSON.params.unlockObjects.reduce(
+            val={transactionJSON.params.unlockObjects?.reduce(
               (total, { amount }) => total + Number(amount), 0,
             )}
             token={tokenMap.LSK.key}

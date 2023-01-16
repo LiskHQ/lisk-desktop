@@ -60,22 +60,11 @@ const ClaimRewardsForm = ({ nextStep }) => {
     isValid: 12 > 0,
   };
 
-  const commandParams = {
-    unlockObjects: [
-      {
-        validatorAddress: 'vote.validatorAddress',
-        amount: 12,
-        unstakeHeight: 12,
-      },
-    ],
-  };
-
   return (
     <section className={classNames(styles.ClaimRewardsForm)}>
       <TxComposer
         onConfirm={onConfirm}
         formProps={unlockBalanceFormProps}
-        commandParams={commandParams}
         buttonTitle="Claim rewards"
       >
         <>

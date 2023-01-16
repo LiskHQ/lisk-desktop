@@ -202,16 +202,6 @@ describe('API: LSK Transactions', () => {
         title: unlock,
         module: 'pos',
         command: 'unlock',
-        params: {
-          unlockObjects: [
-            {
-              amount: '100000000',
-            },
-            {
-              amount: '100000000',
-            },
-          ],
-        },
       };
 
       expect(getTxAmount(tx)).toEqual(200000000);
@@ -396,20 +386,6 @@ describe('API: LSK Transactions', () => {
       const multisigUnlockTx = {
         module: 'pos',
         command: 'unlock',
-        params: {
-          unlockObjects: [
-            {
-              validatorAddress: accounts.genesis.summary.address,
-              amount: '-10000000',
-              unstakeHeight: 1500,
-            },
-            {
-              validatorAddress: accounts.validator_candidate.summary.address,
-              amount: '-340000000',
-              unstakeHeight: 1500,
-            },
-          ],
-        },
       };
       const result = await getTransactionFee({
         transactionJSON: { ...baseTx, ...multisigUnlockTx },

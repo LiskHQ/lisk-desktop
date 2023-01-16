@@ -93,7 +93,7 @@ const convertObjectToHex = (data) => {
   // eslint-disable-next-line no-restricted-syntax, no-unused-vars, guard-for-in
   for (const key in data) {
     const value = data[key];
-    if (key === 'votes' || key === 'unlockObjects') {
+    if (key === 'stakes') {
       obj[key] = value.map((item) => convertObjectToHex(item));
     } else if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
       obj[key] = convertObjectToHex(value);
@@ -174,7 +174,7 @@ const getTxAmount = ({ module, command, params, moduleCommand }) => {
   }
 
   if (moduleCommand === unlock) {
-    return params.unlockObjects.reduce(
+    return params.unlockObjects?.reduce(
       (sum, unlockObject) => sum + parseInt(unlockObject.amount, 10),
       0
     );

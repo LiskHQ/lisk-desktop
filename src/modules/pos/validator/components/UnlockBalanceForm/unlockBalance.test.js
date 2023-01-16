@@ -119,25 +119,6 @@ describe('Unlock LSK modal', () => {
     nonce: '178',
     fee: '100000000',
     senderPublicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-    params: {
-      unlockObjects: [
-        {
-          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
-          amount: '1000000000',
-          unstakeHeight: 4900,
-        },
-        {
-          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
-          amount: '3000000000',
-          unstakeHeight: 100,
-        },
-        {
-          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
-          amount: '1000000000',
-          unstakeHeight: 3000,
-        },
-      ],
-    },
     signatures: [],
   };
 
