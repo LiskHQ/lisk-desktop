@@ -62,7 +62,7 @@ export const mockAppsTokens = {
       displayDenom: 'lisk',
       symbol: 'LSK',
       logo: {
-        png: 'https://downloads.lisk.com/lisk/images/tokens/lsk.png',
+        png: 'https://lisk-qa.ams3.digitaloceanspaces.com/Artboard%201%20copy%2019.png',
         svg: 'https://downloads.lisk.com/lisk/images/tokens/lsk.svg',
       },
     },
