@@ -32,7 +32,7 @@ export const useTransactionFee = ({
   return {
     total: fee,
     components: [
-      { current: fee },
+      { value: fee, type: 'bytesFee' },
     ],
   };
 };
