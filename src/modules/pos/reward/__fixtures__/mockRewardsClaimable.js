@@ -1,13 +1,21 @@
 export const mockRewardsClaimable = {
   "data": [
     {
-      "reward": "0",
-      "tokenID": "0000000000000000"
+      "reward": "30",
+      "tokenID": "0000000100000000"
+    },
+    {
+      "reward": "10000",
+      "tokenID": "0000000200000000"
+    },
+    {
+      "reward": "20000",
+      "tokenID": "0000000200000000"
     },
   ],
   "meta": {
-    "count": 1,
+    "count": 3,
     "offset": 0,
-    "total": 1
+    "total": 3
   }
 };
