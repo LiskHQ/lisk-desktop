@@ -28,7 +28,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
     isValid: unlockableBalance > 0,
-    unlockObjects: pendingUnlocks || []
+    unlockObjects: pendingUnlocks || [],
   };
 
   return (

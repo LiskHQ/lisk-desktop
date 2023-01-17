@@ -65,12 +65,10 @@ export const useRewardsClaimableWithTokenMeta = ({ config: customConfig = {}, op
   };
 
   const config = {
-    url: `/api/${API_VERSION}/pos/rewards/claimable`,
-    method: 'get',
-    event: 'get.pos.rewards.claimable',
     transformResult,
     ...customConfig,
   };
+
   return useCustomQuery({
     keys: [POS_REWARDS_CLAIMABLE],
     config,

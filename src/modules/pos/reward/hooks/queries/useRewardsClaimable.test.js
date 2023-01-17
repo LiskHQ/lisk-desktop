@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { mockRewardsClaimable } from '@pos/validator/__fixtures__';
 import * as useCustomQuerySpy from '@common/hooks/useCustomQuery';
 import { useCustomQuery } from '@common/hooks';
+import { mockRewardsClaimable } from '@pos/reward/__fixtures__';
 import { useRewardsClaimable } from './useRewardsClaimable';
 
 jest.useRealTimers();

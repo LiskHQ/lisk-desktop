@@ -8,3 +8,12 @@ export const getMockValidators = (address) => ({
   },
   data: address ? validators.filter((validator) => validator.address === address) : validators,
 });
+
+export const mockValidators = {
+  meta: {
+    count: 2,
+    offset: 0,
+    total: 30,
+  },
+  data: validators,
+};
