@@ -15,7 +15,7 @@ import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
-import { usePosConstants, useSentStakes, useUnlocks } from '../../hooks/queries';
+import { usePosConstants, useSentStakesWithValidators, useUnlocks } from '../../hooks/queries';
 
 function useStakerAddress(searchParam) {
   const searchAddress = selectSearchParamValue(searchParam, 'address');
@@ -78,7 +78,7 @@ const SentStakes = ({ history }) => {
       <BoxContent>
         <QueryTable
           showHeader
-          queryHook={useSentStakes}
+          queryHook={useSentStakesWithValidators}
           transformResponse={(resp) => resp?.stakes || []}
           queryConfig={{ config: { params: { address: stakerAddress } } }}
           row={SentStakesRow}
