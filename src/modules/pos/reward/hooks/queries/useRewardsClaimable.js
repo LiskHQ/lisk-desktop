@@ -42,9 +42,6 @@ export const useRewardsClaimable = ({ config: customConfig = {}, options } = {})
 };
 
 export const useRewardsClaimableWithTokenMeta = ({ config: customConfig = {}, options } = {}) => {
-  const hasRequiredParams =
-    customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
-
   const createMetaConfig = useAppsMetaTokensConfig();
   const transformToken = addTokensMetaData({ createMetaConfig, client: defaultClient });
 
@@ -69,12 +66,9 @@ export const useRewardsClaimableWithTokenMeta = ({ config: customConfig = {}, op
     ...customConfig,
   };
 
-  return useCustomQuery({
+  return useRewardsClaimable({
     keys: [POS_REWARDS_CLAIMABLE],
     config,
-    options: {
-      ...options,
-      enabled: !!hasRequiredParams && !(options?.enabled === false),
-    },
+    options,
   });
 };
