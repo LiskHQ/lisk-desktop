@@ -9,7 +9,7 @@ export const addTokensMetaData =
       const metaConfig = createMetaConfig({
         params: {
           tokenID: tokenIDs,
-          limit: 100,
+          limit: tokens.length,
         },
       });
       const metaRes = await client.call(metaConfig);
