@@ -32,7 +32,7 @@ describe('computeFee', () => {
       },
       signatures: [],
     };
-    const schema = moduleCommandSchemas["auth:registerMultisignature"];
+    const schema = moduleCommandSchemas["token:transfer"];
     const auth = {
       numberOfSignatures: 1,
     };
@@ -61,14 +61,14 @@ describe('computeFee', () => {
       },
       signatures: [],
     };
-    const schema = moduleCommandSchemas["token:transfer"];
+    const schema = moduleCommandSchemas["auth:registerMultisignature"];
     const auth = {
       numberOfSignatures: 1,
     };
 
     it('Returns the calculated fee given transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(138000));
+      expect(computeFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(275000));
     });
   });
 
@@ -92,7 +92,7 @@ describe('computeFee', () => {
 
     it('Returns the calculated fee given transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(138000));
+      expect(computeFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(133000));
     });
   });
 });
