@@ -1,7 +1,9 @@
 import { POS_REWARDS_CLAIMABLE } from 'src/const/queries';
 import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from '@common/hooks';
-import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
+import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
+import defaultClient from 'src/utils/api/client';
+import { addTokensMetaData } from '@token/fungible/utils/addTokensMetaData';
 
 /**
  * Creates a custom hook to fetch claimable rewards by address
@@ -39,28 +41,42 @@ export const useRewardsClaimable = ({ config: customConfig = {}, options } = {})
   });
 };
 
-export const useRewardsClaimableWithTokenMeta = (address) => {
-  const { data: appsMetaTokens } = useAppsMetaTokens();
+export const useRewardsClaimableWithTokenMeta = ({ config: customConfig = {}, options } = {}) => {
+  const hasRequiredParams =
+    customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
 
-  const options = {
-    select: (data) => {
-      const rewardsWithToken = data.data?.map((rewardsClaimable) => {
-        const token = appsMetaTokens?.data?.find(
-          (metaToken) => (metaToken.tokenID === rewardsClaimable.tokenID)
-        );
+  const createMetaConfig = useAppsMetaTokensConfig();
+  const transformToken = addTokensMetaData({ createMetaConfig, client: defaultClient });
 
-        return {
-          ...rewardsClaimable,
-          ...token,
-        };
-      });
-      return { ...data, data: { data: rewardsWithToken } };
-    },
-    enabled: !!appsMetaTokens?.data,
+  const transformResult = async (res) => {
+    const tokens = await transformToken(res.data);
+    const rewardsWithToken = res.data?.map((rewardsClaimable) => {
+      const token = tokens.find((metaToken) => metaToken.tokenID === rewardsClaimable.tokenID);
+
+      return {
+        ...rewardsClaimable,
+        ...token,
+      };
+    });
+    return {
+      ...res,
+      data: rewardsWithToken,
+    };
   };
 
-  return useRewardsClaimable({
-    config: { params: { address } },
-    options,
+  const config = {
+    url: `/api/${API_VERSION}/pos/rewards/claimable`,
+    method: 'get',
+    event: 'get.pos.rewards.claimable',
+    transformResult,
+    ...customConfig,
+  };
+  return useCustomQuery({
+    keys: [POS_REWARDS_CLAIMABLE],
+    config,
+    options: {
+      ...options,
+      enabled: !!hasRequiredParams && !(options?.enabled === false),
+    },
   });
 };

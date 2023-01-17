@@ -82,8 +82,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
             <QueryTable
               showHeader
               queryHook={useRewardsClaimableWithTokenMeta}
-              transformResponse={(resp) => resp?.data || []}
-              queryConfig={address}
+              queryConfig={{ config: { params: { address } } }}
               row={RewardsClaimableRow}
               header={rewardsClaimableHeader(t)}
               headerClassName={styles.tableHeader}
