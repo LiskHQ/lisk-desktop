@@ -235,8 +235,6 @@ export const computeTransactionId = ({ transaction, schema }) => {
 };
 
 const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, senderAccount) => {
-  // since we sign multisignature registration as a normal tx, we can set this to false.
-  // const isGroupRegistration = moduleCommand === registerMultisignature;
   const keys = getKeys({
     senderAccount,
     transaction,
@@ -252,7 +250,6 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
     schema,
-    false // @todo if you want to send tokens, and you are the group and a member, is this True? (#4506)
   );
 
   return signedTransaction;
