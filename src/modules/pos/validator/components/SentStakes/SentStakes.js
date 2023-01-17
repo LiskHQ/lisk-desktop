@@ -19,8 +19,9 @@ import { usePosConstants, useSentStakes, useUnlocks } from '../../hooks/queries'
 
 function useStakerAddress(searchParam) {
   const searchAddress = selectSearchParamValue(searchParam, 'address');
+  const isModal = !!selectSearchParamValue(searchParam, 'modal');
   const [currentAccount] = useCurrentAccount();
-  return searchAddress || currentAccount?.metadata?.address;
+  return !isModal && searchAddress ? searchAddress : currentAccount?.metadata?.address;
 }
 
 function ClaimRewardsDialogButton({ address }) {
