@@ -39,7 +39,7 @@ function ClaimRewardsDialogButton({ address }) {
 function UnlockDialogButton({ address }) {
   const { t } = useTranslation();
   const { data: unlocks } = useUnlocks({ config: { params: { address } } });
-  const hasUnlocks = unlocks?.data?.pendingUnlocks?.find((pendingUnlock) => pendingUnlock.unlockable);
+  const hasUnlocks = unlocks?.data?.pendingUnlocks?.length > 0;
 
   return (
     <DialogLink component="lockedBalance">
