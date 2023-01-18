@@ -190,15 +190,14 @@ export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
   currentBlockHeight >= unlockHeight;
 
 /**
- * returns the balance that can be unlocked at the current block height
+ * returns total amount that can be unlocked
  *
- * @param {Array} unlocking - unlocking values array from the account details
- * @param {Number} currentBlockHeight - Current block height
- * @returns {Number} - The LSK value that can be unlocked
+ * @param {Array} pendingUnlocks - pendingUnlocks array
+ * @returns {Number} - Total amount that can be unlocked
  */
-export const calculateUnlockableBalance = (unlocking = []) =>
-  unlocking.reduce(
-    (sum, unlockable) => (sum + unlockable.unlockableBalance ? parseInt(unlockable.amount, 10) : 0),
+export const calculateUnlockableAmount = (pendingUnlocks = []) =>
+  pendingUnlocks.reduce(
+    (sum, pendingUnlock) => (sum + (pendingUnlock.unlockable ? parseInt(pendingUnlock.amount, 10) : 0)),
     0
   );
 
