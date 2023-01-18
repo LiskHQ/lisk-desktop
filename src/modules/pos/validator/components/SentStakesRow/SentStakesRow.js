@@ -12,7 +12,7 @@ const SentStakeRow = ({ data: stakes, stakeEdited, token }) => {
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address: validatorAddress } },
   });
-  const { name, rank, validatorWeight, commission } = !isLoadingValidators ? validators?.data[0] : {};
+  const { name, rank, validatorWeight, commission } = !isLoadingValidators ? validators.data[0] : {};
 
   return (
     <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
