@@ -51,7 +51,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
             <BalanceTable
               sentStakesAmount={sentStakesAmount}
               unlockableAmount={unlockableAmount}
-              currentBlockHeight={latestBlock.data?.height ?? 0}
+              currentBlockHeight={latestBlock?.height ?? 0}
               pendingUnlockableUnlocks={pendingUnlockableUnlocks}
             />
           </BoxContent>
