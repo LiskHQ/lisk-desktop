@@ -22,7 +22,10 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
+export const useUnlocks = ({ config: customConfig = {}, options } = {}) => {
+  const hasRequiredParams =
+    customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
+
   const config = {
     url: `/api/${API_VERSION}/pos/unlocks`,
     method: 'get',
@@ -32,6 +35,7 @@ export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
   };
   const customOptions = {
     ...options,
+    enabled: !!hasRequiredParams,
     select: (data) => data.pages.reduce((prevPages, page) => {
       const newData = page?.data || {};
       const newUnlocks = page?.data.pendingUnlocks || [];
