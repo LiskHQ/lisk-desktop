@@ -18,10 +18,7 @@ const UnlockBalance = ({ account, t, formProps }) => (
           <label>{t('Amount to unlock')}</label>
           <label className="amount-label">
             <TokenAmount
-              val={formProps.unlockObjects?.reduce(
-                (total, { amount }) => total + Number(amount),
-                0
-              )}
+              val={formProps.unlockableAmount}
               token={tokenMap.LSK.key}
             />
           </label>

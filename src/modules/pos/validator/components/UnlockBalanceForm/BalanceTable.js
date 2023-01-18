@@ -7,24 +7,24 @@ import UnlockingList from './UnlockingList';
 import styles from './unlockBalance.css';
 
 const BalanceTable = ({
-  lockedInStakes,
-  unlockableBalance,
+  sentStakesAmount,
+  unlockableAmount,
   currentBlockHeight,
-  pendingUnlocks,
+  pendingUnlockableUnlocks,
 }) => {
   const { t } = useTranslation();
   return (
     <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-      {(lockedInStakes !== 0 || pendingUnlocks?.length > 0 || unlockableBalance !== 0) && (
+      {(sentStakesAmount !== 0 || pendingUnlockableUnlocks?.length > 0 || unlockableAmount !== 0) && (
         <li>
           <p className={styles.columnTitle}>{t('Amount')}</p>
           <p className={styles.columnTitle}>{t('Status')}</p>
         </li>
       )}
-      {lockedInStakes !== 0 && (
+      {sentStakesAmount !== 0 && (
         <li>
           <p className="locked-balance">
-            <TokenAmount val={lockedInStakes} token={tokenMap.LSK.key} />
+            <TokenAmount val={sentStakesAmount} token={tokenMap.LSK.key} />
           </p>
           <p>
             <Icon name="lock" />
@@ -32,17 +32,17 @@ const BalanceTable = ({
           </p>
         </li>
       )}
-      {pendingUnlocks?.length > 0 && (
+      {pendingUnlockableUnlocks?.length > 0 && (
         <UnlockingList
-          pendingUnlocks={pendingUnlocks}
+          pendingUnlockableUnlocks={pendingUnlockableUnlocks}
           currentBlockHeight={currentBlockHeight}
           t={t}
         />
       )}
-      {unlockableBalance !== 0 && (
+      {unlockableAmount !== 0 && (
         <li>
           <p className="available-balance">
-            <TokenAmount val={unlockableBalance} token={tokenMap.LSK.key} />
+            <TokenAmount val={unlockableAmount} token={tokenMap.LSK.key} />
           </p>
           <p>
             <Icon name="unlock" />

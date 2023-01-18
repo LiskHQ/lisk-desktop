@@ -174,10 +174,7 @@ const getTxAmount = ({ module, command, params, moduleCommand }, formProps) => {
   }
 
   if (moduleCommand === unlock) {
-    return formProps.unlockObjects?.reduce(
-      (sum, unlockObject) => sum + parseInt(unlockObject.amount, 10),
-      0
-    );
+    return formProps.unlockableAmount;
   }
   if (moduleCommand === stake) {
     return params.stakes.reduce((sum, stakeObject) => sum + Number(stakeObject.amount), 0);
