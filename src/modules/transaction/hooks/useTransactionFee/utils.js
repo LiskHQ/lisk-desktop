@@ -1,5 +1,6 @@
 import { transactions } from '@liskhq/lisk-client';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
+import { DEFAULT_SIGNATURE_BYTE_SIZE } from '@transaction/configuration/transactions';
 
 export const ZERO_FEE = BigInt(0);
 
@@ -16,14 +17,21 @@ export const ZERO_FEE = BigInt(0);
  *
  * @returns {bigint} the transaction fee in Beddows
  */
-export const computeFee = (transaction, paramsSchema, auth, priorities, isTxValid, extraFee = BigInt(0)) => {
-  if (!isTxValid) return ZERO_FEE;
+export const computeTransactionFee = (
+  transaction,
+  paramsSchema,
+  auth,
+  priorities,
+  isTxValid,
+  extraFee = BigInt(0)
+) => {
+  if (!isTxValid || !paramsSchema || !auth || !priorities?.length) return ZERO_FEE;
 
-  const selectedPriority = priorities.find(item => item.selected);
+  const selectedPriority = priorities.find((item) => item.selected);
   const transactionSize = transactions.getBytes(transaction, paramsSchema).length;
 
   const allocateEmptySignaturesWithEmptyBuffer = (signatureCount) =>
-    new Array(signatureCount).fill(Buffer.alloc(64));
+    new Array(signatureCount).fill(Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE));
 
   const numberOfSignatures = auth.numberOfSignatures || 1;
 
