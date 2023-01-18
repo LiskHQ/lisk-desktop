@@ -1,6 +1,6 @@
 import wallets from "@tests/constants/wallets";
 import moduleCommandSchemas from "@tests/constants/schemas";
-import { computeFee } from "./utils";
+import { computeTransactionFee } from "./utils";
 
 const transactionBase = {
   nonce: BigInt(0),
@@ -14,9 +14,9 @@ const defaultPriorities = [
 
 const bufferify = (string) => Buffer.from(string, 'hex');
 
-describe('computeFee', () => {
+describe('computeTransactionFee', () => {
   it('Returns zero if transaction is not valid', () => {
-    expect(computeFee(null, null, null, null, false)).toEqual(BigInt(0));
+    expect(computeTransactionFee(null, null, null, null, false)).toEqual(BigInt(0));
   });
 
   describe('Normal account', () => {
@@ -39,12 +39,12 @@ describe('computeFee', () => {
 
     it('Returns the calculated fee given transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133000));
+      expect(computeTransactionFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133000));
     });
 
     it('Returns the calculated fee with higher priority given the transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Medium' }));
-      expect(computeFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133063));
+      expect(computeTransactionFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133063));
     });
   });
 
@@ -68,7 +68,7 @@ describe('computeFee', () => {
 
     it('Returns the calculated fee given transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(275000));
+      expect(computeTransactionFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(275000));
     });
   });
 
@@ -92,7 +92,7 @@ describe('computeFee', () => {
 
     it('Returns the calculated fee given transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(133000));
+      expect(computeTransactionFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(133000));
     });
   });
 });

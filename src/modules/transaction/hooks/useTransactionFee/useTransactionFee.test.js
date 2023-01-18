@@ -1,8 +1,18 @@
 import { renderHook } from '@testing-library/react-hooks';
 import wallets from '@tests/constants/wallets';
-import { mockAuth } from '@auth/__fixtures__';
-import { useAuth } from '@auth/hooks/queries';
+import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
+import * as networkHooks from '@network/hooks/useCommandsSchema';
+import * as queryHooks from '@auth/hooks/queries/useAuth';
+import { useAuth } from '@auth/hooks/queries/useAuth';
+import { computeTransactionFee } from './utils';
+import * as utils from './utils';
 import { useTransactionFee } from './useTransactionFee';
+
+jest.useRealTimers();
+jest.spyOn(networkHooks, 'useCommandSchema');
+jest.spyOn(queryHooks, 'useAuth');
+jest.spyOn(utils, 'computeTransactionFee');
 
 const bufferify = (string) => Buffer.from(string, 'hex');
 
@@ -25,59 +35,18 @@ const transaction = {
   signatures: [],
 };
 
-jest.mock('@auth/hooks/queries');
-jest.mock('@network/hooks', () => ({
-  useCommandSchema: jest.fn(() => ({
-    moduleCommandSchemas: {
-      "token:transfer": {
-        $id: "/lisk/transferParams",
-        title: "Transfer transaction params",
-        type: "object",
-        required: ["tokenID", "amount", "recipientAddress", "data"],
-        properties: {
-          tokenID: {
-            dataType: "bytes",
-            fieldNumber: 1,
-            minLength: 8,
-            maxLength: 8,
-          },
-          amount: {
-            dataType: "uint64",
-            fieldNumber: 2,
-          },
-          recipientAddress: {
-            dataType: "bytes",
-            fieldNumber: 3,
-            format: "lisk32",
-          },
-          data: {
-            dataType: "string",
-            fieldNumber: 4,
-            minLength: 0,
-            maxLength: 64,
-          },
-        },
-      },
-    },
-  })),
-}));
-
 describe('useTransactionFee', () => {
-  it('Returns the calculated fee given transaction is valid', () => {
-    useAuth.mockReturnValue({ data: mockAuth });
+  it('Returns the calculated fee given transaction is valid', async () => {
     const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-    const { result } = renderHook(() => useTransactionFee({
+    renderHook(() => useTransactionFee({
       isValid: true,
-      wallet: wallets.genesis.summary,
+      senderAddress: wallets.genesis.summary.address,
       priorities,
       transaction,
-    }));
+    }), { wrapper });
 
-    expect(result.current).toEqual({
-      total: BigInt('133000'),
-      components: [
-        { value: BigInt('133000'), type: 'bytesFee' },
-      ],
-    });
+    expect(useCommandSchema).toHaveBeenCalled();
+    expect(useAuth).toBeCalledWith({ config: { params: { address: wallets.genesis.summary.address } } });
+    expect(computeTransactionFee).toHaveBeenCalledTimes(1);
   });
 });
