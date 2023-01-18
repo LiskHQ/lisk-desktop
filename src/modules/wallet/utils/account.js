@@ -201,6 +201,9 @@ export const calculateUnlockableAmount = (pendingUnlocks = []) =>
     0
   );
 
+export const getPendingUnlockableUnlocks = (pendingUnlocks = []) =>
+  pendingUnlocks?.filter((pendingUnlock)=> !pendingUnlock.unlockable);
+
 /**
  * returns the balance that can not be unlocked at the current block height
  *

@@ -5,8 +5,8 @@ import {
   extractPublicKey,
   extractPrivateKey,
   extractAddressFromPublicKey,
-  calculateUnlockableBalance,
-  getUnlockableUnlockObjects,
+  calculateUnlockableAmount,
+  getPendingUnlockableUnlocks,
   calculateBalanceLockedInStakes,
   extractAddressFromPassphrase,
   calculateRemainingAndSignedMembers,
@@ -92,9 +92,8 @@ describe('Utils: Account', () => {
         },
       ];
       const validatorAddress = '80L';
-      const currentBlockHeight = 5000;
 
-      expect(calculateUnlockableBalance(unlocking, currentBlockHeight)).toEqual(4000000000);
+      expect(calculateUnlockableAmount(unlocking)).toEqual(4000000000);
 
       unlocking = [
         {
@@ -116,12 +115,7 @@ describe('Utils: Account', () => {
           validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
         },
       ];
-      expect(calculateUnlockableBalance(unlocking, currentBlockHeight)).toEqual(0);
-    });
-
-    it('should return 0 when unlocking is undefined', () => {
-      const currentBlockHeight = 5000;
-      expect(calculateUnlockableBalance(undefined, currentBlockHeight)).toEqual(0);
+      expect(calculateUnlockableAmount(unlocking)).toEqual(0);
     });
 
     describe('calculateBalanceLockedInStakes', () => {
@@ -162,20 +156,14 @@ describe('Utils: Account', () => {
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
           },
         ];
-        const currentBlockHeight = 5000;
 
-        expect(getUnlockableUnlockObjects(unlocking, currentBlockHeight)).toEqual([
+        expect(getPendingUnlockableUnlocks(unlocking)).toEqual([
           {
             amount: '3000000000',
             unstakeHeight: 100,
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
           },
         ]);
-      });
-
-      it('should return 0 when unlocking is undefined', () => {
-        const currentBlockHeight = 5000;
-        expect(getUnlockableUnlockObjects(undefined, currentBlockHeight)).toEqual([]);
       });
     });
   });
