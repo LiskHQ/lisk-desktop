@@ -36,7 +36,7 @@ export const useRewardsClaimable = ({ config: customConfig = {}, options } = {})
     config,
     options: {
       ...options,
-      enabled: !!hasRequiredParams && !(options?.enabled === false),
+      enabled: !!hasRequiredParams && options?.enabled !== false,
     },
   });
 };
