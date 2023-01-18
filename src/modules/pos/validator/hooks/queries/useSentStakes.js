@@ -18,6 +18,8 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  */
 
 export const useSentStakes = ({ config: customConfig = {}, options } = {}) => {
+  const hasRequiredParams = customConfig.params?.address;
+
   const config = {
     url: `/api/${API_VERSION}/pos/stakes`,
     method: 'get',
@@ -27,7 +29,10 @@ export const useSentStakes = ({ config: customConfig = {}, options } = {}) => {
 
   return useCustomQuery({
     keys: [STAKES_SENT],
-    options,
     config,
+    options: {
+      ...options,
+      enabled: !!hasRequiredParams,
+    },
   });
 };
