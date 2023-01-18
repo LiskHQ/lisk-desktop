@@ -3,7 +3,7 @@ import React from 'react';
 import { usePosConstants, useSentStakes } from '@pos/validator/hooks/queries';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import styles from './StakesCount.css'
+import styles from './StakesCount.css';
 
 const StakesCount = ({ className, classNameAvailableStakes, address, hideIcon }) => {
   const { t } = useTranslation();
@@ -13,13 +13,14 @@ const StakesCount = ({ className, classNameAvailableStakes, address, hideIcon })
 
   return (
     <div className={classNames(styles.stakesCount, className)}>
-      {
-        !hideIcon && <Icon name="stakingQueueActive" />
-      }
+      {!hideIcon && <Icon name="stakingQueueActive" />}
       <span className={classNameAvailableStakes}>{availableStakes}</span>
-      /10 {t('{{stake}} still available in your account', { stake: availableStakes > 1 ? 'stakes' : 'stake' })}
+      /10{' '}
+      {t('{{stake}} still available in your account', {
+        stake: availableStakes > 1 ? 'stakes' : 'stake',
+      })}
     </div>
-  )
-}
+  );
+};
 
 export default StakesCount;
