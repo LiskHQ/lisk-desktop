@@ -4,7 +4,7 @@ const validator = index => ({
   selfStake: `10060000000${index}`,
   commission: 10000,
   validatorWeight: `100600000${index}000`,
-  address:  `lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno${index}`,
+  address: `lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno${index}`,
   lastGeneratedHeight: 27605 + index,
   status: 'active',
   isBanned: index < 15,
