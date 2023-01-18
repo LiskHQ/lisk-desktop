@@ -32,7 +32,7 @@ export const useUnlocks = ({ config: customConfig = {}, options } = {}) => {
     method: 'get',
     event: 'get.pos.unlocks',
     ...customConfig,
-    params: { limit: maxNumberPendingUnlocks, ...(customConfig?.params || {}) },
+    params: { limit: maxNumberPendingUnlocks, ...(customConfig.params || {}) },
   };
   const customOptions = {
     ...options,
