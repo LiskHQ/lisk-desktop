@@ -1,19 +1,24 @@
-import { useSelector } from 'react-redux';
-import { calculateBalanceLockedInStakes, calculateUnlockableBalance } from '@wallet/utils/account';
-import { useUnlocks } from '@pos/validator/hooks/queries';
+import { calculateSentStakesAmount, calculateUnlockableBalance } from '@wallet/utils/account';
+import { useSentStakes, useUnlocks } from '@pos/validator/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 
 const useUnlockableCalculator = () => {
   const [currentAccount] = useCurrentAccount();
+  const address = currentAccount?.metadata?.address;
+
   const { data: unlocks } = useUnlocks({
-    config: { params: { address: currentAccount?.metadata?.address } },
+    config: { params: { address } },
   });
+  const { data: sentStakes } = useSentStakes({
+    config: { params: { address } },
+  });
+
   const pendingUnlocks = unlocks?.data?.pendingUnlocks;
 
   const unlockableBalance = calculateUnlockableBalance(pendingUnlocks);
-  const lockedInStakes = useSelector((state) => calculateBalanceLockedInStakes(state.staking));
+  const sentStakesAmount = calculateSentStakesAmount(sentStakes?.data?.stakes);
 
-  return { pendingUnlocks, lockedInStakes, unlockableBalance };
+  return { pendingUnlocks, sentStakesAmount, unlockableBalance };
 };
 
 export default useUnlockableCalculator;

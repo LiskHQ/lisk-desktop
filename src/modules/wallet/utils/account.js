@@ -166,6 +166,9 @@ export const truncateTransactionID = (id) => {
 export const calculateBalanceLockedInStakes = (stakes = {}) =>
   Object.values(stakes).reduce((total, stake) => (total + stake.confirmed), 0);
 
+export const calculateSentStakesAmount = (sentStakes = []) =>
+  sentStakes.reduce((total, stake) => (total + parseInt(stake.amount, 10)), 0);
+
 /**
  * calculates balance locked for the account in unvotes
  *
@@ -195,9 +198,8 @@ export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
  */
 export const calculateUnlockableBalance = (unlocking = []) =>
   unlocking.reduce(
-    (sum, unlockable) =>
-    (sum + parseInt(unlockable.amount, 10)),
-    0,
+    (sum, unlockable) => (sum + unlockable.unlockableBalance ? parseInt(unlockable.amount, 10) : 0),
+    0
   );
 
 /**
