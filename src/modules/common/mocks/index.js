@@ -9,7 +9,7 @@ import {
 } from '../__fixtures__';
 
 export const webSocketRPC = rest.get(
-  '*/rpc-v3',
+  '*/socket.io/',
   (_, res, ctx) => res(
     ctx.status(200),
     ctx.set('Connection', 'keep-alive'),
@@ -17,16 +17,6 @@ export const webSocketRPC = rest.get(
     ctx.body('data: SUCCESS\n\n'),
   ),
 );
-export const webSocket = rest.get(
-  '*/blockchain',
-  (_, res, ctx) => res(
-    ctx.status(200),
-    ctx.set('Connection', 'keep-alive'),
-    ctx.set('Content-Type', 'text/event-stream'),
-    ctx.body('data: SUCCESS\n\n'),
-  ),
-);
-
 export const newsFeed = rest.get(
   `*/api/${API_VERSION}/newsfeed`,
   async (req, res, ctx) => {
