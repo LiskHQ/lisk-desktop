@@ -133,7 +133,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     .map((address) => ({ address, ...stakes[address] }));
 
   const normalizedStakes = useMemo(() => normalizeStakesForTx(stakes), [stakes]);
-  const { added, edited, removed, selfUnStake, resultingNumOfStakes } = useMemo(
+  const { added, edited, removed, selfUnStake, resultingNumOfStakes, availableStakes } = useMemo(
     () => getStakeStats(stakes, account),
     [stakes, account]
   );
@@ -192,11 +192,14 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
               <BoxContent className={styles.container}>
                 <header className={styles.headerContainer}>
                   <span className={styles.title}>{t('Staking queue')}</span>
-                  <StakesCount
-                    address={account.summary?.address}
-                    className={styles.votesAvailableCounter}
-                    hideIcon
-                  />
+                  <div className={styles.votesAvailableCounter}>
+                    <span className="available-stakes-num">{`${availableStakes}/`}</span>
+                    <span>
+                      {t('{{STAKE_LIMIT}} staking slots available for your account', {
+                        STAKE_LIMIT,
+                      })}
+                    </span>
+                  </div>
                 </header>
                 <div className={styles.contentScrollable}>
                   <Table
