@@ -4,7 +4,7 @@ import { useValidators } from '@pos/validator/hooks/queries';
 import { Actions, Balance, ValidatorWalletVisual } from './components';
 import styles from './SentStakesRow.css';
 
-const SentStakeRow = ({ data: stakes, stakeEdited, token }) => {
+const SentStakesRow = ({ data: stakes, stakeEdited, token }) => {
   const {
     address: validatorAddress,
     amount,
@@ -28,4 +28,4 @@ const SentStakeRow = ({ data: stakes, stakeEdited, token }) => {
   );
 };
 
-export default SentStakeRow;
+export default SentStakesRow;
