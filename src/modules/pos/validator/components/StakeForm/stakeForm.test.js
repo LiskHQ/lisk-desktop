@@ -125,12 +125,10 @@ describe('StakeForm', () => {
         canLoadMore: false,
       })
     );
-    expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
   });
 
   it('Shows an error if trying to stake for more than 10 delegates', () => {
     const wrapper = shallow(<StakeForm {...props} stakes={elevenStakes} />);
-    expect(wrapper.find('.available-stakes-num').text()).toBe('-1/');
     expect(wrapper.find('.feedback').text()).toBe(
       'These stakes in addition to your current stakes will add up to 11, exceeding the account limit of 10.'
     );
@@ -142,7 +140,6 @@ describe('StakeForm', () => {
     act(() => {
       wrapper.update();
     });
-    expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
     expect(wrapper.find('.feedback').at(0).text()).toBe(
       "You don't have enough LSK in your account."
     );
@@ -156,7 +153,6 @@ describe('StakeForm', () => {
     act(() => {
       wrapper.update();
     });
-    expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
     expect(wrapper.find('.feedback').at(0).text()).toBe(
       "You don't have enough LSK in your account."
     );

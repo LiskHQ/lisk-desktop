@@ -195,7 +195,6 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
                   <StakesCount
                     address={account.summary?.address}
                     className={styles.votesAvailableCounter}
-                    classNameAvailableStakes="available-stakes-num"
                     hideIcon
                   />
                 </header>

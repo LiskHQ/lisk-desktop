@@ -6,12 +6,12 @@
   color: var(--color-slate-gray);
   display: flex;
 
-  & > img {
+  & .stakingQueueActive {
     width: 17px;
     margin-right: 12px;
   }
 
-  & > span {
+  & .availableStakes {
     color: var(--color-content-light);
   }
 }
