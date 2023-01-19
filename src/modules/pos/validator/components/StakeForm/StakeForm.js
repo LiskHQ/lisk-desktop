@@ -9,7 +9,6 @@ import BoxContent from '@theme/box/content';
 import Dialog from 'src/theme/dialog/dialog';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
-import StakesCount from '@pos/validator/components/StakesCount';
 import { STAKE_LIMIT } from '../../consts';
 import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';
