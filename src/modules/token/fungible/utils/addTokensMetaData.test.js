@@ -32,7 +32,7 @@ describe('tokenTransformResult', () => {
     await expect(create(tokens)).resolves.toMatchObject([{...mockTokenBalance, ...mockTokenMeta}])
     await expect(createConfig).toHaveBeenCalledWith({
       params: {
-        limit: 100,
+        limit: tokens.length,
         tokenID: '1'
       },
     });
