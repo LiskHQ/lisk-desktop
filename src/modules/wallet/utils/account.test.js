@@ -77,18 +77,21 @@ describe('Utils: Account', () => {
           unstakeHeight: 4900,
           expectedUnlockableHeight: 5900,
           validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          unlockable: false,
         },
         {
           amount: '3000000000',
           unstakeHeight: 100,
           expectedUnlockableHeight: 200,
           validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          unlockable: true,
         },
         {
           amount: '1000000000',
           unstakeHeight: 3000,
           expectedUnlockableHeight: 4000,
           validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+          unlockable: true,
         },
       ];
       const validatorAddress = '80L';
@@ -142,18 +145,21 @@ describe('Utils: Account', () => {
             unstakeHeight: 5000,
             expectedUnlockableHeight: 6000,
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+            unlockable: true,
           },
           {
             amount: '3000000000',
             unstakeHeight: 100,
             expectedUnlockableHeight: 2000,
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+            unlockable: false,
           },
           {
             amount: '1000000000',
             unstakeHeight: 3100,
             expectedUnlockableHeight: 41000,
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+            unlockable: true,
           },
         ];
 
@@ -161,7 +167,9 @@ describe('Utils: Account', () => {
           {
             amount: '3000000000',
             unstakeHeight: 100,
+            expectedUnlockableHeight: 2000,
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+            unlockable: false,
           },
         ]);
       });
