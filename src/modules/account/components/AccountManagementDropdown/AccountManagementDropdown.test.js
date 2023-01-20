@@ -2,15 +2,20 @@ import { screen, fireEvent } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { truncateAddress } from '@wallet/utils/account';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { useAuth } from 'src/modules/auth/hooks/queries';
 import AccountManagementDropdown from './AccountManagementDropdown';
 
 const mockCurrentAccount = mockSavedAccounts[0];
 const mockOnMenuClick = jest.fn();
+jest.mock('@auth/hooks/queries');
 jest.mock('../../../account/hooks/useCurrentAccount.js', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
 }));
 
 describe('AccountManagementDropdown', () => {
+  useAuth.mockReturnValue({ data: mockAuth });
+
   it('displays properly', () => {
     const props = {
       currentAccount: mockCurrentAccount,
