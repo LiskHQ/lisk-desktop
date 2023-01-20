@@ -17,20 +17,15 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 }));
 
 describe('TxComposer', () => {
-  const transaction = {
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-  params: {
-      recipient: { address: accounts.genesis.summary.address },
-      amount: 100000,
-      data: 'test-data',
-      token: { tokenID: '00000000' },
-    },
-    isValid: true,
-    feedback: [],
+  const commandParams = {
+    tokenID: '00000000',
+    amount: 100000,
+    recipientAddress: accounts.genesis.summary.address,
+    data: 'test-data',
   };
   const props = {
     children: null,
-    transaction,
+    commandParams,
     onComposed: jest.fn(),
     onConfirm: jest.fn(),
     className: 'test-class-name',

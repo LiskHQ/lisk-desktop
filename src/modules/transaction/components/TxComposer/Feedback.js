@@ -10,8 +10,8 @@ import { dustThreshold } from '@wallet/configuration/constants';
 import { getTxAmount } from '@transaction/utils/transaction';
 import styles from './txComposer.css';
 
-export const getMinRequiredBalance = (transaction, fee, formProps) =>
-  toRawLsk(fee.value) + dustThreshold + (getTxAmount(transaction, formProps) || 0);
+export const getMinRequiredBalance = (transaction, fee) =>
+  toRawLsk(fee.value) + dustThreshold + (getTxAmount(transaction) || 0);
 
 const Feedback = ({ minRequiredBalance, balance, feedback }) => {
   const { t } = useTranslation();

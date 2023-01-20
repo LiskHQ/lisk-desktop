@@ -14,8 +14,7 @@ import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
 
-const { transfer, stake, reclaim, registerMultisignature } =
-  MODULE_COMMANDS_NAME_MAP;
+const { transfer, stake, reclaim, registerMultisignature } = MODULE_COMMANDS_NAME_MAP;
 
 // @todo import the following 4 values from lisk-elements (#4497)
 const ED25519_PUBLIC_KEY_LENGTH = 32;
@@ -165,7 +164,7 @@ const normalizeTransactionParams = (params) =>
  * @param {Object} transaction The transaction object
  * @returns {String} Amount in Beddows/Satoshi
  */
-const getTxAmount = ({ module, command, params, moduleCommand }) => {
+const getTxAmount = ({ module, command, params = {}, moduleCommand }) => {
   if (!moduleCommand) {
     moduleCommand = joinModuleAndCommand({ module, command });
   }
@@ -243,7 +242,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
       optionalKeys: keys.optionalKeys.map(convertStringToBinary),
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
-    schema,
+    schema
   );
 
   return signedTransaction;
