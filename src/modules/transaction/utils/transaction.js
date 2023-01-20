@@ -14,7 +14,7 @@ import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
 
-const { transfer, stake, unlock, reclaim, registerMultisignature } =
+const { transfer, stake, reclaim, registerMultisignature } =
   MODULE_COMMANDS_NAME_MAP;
 
 // @todo import the following 4 values from lisk-elements (#4497)
