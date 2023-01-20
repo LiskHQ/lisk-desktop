@@ -1,8 +1,9 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
+import { fireEvent, render } from '@testing-library/react';
 import { keyCodes } from 'src/utils/keyCodes';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
-import { fireEvent, render } from '@testing-library/react';
+import routes from 'src/routes/routes';
 import { useSearch } from 'src/modules/search/hooks/useSearch';
 import SearchBar from './SearchBar';
 
@@ -97,7 +98,8 @@ describe('SearchBar', () => {
     });
 
     wrapper.find('.search-transaction-row').at(0).simulate('click');
-    expect(props.history.push).toBeCalled();
+    expect(props.history.push).toBeCalledTimes(1);
+    expect(props.history.push).toHaveBeenCalledWith(`${routes.transactionDetails.path}?transactionID=123456123234234`);
   });
 
   it('should uses keyboard navigation to select search result for validators', () => {
