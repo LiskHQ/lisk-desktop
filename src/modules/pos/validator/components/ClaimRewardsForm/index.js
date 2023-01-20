@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRewardsClaimableWithTokenMeta } from '@pos/reward/hooks/queries';
+import { useRewardsClaimable, useRewardsClaimableWithTokenMeta } from '@pos/reward/hooks/queries';
 import classNames from 'classnames';
 import BoxHeader from '@theme/box/header';
 import { useTranslation } from 'react-i18next';
@@ -48,6 +48,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
   const address = currentAccount?.metadata?.address;
+  const { data: rewardsClaimable } = useRewardsClaimableWithTokenMeta({ config: { params: { address } } });
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -60,7 +61,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
 
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.claimRewards,
-    isValid: 12 > 0,
+    isValid: rewardsClaimable?.data?.length > 0,
   };
 
   return (
