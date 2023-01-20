@@ -14,17 +14,16 @@ describe('SentStakesRow', () => {
     data: getMockValidators(config.params?.address),
     isLoading: false,
   }));
-  
+
+  const props = {
+    data: mockSentStakes.data.stakes[0],
+    stakeEdited: jest.fn(),
+    token: mockTokensBalance.data[0],
+  };
+
   it('should display properly', async () => {
-    const props = {
-      data: mockSentStakes.data.stakes[0],
-      stakeEdited: jest.fn(),
-      token: mockTokensBalance.data[0],
-    };
     renderWithRouter(SentStakesRow, props);
-
     const { address, amount } = props.data;
-
     const { name } = getMockValidators(address).data[0];
 
     expect(screen.getByText(name)).toBeTruthy();
@@ -42,5 +41,18 @@ describe('SentStakesRow', () => {
         amount: 0,
       },
     ]);
+  });
+
+  it('should display properly when loading validators', async () => {
+    useValidators.mockImplementation(({ config }) => ({
+      data: getMockValidators(config.params?.address),
+      isLoading: true,
+    }));
+
+    renderWithRouter(SentStakesRow, props);
+    const { address } = props.data;
+    const { name } = getMockValidators(address).data[0];
+
+    expect(screen.queryByText(name)).toBeFalsy();
   });
 });
