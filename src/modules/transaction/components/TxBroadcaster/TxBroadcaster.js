@@ -10,7 +10,6 @@ import RequestedTxStatus from '../RequestedTxStatus';
 const TxBroadcaster = (props) => {
   const [txType, setTxType] = useState('pending');
   const { moduleCommandSchemas } = useCommandSchema();
-
   useEffect(() => {
     const isMultisig =
       !props.transactions.txSignatureError &&
