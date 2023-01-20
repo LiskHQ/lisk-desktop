@@ -1,10 +1,10 @@
 const generateUnlock = (index) => ({
   validatorAddress: `lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg${index}eu`,
-  amount: `${100 + index}`,
+  amount: `${(index+1) * 1000000000}`,
   tokenID: '0000000000000000',
   unstakeHeight: 30 + index,
   expectedUnlockableHeight: 300 + index,
-  unlockable: true,
+  unlockable: index > 3,
 });
 
 const data = {
