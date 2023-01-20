@@ -12,7 +12,7 @@ export const mockRewardsClaimable = {
     },
     {
       reward: '20000',
-      tokenID: '0000000200000000',
+      tokenID: '0000000300000000',
     },
   ],
   meta: {
@@ -33,4 +33,9 @@ export const mockRewardsClaimableWithToken = {
       ...token,
     };
   }),
+  meta: {
+    count: 3,
+    offset: 0,
+    total: 3,
+  },
 };

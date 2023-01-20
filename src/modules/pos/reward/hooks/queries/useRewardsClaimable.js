@@ -1,4 +1,4 @@
-import { POS_REWARDS_CLAIMABLE } from 'src/const/queries';
+import { POS_REWARDS_CLAIMABLE, POS_REWARDS_CLAIMABLE_WITH_TOKEN_META } from 'src/const/queries';
 import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from '@common/hooks';
 import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
@@ -25,23 +25,6 @@ export const useRewardsClaimable = ({ config: customConfig = {}, options } = {})
   const hasRequiredParams =
     customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
 
-  const config = {
-    url: `/api/${API_VERSION}/pos/rewards/claimable`,
-    method: 'get',
-    event: 'get.pos.rewards.claimable',
-    ...customConfig,
-  };
-  return useCustomQuery({
-    keys: [POS_REWARDS_CLAIMABLE],
-    config,
-    options: {
-      ...options,
-      enabled: !!hasRequiredParams && options?.enabled !== false,
-    },
-  });
-};
-
-export const useRewardsClaimableWithTokenMeta = ({ config: customConfig = {}, options } = {}) => {
   const createMetaConfig = useAppsMetaTokensConfig();
   const transformToken = addTokensMetaData({ createMetaConfig, client: defaultClient });
 
@@ -62,13 +45,19 @@ export const useRewardsClaimableWithTokenMeta = ({ config: customConfig = {}, op
   };
 
   const config = {
+    url: `/api/${API_VERSION}/pos/rewards/claimable`,
+    method: 'get',
+    event: 'get.pos.rewards.claimable',
     transformResult,
     ...customConfig,
   };
 
-  return useRewardsClaimable({
+  return useCustomQuery({
     keys: [POS_REWARDS_CLAIMABLE],
     config,
-    options,
+    options: {
+      ...options,
+      enabled: !!hasRequiredParams && options?.enabled !== false,
+    },
   });
 };

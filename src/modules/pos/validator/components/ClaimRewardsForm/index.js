@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRewardsClaimableWithTokenMeta } from '@pos/reward/hooks/queries';
+import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import classNames from 'classnames';
 import BoxHeader from '@theme/box/header';
 import { useTranslation } from 'react-i18next';
@@ -48,7 +48,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
   const address = currentAccount?.metadata?.address;
-  const { data: rewardsClaimable } = useRewardsClaimableWithTokenMeta({ config: { params: { address } } });
+  const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -83,7 +83,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
           <div className={styles.tableContainer}>
             <QueryTable
               showHeader
-              queryHook={useRewardsClaimableWithTokenMeta}
+              queryHook={useRewardsClaimable}
               queryConfig={{ config: { params: { address } } }}
               row={RewardsClaimableRow}
               header={rewardsClaimableHeader(t)}

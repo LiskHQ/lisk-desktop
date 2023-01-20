@@ -2,10 +2,10 @@ import { renderWithQueryClient } from 'src/utils/testHelpers';
 import { fireEvent, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from '@account/hooks';
-import { useRewardsClaimableWithTokenMeta } from '@pos/reward/hooks/queries';
 import { mockRewardsClaimableWithToken } from '@pos/reward/__fixtures__';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
+import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import ClaimRewardsForm from './index';
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -24,7 +24,7 @@ jest.mock('@pos/reward/hooks/queries');
 
 describe('ClaimRewardsForm', () => {
   useCurrentAccount.mockReturnValue([mockSavedAccounts[0]]);
-  useRewardsClaimableWithTokenMeta.mockReturnValue({ data: mockRewardsClaimableWithToken });
+  useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimableWithToken });
   useTransactionPriority.mockImplementation(() => [
     { selectedIndex: 1 },
     () => {},

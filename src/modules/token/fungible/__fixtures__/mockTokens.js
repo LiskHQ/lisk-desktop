@@ -90,7 +90,7 @@ export const mockAppsTokens = {
     {
       chainID: '00000003',
       chainName: 'Enevti',
-      tokenID: '0000000200000000',
+      tokenID: '0000000300000000',
       tokenName: 'Enevti',
       networkType: 'mainnet',
       description: 'Base token for the Enevti ecosystem',
