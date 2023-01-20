@@ -1,4 +1,4 @@
-import { POS_REWARDS_CLAIMABLE, POS_REWARDS_CLAIMABLE_WITH_TOKEN_META } from 'src/const/queries';
+import { POS_REWARDS_CLAIMABLE } from 'src/const/queries';
 import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from '@common/hooks';
 import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
