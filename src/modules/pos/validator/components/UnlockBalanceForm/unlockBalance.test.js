@@ -10,6 +10,14 @@ import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import {
+  usePosConstants,
+  useSentStakes,
+  useUnlocks,
+  useValidators,
+} from '@pos/validator/hooks/queries';
+import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
+import { mockPosConstants } from '@pos/validator/__fixtures__/mockPosConstants';
 import UnlockBalanceForm from './index';
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -26,6 +34,7 @@ jest.mock('@pos/validator/store/actions/staking', () => ({
   balanceUnlocked: jest.fn(),
 }));
 jest.mock('@transaction/utils/hwManager');
+jest.mock('@pos/validator/hooks/queries');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
@@ -45,6 +54,12 @@ describe('Unlock LSK modal', () => {
     minFee: 0.001,
   }));
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
+  useValidators.mockImplementation(({ config }) => ({
+    data: getMockValidators(config.params?.address),
+  }));
+  useSentStakes.mockReturnValue({ data: mockSentStakes });
+  useUnlocks.mockReturnValue({ data: mockUnlocks });
+  usePosConstants.mockReturnValue({ data: mockPosConstants });
 
   const nextStep = jest.fn();
 
@@ -161,6 +176,7 @@ describe('Unlock LSK modal', () => {
         },
         isValid: true,
         moduleCommand: 'pos:unlock',
+        unlockableAmount: 455000000000,
       },
       fees: {
         Initialisation: '0.1 LSK',
@@ -182,6 +198,7 @@ describe('Unlock LSK modal', () => {
           },
           isValid: true,
           moduleCommand: 'pos:unlock',
+          unlockableAmount: 455000000000,
         },
         fees: {
           Initialisation: '0.1 LSK',

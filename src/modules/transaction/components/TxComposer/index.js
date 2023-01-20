@@ -23,7 +23,7 @@ const TxComposer = ({
   className,
   buttonTitle,
   formProps = {},
-  commandParams = {},
+  commandParams,
 }) => {
   const { t } = useTranslation();
   // @todo Once the transactions are refactored and working, we should
