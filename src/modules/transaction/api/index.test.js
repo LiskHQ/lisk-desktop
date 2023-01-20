@@ -16,7 +16,7 @@ import {
   dryRun,
 } from './index';
 
-const { stake, unlock } = MODULE_COMMANDS_NAME_MAP;
+const { stake } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
 
 jest.mock('src/utils/api/http', () =>
@@ -192,16 +192,6 @@ describe('API: LSK Transactions', () => {
             },
           ],
         },
-      };
-
-      expect(getTxAmount(tx)).toEqual(200000000);
-    });
-
-    it('should return amount of unlock in Beddows', () => {
-      const tx = {
-        title: unlock,
-        module: 'pos',
-        command: 'unlock',
       };
 
       expect(getTxAmount(tx)).toEqual(200000000);

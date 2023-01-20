@@ -165,7 +165,7 @@ const normalizeTransactionParams = (params) =>
  * @param {Object} transaction The transaction object
  * @returns {String} Amount in Beddows/Satoshi
  */
-const getTxAmount = ({ module, command, params, moduleCommand }, formProps) => {
+const getTxAmount = ({ module, command, params, moduleCommand }) => {
   if (!moduleCommand) {
     moduleCommand = joinModuleAndCommand({ module, command });
   }
@@ -173,9 +173,6 @@ const getTxAmount = ({ module, command, params, moduleCommand }, formProps) => {
     return params.amount;
   }
 
-  if (moduleCommand === unlock) {
-    return formProps.unlockableAmount;
-  }
   if (moduleCommand === stake) {
     return params.stakes.reduce((sum, stakeObject) => sum + Number(stakeObject.amount), 0);
   }
