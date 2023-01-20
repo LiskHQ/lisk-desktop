@@ -1,5 +1,6 @@
 .content {
-  padding: 0 !important;
+  padding: 0 20px !important;
+  margin-top: -10px !important;
 }
 
 .wrapper {
@@ -56,6 +57,11 @@ h1 {
   z-index: 2;
   padding: 5px 0px;
   position: sticky;
+
+  &::after {
+    left: 0;
+    right: 0;
+  }
 
   & > div:first-child {
     padding-left: 0px;

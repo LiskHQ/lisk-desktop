@@ -47,3 +47,8 @@ h1 {
 .wrapper {
   margin-bottom: 25px;
 }
+
+.content {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
