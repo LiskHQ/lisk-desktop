@@ -26,8 +26,9 @@ const rewardsClaimableHeader = (t) => [
 ];
 
 const RewardsClaimableRow = ({ data }) => {
-  const { tokenName, logo, reward, symbol } = data;
+  const { tokenName, logo, reward, symbol, denomUnits, displayDenom } = data;
   const amountInFiat = reward;
+  const denom = denomUnits?.find((denomUnit) => denomUnit.denom === displayDenom);
 
   return (
     <div className={classNames(styles.rewardsClaimableRow)}>
@@ -36,7 +37,7 @@ const RewardsClaimableRow = ({ data }) => {
         <span className={styles.tokenName}>{tokenName}</span>
       </div>
       <div className={classNames(rewardsClaimableHeader()[1].classList)}>
-        {`${reward} ${symbol}`}
+        {`${parseInt(reward, denom)} ${symbol}`}
       </div>
       <div className={classNames(rewardsClaimableHeader()[2].classList)}>{amountInFiat}</div>
     </div>
