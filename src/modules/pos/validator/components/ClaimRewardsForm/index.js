@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRewardsClaimable, useRewardsClaimableWithTokenMeta } from '@pos/reward/hooks/queries';
+import { useRewardsClaimableWithTokenMeta } from '@pos/reward/hooks/queries';
 import classNames from 'classnames';
 import BoxHeader from '@theme/box/header';
 import { useTranslation } from 'react-i18next';
