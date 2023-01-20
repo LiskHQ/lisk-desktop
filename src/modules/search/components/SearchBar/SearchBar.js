@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { keyCodes } from 'src/utils/keyCodes';
-import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import routes from 'src/routes/routes';
 import { Input } from 'src/theme';
 import Wallet from '@wallet/components/searchBarWallets';
@@ -35,7 +34,7 @@ const SearchBar = ({ className, history }) => {
 
   const onSelectedRow = (type, value) => {
     if (type === 'transactions') {
-      addSearchParamsToUrl(history, { modal: 'transactionDetails', transactionID: value });
+      history.push(`${routes.transactionDetails.path}?transactionID=${value}`);
     } else if (type === 'delegate-account') {
       history.push(`${routes.validatorProfile.path}?${routes.explorer.searchParam}=${value}`);
     } else {
