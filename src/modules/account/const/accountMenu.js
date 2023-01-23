@@ -1,6 +1,6 @@
 import routes from 'src/routes/routes';
 
-export const ACCOUNT_MENU = [
+export const accountMenu = (authData) => [
   {
     component: 'editAccount',
     icon: 'edit',
@@ -25,6 +25,7 @@ export const ACCOUNT_MENU = [
     component: 'multiSignature',
     icon: 'multiSignatureOutline',
     label: 'Register multisignature account',
+    isHidden: authData?.data?.numberOfSignatures > 0
   },
   {
     component: 'removeSelectedAccount',

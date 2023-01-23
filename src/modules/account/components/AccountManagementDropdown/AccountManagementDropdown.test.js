@@ -1,5 +1,5 @@
 import { screen, fireEvent } from '@testing-library/react';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { truncateAddress } from '@wallet/utils/account';
 import AccountManagementDropdown from './AccountManagementDropdown';
@@ -16,7 +16,7 @@ describe('AccountManagementDropdown', () => {
       currentAccount: mockCurrentAccount,
       onMenuClick: mockOnMenuClick,
     };
-    renderWithRouter(AccountManagementDropdown, props);
+    renderWithRouterAndQueryClient(AccountManagementDropdown, props);
     expect(screen.getByText(mockCurrentAccount.metadata.name)).toBeInTheDocument();
     expect(
       screen.getByText(truncateAddress(mockCurrentAccount.metadata.address))
