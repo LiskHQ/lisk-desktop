@@ -68,7 +68,8 @@ h1 {
     padding-right: 16px;
   }
 
-  & > div:nth-child(3) {
+  & > div:nth-child(3), 
+  & > div:nth-child(4) {
     padding-left: 8px !important;
   }
 
