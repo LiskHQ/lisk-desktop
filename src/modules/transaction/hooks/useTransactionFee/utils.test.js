@@ -1,6 +1,7 @@
 import wallets from "@tests/constants/wallets";
 import moduleCommandSchemas from "@tests/constants/schemas";
-import { computeTransactionFee } from "./utils";
+import { convertStringToBinary } from '@transaction/utils';
+import { computeTransactionMinFee } from "./utils";
 
 const transactionBase = {
   nonce: BigInt(0),
@@ -12,11 +13,9 @@ const defaultPriorities = [
   { value: 2, title: 'High' },
 ];
 
-const bufferify = (string) => Buffer.from(string, 'hex');
-
-describe('computeTransactionFee', () => {
+describe('computeTransactionMinFee', () => {
   it('Returns zero if transaction is not valid', () => {
-    expect(computeTransactionFee(null, null, null, null, false)).toEqual(BigInt(0));
+    expect(computeTransactionMinFee(null, null, null, null, false)).toEqual(BigInt(0));
   });
 
   describe('Normal account', () => {
@@ -25,9 +24,9 @@ describe('computeTransactionFee', () => {
       module: 'token',
       command: 'transfer',
       params: {
-        tokenId: bufferify('00000000'),
+        tokenId: convertStringToBinary('00000000'),
         amount: BigInt('1000000'),
-        recipientAddress: bufferify(wallets.genesis.summary.address),
+        recipientAddress: convertStringToBinary(wallets.genesis.summary.address),
         data: '',
       },
       signatures: [],
@@ -39,12 +38,12 @@ describe('computeTransactionFee', () => {
 
     it('Returns the calculated fee given transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeTransactionFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133000));
+      expect(computeTransactionMinFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133000));
     });
 
     it('Returns the calculated fee with higher priority given the transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Medium' }));
-      expect(computeTransactionFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133063));
+      expect(computeTransactionMinFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133000));
     });
   });
 
@@ -55,7 +54,7 @@ describe('computeTransactionFee', () => {
       command: 'registerMultisignature',
       params: {
         numberOfSignatures: 2,
-        mandatoryKeys: [bufferify(wallets.genesis.summary.publicKey), bufferify(wallets.validator.summary.publicKey)],
+        mandatoryKeys: [convertStringToBinary(wallets.genesis.summary.publicKey), convertStringToBinary(wallets.validator.summary.publicKey)],
         optionalKeys: [],
         signatures: [],
       },
@@ -68,7 +67,7 @@ describe('computeTransactionFee', () => {
 
     it('Returns the calculated fee given transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeTransactionFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(275000));
+      expect(computeTransactionMinFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(275000));
     });
   });
 
@@ -78,9 +77,9 @@ describe('computeTransactionFee', () => {
       module: 'token',
       command: 'transfer',
       params: {
-        tokenId: bufferify('00000000'),
+        tokenId: convertStringToBinary('00000000'),
         amount: BigInt('1000000'),
-        recipientAddress: bufferify(wallets.genesis.summary.address),
+        recipientAddress: convertStringToBinary(wallets.genesis.summary.address),
         data: '',
       },
       signatures: [],
@@ -92,7 +91,7 @@ describe('computeTransactionFee', () => {
 
     it('Returns the calculated fee given transaction is valid', () => {
       const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeTransactionFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(133000));
+      expect(computeTransactionMinFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(133000));
     });
   });
 });

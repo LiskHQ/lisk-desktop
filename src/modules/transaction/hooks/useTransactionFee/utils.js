@@ -17,18 +17,14 @@ export const ZERO_FEE = BigInt(0);
  *
  * @returns {bigint} the transaction fee in Beddows
  */
-export const computeTransactionFee = (
+export const computeTransactionMinFee = (
   transaction,
   paramsSchema,
   auth,
   priorities,
   isTxValid,
-  extraFee = BigInt(0)
 ) => {
   if (!isTxValid || !paramsSchema || !auth || !priorities?.length) return ZERO_FEE;
-
-  const selectedPriority = priorities.find((item) => item.selected);
-  const transactionSize = transactions.getBytes(transaction, paramsSchema).length;
 
   const allocateEmptySignaturesWithEmptyBuffer = (signatureCount) =>
     new Array(signatureCount).fill(Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE));
@@ -54,7 +50,7 @@ export const computeTransactionFee = (
     }
   );
 
-  return minFee + BigInt(selectedPriority.value * transactionSize) + extraFee;
+  return minFee;
 };
 
 export const getParamsSchema = (transaction, schemas) => {
