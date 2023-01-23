@@ -6,7 +6,7 @@ import { computeTransactionMinFee, getParamsSchema } from './utils';
  *
  * @param {object} data
  * @param {boolean} data.isValid Whether the transaction is valid or not. TxComposer defines this
- * @param {object} data.wallet The sender account info as returned by useDeprecatedAccount
+ * @param {string} data.senderAddress The sender address in Lisk 32 format
  * @param {object} data.transaction Transaction object as Lisk Element expects without fee
  * @returns {object} The fee object with a total value, and a component value as an array of fees
  * that contribute in the total value
