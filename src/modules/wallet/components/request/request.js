@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import React, { useEffect, useMemo, useReducer, useRef } from 'react';
+import React, { useMemo, useReducer } from 'react';
 import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
 import { useApplicationExploreAndMetaData } from '@blockchainApplication/manage/hooks';
@@ -40,7 +40,7 @@ const requestInitState = {
   },
   recipientChain: {
     error: false,
-    value: '',
+    value: {},
     loading: false,
     feedback: '',
   },
@@ -73,11 +73,6 @@ const Request = () => {
     (stateData, value) => ({ ...stateData, ...value }),
     requestInitState
   );
-  const timeout = useRef({
-    amount: null,
-    reference: null,
-  });
-
   const { applications } = useApplicationExploreAndMetaData();
   const { data: tokens } = useTransferableTokens(state.recipientChain.value);
 
@@ -140,14 +135,6 @@ const Request = () => {
   };
 
   const { recipientChain, token, amount, reference } = state;
-
-  useEffect(
-    () => () => {
-      clearTimeout(timeout.current.amount);
-      clearTimeout(timeout.current.reference);
-    },
-    []
-  );
 
   return (
     <RequestWrapper
