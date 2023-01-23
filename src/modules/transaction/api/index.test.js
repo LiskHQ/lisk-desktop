@@ -33,7 +33,7 @@ jest.mock('@pos/validator/api', () => ({
 
 describe('API: LSK Transactions', () => {
   const sampleId = 'sample_id';
-  const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.commands.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );

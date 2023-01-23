@@ -36,7 +36,7 @@ jest.mock('@transaction/utils/hwManager', () => ({
 }));
 
 describe('actions: staking', () => {
-  const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.commands.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );
