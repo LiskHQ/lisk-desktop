@@ -7,15 +7,10 @@ const transactionBase = {
   nonce: BigInt(0),
   senderPublicKey: Buffer.from(wallets.genesis.summary.publicKey, 'hex'),
 };
-const defaultPriorities = [
-  { value: 0, title: 'Low' },
-  { value: 1, title: 'Medium' },
-  { value: 2, title: 'High' },
-];
 
 describe('computeTransactionMinFee', () => {
   it('Returns zero if transaction is not valid', () => {
-    expect(computeTransactionMinFee(null, null, null, null, false)).toEqual(BigInt(0));
+    expect(computeTransactionMinFee(null, null, null, false)).toEqual(BigInt(0));
   });
 
   describe('Normal account', () => {
@@ -36,14 +31,8 @@ describe('computeTransactionMinFee', () => {
       numberOfSignatures: 1,
     };
 
-    it('Returns the calculated fee given transaction is valid', () => {
-      const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeTransactionMinFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133000));
-    });
-
-    it('Returns the calculated fee with higher priority given the transaction is valid', () => {
-      const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Medium' }));
-      expect(computeTransactionMinFee(tokenTransfer, schema, auth, priorities, true)).toEqual(BigInt(133000));
+    it('Returns the calculated fee given transaction using a normal account is valid', () => {
+      expect(computeTransactionMinFee(tokenTransfer, schema, auth, true)).toEqual(BigInt(133000));
     });
   });
 
@@ -65,9 +54,8 @@ describe('computeTransactionMinFee', () => {
       numberOfSignatures: 1,
     };
 
-    it('Returns the calculated fee given transaction is valid', () => {
-      const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeTransactionMinFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(275000));
+    it('Returns the calculated fee given multisig regi. transaction is valid', () => {
+      expect(computeTransactionMinFee(registerMultisignature, schema, auth, true)).toEqual(BigInt(208000));
     });
   });
 
@@ -89,9 +77,8 @@ describe('computeTransactionMinFee', () => {
       numberOfSignatures: 1,
     };
 
-    it('Returns the calculated fee given transaction is valid', () => {
-      const priorities = defaultPriorities.map((item) => ({ ...item, selected: item.title === 'Low' }));
-      expect(computeTransactionMinFee(registerMultisignature, schema, auth, priorities, true)).toEqual(BigInt(133000));
+    it('Returns the calculated fee given transaction using a multisig is valid', () => {
+      expect(computeTransactionMinFee(registerMultisignature, schema, auth, true)).toEqual(BigInt(133000));
     });
   });
 });

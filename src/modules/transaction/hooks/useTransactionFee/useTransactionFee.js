@@ -29,6 +29,7 @@ export const useTransactionFee = ({ isValid, senderAddress, transaction }) => {
     [transaction, schema, auth, isValid, isSchemaLoading]
   );
 
+  // @todo Assert the returned value when all fee components are defined
   return {
     isLoading: isSchemaLoading || /* istanbul ignore next */ isLoading,
     isFetched: isSchemaFetched && /* istanbul ignore next */ isFetched,

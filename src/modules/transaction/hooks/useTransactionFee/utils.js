@@ -1,6 +1,5 @@
 import { transactions } from '@liskhq/lisk-client';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
-import { DEFAULT_SIGNATURE_BYTE_SIZE } from '@transaction/configuration/transactions';
 
 export const ZERO_FEE = BigInt(0);
 
@@ -21,33 +20,21 @@ export const computeTransactionMinFee = (
   transaction,
   paramsSchema,
   auth,
-  priorities,
   isTxValid,
 ) => {
-  if (!isTxValid || !paramsSchema || !auth || !priorities?.length) return ZERO_FEE;
+  if (!isTxValid || !paramsSchema || !auth) return ZERO_FEE;
 
-  const allocateEmptySignaturesWithEmptyBuffer = (signatureCount) =>
-    new Array(signatureCount).fill(Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE));
+  // @todo define the numberOfEmptySignatures based on the auth and number
+  // of existing signatures in the transaction
 
-  const numberOfSignatures = auth.numberOfSignatures || 1;
-
-  const numberOfEmptySignatures = 0;
-
+  const options = {
+    numberOfSignatures: auth.numberOfSignatures || 1,
+    numberOfEmptySignatures: 0,
+  };
   const minFee = transactions.computeMinFee(
-    {
-      ...transaction,
-      params: {
-        ...transaction.params,
-        ...(!transaction.params.signatures?.length && {
-          signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
-        }),
-      },
-    },
+    transaction,
     paramsSchema,
-    {
-      numberOfSignatures,
-      numberOfEmptySignatures,
-    }
+    options,
   );
 
   return minFee;
