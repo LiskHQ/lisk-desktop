@@ -176,7 +176,7 @@ const BlockDetails = ({
         <BoxHeader>
           <BoxTabs {...tabs} />
         </BoxHeader>
-        <BoxContent>
+        <BoxContent className={styles.content}>
           {activeTab === 'transactions'
             ? <Transactions blockId={id} />
             : <TransactionEvents blockId={id} />}
