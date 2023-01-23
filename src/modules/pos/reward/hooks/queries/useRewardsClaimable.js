@@ -25,8 +25,8 @@ export const useRewardsClaimable = ({ config: customConfig = {}, options } = {})
   const hasRequiredParams =
     customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
 
-  const appMetaTokensConfig = useAppsMetaTokensConfig();
-  const transformToken = addTokensMetaData({ appMetaTokensConfig, client: defaultClient });
+  const createMetaConfig = useAppsMetaTokensConfig();
+  const transformToken = addTokensMetaData({ createMetaConfig, client: defaultClient });
 
   const transformResult = async (res) => {
     const tokens = await transformToken(res.data);
