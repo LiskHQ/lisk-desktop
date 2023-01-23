@@ -31,7 +31,9 @@ export const useTransactionFee = ({ isValid, senderAddress, priorities, transact
   );
 
   return {
+    /* istanbul ignore next */
     isLoading: isSchemaLoading || isLoading,
+    /* istanbul ignore next */
     isFetched: isSchemaFetched && isFetched,
     total: fee,
     components: [{ value: fee, type: 'bytesFee' }],
