@@ -55,8 +55,9 @@ describe('ClaimRewardsForm', () => {
         'Below are the details of your reward balances, you can continue to claim your rewards and they will be transferred to your wallet balance.'
       )
     ).toBeTruthy();
-    mockRewardsClaimableWithToken.data.forEach(({ tokenName }) => {
+    mockRewardsClaimableWithToken.data.forEach(({ tokenName, reward }) => {
       expect(screen.getAllByText(tokenName)[0]).toBeTruthy();
+      expect(screen.getAllByText(reward)[0]).toBeTruthy();
     });
     expect(screen.getByRole('button', { name: 'Claim rewards' })).toBeTruthy();
   });
