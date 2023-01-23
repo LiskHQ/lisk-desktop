@@ -33,9 +33,5 @@ export const mockRewardsClaimableWithToken = {
       ...token,
     };
   }),
-  meta: {
-    count: 3,
-    offset: 0,
-    total: 3,
-  },
+  meta: mockRewardsClaimable.meta,
 };
