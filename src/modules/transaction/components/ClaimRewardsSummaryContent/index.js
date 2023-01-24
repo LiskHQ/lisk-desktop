@@ -20,10 +20,9 @@ const ClaimRewardsSummaryContent = ({ t }) => {
           const denom = denomUnits?.find((denomUnit) => denomUnit.denom === displayDenom);
 
           return (
-            <div className={styles.rewardLabel} key={index}>{`${parseInt(
-              reward,
-              denom
-            )} ${symbol}`}</div>
+            <div key={index} className={styles.rewardLabel}>
+              {`${parseInt(reward, denom)} ${symbol}`}
+            </div>
           );
         })}
       </div>
