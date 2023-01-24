@@ -242,7 +242,7 @@ const SendForm = (props) => {
               <MenuSelect
                 value={token}
                 onChange={(value) => setToken(value)}
-                select={(selectedValue, option) => selectedValue?.name === option.name}
+                select={(selectedValue, option) => selectedValue?.chainName === option.name}
               >
                 {tokens.map((tokenValue) => (
                   <MenuItem

@@ -7,7 +7,7 @@ export const tokensBalance = [
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '1000000',
+        amount: '10000000000',
       },
     ],
   },
@@ -19,7 +19,7 @@ export const tokensBalance = [
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '5400000',
+        amount: '500000000',
       },
     ],
   },
@@ -31,7 +31,7 @@ export const tokensBalance = [
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '8000000',
+        amount: '8000000000',
       },
     ],
   },
@@ -43,7 +43,7 @@ export const tokensBalance = [
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '24000000',
+        amount: '4000000000',
       },
     ],
   },
@@ -55,7 +55,7 @@ export const tokensBalance = [
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '12000000',
+        amount: '2000000000',
       },
     ],
   },

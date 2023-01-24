@@ -67,7 +67,7 @@ describe('Form', () => {
   useTransferableTokens.mockReturnValue({
     data: mockTokensBalance.data.map((token) => ({
       ...token,
-      tokenName: token.name,
+      tokenName: token.chainName,
       logo: { svg: '', png: '' },
     })),
     isSuccess: true,
@@ -331,7 +331,7 @@ describe('Form', () => {
       expect(toChainDropdown.text()).toBe(mockCurrentApplication.chainName);
     });
 
-    it('Should pre-populate the the dropdown fields', () => {
+    it('Should pre-populate the dropdown fields', () => {
       props = {
         ...props,
         initialValue: {
