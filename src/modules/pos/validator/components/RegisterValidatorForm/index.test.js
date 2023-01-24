@@ -59,7 +59,7 @@ describe('RegisterValidatorForm', () => {
   usePosConstants.mockReturnValue({ data: mockPosConstants });
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.reduce(
+    mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
     )

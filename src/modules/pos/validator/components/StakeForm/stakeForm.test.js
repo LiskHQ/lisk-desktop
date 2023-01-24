@@ -101,7 +101,7 @@ describe('StakeForm', () => {
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
   useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.reduce(
+    mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
     )
