@@ -37,7 +37,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
       <TxComposer
         onConfirm={onConfirm}
         formProps={unlockBalanceFormProps}
-        buttonTitle="Claim rewards"
+        buttonTitle={t('Claim rewards')}
       >
         <>
           <BoxHeader>
