@@ -41,7 +41,7 @@ describe('TxComposer', () => {
   };
 
   useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.reduce(
+    mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
     )

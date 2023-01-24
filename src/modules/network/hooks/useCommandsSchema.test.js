@@ -8,13 +8,13 @@ jest.mock('./queries/useCommandParametersSchemas');
 describe('useCommandSchema', () => {
   it('should return command schemas', async () => {
     useCommandParametersSchemas.mockReturnValue({
-      data: { data: { commands: mockCommandParametersSchemas.data } },
+      data: { data: { commands: mockCommandParametersSchemas.data.commands } },
     });
 
     const { result } = renderHook(() => useCommandSchema());
 
     expect(result.current.moduleCommandSchemas).toEqual(
-      mockCommandParametersSchemas.data.reduce(
+      mockCommandParametersSchemas.data.commands.reduce(
         (schemas, { moduleCommand, schema }) => ({ ...schemas, [moduleCommand]: schema }),
         {}
       )

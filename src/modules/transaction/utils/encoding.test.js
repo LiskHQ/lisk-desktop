@@ -16,7 +16,7 @@ jest.spyOn(codec.codec, 'encode');
 jest.spyOn(cryptography.utils, 'hash');
 
 describe('encoding', () => {
-  const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.commands.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );
