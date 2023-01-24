@@ -2,10 +2,15 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
+import { balanceUnlocked } from '@pos/validator/store/actions/staking';
 import ClaimRewardsSummary from './ClaimRewardsSummary';
 
 const mapStateToProps = (state) => ({
   wallet: selectActiveTokenAccount(state),
 });
 
-export default connect(mapStateToProps)(withTranslation()(ClaimRewardsSummary));
+const mapDispatchToProps = {
+  balanceUnlocked,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(ClaimRewardsSummary));
