@@ -13,8 +13,7 @@ import styles from './ClaimRewardsForm.css';
 
 const ClaimRewardsForm = ({ nextStep }) => {
   const { t } = useTranslation();
-  const [currentAccount] = useCurrentAccount();
-  const address = currentAccount?.metadata?.address;
+  const [{ metadata: { address } }] = useCurrentAccount();
   const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
