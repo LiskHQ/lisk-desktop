@@ -32,7 +32,7 @@ const UnlockBalanceSummary = ({
 
   return (
     <TransactionSummary
-      title={t('Unlock LSK Summary')}
+      title={t('Unlock Summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       fee={!wallet.summary.isMultisignature && transactionJSON.fee}
