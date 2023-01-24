@@ -7,42 +7,9 @@ import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleComma
 import TxComposer from '@transaction/components/TxComposer';
 import { useCurrentAccount } from '@account/hooks';
 import { QueryTable } from '@theme/QueryTable';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import getRewardsClaimableHeader from '@pos/validator/components/ClaimRewardsForm/utils/getRewardsClaimableHeader';
+import RewardsClaimableRow from '@pos/validator/components/ClaimRewardsForm/RewardsClaimableRow';
 import styles from './ClaimRewardsForm.css';
-
-const rewardsClaimableHeader = (t) => [
-  {
-    title: t && t('Token'),
-    classList: `${grid['col-xs-3']}`,
-  },
-  {
-    title: t && t('Reward amount'),
-    classList: `${grid['col-xs-4']}`,
-  },
-  {
-    title: t && t('Fiat'),
-    classList: `${grid['col-xs-1']}`,
-  },
-];
-
-const RewardsClaimableRow = ({ data }) => {
-  const { tokenName, logo, reward, symbol, denomUnits, displayDenom } = data;
-  const amountInFiat = reward;
-  const denom = denomUnits?.find((denomUnit) => denomUnit.denom === displayDenom);
-
-  return (
-    <div className={classNames(styles.rewardsClaimableRow)}>
-      <div className={classNames(styles.logoContainer, rewardsClaimableHeader()[0].classList)}>
-        <img className={styles.logo} src={logo?.png} />
-        <span className={styles.tokenName}>{tokenName}</span>
-      </div>
-      <div className={classNames(rewardsClaimableHeader()[1].classList)}>
-        {`${parseInt(reward, denom)} ${symbol}`}
-      </div>
-      <div className={classNames(rewardsClaimableHeader()[2].classList)}>{amountInFiat}</div>
-    </div>
-  );
-};
 
 const ClaimRewardsForm = ({ nextStep }) => {
   const { t } = useTranslation();
@@ -63,6 +30,8 @@ const ClaimRewardsForm = ({ nextStep }) => {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.claimRewards,
     isValid: rewardsClaimable?.data?.length > 0,
   };
+
+  const rewardsClaimableHeader = getRewardsClaimableHeader(t);
 
   return (
     <section className={classNames(styles.ClaimRewardsForm)}>
@@ -86,7 +55,8 @@ const ClaimRewardsForm = ({ nextStep }) => {
               queryHook={useRewardsClaimable}
               queryConfig={{ config: { params: { address } } }}
               row={RewardsClaimableRow}
-              header={rewardsClaimableHeader(t)}
+              header={rewardsClaimableHeader}
+              additionalRowProps={{ rewardsClaimableHeader }}
               headerClassName={styles.tableHeader}
             />
           </div>
