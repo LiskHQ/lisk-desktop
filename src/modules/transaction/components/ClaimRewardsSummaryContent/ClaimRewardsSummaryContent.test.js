@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
