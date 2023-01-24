@@ -1,5 +1,6 @@
 import React from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
+import ClaimRewardsSummaryContent from '@transaction/components/ClaimRewardsSummaryContent';
 import StakeValidator from '../StakeValidate';
 import Reclaim from '../Reclaim';
 import Send from '../Send';
@@ -15,6 +16,7 @@ export default (props) => {
     case MODULE_COMMANDS_NAME_MAP.transfer:
     case MODULE_COMMANDS_NAME_MAP.crossChainTransfer: return <Send {...props} />;
     case MODULE_COMMANDS_NAME_MAP.stake: return <StakeValidator {...props} />;
+    case MODULE_COMMANDS_NAME_MAP.claimRewards: return <ClaimRewardsSummaryContent {...props} />;
     case MODULE_COMMANDS_NAME_MAP.unlock: return <UnlockBalance {...props} />;
     case MODULE_COMMANDS_NAME_MAP.registerMultisignature:
       return <RegisterMultisignatureGroup {...props} />;
