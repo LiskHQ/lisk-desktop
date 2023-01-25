@@ -1,5 +1,4 @@
 import React from 'react';
-import { PrimaryButton } from 'src/theme/buttons';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
 import classNames from 'classnames';
@@ -23,16 +22,7 @@ const TxBroadcasterWithStatus = ({
         status={status}
         title={template.title}
         message={template.message}
-      >
-        {template.button && (
-          <PrimaryButton
-            onClick={template.button.onClick}
-            className={`${template.button.className} dialog-close-button`}
-          >
-            {template.button.title}
-          </PrimaryButton>
-        )}
-      </TxBroadcaster>
+      />
     </div>
   );
 };
