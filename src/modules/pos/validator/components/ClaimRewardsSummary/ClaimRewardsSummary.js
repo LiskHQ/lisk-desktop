@@ -3,7 +3,7 @@ import TransactionSummary from '@transaction/manager/transactionSummary';
 import styles from './claimRewardsSummary.css';
 
 const ClaimRewardsSummary = ({
-  balanceUnlocked,
+  claimedRewards,
   selectedPriority,
   formProps,
   transactionJSON,
@@ -18,7 +18,7 @@ const ClaimRewardsSummary = ({
       nextStep({
         formProps,
         transactionJSON,
-        actionFunction: balanceUnlocked,
+        actionFunction: claimedRewards,
       });
     },
   };

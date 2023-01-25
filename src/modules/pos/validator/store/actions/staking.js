@@ -157,6 +157,41 @@ export const useStakesRetrieved = (address) => {
   }, [sentStakes, isSentStakesSuccess]);
 };
 
+const signAndDispatchTransaction = async (
+  dispatch,
+  getState,
+  formProps,
+  transactionJSON,
+  privateKey,
+  senderAccount
+) => {
+  const state = getState();
+  const activeWallet = selectActiveTokenAccount(state);
+
+  const [error, tx] = await to(
+    signTransaction({
+      transactionJSON,
+      wallet: activeWallet,
+      schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
+      chainID: state.network.networks.LSK.chainID,
+      privateKey,
+      senderAccount,
+    })
+  );
+
+  if (!error) {
+    dispatch({
+      type: txActionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: txActionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};
+
 /**
  * Submits unlock balance transactions
  *
@@ -165,38 +200,25 @@ export const useStakesRetrieved = (address) => {
  * @returns {promise}
  */
 export const balanceUnlocked =
-  (formProps, transactionJSON, privateKey) => async (dispatch, getState) => {
-    //
-    // Collect data
-    //
-    const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
-
-    //
-    // Create the transaction
-    //
-    const [error, tx] = await to(
-      signTransaction({
-        transactionJSON,
-        wallet: activeWallet,
-        schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
-        chainID: state.network.networks.LSK.chainID,
-        privateKey,
-      })
+  (formProps, transactionJSON, privateKey, senderAccount) => async (dispatch, getState) => {
+    await signAndDispatchTransaction(
+      dispatch,
+      getState,
+      formProps,
+      transactionJSON,
+      privateKey,
+      senderAccount
     );
+  };
 
-    //
-    // Dispatch corresponding action
-    //
-    if (!error) {
-      dispatch({
-        type: txActionTypes.transactionCreatedSuccess,
-        data: tx,
-      });
-    } else {
-      dispatch({
-        type: txActionTypes.transactionSignError,
-        data: error,
-      });
-    }
+export const claimedRewards =
+  (formProps, transactionJSON, privateKey, senderAccount) => async (dispatch, getState) => {
+    await signAndDispatchTransaction(
+      dispatch,
+      getState,
+      formProps,
+      transactionJSON,
+      privateKey,
+      senderAccount
+    );
   };
