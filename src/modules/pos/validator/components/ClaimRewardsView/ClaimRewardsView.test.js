@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from '@auth/__fixtures__';
