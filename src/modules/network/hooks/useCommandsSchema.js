@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useCommandParametersSchemas } from './queries';
 
 export const useCommandSchema = () => {
-  const { data, isLoading } = useCommandParametersSchemas();
+  const { data, ...rest } = useCommandParametersSchemas();
 
   const moduleCommandSchemas = useMemo(() => {
     const { commands } = data?.data || {};
@@ -15,5 +15,5 @@ export const useCommandSchema = () => {
     );
   }, [data]);
 
-  return { isLoading, moduleCommandSchemas };
+  return { moduleCommandSchemas, ...rest };
 };

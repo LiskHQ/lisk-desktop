@@ -1,0 +1,84 @@
+import wallets from "@tests/constants/wallets";
+import moduleCommandSchemas from "@tests/constants/schemas";
+import { convertStringToBinary } from '@transaction/utils';
+import { computeTransactionMinFee } from "./utils";
+
+const transactionBase = {
+  nonce: BigInt(0),
+  senderPublicKey: Buffer.from(wallets.genesis.summary.publicKey, 'hex'),
+};
+
+describe('computeTransactionMinFee', () => {
+  it('Returns zero if transaction is not valid', () => {
+    expect(computeTransactionMinFee(null, null, null, false)).toEqual(BigInt(0));
+  });
+
+  describe('Normal account', () => {
+    const tokenTransfer = {
+      ...transactionBase,
+      module: 'token',
+      command: 'transfer',
+      params: {
+        tokenId: convertStringToBinary('00000000'),
+        amount: BigInt('1000000'),
+        recipientAddress: convertStringToBinary(wallets.genesis.summary.address),
+        data: '',
+      },
+      signatures: [],
+    };
+    const schema = moduleCommandSchemas["token:transfer"];
+    const auth = {
+      numberOfSignatures: 1,
+    };
+
+    it('Returns the calculated fee given transaction using a normal account is valid', () => {
+      expect(computeTransactionMinFee(tokenTransfer, schema, auth, true)).toEqual(BigInt(133000));
+    });
+  });
+
+  describe('Register multisignature', () => {
+    const registerMultisignature = {
+      ...transactionBase,
+      module: 'auth',
+      command: 'registerMultisignature',
+      params: {
+        numberOfSignatures: 2,
+        mandatoryKeys: [convertStringToBinary(wallets.genesis.summary.publicKey), convertStringToBinary(wallets.validator.summary.publicKey)],
+        optionalKeys: [],
+        signatures: [],
+      },
+      signatures: [],
+    };
+    const schema = moduleCommandSchemas["auth:registerMultisignature"];
+    const auth = {
+      numberOfSignatures: 1,
+    };
+
+    it('Returns the calculated fee given multisig regi. transaction is valid', () => {
+      expect(computeTransactionMinFee(registerMultisignature, schema, auth, true)).toEqual(BigInt(208000));
+    });
+  });
+
+  describe('Multisignature', () => {
+    const registerMultisignature = {
+      ...transactionBase,
+      module: 'token',
+      command: 'transfer',
+      params: {
+        tokenId: convertStringToBinary('00000000'),
+        amount: BigInt('1000000'),
+        recipientAddress: convertStringToBinary(wallets.genesis.summary.address),
+        data: '',
+      },
+      signatures: [],
+    };
+    const schema = moduleCommandSchemas["token:transfer"];
+    const auth = {
+      numberOfSignatures: 1,
+    };
+
+    it('Returns the calculated fee given transaction using a multisig is valid', () => {
+      expect(computeTransactionMinFee(registerMultisignature, schema, auth, true)).toEqual(BigInt(133000));
+    });
+  });
+});
