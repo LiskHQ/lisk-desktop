@@ -31,7 +31,7 @@ describe('TxBroadcasterWithStatus', () => {
   );
 
   it('should show "Transaction submitted" when txStatusTypes.broadcastSuccess ', () => {
-    const { container } = renderWithRouterAndStoreAndQueryClient(
+    renderWithRouterAndStoreAndQueryClient(
       TxBroadcasterWithStatus,
       {},
       store
