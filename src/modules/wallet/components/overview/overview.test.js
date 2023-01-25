@@ -1,6 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
+import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useValidators } from '@pos/validator/hooks/queries';
@@ -66,9 +67,17 @@ describe('Overview', () => {
     mockTokensBalance.data.forEach(({ symbol, availableBalance, lockedBalances }) => {
       const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
 
-      expect(screen.queryByText(`${fromRawLsk(lockedBalance)} ${symbol.toUpperCase()}`));
-      expect(screen.queryByText(`${fromRawLsk(availableBalance)}`));
-      expect(screen.queryByText(`${fromRawLsk(+availableBalance + lockedBalance)}`));
+      expect(
+        screen.queryByText(
+          `${numeral(fromRawLsk(lockedBalance)).format('0')} ${symbol.toUpperCase()}`
+        )
+      );
+      expect(screen.queryByText(`${numeral(fromRawLsk(availableBalance)).format('0,0.00')}`));
+      expect(
+        screen.queryByText(
+          `${numeral(fromRawLsk(+availableBalance + lockedBalance)).format('0,0.00')}`
+        )
+      );
       expect(screen.getByAltText(symbol)).toBeTruthy();
     });
   });
