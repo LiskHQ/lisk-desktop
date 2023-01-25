@@ -1,18 +1,33 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Dialog from '@theme/dialog/dialog';
-import MultiStep from '@common/components/OldMultiStep';
-import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
-import ClaimRewardsForm from '@pos/validator/components/ClaimRewardsForm';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuth } from '@auth/__fixtures__';
+import { useCommandSchema } from '@network/hooks';
+import { mockCommandParametersSchemas } from '@common/__fixtures__';
+import { screen } from '@testing-library/react';
 import ClaimRewardsView from './index';
 
-describe('ClaimRewardsView', () => {
-  it('should render properly', () => {
-    const wrapper = shallow(<ClaimRewardsView history={{}} />);
+jest.mock('@walletconnect/sign-client', () => ({
+  init: jest.fn().mockResolvedValue(Promise.resolve({ mock: true })),
+}));
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
 
-    expect(wrapper).toContainMatchingElement(Dialog);
-    expect(wrapper).toContainMatchingElement(MultiStep);
-    expect(wrapper).toContainMatchingElement(ClaimRewardsForm);
-    expect(wrapper).toContainMatchingElement(TxSignatureCollector);
+jest.mock('@network/hooks/useCommandsSchema');
+jest.mock('@auth/hooks/queries');
+
+describe('ClaimRewardsView', () => {
+  useAuth.mockReturnValue({ data: mockAuth });
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.commands.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
+
+  it('should render properly', () => {
+    renderWithRouterAndQueryClient(ClaimRewardsView);
+    expect(screen.getByRole('button', { name: 'Claim rewards' })).toBeTruthy();
   });
 });
