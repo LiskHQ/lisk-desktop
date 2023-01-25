@@ -18,7 +18,7 @@ jest.mock('@pos/reward/hooks/queries');
 describe('ClaimRewardsSummary', () => {
   const props = {
     currentBlockHeight: 10000000,
-    balanceUnlocked: jest.fn(),
+    claimedRewards: jest.fn(),
     formProps: {
       composedFees: {
         Initialisation: '0 LSK',
@@ -63,7 +63,7 @@ describe('ClaimRewardsSummary', () => {
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({
-      actionFunction: props.balanceUnlocked,
+      actionFunction: props.claimedRewards,
       formProps: props.formProps,
       transactionJSON: props.transactionJSON,
     });
