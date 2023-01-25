@@ -48,7 +48,7 @@ export const mountWithRouter = (Component, props, routeConfig = {}) =>
  * @returns {Object} Mounted component
  */
 const defaultHistoryProps = {
-  listen: () => { },
+  listen: () => {},
   location: {
     pathname: '',
   },
@@ -287,3 +287,17 @@ export const renderWithRouterAndStore = (Component, props, store) =>
       </MemoryRouter>
     </Provider>
   );
+
+export const renderWithRouterAndStoreAndQueryClient = (Component, props = {}, store) => {
+  const queryClient = new QueryClient();
+
+  return render(
+    <Provider store={configureStore()(store)}>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter initialEntries={[props?.history ?? defaultHistoryProps]}>
+          <Component {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    </Provider>
+  );
+};
