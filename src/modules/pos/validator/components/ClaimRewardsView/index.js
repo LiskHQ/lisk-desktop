@@ -4,6 +4,7 @@ import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import ClaimRewardsSummary from '@pos/validator/components/ClaimRewardsSummary';
 import ClaimRewardsForm from '../ClaimRewardsForm';
+import TxBroadcasterWithStatus from '@transaction/components/TxBroadcasterWithStatus/TxBroadcasterWithStatus';
 
 const ClaimRewardsView = () => (
     <Dialog hasClose>
@@ -11,6 +12,7 @@ const ClaimRewardsView = () => (
         <ClaimRewardsForm />
         <ClaimRewardsSummary />
         <TxSignatureCollector />
+        <TxBroadcasterWithStatus />
       </MultiStep>
     </Dialog>
   );
