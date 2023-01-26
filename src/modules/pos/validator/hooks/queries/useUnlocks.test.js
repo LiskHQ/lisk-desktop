@@ -1,14 +1,22 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mockUnlocks } from '@pos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { LIMIT as defaultLimit } from 'src/const/config';
-import { useUnlocks } from '.';
+import { mockPosConstants } from '@pos/validator/__fixtures__/mockPosConstants';
+import * as useCustomInfiniteQuerySpy from '@common/hooks/useCustomInfiniteQuery';
+import { useCustomInfiniteQuery } from '@common/hooks';
+import { usePosConstants, useUnlocks } from '.';
 
 jest.useRealTimers();
 
+jest.spyOn(useCustomInfiniteQuerySpy, 'useCustomInfiniteQuery');
+
+jest.mock('@pos/validator/hooks/queries/usePosConstants');
+
 describe('useUnlocks hook', () => {
   const limit = 15;
-  const config = { params: { limit } };
+  const config = { params: { limit, address: 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg' } };
+
+  usePosConstants.mockReturnValue({ data: mockPosConstants, isSuccess: true });
 
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => useUnlocks({ config }), { wrapper });
@@ -29,23 +37,11 @@ describe('useUnlocks hook', () => {
     expect(result.current.data).toEqual(expectedResponse);
   });
 
-  it('fetches data without params correctly', async () => {
-    const { result, waitFor } = renderHook(() => useUnlocks(), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
-    await waitFor(() => result.current.isFetched);
-    expect(result.current.isSuccess).toBeTruthy();
-    const expectedResponse = {
-      data: {
-        ...mockUnlocks.data,
-        pendingUnlocks: mockUnlocks.data.pendingUnlocks?.slice(0, defaultLimit),
-      },
-      meta: {
-        ...mockUnlocks.meta,
-        count: defaultLimit,
-        offset: 0,
-      },
-    };
-    expect(result.current.data).toEqual(expectedResponse);
+  it('should call useCustomInfiniteQuery with enabled false if required params are missing', async () => {
+    renderHook(() => useUnlocks(), { wrapper });
+    expect(useCustomInfiniteQuery).toBeCalledWith(
+      expect.objectContaining({ options: { enabled: false, select: expect.any(Function) } })
+    );
   });
 
   it('should fetch next set of data correctly', async () => {

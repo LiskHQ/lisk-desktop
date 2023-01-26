@@ -62,7 +62,7 @@ export const mockAppsTokens = {
       displayDenom: 'lisk',
       symbol: 'LSK',
       logo: {
-        png: 'https://downloads.lisk.com/lisk/images/tokens/lsk.png',
+        png: 'https://lisk-qa.ams3.digitaloceanspaces.com/Artboard%201%20copy%2019.png',
         svg: 'https://downloads.lisk.com/lisk/images/tokens/lsk.svg',
       },
     },
@@ -90,7 +90,7 @@ export const mockAppsTokens = {
     {
       chainID: '00000003',
       chainName: 'Enevti',
-      tokenID: '0000000200000000',
+      tokenID: '0000000300000000',
       tokenName: 'Enevti',
       networkType: 'mainnet',
       description: 'Base token for the Enevti ecosystem',

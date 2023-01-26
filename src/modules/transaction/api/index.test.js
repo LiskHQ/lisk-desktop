@@ -16,7 +16,7 @@ import {
   dryRun,
 } from './index';
 
-const { stake, unlock } = MODULE_COMMANDS_NAME_MAP;
+const { stake } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
 
 jest.mock('src/utils/api/http', () =>
@@ -188,26 +188,6 @@ describe('API: LSK Transactions', () => {
             },
             {
               validatorAddress: accounts.validator.summary.address,
-              amount: '100000000',
-            },
-          ],
-        },
-      };
-
-      expect(getTxAmount(tx)).toEqual(200000000);
-    });
-
-    it('should return amount of unlock in Beddows', () => {
-      const tx = {
-        title: unlock,
-        module: 'pos',
-        command: 'unlock',
-        params: {
-          unlockObjects: [
-            {
-              amount: '100000000',
-            },
-            {
               amount: '100000000',
             },
           ],
@@ -396,20 +376,6 @@ describe('API: LSK Transactions', () => {
       const multisigUnlockTx = {
         module: 'pos',
         command: 'unlock',
-        params: {
-          unlockObjects: [
-            {
-              validatorAddress: accounts.genesis.summary.address,
-              amount: '-10000000',
-              unstakeHeight: 1500,
-            },
-            {
-              validatorAddress: accounts.validator_candidate.summary.address,
-              amount: '-340000000',
-              unstakeHeight: 1500,
-            },
-          ],
-        },
       };
       const result = await getTransactionFee({
         transactionJSON: { ...baseTx, ...multisigUnlockTx },

@@ -5,9 +5,9 @@ import {
   extractPublicKey,
   extractPrivateKey,
   extractAddressFromPublicKey,
-  calculateUnlockableBalance,
-  getUnlockableUnlockObjects,
-  calculateBalanceLockedInVotes,
+  calculateUnlockableAmount,
+  getPendingUnlockableUnlocks,
+  calculateBalanceLockedInStakes,
   extractAddressFromPassphrase,
   calculateRemainingAndSignedMembers,
 } from './account';
@@ -77,24 +77,26 @@ describe('Utils: Account', () => {
           unstakeHeight: 4900,
           expectedUnlockableHeight: 5900,
           validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          unlockable: false,
         },
         {
           amount: '3000000000',
           unstakeHeight: 100,
           expectedUnlockableHeight: 200,
           validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          unlockable: true,
         },
         {
           amount: '1000000000',
           unstakeHeight: 3000,
           expectedUnlockableHeight: 4000,
           validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+          unlockable: true,
         },
       ];
       const validatorAddress = '80L';
-      const currentBlockHeight = 5000;
 
-      expect(calculateUnlockableBalance(unlocking, currentBlockHeight)).toEqual(4000000000);
+      expect(calculateUnlockableAmount(unlocking)).toEqual(4000000000);
 
       unlocking = [
         {
@@ -116,15 +118,10 @@ describe('Utils: Account', () => {
           validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
         },
       ];
-      expect(calculateUnlockableBalance(unlocking, currentBlockHeight)).toEqual(0);
+      expect(calculateUnlockableAmount(unlocking)).toEqual(0);
     });
 
-    it('should return 0 when unlocking is undefined', () => {
-      const currentBlockHeight = 5000;
-      expect(calculateUnlockableBalance(undefined, currentBlockHeight)).toEqual(0);
-    });
-
-    describe('calculateBalanceLockedInVotes', () => {
+    describe('calculateBalanceLockedInStakes', () => {
       it('should get correct available balance', () => {
         const votes = {
           lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 5000000000 },
@@ -132,11 +129,11 @@ describe('Utils: Account', () => {
           lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: { confirmed: 2000000000 },
         };
 
-        expect(calculateBalanceLockedInVotes(votes)).toEqual(10000000000);
+        expect(calculateBalanceLockedInStakes(votes)).toEqual(10000000000);
       });
 
       it('should return 0 when unlocking is undefined', () => {
-        expect(calculateBalanceLockedInVotes({})).toEqual(0);
+        expect(calculateBalanceLockedInStakes({})).toEqual(0);
       });
     });
 
@@ -148,34 +145,33 @@ describe('Utils: Account', () => {
             unstakeHeight: 5000,
             expectedUnlockableHeight: 6000,
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+            unlockable: true,
           },
           {
             amount: '3000000000',
             unstakeHeight: 100,
             expectedUnlockableHeight: 2000,
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+            unlockable: false,
           },
           {
             amount: '1000000000',
             unstakeHeight: 3100,
             expectedUnlockableHeight: 41000,
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+            unlockable: true,
           },
         ];
-        const currentBlockHeight = 5000;
 
-        expect(getUnlockableUnlockObjects(unlocking, currentBlockHeight)).toEqual([
+        expect(getPendingUnlockableUnlocks(unlocking)).toEqual([
           {
             amount: '3000000000',
             unstakeHeight: 100,
+            expectedUnlockableHeight: 2000,
             validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+            unlockable: false,
           },
         ]);
-      });
-
-      it('should return 0 when unlocking is undefined', () => {
-        const currentBlockHeight = 5000;
-        expect(getUnlockableUnlockObjects(undefined, currentBlockHeight)).toEqual([]);
       });
     });
   });

@@ -3,15 +3,13 @@ import getUnlockButtonTitle from './getUnlockButtonTitle';
 describe('getUnlockButtonTitle', () => {
   const t = str => str;
 
-  it('Returns a message if nothing to unlock', () => {
+  it('Should show "Nothing available to unlock" if there is an unlockableBalance', () => {
     const unlockableBalance = 0;
-    const token = 'LSK';
-    expect(getUnlockButtonTitle(unlockableBalance, token, t)).toEqual('Nothing available to unlock');
+    expect(getUnlockButtonTitle(unlockableBalance, t)).toEqual('Nothing available to unlock');
   });
 
-  it('Returns a message if nothing to unlock', () => {
+  it('Should show "Unlock stakes" if there is an unlockableBalance', () => {
     const unlockableBalance = 100000000;
-    const token = 'LSK';
-    expect(getUnlockButtonTitle(unlockableBalance, token, t)).toEqual('Unlock 1 LSK');
+    expect(getUnlockButtonTitle(unlockableBalance, t)).toEqual('Unlock stakes');
   });
 });

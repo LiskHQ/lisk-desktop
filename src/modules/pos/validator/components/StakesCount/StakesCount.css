@@ -1,0 +1,17 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.stakesCount {
+  @mixin contentLarge;
+
+  color: var(--color-slate-gray);
+  display: flex;
+
+  & .stakingQueueActive {
+    width: 17px;
+    margin-right: 12px;
+  }
+
+  & .availableStakes {
+    color: var(--color-content-light);
+  }
+}

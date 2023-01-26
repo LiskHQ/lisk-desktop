@@ -103,7 +103,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     return stakes.find(({ address: stakerAddress }) => stakerAddress === address);
   }, [sentStakes, address, staking]);
 
-  const [stakeAmount, setStakeAmount, isGettingDposToken] = useStakeAmountField(
+  const [stakeAmount, setStakeAmount, isGettingPosToken] = useStakeAmountField(
     fromRawLsk(staking[address]?.unconfirmed || validatorStake?.amount || 0)
   );
   const mode = validatorStake || staking[address] ? 'edit' : 'add';
@@ -235,7 +235,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
           <PrimaryButton
             className={`${styles.confirmButton} confirm`}
             onClick={handleConfirm}
-            disabled={stakeAmount.error || isGettingDposToken}
+            disabled={stakeAmount.error || isGettingPosToken}
           >
             {t(isForm ? 'Confirm' : 'Go to the staking queue')}
           </PrimaryButton>

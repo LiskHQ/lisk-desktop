@@ -1,111 +1,43 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import {
-  calculateBalanceLockedInVotes,
-  calculateUnlockableBalance,
-} from '@wallet/utils/account';
-import accounts from '@tests/constants/wallets';
+import { calculateSentStakesAmount, calculateUnlockableAmount } from '@wallet/utils/account';
+import { mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import BalanceTable from './BalanceTable';
 
 describe('unlock transaction Status', () => {
   let wrapper;
-
-  const account = {
-    ...accounts.genesis,
-    pos: {
-      pendingUnlocks: [
-        {
-          amount: '1000000000',
-          unstakeHeight: 4900,
-          expectedUnlockableHeight: 5900,
-          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11'
-        },
-        {
-          amount: '3000000000',
-          unstakeHeight: 100,
-          expectedUnlockableHeight: 10100,
-          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11'
-        },
-        {
-          amount: '1000000000',
-          unstakeHeight: 3000,
-          expectedUnlockableHeight: 4000,
-          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13'
-        },
-      ],
-    },
-    sequence: { nonce: '178' },
-  };
-  const staking = {
-    lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 500000000000 },
-    lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 3000000000 },
-    lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: { confirmed: 2000000000 },
-  };
-
+  
+  const pendingUnlockableUnlocks = mockUnlocks.data.pendingUnlocks;
+  const stakes = mockSentStakes.data.stakes;
   const currentBlockHeight = 5000;
 
   const props = {
-    t: key => key,
-    lockedInVotes: calculateBalanceLockedInVotes(staking),
-    unlockableBalance: calculateUnlockableBalance(account.pos.pendingUnlocks, currentBlockHeight),
+    sentStakesAmount: calculateSentStakesAmount(stakes),
+    unlockableAmount: calculateUnlockableAmount(pendingUnlockableUnlocks),
     currentBlockHeight,
-    account,
+    pendingUnlockableUnlocks,
   };
 
   it('renders properly', () => {
     wrapper = mount(<BalanceTable {...props} />);
     expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
-    expect(wrapper.find('.locked-balance').text()).toEqual('5,050 LSK');
-    expect(wrapper.find('.available-balance').text()).toEqual('10 LSK');
-    expect(wrapper.find('.unlocking-balance')).toHaveLength(2);
+    expect(wrapper.find('.locked-balance').text()).toEqual('280 LSK');
+    expect(wrapper.find('.available-balance').text()).toEqual('4,550 LSK');
+    expect(wrapper.find('.unlocking-balance')).toHaveLength(pendingUnlockableUnlocks.length);
   });
 
-  it('renders properly when contains selfStake', () => {
-    const customAccount = {
-      ...account,
-      pos: {
-        pendingUnlocks: [
-          {
-            amount: '1000000000',
-            unstakeHeight: 4900,
-            expectedUnlockableHeight: 5900,
-            validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11'
-          },
-          {
-            amount: '3000000000',
-            unstakeHeight: 2500,
-            expectedUnlockableHeight: 30500,
-            validatorAddress: accounts.genesis.summary.address
-          },
-          {
-            amount: '3000000000',
-            unstakeHeight: 2900,
-            expectedUnlockableHeight: 30900,
-            validatorAddress: accounts.genesis.summary.address
-          },
-        ],
-      },
-    };
-    const customStaking = {
-      lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 500000000000 },
-      lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 2000000000 },
-      [accounts.genesis.summary.address]: { confirmed: 9000000000000 },
-    };
+  it('should not show pendingUnlockableUnlocks if undefined', () => {
+    wrapper = mount(<BalanceTable {...props} pendingUnlockableUnlocks={undefined} />);
+    expect(wrapper.find('.unlocking-balance')).toHaveLength(0);
+  });
 
-    const customProps = {
-      ...props,
-      account: customAccount,
-      lockedInVotes: calculateBalanceLockedInVotes(customStaking),
-      unlockableBalance: calculateUnlockableBalance(
-        customAccount.pos.pendingUnlocks,
-        currentBlockHeight,
-      ),
-      currentBlockHeight,
-    };
+  it('should not show available-balance if 0', () => {
+    wrapper = mount(<BalanceTable {...props} unlockableAmount={0} />);
+    expect(wrapper.find('.available-balance')).toHaveLength(0);
+  });
 
-    wrapper = mount(<BalanceTable {...customProps} />);
-    expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
-    expect(wrapper.find('.locked-balance').text()).toEqual('95,020 LSK');
-    expect(wrapper.find('.unlocking-balance')).toHaveLength(3);
+  it('should not show locked-balance if 0', () => {
+    wrapper = mount(<BalanceTable {...props} sentStakesAmount={0} />);
+    expect(wrapper.find('.locked-balance')).toHaveLength(0);
   });
 });

@@ -3,23 +3,32 @@ import { fireEvent, screen } from '@testing-library/react';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
-import TokenRow from './SentStakesRow';
-import { mockSentStakes } from '../../__fixtures__';
+import { useValidators } from '@pos/validator/hooks/queries';
+import SentStakesRow from './SentStakesRow';
+import { getMockValidators, mockSentStakes } from '../../__fixtures__';
+
+jest.mock('@pos/validator/hooks/queries');
 
 describe('SentStakesRow', () => {
-  it('should display properly', async () => {
-    const props = {
-      data: mockSentStakes.data.stakes[0],
-      stakeEdited: jest.fn(),
-      dposToken: mockTokensBalance.data[0],
-    };
-    renderWithRouter(TokenRow, props);
+  useValidators.mockImplementation(({ config }) => ({
+    data: getMockValidators(config.params?.address),
+    isLoading: false,
+  }));
 
-    const { address, amount, name } = props.data;
+  const props = {
+    data: mockSentStakes.data.stakes[0],
+    stakeEdited: jest.fn(),
+    token: mockTokensBalance.data[0],
+  };
+
+  it('should display properly', async () => {
+    renderWithRouter(SentStakesRow, props);
+    const { address, amount } = props.data;
+    const { name } = getMockValidators(address).data[0];
 
     expect(screen.getByText(name)).toBeTruthy();
     expect(screen.getByText(truncateAddress(address))).toBeTruthy();
-    expect(screen.queryByText(`${fromRawLsk(amount)} ${props.dposToken.symbol}`));
+    expect(screen.queryByText(`${fromRawLsk(amount)} ${props.token.symbol}`));
     expect(screen.getByAltText('deleteIcon')).toBeTruthy();
     expect(screen.getByAltText('edit')).toBeTruthy();
 
@@ -32,5 +41,18 @@ describe('SentStakesRow', () => {
         amount: 0,
       },
     ]);
+  });
+
+  it('should display properly when loading validators', async () => {
+    useValidators.mockImplementation(({ config }) => ({
+      data: getMockValidators(config.params?.address),
+      isLoading: true,
+    }));
+
+    renderWithRouter(SentStakesRow, props);
+    const { address } = props.data;
+    const { name } = getMockValidators(address).data[0];
+
+    expect(screen.queryByText(name)).toBeFalsy();
   });
 });

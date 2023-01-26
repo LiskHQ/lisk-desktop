@@ -3,58 +3,74 @@ import { useTranslation } from 'react-i18next';
 import Heading from 'src/modules/common/components/Heading';
 import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
-import { PrimaryButton } from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import BoxContent from 'src/theme/box/content';
 import { QueryTable } from 'src/theme/QueryTable';
 import BoxHeader from 'src/theme/box/header';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
-import Icon from 'src/theme/Icon';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
+import StakesCount from '@pos/validator/components/StakesCount';
+import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
-import { usePosConstants, useSentStakes } from '../../hooks/queries';
+import { usePosConstants, useSentStakes, useUnlocks } from '../../hooks/queries';
 
-// eslint-disable-next-line max-statements
+function useStakerAddress(searchParam) {
+  const searchAddress = selectSearchParamValue(searchParam, 'address');
+  const isModal = !!selectSearchParamValue(searchParam, 'modal');
+  const [currentAccount] = useCurrentAccount();
+  return !isModal && searchAddress ? searchAddress : currentAccount?.metadata?.address;
+}
+
+function ClaimRewardsDialogButton({ address }) {
+  const { t } = useTranslation();
+  const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
+  const hasClaimAbleRewards = rewardsClaimable?.meta?.total > 0;
+
+  return (
+    <DialogLink component="claimRewardsView">
+      <SecondaryButton disabled={!hasClaimAbleRewards}>{t('Claim rewards')}</SecondaryButton>
+    </DialogLink>
+  );
+}
+
+function UnlockDialogButton({ address }) {
+  const { t } = useTranslation();
+  const { data: unlocks } = useUnlocks({ config: { params: { address } } });
+  const hasUnlocks = unlocks?.data?.pendingUnlocks?.length > 0;
+
+  return (
+    <DialogLink component="lockedBalance">
+      <PrimaryButton disabled={!hasUnlocks}>{t('Unlock stakes')}</PrimaryButton>
+    </DialogLink>
+  );
+}
+
 const SentStakes = ({ history }) => {
   const { t } = useTranslation();
-  const searchAddress = selectSearchParamValue(history.location.search, 'address');
-  const [
-    {
-      metadata: { address: currentAddress },
-    },
-  ] = useCurrentAccount();
+  const stakerAddress = useStakerAddress(history.location.search);
 
-  const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
-  const queryParam = { config: { params: { address } } };
-
-  // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-
   const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: posConstants?.posTokenID } },
+    config: { params: { tokenID: posConstants?.data?.posTokenID, address: stakerAddress } },
     options: { enabled: !isGettingPosConstants },
   });
-  const dposToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
-
-  const { data } = useSentStakes(queryParam);
-  const stakingAvailable = useMemo(() => 10 - data?.meta?.total || 0, [address]);
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
         <Heading title={t('Stakes')}>
           <div className={styles.rightHeaderSection}>
-            <div className={styles.stakesCountBadge}>
-              <Icon name="stakingQueueActive" />
-              <span>{stakingAvailable}</span>
-              /10 {t('staking slots available in your account')}
-            </div>
+            <StakesCount
+              className={styles.stakesCountProp}
+              address={stakerAddress}
+            />
             <div className={styles.actionButtons}>
-              <DialogLink component="lockedBalance">
-                <PrimaryButton>{t('Unlock stakes')}</PrimaryButton>
-              </DialogLink>
+              <ClaimRewardsDialogButton address={stakerAddress} />
+              <UnlockDialogButton address={stakerAddress} />
             </div>
           </div>
         </Heading>
@@ -64,11 +80,11 @@ const SentStakes = ({ history }) => {
           showHeader
           queryHook={useSentStakes}
           transformResponse={(resp) => resp?.stakes || []}
-          queryConfig={queryParam}
+          queryConfig={{ config: { params: { address: stakerAddress } } }}
           row={SentStakesRow}
           header={header(t)}
           additionalRowProps={{
-            dposToken,
+            token,
           }}
           headerClassName={styles.tableHeader}
         />

@@ -280,9 +280,6 @@ describe('actions: staking', () => {
       sender: { publicKey: wallets.genesis.summary.publicKey },
       nonce: wallets.genesis.sequence.nonce,
       fee: '10000000',
-      params: {
-        unlockObjects: [],
-      },
       moduleCommand: 'pos:unlock',
     };
 
