@@ -43,7 +43,7 @@ describe('Reducer: staking(state, action)', () => {
         type: actionTypes.stakesRetrieved,
         data: {
           account: {
-            votesUsed: 2,
+            stakesUsed: 2,
           },
           stakes: [
             { address: validator1.address, name: validator1.name, amount: 1e10 },
@@ -61,7 +61,7 @@ describe('Reducer: staking(state, action)', () => {
     });
   });
 
-  describe('votesEdited', () => {
+  describe('stakesEdited', () => {
     it('should add validator with stake amount if does not exist among stakes', () => {
       const action = {
         type: actionTypes.stakeEdited,

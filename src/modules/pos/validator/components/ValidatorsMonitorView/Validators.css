@@ -61,11 +61,11 @@
   }
 }
 
-.votesColumnTitle {
+.stakesColumnTitle {
   justify-content: flex-start !important;
 }
 
-.votesColumn {
+.stakesColumn {
   display: inline-block;
 
   & .stake,

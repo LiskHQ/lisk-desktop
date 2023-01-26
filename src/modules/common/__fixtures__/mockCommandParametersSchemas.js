@@ -78,7 +78,7 @@ export const mockCommandParametersSchemas = {
             dataType: 'uint32',
             fieldNumber: 11,
           },
-          impliesMaxPrevotes: {
+          impliesMaxPrestakes: {
             dataType: 'boolean',
             fieldNumber: 12,
           },
@@ -122,7 +122,7 @@ export const mockCommandParametersSchemas = {
           'stateRoot',
           'maxHeightPrestaked',
           'maxHeightGenerated',
-          'impliesMaxPrevotes',
+          'impliesMaxPrestakes',
           'validatorsHash',
           'aggregateCommit',
           'signature',
