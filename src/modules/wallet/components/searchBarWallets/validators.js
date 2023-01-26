@@ -30,7 +30,7 @@ const Validators = ({
           <WalletVisual address={validator.address} />
           <div className={styles.walletInformation}>
             <div>
-              <span className={`${styles.delegateName} delegate-name`}>
+              <span className={`${styles.validatorName} delegate-name`}>
                 <Highlighter
                   highlightClassName={styles.highlight}
                   searchWords={[searchTextValue]}

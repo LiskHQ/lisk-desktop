@@ -64,7 +64,7 @@ export const DelegateDetails = () => {
         <div className={`${styles.delegateDetails}`}>
           <WalletVisual address={data.sender.address} />
           <div>
-            <p className={styles.delegateName}>{data.sender.name}</p>
+            <p className={styles.validatorName}>{data.sender.name}</p>
             <p className={styles.validatorAddress}>{truncateAddress(data.sender.address)}</p>
           </div>
         </div>

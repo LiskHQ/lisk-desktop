@@ -142,7 +142,7 @@
   }
 
   & > span {
-    @mixin delegateName;
+    @mixin validatorName;
 
     margin-right: 8px;
     font-size: var(--font-size-h6);
@@ -272,7 +272,7 @@
 }
 
 .delegateUsername {
-  @mixin delegateName;
+  @mixin validatorName;
 
   &.disabled {
     color: var(--color-blue-gray) !important;

@@ -85,7 +85,7 @@
   letter-spacing: 0.1px;
 }
 
-@define-mixin delegateName {
+@define-mixin validatorName {
   font-family: var(--content-font);
   font-size: var(--subtitle-font-size-s);
   font-weight: var(--font-weight-semi-bold);

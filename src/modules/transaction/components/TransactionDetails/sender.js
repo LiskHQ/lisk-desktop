@@ -10,14 +10,14 @@ const Sender = () => {
   const { activeToken, transaction, network } = React.useContext(
     TransactionDetailsContext,
   );
-  const delegateName = getDelegateName(transaction, activeToken);
+  const validatorName = getDelegateName(transaction, activeToken);
   const senderLabel = getModuleCommandSenderLabel()[transaction.moduleCommand];
   const address = extractAddressFromPublicKey(transaction.senderPublicKey);
 
   return (
     <WalletInfo
       className={`${styles.value} ${styles.sender}`}
-      name={delegateName}
+      name={validatorName}
       token={activeToken}
       network={network}
       address={address}
