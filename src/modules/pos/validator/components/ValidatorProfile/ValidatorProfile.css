@@ -373,22 +373,6 @@
         width: 100%;
         margin-bottom: -45px;
       }
-
-      &.delegateActive {
-        padding-right: 10px;
-      }
-
-      &.delegateStandby {
-        padding-right: 10px;
-      }
-
-      &.delegatePunished {
-        padding-right: 10px;
-      }
-
-      &.delegateBanned {
-        padding-right: 10px;
-      }
     }
   }
 }
