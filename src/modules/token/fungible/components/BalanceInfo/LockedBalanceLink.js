@@ -5,7 +5,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import DialogLink from 'src/theme/dialog/link';
 import {
-  calculateBalanceLockedInUnvotes,
+  calculateBalanceLockedInUnstakes,
   calculateBalanceLockedInStakes,
 } from '@wallet/utils/account';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
@@ -42,17 +42,17 @@ const LockedBalanceLink = ({
     lockedInStakes = useSelector((state) =>
       calculateBalanceLockedInStakes(state.staking));
   } else {
-    lockedInStakes = calculateBalanceLockedInUnvotes(account.pos?.sentStakes);
+    lockedInStakes = calculateBalanceLockedInUnstakes(account.pos?.sentStakes);
   }
 
-  const lockedInUnvotes = isWalletRoute && host
-    ? calculateBalanceLockedInUnvotes(host.pos?.unlocking)
-    : calculateBalanceLockedInUnvotes(account.pos?.unlocking);
+  const lockedInUnstakes = isWalletRoute && host
+    ? calculateBalanceLockedInUnstakes(host.pos?.unlocking)
+    : calculateBalanceLockedInUnstakes(account.pos?.unlocking);
 
-  if (lockedInUnvotes + lockedInStakes > 0) {
+  if (lockedInUnstakes + lockedInStakes > 0) {
     return (
       <Link
-        sum={lockedInUnvotes + lockedInStakes}
+        sum={lockedInUnstakes + lockedInStakes}
         style={style}
         icon={icon}
         isWalletRoute={isWalletRoute}

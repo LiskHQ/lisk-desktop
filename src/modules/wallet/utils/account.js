@@ -175,7 +175,7 @@ export const calculateSentStakesAmount = (sentStakes = []) =>
  * @param {Array} unlocking - unlocking values array from the account details
  * @returns {Number} - Sum of locked LSK, this can be different than sum of stake amounts
  */
-export const calculateBalanceLockedInUnvotes = (unlocking = []) =>
+export const calculateBalanceLockedInUnstakes = (unlocking = []) =>
   unlocking.reduce((acc, stake) => acc + parseInt(stake.amount, 10), 0);
 
 /**
