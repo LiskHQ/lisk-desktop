@@ -78,11 +78,11 @@ const getStakeStats = (stakes, account) => {
 /**
  * Validates given stakes against the following criteria:
  * - Number of stakes must not exceed STAKE_LIMIT
- * - Added vote amounts + fee must not exceed account balance
+ * - Added stake amounts + fee must not exceed account balance
  * @param {Object} Stakes - stakes object from Redux store
  * @param {Number} balance - Account balance in Beddows
  * @param {Number} fee - Tx fee in Beddows
- * @param {Number} resultingNumOfStakes - Number of used voted that will result after submitting tx
+ * @param {Number} resultingNumOfStakes - Number of used stakes that will result after submitting tx
  * @param {Function} t - i18n translation function
  * @returns {Object} The feedback object including error status and messages
  */

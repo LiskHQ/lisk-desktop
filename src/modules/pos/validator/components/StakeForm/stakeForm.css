@@ -90,7 +90,7 @@
   margin-left: 10px;
 }
 
-.delegateInfoContainer {
+.validatorInfoContainer {
   display: flex;
   position: relative;
   flex-direction: row;
@@ -99,7 +99,7 @@
   width: calc(33% - 13px);
 }
 
-.delegateInfo {
+.validatorInfo {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -264,14 +264,14 @@
 }
 
 .stakeIndex {
-  counter-increment: delegate-address;
-  content: counter(delegate-address) ".";
+  counter-increment: validator-address;
+  content: counter(validator-address) ".";
   position: absolute;
   left: -16px;
   color: var(--color-blue-gray);
 }
 
-.delegateUsername {
+.validatorUsername {
   @mixin validatorName;
 
   &.disabled {
@@ -279,7 +279,7 @@
   }
 }
 
-.delegateAddress {
+.validatorAddress {
   @mixin contentLarge;
 }
 
