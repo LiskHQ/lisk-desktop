@@ -153,7 +153,7 @@
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
-.reportDelegateMisbehavior {
+.reportValidatorMisbehavior {
   grid-template-areas:
     "illustration illustration"
     "sender sender"

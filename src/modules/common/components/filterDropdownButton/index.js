@@ -25,7 +25,7 @@ const blackListTypes = [
   'auth:registerMultisignature',
   'pos:registerValidator',
   'pos:stakeValidator',
-  'pos:reportDelegateMisbehavior',
+  'pos:reportValidatorMisbehavior',
 ];
 
 class FilterDropdownButton extends React.Component {

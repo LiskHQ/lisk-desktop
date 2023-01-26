@@ -46,7 +46,7 @@ const blackListTypes = [
   'auth:registerMultisignature',
   'pos:registerValidator',
   'pos:stakeValidator',
-  'pos:reportDelegateMisbehavior',
+  'pos:reportValidatorMisbehavior',
 ];
 
 // eslint-disable-next-line max-statements

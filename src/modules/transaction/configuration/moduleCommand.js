@@ -6,7 +6,7 @@ const moduleCommandNameMap = {
   stake: 'pos:stake',
   unlock: 'pos:unlock',
   claimRewards: 'pos:claimRewards',
-  reportDelegateMisbehavior: 'pos:reportMisbehavior',
+  reportValidatorMisbehavior: 'pos:reportMisbehavior',
   reclaim: 'legacy:reclaimLSK',
 };
 
@@ -35,7 +35,7 @@ const moduleCommandMap = {
     maxFee: 25e8,
     icon: 'registerValidator',
   },
-  [moduleCommandNameMap.reportDelegateMisbehavior]: {
+  [moduleCommandNameMap.reportValidatorMisbehavior]: {
     maxFee: 1e7,
     icon: 'reportValidatorMisbehavior',
   },

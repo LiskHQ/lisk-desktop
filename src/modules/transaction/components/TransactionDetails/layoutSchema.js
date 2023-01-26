@@ -9,7 +9,7 @@ import styles from './layoutSchema.css';
 
 const {
   transfer, stakeValidator, unlock, registerValidator, registerMultisignature,
-  reportDelegateMisbehavior, reclaim,
+  reportValidatorMisbehavior, reclaim,
 } = MODULE_COMMANDS_NAME_MAP;
 
 const baseComponents = [Illustration, Sender];
@@ -58,9 +58,9 @@ export const LayoutSchema = {
     components: [...previewBaseComponents, Amount, ...restComponents],
     className: styles.unlockTokenPreview,
   },
-  [reportDelegateMisbehavior]: {
+  [reportValidatorMisbehavior]: {
     components: [...baseComponents, ...timeComponents, PrettyJson],
-    className: styles.reportDelegateMisbehavior,
+    className: styles.reportValidatorMisbehavior,
   },
   [reclaim]: {
     components: [...baseComponents, ...timeComponents, Amount, PrettyJson],

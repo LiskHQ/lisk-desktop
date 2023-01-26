@@ -23,7 +23,7 @@ const data = {
     'pos:registerValidator': 5,
     'pos:stakeValidator': 9,
     'pos:unlock': 4,
-    'pos:reportDelegateMisbehavior': 2,
+    'pos:reportValidatorMisbehavior': 2,
     'legacy:reclaim': 1,
   },
   distributionByAmount: {

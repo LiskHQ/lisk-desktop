@@ -81,8 +81,8 @@ const moduleCommandSchemas = {
       },
     },
   },
-  "pos:reportDelegateMisbehavior": {
-    $id: "/pos/command/reportDelegateMisbehaviorParams",
+  "pos:reportValidatorMisbehavior": {
+    $id: "/pos/command/reportValidatorMisbehaviorParams",
     type: "object",
     required: ["header1", "header2"],
     properties: {
