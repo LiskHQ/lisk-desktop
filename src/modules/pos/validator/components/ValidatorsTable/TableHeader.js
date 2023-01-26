@@ -23,9 +23,9 @@ export const getValidatorWeightClass = (activeTab) => {
     case 'sanctioned':
       return 'hidden';
     case 'watched':
-      return `${grid['col-xs-2']} ${styles.voteWeight}`;
+      return `${grid['col-xs-2']} ${styles.stakeWeight}`;
     default:
-      return `${grid['col-xs-3']} ${styles.voteWeight}`;
+      return `${grid['col-xs-3']} ${styles.stakeWeight}`;
   }
 };
 

@@ -77,7 +77,7 @@
   display: flex;
   flex-flow: row wrap;
 
-  & .voteItem {
+  & .stakeItem {
     background: var(--color-mystic);
     padding: 4px 6px;
     border-radius: 3px;

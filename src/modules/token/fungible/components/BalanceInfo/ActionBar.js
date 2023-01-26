@@ -50,7 +50,7 @@ const ActionBar = ({
                 size="maxContent"
                 content={(
                   <SecondaryButton
-                    className={`${styles.voteButton} ${
+                    className={`${styles.stakeButton} ${
                       isBanned && styles.disabled
                     } ${!isBanned && 'open-add-stake-dialog'}`}
                     size="m"

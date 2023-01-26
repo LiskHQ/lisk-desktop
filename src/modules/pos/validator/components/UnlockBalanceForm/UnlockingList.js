@@ -31,7 +31,7 @@ const UnlockingListItem = ({ pendingUnlockableUnlock, t, currentBlockHeight }) =
  */
 const UnlockingList = ({ pendingUnlockableUnlocks, currentBlockHeight, t }) =>
   pendingUnlockableUnlocks
-    .sort((unvoteA, unvoteB) => unvoteB.unstakeHeight - unvoteA.unstakeHeight)
+    .sort((unstakeA, unstakeB) => unstakeB.unstakeHeight - unstakeA.unstakeHeight)
     .map((pendingUnlockableUnlock, i) => (
       <UnlockingListItem
         key={`${i}-unlocking-balance-list`}
