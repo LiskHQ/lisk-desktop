@@ -102,7 +102,7 @@ describe('Unlock LSK modal', () => {
           ...wallets.genesis,
           pos: {
             pendingUnlocks: initUnlocking,
-            sentVotes: initVotes,
+            sentStakes: initVotes,
           },
           sequence: { nonce: '178' },
         },
@@ -219,7 +219,7 @@ describe('Unlock LSK modal', () => {
             token: wallets.genesis.token,
             pos: {
               pendingUnlocks: [],
-              sentVotes: [],
+              sentStakes: [],
             },
           },
         },

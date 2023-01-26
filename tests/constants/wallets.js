@@ -16,7 +16,7 @@ const wallets = {
     keys: { numberOfSignatures: 0, mandatoryKeys: [], optionalKeys: [] },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   validator: {
@@ -59,7 +59,7 @@ const wallets = {
     sequence: { nonce: '0' },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   validator_candidate: {
@@ -87,7 +87,7 @@ const wallets = {
     sequence: { nonce: 1 },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   multiSig: {
@@ -110,7 +110,7 @@ const wallets = {
     },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   send_all_wallet: {
@@ -124,7 +124,7 @@ const wallets = {
     sequence: { },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   without_initialization: {
@@ -138,7 +138,7 @@ const wallets = {
     sequence: { },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   testnet_guy: {
@@ -151,7 +151,7 @@ const wallets = {
     sequence: { },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   non_migrated: {

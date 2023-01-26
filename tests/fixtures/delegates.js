@@ -36,7 +36,7 @@ export default {
       status: 'standby',
       earnedRewards: '244900000000',
     },
-    sentVotes: [
+    sentStakes: [
       {
         validatorAddress: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag',
         amount: '1626000000000',
