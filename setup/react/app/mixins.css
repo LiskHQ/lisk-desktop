@@ -107,11 +107,3 @@
   letter-spacing: 0;
   line-height: 25px;
 }
-
-@define-mixin voteStatusSubHeading $weight: semi-bold {
-  font-family: var(--content-font);
-  font-size: var(--font-size-h6);
-  font-weight: var(--font-weight-$(weight));
-  letter-spacing: 0;
-  line-height: 21px;
-}
