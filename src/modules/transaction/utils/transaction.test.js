@@ -314,7 +314,7 @@ describe.skip('API: LSK Transactions', () => {
   //     });
   //   });
 
-  //   it('should a vote delegate transaction with type signature of lisk service', () => {
+  //   it('should a stake delegate transaction with type signature of lisk service', () => {
   //     const [module, command] = splitModuleAndCommand(stakeValidator);
   //     const tx = {
   //       ...baseElementsTx,

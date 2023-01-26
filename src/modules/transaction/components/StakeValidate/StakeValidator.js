@@ -10,7 +10,7 @@ const ItemList = ({ items, heading }) => (
         <StakeItem
           key={`stake-item-${address}`}
           address={address}
-          vote={items[address]}
+          stake={items[address]}
           title={items[address].username}
         />
       ))}
@@ -44,7 +44,7 @@ const StakeValidator = ({ t, account, summaryInfo }) => {
         </InfoColumn>
       </div>
       {/* <div className={styles.txFeeContainer}>
-        <InfoColumn title={t('Transaction Fees')} className="vote-fees">
+        <InfoColumn title={t('Transaction Fees')} className="stake-fees">
           {transaction?.composedFees.Transaction}
         </InfoColumn>
       </div> */}

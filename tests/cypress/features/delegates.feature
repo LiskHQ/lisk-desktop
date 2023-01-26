@@ -106,5 +106,5 @@ Feature: validator
   #   When I click on showMoreValidatorsBtn
   #   Then I should see 20 votes in table
   #   When I click on transactionRow
-  #   Then I should be on a vote transaction details modal
+  #   Then I should be on a stake transaction details modal
 

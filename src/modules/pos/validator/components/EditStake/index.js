@@ -207,7 +207,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
               </label>
               {daysLeft >= 1 && start !== undefined && (
                 <>
-                  <WarnPunishedValidator pomHeight={{ start, end }} vote />
+                  <WarnPunishedValidator pomHeight={{ start, end }} stake />
                   <span className={styles.space} />
                 </>
               )}

@@ -46,11 +46,11 @@ const Stakes = ({
   }, [votes.data]);
 
   const areLoading = accounts.isLoading || votes.isLoading;
-  const filteredStakes = votes.data.filter((vote) => {
-    if (!vote.username) return false;
+  const filteredStakes = votes.data.filter((stake) => {
+    if (!stake.username) return false;
     return (
-      vote.username.indexOf(filterValue) > -1
-      || vote.address.indexOf(filterValue) > -1
+      stake.username.indexOf(filterValue) > -1
+      || stake.address.indexOf(filterValue) > -1
     );
   });
 

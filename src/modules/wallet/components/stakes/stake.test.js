@@ -30,7 +30,7 @@ describe('Stakes Tab Component', () => {
       rank: i + 1,
       rewards: '40500000000',
       productivity: Math.random() * 100,
-      vote: '9999988456732672',
+      stake: '9999988456732672',
     })),
   };
 

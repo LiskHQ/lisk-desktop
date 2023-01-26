@@ -160,8 +160,8 @@ export const truncateTransactionID = (id) => {
 /**
  * calculates the balance locked in votes
  *
- * @param {Object} votes - Stakes dictionary, values must include vote.confirmed
- * @returns {Number} - Sum of vote amounts
+ * @param {Object} votes - Stakes dictionary, values must include stake.confirmed
+ * @returns {Number} - Sum of stake amounts
  */
 export const calculateBalanceLockedInStakes = (stakes = {}) =>
   Object.values(stakes).reduce((total, stake) => (total + stake.confirmed), 0);
@@ -173,10 +173,10 @@ export const calculateSentStakesAmount = (sentStakes = []) =>
  * calculates balance locked for the account in unvotes
  *
  * @param {Array} unlocking - unlocking values array from the account details
- * @returns {Number} - Sum of locked LSK, this can be different than sum of vote amounts
+ * @returns {Number} - Sum of locked LSK, this can be different than sum of stake amounts
  */
 export const calculateBalanceLockedInUnvotes = (unlocking = []) =>
-  unlocking.reduce((acc, vote) => acc + parseInt(vote.amount, 10), 0);
+  unlocking.reduce((acc, stake) => acc + parseInt(stake.amount, 10), 0);
 
 /**
  * Checks if given unlocking item can be unlocked
@@ -213,9 +213,9 @@ export const getPendingUnlockableUnlocks = (pendingUnlocks = []) =>
  */
 export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
-    (sum, vote) =>
-    (!isBlockHeightReached(vote.expectedUnlockableHeight, currentBlockHeight)
-      ? sum + parseInt(vote.amount, 10) : sum),
+    (sum, stake) =>
+    (!isBlockHeightReached(stake.expectedUnlockableHeight, currentBlockHeight)
+      ? sum + parseInt(stake.amount, 10) : sum),
     0,
   );
 

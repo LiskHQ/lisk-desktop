@@ -16,7 +16,7 @@ const getPunishmentDetails = (punishedTimestamp, pomHeight, currentHeight) => {
   return { daysLeft, punishmentStartDate };
 };
 
-const Warning = ({ vote, ...props }) => {
+const Warning = ({ stake, ...props }) => {
   const { pomHeight } = props;
   const { t } = useTranslation();
 
@@ -31,7 +31,7 @@ const Warning = ({ vote, ...props }) => {
     currentHeight
   );
 
-  if (vote) return <EditStakeWarning daysLeft={daysLeft} t={t} {...props} />;
+  if (stake) return <EditStakeWarning daysLeft={daysLeft} t={t} {...props} />;
 
   return (
     <ValidatorProfileWarning

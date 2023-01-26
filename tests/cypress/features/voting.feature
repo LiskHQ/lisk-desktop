@@ -21,7 +21,7 @@ Feature: Stake validator
    #    And I click on confirmButton
    #    And I click on backToWalletButton
    #    Given I am on wallet page
-   #    Then The latest transaction is vote
+   #    Then The latest transaction is stake
 
    # @basic
    # Scenario: Up Stake for a validator when there are locked lsk
@@ -34,7 +34,7 @@ Feature: Stake validator
    #    And I click on confirmButton
    #    And I click on backToWalletButton
    #    Given I am on wallet page
-   #    Then The latest transaction is vote
+   #    Then The latest transaction is stake
 
    # @basic
    # Scenario: Remove Stake for a validator
@@ -45,7 +45,7 @@ Feature: Stake validator
    #    And I click on confirmButton
    #    And I click on backToWalletButton
    #    Given I am on wallet page
-   #    Then The latest transaction is vote
+   #    Then The latest transaction is stake
 
    # @basic
    # Scenario: Unlock balance

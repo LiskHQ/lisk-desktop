@@ -10,7 +10,7 @@ import Validators from './Validators';
 const activeDelegates = delegatesList.map((item) => ({ ...item }));
 activeDelegates.push({
   username: 'additional',
-  vote: '0',
+  stake: '0',
   earnedRewards: '0',
   producedBlocks: 28,
   missedBlocks: 0,

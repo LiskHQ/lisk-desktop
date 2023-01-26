@@ -68,7 +68,7 @@
 .votesColumn {
   display: inline-block;
 
-  & .vote,
+  & .stake,
   & .unStake {
     display: inline-block;
     width: 100%;
@@ -82,7 +82,7 @@
     width: 20px;
   }
 
-  & .vote {
+  & .stake {
     & .icon {
       color: var(--color-deep-green);
     }

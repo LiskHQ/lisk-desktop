@@ -25,7 +25,7 @@ function registerValidator(){
 	lisk transaction:broadcast $(lisk transaction:create:validator 0 11 validator --passphrase="recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit" --networkIdentifier=$NETWORKIDENTIFIER)
 }
 
-function vote() {
+function stake() {
 	lisk transaction:broadcast $(lisk transaction:create --type=13 156 0.1 --votes="537318935439898807L,100" --passphrase="peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" --networkIdentifier=93d00fe5be70d90e7ae247936a2e7d83b50809c79b73fa14285f02c842348b3e)
 	sleep 20
 	lisk transaction:broadcast $(lisk transaction:create --type=13 157 0.1 --votes="537318935439898807L,-20" --passphrase="peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" --networkIdentifier=93d00fe5be70d90e7ae247936a2e7d83b50809c79b73fa14285f02c842348b3e)
@@ -45,7 +45,7 @@ transfer 156 1 94495548317450502L without-initialization
 sleep 20
 registerValidator
 sleep 20
-vote
+stake
 
 # initialize accounts
 transfer 158 1 544792633152563672L account-initializer

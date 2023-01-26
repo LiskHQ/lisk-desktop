@@ -124,7 +124,7 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock');
       break;
     case 'voting':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Validator vote');
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Validator stake');
       break;
     case 'validator registration':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Validator registration');
@@ -135,7 +135,7 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     case 'register multisignature group':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register multisig. group');
       break;
-    case 'vote':
+    case 'stake':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Stake');
       break;
   }
