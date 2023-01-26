@@ -3,12 +3,12 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import fakeStore from '@tests/unit-test-utils/fakeStore';
-import delegatesList from '@tests/constants/validators';
+import { validatorList } from '@tests/constants/validators';
 import accounts from '@tests/constants/wallets';
 import Validators from './Validators';
 
-const activeDelegates = delegatesList.map((item) => ({ ...item }));
-activeDelegates.push({
+const activeValidators = validatorList.map((item) => ({ ...item }));
+activeValidators.push({
   username: 'additional',
   stake: '0',
   earnedRewards: '0',
@@ -19,7 +19,7 @@ activeDelegates.push({
   rank: 999,
   address: '14018336151296112016L',
   account: accounts.genesis,
-  delegateWeight: 0,
+  validatorWeight: 0,
 });
 
 describe('Validators monitor page', () => {
@@ -46,7 +46,7 @@ describe('Validators monitor page', () => {
   };
 
   function initSanctionedProps() {
-    props.sanctionedDelegates = {
+    props.sanctionedValidators = {
       isLoading: false,
       data: [
         {
@@ -104,7 +104,7 @@ describe('Validators monitor page', () => {
     props = {
       t: (key) => key,
       blocks,
-      standByDelegates: {
+      standByValidators: {
         isLoading: true,
         data: [],
         meta: { total: 100, count: 10, offset: 0 },
@@ -112,7 +112,7 @@ describe('Validators monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      sanctionedDelegates: {
+      sanctionedValidators: {
         isLoading: true,
         data: [],
 
@@ -120,7 +120,7 @@ describe('Validators monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      watchedDelegates: {
+      watchedValidators: {
         isLoading: true,
         data: [],
         loadData: jest.fn(),
@@ -246,7 +246,7 @@ describe('Validators monitor page', () => {
     wrapper = setup(props);
     const updatedProps = { ...props, watchList: ['lsktaa9xuys6hztyaryvx6msu279mpkn9sz6w5or2'] };
     wrapper = setup(updatedProps);
-    expect(props.watchedDelegates.loadData).toHaveBeenCalledTimes(1);
+    expect(props.watchedValidators.loadData).toHaveBeenCalledTimes(1);
   });
 
   it.skip('does not display watched tab if watchlist is empty', () => {
@@ -275,7 +275,7 @@ describe('Validators monitor page', () => {
       .find('.filter-by-name')
       .last()
       .simulate('change', { target: { value: 'lisk' } });
-    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'sanctionedDelegates');
+    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'sanctionedValidators');
 
     wrapper = setup(updatedProps);
     switchTab('watched');
@@ -285,7 +285,7 @@ describe('Validators monitor page', () => {
       .simulate('change', { target: { value: 'li' } });
     expect(props.applyFilters).toHaveBeenCalledWith(
       { ...expectedArgs, search: 'li' },
-      'watchedDelegates'
+      'watchedValidators'
     );
 
     switchTab('standby');
@@ -293,6 +293,6 @@ describe('Validators monitor page', () => {
       .find('.filter-by-name')
       .last()
       .simulate('change', { target: { value: 'lisk' } });
-    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'standByDelegates');
+    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'standByValidators');
   });
 });
