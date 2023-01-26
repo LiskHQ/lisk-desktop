@@ -154,12 +154,12 @@ describe('Validators monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      votes: {
+      stakes: {
         isLoading: false,
         data: [
           {
             params: {
-              votes: [
+              stakes: [
                 {
                   delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
                   amount: '100000000',
@@ -254,9 +254,9 @@ describe('Validators monitor page', () => {
     expect(wrapper.find('.tab.watched')).not.toExist();
   });
 
-  it.skip('displays latest votes component if active tab is votes', () => {
+  it.skip('displays latest stakes component if active tab is stakes', () => {
     wrapper = mountWithRouter(Validators, props);
-    wrapper.find('.tab.votes').simulate('click');
+    wrapper.find('.tab.stakes').simulate('click');
     expect(wrapper.find('.transaction-row-wrapper')).toExist();
   });
 

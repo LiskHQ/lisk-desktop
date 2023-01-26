@@ -1,6 +1,6 @@
 .container {
   & .stakes {
-    grid-area: votes;
+    grid-area: stakes;
   }
 
   &.full,

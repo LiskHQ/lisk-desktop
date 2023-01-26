@@ -65,7 +65,7 @@ describe.skip('API: LSK Transactions', () => {
         module: 'pos',
         command: 'stakeValidator',
         params: {
-          votes: [
+          stakes: [
             {
               amount: '100000000',
             },
@@ -135,7 +135,7 @@ describe.skip('API: LSK Transactions', () => {
         module: 'pos',
         command: 'stakeValidator',
         params: {
-          votes: [
+          stakes: [
             {
               amount: '100',
               delegateAddress: accounts.genesis.summary.address,
@@ -155,7 +155,7 @@ describe.skip('API: LSK Transactions', () => {
         command,
         id: Buffer.alloc(0),
         params: {
-          votes: tx.params.votes.map((item) => ({
+          stakes: tx.params.stakes.map((item) => ({
             amount: BigInt(item.amount),
             delegateAddress: expect.arrayContaining([]),
           })),
@@ -321,7 +321,7 @@ describe.skip('API: LSK Transactions', () => {
   //       module,
   //       command,
   //       params: {
-  //         votes: [
+  //         stakes: [
   //           {
   //             amount: BigInt('100'),
   //             delegateAddress: getAddressFromBase32Address(accounts.validator.summary.address),
@@ -335,7 +335,7 @@ describe.skip('API: LSK Transactions', () => {
   //       moduleCommand: stakeValidator,
   //       id: '',
   //       params: {
-  //         votes: [
+  //         stakes: [
   //           {
   //             amount: '100',
   //             delegateAddress: accounts.validator.summary.address,

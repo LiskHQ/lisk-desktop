@@ -38,7 +38,7 @@ describe('Reducer: staking(state, action)', () => {
   });
 
   describe('stakesRetrieved', () => {
-    it('should store fetched votes of a given account', () => {
+    it('should store fetched stakes of a given account', () => {
       const action = {
         type: actionTypes.stakesRetrieved,
         data: {
@@ -62,7 +62,7 @@ describe('Reducer: staking(state, action)', () => {
   });
 
   describe('votesEdited', () => {
-    it('should add validator with stake amount if does not exist among votes', () => {
+    it('should add validator with stake amount if does not exist among stakes', () => {
       const action = {
         type: actionTypes.stakeEdited,
         data: [
@@ -83,7 +83,7 @@ describe('Reducer: staking(state, action)', () => {
       expect(changedState).toEqual(expectedState);
     });
 
-    it('should change stake amount if validators exist among votes', () => {
+    it('should change stake amount if validators exist among stakes', () => {
       const action = {
         type: actionTypes.stakeEdited,
         data: [
@@ -109,7 +109,7 @@ describe('Reducer: staking(state, action)', () => {
   });
 
   describe('stakesSubmitted', () => {
-    it('should add pending flag to dirty votes', () => {
+    it('should add pending flag to dirty stakes', () => {
       const action = {
         type: actionTypes.stakesSubmitted,
       };
@@ -160,7 +160,7 @@ describe('Reducer: staking(state, action)', () => {
   });
 
   describe('stakesCleared', () => {
-    it('should revert votes to initial state', () => {
+    it('should revert stakes to initial state', () => {
       const action = {
         type: actionTypes.stakesCleared,
       };

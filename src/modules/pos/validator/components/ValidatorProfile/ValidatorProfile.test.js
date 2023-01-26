@@ -45,7 +45,7 @@ describe('Validator Profile', () => {
     useSentStakes.mockReturnValue({
       data: {
         ...mockSentStakes,
-        data: { ...mockReceivedStakes.data, votes: mockReceivedStakes.data.stakers.slice(5, 7) },
+        data: { ...mockReceivedStakes.data, stakes: mockReceivedStakes.data.stakers.slice(5, 7) },
       },
     });
 
@@ -231,7 +231,7 @@ describe('Validator Profile', () => {
         ...mockReceivedStakes,
         data: {
           ...mockReceivedStakes.data,
-          votes: mockReceivedStakes.data.stakers.map((stake) => ({
+          stakes: mockReceivedStakes.data.stakers.map((stake) => ({
             ...stake,
             delegateAddress: 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53',
           })),

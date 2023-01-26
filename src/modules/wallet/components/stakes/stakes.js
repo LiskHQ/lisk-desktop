@@ -19,7 +19,7 @@ const getMessages = (t) => ({
 });
 
 const Stakes = ({
-  votes, accounts, address, t, history,
+  stakes, accounts, address, t, history,
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
@@ -34,19 +34,19 @@ const Stakes = ({
   };
 
   useEffect(() => {
-    votes.loadData({ address });
+    stakes.loadData({ address });
   }, [address]);
 
   // Fetch validator profiles to define rank, productivity and validator weight
   useEffect(() => {
-    const addressList = votes.data.map((item) => item.address);
+    const addressList = stakes.data.map((item) => item.address);
     if (isEmpty(accounts.data) && addressList.length) {
       accounts.loadData({ addressList, isValidator: true });
     }
-  }, [votes.data]);
+  }, [stakes.data]);
 
-  const areLoading = accounts.isLoading || votes.isLoading;
-  const filteredStakes = votes.data.filter((stake) => {
+  const areLoading = accounts.isLoading || stakes.isLoading;
+  const filteredStakes = stakes.data.filter((stake) => {
     if (!stake.username) return false;
     return (
       stake.username.indexOf(filterValue) > -1
@@ -61,7 +61,7 @@ const Stakes = ({
         <div className={`${styles.filterHolder}`}>
           <Input
             className="search"
-            disabled={!votes.data.length}
+            disabled={!stakes.data.length}
             name="filter"
             value={filterValue}
             placeholder={t('Filter by name')}

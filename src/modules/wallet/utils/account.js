@@ -158,9 +158,9 @@ export const truncateTransactionID = (id) => {
 };
 
 /**
- * calculates the balance locked in votes
+ * calculates the balance locked in stakes
  *
- * @param {Object} votes - Stakes dictionary, values must include stake.confirmed
+ * @param {Object} stakes - Stakes dictionary, values must include stake.confirmed
  * @returns {Number} - Sum of stake amounts
  */
 export const calculateBalanceLockedInStakes = (stakes = {}) =>

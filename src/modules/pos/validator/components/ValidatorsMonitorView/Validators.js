@@ -71,9 +71,9 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
         className: 'sanctioned',
       },
       {
-        value: 'votes',
+        value: 'stakes',
         name: t('Latest stakes'),
-        className: 'votes',
+        className: 'stakes',
       },
     ],
     active: activeTab,
@@ -113,7 +113,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
   };
 
   const displayTab = (tab) => {
-    if (tab === 'votes') return <LatestStakes filters={filters} />;
+    if (tab === 'stakes') return <LatestStakes filters={filters} />;
 
     return <ValidatorsTable {...commonProps} />;
   };
@@ -155,7 +155,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
       <Box main>
         <BoxHeader className={`${styles.tabSelector} validators-table`}>
           {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
-          <span className={activeTab === 'votes' ? 'hidden' : ''}>
+          <span className={activeTab === 'stakes' ? 'hidden' : ''}>
             <Input
               icon={<Icon className={styles.searchIcon} name="searchActive" />}
               onChange={handleFilter}

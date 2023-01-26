@@ -8,11 +8,11 @@ import withData from 'src/utils/withData';
 import Stakes from './stakes';
 
 const apis = {
-  votes: {
+  stakes: {
     apiUtil: (network, params) => getStakes({ network, params }),
     defaultData: [],
     autoload: false,
-    transformResponse: (response) => response.data?.votes ?? [],
+    transformResponse: (response) => response.data?.stakes ?? [],
   },
   accounts: {
     apiUtil: (network, params) => getAccounts({ network, params }),

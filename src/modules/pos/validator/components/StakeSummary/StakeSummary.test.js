@@ -77,7 +77,7 @@ const transactionJSON = {
   module: 'pos',
   command: 'stakeValidator',
   params: {
-    votes: [
+    stakes: [
       {
         amount: '100',
         delegateAddress: accounts.genesis.summary.address,
