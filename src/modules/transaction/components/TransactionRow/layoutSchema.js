@@ -17,7 +17,7 @@ import styles from './schemas.css';
 const hosted = [ID, Height, Type, Date, Fee, Status];
 const full = [ID, Sender, Height, Type, Date, Status];
 const minimal = [Counterpart, Amount];
-const vote = [ValidatorDetails, Date, Round, Params];
+const stake = [ValidatorDetails, Date, Round, Params];
 
 const LayoutSchema = {
   full: {
@@ -32,9 +32,9 @@ const LayoutSchema = {
     components: minimal,
     className: styles.minimalLayout,
   },
-  vote: {
-    components: vote,
-    className: styles.voteLayout,
+  stake: {
+    components: stake,
+    className: styles.stakeLayout,
   },
   default: {
     components: full,

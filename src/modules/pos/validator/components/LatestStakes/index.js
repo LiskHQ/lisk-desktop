@@ -47,7 +47,7 @@ const LatestStakes = ({ filters }) => {
         t,
         validators: validatorsMap,
         activeToken: 'LSK',
-        layout: 'vote',
+        layout: 'stake',
       }}
     />
   );
