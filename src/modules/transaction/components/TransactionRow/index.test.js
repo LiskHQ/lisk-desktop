@@ -20,13 +20,13 @@ const txBase = {
 
 // @TODO: this would be re-instated when work is done in re-instating
 //  the transctions/validator domain
-// const vote = {
+// const stake = {
 //   moduleCommandID: '5:1',
 //   params: {
-//     votes: [
+//     stakes: [
 //       {
 //         amount: '2000000000',
-//         delegateAddress: accounts.validator.summary.address,
+//         validatorAddress: accounts.validator.summary.address,
 //       },
 //     ],
 //   },
@@ -34,7 +34,7 @@ const txBase = {
 // const registerValidator = {
 //   moduleCommandID: '5:0',
 //   params: {
-//     delegate: {
+//     validator: {
 //       username: 'sample_username',
 //     },
 //   },
@@ -103,7 +103,7 @@ describe('Transaction Row', () => {
   //       ...baseProps,
   //       data: {
   //         ...txBase,
-  //         ...vote,
+  //         ...stake,
   //       },
   //       layout: 'full',
   //     };
@@ -125,7 +125,7 @@ describe('Transaction Row', () => {
   //       ...baseProps,
   //       data: {
   //         ...txBase,
-  //         ...vote,
+  //         ...stake,
   //       },
   //       layout: 'hosted',
   //     };

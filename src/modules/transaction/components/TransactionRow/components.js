@@ -207,24 +207,24 @@ export const Status = ({ t }) => {
 };
 
 const generateStakes = (params, validators, token, t) => {
-  const voteElements = params.votes.slice(0, 1).map((vote) => (
-    <span className={`${styles.container} stake-item-address`} key={`vote-${vote.validatorAddress}`}>
-      <Link to={`${routes.wallet.path}?address=${vote.validatorAddress}`}>
+  const stakeElements = params.stakes.slice(0, 1).map((stake) => (
+    <span className={`${styles.container} stake-item-address`} key={`stake-${stake.validatorAddress}`}>
+      <Link to={`${routes.wallet.path}?address=${stake.validatorAddress}`}>
         <span className={styles.primaryText}>
-          {validators[vote.validatorAddress]?.name ?? truncateAddress(vote.validatorAddress)}
+          {validators[stake.validatorAddress]?.name ?? truncateAddress(stake.validatorAddress)}
         </span>
       </Link>
       <span className={`${styles.value}`}>
-        <TokenAmount val={vote.amount} token={token} />
+        <TokenAmount val={stake.amount} token={token} />
       </span>
     </span>
   ));
 
   return (
     <div className={styles.stakeDetails}>
-      {voteElements}
-      {params.votes.length > 1 && (
-        <span className={styles.more}>{`${params.votes.length - 1} ${t('more')}...`}</span>
+      {stakeElements}
+      {params.stakes.length > 1 && (
+        <span className={styles.more}>{`${params.stakes.length - 1} ${t('more')}...`}</span>
       )}
     </div>
   );
@@ -232,13 +232,13 @@ const generateStakes = (params, validators, token, t) => {
 
 export const Params = ({ t }) => {
   const { data, validators = [], activeToken } = useContext(TransactionRowContext);
-  const { voteDelegate, registerValidator, transfer } = MODULE_COMMANDS_NAME_MAP;
+  const { stakeValidator, registerValidator, transfer } = MODULE_COMMANDS_NAME_MAP;
 
   const getDetails = () => {
     switch (data.moduleCommand) {
       case registerValidator:
         return data.params.validator?.username;
-      case voteDelegate:
+      case stakeValidator:
         return generateStakes(data.params, validators, activeToken, t);
       case transfer:
         return data.params.data;
