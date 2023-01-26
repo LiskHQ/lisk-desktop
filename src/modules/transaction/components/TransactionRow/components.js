@@ -221,7 +221,7 @@ const generateStakes = (params, delegates, token, t) => {
   ));
 
   return (
-    <div className={styles.voteDetails}>
+    <div className={styles.stakeDetails}>
       {voteElements}
       {params.votes.length > 1 && (
         <span className={styles.more}>{`${params.votes.length - 1} ${t('more')}...`}</span>
