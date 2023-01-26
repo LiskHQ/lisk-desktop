@@ -6,8 +6,8 @@ import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 export const httpPaths = {
   validators: `${HTTP_PREFIX}/accounts`,
-  votesSent: `${HTTP_PREFIX}/dpos/votes/sent`,
-  votesReceived: `${HTTP_PREFIX}/dpos/votes/received`,
+  stakes: `${HTTP_PREFIX}/pos/stakes`,
+  stakers: `${HTTP_PREFIX}/pos/stakers`,
   forgers: `${HTTP_PREFIX}/generators`,
 };
 
@@ -125,7 +125,7 @@ export const getValidators = ({ network, params = {}, baseUrl }) => {
 };
 
 /**
- * Retrieves a list of votes sent by a given account
+ * Retrieves a list of stakes sent by a given account
  *
  * @param {Object} data
  * @param {String?} data.params.address - account address
@@ -138,7 +138,7 @@ export const getValidators = ({ network, params = {}, baseUrl }) => {
  */
 export const getStakes = ({ params = {} }) =>
   client.rest({
-    url: httpPaths.votesSent,
+    url: httpPaths.stakes,
     params: getValidatorProps({ address: params.address, publicKey: params.publicKey }),
   });
 
@@ -161,7 +161,7 @@ export const getValidatorList = ({ params = {} }) =>
   });
 
 /**
- * Retrieves list of votes given for a given validator.
+ * Retrieves list of stakers given for a given validator.
  *
  * @param {Object} data
  * @param {String?} data.params.address - Validator address
@@ -174,7 +174,7 @@ export const getValidatorList = ({ params = {} }) =>
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getVoters = ({ network, params = {}, baseUrl }) => {
+export const getStakers = ({ network, params = {}, baseUrl }) => {
   const pagination = {};
   Object.keys(params).forEach((key) => {
     if (txFilters[key] && txFilters[key].test(params[key])) {
@@ -187,7 +187,7 @@ export const getVoters = ({ network, params = {}, baseUrl }) => {
   });
 
   return client.rest({
-    url: httpPaths.votesReceived,
+    url: httpPaths.stakers,
     params: {
       ...account,
       ...pagination,

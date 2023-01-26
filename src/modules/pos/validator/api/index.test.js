@@ -230,7 +230,7 @@ describe('API: LSK Delegates', () => {
     });
   });
 
-  describe('getVoters', () => {
+  describe('getStakers', () => {
     const address = 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11';
 
     beforeEach(() => {
@@ -241,7 +241,7 @@ describe('API: LSK Delegates', () => {
       const expectedResponse = [{}, {}, {}];
       const params = { address };
       setApiResponseData(expectedResponse, client.rest);
-      await expect(validator.getVoters({ params, network })).resolves.toEqual(expectedResponse);
+      await expect(validator.getStakers({ params, network })).resolves.toEqual(expectedResponse);
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl: undefined,
         url: validator.httpPaths.votesReceived,
@@ -258,7 +258,7 @@ describe('API: LSK Delegates', () => {
         offset: 2,
       };
       setApiResponseData(expectedResponse, client.rest);
-      await expect(validator.getVoters({ params, baseUrl, network })).resolves.toEqual(
+      await expect(validator.getStakers({ params, baseUrl, network })).resolves.toEqual(
         expectedResponse
       );
       expect(client.rest).toHaveBeenCalledWith({
@@ -275,7 +275,7 @@ describe('API: LSK Delegates', () => {
         limit: 3,
         offset: 2,
       };
-      validator.getVoters({ params, baseUrl, network });
+      validator.getStakers({ params, baseUrl, network });
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl,
         url: validator.httpPaths.votesReceived,
@@ -287,7 +287,7 @@ describe('API: LSK Delegates', () => {
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       setApiRejection(expectedResponse.message, client.rest);
-      await expect(validator.getVoters({ address })).rejects.toEqual(expectedResponse);
+      await expect(validator.getStakers({ address })).rejects.toEqual(expectedResponse);
     });
   });
 
