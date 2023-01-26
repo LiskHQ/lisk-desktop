@@ -105,7 +105,8 @@ export const addSearchParamsToUrl = (history, data = {}) => {
  * removes a query param to the url and redirects to that url
  *
  * @param {object} history the search string
- * @param {?String} paramsToRemove the array of params to remove. Leave it blank to remove all.
+ * @param {string[]} [paramsToRemove] the array of params to remove. Leave it blank to remove all.
+ * @param {boolean} [cleanParamsAfter] clean parameters
  */
 export const removeSearchParamsFromUrl = (history, paramsToRemove, cleanParamsAfter) => {
   let newSearchString = '';

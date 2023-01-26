@@ -22,6 +22,7 @@ import TransactionDetails from '@transaction/manager/transactionDetailViewManage
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@wallet/components/request';
 import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
+import ClaimRewardsView from '@pos/validator/components/ClaimRewardsView';
 import editStakeManager from '@pos/validator/manager/editStakeManager';
 import StakingQueue from '@pos/validator/manager/stakingQueueManager';
 import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
@@ -86,6 +87,7 @@ export default {
   newRelease: NewReleaseDialog,
   request: Request,
   lockedBalance: UnlockBalanceView,
+  claimRewardsView: ClaimRewardsView,
   editStake: editStakeManager,
   stakingQueue: StakingQueue,
   deviceDisconnectDialog: DeviceDisconnect,

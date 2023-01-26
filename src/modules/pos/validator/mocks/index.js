@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
 import {
-  mockValidators,
+  getMockValidators,
   mockSentStakes,
   mockReceivedStakes,
   mockUnlocks,
@@ -11,27 +11,25 @@ import {
 import composeMockList from 'src/modules/common/utils/composeMockList';
 import { mockPosConstants } from '../__fixtures__/mockPosConstants';
 
-export const validators = rest.get(`*/api/${API_VERSION}/pos/validators`, async (req, res, ctx) =>
-  composeMockList({
+export const validators = rest.get(`*/api/${API_VERSION}/pos/validators`, async (req, res, ctx) => {
+  const address = req.url.searchParams.get('address');
+
+  return composeMockList({
     req,
     res,
     ctx,
-    mockData: mockValidators,
-  })
-);
+    mockData: getMockValidators(address),
+  });
+});
 
 export const sentStakes = rest.get(`*/api/${API_VERSION}/pos/stakes`, async (req, res, ctx) => {
-  const limit = Number(req.url.searchParams.get('limit') || LIMIT);
-  const offset = Number(req.url.searchParams.get('offset') || 0);
   const response = {
     data: {
       ...mockSentStakes.data,
-      stakes: mockSentStakes.data.stakes.slice(offset, offset + limit),
+      stakes: mockSentStakes.data.stakes,
     },
     meta: {
       ...mockSentStakes.meta,
-      count: limit,
-      offset,
     },
   };
   return res(ctx.delay(20), ctx.json(response));

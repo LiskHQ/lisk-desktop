@@ -1,16 +1,14 @@
 /* istanbul ignore file */
 import { STAKES_SENT } from 'src/const/queries';
 import { API_VERSION } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
+import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
- * Creates a custom hook for votes sent queries
+ * Creates a custom hook for stakes sent queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {object} configuration.config - the query config
  * @param {object} configuration.config.params - the query config params
- * @param {number} [configuration.config.params.limit] - the query limit
- * @param {number} [configuration.config.params.offset] - the query offset
  * @param {string} [configuration.config.params.address] - account address
  * @param {string} [configuration.config.params.name] - account name
  * @param {string} [configuration.config.params.publicKey] - account public key
@@ -20,31 +18,21 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  */
 
 export const useSentStakes = ({ config: customConfig = {}, options } = {}) => {
+  const hasRequiredParams = customConfig.params?.address;
+
   const config = {
     url: `/api/${API_VERSION}/pos/stakes`,
     method: 'get',
     event: 'get.pos.stakes',
     ...customConfig,
-    params: { ...(customConfig?.params || {}) },
   };
-  const customOptions = {
-    ...options,
-    select: (data) =>
-      data.pages.reduce((prevPages, page) => {
-        const newData = page?.data || {};
-        const newStakes = page?.data.stakes || [];
-        return {
-          ...page,
-          data: {
-            ...newData,
-            stakes: prevPages.data ? [...prevPages.data.stakes, ...newStakes] : newStakes,
-          },
-        };
-      }),
-  };
-  return useCustomInfiniteQuery({
+
+  return useCustomQuery({
     keys: [STAKES_SENT],
-    options: customOptions,
     config,
+    options: {
+      ...options,
+      enabled: !!hasRequiredParams,
+    },
   });
 };
