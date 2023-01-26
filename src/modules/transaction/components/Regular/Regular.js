@@ -40,7 +40,7 @@ const Regular = ({
   moduleCommandSchemas,
   onRetry,
 }) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
@@ -57,7 +57,7 @@ const Regular = ({
     }
     history.push(routes.wallet.path);
   };
-  
+
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {typeof illustration === 'string' ? (
