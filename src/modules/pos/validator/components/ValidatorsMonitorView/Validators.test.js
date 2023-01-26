@@ -3,11 +3,11 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import fakeStore from '@tests/unit-test-utils/fakeStore';
-import { validatorList } from '@tests/constants/validators';
+import validators from '@tests/constants/validators';
 import accounts from '@tests/constants/wallets';
 import Validators from './Validators';
 
-const activeValidators = validatorList.map((item) => ({ ...item }));
+const activeValidators = validators.map((item) => ({ ...item }));
 activeValidators.push({
   username: 'additional',
   stake: '0',
