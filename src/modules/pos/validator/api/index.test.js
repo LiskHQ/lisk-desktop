@@ -19,7 +19,7 @@ const resetApiMock = () => {
   ws.mockClear();
 };
 
-describe('API: LSK Delegates', () => {
+describe('API: LSK Validators', () => {
   const baseUrl = 'http://baseurl.io';
   const network = {
     networks: {
@@ -212,14 +212,14 @@ describe('API: LSK Delegates', () => {
     });
   });
 
-  describe('getVotes', () => {
+  describe('getStakes', () => {
     const address = 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11';
 
     beforeEach(() => {
       resetApiMock();
     });
 
-    it('should return votes list when address is passed', async () => {
+    it('should return stakes list when address is passed', async () => {
       const params = { address };
       const expectedResponse = {
         ...mockSentStakes,
@@ -237,20 +237,20 @@ describe('API: LSK Delegates', () => {
       resetApiMock();
     });
 
-    it('should return votes list when address is passed', async () => {
+    it('should return stakes list when address is passed', async () => {
       const expectedResponse = [{}, {}, {}];
       const params = { address };
       setApiResponseData(expectedResponse, client.rest);
       await expect(validator.getStakers({ params, network })).resolves.toEqual(expectedResponse);
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl: undefined,
-        url: validator.httpPaths.votesReceived,
+        url: validator.httpPaths.stakers,
         params,
         network,
       });
     });
 
-    it('should return votes list when address, filters and baseURL are passed', async () => {
+    it('should return stakes list when address, filters and baseURL are passed', async () => {
       const expectedResponse = [{}, {}, {}];
       const params = {
         address,
@@ -263,7 +263,7 @@ describe('API: LSK Delegates', () => {
       );
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl,
-        url: validator.httpPaths.votesReceived,
+        url: validator.httpPaths.stakers,
         params,
         network,
       });
@@ -278,7 +278,7 @@ describe('API: LSK Delegates', () => {
       validator.getStakers({ params, baseUrl, network });
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl,
-        url: validator.httpPaths.votesReceived,
+        url: validator.httpPaths.stakers,
         params,
         network,
       });
