@@ -10,8 +10,8 @@ PASSPHRASE_GENESIS="peanut hundred pen hawk invite exclude brain chunk gadget wa
 PUBLICKEY_GENESIS="0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a"
 
 # validator
-PASSPHRASE_DELEGATE="recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit"
-PUBLICKEY_DELEGATE="86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"
+PASSPHRASE_VALIDATOR="recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit"
+PUBLICKEY_VALIDATOR="86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"
 
 # mutisig candidate passphrase
 PASSPHRASE_MULTISIG="approve tribe main deposit luxury obtain knock problem pulse claw social select"
@@ -61,9 +61,9 @@ lisk transaction:broadcast $(lisk transaction:create:transfer 0 0.1 1 4264113712
 
 # register multisig account with the multiSig_candidate account
 # transaction:create:multisignature {nonce} {fee} --mandatory-key="xxx" --mandatory-key="yyy" --optional-key="yyy" --optional-key="yyy" --number-of-signatures=4 --passphrase="****" --member-passphrase="****" --member-passphrase="****" 
-TRANSACTION1=$(lisk transaction:create:multisignature "$MULTISIG_CANDIATE_NONCE" 0.1 --number-of-signatures=2 --optional-key="$PUBLICKEY_GENESIS" --optional-key="$PUBLICKEY_DELEGATE" --passphrase="$PASSPHRASE_MULTISIG" --member-passphrase="$PASSPHRASE_GENESIS" --member-passphrase="$PASSPHRASE_DELEGATE" --networkIdentifier="$NETWORK_IDENTIFIER")
+TRANSACTION1=$(lisk transaction:create:multisignature "$MULTISIG_CANDIATE_NONCE" 0.1 --number-of-signatures=2 --optional-key="$PUBLICKEY_GENESIS" --optional-key="$PUBLICKEY_VALIDATOR" --passphrase="$PASSPHRASE_MULTISIG" --member-passphrase="$PASSPHRASE_GENESIS" --member-passphrase="$PASSPHRASE_VALIDATOR" --networkIdentifier="$NETWORK_IDENTIFIER")
 # sign the registration transaction with genesis account
-TRANSACTION2=$(lisk transaction:sign "$TRANSACTION1" --optional-key="$PUBLICKEY_GENESIS" --optional-key="$PUBLICKEY_DELEGATE" --passphrase="$PASSPHRASE_GENESIS" --networkIdentifier="$NETWORK_IDENTIFIER")
+TRANSACTION2=$(lisk transaction:sign "$TRANSACTION1" --optional-key="$PUBLICKEY_GENESIS" --optional-key="$PUBLICKEY_VALIDATOR" --passphrase="$PASSPHRASE_GENESIS" --networkIdentifier="$NETWORK_IDENTIFIER")
 lisk transaction:broadcast "$TRANSACTION2"
 
 # wait for the account registration tx to be included in the blockchain
@@ -72,7 +72,7 @@ sleep 20
 # create and broadcast a multisig tx
 TRANSACTION3=$(lisk transaction:create:transfer 1 0.1 1 5932438298200837883L --networkIdentifier="$NETWORK_IDENTIFIER" --passphrase="$PASSPHRASE_MULTISIG")
 # sign using one member
-TRANSACTION4=$(lisk transaction:sign "$TRANSACTION3" --optional-key="$PUBLICKEY_GENESIS" --optional-key="$PUBLICKEY_DELEGATE" --passphrase="$PASSPHRASE_GENESIS" --networkIdentifier="$NETWORK_IDENTIFIER")
+TRANSACTION4=$(lisk transaction:sign "$TRANSACTION3" --optional-key="$PUBLICKEY_GENESIS" --optional-key="$PUBLICKEY_VALIDATOR" --passphrase="$PASSPHRASE_GENESIS" --networkIdentifier="$NETWORK_IDENTIFIER")
 # sign using another member
-TRANSACTION5=$(lisk transaction:sign "$TRANSACTION4" --optional-key="$PUBLICKEY_GENESIS" --optional-key="$PUBLICKEY_DELEGATE" --passphrase="$PASSPHRASE_DELEGATE" --networkIdentifier="$NETWORK_IDENTIFIER")
+TRANSACTION5=$(lisk transaction:sign "$TRANSACTION4" --optional-key="$PUBLICKEY_GENESIS" --optional-key="$PUBLICKEY_VALIDATOR" --passphrase="$PASSPHRASE_VALIDATOR" --networkIdentifier="$NETWORK_IDENTIFIER")
 lisk transaction:broadcast "$TRANSACTION5"
