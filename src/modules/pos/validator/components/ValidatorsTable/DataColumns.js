@@ -42,11 +42,11 @@ const validatorStatus = {
   ineligible: 'Ineligible',
 };
 
-const getValidatorStatus = (key, grossVotesReceived) => {
+const getValidatorStatus = (key, grossStakesReceived) => {
   if (key === 'banned' || key === 'punished' || key === 'active') {
     return [key, validatorStatus[key]];
   }
-  if (grossVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
+  if (grossStakesReceived < DEFAULT_STANDBY_THRESHOLD) {
     return ['ineligible', validatorStatus.ineligible];
   }
 
@@ -109,7 +109,7 @@ export const ValidatorDetails = () => {
     activeTab === 'sanctioned' ||
     activeTab === 'watched';
   const [key, val] = getValidatorStatus(status, totalStakeReceived);
-  const formattedVoteWeight = formatAmountBasedOnLocale({
+  const formattedStakeWeight = formatAmountBasedOnLocale({
     value: fromRawLsk(validatorWeight),
     format: '0a',
   });
@@ -151,7 +151,7 @@ export const ValidatorDetails = () => {
           >
             <ValidatorSummary
               validator={data}
-              weight={formattedVoteWeight}
+              weight={formattedStakeWeight}
               status={{
                 value: val,
                 className: `${styles.validatorStatus} ${styles[key]} ${styles[theme]}`,
