@@ -128,7 +128,7 @@ describe('Validators monitor page', () => {
         urlSearchParams: {},
       },
       watchList: [],
-      delegatesCount: {
+      validatorsCount: {
         isLoading: false,
         data: '589',
         loadData: jest.fn(),

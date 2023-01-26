@@ -53,7 +53,7 @@ Feature: validator
   #   When I sort by status
   #   Then validators should be sorted in descending order by status
   #   Then validators should be sorted in ascending order by status
-  #   When I fill test_deleg in filterValidatorInput field
+  #   When I fill test_validator in filterValidatorInput field
   #   And I wait 2 seconds
   #   Then filtered results should be displayed
   #   When I watch a validator

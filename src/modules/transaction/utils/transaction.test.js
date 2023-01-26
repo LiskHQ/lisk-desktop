@@ -287,14 +287,14 @@ describe.skip('API: LSK Transactions', () => {
   //     });
   //   });
 
-  //   it('should a register delegate transaction with type signature of lisk service', () => {
+  //   it('should a register validator transaction with type signature of lisk service', () => {
   //     const [module, command] = splitModuleAndCommand(registerValidator);
   //     const tx = {
   //       ...baseElementsTx,
   //       module,
   //       command,
   //       params: {
-  //         name: 'super_delegate',
+  //         name: 'super_validator',
   //         generatorKey: convertStringToBinary(genKey),
   //         blsKey: convertStringToBinary(blsKey),
   //         proofOfPossession: convertStringToBinary(pop),
@@ -306,7 +306,7 @@ describe.skip('API: LSK Transactions', () => {
   //       moduleCommand: registerValidator,
   //       id: '',
   //       params: {
-  //         name: 'super_delegate',
+  //         name: 'super_validator',
   //         generatorKey: genKey,
   //         blsKey,
   //         proofOfPossession: pop,
@@ -314,7 +314,7 @@ describe.skip('API: LSK Transactions', () => {
   //     });
   //   });
 
-  //   it('should a stake delegate transaction with type signature of lisk service', () => {
+  //   it('should a stake validator transaction with type signature of lisk service', () => {
   //     const [module, command] = splitModuleAndCommand(stakeValidator);
   //     const tx = {
   //       ...baseElementsTx,

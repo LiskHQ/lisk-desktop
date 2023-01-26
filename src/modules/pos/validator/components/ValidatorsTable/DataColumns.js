@@ -205,7 +205,7 @@ export const RoundState = () => {
         <Tooltip
           position="left"
           size="maxContent"
-          content={<Icon className={styles.statusIcon} name="delegateWarning" />}
+          content={<Icon className={styles.statusIcon} name="validatorWarning" />}
           footer={<p>{time}</p>}
         >
           <p>{t('This validator will be punished in upcoming rounds')}</p>
