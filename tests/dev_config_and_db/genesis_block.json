@@ -11,7 +11,7 @@
 		"version": 0,
 		"asset": {
 			"initRounds": 3,
-			"initDelegates": [
+			"initValidators": [
 				"03f6d90b7dbd0497dc3a52d1c27e23bb8c75897f",
 				"0903f4c5cb599a7928aef27e314e98291d1e3888",
 				"0ada6a2f6c8f891769366fc9aa6fd9f1facb36cf",
@@ -130,8 +130,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -156,8 +156,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -182,8 +182,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -208,8 +208,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -234,8 +234,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -260,8 +260,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -286,8 +286,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -312,8 +312,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -338,8 +338,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -364,8 +364,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -390,8 +390,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -416,8 +416,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -442,8 +442,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -468,8 +468,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -494,8 +494,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -520,8 +520,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -546,8 +546,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -572,8 +572,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -598,8 +598,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -624,8 +624,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -650,8 +650,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -676,8 +676,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -702,8 +702,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -728,8 +728,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -754,8 +754,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -780,8 +780,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -806,8 +806,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -832,8 +832,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -858,8 +858,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -884,8 +884,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -910,8 +910,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -936,8 +936,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -962,8 +962,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -988,8 +988,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1014,8 +1014,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1040,8 +1040,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1066,8 +1066,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1092,8 +1092,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1118,8 +1118,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1144,8 +1144,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1170,8 +1170,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_34",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1201,8 +1201,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_74",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1232,8 +1232,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_98",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1263,8 +1263,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_83",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1294,8 +1294,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_54",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1325,8 +1325,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_50",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1356,8 +1356,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_15",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1387,8 +1387,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_46",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1418,8 +1418,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_49",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1449,8 +1449,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_77",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1480,8 +1480,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_12",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1511,8 +1511,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_88",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1542,8 +1542,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_44",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1573,8 +1573,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_56",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1604,8 +1604,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_39",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1635,8 +1635,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_75",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1666,8 +1666,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_16",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1697,8 +1697,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_3",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1728,8 +1728,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_68",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1759,8 +1759,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_94",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1790,8 +1790,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_92",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1821,8 +1821,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_25",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1852,8 +1852,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_31",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1883,8 +1883,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_22",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1914,8 +1914,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_2",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1945,8 +1945,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_28",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -1976,8 +1976,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_23",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2007,8 +2007,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_73",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2038,8 +2038,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_11",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2069,8 +2069,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_101",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2100,8 +2100,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_9",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2131,8 +2131,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_71",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2162,8 +2162,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_8",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2193,8 +2193,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_103",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2224,8 +2224,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_47",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2255,8 +2255,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_32",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2286,8 +2286,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_4",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2317,8 +2317,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_36",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2348,8 +2348,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_42",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2379,8 +2379,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_48",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2410,8 +2410,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_58",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2441,8 +2441,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_14",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2472,8 +2472,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_60",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2503,8 +2503,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_69",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2534,8 +2534,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_29",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2565,8 +2565,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_20",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2596,8 +2596,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_67",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2627,8 +2627,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_79",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2658,8 +2658,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_38",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2689,8 +2689,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_53",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2720,8 +2720,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_76",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2751,8 +2751,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_62",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2782,8 +2782,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_37",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2813,8 +2813,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_55",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2844,8 +2844,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_89",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2875,8 +2875,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_41",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2906,8 +2906,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_81",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2937,8 +2937,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_35",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2968,8 +2968,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_102",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -2999,8 +2999,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_43",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3030,8 +3030,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_51",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3061,8 +3061,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_1",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3092,8 +3092,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_5",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3123,8 +3123,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_17",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3154,8 +3154,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_65",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3185,8 +3185,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_90",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3216,8 +3216,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_19",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3247,8 +3247,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_97",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3278,8 +3278,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_84",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3309,8 +3309,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_45",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3340,8 +3340,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_95",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3371,8 +3371,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_33",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3402,8 +3402,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_52",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3433,8 +3433,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_80",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3464,8 +3464,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_10",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3495,8 +3495,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_100",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3526,8 +3526,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_6",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3557,8 +3557,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_7",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3588,8 +3588,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_99",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3619,8 +3619,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_70",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3650,8 +3650,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_27",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3681,8 +3681,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_86",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3712,8 +3712,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_85",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3743,8 +3743,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_64",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3774,8 +3774,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_87",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3805,8 +3805,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_82",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3836,8 +3836,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_21",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3867,8 +3867,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3893,8 +3893,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_59",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3924,8 +3924,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_30",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3955,8 +3955,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_24",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -3986,8 +3986,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_63",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4017,8 +4017,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_40",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4048,8 +4048,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_66",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4079,8 +4079,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_91",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4110,8 +4110,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_78",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4141,8 +4141,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_61",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4172,8 +4172,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_26",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4203,8 +4203,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_57",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4234,8 +4234,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_13",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4265,8 +4265,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_72",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4296,8 +4296,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_18",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4327,8 +4327,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_93",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,
@@ -4358,8 +4358,8 @@
 						"optionalKeys": [],
 						"numberOfSignatures": 0
 					},
-					"dpos": {
-						"delegate": {
+					"pos": {
+						"validator": {
 							"username": "genesis_96",
 							"pomHeights": [],
 							"consecutiveMissedBlocks": 0,

@@ -22,8 +22,8 @@ export default {
     ],
     optionalKeys: [],
   },
-  dpos: {
-    delegate: {
+  pos: {
+    validator: {
       username: 'kc',
       consecutiveMissedBlocks: 0,
       registrationHeight: false,

@@ -37,7 +37,7 @@ describe('encoding', () => {
   it('should create tx from json when params is an object', () => {
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: '1',
       params: {
@@ -52,7 +52,7 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON, moduleCommandSchemas)).toEqual({
       fee: 0n,
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: 1n,
       params: {},
@@ -67,7 +67,7 @@ describe('encoding', () => {
 
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: '1',
       params: '',
@@ -77,7 +77,7 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON, moduleCommandSchemas)).toEqual({
       fee: 0n,
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: 1n,
       params: 'params-decoded',
@@ -92,7 +92,7 @@ describe('encoding', () => {
 
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: '1',
       params: '',
@@ -102,7 +102,7 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON)).toEqual({
       fee: 0n,
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: 1n,
       params: {},
@@ -117,7 +117,7 @@ describe('encoding', () => {
 
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: '1',
       params: '',
@@ -127,7 +127,7 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON)).toEqual({
       fee: 0n,
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: 1n,
       params: {},
@@ -143,7 +143,7 @@ describe('encoding', () => {
 
     const transaction = {
       fee: '0n',
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: '1n',
       params: Buffer.from('params'),
@@ -164,7 +164,7 @@ describe('encoding', () => {
 
     const transaction = {
       fee: '0n',
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       nonce: '1n',
       params: Buffer.from('params'),

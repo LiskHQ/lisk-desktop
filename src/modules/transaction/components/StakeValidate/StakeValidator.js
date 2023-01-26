@@ -29,7 +29,7 @@ const StakeValidator = ({ t, account, summaryInfo }) => {
   const addedLength = Object.keys(summaryInfo.added).length;
   const editedLength = Object.keys(summaryInfo.edited).length;
   const removedLength = Object.keys(summaryInfo.removed).length;
-  const sentStakes = account?.dpos?.sentVotes?.length ?? 0;
+  const sentStakes = account?.pos?.sentVotes?.length ?? 0;
 
   return (
     <>

@@ -237,7 +237,7 @@ export const Params = ({ t }) => {
   const getDetails = () => {
     switch (data.moduleCommand) {
       case registerDelegate:
-        return data.params.delegate?.username;
+        return data.params.validator?.username;
       case voteDelegate:
         return generateStakes(data.params, validators, activeToken, t);
       case transfer:

@@ -50,8 +50,8 @@ const moduleCommandSchemas = {
       "signatures",
     ],
   },
-  "dpos:registerDelegate": {
-    $id: "/dpos/command/registerDelegateParams",
+  "pos:registerDelegate": {
+    $id: "/pos/command/registerDelegateParams",
     type: "object",
     required: ["name", "generatorKey", "blsKey", "proofOfPossession"],
     properties: {
@@ -81,8 +81,8 @@ const moduleCommandSchemas = {
       },
     },
   },
-  "dpos:reportDelegateMisbehavior": {
-    $id: "/dpos/command/reportDelegateMisbehaviorParams",
+  "pos:reportDelegateMisbehavior": {
+    $id: "/pos/command/reportDelegateMisbehaviorParams",
     type: "object",
     required: ["header1", "header2"],
     properties: {
@@ -96,8 +96,8 @@ const moduleCommandSchemas = {
       },
     },
   },
-  "dpos:updateGeneratorKey": {
-    $id: "/dpos/command/updateGeneratorKeyParams",
+  "pos:updateGeneratorKey": {
+    $id: "/pos/command/updateGeneratorKeyParams",
     type: "object",
     required: ["generatorKey"],
     properties: {
@@ -109,8 +109,8 @@ const moduleCommandSchemas = {
       },
     },
   },
-  "dpos:voteDelegate": {
-    $id: "/dpos/command/voteDelegateParams",
+  "pos:voteDelegate": {
+    $id: "/pos/command/voteDelegateParams",
     type: "object",
     required: ["votes"],
     properties: {

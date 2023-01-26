@@ -2,10 +2,10 @@ export default [
   {
     amount: '1000000000000',
     validatorAddress: '5059876081639179984L',
-    delegate: {
+    validator: {
       username: 'genesis_1',
       totalStakeReceived: '1000000000000',
-      delegate: {
+      validator: {
         isBanned: false,
         pomHeights: [478, 555],
         lastForgedHeight: 0,

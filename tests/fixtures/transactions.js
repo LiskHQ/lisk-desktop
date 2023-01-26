@@ -104,8 +104,8 @@ const getState = () => ({
               "signatures"
             ]
           },
-          'dpos:registerDelegate': {
-            $id: "/dpos/command/registerDelegateParams",
+          'pos:registerDelegate': {
+            $id: "/pos/command/registerDelegateParams",
             type: "object",
             required: [
               "name",
@@ -140,8 +140,8 @@ const getState = () => ({
               }
             }
           },
-          'dpos:voteDelegate': {
-            $id: "/dpos/command/voteDelegateParams",
+          'pos:voteDelegate': {
+            $id: "/pos/command/voteDelegateParams",
             type: "object",
             required: [
               "votes"
@@ -207,7 +207,7 @@ const getState = () => ({
 });
 
 const transformedAccountTransaction = {
-  moduleCommand: 'dpos:voteDelegate',
+  moduleCommand: 'pos:voteDelegate',
   id: 'ad0e0acbe8a3ece3087c8362149ca39c470e565d268df32e57de5d3fe2e1ea5c',
   fee: '142000n',
   nonce: '2n',

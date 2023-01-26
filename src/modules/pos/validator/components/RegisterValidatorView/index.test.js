@@ -45,7 +45,7 @@ describe('RegisterDelegate', () => {
       goBack: jest.fn(),
     },
     prevState: {},
-    delegate: {},
+    validator: {},
     liskAPIClient: {
       validators: {
         get: jest.fn(),

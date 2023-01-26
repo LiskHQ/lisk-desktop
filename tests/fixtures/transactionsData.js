@@ -30,8 +30,8 @@ export default [
   },
   {
     id: '827028a55e5a28f96437bf87531c61255b737ceb3407989dfd41985ed6d5453b',
-    moduleCommand: 'dpos:registerDelegate',
-    moduleAssetName: 'dpos:registerDelegate',
+    moduleCommand: 'pos:registerDelegate',
+    moduleAssetName: 'pos:registerDelegate',
     fee: '1000268000',
     height: 329,
     nonce: '2',
@@ -92,8 +92,8 @@ export default [
   },
   {
     id: 'a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca',
-    moduleCommand: 'dpos:voteDelegate',
-    moduleAssetName: 'dpos:voteDelegate',
+    moduleCommand: 'pos:voteDelegate',
+    moduleAssetName: 'pos:voteDelegate',
     fee: '144000',
     height: 454,
     nonce: '137',
@@ -121,8 +121,8 @@ export default [
   },
   {
     id: '1f1aa24b49859d825cc5ace36b5554a1ee65556852b0c1f5c043853c697a2651',
-    moduleCommand: 'dpos:reportDelegateMisbehavior',
-    moduleAssetName: 'dpos:reportDelegateMisbehavior',
+    moduleCommand: 'pos:reportDelegateMisbehavior',
+    moduleAssetName: 'pos:reportDelegateMisbehavior',
     fee: '10000000',
     height: 15334905,
     nonce: '6',

@@ -87,7 +87,7 @@ export const getTransactions = ({ network, params, baseUrl }) => {
 };
 
 /**
- * Fetches and generates an array of monthly number of delegate
+ * Fetches and generates an array of monthly number of validator
  * registrations on Lisk blockchain.
  *
  * @param {Object} Network - Network setting from Redux store
@@ -100,7 +100,7 @@ export const getRegisteredValidators = async ({ network }) => {
   });
   const txs = await getTransactions({
     network,
-    params: { moduleCommand: 'dpos:registerDelegate', limit: 100 },
+    params: { moduleCommand: 'pos:registerDelegate', limit: 100 },
   });
 
   if (validators.error || txs.error) {

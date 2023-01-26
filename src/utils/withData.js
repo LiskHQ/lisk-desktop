@@ -9,7 +9,7 @@ import React from 'react';
  * Every property of this parameter should have the following properties
  *
  * The key of each property is used to namespace the fetched data.
- * for example if it's named delegate: { ... } and fetches a list of delegates, the results will be
+ * for example if it's named validator: { ... } and fetches a list of delegates, the results will be
  * fetched and returned as delegates: { data: [ ... ], ...  }
  *
  * @param {Function} apiUtil

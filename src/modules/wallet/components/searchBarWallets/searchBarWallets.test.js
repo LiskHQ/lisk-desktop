@@ -24,7 +24,7 @@ describe('SearchBarWallets', () => {
     expect(wrapper).not.toContainMatchingElement('.account-row');
   });
 
-  it('should render properly delegate accounts', () => {
+  it('should render properly validator accounts', () => {
     const newProps = { ...props };
     newProps.wallets = [
       {

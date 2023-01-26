@@ -11,14 +11,14 @@ import styles from './StakeItem.css';
 const token = tokenMap.LSK.key;
 
 /**
- * Displays address/delegate username along with vote amount
+ * Displays address/validator username along with vote amount
  *
  * @param {Object} vote object containing either or both the confirmed and unconfirmed
  * vote amount values
  * @param {String} address the address to redirect to, also used as primary text if
  * title is not defined
- * @param {String} title text to use instead of the address e.g. delegate username
- * @param {Boolean} truncate text to use instead of the address e.g. delegate username
+ * @param {String} title text to use instead of the address e.g. validator username
+ * @param {Boolean} truncate text to use instead of the address e.g. validator username
  */
 const StakeItem = ({ vote, address, title, truncate }) => {
   const accountPath = routes.explorer.path;

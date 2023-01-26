@@ -177,7 +177,7 @@ const ActionBar = ({
                   username
                     ? {
                       formAddress: address,
-                      label: account.dpos?.delegate?.username,
+                      label: account.pos?.validator?.username,
                       isValidator: account.summary.isValidator,
                     }
                     : {

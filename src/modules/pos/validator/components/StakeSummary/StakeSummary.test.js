@@ -74,7 +74,7 @@ const transactionJSON = {
   nonce: accounts.genesis.sequence.nonce,
   fee: '1000000',
   signatures: [],
-  module: 'dpos',
+  module: 'pos',
   command: 'voteDelegate',
   params: {
     votes: [

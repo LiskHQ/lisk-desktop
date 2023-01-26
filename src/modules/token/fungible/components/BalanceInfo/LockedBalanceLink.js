@@ -42,12 +42,12 @@ const LockedBalanceLink = ({
     lockedInVotes = useSelector((state) =>
       calculateBalanceLockedInStakes(state.staking));
   } else {
-    lockedInVotes = calculateBalanceLockedInUnvotes(account.dpos?.sentVotes);
+    lockedInVotes = calculateBalanceLockedInUnvotes(account.pos?.sentVotes);
   }
 
   const lockedInUnvotes = isWalletRoute && host
-    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking)
-    : calculateBalanceLockedInUnvotes(account.dpos?.unlocking);
+    ? calculateBalanceLockedInUnvotes(host.pos?.unlocking)
+    : calculateBalanceLockedInUnvotes(account.pos?.unlocking);
 
   if (lockedInUnvotes + lockedInVotes > 0) {
     return (

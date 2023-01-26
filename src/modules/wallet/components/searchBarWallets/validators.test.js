@@ -31,8 +31,8 @@ describe('Validators', () => {
         summary: {
           address: '123456L',
         },
-        dpos: {
-          delegate: {
+        pos: {
+          validator: {
             username: 'John',
             rank: 34,
             rewards: 23423,
@@ -44,8 +44,8 @@ describe('Validators', () => {
         summary: {
           address: '123457L',
         },
-        dpos: {
-          delegate: {
+        pos: {
+          validator: {
             username: 'Anna',
             rank: 26,
             rewards: 23421,
@@ -69,8 +69,8 @@ describe('Validators', () => {
         summary: {
           address: '123456L',
         },
-        dpos: {
-          delegate: {
+        pos: {
+          validator: {
             username: 'John',
             rank: 34,
             rewards: 23423,

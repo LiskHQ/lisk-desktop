@@ -9,7 +9,7 @@ MULTISIG_CANDIATE_NONCE=0
 PASSPHRASE_GENESIS="peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready"
 PUBLICKEY_GENESIS="0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a"
 
-# delegate
+# validator
 PASSPHRASE_DELEGATE="recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit"
 PUBLICKEY_DELEGATE="86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"
 
@@ -22,7 +22,7 @@ function transfer(){
 }
 
 function registerDelegate(){
-	lisk transaction:broadcast $(lisk transaction:create:delegate 0 11 delegate --passphrase="recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit" --networkIdentifier=$NETWORKIDENTIFIER)
+	lisk transaction:broadcast $(lisk transaction:create:validator 0 11 validator --passphrase="recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit" --networkIdentifier=$NETWORKIDENTIFIER)
 }
 
 function vote() {
@@ -37,7 +37,7 @@ for i in {1..50}; do
 done
 
 transfer 153 1000 1941002779612196826L multisig-candidate
-transfer 154 90 544792633152563672L delegate-candidate
+transfer 154 90 544792633152563672L validator-candidate
 transfer 155 70 16422276087748907680L send-all-account
 transfer 156 1 94495548317450502L without-initialization
 

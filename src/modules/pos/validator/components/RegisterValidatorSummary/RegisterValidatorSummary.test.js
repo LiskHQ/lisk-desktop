@@ -30,7 +30,7 @@ describe('Validator Registration Summary', () => {
       nonce: '1',
       signatures: [],
       senderPublicKey: accounts.genesis.summary.publicKey,
-      module: 'dpos',
+      module: 'pos',
       command: 'registerDelegate',
       params: {
         username: 'mydelegate',

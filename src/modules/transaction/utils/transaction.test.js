@@ -62,7 +62,7 @@ describe.skip('API: LSK Transactions', () => {
     it('should return amount of stakes in Beddows', () => {
       const tx = {
         title: voteDelegate,
-        module: 'dpos',
+        module: 'pos',
         command: 'voteDelegate',
         params: {
           votes: [
@@ -82,7 +82,7 @@ describe.skip('API: LSK Transactions', () => {
     it('should return amount of unlock in Beddows', () => {
       const tx = {
         title: unlock,
-        module: 'dpos',
+        module: 'pos',
         command: 'unlock',
         params: {
           unlockObjects: [
@@ -132,7 +132,7 @@ describe.skip('API: LSK Transactions', () => {
     it('creates a transaction object for stake transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        module: 'dpos',
+        module: 'pos',
         command: 'voteDelegate',
         params: {
           votes: [
@@ -163,10 +163,10 @@ describe.skip('API: LSK Transactions', () => {
       });
     });
 
-    it('creates a transaction object for delegate registration transaction', () => {
+    it('creates a transaction object for validator registration transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        module: 'dpos',
+        module: 'pos',
         command: 'registerDelegate',
         params: {
           name: 'username',
@@ -216,7 +216,7 @@ describe.skip('API: LSK Transactions', () => {
     it('creates a transaction object for unlockToken transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        module: 'dpos',
+        module: 'pos',
         command: 'unlock',
       };
       const txObj = fromTransactionJSON(tx, moduleCommandSchemas['pos:unlock']);

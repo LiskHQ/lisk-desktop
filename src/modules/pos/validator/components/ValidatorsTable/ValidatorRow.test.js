@@ -46,7 +46,7 @@ describe('ValidatorRow', () => {
     expect(addedToWatchList).toHaveBeenCalledWith({ address: props.data.address });
   });
 
-  it('removes delegate from watched list when watch icon is clicked', () => {
+  it('removes validator from watched list when watch icon is clicked', () => {
     const updatedProps = {
       ...props,
       activeTab: 'watched',

@@ -69,7 +69,7 @@ describe('externalLinks', () => {
     };
 
     externalLinks.init();
-    callbacks.openUrl({}, 'lisk://stake?stakes=delegate');
-    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=StakingQueue&stakes=delegate');
+    callbacks.openUrl({}, 'lisk://stake?stakes=validator');
+    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=StakingQueue&stakes=validator');
   });
 });

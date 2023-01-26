@@ -1,7 +1,7 @@
 const ValidatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks = 0) => {
   if (!pomHeights) return 'Punishment information unavailable.';
   if (status === 'punished') {
-    // Since this can only be accessed if the delegate has been punished at least once
+    // Since this can only be accessed if the validator has been punished at least once
     // and is not banned yet due to not getting 5 punishments, the text to be displayed
     // will be for one to four punishments
     const textConversion = {
