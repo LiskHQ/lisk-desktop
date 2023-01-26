@@ -1,4 +1,4 @@
-Feature: Wallet Votes
+Feature: Wallet Stakes
 
   # @basic
   # Scenario: See all votes

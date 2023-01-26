@@ -36,23 +36,23 @@ const LockedBalanceLink = ({
   account, isWalletRoute, style, icon,
 }) => {
   const host = useSelector((state) => selectActiveTokenAccount(state));
-  let lockedInVotes = 0;
+  let lockedInStakes = 0;
 
   if (isWalletRoute && host) {
-    lockedInVotes = useSelector((state) =>
+    lockedInStakes = useSelector((state) =>
       calculateBalanceLockedInStakes(state.staking));
   } else {
-    lockedInVotes = calculateBalanceLockedInUnvotes(account.pos?.sentStakes);
+    lockedInStakes = calculateBalanceLockedInUnvotes(account.pos?.sentStakes);
   }
 
   const lockedInUnvotes = isWalletRoute && host
     ? calculateBalanceLockedInUnvotes(host.pos?.unlocking)
     : calculateBalanceLockedInUnvotes(account.pos?.unlocking);
 
-  if (lockedInUnvotes + lockedInVotes > 0) {
+  if (lockedInUnvotes + lockedInStakes > 0) {
     return (
       <Link
-        sum={lockedInUnvotes + lockedInVotes}
+        sum={lockedInUnvotes + lockedInStakes}
         style={style}
         icon={icon}
         isWalletRoute={isWalletRoute}

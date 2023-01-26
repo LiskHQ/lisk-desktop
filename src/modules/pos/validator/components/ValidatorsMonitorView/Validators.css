@@ -272,7 +272,7 @@ header {
   }
 }
 
-.loadMoreVotesBtn {
+.loadMoreStakesBtn {
   @mixin contentLarge semi-bold;
 
   background-color: transparent;

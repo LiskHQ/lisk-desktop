@@ -99,7 +99,7 @@ const props = {
   stakesSubmitted: jest.fn(),
   nextStep: jest.fn(),
   transactions: { txSignatureError: null, signedTransaction: transaction },
-  normalizedVotes: { lsk123: {} },
+  normalizedStakes: { lsk123: {} },
   selectedPriority: { title: 'Normal', value: 1 },
   formProps: {
     isValid: true,

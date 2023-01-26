@@ -17,15 +17,15 @@ describe('Reducer: staking(state, action)', () => {
     [validator2.address]: { confirmed: 1e10, unconfirmed: 1e10, name: 'username_2' },
     [validator3.address]: { confirmed: 1e10, unconfirmed: 1e10, name: 'username_3' },
   };
-  const dirtyVotes = {
+  const dirtyStakes = {
     [validator1.address]: { ...cleanStakes[validator1.address], unconfirmed: 3e10 },
     [validator2.address]: { ...cleanStakes[validator2.address], unconfirmed: 2e10 },
     [validator3.address]: cleanStakes[[validator3.address]],
   };
-  const pendingVotes = {
-    [validator1.address]: { ...dirtyVotes[validator1.address], pending: true },
-    [validator2.address]: { ...dirtyVotes[validator2.address], pending: true },
-    [validator3.address]: { ...dirtyVotes[validator3.address], pending: false },
+  const pendingStakes = {
+    [validator1.address]: { ...dirtyStakes[validator1.address], pending: true },
+    [validator2.address]: { ...dirtyStakes[validator2.address], pending: true },
+    [validator3.address]: { ...dirtyStakes[validator3.address], pending: false },
   };
 
   it('should return default state if action does not match', () => {
@@ -68,14 +68,14 @@ describe('Reducer: staking(state, action)', () => {
         data: [
           {
             validator: validator1,
-            amount: dirtyVotes[validator1.address].unconfirmed,
+            amount: dirtyStakes[validator1.address].unconfirmed,
           },
         ],
       };
       const expectedState = {
         [validator1.address]: {
           confirmed: 0,
-          unconfirmed: dirtyVotes[validator1.address].unconfirmed,
+          unconfirmed: dirtyStakes[validator1.address].unconfirmed,
         },
       };
       const changedState = staking({}, action);
@@ -89,14 +89,14 @@ describe('Reducer: staking(state, action)', () => {
         data: [
           {
             validator: validator1,
-            amount: dirtyVotes[validator1.address].unconfirmed,
+            amount: dirtyStakes[validator1.address].unconfirmed,
           },
         ],
       };
       const expectedState = {
         [validator1.address]: {
           confirmed: cleanStakes[validator1.address].confirmed,
-          unconfirmed: dirtyVotes[validator1.address].unconfirmed,
+          unconfirmed: dirtyStakes[validator1.address].unconfirmed,
           name: 'username_1',
         },
         [validator2.address]: cleanStakes[validator2.address],
@@ -113,9 +113,9 @@ describe('Reducer: staking(state, action)', () => {
       const action = {
         type: actionTypes.stakesSubmitted,
       };
-      const changedState = staking(dirtyVotes, action);
+      const changedState = staking(dirtyStakes, action);
 
-      expect(changedState).toEqual(pendingVotes);
+      expect(changedState).toEqual(pendingStakes);
     });
   });
 
@@ -126,18 +126,18 @@ describe('Reducer: staking(state, action)', () => {
       };
       const expectedState = {
         [validator1.address]: {
-          ...dirtyVotes[validator1.address],
+          ...dirtyStakes[validator1.address],
           pending: false,
-          confirmed: dirtyVotes[validator1.address].unconfirmed,
+          confirmed: dirtyStakes[validator1.address].unconfirmed,
         },
         [validator2.address]: {
-          ...dirtyVotes[validator2.address],
+          ...dirtyStakes[validator2.address],
           pending: false,
-          confirmed: dirtyVotes[validator2.address].unconfirmed,
+          confirmed: dirtyStakes[validator2.address].unconfirmed,
         },
-        [validator3.address]: { ...dirtyVotes[validator3.address], pending: false },
+        [validator3.address]: { ...dirtyStakes[validator3.address], pending: false },
       };
-      const changedState = staking(pendingVotes, action);
+      const changedState = staking(pendingStakes, action);
 
       expect(changedState).toEqual(expectedState);
     });
@@ -164,7 +164,7 @@ describe('Reducer: staking(state, action)', () => {
       const action = {
         type: actionTypes.stakesCleared,
       };
-      const changedState = staking(dirtyVotes, action);
+      const changedState = staking(dirtyStakes, action);
 
       expect(changedState).toEqual(cleanStakes);
     });

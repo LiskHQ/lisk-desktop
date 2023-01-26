@@ -46,7 +46,7 @@ const Stakes = ({
   }, [votes.data]);
 
   const areLoading = accounts.isLoading || votes.isLoading;
-  const filteredVotes = votes.data.filter((vote) => {
+  const filteredStakes = votes.data.filter((vote) => {
     if (!vote.username) return false;
     return (
       vote.username.indexOf(filterValue) > -1
@@ -72,7 +72,7 @@ const Stakes = ({
       </BoxHeader>
       <BoxContent className={`${styles.results} stakes-tab`}>
         <Table
-          data={filteredVotes}
+          data={filteredStakes}
           isLoading={areLoading}
           iterationKey="address"
           emptyState={{

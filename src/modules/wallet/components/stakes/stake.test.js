@@ -10,7 +10,7 @@ describe('Stakes Tab Component', () => {
       data: [],
       loadData: jest.fn(),
     },
-    emptyVotes: {
+    emptyStakes: {
       data: [],
       loadData: jest.fn(),
     },
@@ -76,7 +76,7 @@ describe('Stakes Tab Component', () => {
     const loadData = jest.fn();
     wrapper = setup({
       ...props,
-      votes: { ...props.emptyVotes, isLoading: true },
+      votes: { ...props.emptyStakes, isLoading: true },
       accounts: { data: [], loadData },
     });
     expect(loadData).not.toHaveBeenCalled();
