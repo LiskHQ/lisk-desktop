@@ -123,7 +123,7 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     case 'unlocking':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock');
       break;
-    case 'voting':
+    case 'staking':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Validator stake');
       break;
     case 'validator registration':

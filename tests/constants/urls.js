@@ -13,7 +13,7 @@ const urls = {
   secondPassphrase: '/second-passphrase',
   registerValidator: '/register-validator',
   validators: '/validators',
-  voting: '/voting',
+  staking: '/staking',
   validatorsStake: '/validators/stake',
   signMessage: '/sign-message',
   login: '/login',
