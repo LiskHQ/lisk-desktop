@@ -8,7 +8,7 @@ Feature: Register validator
   # @basic
   #  Scenario: Register validator + Header balance is affected
   #       Given I am on wallet page
-  #       When I click on votesTab
+  #       When I click on stakesTab
   #       And I click on becomeValidatorLink
   #       Then I see this title: Register validator
   #       When I fill test_validator in validatorNameInput field

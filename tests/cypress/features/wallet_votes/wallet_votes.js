@@ -3,7 +3,7 @@ import { Then } from 'cypress-cucumber-preprocessor/steps';
 import { ss } from '../../../constants';
 
 Then(/^I open votes tab$/, function () {
-  cy.get(ss.votesTab).click();
+  cy.get(ss.stakesTab).click();
 });
 
 Then(/^I see 30 validators$/, function () {
@@ -11,7 +11,7 @@ Then(/^I see 30 validators$/, function () {
 });
 
 Then(/^I click show more$/, function () {
-  cy.get(ss.showMoreVotesBtn).click();
+  cy.get(ss.showMoreStakesBtn).click();
 });
 
 Then(/^I see more than 30 votes$/, function () {

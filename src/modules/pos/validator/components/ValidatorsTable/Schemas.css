@@ -1,5 +1,5 @@
 .container {
-  & .votes {
+  & .stakes {
     grid-area: votes;
   }
 
