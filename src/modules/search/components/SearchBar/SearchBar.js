@@ -54,7 +54,7 @@ const SearchBar = ({ className, history }) => {
   };
 
   const onSelectAccount = (value) => onSelectedRow('explorer', value);
-  const onSelectDelegateAccount = (value) => onSelectedRow('validator-account', value);
+  const onSelectValidatorAccount = (value) => onSelectedRow('validator-account', value);
   const onSelectTransaction = (value) => onSelectedRow('transactions', value);
   const onSelectBlock = (value) => onSelectedRow('block', value);
 
@@ -63,7 +63,7 @@ const SearchBar = ({ className, history }) => {
       onSelectAccount(addresses[rowItemIndex].address);
     }
     if (validators.length) {
-      onSelectDelegateAccount(validators[rowItemIndex]?.address);
+      onSelectValidatorAccount(validators[rowItemIndex]?.address);
     }
     if (transactions.length) {
       onSelectTransaction(transactions[rowItemIndex].id);
@@ -148,7 +148,7 @@ const SearchBar = ({ className, history }) => {
         <Validators
           searchTextValue={searchTextValue}
           validators={validators}
-          onSelectedRow={onSelectDelegateAccount}
+          onSelectedRow={onSelectValidatorAccount}
           rowItemIndex={rowItemIndex}
           updateRowItemIndex={updateRowItemIndex}
           t={t}
