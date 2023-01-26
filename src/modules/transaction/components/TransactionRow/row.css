@@ -94,7 +94,7 @@
   font-size: var(--font-size-h6);
 }
 
-.delegateDetails {
+.validatorDetails {
   display: flex;
   flex-direction: row;
   align-items: center;
