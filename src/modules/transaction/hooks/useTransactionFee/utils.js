@@ -1,7 +1,6 @@
 import { transactions } from '@liskhq/lisk-client';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
-
-export const ZERO_FEE = BigInt(0);
+import { fromTransactionJSON } from '../../utils/encoding';
 
 /**
  * This is solution uses the same logic as implemented in transactions utility.
@@ -17,13 +16,10 @@ export const ZERO_FEE = BigInt(0);
  * @returns {bigint} the transaction fee in Beddows
  */
 export const computeTransactionMinFee = (
-  transaction,
+  transactionJSON,
   paramsSchema,
   auth,
-  isTxValid,
 ) => {
-  if (!isTxValid || !paramsSchema || !auth) return ZERO_FEE;
-
   // @todo define the numberOfEmptySignatures based on the auth and number
   // of existing signatures in the transaction
 
@@ -32,7 +28,7 @@ export const computeTransactionMinFee = (
     numberOfEmptySignatures: 0,
   };
   const minFee = transactions.computeMinFee(
-    transaction,
+    fromTransactionJSON(transactionJSON, paramsSchema),
     paramsSchema,
     options,
   );

@@ -110,7 +110,7 @@ const SendForm = (props) => {
     setReference({ target: { value: '' } });
   }, []);
 
-  const isValid = useMemo(
+  const isFormValid = useMemo(
     () =>
       [amount, recipient, reference, recipientChain, sendingChain, token].reduce((result, item) => {
         result =
@@ -125,7 +125,7 @@ const SendForm = (props) => {
   );
 
   const sendFormProps = {
-    isValid,
+    isFormValid,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
       amount: toRawLsk(amount.value),
@@ -142,7 +142,7 @@ const SendForm = (props) => {
       token,
       recipient,
     },
-    extraCommandFee: initializationFees?.result?.data?.userAccount || 0,
+    extraCommandFee: initializationFees?.data?.userAccount || 0,
   };
 
   let commandParams = {

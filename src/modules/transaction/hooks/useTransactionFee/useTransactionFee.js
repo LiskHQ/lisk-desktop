@@ -1,14 +1,11 @@
-/* eslint-disable complexity */
-/* eslint-disable max-statements */
 import { useMemo } from 'react';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { useAuth } from '@auth/hooks/queries/useAuth';
 import { computeTransactionMinFee, getParamsSchema } from './utils';
 import { FEE_TYPES } from '../../constants';
 import usePriorityFee from '../usePriorityFee';
-import { fromTransactionJSON } from '../../utils/encoding';
 
-export const useByteFee = ({ isValid, senderAddress, transactionJSON }) => {
+export const useByteFee = ({ isFormValid, senderAddress, transactionJSON }) => {
   const {
     data: auth,
     isLoading,
@@ -23,7 +20,7 @@ export const useByteFee = ({ isValid, senderAddress, transactionJSON }) => {
   const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
 
   const bytesFee = useMemo(() => {
-    if (!isValid) {
+    if (!isFormValid || isSchemaLoading) {
       return {
         result: { value: 0, type: FEE_TYPES.BYTES_FEE },
         isLoading: isLoading || isSchemaLoading,
@@ -32,10 +29,9 @@ export const useByteFee = ({ isValid, senderAddress, transactionJSON }) => {
     }
 
     const fee = computeTransactionMinFee(
-      fromTransactionJSON(transactionJSON, paramsSchema),
+      transactionJSON,
       paramsSchema,
       auth,
-      isValid && !isSchemaLoading
     );
 
     return {
@@ -43,7 +39,7 @@ export const useByteFee = ({ isValid, senderAddress, transactionJSON }) => {
       isLoading: isLoading || isSchemaLoading,
       isFetched: isFetchedCommandSchema && isFetched,
     };
-  }, [transactionJSON, paramsSchema, auth, isValid, isSchemaLoading]);
+  }, [transactionJSON, paramsSchema, auth, isFormValid, isSchemaLoading]);
 
   return bytesFee;
 };
@@ -51,14 +47,14 @@ export const useByteFee = ({ isValid, senderAddress, transactionJSON }) => {
 /**
  *
  * @param {object} data
- * @param {boolean} data.isValid Whether the transaction is valid or not. TxComposer defines this
+ * @param {boolean} data.isFormValid Whether the transaction form is valid or not. TxComposer defines this
  * @param {string} data.senderAddress The sender address in Lisk 32 format
  * @param {object} data.transaction Transaction object as Lisk Element expects without fee
  * @returns {object} The fee object with a total value, and a component value as an array of fees
  * that contribute in the total value
  */
 export const useTransactionFee = ({
-  isValid,
+  isFormValid,
   transactionJSON,
   senderAddress,
   selectedPriority = [],
@@ -77,7 +73,7 @@ export const useTransactionFee = ({
     isFetched: isFetchedByteFee,
   } = useByteFee({
     senderAddress,
-    isValid,
+    isFormValid,
     transactionJSON,
   });
 
@@ -87,12 +83,13 @@ export const useTransactionFee = ({
     paramsSchema,
   });
   const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
+  const minimumFee = BigInt(bytesFee.value) + BigInt(extraCommandFee);
 
   return {
-    minimumFee: Number(bytesFee.value) + extraCommandFee,
-    isLoading: isSchemaLoading || /* istanbul ignore next */ isLoadingByteFee,
-    isFetched: isSchemaFetched && /* istanbul ignore next */ isFetchedByteFee,
-    transactionFee: Number(bytesFee.value) + Number(priorityFee.value) + extraCommandFee,
+    isLoading: isSchemaLoading || isLoadingByteFee,
+    isFetched: isSchemaFetched && isFetchedByteFee,
+    minimumFee: minimumFee.toString(),
+    transactionFee: (minimumFee + BigInt(priorityFee.value)).toString(),
     components,
   };
 };

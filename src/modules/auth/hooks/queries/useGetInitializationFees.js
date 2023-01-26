@@ -1,13 +1,13 @@
 import { useInvokeQuery } from '@common/hooks';
-import { INITIALIZATION_FEES } from 'src/const/queries';
+import { INVOKE } from 'src/const/queries';
 
 export const useGetInitializationFees = ({ options = {} } = {}) => {
   const config = {
-    params: {
-      endpoint: 'auth.getInitializationFees',
+    data: {
+      endpoint: 'token_getInitializationFees',
       params: {},
     },
   };
 
-  return useInvokeQuery({ config, keys: [INITIALIZATION_FEES], options });
+  return useInvokeQuery({ config, keys: [INVOKE], options });
 };

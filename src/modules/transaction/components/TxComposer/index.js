@@ -57,7 +57,7 @@ const TxComposer = ({
     module,
     command,
     nonce: auth?.data?.nonce,
-    fee: 0,
+    fee: formProps?.extraCommandFee || 0,
     senderPublicKey: pubkey,
     params: commandParams,
     signatures: [],
@@ -66,18 +66,10 @@ const TxComposer = ({
   const { minimumFee, components, transactionFee } = useTransactionFee({
     selectedPriority,
     transactionJSON,
-    isValid: formProps.isValid,
+    isFormValid: formProps.isFormValid,
     senderAddress: address,
-    extraCommandFee: formProps.extraCommandFee || 0,
+    extraCommandFee: formProps?.extraCommandFee,
   });
-  // const { totalFee: maximumTransactionFee } = useTransactionFee({
-  //   selectedPriority,
-  //   transaction: {
-  //     ...transactionJSON,
-  //     ...(commandParamsWithMaxBalance && { params: commandParamsWithMaxBalance }),
-  //   },
-  //   isValid: formProps.isValid,
-  // });
 
   useEffect(() => {
     if (typeof onComposed === 'function') {
@@ -148,7 +140,7 @@ const TxComposer = ({
         <PrimaryButton
           className="confirm-btn"
           onClick={() => onConfirm(formProps, transactionJSON, selectedPriority, composedFees)}
-          disabled={!formProps.isValid || minRequiredBalance > wallet.token?.balance}
+          disabled={!formProps.isFormValid || minRequiredBalance > wallet.token?.balance}
         >
           {buttonTitle ?? t('Continue')}
         </PrimaryButton>
