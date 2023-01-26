@@ -97,14 +97,14 @@ Feature: validator
 
   # # @advanced
   # @skip
-  # Scenario: latest votes list should function properly
+  # Scenario: latest stakes list should function properly
   #   Given Network is set to customNode
   #   And I am on validators page
   #   And I wait 5 seconds
   #   When I click on latestStakesBtn
-  #   Then I should see 10 votes in table
+  #   Then I should see 10 stakes in table
   #   When I click on showMoreValidatorsBtn
-  #   Then I should see 20 votes in table
+  #   Then I should see 20 stakes in table
   #   When I click on transactionRow
   #   Then I should be on a stake transaction details modal
 

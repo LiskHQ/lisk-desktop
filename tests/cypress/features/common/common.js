@@ -172,7 +172,7 @@ Then(/^I should see (\d+) (\w+) in table$/, function (number, rowType) {
     case 'transactions':
       cy.get(ss.transactionRow).should('have.length', number);
       break;
-    case 'votes':
+    case 'stakes':
       cy.get(ss.transactionRow).should('have.length', number);
       break;
     case 'validators':

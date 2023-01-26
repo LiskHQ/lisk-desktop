@@ -26,9 +26,9 @@ function registerValidator(){
 }
 
 function stake() {
-	lisk transaction:broadcast $(lisk transaction:create --type=13 156 0.1 --votes="537318935439898807L,100" --passphrase="peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" --networkIdentifier=93d00fe5be70d90e7ae247936a2e7d83b50809c79b73fa14285f02c842348b3e)
+	lisk transaction:broadcast $(lisk transaction:create --type=13 156 0.1 --stakes="537318935439898807L,100" --passphrase="peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" --networkIdentifier=93d00fe5be70d90e7ae247936a2e7d83b50809c79b73fa14285f02c842348b3e)
 	sleep 20
-	lisk transaction:broadcast $(lisk transaction:create --type=13 157 0.1 --votes="537318935439898807L,-20" --passphrase="peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" --networkIdentifier=93d00fe5be70d90e7ae247936a2e7d83b50809c79b73fa14285f02c842348b3e)
+	lisk transaction:broadcast $(lisk transaction:create --type=13 157 0.1 --stakes="537318935439898807L,-20" --passphrase="peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" --networkIdentifier=93d00fe5be70d90e7ae247936a2e7d83b50809c79b73fa14285f02c842348b3e)
 }
 
 for i in {1..50}; do

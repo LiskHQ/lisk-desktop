@@ -112,9 +112,9 @@ const moduleCommandSchemas = {
   "pos:stakeValidator": {
     $id: "/pos/command/stakeValidatorParams",
     type: "object",
-    required: ["votes"],
+    required: ["stakes"],
     properties: {
-      votes: {
+      stakes: {
         type: "array",
         fieldNumber: 1,
         minItems: 1,

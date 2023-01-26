@@ -2,7 +2,7 @@
 import { Then } from 'cypress-cucumber-preprocessor/steps';
 import { ss } from '../../../constants';
 
-Then(/^I open votes tab$/, function () {
+Then(/^I open stakes tab$/, function () {
   cy.get(ss.stakesTab).click();
 });
 
@@ -14,15 +14,15 @@ Then(/^I click show more$/, function () {
   cy.get(ss.showMoreStakesBtn).click();
 });
 
-Then(/^I see more than 30 votes$/, function () {
+Then(/^I see more than 30 stakes$/, function () {
   cy.get(ss.stakeRow).should('have.length.greaterThan', 30);
 });
 
-Then(/^I see no votes$/, function () {
+Then(/^I see no stakes$/, function () {
   cy.get(ss.stakeRow).should('not.exist');
 });
 
-Then(/^I filter votes$/, function () {
+Then(/^I filter stakes$/, function () {
   cy.get(ss.searchValidatorInput).click().type('genesis_17');
 });
 

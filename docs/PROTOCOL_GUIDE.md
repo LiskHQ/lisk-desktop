@@ -13,7 +13,7 @@ Everything that comes after `lisk://` is treated as a route so this example will
 
 #### Voting protocol
 Makes voting for validators easier 
-`lisk://main/voting/stake?votes=thepool,4miners.net` or `lisk://validators/stake?votes=thepool,4miners.net`
+`lisk://main/voting/stake?stakes=thepool,4miners.net` or `lisk://validators/stake?stakes=thepool,4miners.net`
 It will open lisk app and select validators automatically `thepool` and `4miners.net`
 
 :exclamation: Please keep in mind that We don't use `/main` route anymore but some websites still relay on an old url so We are allowing `/main` in this particular case `main/voting/stake`.

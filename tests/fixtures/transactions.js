@@ -144,10 +144,10 @@ const getState = () => ({
             $id: "/pos/command/stakeValidatorParams",
             type: "object",
             required: [
-              "votes"
+              "stakes"
             ],
             properties: {
-              votes: {
+              stakes: {
                 type: "array",
                 fieldNumber: 1,
                 minItems: 1,
