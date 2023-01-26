@@ -1,7 +1,7 @@
 import { getTransactionFee } from '@transaction/api';
 import { getNumberOfSignatures } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import { MIN_ACCOUNT_BALANCE, VOTE_AMOUNT_STEP } from '@transaction/configuration/transactions';
+import { MIN_ACCOUNT_BALANCE, STAKE_AMOUNT_STEP } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { normalizeStakesForTx, splitModuleAndCommand } from '@transaction/utils';
 
@@ -78,7 +78,7 @@ const getMaxAmount = async ({
   ) {
     return maxStakeAmount;
   }
-  return maxStakeAmount - VOTE_AMOUNT_STEP;
+  return maxStakeAmount - STAKE_AMOUNT_STEP;
 };
 
 export default getMaxAmount;
