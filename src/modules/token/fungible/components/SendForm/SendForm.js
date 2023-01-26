@@ -98,7 +98,6 @@ const SendForm = (props) => {
   }, []);
 
   const onConfirm = useCallback((formProps, transactionJSON, selectedPriority, fees) => {
-    console.log('--->>', transactionJSON)
     nextStep({
       selectedPriority,
       formProps,
