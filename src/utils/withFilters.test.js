@@ -4,7 +4,7 @@ import withFilters from './withFilters';
 
 describe('withFilters', () => {
   const className = 'dummyFilter';
-  const apiName = 'delegates';
+  const apiName = 'validators';
   const delegateData = [{ username: 'test', id: 1 }, { username: 'Me', id: 2 }];
   const DummyComponent = props => (
     <span className={className}>
@@ -34,7 +34,7 @@ describe('withFilters', () => {
 
   it('should call applyFilters with default filters', () => {
     wrapper.find('.filter').simulate('change');
-    expect(props.delegates.loadData).toHaveBeenCalledWith({ sort: undefined });
+    expect(props.validators.loadData).toHaveBeenCalledWith({ sort: undefined });
   });
 
   it('should call applyFilters with custom filters', () => {
@@ -45,6 +45,6 @@ describe('withFilters', () => {
         name: 'filters',
       },
     });
-    expect(props.delegates.loadData).toHaveBeenCalledWith({ sort: undefined, ...filter });
+    expect(props.validators.loadData).toHaveBeenCalledWith({ sort: undefined, ...filter });
   });
 });

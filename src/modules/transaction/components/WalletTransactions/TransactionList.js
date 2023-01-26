@@ -97,7 +97,7 @@ const Transactions = ({
           additionalRowProps={{
             activeToken,
             host: address,
-            delegates: votedDelegates.data,
+            validators: votedDelegates.data,
             currentBlockHeight,
             layout: 'hosted',
             avatarSize: 40,

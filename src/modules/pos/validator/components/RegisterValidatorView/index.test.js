@@ -47,7 +47,7 @@ describe('RegisterDelegate', () => {
     prevState: {},
     delegate: {},
     liskAPIClient: {
-      delegates: {
+      validators: {
         get: jest.fn(),
       },
     },
@@ -60,8 +60,8 @@ describe('RegisterDelegate', () => {
   };
 
   beforeEach(() => {
-    props.liskAPIClient.delegates.get.mockClear();
-    debounce.mockReturnValue((name, error) => !error && props.liskAPIClient.delegates.get(name));
+    props.liskAPIClient.validators.get.mockClear();
+    debounce.mockReturnValue((name, error) => !error && props.liskAPIClient.validators.get(name));
   });
 
   it('renders properly SelectName component', () => {

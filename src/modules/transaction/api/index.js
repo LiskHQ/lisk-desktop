@@ -91,7 +91,7 @@ export const getTransactions = ({ network, params, baseUrl }) => {
  * registrations on Lisk blockchain.
  *
  * @param {Object} Network - Network setting from Redux store
- * @returns {Promise} Registered delegates list API call
+ * @returns {Promise} Registered validators list API call
  */
 export const getRegisteredValidators = async ({ network }) => {
   const validators = await getValidators({

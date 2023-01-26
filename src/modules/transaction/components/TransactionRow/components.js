@@ -206,12 +206,12 @@ export const Status = ({ t }) => {
   );
 };
 
-const generateStakes = (params, delegates, token, t) => {
+const generateStakes = (params, validators, token, t) => {
   const voteElements = params.votes.slice(0, 1).map((vote) => (
     <span className={`${styles.container} stake-item-address`} key={`vote-${vote.validatorAddress}`}>
       <Link to={`${routes.wallet.path}?address=${vote.validatorAddress}`}>
         <span className={styles.primaryText}>
-          {delegates[vote.validatorAddress]?.name ?? truncateAddress(vote.validatorAddress)}
+          {validators[vote.validatorAddress]?.name ?? truncateAddress(vote.validatorAddress)}
         </span>
       </Link>
       <span className={`${styles.value}`}>
@@ -231,7 +231,7 @@ const generateStakes = (params, delegates, token, t) => {
 };
 
 export const Params = ({ t }) => {
-  const { data, delegates = [], activeToken } = useContext(TransactionRowContext);
+  const { data, validators = [], activeToken } = useContext(TransactionRowContext);
   const { voteDelegate, registerDelegate, transfer } = MODULE_COMMANDS_NAME_MAP;
 
   const getDetails = () => {
@@ -239,7 +239,7 @@ export const Params = ({ t }) => {
       case registerDelegate:
         return data.params.delegate?.username;
       case voteDelegate:
-        return generateStakes(data.params, delegates, activeToken, t);
+        return generateStakes(data.params, validators, activeToken, t);
       case transfer:
         return data.params.data;
       default:

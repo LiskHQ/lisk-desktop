@@ -121,7 +121,7 @@ describe('API: LSK Transactions', () => {
       await expect(getRegisteredValidators({ network })).rejects.toThrow('Error fetching data.');
     });
 
-    it('should return correct stats of registered delegates', async () => {
+    it('should return correct stats of registered validators', async () => {
       // create sample delegate registration transactions
       const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4].map((d) => ({
         block: { timestamp: new Date(`2020-${d}-1`).getTime() / 1000 },

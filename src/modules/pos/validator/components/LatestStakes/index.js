@@ -23,7 +23,7 @@ const LatestStakes = ({ filters }) => {
     [filters]
   );
 
-  const votedValidators = useMemo(() => {
+  const validatorsMap = useMemo(() => {
     if (!validators || !validators.data) return {};
 
     const responseMap = validators.data.reduce((acc, validator) => {
@@ -45,7 +45,7 @@ const LatestStakes = ({ filters }) => {
       }}
       additionalRowProps={{
         t,
-        delegates: votedValidators,
+        validators: validatorsMap,
         activeToken: 'LSK',
         layout: 'vote',
       }}
