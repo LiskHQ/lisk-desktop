@@ -109,7 +109,7 @@
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
-.registerDelegatePreview {
+.registerValidatorPreview {
   grid-template-areas:
     "illustration illustration"
     "sender sender"

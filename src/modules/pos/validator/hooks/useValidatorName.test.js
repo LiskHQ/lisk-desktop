@@ -6,7 +6,7 @@ import { useValidators } from './queries';
 import useValidatorName from './useValidatorName';
 
 jest.mock('../api', () => ({
-  getDelegate: jest.fn(),
+  getValidator: jest.fn(),
 }));
 jest.mock('./queries/useValidators');
 
@@ -71,7 +71,7 @@ describe('useValidatorName', () => {
   });
 
   it('should return no errors if the value is unique', async () => {
-    delegateAPI.getDelegate.mockRejectedValue({ message: 'Data not found.' });
+    delegateAPI.getValidator.mockRejectedValue({ message: 'Data not found.' });
     useValidators.mockReturnValue({
       loading: false,
       error: {},

@@ -51,7 +51,7 @@ const moduleCommandSchemas = {
     ],
   },
   "pos:registerValidator": {
-    $id: "/pos/command/registerDelegateParams",
+    $id: "/pos/command/registerValidatorParams",
     type: "object",
     required: ["name", "generatorKey", "blsKey", "proofOfPossession"],
     properties: {

@@ -40,7 +40,7 @@ export const LayoutSchema = {
   },
   [`${registerValidator}-preview`]: {
     components: [...previewBaseComponents, ...restComponents],
-    className: styles.registerDelegatePreview,
+    className: styles.registerValidatorPreview,
   },
   [registerMultisignature]: {
     components: [...baseComponents, ...timeComponents, Members, NumberOfSignatures, PrettyJson],
