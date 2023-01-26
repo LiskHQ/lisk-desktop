@@ -15,8 +15,8 @@ export const stakesReset = () => ({
 });
 
 /**
- * Clears the existing changes on votes.
- * The vote queue will be empty after this action dispatched
+ * Clears the existing changes on stakes.
+ * The stake queue will be empty after this action dispatched
  *
  * @returns {Object} Pure action object
  */
@@ -25,7 +25,7 @@ export const stakesCleared = () => ({
 });
 
 /**
- * To be dispatched when the pending vote transaction
+ * To be dispatched when the pending stake transaction
  * is confirmed by the blockchain.
  *
  * @returns {Object} Pure action object
@@ -35,7 +35,7 @@ export const stakesConfirmed = () => ({
 });
 
 /**
- * To be dispatched when a vote is to be removed from the staking queue
+ * To be dispatched when a stake is to be removed from the staking queue
  *
  * @returns {Object} Pure action object
  */
@@ -45,15 +45,15 @@ export const stakeDiscarded = (data) => ({
 });
 
 /**
- * Defines the new vote amount for a given validator.
- * The reducer will add a new vote if if didn't exist before
- * Any vote whose vote amount changes to zero will be removed
- * when the vote transaction is confirmed (via stakesConfirmed action)
+ * Defines the new stake amount for a given validator.
+ * The reducer will add a new stake if if didn't exist before
+ * Any stake whose stake amount changes to zero will be removed
+ * when the stake transaction is confirmed (via stakesConfirmed action)
  *
  * @param {Object} data
- * @param {String} data.address - Delegate address
- * @param {String} data.name - Delegate name
- * @param {String} data.voteAmount - (New) vote amount in Beddows
+ * @param {String} data.address - Validator address
+ * @param {String} data.name - Validator name
+ * @param {String} data.stakeAmount - (New) stake amount in Beddows
  * @returns {Object} Pure action object
  */
 export const stakeEdited = (data) => async (dispatch) =>
@@ -63,13 +63,13 @@ export const stakeEdited = (data) => async (dispatch) =>
   });
 
 /**
- * Makes Api call to register votes
+ * Makes Api call to register stakes
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  *
  * @param {object} data
  * @param {object} data.fee
- * @param {object} data.votes
+ * @param {object} data.stakes
  * @param {promise} API call response
  */
 export const stakesSubmitted =
@@ -102,7 +102,7 @@ export const stakesSubmitted =
   };
 
 /**
- * Fetches the list of votes of the host wallet.
+ * Fetches the list of stakes of the host wallet.
  */
 export const stakesRetrieved = () => async (dispatch, getState) => {
   const { network, account } = getState();
@@ -121,7 +121,7 @@ export const stakesRetrieved = () => async (dispatch, getState) => {
       type: actionTypes.stakesRetrieved,
       data: stakes.data.map((stake) => ({
         ...stake,
-        commission: mapValidatorToAddress[stake.delegateAddress],
+        commission: mapValidatorToAddress[stake.validatorAddress],
       })),
     });
   } catch (exp) {
