@@ -80,7 +80,7 @@ describe('Transactions', () => {
         },
         id: '123',
         type: 3,
-        moduleAssetName: 'voteDelegate',
+        moduleAssetName: 'stakeValidator',
       },
     ];
     const wrapper = mount(<Transactions {...props} />);

@@ -8,7 +8,7 @@ import {
 import styles from './layoutSchema.css';
 
 const {
-  transfer, voteDelegate, unlock, registerValidator, registerMultisignature,
+  transfer, stakeValidator, unlock, registerValidator, registerMultisignature,
   reportDelegateMisbehavior, reclaim,
 } = MODULE_COMMANDS_NAME_MAP;
 
@@ -26,11 +26,11 @@ export const LayoutSchema = {
     components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],
     className: styles.transferPreview,
   },
-  [voteDelegate]: {
+  [stakeValidator]: {
     components: [...baseComponents, ...timeComponents, Stakes, PrettyJson],
     className: styles.stakeLayout,
   },
-  [`${voteDelegate}-preview`]: {
+  [`${stakeValidator}-preview`]: {
     components: [...previewBaseComponents, Stakes, ...restComponents],
     className: styles.stakePreview,
   },

@@ -21,7 +21,7 @@ const data = {
     'token:transfer': 15,
     'auth:registerMultisignature': 2,
     'pos:registerValidator': 5,
-    'pos:voteDelegate': 9,
+    'pos:stakeValidator': 9,
     'pos:unlock': 4,
     'pos:reportDelegateMisbehavior': 2,
     'legacy:reclaim': 1,

@@ -92,8 +92,8 @@ export default [
   },
   {
     id: 'a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca',
-    moduleCommand: 'pos:voteDelegate',
-    moduleAssetName: 'pos:voteDelegate',
+    moduleCommand: 'pos:stakeValidator',
+    moduleAssetName: 'pos:stakeValidator',
     fee: '144000',
     height: 454,
     nonce: '137',

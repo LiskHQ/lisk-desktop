@@ -78,7 +78,7 @@ describe('actions: staking', () => {
 
   const transactionJSON = {
     module: 'pos',
-    command: 'voteDelegate',
+    command: 'stakeValidator',
     nonce: '6',
     senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
     signatures: [],

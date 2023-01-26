@@ -75,7 +75,7 @@ const transactionJSON = {
   fee: '1000000',
   signatures: [],
   module: 'pos',
-  command: 'voteDelegate',
+  command: 'stakeValidator',
   params: {
     votes: [
       {

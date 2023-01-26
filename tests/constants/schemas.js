@@ -109,8 +109,8 @@ const moduleCommandSchemas = {
       },
     },
   },
-  "pos:voteDelegate": {
-    $id: "/pos/command/voteDelegateParams",
+  "pos:stakeValidator": {
+    $id: "/pos/command/stakeValidatorParams",
     type: "object",
     required: ["votes"],
     properties: {

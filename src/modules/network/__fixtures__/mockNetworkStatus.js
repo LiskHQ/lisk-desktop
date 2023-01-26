@@ -25,7 +25,7 @@ export const mockNetworkStatus = {
       { id: '0000000d:00000003', name: 'pos:reportDelegateMisbehavior' },
       { id: '0000000d:00000002', name: 'pos:unlockToken' },
       { id: '0000000d:00000004', name: 'pos:updateGeneratorKey' },
-      { id: '0000000d:00000001', name: 'pos:voteDelegate' },
+      { id: '0000000d:00000001', name: 'pos:stakeValidator' },
       { id: '00008000:00000000', name: 'legacy:reclaim' },
       { id: '00008000:00000001', name: 'legacy:registerkeys' },
     ],

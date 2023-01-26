@@ -22,7 +22,7 @@ import { fromTransactionJSON } from './encoding';
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
-const { transfer, voteDelegate, registerMultisignature, registerValidator, reclaim, unlock } =
+const { transfer, stakeValidator, registerMultisignature, registerValidator, reclaim, unlock } =
   MODULE_COMMANDS_NAME_MAP;
 
 // TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
@@ -61,9 +61,9 @@ describe.skip('API: LSK Transactions', () => {
 
     it('should return amount of stakes in Beddows', () => {
       const tx = {
-        title: voteDelegate,
+        title: stakeValidator,
         module: 'pos',
-        command: 'voteDelegate',
+        command: 'stakeValidator',
         params: {
           votes: [
             {
@@ -133,7 +133,7 @@ describe.skip('API: LSK Transactions', () => {
       const tx = {
         ...baseDesktopTx,
         module: 'pos',
-        command: 'voteDelegate',
+        command: 'stakeValidator',
         params: {
           votes: [
             {
@@ -148,7 +148,7 @@ describe.skip('API: LSK Transactions', () => {
         },
       };
       const txObj = fromTransactionJSON(tx, moduleCommandSchemas['pos:stake']);
-      const [module, command] = splitModuleAndCommand(voteDelegate);
+      const [module, command] = splitModuleAndCommand(stakeValidator);
       expect(txObj).toEqual({
         ...baseElementsTx,
         module,
@@ -315,7 +315,7 @@ describe.skip('API: LSK Transactions', () => {
   //   });
 
   //   it('should a vote delegate transaction with type signature of lisk service', () => {
-  //     const [module, command] = splitModuleAndCommand(voteDelegate);
+  //     const [module, command] = splitModuleAndCommand(stakeValidator);
   //     const tx = {
   //       ...baseElementsTx,
   //       module,
@@ -332,7 +332,7 @@ describe.skip('API: LSK Transactions', () => {
 
   //     expect(elementTxToDesktopTx(tx)).toEqual({
   //       ...baseDesktopTx,
-  //       moduleCommand: voteDelegate,
+  //       moduleCommand: stakeValidator,
   //       id: '',
   //       params: {
   //         votes: [
@@ -447,19 +447,19 @@ describe.skip('API: LSK Transactions', () => {
 
   describe('containsTransactionType', () => {
     it('should return true', () => {
-      let pending = [{ moduleCommand: voteDelegate }];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
+      let pending = [{ moduleCommand: stakeValidator }];
+      expect(containsTransactionType(pending, stakeValidator)).toEqual(true);
 
-      pending = [{ moduleCommand: transfer }, { moduleCommand: voteDelegate }];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
+      pending = [{ moduleCommand: transfer }, { moduleCommand: stakeValidator }];
+      expect(containsTransactionType(pending, stakeValidator)).toEqual(true);
     });
 
     it('should return false', () => {
       let pending = [];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
+      expect(containsTransactionType(pending, stakeValidator)).toEqual(false);
 
       pending = [{ moduleCommand: transfer }];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
+      expect(containsTransactionType(pending, stakeValidator)).toEqual(false);
     });
   });
 

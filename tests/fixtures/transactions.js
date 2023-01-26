@@ -140,8 +140,8 @@ const getState = () => ({
               }
             }
           },
-          'pos:voteDelegate': {
-            $id: "/pos/command/voteDelegateParams",
+          'pos:stakeValidator': {
+            $id: "/pos/command/stakeValidatorParams",
             type: "object",
             required: [
               "votes"
@@ -207,7 +207,7 @@ const getState = () => ({
 });
 
 const transformedAccountTransaction = {
-  moduleCommand: 'pos:voteDelegate',
+  moduleCommand: 'pos:stakeValidator',
   id: 'ad0e0acbe8a3ece3087c8362149ca39c470e565d268df32e57de5d3fe2e1ea5c',
   fee: '142000n',
   nonce: '2n',

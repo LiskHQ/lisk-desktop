@@ -45,7 +45,7 @@ const getFields = (t) => [
 const blackListTypes = [
   'auth:registerMultisignature',
   'pos:registerValidator',
-  'pos:voteDelegate',
+  'pos:stakeValidator',
   'pos:reportDelegateMisbehavior',
 ];
 
