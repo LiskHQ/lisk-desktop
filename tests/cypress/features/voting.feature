@@ -12,7 +12,7 @@ Feature: Stake validator
    # @todo: disabled until account management is updated
    # @basic
    # Scenario: Down Stake for a validator when there are locked lsk
-   #    And I click on openAddVoteDialog
+   #    And I click on openAddStakeDialog
    #    And I clear input amountInput
    #    And I fill 160 in amountInput field
    #    And I click on confirmBtn
@@ -25,7 +25,7 @@ Feature: Stake validator
 
    # @basic
    # Scenario: Up Stake for a validator when there are locked lsk
-   #    And I click on openAddVoteDialog
+   #    And I click on openAddStakeDialog
    #    And I clear input amountInput
    #    And I fill 200 in amountInput field
    #    And I click on confirmBtn
@@ -38,8 +38,8 @@ Feature: Stake validator
 
    # @basic
    # Scenario: Remove Stake for a validator
-   #    When I click on openAddVoteDialog
-   #    And I click on removeVote
+   #    When I click on openAddStakeDialog
+   #    And I click on removeStake
    #    And I click on stakingQueueToggle
    #    And I click on txNextBtn
    #    And I click on confirmButton

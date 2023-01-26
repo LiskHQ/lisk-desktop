@@ -69,7 +69,7 @@
   display: inline-block;
 
   & .vote,
-  & .unVote {
+  & .unStake {
     display: inline-block;
     width: 100%;
     text-align: left;

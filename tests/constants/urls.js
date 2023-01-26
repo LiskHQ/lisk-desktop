@@ -14,7 +14,7 @@ const urls = {
   registerValidator: '/register-validator',
   validators: '/validators',
   voting: '/voting',
-  validatorsVote: '/validators/vote',
+  validatorsStake: '/validators/vote',
   signMessage: '/sign-message',
   login: '/login',
   network: '/network',
