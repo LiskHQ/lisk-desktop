@@ -55,8 +55,8 @@ export const validateLSKPublicKey = (publicKey) => {
  * @param {string?} [data.funds] Maximum funds users are allowed to input
  * @param {Array?} [data.checklist] The list of errors to be tested. A choice of
  * ZERO, MAX_ACCURACY, FORMAT, STAKE_10X, INSUFFICIENT_FUNDS
- * @param {string} [data.minValue] The minimum value which is the previously confirmed votes
- * @param {string} [data.inputValue] The user's input for votes
+ * @param {string} [data.minValue] The minimum value which is the previously confirmed stakes
+ * @param {string} [data.inputValue] The user's input for stakes
  * @returns {Object.<string, string|boolean>}
  * data - Object containing the message and if has an error
  *  data.message - Message of the error or empty string

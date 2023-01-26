@@ -5,7 +5,7 @@ import withFilters from './withFilters';
 describe('withFilters', () => {
   const className = 'dummyFilter';
   const apiName = 'validators';
-  const delegateData = [{ username: 'test', id: 1 }, { username: 'Me', id: 2 }];
+  const validatorData = [{ username: 'test', id: 1 }, { username: 'Me', id: 2 }];
   const DummyComponent = props => (
     <span className={className}>
       <span className="filter" onChange={event => props.applyFilters(event.target.value)} />
@@ -14,7 +14,7 @@ describe('withFilters', () => {
   const initialFilters = { search: '' };
   const props = {
     [apiName]: {
-      loadData: jest.fn().mockReturnValue(delegateData),
+      loadData: jest.fn().mockReturnValue(validatorData),
     },
   };
   const setup = () => {
