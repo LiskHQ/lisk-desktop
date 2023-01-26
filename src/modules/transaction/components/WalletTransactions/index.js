@@ -33,7 +33,7 @@ export default compose(
           ? { data: [...oldData.data, ...response.data], meta: response.meta }
           : response,
     },
-    votedDelegates: {
+    stakedValidators: {
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
       defaultData: [],
       transformResponse: (response) =>

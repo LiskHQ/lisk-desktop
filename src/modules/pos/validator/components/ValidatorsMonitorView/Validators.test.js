@@ -182,7 +182,7 @@ describe('Validators monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      votedDelegates: {
+      stakedValidators: {
         isLoading: false,
         data: [{ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', username: 'test_del' }],
         loadData: jest.fn(),
