@@ -30,8 +30,8 @@ export default [
   },
   {
     id: '827028a55e5a28f96437bf87531c61255b737ceb3407989dfd41985ed6d5453b',
-    moduleCommand: 'pos:registerDelegate',
-    moduleAssetName: 'pos:registerDelegate',
+    moduleCommand: 'pos:registerValidator',
+    moduleAssetName: 'pos:registerValidator',
     fee: '1000268000',
     height: 329,
     nonce: '2',

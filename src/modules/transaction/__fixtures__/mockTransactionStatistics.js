@@ -20,7 +20,7 @@ const data = {
   distributionByType: {
     'token:transfer': 15,
     'auth:registerMultisignature': 2,
-    'pos:registerDelegate': 5,
+    'pos:registerValidator': 5,
     'pos:voteDelegate': 9,
     'pos:unlock': 4,
     'pos:reportDelegateMisbehavior': 2,

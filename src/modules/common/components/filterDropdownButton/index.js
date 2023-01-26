@@ -23,7 +23,7 @@ const filterComponents = {
 
 const blackListTypes = [
   'auth:registerMultisignature',
-  'pos:registerDelegate',
+  'pos:registerValidator',
   'pos:voteDelegate',
   'pos:reportDelegateMisbehavior',
 ];

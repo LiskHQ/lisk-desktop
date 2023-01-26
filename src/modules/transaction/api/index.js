@@ -100,7 +100,7 @@ export const getRegisteredValidators = async ({ network }) => {
   });
   const txs = await getTransactions({
     network,
-    params: { moduleCommand: 'pos:registerDelegate', limit: 100 },
+    params: { moduleCommand: 'pos:registerValidator', limit: 100 },
   });
 
   if (validators.error || txs.error) {

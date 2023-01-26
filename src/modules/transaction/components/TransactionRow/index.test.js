@@ -31,7 +31,7 @@ const txBase = {
 //     ],
 //   },
 // };
-// const registerDelegate = {
+// const registerValidator = {
 //   moduleCommandID: '5:0',
 //   params: {
 //     delegate: {
@@ -151,7 +151,7 @@ describe('Transaction Row', () => {
   //       ...baseProps,
   //       data: {
   //         ...txBase,
-  //         ...registerDelegate,
+  //         ...registerValidator,
   //       },
   //       layout: 'full',
   //     };
@@ -173,7 +173,7 @@ describe('Transaction Row', () => {
   //       ...baseProps,
   //       data: {
   //         ...txBase,
-  //         ...registerDelegate,
+  //         ...registerValidator,
   //       },
   //       layout: 'hosted',
   //     };

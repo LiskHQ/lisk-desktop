@@ -74,7 +74,7 @@
     "transactionAsset transactionAsset";
 }
 
-.registerDelegate {
+.registerValidator {
   grid-template-areas:
     "illustration illustration"
     "sender sender"

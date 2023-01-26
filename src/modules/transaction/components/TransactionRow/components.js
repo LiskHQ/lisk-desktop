@@ -232,11 +232,11 @@ const generateStakes = (params, validators, token, t) => {
 
 export const Params = ({ t }) => {
   const { data, validators = [], activeToken } = useContext(TransactionRowContext);
-  const { voteDelegate, registerDelegate, transfer } = MODULE_COMMANDS_NAME_MAP;
+  const { voteDelegate, registerValidator, transfer } = MODULE_COMMANDS_NAME_MAP;
 
   const getDetails = () => {
     switch (data.moduleCommand) {
-      case registerDelegate:
+      case registerValidator:
         return data.params.validator?.username;
       case voteDelegate:
         return generateStakes(data.params, validators, activeToken, t);

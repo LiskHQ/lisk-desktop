@@ -104,7 +104,7 @@ const getState = () => ({
               "signatures"
             ]
           },
-          'pos:registerDelegate': {
+          'pos:registerValidator': {
             $id: "/pos/command/registerDelegateParams",
             type: "object",
             required: [

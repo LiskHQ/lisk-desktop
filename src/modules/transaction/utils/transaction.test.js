@@ -22,7 +22,7 @@ import { fromTransactionJSON } from './encoding';
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
-const { transfer, voteDelegate, registerMultisignature, registerDelegate, reclaim, unlock } =
+const { transfer, voteDelegate, registerMultisignature, registerValidator, reclaim, unlock } =
   MODULE_COMMANDS_NAME_MAP;
 
 // TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
@@ -167,7 +167,7 @@ describe.skip('API: LSK Transactions', () => {
       const tx = {
         ...baseDesktopTx,
         module: 'pos',
-        command: 'registerDelegate',
+        command: 'registerValidator',
         params: {
           name: 'username',
           generatorKey: genKey,
@@ -176,7 +176,7 @@ describe.skip('API: LSK Transactions', () => {
         },
       };
       const txObj = fromTransactionJSON(tx, moduleCommandSchemas['pos:registerValidator']);
-      const [module, command] = splitModuleAndCommand(registerDelegate);
+      const [module, command] = splitModuleAndCommand(registerValidator);
       expect(txObj).toEqual({
         ...baseElementsTx,
         id: Buffer.alloc(0),
@@ -288,7 +288,7 @@ describe.skip('API: LSK Transactions', () => {
   //   });
 
   //   it('should a register delegate transaction with type signature of lisk service', () => {
-  //     const [module, command] = splitModuleAndCommand(registerDelegate);
+  //     const [module, command] = splitModuleAndCommand(registerValidator);
   //     const tx = {
   //       ...baseElementsTx,
   //       module,
@@ -303,7 +303,7 @@ describe.skip('API: LSK Transactions', () => {
 
   //     expect(elementTxToDesktopTx(tx)).toEqual({
   //       ...baseDesktopTx,
-  //       moduleCommand: registerDelegate,
+  //       moduleCommand: registerValidator,
   //       id: '',
   //       params: {
   //         name: 'super_delegate',

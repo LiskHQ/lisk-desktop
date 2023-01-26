@@ -21,7 +21,7 @@ function transfer(){
 	lisk transaction:broadcast $(lisk transaction:create:transfer $1 0.1 $2 $3 --data=$4 --passphrase="$PASSPHRASE_GENESIS" --networkIdentifier=$NETWORK_IDENTIFIER)
 }
 
-function registerDelegate(){
+function registerValidator(){
 	lisk transaction:broadcast $(lisk transaction:create:validator 0 11 validator --passphrase="recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit" --networkIdentifier=$NETWORKIDENTIFIER)
 }
 
@@ -43,7 +43,7 @@ transfer 156 1 94495548317450502L without-initialization
 
 # wait for the account registration tx to be included in the blockchain
 sleep 20
-registerDelegate
+registerValidator
 sleep 20
 vote
 

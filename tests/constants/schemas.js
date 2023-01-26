@@ -50,7 +50,7 @@ const moduleCommandSchemas = {
       "signatures",
     ],
   },
-  "pos:registerDelegate": {
+  "pos:registerValidator": {
     $id: "/pos/command/registerDelegateParams",
     type: "object",
     required: ["name", "generatorKey", "blsKey", "proofOfPossession"],

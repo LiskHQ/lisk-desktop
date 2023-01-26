@@ -21,7 +21,7 @@ export const mockNetworkStatus = {
       { id: '00000002:00000000', name: 'token:transfer' },
       { id: '00000002:00000000', name: 'token:crossChaintransfer' },
       { id: '0000000c:00000000', name: 'auth:registerMultisignature' },
-      { id: '0000000d:00000000', name: 'pos:registerDelegate' },
+      { id: '0000000d:00000000', name: 'pos:registerValidator' },
       { id: '0000000d:00000003', name: 'pos:reportDelegateMisbehavior' },
       { id: '0000000d:00000002', name: 'pos:unlockToken' },
       { id: '0000000d:00000004', name: 'pos:updateGeneratorKey' },
