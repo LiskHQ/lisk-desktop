@@ -13,10 +13,10 @@ const LiskAmountFormatted = ({ val }) => (
   </span>
 );
 
-const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 }) => {
+const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }) => {
   if (!locked && unlockable) {
-    const regularUnlockable = unlockable - Number(selfUnvote.confirmed || 0);
-    const selfUnstakeUnlockable = selfUnvote.confirmed;
+    const regularUnlockable = unlockable - Number(selfUnstake.confirmed || 0);
+    const selfUnstakeUnlockable = selfUnstake.confirmed;
 
     return (
       <>
@@ -68,7 +68,7 @@ const stakeStatusMessages = (t, statusInfo) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Tokens are staked'),
-    message: getSuccessMessage(t, statusInfo.locked, statusInfo.unlockable, statusInfo.selfUnvote),
+    message: getSuccessMessage(t, statusInfo.locked, statusInfo.unlockable, statusInfo.selfUnstake),
   },
 });
 

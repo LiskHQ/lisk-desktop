@@ -175,7 +175,7 @@ describe('StakingQueue.Summary', () => {
       statusInfo: {
         locked: 0,
         unlockable: 0,
-        selfUnvote: {},
+        selfUnstake: {},
       },
     });
   });
@@ -197,7 +197,7 @@ describe('StakingQueue.Summary', () => {
       statusInfo: {
         locked: 100,
         unlockable: 120,
-        selfUnvote: {},
+        selfUnstake: {},
       },
     });
   });
