@@ -60,7 +60,7 @@ export const ValidatorDetails = () => {
 
   return (
     <span className={getValidatorDetailsClass(activeTab)}>
-      <div className={styles.delegateColumn}>
+      <div className={styles.validatorColumn}>
         <div className={`${styles.validatorDetails}`}>
           <WalletVisual address={data.sender.address} />
           <div>
