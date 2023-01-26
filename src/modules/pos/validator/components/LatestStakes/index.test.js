@@ -9,17 +9,17 @@ jest.mock('src/modules/transaction/hooks/queries');
 jest.mock('../../hooks/queries');
 
 describe('Latest stakes', () => {
-  const mockFetchNextDelegates = jest.fn();
+  const mockFetchNextValidators = jest.fn();
   const mockFetchNextTransactions = jest.fn();
   const props = {
     filters: {},
   };
 
-  it('displays initial table of votes', () => {
+  it('displays initial table of stakes', () => {
     useValidators.mockReturnValue({
       data: mockValidators,
       isFetching: false,
-      fetchNextPage: mockFetchNextDelegates,
+      fetchNextPage: mockFetchNextValidators,
       hasNextPage: false,
     });
     useTransactions.mockReturnValue({
@@ -32,11 +32,11 @@ describe('Latest stakes', () => {
     expect(wrapper.find('.transactions-row').hostNodes()).toHaveLength(10);
   });
 
-  it('can load more votes if possible', () => {
+  it('can load more stakes if possible', () => {
     useValidators.mockReturnValue({
       data: mockValidators,
       isFetching: false,
-      fetchNextPage: mockFetchNextDelegates,
+      fetchNextPage: mockFetchNextValidators,
       hasNextPage: false,
     });
     useTransactions.mockReturnValue({
@@ -52,10 +52,10 @@ describe('Latest stakes', () => {
     expect(mockFetchNextTransactions).toHaveBeenCalledTimes(1);
   });
 
-  it('can not load more votes if meta property is unavailable', () => {
+  it('can not load more stakes if meta property is unavailable', () => {
     useValidators.mockReturnValue({
       isFetching: false,
-      fetchNextPage: mockFetchNextDelegates,
+      fetchNextPage: mockFetchNextValidators,
       hasNextPage: false,
     });
     useTransactions.mockReturnValue({
