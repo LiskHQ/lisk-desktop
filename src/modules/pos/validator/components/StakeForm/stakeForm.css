@@ -54,7 +54,7 @@
     padding: 20px 16px;
   }
 
-  & > .votesAvailableCounter {
+  & > .stakesAvailableCounter {
     @mixin contentLarge;
 
     line-height: 15px;
@@ -130,7 +130,7 @@
   }
 }
 
-.voteItemContainer {
+.stakeItemContainer {
   display: flex;
   flex-direction: row;
   margin-bottom: 6px;
@@ -263,7 +263,7 @@
   }
 }
 
-.voteIndex {
+.stakeIndex {
   counter-increment: delegate-address;
   content: counter(delegate-address) ".";
   position: absolute;

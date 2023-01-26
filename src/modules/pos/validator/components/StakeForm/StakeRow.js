@@ -58,9 +58,9 @@ const StakeRow = ({
   };
 
   return (
-    <Box className={styles.voteItemContainer}>
+    <Box className={styles.stakeItemContainer}>
       <div className={`${styles.infoColumn} ${styles.delegateInfoContainer}`}>
-        <span className={styles.voteIndex}>{index + 1}.</span>
+        <span className={styles.stakeIndex}>{index + 1}.</span>
         <WalletVisual address={address} disabled={!unconfirmed} />
         <div className={styles.delegateInfo}>
           <span className={`${styles.delegateUsername} ${!unconfirmed ? styles.disabled : ''}`}>
