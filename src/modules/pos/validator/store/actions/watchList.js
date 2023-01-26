@@ -2,7 +2,7 @@ import { getFromStorage } from 'src/utils/localJSONStorage';
 import actionTypes from './actionTypes';
 
 export const watchListRetrieved = () => (dispatch) => {
-  getFromStorage('delegateWatchList', [], (data) => {
+  getFromStorage('validatorWatchList', [], (data) => {
     dispatch({
       type: actionTypes.watchListRetrieved,
       data: data || [],
