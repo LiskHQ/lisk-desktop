@@ -1,7 +1,7 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import { truncateAddress } from '@wallet/utils/account';
-import styles from './walletsAndDeletegates.css';
+import styles from './walletsAndValidators.css';
 
 const Wallets = ({
   wallets, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
