@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
+import { useGetInitializationFees } from '@auth/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
@@ -89,6 +90,7 @@ const SendForm = (props) => {
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
+  const { data: initializationFees } = useGetInitializationFees();
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
@@ -96,6 +98,7 @@ const SendForm = (props) => {
   }, []);
 
   const onConfirm = useCallback((formProps, transactionJSON, selectedPriority, fees) => {
+    console.log('--->>', transactionJSON)
     nextStep({
       selectedPriority,
       formProps,
@@ -140,6 +143,7 @@ const SendForm = (props) => {
       token,
       recipient,
     },
+    extraCommandFee: initializationFees?.result?.data?.userAccount || 0,
   };
 
   let commandParams = {
@@ -165,6 +169,7 @@ const SendForm = (props) => {
         onConfirm={onConfirm}
         formProps={sendFormProps}
         commandParams={commandParams}
+        commandParamsWithMaxBalance={{ ...commandParams, amount: token?.availableBalance }}
         buttonTitle={t('Continue to summary')}
       >
         <>

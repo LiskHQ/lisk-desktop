@@ -1,12 +1,20 @@
-import { transactions } from "@liskhq/lisk-client";
-import { FEE_TYPES } from "./useTransactionFee/constants";
+import { transactions } from '@liskhq/lisk-client';
+import { fromTransactionJSON } from '../utils/encoding';
+import { FEE_TYPES } from '../constants';
 
-// eslint-disable-next-line max-statements
-const usePriorityFee = ({ selectedPriority, transaction, paramsSchema }) => {
-  const feePerByte = selectedPriority.value
+const usePriorityFee = ({ selectedPriority, transactionJSON, paramsSchema }) => {
+  const feePerByte = selectedPriority.value;
 
-  const size = transactions.getBytes(transaction, paramsSchema).length;
-  return { type:  FEE_TYPES.PRIORITY_FEE , value: size * feePerByte }
+  try {
+    const size = transactions.getBytes(
+      fromTransactionJSON(transactionJSON, paramsSchema),
+      paramsSchema
+    ).length;
+
+    return { type: FEE_TYPES.PRIORITY_FEE, value: size * feePerByte };
+  } catch (exp) {
+    return { type: FEE_TYPES.PRIORITY_FEE, value: 0 };
+  }
 };
 
 export default usePriorityFee;

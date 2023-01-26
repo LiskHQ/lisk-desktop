@@ -34,11 +34,11 @@ export const useTransferableTokens = (application) => {
           })
           .flatMap((res) => res);
     const supportedAppTokens = [...(patternTokensSupported || []), ...exactTokensSupported];
-    const tokens = isSupportAllToken ? myTokens : Array.from(new Set(supportedAppTokens));
+    const tokens = isSupportAllToken || true ? myTokens : Array.from(new Set(supportedAppTokens));
     return {
       isLoading,
       isSuccess,
-      data: isSuccess ? tokens : [],
+      data: isSuccess || true ? tokens : [],
     };
   }, [isTokensSuccess, isSupportedSuccess, isTokenLoading, isSupportLoading, application]);
 };

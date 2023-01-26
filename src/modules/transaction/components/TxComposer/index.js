@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
+// import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
+import { useAuth } from '@auth/hooks/queries';
+import { useCurrentAccount } from '@account/hooks';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback, { getMinRequiredBalance } from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
 import { splitModuleAndCommand } from '../../utils';
+import { useTransactionFee } from '../../hooks/useTransactionFee/useTransactionFee';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
@@ -24,12 +27,21 @@ const TxComposer = ({
   buttonTitle,
   formProps = {},
   commandParams = {},
+  // commandParamsWithMaxBalance = {},
 }) => {
+  const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const { t } = useTranslation();
+
   // @todo Once the transactions are refactored and working, we should
   // use the schema returned by this hook instead of reading from the Redux store.
   useSchemas();
   useDeprecatedAccount();
+  const [
+    {
+      metadata: { pubkey, address },
+    },
+  ] = useCurrentAccount();
+  const { data: auth } = useAuth({ config: { params: { address } } });
   const wallet = useSelector(selectActiveTokenAccount);
   const token = useSelector(selectActiveToken);
   const [customFee, setCustomFee] = useState();
@@ -40,47 +52,70 @@ const TxComposer = ({
     prioritiesLoadError,
     loadingPriorities,
   ] = useTransactionPriority();
-  const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
+
   const transactionJSON = {
     module,
     command,
-    nonce: wallet.sequence?.nonce,
+    nonce: auth?.data?.nonce,
     fee: 0,
-    senderPublicKey: wallet.summary?.publicKey,
+    senderPublicKey: pubkey,
     params: commandParams,
     signatures: [],
   };
 
-  const status = useTransactionFeeCalculation({
-    token,
-    wallet,
+  const { minimumFee, components, transactionFee } = useTransactionFee({
     selectedPriority,
-    priorityOptions,
     transactionJSON,
+    isValid: formProps.isValid,
+    senderAddress: address,
+    extraCommandFee: formProps.extraCommandFee || 0,
   });
+  // const { totalFee: maximumTransactionFee } = useTransactionFee({
+  //   selectedPriority,
+  //   transaction: {
+  //     ...transactionJSON,
+  //     ...(commandParamsWithMaxBalance && { params: commandParamsWithMaxBalance }),
+  //   },
+  //   isValid: formProps.isValid,
+  // });
 
   useEffect(() => {
     if (typeof onComposed === 'function') {
-      onComposed(status, formProps, { ...transactionJSON, fee: toRawLsk(status.fee.value) });
+      onComposed({}, formProps, {
+        ...transactionJSON,
+        fee: toRawLsk(transactionFee),
+      });
     }
   }, [selectedPriority, transactionJSON.params]);
 
-  const minRequiredBalance = getMinRequiredBalance(transactionJSON, status.fee);
+  const minRequiredBalance = getMinRequiredBalance(transactionJSON, transactionFee);
   const { recipientChain, sendingChain } = formProps;
 
-  const composedFees = {
-    Transaction: getFeeStatus({ fee: status.fee, token, customFee }),
-    Initialisation: getFeeStatus({ fee: status.fee, token, customFee }),
-  };
+  const composedFees = [
+    {
+      title: 'Transaction',
+      value: getFeeStatus({ fee: Number(fromRawLsk(transactionFee)), token, customFee }),
+      components,
+    },
+    {
+      title: 'Message',
+      value: getFeeStatus({
+        fee: Number(fromRawLsk(transactionJSON.params.messageFee || 0)),
+        token,
+        customFee,
+      }),
+      isHidden: !transactionJSON.params.messageFee,
+      components: [],
+    },
+  ];
 
-  if (sendingChain && recipientChain && sendingChain.chainID !== recipientChain.chainID) {
-    composedFees.CCM = getFeeStatus({ fee: status.fee, token, customFee });
-  }
+  console.log('---', transactionFee, composedFees, components);
 
   formProps.composedFees = composedFees;
-  transactionJSON.fee = toRawLsk(status.fee.value);
+  transactionJSON.fee = transactionFee;
   // TODO: Temporary solution to process transaction, this will be resolved by #4632
-  transactionJSON.fee = transactionJSON.command === 'registerValidator' ? '1100000000' : '100000000';
+  // transactionJSON.fee =
+  //   transactionJSON.command === 'registerValidator' ? '1100000000' : '100000000';
 
   if (recipientChain && sendingChain) {
     formProps.recipientChain = recipientChain;
@@ -92,8 +127,8 @@ const TxComposer = ({
       {children}
       <TransactionPriority
         token={token}
-        fee={status.fee}
-        minFee={Number(status.minFee.value)}
+        fee={transactionFee}
+        minFee={+minimumFee}
         customFee={customFee ? customFee.value : undefined}
         moduleCommand={formProps.moduleCommand}
         setCustomFee={setCustomFee}

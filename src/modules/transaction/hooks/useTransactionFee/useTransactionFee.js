@@ -3,53 +3,56 @@
 import { useMemo } from 'react';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { useAuth } from '@auth/hooks/queries/useAuth';
-import { usePosConstants } from '@pos/validator/hooks/queries';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { computeTransactionMinFee, getParamsSchema } from './utils';
-import { useCommandFee } from './useCommandFee';
-import { FEE_TYPES } from './constants';
+import { FEE_TYPES } from '../../constants';
 import usePriorityFee from '../usePriorityFee';
-import { joinModuleAndCommand } from '../../utils';
-import { MODULE_COMMANDS_MAP } from '../../configuration/moduleCommand';
+import { fromTransactionJSON } from '../../utils/encoding';
 
-const useGenerateTxWithMaxBalance = ({ transaction = {} }) => {
-  const moduleCommand = joinModuleAndCommand(transaction);
+export const useByteFee = ({ isValid, senderAddress, transactionJSON }) => {
+  const {
+    data: auth,
+    isLoading,
+    isFetched,
+  } = useAuth({ config: { params: { address: senderAddress } } });
+  const {
+    moduleCommandSchemas,
+    isLoading: isSchemaLoading,
+    isFetched: isFetchedCommandSchema,
+  } = useCommandSchema();
 
-  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-  const { data: tokens, isSuccess: isTokenSuccess } = useTokensBalance({
-    config: { params: { tokenID: transaction.params.token?.tokenID || posConstants?.posTokenID } },
-    option: {
-      enabled:
-        !isGettingPosConstants &&
-        (moduleCommand === MODULE_COMMANDS_MAP.transfer ||
-          MODULE_COMMANDS_MAP.crossChainTransfer ||
-          moduleCommand === MODULE_COMMANDS_MAP.stake),
-    },
-  });
+  const numberOfSignatures = auth?.data?.numberOfSignatures || 1;
+  const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
 
-  const token = tokens?.data?.[0] || {};
+  const bytesFee = useMemo(() => {
+    if (!isValid) {
+      return {
+        result: { value: 0, type: FEE_TYPES.BYTES_FEE },
+        isLoading: isLoading || isSchemaLoading,
+        isFetched: false,
+      };
+    }
 
-  if (moduleCommand === MODULE_COMMANDS_MAP.stake && isTokenSuccess) {
-    const maxAmountPerStake = +token.availableBalance / (transaction.params?.stakes?.length || 1);
-    const maxStakes = transaction.params.stakes.map(({ amount, ...rest }) => ({
-      ...rest,
-      amount: maxAmountPerStake.toString(),
-    }));
+    const transaction = {
+      ...fromTransactionJSON(transactionJSON),
+      signatures: new Array(numberOfSignatures).fill(Buffer.alloc(64)),
+    };
 
-    return { ...transaction, params: { ...transaction.params, stakes: maxStakes } };
-  }
+    const fee = computeTransactionMinFee(
+      transaction,
+      paramsSchema,
+      auth,
+      isValid && !isSchemaLoading
+    );
 
-  if (
-    isTokenSuccess &&
-    (moduleCommand === MODULE_COMMANDS_MAP.transfer || MODULE_COMMANDS_MAP.crossChainTransfer)
-  ) {
-    return { ...transaction, params: { ...transaction.params, amount: token.availableBalance } };
-  }
+    return {
+      result: { value: fee, type: FEE_TYPES.BYTES_FEE },
+      isLoading: isLoading || isSchemaLoading,
+      isFetched: isFetchedCommandSchema && isFetched,
+    };
+  }, [transactionJSON, paramsSchema, auth, isValid, isSchemaLoading]);
 
-  return transaction;
+  return bytesFee;
 };
-
-const getTotalFee = (components) => components.reduce((acc, { value }) => acc + value, 0);
 
 /**
  *
@@ -62,63 +65,40 @@ const getTotalFee = (components) => components.reduce((acc, { value }) => acc + 
  */
 export const useTransactionFee = ({
   isValid,
+  transactionJSON,
   senderAddress,
-  transaction,
   selectedPriority = [],
+  extraCommandFee = 0,
 }) => {
-  const {
-    data: auth,
-    isLoading,
-    isFetched,
-  } = useAuth({ config: { params: { address: senderAddress } } });
   const {
     moduleCommandSchemas,
     isLoading: isSchemaLoading,
     isFetched: isSchemaFetched,
   } = useCommandSchema();
+  const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
 
-  const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
-
-  const txWithMaxBalance = useGenerateTxWithMaxBalance({ transaction });
-  const priorityFee = usePriorityFee({ selectedPriority, paramsSchema, transaction });
-  const commandFees = useCommandFee(transaction);
-
-  const maxPriorityFee = usePriorityFee({
-    selectedPriority,
-    paramsSchema,
-    transaction: txWithMaxBalance,
+  const {
+    result: bytesFee,
+    isLoading: isLoadingByteFee,
+    isFetched: isFetchedByteFee,
+  } = useByteFee({
+    senderAddress,
+    isValid,
+    transactionJSON,
   });
-  const maxCommandFees = useCommandFee(txWithMaxBalance);
 
-  const bytesFee = useMemo(() => {
-    const fee = computeTransactionMinFee(
-      transaction,
-      paramsSchema,
-      auth,
-      isValid && !isSchemaLoading
-    );
-    return { value: fee, type: FEE_TYPES.BYTES_FEE };
-  }, [transaction, paramsSchema, auth, isValid, isSchemaLoading]);
+  const priorityFee = usePriorityFee({
+    selectedPriority,
+    transactionJSON,
+    paramsSchema,
+  });
+  const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
 
-  const maxBytesFee = useMemo(() => {
-    const fee = computeTransactionMinFee(
-      txWithMaxBalance,
-      paramsSchema,
-      auth,
-      isValid && !isSchemaLoading
-    );
-    return { value: fee, type: FEE_TYPES.BYTES_FEE };
-  }, [txWithMaxBalance, paramsSchema, auth, isValid, isSchemaLoading]);
-
-  const components = [bytesFee, priorityFee, ...commandFees].filter((item) => item.value > 0);
-  const maxFeeComponents = [maxPriorityFee, maxBytesFee, ...maxCommandFees].filter(
-    (item) => item.value > 0
-  );
   return {
-    isLoading: isSchemaLoading || /* istanbul ignore next */ isLoading,
-    isFetched: isSchemaFetched && /* istanbul ignore next */ isFetched,
-    totalFee: getTotalFee(components),
-    totalMaxFee: getTotalFee(maxFeeComponents),
+    minimumFee: Number(bytesFee.value) + extraCommandFee,
+    isLoading: isSchemaLoading || /* istanbul ignore next */ isLoadingByteFee,
+    isFetched: isSchemaFetched && /* istanbul ignore next */ isFetchedByteFee,
+    transactionFee: Number(bytesFee.value) + Number(priorityFee.value) + extraCommandFee,
     components,
   };
 };
