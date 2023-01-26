@@ -80,11 +80,11 @@ const transactionJSON = {
     stakes: [
       {
         amount: '100',
-        delegateAddress: accounts.genesis.summary.address,
+        validatorAddress: accounts.genesis.summary.address,
       },
       {
         amount: '-100',
-        delegateAddress: accounts.validator.summary.address,
+        validatorAddress: accounts.validator.summary.address,
       },
     ],
   },

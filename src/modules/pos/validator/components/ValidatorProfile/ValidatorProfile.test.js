@@ -233,7 +233,7 @@ describe('Validator Profile', () => {
           ...mockReceivedStakes.data,
           stakes: mockReceivedStakes.data.stakers.map((stake) => ({
             ...stake,
-            delegateAddress: 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53',
+            validatorAddress: 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53',
           })),
         },
       },

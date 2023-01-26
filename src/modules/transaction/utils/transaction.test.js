@@ -138,11 +138,11 @@ describe.skip('API: LSK Transactions', () => {
           stakes: [
             {
               amount: '100',
-              delegateAddress: accounts.genesis.summary.address,
+              validatorAddress: accounts.genesis.summary.address,
             },
             {
               amount: '-100',
-              delegateAddress: accounts.validator.summary.address,
+              validatorAddress: accounts.validator.summary.address,
             },
           ],
         },
@@ -157,7 +157,7 @@ describe.skip('API: LSK Transactions', () => {
         params: {
           stakes: tx.params.stakes.map((item) => ({
             amount: BigInt(item.amount),
-            delegateAddress: expect.arrayContaining([]),
+            validatorAddress: expect.arrayContaining([]),
           })),
         },
       });
@@ -324,7 +324,7 @@ describe.skip('API: LSK Transactions', () => {
   //         stakes: [
   //           {
   //             amount: BigInt('100'),
-  //             delegateAddress: getAddressFromBase32Address(accounts.validator.summary.address),
+  //             validatorAddress: getAddressFromBase32Address(accounts.validator.summary.address),
   //           },
   //         ],
   //       },
@@ -338,7 +338,7 @@ describe.skip('API: LSK Transactions', () => {
   //         stakes: [
   //           {
   //             amount: '100',
-  //             delegateAddress: accounts.validator.summary.address,
+  //             validatorAddress: accounts.validator.summary.address,
   //           },
   //         ],
   //       },
@@ -370,13 +370,13 @@ describe.skip('API: LSK Transactions', () => {
   //     const [module, command] = splitModuleAndCommand(unlock);
   //     const unlockObjects = [
   //       {
-  //         delegateAddress:
+  //         validatorAddress:
   //           getAddressFromBase32Address(accounts.validator.summary.address),
   //         amount: BigInt('10000000'),
   //         unstakeHeight: 1000000,
   //       },
   //       {
-  //         delegateAddress:
+  //         validatorAddress:
   //           getAddressFromBase32Address(accounts.send_all_wallet.summary.address),
   //         amount: BigInt('-10000000'),
   //         unstakeHeight: 1000000,
@@ -397,7 +397,7 @@ describe.skip('API: LSK Transactions', () => {
   //       params: {
   //         unlockObjects: tx.params.unlockObjects.map(item => ({
   //           amount: String(item.amount),
-  //           delegateAddress: getBase32AddressFromAddress(item.delegateAddress),
+  //           validatorAddress: getBase32AddressFromAddress(item.validatorAddress),
   //           unstakeHeight: item.unstakeHeight,
   //         })),
   //       },

@@ -161,7 +161,7 @@ describe('Validators monitor page', () => {
             params: {
               stakes: [
                 {
-                  delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+                  validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
                   amount: '100000000',
                 },
               ],

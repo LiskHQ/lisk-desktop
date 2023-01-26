@@ -33,7 +33,7 @@ describe('Validator Registration Summary', () => {
       module: 'pos',
       command: 'registerValidator',
       params: {
-        username: 'mydelegate',
+        username: 'myvalidator',
       },
     },
     account: accounts.genesis,
