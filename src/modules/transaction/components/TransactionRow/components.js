@@ -55,7 +55,7 @@ export const Type = () => {
   return <span className={styles.type}>{formatTransactionType(data.moduleCommand)}</span>;
 };
 
-export const DelegateDetails = () => {
+export const ValidatorDetails = () => {
   const { data, activeTab } = useContext(TransactionRowContext);
 
   return (
@@ -73,7 +73,7 @@ export const DelegateDetails = () => {
   );
 };
 
-export const Sender = () => <DelegateDetails />;
+export const Sender = () => <ValidatorDetails />;
 
 export const Recipient = () => {
   const { data, avatarSize } = useContext(TransactionRowContext);
