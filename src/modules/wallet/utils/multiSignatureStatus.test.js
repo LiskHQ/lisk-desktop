@@ -31,7 +31,7 @@ describe('TxSignatureCollector', () => {
       balance: '10000000000000',
       username: 'eni_delegate',
       isMigrated: true,
-      isDelegate: true,
+      isValidator: true,
       isMultisignature: false,
     },
     keys: {

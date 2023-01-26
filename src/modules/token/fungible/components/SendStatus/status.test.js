@@ -71,7 +71,7 @@ describe('unlock transaction Status', () => {
       component: 'addBookmark',
       data: {
         formAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        isDelegate: true,
+        isValidator: true,
         label: 'genesis_17',
       },
     });
@@ -148,7 +148,7 @@ describe('unlock transaction Status', () => {
       component: 'addBookmark',
       data: {
         formAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        isDelegate: true,
+        isValidator: true,
         label: 'genesis_17',
       },
     });

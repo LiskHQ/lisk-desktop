@@ -38,7 +38,7 @@ describe('API: LSK Delegates', () => {
         username: 'del1',
         data: {},
       };
-      const params = { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', isDelegate: true };
+      const params = { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', isValidator: true };
       setApiResponseData(expectedResponse, client.rest);
       await expect(validator.getValidator({ params, network })).resolves.toEqual(expectedResponse);
       expect(client.rest).toHaveBeenCalledWith({
@@ -51,7 +51,7 @@ describe('API: LSK Delegates', () => {
 
     it('should return validator data with username when it is passed', async () => {
       const expectedResponse = { username: 'del1', data: {} };
-      const params = { username: 'del1', isDelegate: true };
+      const params = { username: 'del1', isValidator: true };
       setApiResponseData(expectedResponse, client.rest);
       await expect(validator.getValidator({ params, network })).resolves.toEqual(expectedResponse);
       expect(client.rest).toHaveBeenCalledWith({
@@ -71,13 +71,13 @@ describe('API: LSK Delegates', () => {
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl: undefined,
         url: validator.httpPaths.validators,
-        params: { address, isDelegate: true },
+        params: { address, isValidator: true },
         network,
       });
     });
 
     it('should set baseUrl', () => {
-      const params = { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', isDelegate: true };
+      const params = { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', isValidator: true };
       validator.getValidator({ params, baseUrl, network });
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl,
@@ -118,11 +118,11 @@ describe('API: LSK Delegates', () => {
         baseUrl: network.serviceUrl,
         requests: [
           {
-            params: { address: addressList[0], isDelegate: true },
+            params: { address: addressList[0], isValidator: true },
             method: validator.wsMethods.validators,
           },
           {
-            params: { address: addressList[1], isDelegate: true },
+            params: { address: addressList[1], isValidator: true },
             method: validator.wsMethods.validators,
           },
         ],
@@ -142,11 +142,11 @@ describe('API: LSK Delegates', () => {
         baseUrl: network.serviceUrl,
         requests: [
           {
-            params: { address: addressList[0], isDelegate: true },
+            params: { address: addressList[0], isValidator: true },
             method: validator.wsMethods.validators,
           },
           {
-            params: { address: addressList[1], isDelegate: true },
+            params: { address: addressList[1], isValidator: true },
             method: validator.wsMethods.validators,
           },
         ],
@@ -168,7 +168,7 @@ describe('API: LSK Delegates', () => {
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl: undefined,
         url: validator.httpPaths.validators,
-        params: { ...params, isDelegate: true },
+        params: { ...params, isValidator: true },
         network,
       });
     });
@@ -179,11 +179,11 @@ describe('API: LSK Delegates', () => {
         baseUrl,
         requests: [
           {
-            params: { address: addressList[0], isDelegate: true },
+            params: { address: addressList[0], isValidator: true },
             method: validator.wsMethods.validators,
           },
           {
-            params: { address: addressList[1], isDelegate: true },
+            params: { address: addressList[1], isValidator: true },
             method: validator.wsMethods.validators,
           },
         ],
@@ -196,7 +196,7 @@ describe('API: LSK Delegates', () => {
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl,
         url: validator.httpPaths.validators,
-        params: { limit: 10, offset: 2, isDelegate: true },
+        params: { limit: 10, offset: 2, isValidator: true },
         network,
       });
     });

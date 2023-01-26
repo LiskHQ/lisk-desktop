@@ -69,7 +69,7 @@ describe('Stakes Tab Component', () => {
         'lsk7',
         'lsk8',
         'lsk9'],
-      isDelegate: true,
+      isValidator: true,
     });
   });
   it('should not call accounts.loadData if accounts.data and no sentStakes is empty', () => {

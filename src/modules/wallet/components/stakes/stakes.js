@@ -41,7 +41,7 @@ const Stakes = ({
   useEffect(() => {
     const addressList = votes.data.map((item) => item.address);
     if (isEmpty(accounts.data) && addressList.length) {
-      accounts.loadData({ addressList, isDelegate: true });
+      accounts.loadData({ addressList, isValidator: true });
     }
   }, [votes.data]);
 

@@ -28,7 +28,7 @@ const apis = {
 
 const mapStateToProps = (state) => ({
   sentVotes: state.staking,
-  isDelegate: state.wallet?.info?.LSK?.summary.isDelegate,
+  isValidator: state.wallet?.info?.LSK?.summary.isValidator,
 });
 
 export default compose(connect(mapStateToProps), withData(apis), withTranslation())(Stakes);

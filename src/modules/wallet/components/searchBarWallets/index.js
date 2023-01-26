@@ -6,7 +6,7 @@ import styles from './walletsAndDeletegates.css';
 const Wallets = ({
   wallets, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
-  const isDelegate = wallets.some(wallet => wallet.isDelegate);
+  const isValidator = wallets.some(wallet => wallet.isValidator);
 
   return (
     <div className={`${styles.wrapper} accounts`}>
@@ -26,7 +26,7 @@ const Wallets = ({
             <WalletVisual address={wallet.address} />
             <div className={styles.walletInformation}>
               {
-                isDelegate
+                isValidator
                   ? (
                     <>
                       <div>
@@ -50,7 +50,7 @@ const Wallets = ({
               }
             </div>
             <span className={styles.accountBalance}>
-              {isDelegate
+              {isValidator
                 ? (
                   <span className={`${styles.tag} tag`}>
                     {

@@ -178,12 +178,12 @@ const ActionBar = ({
                     ? {
                       formAddress: address,
                       label: account.dpos?.delegate?.username,
-                      isDelegate: account.summary.isDelegate,
+                      isValidator: account.summary.isValidator,
                     }
                     : {
                       formAddress: address,
                       label: bookmark ? bookmark.title : '',
-                      isDelegate: account.summary.isDelegate,
+                      isValidator: account.summary.isValidator,
                     }
                 }
               >

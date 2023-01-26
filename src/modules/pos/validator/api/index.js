@@ -13,7 +13,7 @@ export const httpPaths = {
 
 export const wsMethods = {
   validators: 'get.accounts',
-  forgers: 'get.delegates.next_forgers',
+  forgers: 'get.validators.next_forgers',
   forgersRound: 'update.round',
 };
 
@@ -40,7 +40,7 @@ const getValidatorProps = ({ address, publicKey, username }) => {
 export const getValidator = ({ params = {}, network, baseUrl }) =>
   client.rest({
     url: httpPaths.validators,
-    params: { ...getValidatorProps(params), isDelegate: true },
+    params: { ...getValidatorProps(params), isValidator: true },
     network,
     baseUrl,
   });
@@ -72,7 +72,7 @@ const getRequests = (values) => {
       .filter((item) => regex[paramList.name].test(item))
       .map((item) => ({
         method: wsMethods.validators,
-        params: { [paramList.name]: item, isDelegate: true },
+        params: { [paramList.name]: item, isValidator: true },
       }));
   }
   return false;
@@ -109,7 +109,7 @@ export const getValidators = ({ network, params = {}, baseUrl }) => {
   }
 
   // Use HTTP to retrieve accounts with given sorting and pagination parameters
-  const normParams = { isDelegate: true };
+  const normParams = { isValidator: true };
   Object.keys(params).forEach((key) => {
     if (txFilters[key].test(params[key])) {
       normParams[txFilters[key].key] = params[key];

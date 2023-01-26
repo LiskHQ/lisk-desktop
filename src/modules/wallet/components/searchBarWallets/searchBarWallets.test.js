@@ -30,7 +30,7 @@ describe('SearchBarWallets', () => {
       {
         address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
         balance: '120',
-        isDelegate: true,
+        isValidator: true,
         name: 'genesis_51',
         rank: 34,
       },
