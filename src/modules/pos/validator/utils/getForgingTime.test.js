@@ -18,13 +18,13 @@ describe('getForgingTime', () => {
     expect(nowResult).toBe('12s ago');
   });
 
-  it('returns future time if forging time is in the future', () => {
+  it('returns future time if generating time is in the future', () => {
     const recentTime = Math.floor((new Date().getTime() / 1000) + 80);
     const nowResult = getForgingTime(recentTime);
     expect(nowResult).toBe('in 1m 20s');
   });
 
-  it('returns future time without seconds if forging time is in the future and has no seconds', () => {
+  it('returns future time without seconds if generating time is in the future and has no seconds', () => {
     const recentTime = Math.floor((new Date().getTime() / 1000) + 60);
     const nowResult = getForgingTime(recentTime);
     expect(nowResult).toBe('in 1m ');

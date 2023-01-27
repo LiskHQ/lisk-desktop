@@ -23,13 +23,13 @@ import ValidatorSummary from '../ValidatorSummary/ValidatorSummary';
 import { extractValidatorCommission } from '../../utils';
 
 const roundStates = {
-  forging: 'Forging',
+  generating: 'Forging',
   awaitingSlot: 'Awaiting slot',
   missedBlock: 'Missed slot',
 };
 
 const icons = {
-  forging: 'validatorForged',
+  generating: 'validatorForged',
   awaitingSlot: 'validatorAwaiting',
   missedBlock: 'validatorMissed',
 };

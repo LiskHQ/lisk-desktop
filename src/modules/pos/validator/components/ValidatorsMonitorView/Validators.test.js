@@ -212,7 +212,7 @@ describe('Validators monitor page', () => {
     expect(wrapper.find('.tab.standby')).toHaveClassName('active');
   });
 
-  it.skip('renders the forging status', () => {
+  it.skip('renders the generating status', () => {
     wrapper = setup(props);
     expect(wrapper.find('a.validator-row')).toHaveLength(blocks.generators.length);
   });

@@ -88,9 +88,9 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
         className: 'overview',
       },
       {
-        value: 'forging-details',
+        value: 'generating-details',
         name: t('Forging details'),
-        className: 'forging-details',
+        className: 'generating-details',
       },
     ],
     active: activeDetailTab,

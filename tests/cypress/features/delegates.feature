@@ -12,7 +12,7 @@ Feature: validator
   #   And transactions count should have value greater than 0
 
   # @basic
-  # Scenario: Should properly display forging details
+  # Scenario: Should properly display generating details
   #   When I observe blocksForged
   #   And I observe timeValue-clock
   #   And I observe forger list
@@ -29,7 +29,7 @@ Feature: validator
   # Scenario: Inside round validators should function properly
   #   When I click on insideRoundBtn
   #   Then I should see 103 validators in table
-  #   And first validator should be forging
+  #   And first validator should be generating
   #   When I sort by forgingTime
   #   Then validators should be sorted in descending order by forgingTime
   #   When I fill genesis in filterValidatorInput field
