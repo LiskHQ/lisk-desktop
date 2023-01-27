@@ -18,7 +18,7 @@ export const useGetInitializationFees = ({ options = {}, address } = {}) => {
   const { data: auth, isLoading: isAuthLoading } = useAuth(queryConfig);
   const { data: token, isLoading: isTokenLoading } = useTokensBalance(queryConfig);
 
-  const isAccountInitialized = +auth?.data?.nonce !== '0' && +token?.data?.[0]?.availableBalance;
+  const isAccountInitialized = auth?.data?.nonce !== '0' && +token?.data?.[0]?.availableBalance;
   const shouldReturnInitalizationFee = !isAccountInitialized && !isAuthLoading && !isTokenLoading;
 
   const result = useInvokeQuery({

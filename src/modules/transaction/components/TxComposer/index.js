@@ -55,7 +55,7 @@ const TxComposer = ({
     module,
     command,
     nonce: auth?.data?.nonce,
-    fee: formProps?.extraCommandFee || 0,
+    fee: formProps.extraCommandFee || 0,
     senderPublicKey: pubkey,
     params: commandParams,
     signatures: [],
@@ -66,7 +66,7 @@ const TxComposer = ({
     transactionJSON,
     isFormValid: formProps.isFormValid,
     senderAddress: address,
-    extraCommandFee: formProps?.extraCommandFee,
+    extraCommandFee: formProps.extraCommandFee,
   });
 
   useEffect(() => {
