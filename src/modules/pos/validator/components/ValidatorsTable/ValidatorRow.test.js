@@ -18,7 +18,7 @@ const props = {
   watchList: [],
   setActiveTab: jest.fn(),
   blocks: {
-    forgers: [
+    generators: [
       {
         address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
         isConsensusParticipant: true,

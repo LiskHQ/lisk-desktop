@@ -54,7 +54,7 @@ Then(/^next forger list should have a maximum of (\d+) validators/, (forgerCount
   cy.get(ss.forgerItem).should('have.length.at.most', forgerCount);
 });
 
-Then(/^next forgers should match first members of the inside round list$/, () => {
+Then(/^next generators should match first members of the inside round list$/, () => {
   cy.get(ss.validatorRow).eq(1).then((ele) => {
     const validatorName = getValidatorNameFromRow(ele);
     cy.get(ss.forgerItem).eq(0).contains(validatorName);

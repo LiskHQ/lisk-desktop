@@ -214,7 +214,7 @@ describe('Validators monitor page', () => {
 
   it.skip('renders the forging status', () => {
     wrapper = setup(props);
-    expect(wrapper.find('a.validator-row')).toHaveLength(blocks.forgers.length);
+    expect(wrapper.find('a.validator-row')).toHaveLength(blocks.generators.length);
   });
 
   it.skip('properly sorts validators by their status', () => {

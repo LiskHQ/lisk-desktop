@@ -45,14 +45,14 @@ const ForgingDetails = ({ t, forgedInRound, startTime }) => {
   const colorPalette = getColorPalette(theme);
   const validatorsForgedLabels = [t('Forged blocks'), t('Awaiting slot'), t('Missed blocks')];
   const { data: forgersData } = useForgersGenerator({ config: { params: { limit: 103 } } });
-  const forgers = forgersData?.data ?? [];
+  const generators = forgersData?.data ?? [];
 
   const doughnutChartData = {
     labels: validatorsForgedLabels,
     datasets: [
       {
         label: 'status',
-        data: getForgingStats(forgers, forgedInRound),
+        data: getForgingStats(generators, forgedInRound),
       },
     ],
   };
@@ -70,13 +70,13 @@ const ForgingDetails = ({ t, forgedInRound, startTime }) => {
     },
   };
 
-  const forgersListToShow = forgers.slice(1, FORGERS_TO_SHOW + 1);
+  const forgersListToShow = generators.slice(1, FORGERS_TO_SHOW + 1);
 
   return (
     <Box className={styles.wrapper}>
       <BoxContent className={styles.content}>
         <div className={styles.column}>
-          {forgers.length ? (
+          {generators.length ? (
             <div className={styles.chartBox}>
               <h2 className={styles.title}>{t('Validator Forging Status')}</h2>
               <div className={`${styles.chart} showOnLargeViewPort`}>
@@ -140,7 +140,7 @@ const ForgingDetails = ({ t, forgedInRound, startTime }) => {
         </div>
         <div className={`${styles.column} ${styles.nextForgers}`}>
           <div className={styles.chartBox}>
-            <h2 className={styles.title}>{t('Next forgers')}</h2>
+            <h2 className={styles.title}>{t('Next generators')}</h2>
             <nav className={styles.list}>
               {forgersListToShow.map((forger) => (
                 <Forger key={forger.address} forger={forger} />

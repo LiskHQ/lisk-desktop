@@ -8,12 +8,12 @@ export const httpPaths = {
   validators: `${HTTP_PREFIX}/accounts`,
   stakes: `${HTTP_PREFIX}/pos/stakes`,
   stakers: `${HTTP_PREFIX}/pos/stakers`,
-  forgers: `${HTTP_PREFIX}/generators`,
+  generators: `${HTTP_PREFIX}/generators`,
 };
 
 export const wsMethods = {
   validators: 'get.accounts',
-  forgers: 'get.validators.next_forgers',
+  generators: 'get.validators.next_forgers',
   forgersRound: 'update.round',
 };
 
@@ -210,7 +210,7 @@ export const getStakers = ({ network, params = {}, baseUrl }) => {
  */
 export const getForgers = ({ network, params = {}, baseUrl }) =>
   client.rest({
-    url: httpPaths.forgers,
+    url: httpPaths.generators,
     params,
     network,
     baseUrl,

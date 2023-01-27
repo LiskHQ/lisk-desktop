@@ -296,7 +296,7 @@ describe('API: LSK Validators', () => {
       resetApiMock();
     });
 
-    it('should return forgers list', async () => {
+    it('should return generators list', async () => {
       const expectedResponse = [{}, {}, {}];
       setApiResponseData(expectedResponse, client.rest);
       await expect(
@@ -304,7 +304,7 @@ describe('API: LSK Validators', () => {
       ).resolves.toEqual(expectedResponse);
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl: undefined,
-        url: validator.httpPaths.forgers,
+        url: validator.httpPaths.generators,
         params: { limit: 5, offset: 0 },
         network,
       });
@@ -319,7 +319,7 @@ describe('API: LSK Validators', () => {
       });
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl,
-        url: validator.httpPaths.forgers,
+        url: validator.httpPaths.generators,
         params,
         network,
       });
@@ -337,7 +337,7 @@ describe('API: LSK Validators', () => {
     });
   });
 
-  describe('forgers websocket', () => {
+  describe('generators websocket', () => {
     it('Should call ws subscribe with parameters', () => {
       const fn = () => {};
       const serviceUrl = 'http://sample-service-url.com';

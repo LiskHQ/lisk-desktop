@@ -21,7 +21,7 @@ Feature: validator
   #   And blocksForged should be incremented by at least 1
   #   And next forger list should be updated accordingly
   #   And next forger list should have a maximum of 6 validators
-  #   And next forgers should match first members of the inside round list
+  #   And next generators should match first members of the inside round list
 
 
   # @advanced
