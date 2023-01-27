@@ -1,7 +1,8 @@
 import { useInvokeQuery } from '@common/hooks';
-import { INVOKE } from 'src/const/queries';
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
+import { useAuth } from './useAuth';
 
-export const useGetInitializationFees = ({ options = {} } = {}) => {
+export const useGetInitializationFees = ({ options = {}, address } = {}) => {
   const config = {
     data: {
       endpoint: 'token_getInitializationFees',
@@ -9,5 +10,21 @@ export const useGetInitializationFees = ({ options = {} } = {}) => {
     },
   };
 
-  return useInvokeQuery({ config, keys: [INVOKE], options });
+  const queryConfig = {
+    options: { enabled: !!address },
+    config: { params: { address } },
+  };
+
+  const { data: auth, isLoading: isAuthLoading } = useAuth(queryConfig);
+  const { data: token, isLoading: isTokenLoading } = useTokensBalance(queryConfig);
+
+  const isAccountInitialized = +auth?.data?.nonce !== '0' && +token?.data?.[0]?.availableBalance;
+  const shouldReturnInitalizationFee = !isAccountInitialized && !isAuthLoading && !isTokenLoading;
+
+  const result = useInvokeQuery({
+    config,
+    options: { ...options, enabled: shouldReturnInitalizationFee },
+  });
+
+  return shouldReturnInitalizationFee ? result : { data: null };
 };

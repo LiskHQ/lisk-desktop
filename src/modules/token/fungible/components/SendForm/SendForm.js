@@ -90,7 +90,7 @@ const SendForm = (props) => {
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
-  const { data: initializationFees } = useGetInitializationFees();
+  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value });
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');

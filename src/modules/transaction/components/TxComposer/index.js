@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-// import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
@@ -27,7 +26,6 @@ const TxComposer = ({
   buttonTitle,
   formProps = {},
   commandParams = {},
-  // commandParamsWithMaxBalance = {},
 }) => {
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const { t } = useTranslation();
@@ -101,13 +99,8 @@ const TxComposer = ({
     },
   ];
 
-  console.log('---', transactionFee, composedFees, components);
-
   formProps.composedFees = composedFees;
   transactionJSON.fee = transactionFee;
-  // TODO: Temporary solution to process transaction, this will be resolved by #4632
-  // transactionJSON.fee =
-  //   transactionJSON.command === 'registerValidator' ? '1100000000' : '100000000';
 
   if (recipientChain && sendingChain) {
     formProps.recipientChain = recipientChain;

@@ -35,7 +35,7 @@ const UnlockBalanceForm = ({
 
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
-    isValid: unlockableBalance > 0,
+    isFormValid: unlockableBalance > 0,
   };
   const commandParams = {
     unlockObjects
