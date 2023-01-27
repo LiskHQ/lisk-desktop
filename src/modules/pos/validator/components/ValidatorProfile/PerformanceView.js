@@ -155,7 +155,7 @@ const PerformanceView = ({ data }) => {
               <span className={styles.performanceValue}>-</span>
             )}
           </Item>
-          <Item title={t('Blocks generated')} icon="forgedBlocks">
+          <Item title={t('Blocks generated')} icon="generatedBlocks">
             <div className={styles.performanceValue}>{data.producedBlocks ?? '-'}</div>
           </Item>
         </Box>

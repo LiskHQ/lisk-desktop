@@ -120,12 +120,12 @@ const ForgingDetails = ({ t, forgedInRound, startTime }) => {
             </h2>
             <div className={styles.list}>
               <section className={styles.numericInfo}>
-                <Icon name="blocksForged" />
+                <Icon name="blocksGenerated" />
                 <main className={styles.main}>
-                  <h6>{t('Blocks forged')}</h6>
+                  <h6>{t('Blocks generated')}</h6>
                   <ProgressBar forgedInRound={forgedInRound} theme={theme} />
                   <p className={styles.blue}>
-                    <span className="blocksForged">{`${forgedInRound} `}</span>
+                    <span className="blocksGenerated">{`${forgedInRound} `}</span>
                     <span>{`/ ${ROUND_LENGTH}`}</span>
                   </p>
                 </main>

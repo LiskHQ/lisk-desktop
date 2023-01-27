@@ -135,8 +135,8 @@ import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
 import removeRed from '@setup/react/assets/images/icons/remove-red.svg';
 import totalBlocks from '@setup/react/assets/images/icons/total-blocks.svg';
 import totalBlocksDark from '@setup/react/assets/images/icons/total-blocks-dark.svg';
-import blocksForged from '@setup/react/assets/images/icons/blocks-forged.svg';
-import blocksForgedDark from '@setup/react/assets/images/icons/blocks-forged-dark.svg';
+import blocksGenerated from '@setup/react/assets/images/icons/blocks-generated.svg';
+import blocksGeneratedDark from '@setup/react/assets/images/icons/blocks-generated-dark.svg';
 import distribution from '@setup/react/assets/images/icons/distribution.svg';
 import clock from '@setup/react/assets/images/icons/clock.svg';
 import clockDark from '@setup/react/assets/images/icons/clock-dark.svg';
@@ -148,14 +148,14 @@ import calendar from '@setup/react/assets/images/icons/calendar.svg';
 import calendarDark from '@setup/react/assets/images/icons/calendar-dark.svg';
 import weight from '@setup/react/assets/images/icons/weight.svg';
 import weightDark from '@setup/react/assets/images/icons/weight-dark.svg';
-import reward from '@setup/react/assets/images/icons/forged-lsk.svg';
-import rewardDark from '@setup/react/assets/images/icons/forged-lsk-dark.svg';
+import reward from '@setup/react/assets/images/icons/generated-lsk.svg';
+import rewardDark from '@setup/react/assets/images/icons/generated-lsk-dark.svg';
 import productivity from '@setup/react/assets/images/icons/productivity.svg';
 import productivityDark from '@setup/react/assets/images/icons/productivity-dark.svg';
 import missedBlocks from '@setup/react/assets/images/icons/missed-blocks.svg';
 import missedBlocksDark from '@setup/react/assets/images/icons/missed-blocks-dark.svg';
-import forgedBlocks from '@setup/react/assets/images/icons/forged-blocks.svg';
-import forgedBlocksDark from '@setup/react/assets/images/icons/forged-blocks-dark.svg';
+import generatedBlocks from '@setup/react/assets/images/icons/generated-blocks.svg';
+import generatedBlocksDark from '@setup/react/assets/images/icons/generated-blocks-dark.svg';
 import consecutiveMissedBlocks from '@setup/react/assets/images/icons/consecutive-missed-blocks.svg';
 import consecutiveMissedBlocksDark from '@setup/react/assets/images/icons/consecutive-missed-blocks-dark.svg';
 import lock from '@setup/react/assets/images/icons/lock.svg';
@@ -179,8 +179,8 @@ import multiSignatureOutline from '@setup/react/assets/images/icons/multisignatu
 import multisigKeys from '@setup/react/assets/images/icons/keys-filled.svg';
 import multisigKeysDark from '@setup/react/assets/images/icons/keys-filled-dark.svg';
 import upload from '@setup/react/assets/images/icons/upload.svg';
-import validatorForged from '@setup/react/assets/images/icons/validator-forged.svg';
-import validatorForgedDark from '@setup/react/assets/images/icons/validator-forged-dark.svg';
+import validatorGenerated from '@setup/react/assets/images/icons/validator-generated.svg';
+import validatorGeneratedDark from '@setup/react/assets/images/icons/validator-generated-dark.svg';
 import validatorMissed from '@setup/react/assets/images/icons/validator-missed.svg';
 import validatorMissedDark from '@setup/react/assets/images/icons/validator-missed-dark.svg';
 import validatorWarning from '@setup/react/assets/images/icons/validator-warning.svg';
@@ -270,8 +270,8 @@ export const icons = {
   feedback,
   feedbackActive,
   fileOutline,
-  forgedBlocks,
-  forgedBlocksDark,
+  generatedBlocks,
+  generatedBlocksDark,
   reward,
   rewardDark,
   help,
@@ -379,8 +379,8 @@ export const icons = {
   remove,
   totalBlocks,
   totalBlocksDark,
-  blocksForged,
-  blocksForgedDark,
+  blocksGenerated,
+  blocksGeneratedDark,
   distribution,
   clock,
   clockDark,
@@ -401,8 +401,8 @@ export const icons = {
   download,
   downloadBlue,
   upload,
-  validatorForged,
-  validatorForgedDark,
+  validatorGenerated,
+  validatorGeneratedDark,
   validatorMissed,
   validatorMissedDark,
   validatorWarning,

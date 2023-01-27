@@ -29,7 +29,7 @@ const roundStates = {
 };
 
 const icons = {
-  generating: 'validatorForged',
+  generating: 'validatorGenerated',
   awaitingSlot: 'validatorAwaiting',
   missedBlock: 'validatorMissed',
 };

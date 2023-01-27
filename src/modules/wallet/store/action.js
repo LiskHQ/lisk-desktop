@@ -30,7 +30,7 @@ export const getAccounts = async ({ network, params }) =>
   }, Promise.resolve({}));
 
 /**
- * This action is used to update account balance when new block was forged and
+ * This action is used to update account balance when new block was generated and
  * account middleware detected that it contains a transaction that affects balance
  * of the active account
  *

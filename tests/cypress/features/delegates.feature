@@ -13,12 +13,12 @@ Feature: validator
 
   # @basic
   # Scenario: Should properly display generating details
-  #   When I observe blocksForged
+  #   When I observe blocksGenerated
   #   And I observe timeValue-clock
   #   And I observe forger list
   #   And I wait 10 seconds
   #   Then time timeValue should be incremented by at least 5 seconds
-  #   And blocksForged should be incremented by at least 1
+  #   And blocksGenerated should be incremented by at least 1
   #   And next forger list should be updated accordingly
   #   And next forger list should have a maximum of 6 validators
   #   And next generators should match first members of the inside round list
