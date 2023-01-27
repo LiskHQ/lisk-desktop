@@ -123,7 +123,6 @@ export const useDeprecatedAccount = (accountInfo) => {
     }));
   }, [validators, isValidatorsSuccess]);
 
-  // TODO: For any given account maximum possible stakes, unlocks is 10
   // Cross check other query params limit as well
   const {
     data: unlocks,
