@@ -9,7 +9,7 @@ import { useCurrentAccount } from '@account/hooks';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
-import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
+import { convertToken, fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback, { getMinRequiredBalance } from './Feedback';
@@ -84,7 +84,11 @@ const TxComposer = ({
   const composedFees = [
     {
       title: 'Transaction',
-      value: getFeeStatus({ fee: Number(fromRawLsk(transactionFee)), token, customFee }),
+      value: getFeeStatus({
+        fee: Number(convertToken(transactionFee, formProps.fields.token)),
+        token,
+        customFee,
+      }),
       components,
     },
     {
