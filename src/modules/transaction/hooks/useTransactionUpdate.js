@@ -29,7 +29,7 @@ export const useTransactionUpdate = (isLoading) => {
         .filter((query) => {
           const { params } = query[0][2];
           const isSameChain = query[0][1]?.length && query[0][1] === currentApplicationData.current;
-          const isSameRecipient = params.address === latestTxns.data[0].meta.recipient.address;
+          const isSameRecipient = params.address === latestTxns.data[0].meta?.recipient.address;
           const isSameSender = params.address === latestTxns.data[0].sender.address;
           const isMyAddress = isSameRecipient || isSameSender;
           const latestTxnDate = latestTxns.data[0].block.timestamp;
