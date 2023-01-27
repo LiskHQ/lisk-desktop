@@ -10,7 +10,7 @@ import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/ch
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
-import { useForgersGenerator } from '../../hooks/queries/useForgersGenerator';
+import { useGenerators } from '../../hooks/queries/useGenerators';
 import NumericInfo from './NumericInfo';
 import Forger from './Forger';
 import styles from './Overview.css';
@@ -44,7 +44,7 @@ const ForgingDetails = ({ t, forgedInRound, startTime }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
   const validatorsForgedLabels = [t('Forged blocks'), t('Awaiting slot'), t('Missed blocks')];
-  const { data: forgersData } = useForgersGenerator({ config: { params: { limit: 103 } } });
+  const { data: forgersData } = useGenerators({ config: { params: { limit: 103 } } });
   const generators = forgersData?.data ?? [];
 
   const doughnutChartData = {

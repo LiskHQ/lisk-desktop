@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useSort } from 'src/modules/common/hooks';
 import { useValidators } from '../../hooks/queries';
-import { useForgersGenerator } from '../../hooks/queries/useForgersGenerator';
+import { useGenerators } from '../../hooks/queries/useGenerators';
 import ValidatorRow from './ValidatorRow';
 import header from './TableHeader';
 import { ROUND_LENGTH } from '../../consts';
@@ -13,7 +13,7 @@ import { ROUND_LENGTH } from '../../consts';
 const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
   const { t } = useTranslation();
   const watchList = useSelector((state) => state.watchList);
-  const queryHook = activeTab === 'active' ? useForgersGenerator : useValidators;
+  const queryHook = activeTab === 'active' ? useGenerators : useValidators;
   const { sort, toggleSort } = useSort();
 
   const queryConfig = useMemo(
