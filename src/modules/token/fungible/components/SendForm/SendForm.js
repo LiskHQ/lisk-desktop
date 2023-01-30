@@ -84,7 +84,7 @@ const SendForm = (props) => {
   );
   const [amount, setAmountField] = useAmountField(
     getInitialAmount(props.prevState?.formProps, props.initialValue?.amount),
-    account.summary?.balance,
+    account.token?.balance,
     token?.symbol
   );
   const [recipient, setRecipientField] = useRecipientField(

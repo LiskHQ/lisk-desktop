@@ -19,7 +19,7 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 describe('TxComposer', () => {
   const transaction = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-  params: {
+    params: {
       recipient: { address: accounts.genesis.summary.address },
       amount: 100000,
       data: 'test-data',
@@ -37,6 +37,7 @@ describe('TxComposer', () => {
     buttonTitle: 'test-button-title',
     formProps: {
       moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+      fields: { token: { availableBalance: 10000 } },
     },
   };
 
