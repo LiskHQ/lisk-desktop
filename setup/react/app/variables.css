@@ -184,6 +184,7 @@ or "warn/action" ineastd of "red/green"
   --color-tx-priority-btn-bg: var(--color-ink-blue);
   --color-tx-priority-btn-default: var(--color-maastricht-blue);
   --color-progress-bar: var(--color-ink-blue);
+  --color-progress-bar-text: var(--color-ink-blue);
   --color-ghost-white: #f7f9fb;
   --color-button-outline-color: var(--color-very-light-gray);
   --color-athens-white: rgba(247, 249, 251, 1);
@@ -260,6 +261,7 @@ or "warn/action" ineastd of "red/green"
   --color-white: #111112;
   --color-platinum: #4d4d50;
   --color-white-smoke: #1c1c1c;
+  --color-ghost-white: var(--color-satin-deep-black);
   --color-maastricht-blue: #fff;
   --color-black: #fff;
   --dark-border-color: #373739;
@@ -280,6 +282,7 @@ or "warn/action" ineastd of "red/green"
   --color-request-textarea: #2e2e30;
   --color-strong-ink-blue: #254898;
   --tab-border-color: #4070f4;
+  --color-active-tab: #000;
   --color-zodiac-blue--satin-deep-black: var(--color-satin-deep-black);
   --color-periwinkle-blue--manatee-gray: var(--color-manatee-gray);
   --color-search-container: var(--color-body-bg);
@@ -288,7 +291,8 @@ or "warn/action" ineastd of "red/green"
   --color-tooltip-arrow: rgb(35, 35, 37, 0.7);
   --color-tx-priority-btn-bg: #254798;
   --color-tx-priority-btn-default: #86868b;
-  --color-progress-bar: var(--color-jade-green);
+  --color-progress-bar: var(--color-ultramarine-blue);
+  --color-progress-bar-text: var(--color-maastricht-blue);
   --color-background-dropdown: var(--color-body-bg);
   --color-button-outline-color: #4c4c4c;
   --color-search-bar-background: #3e3e40;
