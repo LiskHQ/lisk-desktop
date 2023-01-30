@@ -10,9 +10,8 @@ BigNumber.config({ ERRORS: false });
  * @param {Strong|Number} value - Value in Beddow
  * @returns {BigNumber} Value converted to LSK
  */
-export const fromRawLsk = value => (
-  new BigNumber(value || 0).dividedBy(new BigNumber(10).pow(8)).toFixed()
-);
+export const fromRawLsk = (value) =>
+  new BigNumber(value || 0).dividedBy(new BigNumber(10).pow(8)).toFixed();
 
 /**
  * Convert Beddow to LSK
@@ -21,8 +20,8 @@ export const fromRawLsk = value => (
  * @param {Strong|Number} token - Token value merged with its equivalent metadata
  * @returns {BigNumber} Amount value converted to the token symbol's denom
  */
- export const convertToken = (amount, token = {}) => {
-  const { decimals } =
+export const convertToken = (amount, token = {}) => {
+  const { decimals = 0 } =
     token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
 
   return new BigNumber(amount || 0).dividedBy(new BigNumber(10).pow(decimals)).toFixed();
@@ -48,8 +47,9 @@ export const toRawLsk = (value) => {
  * @returns {Promise} resolves with True after 100ms
  */
 /* istanbul ignore next */
-export const delay = (ms = 1500) => new Promise((resolve) => {
-  setTimeout(() => {
-    resolve();
-  }, ms);
-});
+export const delay = (ms = 1500) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });
