@@ -25,7 +25,7 @@ export const computeTransactionMinFee = (transactionJSON, paramsSchema, numberOf
     paramsSchema,
     options
   );
-    console.log('---', minFee)
+
   return minFee;
 };
 
