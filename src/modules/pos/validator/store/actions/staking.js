@@ -73,7 +73,7 @@ export const stakeEdited = (data) => async (dispatch) =>
  * @param {promise} API call response
  */
 export const stakesSubmitted =
-  (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
+  (_, transactionJSON, privateKey, __, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
     const activeWallet = selectActiveTokenAccount(state);
