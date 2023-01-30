@@ -10,7 +10,6 @@ import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockBlocks } from '@block/__fixtures__';
 import { signTransaction } from '@transaction/api';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
@@ -26,7 +25,6 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 }));
 jest.mock('@transaction/hooks/useTransactionPriority');
 jest.mock('@block/hooks/queries/useLatestBlock');
-jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
 jest.mock('@pos/validator/store/actions/staking', () => ({
   balanceUnlocked: jest.fn(),
@@ -48,11 +46,7 @@ describe('Unlock LSK modal', () => {
       { title: 'Custom', value: undefined },
     ],
   ]);
-  useTransactionFeeCalculation.mockImplementation(() => ({
-    fee: { value: '0.1' },
-    maxAmount: 0.1,
-    minFee: 0.001,
-  }));
+
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
