@@ -1,9 +1,10 @@
 import { mountWithQueryClient } from 'src/utils/testHelpers';
-import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import wallets from '@tests/constants/wallets';
 import * as keys from '@tests/constants/keys';
-import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
@@ -11,10 +12,13 @@ import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
 import RegisterValidatorForm from '.';
 
+const mockCurrentAccount = mockSavedAccounts[0];
+
 jest.mock('../../hooks/queries');
 jest.mock('@token/fungible/hooks/queries');
-
-jest.mock('@network/hooks/useCommandsSchema');
+jest.mock('@account/hooks/useCurrentAccount', () => ({
+  useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
+}));
 jest.mock('../../hooks/useValidatorName', () => jest.fn());
 jest.mock('../../hooks/useValidatorKey', () => jest.fn());
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -22,6 +26,10 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
     isSuccess: true,
     isLoading: false,
   }),
+}));
+jest.mock('@auth/hooks/queries', () => ({
+  ...jest.requireActual('@auth/hooks/queries'),
+  useAuth: jest.fn().mockReturnValue({ data: mockAuth }),
 }));
 
 const genKey = {
@@ -58,12 +66,6 @@ describe('RegisterValidatorForm', () => {
 
   usePosConstants.mockReturnValue({ data: mockPosConstants });
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
-      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
-      {}
-    )
-  );
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -171,10 +173,10 @@ describe('RegisterValidatorForm', () => {
     };
     const rawTx = {
       transactionJSON: {
-        fee: '1100000000',
+        fee: '1000000000',
         module: 'pos',
         command: 'registerValidator',
-        nonce: '1',
+        nonce: '0',
         params: {
           blsKey: blsKey.value,
           generatorKey: genKey.value,
@@ -182,23 +184,42 @@ describe('RegisterValidatorForm', () => {
           name: validName.value,
         },
         signatures: [],
-        senderPublicKey: wallets.genesis.summary.publicKey,
+        senderPublicKey: mockCurrentAccount.metadata.pubkey,
       },
       formProps: {
-        composedFees: {
-          Initialisation: '0 LSK',
-          Transaction: '0 LSK',
-        },
+        composedFees: [
+          {
+            title: 'Transaction',
+            value: '0 LSK',
+            components: [],
+          },
+          {
+            title: 'Message',
+            value: '0 LSK',
+            isHidden: true,
+            components: [],
+          },
+        ],
+        extraCommandFee: '1000000000',
         fields: {
           token: mockTokensBalance.data[0],
         },
-        isValid: true,
+        isFormValid: true,
         moduleCommand: 'pos:registerValidator',
       },
-      fees: {
-        Initialisation: '0 LSK',
-        Transaction: '0 LSK',
-      },
+      fees: [
+        {
+          title: 'Transaction',
+          value: '0 LSK',
+          components: [],
+        },
+        {
+          title: 'Message',
+          value: '0 LSK',
+          isHidden: true,
+          components: [],
+        },
+      ],
       selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
     };
 
