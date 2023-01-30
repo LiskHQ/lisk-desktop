@@ -16,9 +16,9 @@ export const useByteFee = ({ isFormValid, senderAddress, transactionJSON }) => {
     isLoading: isSchemaLoading,
     isFetched: isFetchedCommandSchema,
   } = useCommandSchema();
+  const numberOfSignatures = auth?.data?.numberOfSignatures || 1;
 
   const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
-
   const bytesFee = useMemo(() => {
     if (!isFormValid || isSchemaLoading) {
       return {
@@ -27,12 +27,7 @@ export const useByteFee = ({ isFormValid, senderAddress, transactionJSON }) => {
         isFetched: false,
       };
     }
-
-    const fee = computeTransactionMinFee(
-      transactionJSON,
-      paramsSchema,
-      auth,
-    );
+    const fee = computeTransactionMinFee(transactionJSON, paramsSchema, numberOfSignatures);
 
     return {
       result: { value: fee, type: FEE_TYPES.BYTES_FEE },
