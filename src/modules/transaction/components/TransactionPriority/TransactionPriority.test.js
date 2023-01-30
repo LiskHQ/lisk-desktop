@@ -1,9 +1,9 @@
 import React from 'react';
+import { waitFor } from '@testing-library/dom';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import TransactionPriority from '.';
-import { waitFor } from '@testing-library/dom';
 
 const baseFees = {
   Low: 100,
@@ -84,11 +84,11 @@ describe('TransactionPriority', () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
     // simulate blur so that the edit icon is shown
     wrapper.find('.custom-fee-input').at(1).simulate('blur');
-    
+
     await waitFor(() => {
       expect(wrapper).toContainMatchingElement('Icon[name="edit"]');
       expect(wrapper).not.toContainMatchingElement('.custom-fee-input');
-    })
+    });
   });
 
   it('should disable button when fees are 0', () => {
