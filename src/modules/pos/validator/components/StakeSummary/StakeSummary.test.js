@@ -104,11 +104,19 @@ const props = {
   formProps: {
     isValid: true,
     moduleCommand: 'pos:stake',
-    composedFees: {
-      transaction: '1 LSK',
-      CCM: '1 LSK',
-      initiation: '1 LSK',
-    },
+    composedFees: [
+      {
+        title: 'Transaction',
+        value: '0 LSK',
+        components: [],
+      },
+      {
+        title: 'Message',
+        value: '0 LSK',
+        isHidden: true,
+        components: [],
+      },
+    ],
   },
 };
 
