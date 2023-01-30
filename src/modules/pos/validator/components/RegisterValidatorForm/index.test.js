@@ -1,5 +1,4 @@
 import { mountWithQueryClient } from 'src/utils/testHelpers';
-import wallets from '@tests/constants/wallets';
 import * as keys from '@tests/constants/keys';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
