@@ -40,7 +40,7 @@ const getPassedMinutes = (startTime) => {
   return `${formatToTwoDigits(duration.minutes())}:${formatToTwoDigits(duration.seconds())}`;
 };
 
-const ForgingDetails = ({ t, forgedInRound, startTime }) => {
+const GeneratingDetails = ({ t, forgedInRound, startTime }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
   const validatorsForgedLabels = [t('Forged blocks'), t('Awaiting slot'), t('Missed blocks')];
@@ -153,4 +153,4 @@ const ForgingDetails = ({ t, forgedInRound, startTime }) => {
   );
 };
 
-export default ForgingDetails;
+export default GeneratingDetails;

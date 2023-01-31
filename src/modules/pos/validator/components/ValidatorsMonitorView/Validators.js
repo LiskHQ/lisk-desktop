@@ -18,7 +18,7 @@ import { ROUND_LENGTH } from '@pos/validator/consts';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import ValidatorsOverview from '../Overview/ValidatorsOverview';
-import ForgingDetails from '../Overview/ForgingDetails';
+import GeneratingDetails from '../Overview/GeneratingDetails';
 import ValidatorsTable from '../ValidatorsTable';
 import LatestStakes from '../LatestStakes';
 import { useValidators } from '../../hooks/queries';
@@ -145,7 +145,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
         activeDetailTab === 'overview' ? (
           <ValidatorsOverview registrations={registrations} t={t} totalBlocks={total} />
         ) : (
-          <ForgingDetails
+          <GeneratingDetails
             t={t}
             forgedInRound={forgedInRound}
             startTime={blocks[forgedInRound]?.timestamp}
