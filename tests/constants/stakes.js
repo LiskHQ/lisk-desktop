@@ -8,7 +8,7 @@ export default [
       validator: {
         isBanned: false,
         pomHeights: [478, 555],
-        lastForgedHeight: 0,
+        lastGeneratedHeight: 0,
         consecutiveMissedBlocks: 0,
       },
     },

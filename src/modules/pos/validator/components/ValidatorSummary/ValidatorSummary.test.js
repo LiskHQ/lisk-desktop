@@ -19,7 +19,7 @@ describe('ValidatorSummary', () => {
     validator: { ...mockValidators.data[0], nextGeneratingTime: 1661165000 },
     status: { className: 'active', value: 'Active' },
     weight: '10k',
-    lastForgeTime: 23293993234,
+    lastGeneratedTime: 23293993234,
   };
 
   beforeEach(() => {

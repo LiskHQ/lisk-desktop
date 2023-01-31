@@ -35,7 +35,7 @@ const wallets = {
         username: 'genesis_17',
         consecutiveMissedBlocks: 0,
         isBanned: false,
-        lastForgedHeight: 618820,
+        lastGeneratedHeight: 618820,
         rank: 18,
         status: 'active',
         totalStakeReceived: '100000000000',
@@ -180,7 +180,7 @@ const wallets = {
       validator: {
         username: '',
         consecutiveMissedBlocks: 0,
-        lastForgedHeight: 0,
+        lastGeneratedHeight: 0,
         isBanned: false,
         totalStakeReceived: '0',
       },
@@ -277,7 +277,7 @@ const wallets = {
       validator: {
         username: '',
         consecutiveMissedBlocks: 0,
-        lastForgedHeight: 0,
+        lastGeneratedHeight: 0,
         isBanned: false,
         totalStakeReceived: '0',
       },

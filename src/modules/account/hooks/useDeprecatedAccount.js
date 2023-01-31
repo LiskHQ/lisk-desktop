@@ -115,7 +115,7 @@ export const useDeprecatedAccount = (accountInfo) => {
         validator: {
           username: validator?.name || '',
           consecutiveMissedBlocks: validator?.consecutiveMissedBlocks,
-          lastForgedHeight: validator?.lastGeneratedHeight,
+          lastGeneratedHeight: validator?.lastGeneratedHeight,
           isBanned: validator?.isBanned,
           totalStakeReceived: validator?.totalStakeReceived,
         },

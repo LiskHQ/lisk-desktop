@@ -27,7 +27,7 @@ export default {
       username: 'kc',
       consecutiveMissedBlocks: 0,
       registrationHeight: false,
-      lastForgedHeight: 16647708,
+      lastGeneratedHeight: 16647708,
       isBanned: false,
       validatorWeight: '11250000000000',
       totalStakeReceived: '11250000000000',
