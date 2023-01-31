@@ -194,7 +194,7 @@ const ss = {
   validatorStatsRank: '.rank',
   validatorStatsApproval: '.approval',
   validatorStatsWeight: '.stake',
-  validatorStatsForged: '.generated',
+  validatorStatsGenerated: '.generated',
   validatorStatsBlocks: '.blocks',
   validatorStatsLastBlock: '.last-generated',
   validatorStatsSince: '.validator-since',

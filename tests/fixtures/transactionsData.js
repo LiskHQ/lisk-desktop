@@ -148,7 +148,7 @@ export default [
         generatorKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
         params: {
-          maxHeightPreviouslyForged: 15329877,
+          maxHeightPreviouslyGenerated: 15329877,
           maxHeightPrestaked: 15329809,
           seedReveal: '9df2fee500047174fe19c4454d32c0e2',
         },
@@ -163,7 +163,7 @@ export default [
         generatorKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
         params: {
-          maxHeightPreviouslyForged: 15329877,
+          maxHeightPreviouslyGenerated: 15329877,
           maxHeightPrestaked: 15329809,
           seedReveal: '9df2fee500047174fe19c4454d32c0e2',
         },
