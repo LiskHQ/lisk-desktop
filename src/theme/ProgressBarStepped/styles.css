@@ -37,7 +37,7 @@
 .active {
   border-color: var(--color-progress-bar);
   background-color: var(--color-white-smoke);
-  color: var(--color-progress-bar);
+  color: var(--color-progress-bar-text);
 }
 
 .solid {
