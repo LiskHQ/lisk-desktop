@@ -12,21 +12,21 @@ import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import { useGenerators } from '../../hooks/queries/useGenerators';
 import NumericInfo from './NumericInfo';
-import Forger from './Forger';
+import Generator from './Generator';
 import styles from './Overview.css';
 
-const FORGERS_TO_SHOW = 6;
+const GENERATORS_TO_SHOW = 6;
 
-const getForgingStats = (data, forgedInRound = 0) => {
+const getGeneratingStats = (data, generatedInRound = 0) => {
   const missedBlocks = data.filter((item) => item.state === 'missedBlock').length;
-  return [forgedInRound, ROUND_LENGTH - forgedInRound, missedBlocks];
+  return [generatedInRound, ROUND_LENGTH - generatedInRound, missedBlocks];
 };
 
-const ProgressBar = ({ forgedInRound, theme }) => (
+const ProgressBar = ({ generatedInRound, theme }) => (
   <div className={`${styles.progressBar} ${styles[theme]}`}>
     <div
-      className={`${styles.lineForged} ${styles[theme]}`}
-      style={{ width: `${(forgedInRound / ROUND_LENGTH) * 100}%` }}
+      className={`${styles.lineGenerated} ${styles[theme]}`}
+      style={{ width: `${(generatedInRound / ROUND_LENGTH) * 100}%` }}
     />
   </div>
 );
@@ -40,19 +40,19 @@ const getPassedMinutes = (startTime) => {
   return `${formatToTwoDigits(duration.minutes())}:${formatToTwoDigits(duration.seconds())}`;
 };
 
-const GeneratingDetails = ({ t, forgedInRound, startTime }) => {
+const GeneratingDetails = ({ t, generatedInRound, startTime }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
-  const validatorsForgedLabels = [t('Forged blocks'), t('Awaiting slot'), t('Missed blocks')];
-  const { data: forgersData } = useGenerators({ config: { params: { limit: 103 } } });
-  const generators = forgersData?.data ?? [];
+  const validatorsGeneratedLabels = [t('Generated blocks'), t('Awaiting slot'), t('Missed blocks')];
+  const { data: generatorsData } = useGenerators({ config: { params: { limit: 103 } } });
+  const generators = generatorsData?.data ?? [];
 
   const doughnutChartData = {
-    labels: validatorsForgedLabels,
+    labels: validatorsGeneratedLabels,
     datasets: [
       {
         label: 'status',
-        data: getForgingStats(generators, forgedInRound),
+        data: getGeneratingStats(generators, generatedInRound),
       },
     ],
   };
@@ -70,7 +70,7 @@ const GeneratingDetails = ({ t, forgedInRound, startTime }) => {
     },
   };
 
-  const forgersListToShow = generators.slice(1, FORGERS_TO_SHOW + 1);
+  const generatorsListToShow = generators.slice(1, GENERATORS_TO_SHOW + 1);
 
   return (
     <Box className={styles.wrapper}>
@@ -78,7 +78,7 @@ const GeneratingDetails = ({ t, forgedInRound, startTime }) => {
         <div className={styles.column}>
           {generators.length ? (
             <div className={styles.chartBox}>
-              <h2 className={styles.title}>{t('Validator Forging Status')}</h2>
+              <h2 className={styles.title}>{t('Validator Generating Status')}</h2>
               <div className={`${styles.chart} showOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}
@@ -101,7 +101,7 @@ const GeneratingDetails = ({ t, forgedInRound, startTime }) => {
               </div>
               <div className="hideOnLargeViewPort">
                 <GuideTooltip>
-                  {validatorsForgedLabels.map((label, i) => (
+                  {validatorsGeneratedLabels.map((label, i) => (
                     <GuideTooltipItem key={label} color={colorPalette[i]} label={label} />
                   ))}
                 </GuideTooltip>
@@ -123,9 +123,9 @@ const GeneratingDetails = ({ t, forgedInRound, startTime }) => {
                 <Icon name="blocksGenerated" />
                 <main className={styles.main}>
                   <h6>{t('Blocks generated')}</h6>
-                  <ProgressBar forgedInRound={forgedInRound} theme={theme} />
+                  <ProgressBar generatedInRound={generatedInRound} theme={theme} />
                   <p className={styles.blue}>
-                    <span className="blocksGenerated">{`${forgedInRound} `}</span>
+                    <span className="blocksGenerated">{`${generatedInRound} `}</span>
                     <span>{`/ ${ROUND_LENGTH}`}</span>
                   </p>
                 </main>
@@ -138,12 +138,12 @@ const GeneratingDetails = ({ t, forgedInRound, startTime }) => {
             </div>
           </div>
         </div>
-        <div className={`${styles.column} ${styles.nextForgers}`}>
+        <div className={`${styles.column} ${styles.nextGenerators}`}>
           <div className={styles.chartBox}>
             <h2 className={styles.title}>{t('Next generators')}</h2>
             <nav className={styles.list}>
-              {forgersListToShow.map((forger) => (
-                <Forger key={forger.address} forger={forger} />
+              {generatorsListToShow.map((generator) => (
+                <Generator key={generator.address} generator={generator} />
               ))}
             </nav>
           </div>

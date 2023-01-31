@@ -38,8 +38,8 @@
     max-width: 270px;
   }
 
-  &.nextForgers {
-    & .forger {
+  &.nextGenerators {
+    & .generator {
       width: 50%;
     }
   }
@@ -68,7 +68,7 @@
   padding: 18px 0 0;
   font-size: var(--font-size-h6);
 
-  & .forger {
+  & .generator {
     display: inline-block;
     padding-bottom: 15px;
     max-height: 40px;
@@ -106,7 +106,7 @@
   max-height: 40px;
 }
 
-.totalForged {
+.totalGenerated {
   font-size: var(--font-size-h4);
   padding-left: 10px;
   padding-top: 5px;
@@ -190,7 +190,7 @@
     background-color: var(--color-very-light-gray);
   }
 
-  & > .lineForged {
+  & > .lineGenerated {
     border-radius: 43px;
 
     &.dark {

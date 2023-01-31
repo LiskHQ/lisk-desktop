@@ -27,7 +27,7 @@
   box-sizing: border-box;
   padding: 0 20px;
 
-  &.nextForgers {
+  &.nextGenerators {
     width: 50%;
 
     & .forger {
@@ -35,14 +35,14 @@
     }
   }
 
-  &:not(.nextForgers) {
+  &:not(.nextGenerators) {
     width: 25%;
   }
 }
 
 @media (--medium-viewport) {
   .column {
-    &.nextForgers {
+    &.nextGenerators {
       width: 60%;
 
       & .forger {
@@ -50,7 +50,7 @@
       }
     }
 
-    &:not(.nextForgers) {
+    &:not(.nextGenerators) {
       width: 20%;
     }
   }
@@ -96,7 +96,7 @@
   }
 }
 
-.totalForged {
+.totalGenerated {
   font-size: var(--font-size-h4);
   padding-left: 10px;
   padding-top: 5px;
