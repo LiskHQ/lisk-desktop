@@ -1,23 +1,29 @@
-import { useSelector } from 'react-redux';
 import {
-  calculateBalanceLockedInVotes,
-  calculateUnlockableBalance,
-  getUnlockableUnlockObjects,
+  calculateSentStakesAmount,
+  calculateUnlockableAmount,
+  getPendingUnlockableUnlocks,
 } from '@wallet/utils/account';
-import {
-  selectActiveTokenAccount,
-} from 'src/redux/selectors';
-import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { useSentStakes, useUnlocks } from '@pos/validator/hooks/queries';
+import { useCurrentAccount } from '@account/hooks';
 
 const useUnlockableCalculator = () => {
-  const wallet = useSelector(selectActiveTokenAccount);
-  const { data: { height: currentHeight } } = useLatestBlock();
-  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.staking));
-  const unlockableBalance = calculateUnlockableBalance(
-    wallet.pos?.pendingUnlocks, currentHeight,
-  );
-  const unlockObjects = getUnlockableUnlockObjects(wallet.pos?.pendingUnlocks, currentHeight);
-  return [unlockObjects, lockedInVotes, unlockableBalance];
+  const [currentAccount] = useCurrentAccount();
+  const address = currentAccount?.metadata?.address;
+
+  const { data: unlocks } = useUnlocks({
+    config: { params: { address } },
+  });
+  const { data: sentStakes } = useSentStakes({
+    config: { params: { address } },
+  });
+
+  const pendingUnlocks = unlocks?.data?.pendingUnlocks;
+
+  const unlockableAmount = calculateUnlockableAmount(pendingUnlocks);
+  const pendingUnlockableUnlocks = getPendingUnlockableUnlocks(pendingUnlocks);
+  const sentStakesAmount = calculateSentStakesAmount(sentStakes?.data?.stakes);
+
+  return { pendingUnlockableUnlocks, sentStakesAmount, unlockableAmount };
 };
 
 export default useUnlockableCalculator;

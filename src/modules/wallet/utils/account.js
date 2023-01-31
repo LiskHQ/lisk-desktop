@@ -163,8 +163,11 @@ export const truncateTransactionID = (id) => {
  * @param {Object} votes - Votes dictionary, values must include vote.confirmed
  * @returns {Number} - Sum of vote amounts
  */
-export const calculateBalanceLockedInVotes = (votes = {}) =>
-  Object.values(votes).reduce((total, vote) => (total + vote.confirmed), 0);
+export const calculateBalanceLockedInStakes = (stakes = {}) =>
+  Object.values(stakes).reduce((total, stake) => (total + stake.confirmed), 0);
+
+export const calculateSentStakesAmount = (sentStakes = []) =>
+  sentStakes.reduce((total, stake) => (total + parseInt(stake.amount, 10)), 0);
 
 /**
  * calculates balance locked for the account in unvotes
@@ -187,35 +190,19 @@ export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
   currentBlockHeight >= unlockHeight;
 
 /**
- * returns unlocking objects for broadcasting an unlock transaction
- * at the current height
+ * returns total amount that can be unlocked
  *
- * @param {Array} unlocking - unlocking values array from the account details
- * @param {Number} currentBlockHeight - Current block height
- * @returns {Array} Array of LSK rows available to unlock
+ * @param {Array} pendingUnlocks - pendingUnlocks array
+ * @returns {Number} - Total amount that can be unlocked
  */
-export const getUnlockableUnlockObjects = (unlocking = [], currentBlockHeight = 0) =>
-  unlocking.filter(vote => isBlockHeightReached(vote.expectedUnlockableHeight, currentBlockHeight))
-    .map(vote => ({
-      validatorAddress: vote.validatorAddress,
-      amount: vote.amount,
-      unstakeHeight: Number(vote.unstakeHeight),
-    }));
-
-/**
- * returns the balance that can be unlocked at the current block height
- *
- * @param {Array} unlocking - unlocking values array from the account details
- * @param {Number} currentBlockHeight - Current block height
- * @returns {Number} - The LSK value that can be unlocked
- */
-export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 0) =>
-  unlocking.reduce(
-    (sum, unlockable) =>
-    (isBlockHeightReached(unlockable.expectedUnlockableHeight, currentBlockHeight)
-      ? sum + parseInt(unlockable.amount, 10) : sum),
-    0,
+export const calculateUnlockableAmount = (pendingUnlocks = []) =>
+  pendingUnlocks.reduce(
+    (sum, pendingUnlock) => (sum + (pendingUnlock.unlockable ? parseInt(pendingUnlock.amount, 10) : 0)),
+    0
   );
+
+export const getPendingUnlockableUnlocks = (pendingUnlocks = []) =>
+  pendingUnlocks?.filter((pendingUnlock)=> !pendingUnlock.unlockable);
 
 /**
  * returns the balance that can not be unlocked at the current block height

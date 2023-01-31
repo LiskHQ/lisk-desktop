@@ -25,7 +25,7 @@ const TxComposer = ({
   className,
   buttonTitle,
   formProps = {},
-  commandParams = {},
+  commandParams,
 }) => {
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const { t } = useTranslation();

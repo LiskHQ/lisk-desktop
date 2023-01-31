@@ -41,9 +41,6 @@ describe('Locked balance Summary', () => {
       senderPublicKey: wallets.genesis.summary.publicKey,
       module: 'dpos',
       command: 'unlock',
-      params: {
-        unlockObjects: [],
-      },
     },
     nextStep: jest.fn(),
     prevStep: jest.fn(),

@@ -55,7 +55,7 @@ const network = (state = initialState, action) => {
             schemas: {
               ...action.data,
             },
-            moduleCommandSchemas: action.data.reduce((acc, item) => {
+            moduleCommandSchemas: action.data?.reduce((acc, item) => {
               acc[item.moduleCommand] = item.schema;
               return acc;
             }, {}),

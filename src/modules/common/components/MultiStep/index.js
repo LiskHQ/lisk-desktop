@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Nav from './Navigator';
 import Element from './Element';
 import { getStyles } from './utils';
@@ -150,5 +151,9 @@ class MultiStep extends React.Component {
     );
   }
 }
+
+MultiStep.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+};
 
 export default MultiStep;

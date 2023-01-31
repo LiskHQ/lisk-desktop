@@ -132,7 +132,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     .map((address) => ({ address, ...stakes[address] }));
 
   const normalizedStakes = useMemo(() => normalizeStakesForTx(stakes), [stakes]);
-  const { added, edited, removed, selfUnStake, availableStakes, resultingNumOfStakes } = useMemo(
+  const { added, edited, removed, selfUnStake, resultingNumOfStakes, availableStakes } = useMemo(
     () => getStakeStats(stakes, account),
     [stakes, account]
   );

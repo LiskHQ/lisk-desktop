@@ -1,0 +1,26 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.ClaimRewardsSummaryContent {
+  color: var(--color-maastricht-blue);
+
+  & .title {
+    margin: 0 0 8px 0;
+
+    @mixin contentLarge;
+  }
+
+  & .rewardListing {
+    margin-bottom: 14px;
+
+    & .rewardLabel {
+      margin-top: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: var(--content-font);
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}

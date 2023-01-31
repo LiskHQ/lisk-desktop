@@ -187,6 +187,10 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  claimRewardsView: {
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
   editStake: {
     isPrivate: true,
     forbiddenTokens: [],

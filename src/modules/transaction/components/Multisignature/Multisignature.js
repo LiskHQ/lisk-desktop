@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { codec } from '@liskhq/lisk-client';
+import { codec, cryptography } from '@liskhq/lisk-client';
 import Illustration from 'src/modules/common/components/illustration';
 import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
@@ -87,7 +87,12 @@ const Multisignature = ({
 
   const onDownload = () => {
     const transaction = JSON.parse(transactionToJSON(transactions.signedTransaction));
-    downloadJSON(transaction, `tx-${transaction.id}`);
+    const fileSuffix =
+      transaction?.id ??
+      `registerMultisig-${cryptography.address.getLisk32AddressFromPublicKey(
+        transactions.signedTransaction.senderPublicKey
+      )}`;
+    downloadJSON(transaction, `tx-${fileSuffix}`);
   };
 
   const onSend = () => {

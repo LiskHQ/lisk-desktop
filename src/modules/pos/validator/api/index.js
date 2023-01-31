@@ -6,7 +6,7 @@ import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 export const httpPaths = {
   validators: `${HTTP_PREFIX}/accounts`,
-  votesSent: `${HTTP_PREFIX}/dpos/votes/sent`,
+  stakesSent: `${HTTP_PREFIX}/pos/stakes`,
   votesReceived: `${HTTP_PREFIX}/dpos/votes/received`,
   forgers: `${HTTP_PREFIX}/generators`,
 };
@@ -125,7 +125,7 @@ export const getValidators = ({ network, params = {}, baseUrl }) => {
 };
 
 /**
- * Retrieves a list of votes sent by a given account
+ * Retrieves a list of stakes sent by a given account
  *
  * @param {Object} data
  * @param {String?} data.params.address - account address
@@ -138,7 +138,7 @@ export const getValidators = ({ network, params = {}, baseUrl }) => {
  */
 export const getStakes = ({ params = {} }) =>
   client.rest({
-    url: httpPaths.votesSent,
+    url: httpPaths.stakesSent,
     params: getValidatorProps({ address: params.address, publicKey: params.publicKey }),
   });
 

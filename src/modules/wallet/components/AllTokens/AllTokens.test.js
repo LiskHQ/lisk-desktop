@@ -1,4 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
+import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
@@ -36,7 +37,7 @@ describe('AllTokens', () => {
   useValidators.mockReturnValue({ data: mockValidators });
   useBlocks.mockReturnValue({ data: mockBlocks });
 
-  it('should display properly', async () => {
+  it('should display token details properly', async () => {
     const props = {
       history,
     };
@@ -52,14 +53,18 @@ describe('AllTokens', () => {
       expect(screen.getByText(title)).toBeTruthy();
     });
 
-    mockTokensBalance.data.forEach(({ name, symbol, availableBalance, lockedBalances }) => {
+    mockTokensBalance.data.forEach(({ chainName, symbol, availableBalance, lockedBalances }) => {
       const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
 
-      expect(screen.getByText(name)).toBeTruthy();
-      expect(screen.getByText(fromRawLsk(lockedBalance))).toBeTruthy();
-      expect(screen.queryByText(fromRawLsk(availableBalance))).toBeTruthy();
-      expect(screen.queryByText(fromRawLsk(+availableBalance + lockedBalance))).toBeTruthy();
-      expect( screen.getByText(/~10\.00/g)).toBeTruthy();
+      expect(screen.getByText(chainName)).toBeTruthy();
+      expect(screen.getByText(numeral(fromRawLsk(lockedBalance)).format('0'))).toBeTruthy();
+      expect(
+        screen.queryByText(numeral(fromRawLsk(availableBalance)).format('0,0.00'))
+      ).toBeTruthy();
+      expect(
+        screen.queryByText(numeral(fromRawLsk(+availableBalance + lockedBalance)).format('0,0.00'))
+      ).toBeTruthy();
+      expect(screen.getByText(/~10\.00/g)).toBeTruthy();
       expect(screen.getByAltText(symbol)).toBeTruthy();
     });
   });

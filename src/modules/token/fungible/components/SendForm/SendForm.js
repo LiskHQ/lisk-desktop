@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
@@ -9,10 +9,11 @@ import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import { maxMessageLength } from '@transaction/configuration/transactions';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import {
+  useApplicationExploreAndMetaData,
+  useCurrentApplication,
+} from '@blockchainApplication/manage/hooks';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
-import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore';
-import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import TxComposer from '@transaction/components/TxComposer';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
@@ -50,34 +51,14 @@ const getInitialToken = (transactionData, initialTokenId, tokens) => {
 // eslint-disable-next-line max-statements
 const SendForm = (props) => {
   const { account = {}, prevState, t, bookmarks, nextStep } = props;
-  const [currentApplication] = useCurrentApplication();
-  const [sendingChain, setSendingChain] = useState(
-    prevState?.transactionData?.sendingChain || currentApplication
-  );
-  const {
-    data: { data: activeApps = [] } = {},
-    isLoading: isLoadingActiveApps,
-    error: errorGettingActiveApps,
-  } = useBlockchainApplicationExplore({ config: { params: { state: 'active' } } });
-  const activeAppsList = activeApps.map((app) => app.chainID).join();
-  const { data: { data: applications = [] } = {} } = useBlockchainApplicationMeta({
-    config: { params: { chainID: activeAppsList } },
-    options: { enabled: !isLoadingActiveApps && !errorGettingActiveApps },
-  });
-  const [recipientChain, setRecipientChain] = useState(
-    getInitialRecipientChain(
-      prevState?.transactionData,
-      props.initialValue?.recipientApplication,
-      currentApplication,
-      applications
-    )
-  );
-  const { data: tokens } = useTransferableTokens(recipientChain);
-  const [token, setToken] = useState(
-    getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)
-  );
-
+  const [recipientChain, setRecipientChain] = useState({});
+  const [token, setToken] = useState({});
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
+
+  const [currentApplication] = useCurrentApplication();
+  const sendingChain = prevState?.transactionData?.sendingChain || currentApplication;
+  const { applications } = useApplicationExploreAndMetaData();
+  const { data: tokens } = useTransferableTokens(recipientChain);
 
   const [reference, setReference] = useMessageField(
     getInitialData(props.prevState?.formProps, props.initialValue?.reference)
@@ -124,6 +105,25 @@ const SendForm = (props) => {
     [amount, recipient, reference, recipientChain, sendingChain]
   );
 
+  useEffect(() => {
+    setToken(getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens));
+  }, [prevState?.transactionData, props.initialValue?.token, tokens]);
+  useEffect(() => {
+    setRecipientChain(
+      getInitialRecipientChain(
+        prevState?.transactionData,
+        props.initialValue?.recipientChain,
+        currentApplication,
+        applications
+      )
+    );
+  }, [
+    applications.length,
+    currentApplication,
+    props.initialValue?.recipientChain,
+    prevState?.transactionData,
+  ]);
+
   const sendFormProps = {
     isFormValid,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
@@ -160,7 +160,6 @@ const SendForm = (props) => {
       messageFee: 50000000,
     };
   }
-
   return (
     <section className={styles.wrapper}>
       <TxComposer
@@ -183,7 +182,6 @@ const SendForm = (props) => {
                 </label>
                 <MenuSelect
                   value={sendingChain}
-                  onChange={(value) => setSendingChain(value)}
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                   disabled
                 >
@@ -246,13 +244,13 @@ const SendForm = (props) => {
               <MenuSelect
                 value={token}
                 onChange={(value) => setToken(value)}
-                select={(selectedValue, option) => selectedValue?.name === option.name}
+                select={(selectedValue, option) => selectedValue?.tokenName === option.tokenName}
               >
                 {tokens.map((tokenValue) => (
                   <MenuItem
                     className={styles.chainOptionWrapper}
                     value={tokenValue}
-                    key={tokenValue.name}
+                    key={tokenValue.tokenName}
                   >
                     <img className={styles.chainLogo} src={getLogo(tokenValue)} alt="Token logo" />
                     <span>{tokenValue.tokenName}</span>

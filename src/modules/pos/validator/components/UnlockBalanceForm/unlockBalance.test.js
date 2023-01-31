@@ -13,9 +13,15 @@ import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import {
+  usePosConstants,
+  useSentStakes,
+  useUnlocks,
+  useValidators,
+} from '@pos/validator/hooks/queries';
+import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
+import UnlockBalanceForm from '.';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
-import UnlockBalanceForm from './index';
-import { usePosConstants } from '../../hooks/queries';
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
@@ -33,6 +39,7 @@ jest.mock('@transaction/utils/hwManager');
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('../../hooks/queries');
 jest.mock('@auth/hooks/queries');
+jest.mock('@pos/validator/hooks/queries');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
@@ -51,6 +58,11 @@ describe('Unlock LSK modal', () => {
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
   useAuth.mockReturnValue({ data: mockAuth });
+  useValidators.mockImplementation(({ config }) => ({
+    data: getMockValidators(config.params?.address),
+  }));
+  useSentStakes.mockReturnValue({ data: mockSentStakes });
+  useUnlocks.mockReturnValue({ data: mockUnlocks });
 
   const nextStep = jest.fn();
 
@@ -122,28 +134,10 @@ describe('Unlock LSK modal', () => {
   const transactionJSON = {
     module: 'pos',
     command: 'unlock',
+    params: {},
     nonce: '0',
     fee: '0',
     senderPublicKey: 'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535',
-    params: {
-      unlockObjects: [
-        {
-          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
-          amount: '1000000000',
-          unstakeHeight: 4900,
-        },
-        {
-          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
-          amount: '3000000000',
-          unstakeHeight: 100,
-        },
-        {
-          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
-          amount: '1000000000',
-          unstakeHeight: 3000,
-        },
-      ],
-    },
     signatures: [],
   };
 
@@ -194,6 +188,7 @@ describe('Unlock LSK modal', () => {
           },
         ],
         isFormValid: true,
+        unlockableAmount: 455000000000,
         moduleCommand: 'pos:unlock',
         fields: {
           token: mockTokensBalance.data[0],
@@ -240,6 +235,7 @@ describe('Unlock LSK modal', () => {
           fields: {
             token: mockTokensBalance.data[0],
           },
+          unlockableAmount: 455000000000,
         },
         fees: [
           {

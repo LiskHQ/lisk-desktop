@@ -173,44 +173,8 @@ const getState = () => ({
               }
             }
           },
-          'dpos:unlock': {
-            $id: "lisk/dpos/unlock",
-            type: "object",
-            required: [
-              "unlockObjects"
-            ],
-            properties: {
-              unlockObjects: {
-                fieldNumber: 1,
-                maxItems: 20,
-                minItems: 1,
-                type: "array",
-                items: {
-                  properties: {
-                    amount: {
-                      dataType: "uint64",
-                      fieldNumber: 2
-                    },
-                    validatorAddress: {
-                      dataType: "bytes",
-                      fieldNumber: 1,
-                      minLength: 20,
-                      maxLength: 20
-                    },
-                    unstakeHeight: {
-                      dataType: "uint32",
-                      fieldNumber: 3
-                    }
-                  },
-                  required: [
-                    "validatorAddress",
-                    "amount",
-                    "unstakeHeight"
-                  ],
-                  type: "object"
-                }
-              }
-            }
+          'pos:unlock': {
+            $id: "lisk/pos/unlock",
           },
           'legacy:reclaim': {
             $id: "lisk/legacy/reclaim",

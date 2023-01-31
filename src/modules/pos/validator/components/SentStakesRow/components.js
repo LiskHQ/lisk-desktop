@@ -5,6 +5,7 @@ import Icon from 'src/theme/Icon';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import DialogLink from 'src/theme/dialog/link';
+import classNames from 'classnames';
 import styles from './SentStakesRow.css';
 
 export const ValidatorWalletVisual = ({ address, name }) => (
@@ -13,10 +14,10 @@ export const ValidatorWalletVisual = ({ address, name }) => (
   </div>
 );
 
-export const Balance = ({ value, ...rest }) => (
-  <p className={`${grid['col-xs-2']} ${styles.balance}`} {...rest}>
+export const Balance = ({ className, colSpanXs = 2, value }) => (
+  <div className={classNames(className, grid[`col-xs-${colSpanXs}`], styles.balance)}>
     {value}
-  </p>
+  </div>
 );
 
 export const Actions = withRouter (({ history, address, name, stakeEdited }) => {
@@ -32,7 +33,7 @@ export const Actions = withRouter (({ history, address, name, stakeEdited }) => 
   };
 
   return (
-    <div className={`${styles.action} ${grid['col-xs-3']}`}>
+    <div className={`${styles.action} ${grid['col-xs-2']}`}>
       <DialogLink component="editStake" data={{ address }}>
         <Icon name="edit" />
       </DialogLink>

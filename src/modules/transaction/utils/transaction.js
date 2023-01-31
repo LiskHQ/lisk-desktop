@@ -14,8 +14,7 @@ import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
 
-const { transfer, stake, unlock, reclaim, registerMultisignature } =
-  MODULE_COMMANDS_NAME_MAP;
+const { transfer, stake, reclaim, registerMultisignature } = MODULE_COMMANDS_NAME_MAP;
 
 // @todo import the following 4 values from lisk-elements (#4497)
 const ED25519_PUBLIC_KEY_LENGTH = 32;
@@ -93,7 +92,7 @@ const convertObjectToHex = (data) => {
   // eslint-disable-next-line no-restricted-syntax, no-unused-vars, guard-for-in
   for (const key in data) {
     const value = data[key];
-    if (key === 'votes' || key === 'unlockObjects') {
+    if (key === 'stakes') {
       obj[key] = value.map((item) => convertObjectToHex(item));
     } else if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
       obj[key] = convertObjectToHex(value);
@@ -165,7 +164,7 @@ const normalizeTransactionParams = (params) =>
  * @param {Object} transaction The transaction object
  * @returns {String} Amount in Beddows/Satoshi
  */
-const getTxAmount = ({ module, command, params, moduleCommand }) => {
+const getTxAmount = ({ module, command, params = {}, moduleCommand }) => {
   if (!moduleCommand) {
     moduleCommand = joinModuleAndCommand({ module, command });
   }
@@ -173,12 +172,6 @@ const getTxAmount = ({ module, command, params, moduleCommand }) => {
     return params.amount;
   }
 
-  if (moduleCommand === unlock) {
-    return params.unlockObjects.reduce(
-      (sum, unlockObject) => sum + parseInt(unlockObject.amount, 10),
-      0
-    );
-  }
   if (moduleCommand === stake) {
     return params.stakes.reduce((sum, stakeObject) => sum + Number(stakeObject.amount), 0);
   }
@@ -249,7 +242,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
       optionalKeys: keys.optionalKeys.map(convertStringToBinary),
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
-    schema,
+    schema
   );
 
   return signedTransaction;

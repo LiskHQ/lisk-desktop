@@ -1,10 +1,8 @@
 /* eslint-disable max-statements */
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import { selectActiveTokenAccount, selectActiveToken } from 'src/redux/selectors';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
@@ -17,10 +15,9 @@ import { usePosConstants } from '../../hooks/queries';
 
 const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
-  const activeToken = useSelector(selectActiveToken);
   const { data: latestBlock } = useLatestBlock();
-  const [unlockObjects, lockedInVotes, unlockableBalance] = useUnlockableCalculator();
-  const wallet = useSelector(selectActiveTokenAccount);
+  const { pendingUnlockableUnlocks, sentStakesAmount, unlockableAmount, unlockObjects } =
+    useUnlockableCalculator();
 
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
   const { data: tokens } = useTokensBalance({
@@ -40,13 +37,11 @@ const UnlockBalanceForm = ({ nextStep }) => {
 
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
-    isFormValid: unlockableBalance > 0,
+    isFormValid: unlockableAmount > 0,
+    unlockableAmount,
     fields: {
       token: dposToken,
     },
-  };
-  const commandParams = {
-    unlockObjects,
   };
 
   return (
@@ -54,24 +49,24 @@ const UnlockBalanceForm = ({ nextStep }) => {
       <TxComposer
         onConfirm={onConfirm}
         formProps={unlockBalanceFormProps}
-        commandParams={commandParams}
-        buttonTitle={getUnlockButtonTitle(unlockableBalance, activeToken, t)}
+        commandParams={{}}
+        buttonTitle={getUnlockButtonTitle(unlockableAmount, t)}
       >
         <>
           <BoxHeader className={styles.header}>
-            <h2>{t('Locked balance details')}</h2>
+            <h2>{t('Pending unlock details')}</h2>
           </BoxHeader>
           <BoxContent className={styles.container}>
             <p>
               {t(
-                'Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.'
+                'Below are the details of your staked balances and rewards, as well as the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.'
               )}
             </p>
             <BalanceTable
-              lockedInVotes={lockedInVotes}
-              unlockableBalance={unlockableBalance}
-              currentBlockHeight={latestBlock.data?.height ?? 0}
-              account={wallet}
+              sentStakesAmount={sentStakesAmount}
+              unlockableAmount={unlockableAmount}
+              currentBlockHeight={latestBlock?.height ?? 0}
+              pendingUnlockableUnlocks={pendingUnlockableUnlocks}
             />
           </BoxContent>
         </>

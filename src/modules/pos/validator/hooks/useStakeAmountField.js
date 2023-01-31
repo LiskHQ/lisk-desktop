@@ -51,11 +51,10 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
  */
 // eslint-disable-next-line max-statements
 const useStakeAmountField = (initialValue) => {
-  // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
-  // Since we know the dposTokenId we need to get the token's object
-  const { data: tokens, isLoading: isGettingDposToken } = useTokensBalance({
+  // Since we know the posTokenId we need to get the token's object
+  const { data: tokens, isLoading: isGettingPosToken } = useTokensBalance({
     config: { params: { tokenID: posConstants?.posTokenID } },
     options: { enabled: !isGettingPosConstants },
   });
@@ -117,7 +116,7 @@ const useStakeAmountField = (initialValue) => {
     }, 300);
   };
 
-  return [amountField, onAmountInputChange, isGettingDposToken];
+  return [amountField, onAmountInputChange, isGettingPosToken];
 };
 
 export default useStakeAmountField;
