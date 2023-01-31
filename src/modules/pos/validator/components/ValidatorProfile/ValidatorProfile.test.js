@@ -112,7 +112,7 @@ describe('Validator Profile', () => {
 
     expect(
       screen.getByText(
-        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to forge.'
+        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to generate.'
       )
     ).toBeTruthy();
   });

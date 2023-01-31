@@ -78,7 +78,7 @@ const IneligibleValidator = ({ theme, t }) => (
   <div className={`${styles.validatorDescription} ${theme}`}>
     <p>
       {t(
-        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to forge.'
+        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to generate.'
       )}
     </p>
   </div>

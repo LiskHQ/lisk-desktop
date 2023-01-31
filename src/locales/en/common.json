@@ -611,7 +611,7 @@
   "The validator has at least 1,000 LSK validator weight, but is not among the\n      top 101 by validator weight.": "The validator has at least 1,000 LSK validator weight, but is not among the\n      top 101 by validator weight.",
   "The validator is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.": "The validator is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.",
   "The validator is temporarily punished and their validator weight is set to 0 due to a misbehavior.": "The validator is temporarily punished and their validator weight is set to 0 due to a misbehavior.",
-  "The validator weight is below 1,000 LSK meaning that the validator is not eligible to forge.": "The validator weight is below 1,000 LSK meaning that the validator is not eligible to forge.",
+  "The validator weight is below 1,000 LSK meaning that the validator is not eligible to generate.": "The validator weight is below 1,000 LSK meaning that the validator is not eligible to generate.",
   "The {{inputLabel}} can't be empty": "The {{inputLabel}} can't be empty",
   "There are no blockchain applications.": "There are no blockchain applications.",
   "There are no results matching your search term.": "There are no results matching your search term.",
