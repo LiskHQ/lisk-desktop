@@ -5,6 +5,7 @@ import { computeTransactionMinFee, getParamsSchema } from './utils';
 import { FEE_TYPES } from '../../constants';
 
 /**
+ * Calculates minimum transaction fee based on bytes as per Lisk protocol
  *
  * @param {object} data
  * @param {boolean} data.isFormValid Whether the transaction form is valid or not. TxComposer defines this

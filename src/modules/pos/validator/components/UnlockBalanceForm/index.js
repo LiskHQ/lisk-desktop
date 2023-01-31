@@ -49,7 +49,6 @@ const UnlockBalanceForm = ({ nextStep }) => {
       <TxComposer
         onConfirm={onConfirm}
         formProps={unlockBalanceFormProps}
-        commandParams={{}}
         buttonTitle={getUnlockButtonTitle(unlockableAmount, t)}
       >
         <>

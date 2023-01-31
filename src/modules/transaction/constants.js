@@ -1,7 +1,9 @@
 export const FEE_TYPES = {
   BYTES_FEE: 'bytesFee',
   PRIORITY_FEE: 'priorityFee',
-  INITIALIZE: 'initialize',
-  INITIALIZE_ESCROW: 'initializeEscrow',
-  REGISTER_VALIDATOR: 'registerValidator',
+  USER_ACCOUNT_INITIALIZATION: 'userAccountInitialization',
+  ESCROW_ACCOUNT_INITIALIZATION: 'escrowAccountInitialization',
+  VALIDATOR_REGISTRATION: 'validatorRegistration',
 };
+
+export const BASE = 10;

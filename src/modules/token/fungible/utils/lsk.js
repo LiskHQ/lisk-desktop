@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import 'numeral/locales';
+import { BASE } from 'src/modules/transaction/constants';
 
 BigNumber.config({ ERRORS: false });
 
@@ -20,11 +21,11 @@ export const fromRawLsk = (value) =>
  * @param {BigNumber|number} token - Token value merged with its equivalent metadata
  * @returns {BigNumber} Amount value converted to the token symbol's denom
  */
-export const changeDemnom = (amount, token = {}) => {
+export const convertToDenom = (amount, token = {}) => {
   const { decimals = 8 } =
     token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
 
-  return new BigNumber(amount || 0).dividedBy(new BigNumber(10).pow(decimals)).toFixed();
+  return new BigNumber(amount || 0).dividedBy(new BigNumber(BASE).pow(decimals)).toFixed();
 };
 
 /**

@@ -91,7 +91,7 @@ const SendForm = (props) => {
   }, []);
 
   const isFormValid = useMemo(() => {
-    const isFieldsValid = [amount, recipient, reference, recipientChain, sendingChain].reduce(
+    const areFieldsValid = [amount, recipient, reference, recipientChain, sendingChain].reduce(
       (result, item) => {
         result =
           result &&
@@ -104,7 +104,7 @@ const SendForm = (props) => {
       true
     );
     const isTokenValid = !!token && Object.keys(token).length;
-    return isFieldsValid && isTokenValid;
+    return areFieldsValid && isTokenValid;
   }, [amount, recipient, reference, recipientChain, sendingChain, token]);
 
   useEffect(() => {
@@ -170,7 +170,6 @@ const SendForm = (props) => {
         onConfirm={onConfirm}
         formProps={sendFormProps}
         commandParams={commandParams}
-        commandParamsWithMaxBalance={{ ...commandParams, amount: token?.availableBalance }}
         buttonTitle={t('Continue to summary')}
       >
         <>

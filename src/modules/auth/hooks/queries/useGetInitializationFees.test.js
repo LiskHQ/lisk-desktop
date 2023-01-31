@@ -14,7 +14,7 @@ jest.mock('@token/fungible/hooks/queries');
 beforeEach(() => jest.clearAllMocks());
 
 describe('useGetInitializationFees hook', () => {
-  it('does not call the useInoke query if token is still loading', () => {
+  it('should not call the useInvoke query if token is still loading', () => {
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: true });
     useAuth.mockReturnValue({ data: mockAuth, isLoading: false });
     const { result } = renderHook(
