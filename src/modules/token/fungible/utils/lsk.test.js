@@ -32,9 +32,9 @@ describe('lsk', () => {
       expect(convertToken(100000000, mockToken)).to.be.equal('1');
     });
 
-    it('should not convert value', () => {
-      expect(convertToken(100000000, { ...mockToken, symbol: 'ENV' })).to.be.equal('100000000');
-      expect(convertToken(100000000)).to.be.equal('100000000');
+    it('should use default decimal value', () => {
+      expect(convertToken(100000000, { ...mockToken, symbol: 'ENV' })).to.be.equal('1');
+      expect(convertToken(100000000)).to.be.equal('1');
     });
 
     it('should return a zero value', () => {

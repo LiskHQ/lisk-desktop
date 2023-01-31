@@ -189,7 +189,7 @@ describe('RegisterValidatorForm', () => {
         composedFees: [
           {
             title: 'Transaction',
-            value: '0 LSK',
+            value: '10 LSK',
             components: [],
           },
           {
@@ -209,7 +209,7 @@ describe('RegisterValidatorForm', () => {
       fees: [
         {
           title: 'Transaction',
-          value: '0 LSK',
+          value: '10 LSK',
           components: [],
         },
         {
