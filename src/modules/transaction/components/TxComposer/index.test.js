@@ -4,16 +4,22 @@ import { mountWithQueryClient, mountWithQueryAndProps } from 'src/utils/testHelp
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
+import * as encodingUtils from '../../utils/encoding';
 import TxComposer from './index';
 
-
 jest.mock('@network/hooks/useCommandsSchema');
-
+jest.spyOn(encodingUtils, 'fromTransactionJSON').mockImplementation((tx) => tx);
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
     isLoading: false,
   }),
+}));
+jest.mock('@liskhq/lisk-client', () => ({
+  ...jest.requireActual('@liskhq/lisk-client'),
+  transactions: {
+    computeMinFee: jest.fn().mockReturnValue(1000000n),
+  },
 }));
 
 describe('TxComposer', () => {
@@ -25,7 +31,7 @@ describe('TxComposer', () => {
       data: 'test-data',
       token: { tokenID: '00000000' },
     },
-    isValid: true,
+    isFormValid: true,
     feedback: [],
   };
   const props = {
@@ -52,13 +58,14 @@ describe('TxComposer', () => {
     const newProps = {
       ...props,
       formProps: {
-        isValid: true,
+        isFormValid: true,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
         fields: { token: { availableBalance: 100000000 } },
         sendingChain: { chainID: '1' },
-        recipientChain: { chainID: '2' }
+        recipientChain: { chainID: '2' },
       },
     };
+
     const wrapper = mountWithQueryClient(TxComposer, newProps);
     expect(wrapper.find('TransactionPriority')).toExist();
     expect(wrapper.find('Feedback').html()).toEqual(null);
@@ -70,7 +77,7 @@ describe('TxComposer', () => {
     const newProps = {
       ...props,
       formProps: {
-        isValid: false,
+        isFormValid: false,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
         fields: { token: { availableBalance: 1000000000000000 } },
         feedback: ['Test error feedback'],
@@ -86,7 +93,7 @@ describe('TxComposer', () => {
     const newProps = {
       ...props,
       transaction: {
-        isValid: true,
+        isFormValid: true,
         feedback: [],
         moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
         params: {

@@ -30,8 +30,6 @@ const FeesViewer = ({
 }) => {
   const { t } = useTranslation();
   const [showEditIcon, setShowEditIcon] = useState(false);
-  // const composedFeeList = useMemo(() =>
-  //   Object.keys(fees).map(feeKey => ({ title: feeKey, value: fees[feeKey] })), [fees]);
   const composedFeeList = fees.filter(({ isHidden }) => !isHidden);
 
   const onInputFocus = (e) => {
