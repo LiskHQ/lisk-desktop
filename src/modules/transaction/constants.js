@@ -5,5 +5,3 @@ export const FEE_TYPES = {
   ESCROW_ACCOUNT_INITIALIZATION: 'escrowAccountInitialization',
   VALIDATOR_REGISTRATION: 'validatorRegistration',
 };
-
-export const BASE = 10;

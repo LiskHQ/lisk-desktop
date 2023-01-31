@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import 'numeral/locales';
-import { BASE } from 'src/modules/transaction/constants';
 
 BigNumber.config({ ERRORS: false });
+const BASE = 10;
 
 /**
  * Convert Beddow to LSK
