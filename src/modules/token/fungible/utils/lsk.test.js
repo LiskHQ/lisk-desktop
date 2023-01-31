@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { convertToken, fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
+import { changeDemnom, fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 
 const mockToken = {
   symbol: 'LSK',
@@ -27,18 +27,18 @@ describe('lsk', () => {
     });
   });
 
-  describe('convertToken', () => {
+  describe('changeDemnom', () => {
     it('should convert 100000000 to 1', () => {
-      expect(convertToken(100000000, mockToken)).to.be.equal('1');
+      expect(changeDemnom(100000000, mockToken)).to.be.equal('1');
     });
 
     it('should use default decimal value', () => {
-      expect(convertToken(100000000, { ...mockToken, symbol: 'ENV' })).to.be.equal('1');
-      expect(convertToken(100000000)).to.be.equal('1');
+      expect(changeDemnom(100000000, { ...mockToken, symbol: 'ENV' })).to.be.equal('1');
+      expect(changeDemnom(100000000)).to.be.equal('1');
     });
 
     it('should return a zero value', () => {
-      expect(convertToken()).to.be.equal('0');
+      expect(changeDemnom()).to.be.equal('0');
     });
   });
 });

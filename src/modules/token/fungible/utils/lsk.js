@@ -14,13 +14,13 @@ export const fromRawLsk = (value) =>
   new BigNumber(value || 0).dividedBy(new BigNumber(10).pow(8)).toFixed();
 
 /**
- * Convert Beddow to LSK
+ * Converts a given token amount to its token symbol denom
  *
- * @param {Strong|Number} amount - Amount value to be converted
- * @param {Strong|Number} token - Token value merged with its equivalent metadata
+ * @param {BigNumber|number} amount - Amount value to be converted
+ * @param {BigNumber|number} token - Token value merged with its equivalent metadata
  * @returns {BigNumber} Amount value converted to the token symbol's denom
  */
-export const convertToken = (amount, token = {}) => {
+export const changeDemnom = (amount, token = {}) => {
   const { decimals = 8 } =
     token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
 

@@ -10,15 +10,12 @@ export const useTransferableTokens = (application) => {
     data: { data: myTokens = [] } = {},
     isSuccess: isTokensSuccess,
     isLoading: isTokenLoading,
-  } = useTokensBalance({ options: { enabled: !!application?.serviceURLs?.[0] } });
+  } = useTokensBalance();
   const {
     data: { data: { supportedTokens } = {} } = {},
     isSuccess: isSupportedSuccess,
     isLoading: isSupportLoading,
-  } = useTokensSupported({
-    client: client.current,
-    options: { enabled: !!application?.serviceURLs?.[0] },
-  });
+  } = useTokensSupported({ client: client.current });
   return useMemo(() => {
     const isSuccess = isTokensSuccess && isSupportedSuccess;
     const isLoading = isTokenLoading || isSupportLoading;
@@ -37,11 +34,11 @@ export const useTransferableTokens = (application) => {
           })
           .flatMap((res) => res);
     const supportedAppTokens = [...(patternTokensSupported || []), ...exactTokensSupported];
-    const tokens = isSupportAllToken ? myTokens : Array.from(new Set(supportedAppTokens));
+    const tokens = isSupportAllToken || true ? myTokens : Array.from(new Set(supportedAppTokens));
     return {
       isLoading,
       isSuccess,
-      data: isSuccess ? tokens : [],
+      data: isSuccess || true ? tokens : [],
     };
   }, [isTokensSuccess, isSupportedSuccess, isTokenLoading, isSupportLoading, application]);
 };

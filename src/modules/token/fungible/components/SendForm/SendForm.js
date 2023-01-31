@@ -54,7 +54,6 @@ const SendForm = (props) => {
   const [recipientChain, setRecipientChain] = useState({});
   const [token, setToken] = useState({});
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
-
   const [currentApplication] = useCurrentApplication();
   const sendingChain = prevState?.transactionData?.sendingChain || currentApplication;
   const { applications } = useApplicationExploreAndMetaData();
@@ -91,9 +90,9 @@ const SendForm = (props) => {
     setReference({ target: { value: '' } });
   }, []);
 
-  const isFormValid = useMemo(
-    () =>
-      [amount, recipient, reference, recipientChain, sendingChain, token].reduce((result, item) => {
+  const isFormValid = useMemo(() => {
+    const isFieldsValid = [amount, recipient, reference, recipientChain, sendingChain].reduce(
+      (result, item) => {
         result =
           result &&
           !item?.error &&
@@ -101,13 +100,17 @@ const SendForm = (props) => {
           !Object.keys(result).length;
 
         return result;
-      }, true),
-    [amount, recipient, reference, recipientChain, sendingChain]
-  );
+      },
+      true
+    );
+    const isTokenValid = !!token && Object.keys(token).length;
+    return isFieldsValid && isTokenValid;
+  }, [amount, recipient, reference, recipientChain, sendingChain, token]);
 
   useEffect(() => {
     setToken(getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens));
   }, [prevState?.transactionData, props.initialValue?.token, tokens]);
+
   useEffect(() => {
     setRecipientChain(
       getInitialRecipientChain(

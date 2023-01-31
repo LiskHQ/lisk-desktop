@@ -1,43 +1,7 @@
-import { useMemo } from 'react';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
-import { useAuth } from '@auth/hooks/queries/useAuth';
-import { computeTransactionMinFee, getParamsSchema } from './utils';
-import { FEE_TYPES } from '../../constants';
+import { getParamsSchema } from './utils';
 import usePriorityFee from '../usePriorityFee';
-
-export const useByteFee = ({ isFormValid, senderAddress, transactionJSON }) => {
-  const {
-    data: auth,
-    isLoading,
-    isFetched,
-  } = useAuth({ config: { params: { address: senderAddress } } });
-  const {
-    moduleCommandSchemas,
-    isLoading: isSchemaLoading,
-    isFetched: isFetchedCommandSchema,
-  } = useCommandSchema();
-  const numberOfSignatures = auth?.data?.numberOfSignatures || 1;
-
-  const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
-  const bytesFee = useMemo(() => {
-    if (!isFormValid || isSchemaLoading) {
-      return {
-        result: { value: 0, type: FEE_TYPES.BYTES_FEE },
-        isLoading: isLoading || isSchemaLoading,
-        isFetched: false,
-      };
-    }
-    const fee = computeTransactionMinFee(transactionJSON, paramsSchema, numberOfSignatures);
-
-    return {
-      result: { value: fee, type: FEE_TYPES.BYTES_FEE },
-      isLoading: isLoading || isSchemaLoading,
-      isFetched: isFetchedCommandSchema && isFetched,
-    };
-  }, [transactionJSON, paramsSchema, auth, isFormValid, isSchemaLoading]);
-
-  return bytesFee;
-};
+import { useByteFee } from './useByteFee';
 
 /**
  *
@@ -76,6 +40,7 @@ export const useTransactionFee = ({
     selectedPriority,
     transactionJSON,
     paramsSchema,
+    isEnabled: !!paramsSchema && isFormValid,
   });
   const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
   const minimumFee = BigInt(bytesFee.value) + BigInt(extraCommandFee);
