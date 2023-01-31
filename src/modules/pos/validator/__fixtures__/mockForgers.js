@@ -1,4 +1,4 @@
-export const mockForgers = {
+export const mockGenerators = {
   data: {
     generatorKey: '4f3034d6704e8a38098083695822a3da',
     blsKey: '3c95f7931d61909ff092375fc8ad2bc35e393b62d5cca902',
