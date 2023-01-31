@@ -16,7 +16,7 @@ import { usePosConstants } from '../../hooks/queries';
 const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const { data: latestBlock } = useLatestBlock();
-  const { pendingUnlockableUnlocks, sentStakesAmount, unlockableAmount, unlockObjects } =
+  const { pendingUnlockableUnlocks, sentStakesAmount, unlockableAmount } =
     useUnlockableCalculator();
 
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
