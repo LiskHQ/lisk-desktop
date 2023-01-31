@@ -16,14 +16,14 @@ import {
   getStatusClass,
   getValidatorWeightClass,
   getRoundStateClass,
-  getForgingTimeClass,
+  getGeneratingTimeClass,
   getValidatorRankClass,
 } from './TableHeader';
 import ValidatorSummary from '../ValidatorSummary/ValidatorSummary';
 import { extractValidatorCommission } from '../../utils';
 
 const roundStates = {
-  generating: 'Forging',
+  generating: 'Generating',
   awaitingSlot: 'Awaiting slot',
   missedBlock: 'Missed slot',
 };
@@ -230,13 +230,13 @@ export const ValidatorStatus = () => {
   );
 };
 
-export const ForgingTime = () => {
+export const GeneratingTime = () => {
   const {
     activeTab,
     data: { state },
     time,
   } = useContext(ValidatorRowContext);
   return (
-    <span className={getForgingTimeClass(activeTab)}>{state === 'missedBlock' ? '-' : time}</span>
+    <span className={getGeneratingTimeClass(activeTab)}>{state === 'missedBlock' ? '-' : time}</span>
   );
 };

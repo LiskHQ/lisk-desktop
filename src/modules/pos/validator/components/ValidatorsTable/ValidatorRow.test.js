@@ -23,7 +23,7 @@ const props = {
         address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
         isConsensusParticipant: true,
         minActiveHeight: 14075261,
-        nextForgingTime: 1654135710,
+        nextGeneratingTime: 1654135710,
         rank: 22,
         state: 'awaitingSlot',
         totalStakeReceived: '10828000000000',

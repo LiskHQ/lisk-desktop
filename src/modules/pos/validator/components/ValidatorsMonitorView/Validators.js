@@ -89,7 +89,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
       },
       {
         value: 'generating-details',
-        name: t('Forging details'),
+        name: t('Generating details'),
         className: 'generating-details',
       },
     ],

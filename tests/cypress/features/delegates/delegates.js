@@ -64,7 +64,7 @@ Then(/^next generators should match first members of the inside round list$/, ()
 Then(/^first validator should be generating$/, () => {
   cy.get(ss.validatorRow).each((ele, index) => {
     if (index === 0) {
-      expect(ele.find('span:last-child > div > div > main > p').text()).contain('Forging');
+      expect(ele.find('span:last-child > div > div > main > p').text()).contain('Generating');
     }
   });
 });

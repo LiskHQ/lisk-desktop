@@ -53,7 +53,7 @@ export const getRoundStateClass = (activeTab) => {
   }
 };
 
-export const getForgingTimeClass = (activeTab) => {
+export const getGeneratingTimeClass = (activeTab) => {
   switch (activeTab) {
     case 'active':
       return grid['col-xs-2'];
@@ -113,7 +113,7 @@ export default (activeTab, changeSort, t) => [
   },
   {
     title: t('Generation time'),
-    classList: getForgingTimeClass(activeTab),
+    classList: getGeneratingTimeClass(activeTab),
     sort: {
       fn: changeSort,
       key: 'generatingTime',

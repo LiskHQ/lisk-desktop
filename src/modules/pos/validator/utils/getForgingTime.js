@@ -1,4 +1,4 @@
-const getForgingTime = (time) => {
+const getGeneratingTime = (time) => {
   if (!time) return '-';
   const diff = time - Math.floor((new Date()).getTime() / 1000);
   if (Math.abs(diff) < 9) return 'now';
@@ -11,4 +11,4 @@ const getForgingTime = (time) => {
   return `${minutes}${seconds} ago`;
 };
 
-export default getForgingTime;
+export default getGeneratingTime;
