@@ -37,7 +37,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
 
   const total = blocksData?.meta?.total ?? 0;
   const blocks = blocksData?.data ?? [];
-  const forgedInRound = blocks.length ? blocks[0].height % ROUND_LENGTH : 0;
+  const generatedInRound = blocks.length ? blocks[0].height % ROUND_LENGTH : 0;
   const { address } = currentAccount.metadata || {};
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address } },
@@ -147,8 +147,8 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
         ) : (
           <GeneratingDetails
             t={t}
-            forgedInRound={forgedInRound}
-            startTime={blocks[forgedInRound]?.timestamp}
+            generatedInRound={generatedInRound}
+            startTime={blocks[generatedInRound]?.timestamp}
           />
         )
       }
