@@ -79,7 +79,7 @@ module.exports = {
     'src/utils/testHelpers.js',
     'src/auth/const/',
     'src/block/const/',
-    'src/pos/validator/consts/', // Fix after updating pos domain
+    'src/pos/validator/consts/',
     'src/settings/const/',
     'src/const',
     'src/modules/token/fungible/consts/',
