@@ -166,4 +166,9 @@ describe('TransactionPriority', () => {
       value: '0.019',
     });
   });
+
+  it('Should display the fee in loading state', async () => {
+    wrapper.setProps({ ...props, isLoading: true });
+    expect(wrapper.find('Spinner')).toBeTruthy();
+  });
 });
