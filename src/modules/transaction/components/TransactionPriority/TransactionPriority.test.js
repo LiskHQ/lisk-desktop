@@ -84,10 +84,11 @@ describe('TransactionPriority', () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
     // simulate blur so that the edit icon is shown
     wrapper.find('.custom-fee-input').at(1).simulate('blur');
+    wrapper.find('span.fee-value-Transaction').simulate('click');
 
     await waitFor(() => {
-      expect(wrapper).toContainMatchingElement('Icon[name="edit"]');
-      expect(wrapper).not.toContainMatchingElement('.custom-fee-input');
+      expect(wrapper).not.toContainMatchingElement('Icon[name="edit"]');
+      expect(wrapper).toContainMatchingElement('.custom-fee-input');
     });
   });
 
