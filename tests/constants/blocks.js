@@ -1,6 +1,6 @@
 const names = [
   'menfei',
-  'forger_of_lisk',
+  'generator_of_lisk',
   'xujian',
   'jixie',
   'elonhan',

@@ -303,7 +303,7 @@ const ss = {
   signedResult: '.result',
   timeValue: '.timeValue-clock',
   blocksGenerated: '.blocksGenerated',
-  forgerItem: '.generator-item',
+  generatorItem: '.generator-item',
   insideRoundBtn: '.validators-table > ul > .tab:first-child',
   outsideRoundBtn: '.validators-table > ul > .tab:nth-child(2)',
   sanctionedBtn: '.validators-table > ul > .tab:nth-child(3)',

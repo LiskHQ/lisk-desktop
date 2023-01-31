@@ -12,7 +12,7 @@ Then(/(\w+) count should have value greater than (\d+)/, (displayElementClassNam
 
 When(/I observe (\w+)/, (elementClass) => {
   if (elementClass === 'generator') {
-    cy.get(ss.forgerItem).as('forgerList');
+    cy.get(ss.generatorItem).as('generatorList');
   } else {
     const className = ss[elementClass];
     cy.get(className).invoke('text').as(elementClass);
@@ -28,10 +28,10 @@ Then(/^(\w+) should be incremented by at least (\d+)$/, function (elementClass, 
 });
 
 Then(/^next generator list should be updated accordingly$/, function () {
-  const forgerList = this.forgerList;
-  const secondForger = forgerList.eq(1);
+  const generatorList = this.generatorList;
+  const secondForger = generatorList.eq(1);
 
-  cy.get(ss.forgerItem).eq(0).then(ele => {
+  cy.get(ss.generatorItem).eq(0).then(ele => {
     expect(ele.text() === secondForger.text());
   });
 });
@@ -50,14 +50,14 @@ Then(/^time (\w+) should be incremented by at least (\d+) seconds/, function (el
   });
 });
 
-Then(/^next generator list should have a maximum of (\d+) validators/, (forgerCount) => {
-  cy.get(ss.forgerItem).should('have.length.at.most', forgerCount);
+Then(/^next generator list should have a maximum of (\d+) validators/, (generatorCount) => {
+  cy.get(ss.generatorItem).should('have.length.at.most', generatorCount);
 });
 
 Then(/^next generators should match first members of the inside round list$/, () => {
   cy.get(ss.validatorRow).eq(1).then((ele) => {
     const validatorName = getValidatorNameFromRow(ele);
-    cy.get(ss.forgerItem).eq(0).contains(validatorName);
+    cy.get(ss.generatorItem).eq(0).contains(validatorName);
   });
 });
 
