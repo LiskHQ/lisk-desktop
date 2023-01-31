@@ -7,7 +7,7 @@ import WalletVisual from '@wallet/components/walletVisual';
 import styles from './Overview.css';
 
 const Generator = ({ generator }) => (
-  <div className={`${styles.generator} forger-item`}>
+  <div className={`${styles.generator} generator-item`}>
     <Link to={`${routes.explorer.path}?address=${generator.address}`}>
       <WalletVisual
         address={generator.address}

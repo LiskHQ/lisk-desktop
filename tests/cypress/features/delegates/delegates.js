@@ -11,7 +11,7 @@ Then(/(\w+) count should have value greater than (\d+)/, (displayElementClassNam
 });
 
 When(/I observe (\w+)/, (elementClass) => {
-  if (elementClass === 'forger') {
+  if (elementClass === 'generator') {
     cy.get(ss.forgerItem).as('forgerList');
   } else {
     const className = ss[elementClass];
@@ -27,7 +27,7 @@ Then(/^(\w+) should be incremented by at least (\d+)$/, function (elementClass, 
   });
 });
 
-Then(/^next forger list should be updated accordingly$/, function () {
+Then(/^next generator list should be updated accordingly$/, function () {
   const forgerList = this.forgerList;
   const secondForger = forgerList.eq(1);
 
@@ -50,7 +50,7 @@ Then(/^time (\w+) should be incremented by at least (\d+) seconds/, function (el
   });
 });
 
-Then(/^next forger list should have a maximum of (\d+) validators/, (forgerCount) => {
+Then(/^next generator list should have a maximum of (\d+) validators/, (forgerCount) => {
   cy.get(ss.forgerItem).should('have.length.at.most', forgerCount);
 });
 

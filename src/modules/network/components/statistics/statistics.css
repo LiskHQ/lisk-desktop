@@ -30,7 +30,7 @@
   &.nextGenerators {
     width: 50%;
 
-    & .forger {
+    & .generator {
       width: 33.33%;
     }
   }
@@ -45,7 +45,7 @@
     &.nextGenerators {
       width: 60%;
 
-      & .forger {
+      & .generator {
         width: 50%;
       }
     }
@@ -73,7 +73,7 @@
   padding: 18px 10px 0;
   font-size: var(--font-size-h6);
 
-  & .forger {
+  & .generator {
     display: inline-block;
     padding-bottom: 15px;
 
