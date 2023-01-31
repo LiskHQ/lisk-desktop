@@ -34,12 +34,12 @@ describe('Status', () => {
     fee: '207000n',
   };
 
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
 
   it('passes correct props to TxBroadcaster when signed transaction', () => {
     const propsWithSignedTx = {
