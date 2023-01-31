@@ -17,6 +17,7 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 jest.mock('@transaction/hooks/useTransactionPriority');
 jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('@transaction/api');
+jest.mock('@transaction/hooks/useTransactionFee/useTransactionFee');
 
 jest.mock('@account/hooks/useCurrentAccount');
 jest.mock('@pos/reward/hooks/queries');
@@ -35,9 +36,9 @@ describe('ClaimRewardsForm', () => {
     ],
   ]);
   useTransactionFee.mockImplementation(() => ({
-    fee: { value: '0.1' },
-    maxAmount: 0.1,
-    minFee: 0.001,
+    transactionFee: { value: '0.1' },
+    minimumFee: 0.001,
+    components: [],
   }));
 
   const nextStep = jest.fn();
