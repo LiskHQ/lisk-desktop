@@ -36,7 +36,7 @@ export const useTransactionFee = ({
     transactionJSON,
   });
 
-  const priorityFee = usePriorityFee({
+  const priorityFee = { value: 0 }; usePriorityFee({
     selectedPriority,
     transactionJSON,
     paramsSchema,

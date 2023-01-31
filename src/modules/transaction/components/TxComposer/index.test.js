@@ -19,6 +19,7 @@ jest.mock('@liskhq/lisk-client', () => ({
   ...jest.requireActual('@liskhq/lisk-client'),
   transactions: {
     computeMinFee: jest.fn().mockReturnValue(1000000n),
+    getBytes: jest.fn().mockReturnValue({ length: 50 }),
   },
 }));
 
@@ -64,6 +65,7 @@ describe('TxComposer', () => {
         sendingChain: { chainID: '1' },
         recipientChain: { chainID: '2' },
       },
+      commandParams: {},
     };
 
     const wrapper = mountWithQueryClient(TxComposer, newProps);
@@ -76,6 +78,7 @@ describe('TxComposer', () => {
   it('should render TxComposer correctly for an invalid tx', () => {
     const newProps = {
       ...props,
+      commandParams: {},
       formProps: {
         isFormValid: false,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
@@ -92,6 +95,7 @@ describe('TxComposer', () => {
   it('should render TxComposer correctly if the balance is insufficient', () => {
     const newProps = {
       ...props,
+      commandParams: {},
       transaction: {
         isFormValid: true,
         feedback: [],

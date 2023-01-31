@@ -12,6 +12,7 @@ jest.mock('@liskhq/lisk-client', () => ({
   ...jest.requireActual('@liskhq/lisk-client'),
   transactions: {
     computeMinFee: jest.fn().mockReturnValue(1000000n),
+    getBytes: jest.fn().mockReturnValue({ length: 50 }),
   },
 }));
 
