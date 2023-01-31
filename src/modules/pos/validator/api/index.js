@@ -208,7 +208,7 @@ export const getStakers = ({ network, params = {}, baseUrl }) => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getForgers = ({ network, params = {}, baseUrl }) =>
+export const getGenerators = ({ network, params = {}, baseUrl }) =>
   client.rest({
     url: httpPaths.generators,
     params,

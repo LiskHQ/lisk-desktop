@@ -291,7 +291,7 @@ describe('API: LSK Validators', () => {
     });
   });
 
-  describe('getForgers', () => {
+  describe('getGenerators', () => {
     beforeEach(() => {
       resetApiMock();
     });
@@ -300,7 +300,7 @@ describe('API: LSK Validators', () => {
       const expectedResponse = [{}, {}, {}];
       setApiResponseData(expectedResponse, client.rest);
       await expect(
-        validator.getForgers({ params: { limit: 5, offset: 0 }, network })
+        validator.getGenerators({ params: { limit: 5, offset: 0 }, network })
       ).resolves.toEqual(expectedResponse);
       expect(client.rest).toHaveBeenCalledWith({
         baseUrl: undefined,
@@ -312,7 +312,7 @@ describe('API: LSK Validators', () => {
 
     it('should set baseUrl', () => {
       const params = { limit: 5, offset: 0 };
-      validator.getForgers({
+      validator.getGenerators({
         baseUrl,
         network,
         params,
@@ -329,7 +329,7 @@ describe('API: LSK Validators', () => {
       const expectedResponse = new Error('API call could not be completed');
       setApiRejection(expectedResponse.message, client.rest);
       await expect(
-        validator.getForgers({
+        validator.getGenerators({
           network,
           params: { limit: 5, offset: 0 },
         })
