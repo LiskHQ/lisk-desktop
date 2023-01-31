@@ -39,7 +39,7 @@ const UpdateIndicator = ({
           </p>
           <div className={styles.progressBar}>
             <div
-              className={styles.lineForged}
+              className={styles.lineGenerated}
               style={{ width: `${(transferred / total) * 100}%` }}
             />
           </div>

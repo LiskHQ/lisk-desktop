@@ -29,10 +29,10 @@ Then(/^(\w+) should be incremented by at least (\d+)$/, function (elementClass, 
 
 Then(/^next generator list should be updated accordingly$/, function () {
   const generatorList = this.generatorList;
-  const secondForger = generatorList.eq(1);
+  const secondGenerator = generatorList.eq(1);
 
   cy.get(ss.generatorItem).eq(0).then(ele => {
-    expect(ele.text() === secondForger.text());
+    expect(ele.text() === secondGenerator.text());
   });
 });
 
