@@ -5,7 +5,7 @@
 
   &.full,
   &.general {
-    grid-template-areas: "validatordetails validatorweight validatorrank forgingtime roundstate";
+    grid-template-areas: "validatordetails validatorweight validatorrank generatingtime roundstate";
 
     & > * {
       height: 100%;
@@ -122,7 +122,7 @@
   }
 
   &.watched {
-    grid-template-areas: "validatordetails validatorweight validatorrank forgingtime roundstate validatorstatus";
+    grid-template-areas: "validatordetails validatorweight validatorrank generatingtime roundstate validatorstatus";
 
     & > * {
       height: 100%;

@@ -61,7 +61,7 @@ Then(/^next generators should match first members of the inside round list$/, ()
   });
 });
 
-Then(/^first validator should be forging$/, () => {
+Then(/^first validator should be generating$/, () => {
   cy.get(ss.validatorRow).each((ele, index) => {
     if (index === 0) {
       expect(ele.find('span:last-child > div > div > main > p').text()).contain('Forging');
@@ -69,7 +69,7 @@ Then(/^first validator should be forging$/, () => {
   });
 });
 
-Then(/^validators should be sorted in (\w+) order by forgingTime$/, (sortOrder) => {
+Then(/^validators should be sorted in (\w+) order by generatingTime$/, (sortOrder) => {
   let prevForgeTime = sortOrder === 'descending' ? Infinity : -Infinity;
   const parseToSeconds = (time) => {
     const minutes = time.match(/\d+(?=m)/g)?.[0] || 0;

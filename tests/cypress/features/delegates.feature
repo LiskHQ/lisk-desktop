@@ -30,8 +30,8 @@ Feature: validator
   #   When I click on insideRoundBtn
   #   Then I should see 103 validators in table
   #   And first validator should be generating
-  #   When I sort by forgingTime
-  #   Then validators should be sorted in descending order by forgingTime
+  #   When I sort by generatingTime
+  #   Then validators should be sorted in descending order by generatingTime
   #   When I fill genesis in filterValidatorInput field
   #   And I wait 2 seconds
   #   Then filtered results should be displayed

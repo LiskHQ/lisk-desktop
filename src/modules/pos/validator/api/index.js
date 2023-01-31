@@ -13,8 +13,8 @@ export const httpPaths = {
 
 export const wsMethods = {
   validators: 'get.accounts',
-  generators: 'get.validators.next_forgers',
-  forgersRound: 'update.round',
+  generators: 'get.validators.next_generators',
+  generatorsRound: 'update.round',
 };
 
 const getValidatorProps = ({ address, publicKey, username }) => {
@@ -224,10 +224,10 @@ export const getForgers = ({ network, params = {}, baseUrl }) =>
  * @param {Function} onDisconnect - Function to be called when disconnect event fires
  * @param {Function} onReconnect - Function to be called when reconnect event fires
  */
-export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) => {
+export const generatorsSubscribe = (network, callback, onDisconnect, onReconnect) => {
   const node = network?.networks?.LSK?.serviceUrl;
   if (node) {
-    subscribe(`${node}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect);
+    subscribe(`${node}/blockchain`, wsMethods.generatorsRound, callback, onDisconnect, onReconnect);
   }
 };
 
@@ -236,6 +236,6 @@ export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) =
  *
  * @param {Object} network - Redux network state
  */
-export const forgersUnsubscribe = () => {
-  unsubscribe(wsMethods.forgersRound);
+export const generatorsUnsubscribe = () => {
+  unsubscribe(wsMethods.generatorsRound);
 };

@@ -343,7 +343,7 @@ describe('API: LSK Validators', () => {
       const serviceUrl = 'http://sample-service-url.com';
       subscribe.mockImplementation(() => {});
 
-      validator.forgersSubscribe({ networks: { LSK: { serviceUrl } } }, fn, fn, fn);
+      validator.generatorsSubscribe({ networks: { LSK: { serviceUrl } } }, fn, fn, fn);
 
       expect(subscribe).toHaveBeenCalledTimes(1);
       expect(subscribe).toHaveBeenCalledWith(
@@ -356,7 +356,7 @@ describe('API: LSK Validators', () => {
     });
 
     it('Should call ws unsubscribe with parameters', () => {
-      validator.forgersUnsubscribe();
+      validator.generatorsUnsubscribe();
       expect(unsubscribe).toHaveBeenCalledTimes(1);
       expect(unsubscribe).toHaveBeenCalledWith('update.round');
     });

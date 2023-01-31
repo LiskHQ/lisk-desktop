@@ -116,7 +116,7 @@ export default (activeTab, changeSort, t) => [
     classList: getForgingTimeClass(activeTab),
     sort: {
       fn: changeSort,
-      key: 'forgingTime',
+      key: 'generatingTime',
     },
   },
   {
