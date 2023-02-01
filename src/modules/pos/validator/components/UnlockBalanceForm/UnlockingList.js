@@ -27,11 +27,11 @@ const UnlockingListItem = ({ pendingUnlockableUnlock, t, currentBlockHeight }) =
 );
 
 /**
- * displays a list of vote amounts that can be unlocked sometime in the future
+ * displays a list of stake amounts that can be unlocked sometime in the future
  */
 const UnlockingList = ({ pendingUnlockableUnlocks, currentBlockHeight, t }) =>
   pendingUnlockableUnlocks
-    .sort((unvoteA, unvoteB) => unvoteB.unstakeHeight - unvoteA.unstakeHeight)
+    .sort((unstakeA, unstakeB) => unstakeB.unstakeHeight - unstakeA.unstakeHeight)
     .map((pendingUnlockableUnlock, i) => (
       <UnlockingListItem
         key={`${i}-unlocking-balance-list`}

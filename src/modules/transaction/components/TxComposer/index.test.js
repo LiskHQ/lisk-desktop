@@ -82,7 +82,7 @@ describe('TxComposer', () => {
       transaction: {
         isValid: true,
         feedback: [],
-        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
         params: {
           name: 'test_username',
           generatorKey: genKey,

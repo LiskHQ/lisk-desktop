@@ -6,11 +6,11 @@ import Stakes from './stakes';
 describe('Stakes Tab Component', () => {
   let wrapper;
   const props = {
-    votes: {
+    stakes: {
       data: [],
       loadData: jest.fn(),
     },
-    emptyVotes: {
+    emptyStakes: {
       data: [],
       loadData: jest.fn(),
     },
@@ -22,20 +22,20 @@ describe('Stakes Tab Component', () => {
     t: v => v,
     history: { push: jest.fn() },
   };
-  const votes = {
-    ...props.votes,
+  const stakes = {
+    ...props.stakes,
     data: [...Array(10)].map((_, i) => ({
       username: `user_${i}`,
       address: `lsk${i}`,
       rank: i + 1,
       rewards: '40500000000',
       productivity: Math.random() * 100,
-      vote: '9999988456732672',
+      stake: '9999988456732672',
     })),
   };
 
   afterEach(() => {
-    props.votes.loadData.mockRestore();
+    props.stakes.loadData.mockRestore();
     props.accounts.loadData.mockRestore();
   });
 
@@ -47,7 +47,7 @@ describe('Stakes Tab Component', () => {
   });
 
   it('Should show loading state', () => {
-    wrapper = setup({ ...props, votes: { ...props.votes, isLoading: true } });
+    wrapper = setup({ ...props, stakes: { ...props.stakes, isLoading: true } });
     expect(wrapper).toContainMatchingElement('.loading');
   });
 
@@ -55,7 +55,7 @@ describe('Stakes Tab Component', () => {
     const loadData = jest.fn();
     wrapper = setup({
       ...props,
-      votes: { ...votes, isLoading: true },
+      stakes: { ...stakes, isLoading: true },
       accounts: { data: [], loadData },
     });
     expect(loadData).toBeCalledWith({
@@ -69,14 +69,14 @@ describe('Stakes Tab Component', () => {
         'lsk7',
         'lsk8',
         'lsk9'],
-      isDelegate: true,
+      isValidator: true,
     });
   });
   it('should not call accounts.loadData if accounts.data and no sentStakes is empty', () => {
     const loadData = jest.fn();
     wrapper = setup({
       ...props,
-      votes: { ...props.emptyVotes, isLoading: true },
+      stakes: { ...props.emptyStakes, isLoading: true },
       accounts: { data: [], loadData },
     });
     expect(loadData).not.toHaveBeenCalled();
@@ -85,7 +85,7 @@ describe('Stakes Tab Component', () => {
   it('Should render stakes', () => {
     const customProps = {
       ...props,
-      votes,
+      stakes,
     };
     wrapper = setup(customProps);
     expect(wrapper).toContainMatchingElements(10, 'StakeRow');
@@ -94,7 +94,7 @@ describe('Stakes Tab Component', () => {
   it('Should go to account page on clicking row', () => {
     const customProps = {
       ...props,
-      votes,
+      stakes,
     };
     wrapper = setup(customProps);
     wrapper.find('.stake-row > div').at(0).first().simulate('click');
@@ -105,7 +105,7 @@ describe('Stakes Tab Component', () => {
   it('Should filter stakes per username and show error message if no results found', () => {
     const customProps = {
       ...props,
-      votes,
+      stakes,
     };
     wrapper = setup(customProps);
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'user_1' } });

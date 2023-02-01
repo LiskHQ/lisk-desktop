@@ -116,7 +116,7 @@ describe('API: LSK Network', () => {
             milestones: ['500000000', '400000000', '300000000', '200000000', '100000000'],
             offset: 2160,
           },
-          registeredModules: ['token', 'sequence', 'keys', 'dpos', 'legacyAccount'],
+          registeredModules: ['token', 'sequence', 'keys', 'pos', 'legacyAccount'],
 
         },
       };

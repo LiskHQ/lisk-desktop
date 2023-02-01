@@ -1,7 +1,7 @@
 const ValidatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks = 0) => {
   if (!pomHeights) return 'Punishment information unavailable.';
   if (status === 'punished') {
-    // Since this can only be accessed if the delegate has been punished at least once
+    // Since this can only be accessed if the validator has been punished at least once
     // and is not banned yet due to not getting 5 punishments, the text to be displayed
     // will be for one to four punishments
     const textConversion = {
@@ -18,7 +18,7 @@ const ValidatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks
       pomHeights.length !== 1 ? 's' : ''
     }. ${textCount} more punishments will cause the permanent ban of the validator.`;
   }
-  return `The validator is banned because of not forging blocks for 1 month and missing ${consecutiveMissedBlocks} consecutive blocks`;
+  return `The validator is banned because of not generating blocks for 1 month and missing ${consecutiveMissedBlocks} consecutive blocks`;
 };
 
 export default ValidatorPerformanceDetails;

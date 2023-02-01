@@ -12,16 +12,16 @@ Feature: validator
   #   And transactions count should have value greater than 0
 
   # @basic
-  # Scenario: Should properly display forging details
-  #   When I observe blocksForged
+  # Scenario: Should properly display generating details
+  #   When I observe blocksGenerated
   #   And I observe timeValue-clock
-  #   And I observe forger list
+  #   And I observe generator list
   #   And I wait 10 seconds
   #   Then time timeValue should be incremented by at least 5 seconds
-  #   And blocksForged should be incremented by at least 1
-  #   And next forger list should be updated accordingly
-  #   And next forger list should have a maximum of 6 validators
-  #   And next forgers should match first members of the inside round list
+  #   And blocksGenerated should be incremented by at least 1
+  #   And next generator list should be updated accordingly
+  #   And next generator list should have a maximum of 6 validators
+  #   And next generators should match first members of the inside round list
 
 
   # @advanced
@@ -29,9 +29,9 @@ Feature: validator
   # Scenario: Inside round validators should function properly
   #   When I click on insideRoundBtn
   #   Then I should see 103 validators in table
-  #   And first validator should be forging
-  #   When I sort by forgingTime
-  #   Then validators should be sorted in descending order by forgingTime
+  #   And first validator should be generating
+  #   When I sort by generatingTime
+  #   Then validators should be sorted in descending order by generatingTime
   #   When I fill genesis in filterValidatorInput field
   #   And I wait 2 seconds
   #   Then filtered results should be displayed
@@ -53,7 +53,7 @@ Feature: validator
   #   When I sort by status
   #   Then validators should be sorted in descending order by status
   #   Then validators should be sorted in ascending order by status
-  #   When I fill test_deleg in filterValidatorInput field
+  #   When I fill test_validator in filterValidatorInput field
   #   And I wait 2 seconds
   #   Then filtered results should be displayed
   #   When I watch a validator
@@ -97,14 +97,14 @@ Feature: validator
 
   # # @advanced
   # @skip
-  # Scenario: latest votes list should function properly
+  # Scenario: latest stakes list should function properly
   #   Given Network is set to customNode
   #   And I am on validators page
   #   And I wait 5 seconds
   #   When I click on latestStakesBtn
-  #   Then I should see 10 votes in table
+  #   Then I should see 10 stakes in table
   #   When I click on showMoreValidatorsBtn
-  #   Then I should see 20 votes in table
+  #   Then I should see 20 stakes in table
   #   When I click on transactionRow
-  #   Then I should be on a vote transaction details modal
+  #   Then I should be on a stake transaction details modal
 

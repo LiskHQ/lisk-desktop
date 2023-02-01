@@ -13,7 +13,7 @@ const data = {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     name: 'genesis_56',
-    votesUsed: 10,
+    stakesUsed: 10,
   },
 };
 

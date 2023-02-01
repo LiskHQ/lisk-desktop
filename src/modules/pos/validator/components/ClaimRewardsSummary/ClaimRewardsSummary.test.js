@@ -33,7 +33,7 @@ describe('ClaimRewardsSummary', () => {
       nonce: '1',
       signatures: [],
       senderPublicKey: wallets.genesis.summary.publicKey,
-      module: 'dpos',
+      module: 'pos',
       command: 'unlock',
     },
     nextStep: jest.fn(),

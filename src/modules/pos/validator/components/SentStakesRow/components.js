@@ -21,7 +21,7 @@ export const Balance = ({ className, colSpanXs = 2, value }) => (
 );
 
 export const Actions = withRouter (({ history, address, name, stakeEdited }) => {
-  const handleRemoveVote = () => {
+  const handleRemoveStake = () => {
     stakeEdited([
       {
         name,
@@ -38,7 +38,7 @@ export const Actions = withRouter (({ history, address, name, stakeEdited }) => 
         <Icon name="edit" />
       </DialogLink>
       <button
-        onClick={handleRemoveVote}
+        onClick={handleRemoveStake}
       >
         <Icon name="deleteIcon" />
       </button>

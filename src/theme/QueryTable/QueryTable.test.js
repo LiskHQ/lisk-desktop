@@ -21,7 +21,7 @@ const tableHeader = [
     title: 'Transactions',
   },
   {
-    title: 'Forged',
+    title: 'Generated',
   },
 ];
 const row = blockRow;

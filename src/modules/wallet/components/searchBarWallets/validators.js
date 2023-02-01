@@ -2,7 +2,7 @@ import React from 'react';
 import Highlighter from 'react-highlight-words';
 import WalletVisual from '@wallet/components/walletVisual';
 import { truncateAddress } from '@wallet/utils/account';
-import styles from './walletsAndDeletegates.css';
+import styles from './walletsAndValidators.css';
 
 const Validators = ({
   validators,
@@ -30,7 +30,7 @@ const Validators = ({
           <WalletVisual address={validator.address} />
           <div className={styles.walletInformation}>
             <div>
-              <span className={`${styles.delegateName} delegate-name`}>
+              <span className={`${styles.validatorName} validator-name`}>
                 <Highlighter
                   highlightClassName={styles.highlight}
                   searchWords={[searchTextValue]}

@@ -18,12 +18,12 @@ const props = {
   watchList: [],
   setActiveTab: jest.fn(),
   blocks: {
-    forgers: [
+    generators: [
       {
         address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
         isConsensusParticipant: true,
         minActiveHeight: 14075261,
-        nextForgingTime: 1654135710,
+        nextGeneratingTime: 1654135710,
         rank: 22,
         state: 'awaitingSlot',
         totalStakeReceived: '10828000000000',
@@ -46,7 +46,7 @@ describe('ValidatorRow', () => {
     expect(addedToWatchList).toHaveBeenCalledWith({ address: props.data.address });
   });
 
-  it('removes delegate from watched list when watch icon is clicked', () => {
+  it('removes validator from watched list when watch icon is clicked', () => {
     const updatedProps = {
       ...props,
       activeTab: 'watched',

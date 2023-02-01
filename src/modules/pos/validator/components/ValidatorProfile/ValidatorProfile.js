@@ -41,7 +41,7 @@ const ValidatorProfile = ({ history }) => {
   });
   const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
 
-  const { data: forgedBlocks } = useBlocks({
+  const { data: generatedBlocks } = useBlocks({
     config: { params: { generatorAddress: address } },
   });
 
@@ -115,7 +115,7 @@ const ValidatorProfile = ({ history }) => {
         className={`${grid.row} ${styles.statsContainer} stats-container`}
       >
         <DetailsView data={validator} />
-        <PerformanceView data={{ ...validator, producedBlocks: forgedBlocks?.meta?.total }} />
+        <PerformanceView data={{ ...validator, producedBlocks: generatedBlocks?.meta?.total }} />
       </Box>
       <ValidatorStakesView address={address} />
     </section>

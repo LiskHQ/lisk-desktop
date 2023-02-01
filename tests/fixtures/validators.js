@@ -5,7 +5,7 @@ export default {
     username: 'kc',
     publicKey:
       '04bb8d1f6a76614913622ddaf3fb08ba778bb43e6475f298c13f111a82bb813f',
-    isDelegate: true,
+    isValidator: true,
     isMultisignature: true,
   },
   token: {
@@ -22,12 +22,12 @@ export default {
     ],
     optionalKeys: [],
   },
-  dpos: {
-    delegate: {
+  pos: {
+    validator: {
       username: 'kc',
       consecutiveMissedBlocks: 0,
       registrationHeight: false,
-      lastForgedHeight: 16647708,
+      lastGeneratedHeight: 16647708,
       isBanned: false,
       validatorWeight: '11250000000000',
       totalStakeReceived: '11250000000000',
@@ -36,7 +36,7 @@ export default {
       status: 'standby',
       earnedRewards: '244900000000',
     },
-    sentVotes: [
+    sentStakes: [
       {
         validatorAddress: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag',
         amount: '1626000000000',

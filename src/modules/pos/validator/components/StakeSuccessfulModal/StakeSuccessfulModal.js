@@ -12,7 +12,7 @@ import styles from './StakeSuccessfulModal.css';
 function StakeSuccessfulModal({ history, statusMessage }) {
   const { t } = useTranslation();
 
-  const handleBackToDelegate = useCallback(() => {
+  const handleBackToValidator = useCallback(() => {
     history.push(routes.validators.path);
   }, [history]);
 
@@ -25,7 +25,7 @@ function StakeSuccessfulModal({ history, statusMessage }) {
         <p>{statusMessage.message}</p>
       </BoxContent>
       <BoxFooter>
-        <PrimaryButton onClick={handleBackToDelegate}>{t('Back to validators')}</PrimaryButton>
+        <PrimaryButton onClick={handleBackToValidator}>{t('Back to validators')}</PrimaryButton>
       </BoxFooter>
     </Box>
   );

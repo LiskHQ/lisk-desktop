@@ -123,13 +123,13 @@ describe('Utils: Account', () => {
 
     describe('calculateBalanceLockedInStakes', () => {
       it('should get correct available balance', () => {
-        const votes = {
+        const stakes = {
           lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 5000000000 },
           lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 3000000000 },
           lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: { confirmed: 2000000000 },
         };
 
-        expect(calculateBalanceLockedInStakes(votes)).toEqual(10000000000);
+        expect(calculateBalanceLockedInStakes(stakes)).toEqual(10000000000);
       });
 
       it('should return 0 when unlocking is undefined', () => {

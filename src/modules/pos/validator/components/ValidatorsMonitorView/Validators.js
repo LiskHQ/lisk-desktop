@@ -18,7 +18,7 @@ import { ROUND_LENGTH } from '@pos/validator/consts';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import ValidatorsOverview from '../Overview/ValidatorsOverview';
-import ForgingDetails from '../Overview/ForgingDetails';
+import GeneratingDetails from '../Overview/GeneratingDetails';
 import ValidatorsTable from '../ValidatorsTable';
 import LatestStakes from '../LatestStakes';
 import { useValidators } from '../../hooks/queries';
@@ -37,7 +37,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
 
   const total = blocksData?.meta?.total ?? 0;
   const blocks = blocksData?.data ?? [];
-  const forgedInRound = blocks.length ? blocks[0].height % ROUND_LENGTH : 0;
+  const generatedInRound = blocks.length ? blocks[0].height % ROUND_LENGTH : 0;
   const { address } = currentAccount.metadata || {};
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address } },
@@ -71,9 +71,9 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
         className: 'sanctioned',
       },
       {
-        value: 'votes',
+        value: 'stakes',
         name: t('Latest stakes'),
-        className: 'votes',
+        className: 'stakes',
       },
     ],
     active: activeTab,
@@ -88,9 +88,9 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
         className: 'overview',
       },
       {
-        value: 'forging-details',
-        name: t('Forging details'),
-        className: 'forging-details',
+        value: 'generating-details',
+        name: t('Generating details'),
+        className: 'generating-details',
       },
     ],
     active: activeDetailTab,
@@ -113,7 +113,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
   };
 
   const displayTab = (tab) => {
-    if (tab === 'votes') return <LatestStakes filters={filters} />;
+    if (tab === 'stakes') return <LatestStakes filters={filters} />;
 
     return <ValidatorsTable {...commonProps} />;
   };
@@ -145,17 +145,17 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
         activeDetailTab === 'overview' ? (
           <ValidatorsOverview registrations={registrations} t={t} totalBlocks={total} />
         ) : (
-          <ForgingDetails
+          <GeneratingDetails
             t={t}
-            forgedInRound={forgedInRound}
-            startTime={blocks[forgedInRound]?.timestamp}
+            generatedInRound={generatedInRound}
+            startTime={blocks[generatedInRound]?.timestamp}
           />
         )
       }
       <Box main>
         <BoxHeader className={`${styles.tabSelector} validators-table`}>
           {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
-          <span className={activeTab === 'votes' ? 'hidden' : ''}>
+          <span className={activeTab === 'stakes' ? 'hidden' : ''}>
             <Input
               icon={<Icon className={styles.searchIcon} name="searchActive" />}
               onChange={handleFilter}

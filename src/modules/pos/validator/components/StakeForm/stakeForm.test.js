@@ -128,7 +128,7 @@ describe('StakeForm', () => {
     expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
   });
 
-  it('Shows an error if trying to stake for more than 10 delegates', () => {
+  it('Shows an error if trying to stake for more than 10 validators', () => {
     const wrapper = shallow(<StakeForm {...props} stakes={elevenStakes} />);
     expect(wrapper.find('.available-stakes-num').text()).toBe('-1/');
     expect(wrapper.find('.feedback').text()).toBe(

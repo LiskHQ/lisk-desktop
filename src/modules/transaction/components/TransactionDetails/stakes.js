@@ -24,7 +24,7 @@ export const StakesPure = ({ t, stakedValidator }) => {
           {stakes.map((stake) => (
             <StakeItem
               key={`stake-${stake.address}`}
-              vote={{ confirmed: stake.amount }}
+              stake={{ confirmed: stake.amount }}
               address={stake.address}
               truncate
               title={

@@ -7,7 +7,7 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.stake]: t('Staker'),
   [MODULE_COMMANDS_NAME_MAP.registerValidator]: t('Account username'),
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Registrant'),
-  [MODULE_COMMANDS_NAME_MAP.reportDelegateMisbehavior]: t('Reporter'),
+  [MODULE_COMMANDS_NAME_MAP.reportValidatorMisbehavior]: t('Reporter'),
 });
 
 const getModuleCommandTitle = (t = str => str) => ({
@@ -17,7 +17,7 @@ const getModuleCommandTitle = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.stake]: t('Stake'),
   [MODULE_COMMANDS_NAME_MAP.registerValidator]: t('Register validator'),
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Register multisignature'),
-  [MODULE_COMMANDS_NAME_MAP.reportDelegateMisbehavior]: t('Report validator misbehaviour'),
+  [MODULE_COMMANDS_NAME_MAP.reportValidatorMisbehavior]: t('Report validator misbehaviour'),
   [MODULE_COMMANDS_NAME_MAP.crossChainTransfer]: t('Cross chain transfer'),
 });
 

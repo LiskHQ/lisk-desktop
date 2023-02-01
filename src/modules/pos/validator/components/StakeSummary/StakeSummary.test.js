@@ -74,17 +74,17 @@ const transactionJSON = {
   nonce: accounts.genesis.sequence.nonce,
   fee: '1000000',
   signatures: [],
-  module: 'dpos',
-  command: 'voteDelegate',
+  module: 'pos',
+  command: 'stakeValidator',
   params: {
-    votes: [
+    stakes: [
       {
         amount: '100',
-        delegateAddress: accounts.genesis.summary.address,
+        validatorAddress: accounts.genesis.summary.address,
       },
       {
         amount: '-100',
-        delegateAddress: accounts.validator.summary.address,
+        validatorAddress: accounts.validator.summary.address,
       },
     ],
   },
@@ -99,7 +99,7 @@ const props = {
   stakesSubmitted: jest.fn(),
   nextStep: jest.fn(),
   transactions: { txSignatureError: null, signedTransaction: transaction },
-  normalizedVotes: { lsk123: {} },
+  normalizedStakes: { lsk123: {} },
   selectedPriority: { title: 'Normal', value: 1 },
   formProps: {
     isValid: true,
@@ -175,7 +175,7 @@ describe('StakingQueue.Summary', () => {
       statusInfo: {
         locked: 0,
         unlockable: 0,
-        selfUnvote: {},
+        selfUnstake: {},
       },
     });
   });
@@ -197,7 +197,7 @@ describe('StakingQueue.Summary', () => {
       statusInfo: {
         locked: 100,
         unlockable: 120,
-        selfUnvote: {},
+        selfUnstake: {},
       },
     });
   });

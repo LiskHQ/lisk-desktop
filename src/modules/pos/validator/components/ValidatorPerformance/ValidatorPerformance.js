@@ -9,7 +9,7 @@ import validatorPerformanceDetails from './ValidatorPerformanceDetails';
 import styles from './styles.css';
 
 // eslint-disable-next-line max-statements
-const ValidatorPerformance = ({ delegate: { error, isLoading, data } } = {}) => {
+const ValidatorPerformance = ({ validator: { error, isLoading, data } } = {}) => {
   if (!error && isEmpty(data)) {
     return <div />;
   }
@@ -19,8 +19,8 @@ const ValidatorPerformance = ({ delegate: { error, isLoading, data } } = {}) => 
   }
 
   const {
-    dpos: {
-      delegate: { punishmentPeriods, status, consecutiveMissedBlocks },
+    pos: {
+      validator: { punishmentPeriods, status, consecutiveMissedBlocks },
     },
   } = data;
   const headerTitle = {

@@ -119,16 +119,16 @@ const accountFilters = {
   },
 };
 
-const getRequests = (values, isDelegate) => {
+const getRequests = (values, isValidator) => {
   const paramList = values.find(item => Array.isArray(item.list) && item.list.length);
   if (paramList) {
     return paramList.list
       .filter(item => regex[paramList.name].test(item))
       .map((item) => {
-        const params = isDelegate
+        const params = isValidator
           ? {
             [paramList.name]: item,
-            isDelegate: true,
+            isValidator: true,
           } : {
             [paramList.name]: item,
           };
@@ -168,7 +168,7 @@ export const getAccounts = async ({
     { name: 'address', list: params.addressList },
     { name: 'publicKey', list: params.publicKeyList },
     { name: 'username', list: params.usernameList },
-  ], params.isDelegate);
+  ], params.isValidator);
   if (requests.length) {
     return ws({
       requests,

@@ -77,8 +77,8 @@ describe('actions: staking', () => {
   const privateKey = '0x0';
 
   const transactionJSON = {
-    module: 'dpos',
-    command: 'voteDelegate',
+    module: 'pos',
+    command: 'stakeValidator',
     nonce: '6',
     senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
     signatures: [],
@@ -100,7 +100,7 @@ describe('actions: staking', () => {
   });
 
   describe('stakeEdited', () => {
-    it('should create an action to add data to toggle the stake status for any given delegate', async () => {
+    it('should create an action to add data to toggle the stake status for any given validator', async () => {
       const data = [
         {
           validatorAddress: 'dummy',
@@ -114,7 +114,7 @@ describe('actions: staking', () => {
       });
     });
 
-    it('creates an action to add data to toggle the stake status for any given delegate, without calling getAccount', async () => {
+    it('creates an action to add data to toggle the stake status for any given validator, without calling getAccount', async () => {
       const data = [
         {
           address: 'dummy',
@@ -275,7 +275,7 @@ describe('actions: staking', () => {
       ...state.wallet.info.LSK,
     };
     const transactionObject = {
-      module: 'dpos',
+      module: 'pos',
       command: 'unlock',
       sender: { publicKey: wallets.genesis.summary.publicKey },
       nonce: wallets.genesis.sequence.nonce,

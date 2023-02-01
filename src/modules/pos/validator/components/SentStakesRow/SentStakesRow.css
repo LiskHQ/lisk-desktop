@@ -81,7 +81,7 @@
   align-items: center;
 
   & p {
-    @mixin delegateName;
+    @mixin validatorName;
 
     margin: 0 0 8px 0;
   }

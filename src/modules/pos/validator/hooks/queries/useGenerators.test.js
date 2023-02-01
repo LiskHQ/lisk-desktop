@@ -2,16 +2,16 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { mockGenerator } from '@pos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { LIMIT as defaultLimit } from 'src/const/config';
-import { useForgersGenerator } from './useForgersGenerator';
+import { useGenerators } from './useGenerators';
 
 jest.useRealTimers();
 
-describe('useForgersGenerator hook', () => {
+describe('useGenerators hook', () => {
   const limit = 52;
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useForgersGenerator({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useGenerators({ config }), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
@@ -27,7 +27,7 @@ describe('useForgersGenerator hook', () => {
   });
 
   it('fetches data without params correctly', async () => {
-    const { result, waitFor } = renderHook(() => useForgersGenerator(), { wrapper });
+    const { result, waitFor } = renderHook(() => useGenerators(), { wrapper });
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
@@ -43,7 +43,7 @@ describe('useForgersGenerator hook', () => {
   });
 
   it('should fetch next set of data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useForgersGenerator({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useGenerators({ config }), { wrapper });
     await waitFor(() => result.current.isFetched);
     act(() => {
       result.current.fetchNextPage();

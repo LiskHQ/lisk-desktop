@@ -4,5 +4,5 @@ export default {
   address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
   minActiveHeight: 1,
   isConsensusParticipant: true,
-  nextForgingTime: 1616058987,
+  nextGeneratingTime: 1616058987,
 };

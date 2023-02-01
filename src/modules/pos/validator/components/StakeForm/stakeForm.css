@@ -54,7 +54,7 @@
     padding: 20px 16px;
   }
 
-  & > .votesAvailableCounter {
+  & > .stakesAvailableCounter {
     @mixin contentLarge;
 
     line-height: 15px;
@@ -90,7 +90,7 @@
   margin-left: 10px;
 }
 
-.delegateInfoContainer {
+.validatorInfoContainer {
   display: flex;
   position: relative;
   flex-direction: row;
@@ -99,7 +99,7 @@
   width: calc(33% - 13px);
 }
 
-.delegateInfo {
+.validatorInfo {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -130,7 +130,7 @@
   }
 }
 
-.voteItemContainer {
+.stakeItemContainer {
   display: flex;
   flex-direction: row;
   margin-bottom: 6px;
@@ -142,7 +142,7 @@
   }
 
   & > span {
-    @mixin delegateName;
+    @mixin validatorName;
 
     margin-right: 8px;
     font-size: var(--font-size-h6);
@@ -263,23 +263,23 @@
   }
 }
 
-.voteIndex {
-  counter-increment: delegate-address;
-  content: counter(delegate-address) ".";
+.stakeIndex {
+  counter-increment: validator-address;
+  content: counter(validator-address) ".";
   position: absolute;
   left: -16px;
   color: var(--color-blue-gray);
 }
 
-.delegateUsername {
-  @mixin delegateName;
+.validatorUsername {
+  @mixin validatorName;
 
   &.disabled {
     color: var(--color-blue-gray) !important;
   }
 }
 
-.delegateAddress {
+.validatorAddress {
   @mixin contentLarge;
 }
 
