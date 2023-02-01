@@ -3,6 +3,7 @@ import numeral from 'numeral';
 import 'numeral/locales';
 
 BigNumber.config({ ERRORS: false });
+const BASE = 10;
 
 /**
  * Convert Beddow to LSK
@@ -10,9 +11,24 @@ BigNumber.config({ ERRORS: false });
  * @param {Strong|Number} value - Value in Beddow
  * @returns {BigNumber} Value converted to LSK
  */
-export const fromRawLsk = value => (
-  new BigNumber(value || 0).dividedBy(new BigNumber(10).pow(8)).toFixed()
-);
+export const fromRawLsk = (value) =>
+  new BigNumber(value || 0).dividedBy(new BigNumber(10).pow(8)).toFixed();
+
+/**
+ * Converts a given token amount to its token symbol denom
+ *
+ * @param {BigNumber|number} amount - Amount value to be converted
+ * @param {BigNumber|number} token - Token value merged with its equivalent metadata
+ * @returns {BigNumber} Amount value converted to the token symbol's denom
+ */
+export const convertToDenom = (amount, token = {}) => {
+  const { decimals } =
+    token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
+
+  if (!decimals) return '0';
+
+  return new BigNumber(amount || 0).dividedBy(new BigNumber(BASE).pow(decimals)).toFixed();
+};
 
 /**
  * Convert LSK to Beddow
@@ -34,8 +50,9 @@ export const toRawLsk = (value) => {
  * @returns {Promise} resolves with True after 100ms
  */
 /* istanbul ignore next */
-export const delay = (ms = 1500) => new Promise((resolve) => {
-  setTimeout(() => {
-    resolve();
-  }, ms);
-});
+export const delay = (ms = 1500) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });

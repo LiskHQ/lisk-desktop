@@ -1,11 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import styles from './txSummarizer.css';
 
 const FeeSummarizer = ({ fees }) => {
-  const composedFeeList = useMemo(
-    () => Object.keys(fees).map((feeKey) => ({ title: feeKey, value: fees[feeKey] })),
-    [fees]
-  );
+  const composedFeeList = fees.filter(({ isHidden }) => !isHidden);
 
   return (
     <div className={styles.feesListWrapper}>

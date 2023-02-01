@@ -90,12 +90,12 @@ describe('Multisignature Summary component', () => {
   });
 
   useAuth.mockReturnValue({ data: mockAuth });
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
 
   it('Should call props.nextStep', async () => {
     wrapper.find('.confirm-button').at(0).simulate('click');

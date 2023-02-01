@@ -35,14 +35,6 @@ jest.mock('../../hooks');
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.mock('@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore');
 
-jest.mock('@transaction/hooks/useTransactionFeeCalculation', () =>
-  jest.fn().mockReturnValue({
-    minFee: { value: 0.00001 },
-    fee: { value: 0.0001 },
-    maxAmount: { value: 200000000 },
-  })
-);
-
 describe('Form', () => {
   let props;
   let bookmarks;

@@ -30,7 +30,7 @@ export const getFeeStatus = ({ fee, token, customFee }) => {
   if (customFee) {
     return customFee;
   }
-  return !fee.error ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}` : fee.feedback;
+  return !fee.error ? `${formatAmountBasedOnLocale({ value: fee })} ${token}` : fee.feedback;
 };
 
 export const getSpaceSeparated = (str) => str.replace(/([A-Z])/g, ' $1');

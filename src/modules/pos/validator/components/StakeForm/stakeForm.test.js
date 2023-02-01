@@ -100,12 +100,12 @@ describe('StakeForm', () => {
 
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
 
   it('Render only the changed Stakes', async () => {
     const wrapper = shallow(<StakeForm {...props} stakes={mixedStakes} />);
