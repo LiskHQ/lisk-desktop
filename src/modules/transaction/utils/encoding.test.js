@@ -37,8 +37,8 @@ describe('encoding', () => {
   it('should create tx from json when params is an object', () => {
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1',
       params: {
         blsKey: keys.blsKey,
@@ -52,8 +52,8 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON, moduleCommandSchemas)).toEqual({
       fee: 0n,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: 1n,
       params: {},
       signatures: [],
@@ -67,8 +67,8 @@ describe('encoding', () => {
 
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1',
       params: '',
       signatures: [],
@@ -77,8 +77,8 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON, moduleCommandSchemas)).toEqual({
       fee: 0n,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: 1n,
       params: 'params-decoded',
       signatures: [],
@@ -92,8 +92,8 @@ describe('encoding', () => {
 
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1',
       params: '',
       signatures: [],
@@ -102,8 +102,8 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON)).toEqual({
       fee: 0n,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: 1n,
       params: {},
       signatures: [],
@@ -117,8 +117,8 @@ describe('encoding', () => {
 
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1',
       params: '',
       signatures: [],
@@ -127,8 +127,8 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON)).toEqual({
       fee: 0n,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: 1n,
       params: {},
       signatures: [],
@@ -143,8 +143,8 @@ describe('encoding', () => {
 
     const transaction = {
       fee: '0n',
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1n',
       params: Buffer.from('params'),
       signatures: [],
@@ -164,8 +164,8 @@ describe('encoding', () => {
 
     const transaction = {
       fee: '0n',
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1n',
       params: Buffer.from('params'),
       signatures: [],

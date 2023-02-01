@@ -3,7 +3,7 @@ import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
- * Creates a custom hook for dpos constants queries
+ * Creates a custom hook for pos constants queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {Object} configuration.config - the query config

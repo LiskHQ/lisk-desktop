@@ -30,7 +30,7 @@ const generateValidator = (index) => ({
   },
 });
 
-export const delegateList = (validatorCount = 0) =>
+export const validatorList = (validatorCount = 0) =>
   Array(validatorCount).fill(1).map((_, index) => generateValidator(index));
 
 export default validators;

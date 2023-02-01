@@ -141,7 +141,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
 
   const handleContinueStaking = () => history.push(routes.validators.path);
 
-  const removeVote = () => {
+  const removeStake = () => {
     stakeEdited([
       {
         validator,
@@ -207,7 +207,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
               </label>
               {daysLeft >= 1 && start !== undefined && (
                 <>
-                  <WarnPunishedValidator pomHeight={{ start, end }} vote />
+                  <WarnPunishedValidator pomHeight={{ start, end }} stake />
                   <span className={styles.space} />
                 </>
               )}
@@ -218,7 +218,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
           {mode === 'edit' && isForm && (
             <WarningButton
               className={`${styles.removeStakeButton} remove-stake`}
-              onClick={removeVote}
+              onClick={removeStake}
             >
               {t('Remove stake')}
             </WarningButton>

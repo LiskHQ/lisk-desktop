@@ -2,7 +2,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withFilters from 'src/utils/withFilters';
 import withData from 'src/utils/withData';
-import { getDelegates } from '@pos/validator/api';
+import { getValidators } from '@pos/validator/api';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import TransactionsList from './TransactionList';
 import { normalizeTransactionParams } from '../../utils';
@@ -33,8 +33,8 @@ export default compose(
           ? { data: [...oldData.data, ...response.data], meta: response.meta }
           : response,
     },
-    votedDelegates: {
-      apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+    stakedValidators: {
+      apiUtil: ({ networks }, params) => getValidators({ network: networks.LSK, params }),
       defaultData: [],
       transformResponse: (response) =>
         response.data.reduce((acc, validator) => {

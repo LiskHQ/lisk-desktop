@@ -1,7 +1,7 @@
 import debounce from 'lodash.debounce';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import RegisterDelegate from './index';
+import RegisterValidator from './index';
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
@@ -27,7 +27,7 @@ getTransactionFee.mockResolvedValue({
   feedback: '',
 });
 
-describe('RegisterDelegate', () => {
+describe('RegisterValidator', () => {
   const props = {
     account: {
       info: {
@@ -45,9 +45,9 @@ describe('RegisterDelegate', () => {
       goBack: jest.fn(),
     },
     prevState: {},
-    delegate: {},
+    validator: {},
     liskAPIClient: {
-      delegates: {
+      validators: {
         get: jest.fn(),
       },
     },
@@ -60,12 +60,12 @@ describe('RegisterDelegate', () => {
   };
 
   beforeEach(() => {
-    props.liskAPIClient.delegates.get.mockClear();
-    debounce.mockReturnValue((name, error) => !error && props.liskAPIClient.delegates.get(name));
+    props.liskAPIClient.validators.get.mockClear();
+    debounce.mockReturnValue((name, error) => !error && props.liskAPIClient.validators.get(name));
   });
 
   it('renders properly SelectName component', () => {
-    const wrapper = mountWithRouterAndQueryClient(RegisterDelegate, props);
+    const wrapper = mountWithRouterAndQueryClient(RegisterValidator, props);
     expect(wrapper).toContainMatchingElement('.select-name-container');
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper).toContainMatchingElement('.feedback');

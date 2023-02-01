@@ -36,7 +36,7 @@ const normalizeUsernames = (usernames) => {
 
 /**
  * Fetches the accounts corresponding to the usernames
- * passed by votes and unvotes query params
+ * passed by stakes and unstakes query params
  *
  * @param {String} search - Search string from history.location
  * @param {Object} network - network config from Redux store
@@ -44,20 +44,20 @@ const normalizeUsernames = (usernames) => {
  */
 const urlProcessor = (search, network) => {
   const params = parseSearchParams(search);
-  const votes = normalizeUsernames(params.votes);
-  const unvotes = normalizeUsernames(params.unvotes);
+  const stakes = normalizeUsernames(params.stakes);
+  const unstakes = normalizeUsernames(params.unstakes);
 
-  if (votes.length + unvotes.length === 0) {
+  if (stakes.length + unstakes.length === 0) {
     return { data: [] };
   }
 
   return getAccounts({
     network,
-    params: { usernameList: [...votes, ...unvotes] },
+    params: { usernameList: [...stakes, ...unstakes] },
   });
 };
 
-const setVotesByLaunchProtocol = (search) => async (dispatch, getState) => {
+const setStakesByLaunchProtocol = (search) => async (dispatch, getState) => {
   const { network } = getState();
   const accounts = await urlProcessor(search, network);
 
@@ -74,4 +74,4 @@ const setVotesByLaunchProtocol = (search) => async (dispatch, getState) => {
   );
 };
 
-export default setVotesByLaunchProtocol;
+export default setStakesByLaunchProtocol;

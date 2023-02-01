@@ -45,7 +45,7 @@ describe('Validator Profile', () => {
     useSentStakes.mockReturnValue({
       data: {
         ...mockSentStakes,
-        data: { ...mockReceivedStakes.data, votes: mockReceivedStakes.data.stakers.slice(5, 7) },
+        data: { ...mockReceivedStakes.data, stakes: mockReceivedStakes.data.stakers.slice(5, 7) },
       },
     });
 
@@ -112,7 +112,7 @@ describe('Validator Profile', () => {
 
     expect(
       screen.getByText(
-        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to forge.'
+        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to generate.'
       )
     ).toBeTruthy();
   });
@@ -231,9 +231,9 @@ describe('Validator Profile', () => {
         ...mockReceivedStakes,
         data: {
           ...mockReceivedStakes.data,
-          votes: mockReceivedStakes.data.stakers.map((vote) => ({
-            ...vote,
-            delegateAddress: 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53',
+          stakes: mockReceivedStakes.data.stakers.map((stake) => ({
+            ...stake,
+            validatorAddress: 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53',
           })),
         },
       },

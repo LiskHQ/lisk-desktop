@@ -11,8 +11,8 @@ Then(/(\w+) count should have value greater than (\d+)/, (displayElementClassNam
 });
 
 When(/I observe (\w+)/, (elementClass) => {
-  if (elementClass === 'forger') {
-    cy.get(ss.forgerItem).as('forgerList');
+  if (elementClass === 'generator') {
+    cy.get(ss.generatorItem).as('generatorList');
   } else {
     const className = ss[elementClass];
     cy.get(className).invoke('text').as(elementClass);
@@ -27,12 +27,12 @@ Then(/^(\w+) should be incremented by at least (\d+)$/, function (elementClass, 
   });
 });
 
-Then(/^next forger list should be updated accordingly$/, function () {
-  const forgerList = this.forgerList;
-  const secondForger = forgerList.eq(1);
+Then(/^next generator list should be updated accordingly$/, function () {
+  const generatorList = this.generatorList;
+  const secondGenerator = generatorList.eq(1);
 
-  cy.get(ss.forgerItem).eq(0).then(ele => {
-    expect(ele.text() === secondForger.text());
+  cy.get(ss.generatorItem).eq(0).then(ele => {
+    expect(ele.text() === secondGenerator.text());
   });
 });
 
@@ -50,26 +50,26 @@ Then(/^time (\w+) should be incremented by at least (\d+) seconds/, function (el
   });
 });
 
-Then(/^next forger list should have a maximum of (\d+) validators/, (forgerCount) => {
-  cy.get(ss.forgerItem).should('have.length.at.most', forgerCount);
+Then(/^next generator list should have a maximum of (\d+) validators/, (generatorCount) => {
+  cy.get(ss.generatorItem).should('have.length.at.most', generatorCount);
 });
 
-Then(/^next forgers should match first members of the inside round list$/, () => {
+Then(/^next generators should match first members of the inside round list$/, () => {
   cy.get(ss.validatorRow).eq(1).then((ele) => {
     const validatorName = getValidatorNameFromRow(ele);
-    cy.get(ss.forgerItem).eq(0).contains(validatorName);
+    cy.get(ss.generatorItem).eq(0).contains(validatorName);
   });
 });
 
-Then(/^first validator should be forging$/, () => {
+Then(/^first validator should be generating$/, () => {
   cy.get(ss.validatorRow).each((ele, index) => {
     if (index === 0) {
-      expect(ele.find('span:last-child > div > div > main > p').text()).contain('Forging');
+      expect(ele.find('span:last-child > div > div > main > p').text()).contain('Generating');
     }
   });
 });
 
-Then(/^validators should be sorted in (\w+) order by forgingTime$/, (sortOrder) => {
+Then(/^validators should be sorted in (\w+) order by generatingTime$/, (sortOrder) => {
   let prevForgeTime = sortOrder === 'descending' ? Infinity : -Infinity;
   const parseToSeconds = (time) => {
     const minutes = time.match(/\d+(?=m)/g)?.[0] || 0;

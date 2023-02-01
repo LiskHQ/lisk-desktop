@@ -17,7 +17,7 @@ const defaultAccount = {
     balance: '10000000000000',
     username: '',
     isMigrated: true,
-    isDelegate: false,
+    isValidator: false,
     isMultisignature: false,
   },
   // @todo same here.
@@ -33,9 +33,9 @@ const defaultAccount = {
     mandatoryKeys: [],
     optionalKeys: [],
   },
-  dpos: {
-    delegate: {},
-    sentVotes: [],
+  pos: {
+    validator: {},
+    sentStakes: [],
     unlocking: [],
   },
 };
@@ -48,22 +48,22 @@ export const useDeprecatedAccount = (accountInfo) => {
   const [account, setAccount] = useState({ ...defaultAccount, hwInfo });
 
   const {
-    data: sentVotes,
-    isLoading: isSentVotesLoading,
-    isSuccess: isSentVotesSuccess,
+    data: sentStakes,
+    isLoading: isSentStakesLoading,
+    isSuccess: isSentStakesSuccess,
   } = useSentStakes({ config: { params: { address } } });
   useEffect(() => {
-    if (!isSentVotesSuccess) {
+    if (!isSentStakesSuccess) {
       return;
     }
     setAccount((state) => ({
       ...state,
-      dpos: {
-        ...state.dpos,
-        sentVotes: sentVotes?.data?.votes || [],
+      pos: {
+        ...state.pos,
+        sentStakes: sentStakes?.data?.stakes || [],
       },
     }));
-  }, [sentVotes, isSentVotesSuccess]);
+  }, [sentStakes, isSentStakesSuccess]);
 
   const {
     data: auth,
@@ -96,11 +96,11 @@ export const useDeprecatedAccount = (accountInfo) => {
 
   const {
     data: validators,
-    isLoading: isDelegatesLoading,
-    isSuccess: isDelegatesSuccess,
+    isLoading: isValidatorsLoading,
+    isSuccess: isValidatorsSuccess,
   } = useValidators({ config: { params: { address } } });
   useEffect(() => {
-    if (!isDelegatesSuccess) {
+    if (!isValidatorsSuccess) {
       return;
     }
     const validator = validators.data[0];
@@ -108,22 +108,21 @@ export const useDeprecatedAccount = (accountInfo) => {
       ...state,
       summary: {
         ...state.summary,
-        isDelegate: !!validator?.name,
+        isValidator: !!validator?.name,
       },
       pos: {
         ...state.pos,
         validator: {
           username: validator?.name || '',
           consecutiveMissedBlocks: validator?.consecutiveMissedBlocks,
-          lastForgedHeight: validator?.lastGeneratedHeight,
+          lastGeneratedHeight: validator?.lastGeneratedHeight,
           isBanned: validator?.isBanned,
           totalStakeReceived: validator?.totalStakeReceived,
         },
       },
     }));
-  }, [validators, isDelegatesSuccess]);
+  }, [validators, isValidatorsSuccess]);
 
-  // TODO: For any given account maximum possible votes, unlocks is 10
   // Cross check other query params limit as well
   const {
     data: unlocks,
@@ -193,16 +192,16 @@ export const useDeprecatedAccount = (accountInfo) => {
   return {
     isLoading:
       isAuthLoading ||
-      isDelegatesLoading ||
+      isValidatorsLoading ||
       isUnlocksLoading ||
-      isSentVotesLoading ||
+      isSentStakesLoading ||
       isLegacyLoading ||
       isTokenLoading,
     isSuccess:
       isAuthSuccess &&
-      isDelegatesSuccess &&
+      isValidatorsSuccess &&
       isUnlocksSuccess &&
-      isSentVotesSuccess &&
+      isSentStakesSuccess &&
       isLegacySuccess &&
       isTokenSuccess,
   };

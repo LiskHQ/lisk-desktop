@@ -1,6 +1,6 @@
 import * as accounts from '@wallet/utils/api';
 import mockAccounts from '@tests/constants/wallets';
-import setVotesByLaunchProtocol from './urlProcessor';
+import setStakesByLaunchProtocol from './urlProcessor';
 
 jest.mock('@wallet/utils/api', () => ({
   getAccount: jest.fn().mockImplementation(data => Promise.resolve({
@@ -10,7 +10,7 @@ jest.mock('@wallet/utils/api', () => ({
   getAccounts: jest.fn(),
 }));
 
-describe('setVotesByLaunchProtocol', () => {
+describe('setStakesByLaunchProtocol', () => {
   const network = {
     status: { online: true },
     name: 'Mainnet',
@@ -32,7 +32,7 @@ describe('setVotesByLaunchProtocol', () => {
   it('Should dispatch stakeEdited with empty array if no usernames in query params', async () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve([]));
     accounts.getAccount.mockImplementation({ data: mockAccounts.genesis });
-    await setVotesByLaunchProtocol('?modal=StakingQueue')(dispatch, getState);
+    await setStakesByLaunchProtocol('?modal=StakingQueue')(dispatch, getState);
     expect(accounts.getAccount).not.toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalled();
   });
@@ -48,7 +48,7 @@ describe('setVotesByLaunchProtocol', () => {
     accounts.getAccount.mockImplementation({
       data: account,
     });
-    await setVotesByLaunchProtocol('?modal=StakingQueue&unvotes=genesis_5')(dispatch, getState);
+    await setStakesByLaunchProtocol('?modal=StakingQueue&unstakes=genesis_5')(dispatch, getState);
     expect(accounts.getAccounts).toHaveBeenCalledWith({
       params: { usernameList: ['genesis_5'] },
       network,
@@ -60,7 +60,7 @@ describe('setVotesByLaunchProtocol', () => {
   it('Should dispatch stakeEdited with empty data if the username is invalid', async () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: [] }));
     accounts.getAccount.mockImplementation(() => Promise.resolve({ data: [] }));
-    await setVotesByLaunchProtocol('?modal=StakingQueue&unvotes=ad')(dispatch, getState);
+    await setStakesByLaunchProtocol('?modal=StakingQueue&unstakes=ad')(dispatch, getState);
     expect(accounts.getAccounts).not.toHaveBeenCalled();
     expect(accounts.getAccount).not.toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalled();
@@ -75,7 +75,7 @@ describe('setVotesByLaunchProtocol', () => {
       data: [account, account],
     });
     accounts.getAccount.mockImplementation(() => Promise.resolve({ data: [] }));
-    await setVotesByLaunchProtocol('?modal=StakingQueue&unvotes=ad,genesis_5')(dispatch, getState);
+    await setStakesByLaunchProtocol('?modal=StakingQueue&unstakes=ad,genesis_5')(dispatch, getState);
     expect(accounts.getAccounts).not.toHaveBeenCalled();
     expect(accounts.getAccount).not.toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalled();
@@ -85,10 +85,10 @@ describe('setVotesByLaunchProtocol', () => {
     const validator = Object.values(mockAccounts)
       .filter(account => account.pos?.validator.username && account.summary.address);
     const usernameList = validator.map(account => account.pos.validator.username);
-    const url = `?modal=stakingQueue&unvotes=${usernameList.join(',')}`;
+    const url = `?modal=stakingQueue&unstakes=${usernameList.join(',')}`;
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: validator }));
 
-    await setVotesByLaunchProtocol(url)(dispatch, getState);
+    await setStakesByLaunchProtocol(url)(dispatch, getState);
     expect(accounts.getAccounts).toHaveBeenCalledWith({
       params: { usernameList: ['genesis_17', 'test'] },
       network,

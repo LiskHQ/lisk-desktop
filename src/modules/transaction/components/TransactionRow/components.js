@@ -55,16 +55,16 @@ export const Type = () => {
   return <span className={styles.type}>{formatTransactionType(data.moduleCommand)}</span>;
 };
 
-export const DelegateDetails = () => {
+export const ValidatorDetails = () => {
   const { data, activeTab } = useContext(TransactionRowContext);
 
   return (
     <span className={getValidatorDetailsClass(activeTab)}>
-      <div className={styles.delegateColumn}>
-        <div className={`${styles.delegateDetails}`}>
+      <div className={styles.validatorColumn}>
+        <div className={`${styles.validatorDetails}`}>
           <WalletVisual address={data.sender.address} />
           <div>
-            <p className={styles.delegateName}>{data.sender.name}</p>
+            <p className={styles.validatorName}>{data.sender.name}</p>
             <p className={styles.validatorAddress}>{truncateAddress(data.sender.address)}</p>
           </div>
         </div>
@@ -73,7 +73,7 @@ export const DelegateDetails = () => {
   );
 };
 
-export const Sender = () => <DelegateDetails />;
+export const Sender = () => <ValidatorDetails />;
 
 export const Recipient = () => {
   const { data, avatarSize } = useContext(TransactionRowContext);
@@ -206,40 +206,40 @@ export const Status = ({ t }) => {
   );
 };
 
-const generateStakes = (params, delegates, token, t) => {
-  const voteElements = params.votes.slice(0, 1).map((vote) => (
-    <span className={`${styles.container} stake-item-address`} key={`vote-${vote.validatorAddress}`}>
-      <Link to={`${routes.wallet.path}?address=${vote.validatorAddress}`}>
+const generateStakes = (params, validators, token, t) => {
+  const stakeElements = params.stakes.slice(0, 1).map((stake) => (
+    <span className={`${styles.container} stake-item-address`} key={`stake-${stake.validatorAddress}`}>
+      <Link to={`${routes.wallet.path}?address=${stake.validatorAddress}`}>
         <span className={styles.primaryText}>
-          {delegates[vote.validatorAddress]?.name ?? truncateAddress(vote.validatorAddress)}
+          {validators[stake.validatorAddress]?.name ?? truncateAddress(stake.validatorAddress)}
         </span>
       </Link>
       <span className={`${styles.value}`}>
-        <TokenAmount val={vote.amount} token={token} />
+        <TokenAmount val={stake.amount} token={token} />
       </span>
     </span>
   ));
 
   return (
-    <div className={styles.voteDetails}>
-      {voteElements}
-      {params.votes.length > 1 && (
-        <span className={styles.more}>{`${params.votes.length - 1} ${t('more')}...`}</span>
+    <div className={styles.stakeDetails}>
+      {stakeElements}
+      {params.stakes.length > 1 && (
+        <span className={styles.more}>{`${params.stakes.length - 1} ${t('more')}...`}</span>
       )}
     </div>
   );
 };
 
 export const Params = ({ t }) => {
-  const { data, delegates = [], activeToken } = useContext(TransactionRowContext);
-  const { voteDelegate, registerDelegate, transfer } = MODULE_COMMANDS_NAME_MAP;
+  const { data, validators = [], activeToken } = useContext(TransactionRowContext);
+  const { stakeValidator, registerValidator, transfer } = MODULE_COMMANDS_NAME_MAP;
 
   const getDetails = () => {
     switch (data.moduleCommand) {
-      case registerDelegate:
-        return data.params.delegate?.username;
-      case voteDelegate:
-        return generateStakes(data.params, delegates, activeToken, t);
+      case registerValidator:
+        return data.params.validator?.username;
+      case stakeValidator:
+        return generateStakes(data.params, validators, activeToken, t);
       case transfer:
         return data.params.data;
       default:

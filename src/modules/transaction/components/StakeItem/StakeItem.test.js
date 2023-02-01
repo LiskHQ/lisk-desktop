@@ -8,7 +8,7 @@ jest.mock('@wallet/utils/account');
 describe('StakeItem', () => {
   it('should render correctly', () => {
     const props = {
-      vote: {
+      stake: {
         confirmed: '10',
       },
       address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',

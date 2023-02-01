@@ -11,7 +11,7 @@
     padding-left: 0;
     padding-right: 0;
 
-    &.forgingDetails {
+    &.generatingDetails {
       min-height: 180px;
     }
   }
@@ -27,30 +27,30 @@
   box-sizing: border-box;
   padding: 0 20px;
 
-  &.nextForgers {
+  &.nextGenerators {
     width: 50%;
 
-    & .forger {
+    & .generator {
       width: 33.33%;
     }
   }
 
-  &:not(.nextForgers) {
+  &:not(.nextGenerators) {
     width: 25%;
   }
 }
 
 @media (--medium-viewport) {
   .column {
-    &.nextForgers {
+    &.nextGenerators {
       width: 60%;
 
-      & .forger {
+      & .generator {
         width: 50%;
       }
     }
 
-    &:not(.nextForgers) {
+    &:not(.nextGenerators) {
       width: 20%;
     }
   }
@@ -73,7 +73,7 @@
   padding: 18px 10px 0;
   font-size: var(--font-size-h6);
 
-  & .forger {
+  & .generator {
     display: inline-block;
     padding-bottom: 15px;
 
@@ -96,7 +96,7 @@
   }
 }
 
-.totalForged {
+.totalGenerated {
   font-size: var(--font-size-h4);
   padding-left: 10px;
   padding-top: 5px;

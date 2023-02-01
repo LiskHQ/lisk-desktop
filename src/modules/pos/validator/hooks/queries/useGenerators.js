@@ -19,7 +19,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useForgersGenerator = ({ config: customConfig = {}, options } = { }) => {
+export const useGenerators = ({ config: customConfig = {}, options } = { }) => {
   const config = {
     url: `/api/${API_VERSION}/generators`,
     method: 'get',

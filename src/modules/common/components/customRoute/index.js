@@ -39,7 +39,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
     return (
       <Redirect
         to={`${routes.manageAccounts.path}?referrer=${path.replace(
-          /\/(send|vote)/,
+          /\/(send|stake)/,
           ''
         )}&${search.replace(/^\?/, '')}`}
       />

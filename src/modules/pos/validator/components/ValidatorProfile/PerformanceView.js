@@ -38,14 +38,16 @@ const Item = ({ icon, title, children }) => {
   );
 };
 
-const FullItem = ({ icon, title, children, theme }) => (
+const FullItem = ({ status, title, children, theme }) => (
   <BoxContent className={`${styles.full} performance`}>
     <div className={styles.content}>
       <div className={`${styles.title} ${theme}`}>{title}</div>
       {children}
     </div>
-    <div className={`${styles.highlighIcon} ${styles[icon]}`}>
-      <Icon name={icon} />
+    <div className={`${styles.highlighIcon}`}>
+      {
+        status && <Icon name={`validator${capitalize(status) || 'Standby'}`} />
+      }
     </div>
   </BoxContent>
 );
@@ -76,7 +78,7 @@ const IneligibleValidator = ({ theme, t }) => (
   <div className={`${styles.validatorDescription} ${theme}`}>
     <p>
       {t(
-        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to forge.'
+        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to generate.'
       )}
     </p>
   </div>
@@ -107,8 +109,6 @@ const BannedValidator = ({ theme, t }) => (
   </div>
 );
 
-const getValidatorIcon = (status) => `validator${capitalize(status) || 'Standby'}`;
-
 const getValidatorComponent = (status) => {
   const components = {
     active: ActiveValidator,
@@ -135,7 +135,7 @@ const PerformanceView = ({ data }) => {
       </BoxHeader>
       <Box className={`${grid.row} ${styles.content}`}>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
-          <FullItem theme={theme} title={t('Status')} icon={getValidatorIcon(status)}>
+          <FullItem theme={theme} title={t('Status')} status={status}>
             <div className={styles.performanceValue}>{capitalize(status)}</div>
             <ValidatorComponent theme={theme} t={t} />
           </FullItem>
@@ -155,7 +155,7 @@ const PerformanceView = ({ data }) => {
               <span className={styles.performanceValue}>-</span>
             )}
           </Item>
-          <Item title={t('Blocks generated')} icon="forgedBlocks">
+          <Item title={t('Blocks generated')} icon="generatedBlocks">
             <div className={styles.performanceValue}>{data.producedBlocks ?? '-'}</div>
           </Item>
         </Box>

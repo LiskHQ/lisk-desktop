@@ -23,9 +23,9 @@ export const getValidatorWeightClass = (activeTab) => {
     case 'sanctioned':
       return 'hidden';
     case 'watched':
-      return `${grid['col-xs-2']} ${styles.voteWeight}`;
+      return `${grid['col-xs-2']} ${styles.stakeWeight}`;
     default:
-      return `${grid['col-xs-3']} ${styles.voteWeight}`;
+      return `${grid['col-xs-3']} ${styles.stakeWeight}`;
   }
 };
 
@@ -53,7 +53,7 @@ export const getRoundStateClass = (activeTab) => {
   }
 };
 
-export const getForgingTimeClass = (activeTab) => {
+export const getGeneratingTimeClass = (activeTab) => {
   switch (activeTab) {
     case 'active':
       return grid['col-xs-2'];
@@ -113,10 +113,10 @@ export default (activeTab, changeSort, t) => [
   },
   {
     title: t('Generation time'),
-    classList: getForgingTimeClass(activeTab),
+    classList: getGeneratingTimeClass(activeTab),
     sort: {
       fn: changeSort,
-      key: 'forgingTime',
+      key: 'generatingTime',
     },
   },
   {

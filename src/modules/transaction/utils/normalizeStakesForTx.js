@@ -1,18 +1,18 @@
 /**
- * Converts the votes object stored in Redux store
+ * Converts the stakes object stored in Redux store
  * which looks like { validatorAddress: { confirmed, unconfirmed } }
  * into an array of objects that Lisk Element expects, looking like
- * [{ delegatesAddress, amount }]
+ * [{ validatorAddress, amount }]
  *
- * @param {Object} votes - votes object retrieved from the Redux store
- * @returns {Array} Array of votes as Lisk Element expects
+ * @param {Object} stakes - stakes object retrieved from the Redux store
+ * @returns {Array} Array of stakes as Lisk Element expects
  */
-const normalizeStakesForTx = votes =>
-  Object.keys(votes)
-    .filter(address => votes[address].confirmed !== votes[address].unconfirmed)
+const normalizeStakesForTx = stakes =>
+  Object.keys(stakes)
+    .filter(address => stakes[address].confirmed !== stakes[address].unconfirmed)
     .map(validatorAddress => ({
       validatorAddress,
-      amount: (votes[validatorAddress].unconfirmed - votes[validatorAddress].confirmed).toString(),
+      amount: (stakes[validatorAddress].unconfirmed - stakes[validatorAddress].confirmed).toString(),
     }));
 
 export default normalizeStakesForTx;

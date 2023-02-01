@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
-import getForgingTime from '../../utils/getForgingTime';
+import getGeneratingTime from '../../utils/getGeneratingTime';
 import ValidatorRowContext from '../../context/validatorRowContext';
 import validatorStyles from '../ValidatorsMonitorView/Validators.css';
 import styles from './Schemas.css';
@@ -13,7 +13,7 @@ import LayoutSchema from './LayoutSchema';
 const ValidatorRow = ({ data, className, activeTab, watchList, setActiveTab }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const formattedForgingTime = getForgingTime(data.nextAllocatedTime);
+  const formattedGeneratingTime = getGeneratingTime(data.nextAllocatedTime);
 
   const isWatched = watchList.find((address) => address === data.address);
 
@@ -47,7 +47,7 @@ const ValidatorRow = ({ data, className, activeTab, watchList, setActiveTab }) =
           watched: isWatched,
           addToWatchList,
           removeFromWatchList,
-          time: formattedForgingTime,
+          time: formattedGeneratingTime,
           t,
         }}
       >

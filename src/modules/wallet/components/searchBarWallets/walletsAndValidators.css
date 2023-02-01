@@ -79,7 +79,7 @@
     color: var(--color-maastricht-blue);
   }
 
-  & .delegateName {
+  & .validatorName {
     @mixin contentLargest bold;
 
     color: var(--color-ghost);

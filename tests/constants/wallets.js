@@ -16,7 +16,7 @@ const wallets = {
     keys: { numberOfSignatures: 0, mandatoryKeys: [], optionalKeys: [] },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   validator: {
@@ -26,7 +26,7 @@ const wallets = {
       serverPublicKey: '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19',
       address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
       balance: 1000e8,
-      isDelegate: true,
+      isValidator: true,
     },
     token: { balance: 1000e8 },
     sequence: { },
@@ -35,7 +35,7 @@ const wallets = {
         username: 'genesis_17',
         consecutiveMissedBlocks: 0,
         isBanned: false,
-        lastForgedHeight: 618820,
+        lastGeneratedHeight: 618820,
         rank: 18,
         status: 'active',
         totalStakeReceived: '100000000000',
@@ -59,7 +59,7 @@ const wallets = {
     sequence: { nonce: '0' },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   validator_candidate: {
@@ -68,7 +68,7 @@ const wallets = {
       publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
       serverPublicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
       address: 'lsksckkjs2c8dnu7vhcku825cp62ed6eyxd8pbt6p',
-      isDelegate: false,
+      isValidator: false,
     },
     token: { },
     sequence: { },
@@ -87,7 +87,7 @@ const wallets = {
     sequence: { nonce: 1 },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   multiSig: {
@@ -110,7 +110,7 @@ const wallets = {
     },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   send_all_wallet: {
@@ -124,7 +124,7 @@ const wallets = {
     sequence: { },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   without_initialization: {
@@ -138,7 +138,7 @@ const wallets = {
     sequence: { },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   testnet_guy: {
@@ -151,7 +151,7 @@ const wallets = {
     sequence: { },
     pos: {
       validator: {},
-      sentVotes: [],
+      sentStakes: [],
     },
   },
   non_migrated: {
@@ -162,7 +162,7 @@ const wallets = {
       username: '',
       publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86',
       isMigrated: false,
-      isDelegate: false,
+      isValidator: false,
       isMultisignature: false,
     },
     token: {
@@ -180,7 +180,7 @@ const wallets = {
       validator: {
         username: '',
         consecutiveMissedBlocks: 0,
-        lastForgedHeight: 0,
+        lastGeneratedHeight: 0,
         isBanned: false,
         totalStakeReceived: '0',
       },
@@ -262,7 +262,7 @@ const wallets = {
     summary: {
       address: 'lskaror3zjhrg85edkfemyg7aoq4cq6jqycnxgkr9',
       balance: '0',
-      isDelegate: false,
+      isValidator: false,
       isMigrated: false,
       isMultisignature: false,
       legacyAddress: '13537424230540679628L',
@@ -277,7 +277,7 @@ const wallets = {
       validator: {
         username: '',
         consecutiveMissedBlocks: 0,
-        lastForgedHeight: 0,
+        lastGeneratedHeight: 0,
         isBanned: false,
         totalStakeReceived: '0',
       },
