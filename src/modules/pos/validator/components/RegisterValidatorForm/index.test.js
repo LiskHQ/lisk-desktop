@@ -64,7 +64,16 @@ describe('RegisterValidatorForm', () => {
   const setKey = jest.fn();
 
   usePosConstants.mockReturnValue({ data: mockPosConstants });
-  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+  useTokensBalance.mockReturnValue({
+    data: {
+      ...mockTokensBalance,
+      data: mockTokensBalance.data.map((token) => ({
+        ...token,
+        denomUnits: [{ denom: 'lsk', decimals: 8 }],
+      })),
+    },
+    isLoading: false,
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -201,7 +210,7 @@ describe('RegisterValidatorForm', () => {
         ],
         extraCommandFee: '1000000000',
         fields: {
-          token: mockTokensBalance.data[0],
+          token: { ...mockTokensBalance.data[0], denomUnits: [{ denom: 'lsk', decimals: 8 }] },
         },
         isFormValid: true,
         moduleCommand: 'pos:registerValidator',

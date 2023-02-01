@@ -96,10 +96,15 @@ describe('TxComposer', () => {
     const newProps = {
       ...props,
       commandParams: {},
+      formProps: {
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
+        fields: { token: { availableBalance: 100 } },
+        extraCommandFee: 100000000000,
+      },
       transaction: {
         isFormValid: true,
         feedback: [],
-        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
         params: {
           name: 'test_username',
           generatorKey: genKey,
