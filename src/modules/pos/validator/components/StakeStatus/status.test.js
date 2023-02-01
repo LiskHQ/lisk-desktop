@@ -15,12 +15,12 @@ jest.mock('@libs/wcm/hooks/useSession', () => ({
 jest.mock('@network/hooks/useCommandsSchema');
 
 describe('StakingQueue.Result', () => {
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
 
   it('renders properly', () => {
     const wrapper = mountWithRouter(Result, props);
@@ -29,14 +29,20 @@ describe('StakingQueue.Result', () => {
   });
 
   it('displays the locked message properly', () => {
-    const wrapper = mountWithRouterAndQueryClient(Result, { ...props, statusInfo: { locked: 200 } });
+    const wrapper = mountWithRouterAndQueryClient(Result, {
+      ...props,
+      statusInfo: { locked: 200 },
+    });
     const element = wrapper.find('StakeSuccessfulModal');
 
     expect(element.text()).toContain('0.000002 LSK will be locked for staking.');
   });
 
   it('displays the unlocked message properly', () => {
-    const wrapper = mountWithRouterAndQueryClient(Result, { ...props, statusInfo: { unlockable: 300 } });
+    const wrapper = mountWithRouterAndQueryClient(Result, {
+      ...props,
+      statusInfo: { unlockable: 300 },
+    });
     const element = wrapper.find('StakeSuccessfulModal');
 
     expect(element.text()).toContain(

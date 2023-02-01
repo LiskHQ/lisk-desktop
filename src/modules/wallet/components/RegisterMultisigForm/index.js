@@ -133,7 +133,7 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
 
   const multisignatureFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
-    isValid: feedback.error === 0,
+    isFormValid: feedback.error === 0,
     feedback: feedback.messages,
     fields: {
       token: defaultToken,

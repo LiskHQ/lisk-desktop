@@ -23,19 +23,15 @@ describe('TxBroadcasterWithStatus', () => {
     },
   };
 
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
 
   it('should show "Transaction submitted" when txStatusTypes.broadcastSuccess ', () => {
-    renderWithRouterAndStoreAndQueryClient(
-      TxBroadcasterWithStatus,
-      {},
-      store
-    );
+    renderWithRouterAndStoreAndQueryClient(TxBroadcasterWithStatus, {}, store);
     expect(screen.getByText('Transaction submitted')).toBeTruthy();
   });
 });

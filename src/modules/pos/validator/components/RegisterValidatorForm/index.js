@@ -64,9 +64,10 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
   };
 
   const registerValidatorFormProps = {
-    isValid: isFormValid(name, generatorKey, blsKey, proofOfPossession),
+    isFormValid: isFormValid(name, generatorKey, blsKey, proofOfPossession),
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
     fields: { token },
+    extraCommandFee: posConstants?.data?.extraCommandFees?.validatorRegistrationFee || 0,
   };
   const commandParams = {
     name: name.value,

@@ -2,12 +2,10 @@ import { act } from 'react-dom/test-utils';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import wallets from '@tests/constants/wallets';
 import Form, { validateState } from './index';
 
-jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
@@ -35,11 +33,6 @@ getTransactionFee.mockImplementation((params) => {
     error: false,
   };
 });
-
-useTransactionFeeCalculation.mockImplementation(() => ({
-  minFee: { value: 0.001 },
-  fee: { value: 0.01 },
-}));
 
 describe('Multisignature editor component', () => {
   let wrapper;

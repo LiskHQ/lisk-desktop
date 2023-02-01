@@ -166,7 +166,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
   const showEmptyState = !changedStakes.length || isStakingTxPending;
   const stakeFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
-    isValid: !feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending,
+    isFormValid: !feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending,
     fields: {
       token: posToken
     }

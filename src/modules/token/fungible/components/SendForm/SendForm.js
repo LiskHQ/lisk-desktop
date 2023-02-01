@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
+import { useGetInitializationFees } from '@auth/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
@@ -53,7 +54,6 @@ const SendForm = (props) => {
   const [recipientChain, setRecipientChain] = useState({});
   const [token, setToken] = useState({});
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
-
   const [currentApplication] = useCurrentApplication();
   const sendingChain = prevState?.transactionData?.sendingChain || currentApplication;
   const { applications } = useApplicationExploreAndMetaData();
@@ -64,12 +64,13 @@ const SendForm = (props) => {
   );
   const [amount, setAmountField] = useAmountField(
     getInitialAmount(props.prevState?.formProps, props.initialValue?.amount),
-    account.summary?.balance,
+    account.token?.balance,
     token?.symbol
   );
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
+  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value });
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
@@ -89,9 +90,9 @@ const SendForm = (props) => {
     setReference({ target: { value: '' } });
   }, []);
 
-  const isValid = useMemo(
-    () =>
-      [amount, recipient, reference, recipientChain, sendingChain, token].reduce((result, item) => {
+  const isFormValid = useMemo(() => {
+    const areFieldsValid = [amount, recipient, reference, recipientChain, sendingChain].reduce(
+      (result, item) => {
         result =
           result &&
           !item?.error &&
@@ -99,13 +100,17 @@ const SendForm = (props) => {
           !Object.keys(result).length;
 
         return result;
-      }, true),
-    [amount, recipient, reference, recipientChain, sendingChain]
-  );
+      },
+      true
+    );
+    const isTokenValid = !!token && Object.keys(token).length;
+    return areFieldsValid && isTokenValid;
+  }, [amount, recipient, reference, recipientChain, sendingChain, token]);
 
   useEffect(() => {
     setToken(getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens));
   }, [prevState?.transactionData, props.initialValue?.token, tokens]);
+
   useEffect(() => {
     setRecipientChain(
       getInitialRecipientChain(
@@ -123,7 +128,7 @@ const SendForm = (props) => {
   ]);
 
   const sendFormProps = {
-    isValid,
+    isFormValid,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
       amount: toRawLsk(amount.value),
@@ -140,6 +145,7 @@ const SendForm = (props) => {
       token,
       recipient,
     },
+    extraCommandFee: initializationFees?.data?.userAccount || 0,
   };
 
   let commandParams = {

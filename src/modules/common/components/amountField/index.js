@@ -30,7 +30,7 @@ export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
 // eslint-disable-next-line complexity
 const AmountField = ({
   amount,
-  maxAmount,
+  maxAmount = {},
   onChange,
   className,
   label,

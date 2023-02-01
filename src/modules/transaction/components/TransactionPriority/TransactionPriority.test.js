@@ -1,4 +1,5 @@
 import React from 'react';
+import { waitFor } from '@testing-library/dom';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
@@ -15,12 +16,14 @@ describe('TransactionPriority', () => {
   const fee = 0.123;
 
   const props = {
-    t: str => str,
+    t: (str) => str,
     token: tokenMap.LSK.key,
-    priorityOptions: [{ title: 'Low', value: baseFees.Low },
+    priorityOptions: [
+      { title: 'Low', value: baseFees.Low },
       { title: 'Medium', value: baseFees.Medium },
       { title: 'High', value: baseFees.High },
-      { title: 'Custom', value: baseFees.Low }],
+      { title: 'Custom', value: baseFees.Low },
+    ],
     selectedPriority: 0,
     setSelectedPriority: jest.fn(),
     fee,
@@ -28,11 +31,19 @@ describe('TransactionPriority', () => {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     loadError: false,
     isloading: false,
-    composedFees: {
-      transaction: 0.1,
-      CCM: 1,
-      initiation: 1,
-    },
+    composedFees: [
+      {
+        title: 'Transaction',
+        value: '0 LSK',
+        components: [],
+      },
+      {
+        title: 'Message',
+        value: '0 LSK',
+        isHidden: true,
+        components: [],
+      },
+    ],
   };
   beforeEach(() => {
     props.setSelectedPriority.mockRestore();
@@ -62,27 +73,35 @@ describe('TransactionPriority', () => {
 
   it('when typed in custom fee input, the custom fee cb is called', () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
-    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { value: '0.20' } });
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { value: '0.20' } });
     expect(props.setCustomFee).toHaveBeenCalledTimes(1);
   });
 
-  it('hides the edit icon and shows the input when clicked in the "fee-value" element', () => {
+  it('hides the edit icon and shows the input when clicked in the "fee-value" element', async () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
     // simulate blur so that the edit icon is shown
     wrapper.find('.custom-fee-input').at(1).simulate('blur');
-    wrapper.find('span.fee-value-transaction').simulate('click');
-    expect(wrapper).not.toContainMatchingElement('Icon[name="edit"]');
-    expect(wrapper).toContainMatchingElement('.custom-fee-input');
+    wrapper.find('span.fee-value-Transaction').simulate('click');
+
+    await waitFor(() => {
+      expect(wrapper).not.toContainMatchingElement('Icon[name="edit"]');
+      expect(wrapper).toContainMatchingElement('.custom-fee-input');
+    });
   });
 
   it('should disable button when fees are 0', () => {
     wrapper.setProps({
       ...props,
       token: tokenMap.LSK.key,
-      priorityOptions: [{ title: 'Low', value: 0 },
+      priorityOptions: [
+        { title: 'Low', value: 0 },
         { title: 'Medium', value: 0 },
         { title: 'High', value: 0 },
-        { title: 'Custom', value: 0 }],
+        { title: 'Custom', value: 0 },
+      ],
     });
     expect(wrapper.find('.option-Medium')).toBeDisabled();
     expect(wrapper.find('.option-High')).toBeDisabled();
@@ -107,7 +126,10 @@ describe('TransactionPriority', () => {
 
   it('Should disable confirmation button when fee is higher than hard cap', async () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
-    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.5' } });
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { name: 'amount', value: '0.5' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: true,
       feedback: 'invalid custom fee',
@@ -122,7 +144,10 @@ describe('TransactionPriority', () => {
       selectedPriority: 3,
       minFee: 1000,
     });
-    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: true,
       feedback: 'invalid custom fee',
@@ -132,11 +157,19 @@ describe('TransactionPriority', () => {
 
   it('Should enable confirmation button when fee is within bounds', async () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
-    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.019' } });
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { name: 'amount', value: '0.019' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: false,
       feedback: '',
       value: '0.019',
     });
+  });
+
+  it('Should display the fee in loading state', async () => {
+    wrapper.setProps({ ...props, isLoading: true });
+    expect(wrapper.find('Spinner')).toBeTruthy();
   });
 });
