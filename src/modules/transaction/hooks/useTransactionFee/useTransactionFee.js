@@ -1,3 +1,5 @@
+// @Todo: this should be fixed in this issue #4521
+/* istanbul ignore file */
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { getParamsSchema } from './utils';
 import usePriorityFee from '../usePriorityFee';

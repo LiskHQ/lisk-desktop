@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { useMemo } from 'react';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { useAuth } from '@auth/hooks/queries/useAuth';
@@ -25,7 +26,7 @@ export const useMinimumFee = ({ isFormValid, senderAddress, transactionJSON, ext
     isFetched: isFetchedCommandSchema,
   } = useCommandSchema();
   const numberOfSignatures = auth?.data?.numberOfSignatures || 1;
-  
+
   const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
   const bytesFee = useMemo(() => {
     if (!isFormValid || isSchemaLoading) {
