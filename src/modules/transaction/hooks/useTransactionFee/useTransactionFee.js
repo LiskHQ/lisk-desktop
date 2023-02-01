@@ -1,7 +1,8 @@
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { getParamsSchema } from './utils';
 import usePriorityFee from '../usePriorityFee';
-import { useByteFee } from './useByteFee';
+import { FEE_TYPES } from '../../constants';
+import { useMinimumFee } from '.';
 
 /**
  *
@@ -27,29 +28,33 @@ export const useTransactionFee = ({
   const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
 
   const {
-    result: bytesFee,
+    result: minimumFee,
     isLoading: isLoadingByteFee,
     isFetched: isFetchedByteFee,
-  } = useByteFee({
+  } = useMinimumFee({
     senderAddress,
     isFormValid,
     transactionJSON,
+    extraCommandFee,
   });
 
-  const priorityFee = { value: 0 }; usePriorityFee({
+  const priorityFee = usePriorityFee({
     selectedPriority,
     transactionJSON,
     paramsSchema,
     isEnabled: !!paramsSchema && isFormValid,
   });
+  const bytesFee = {
+    value: BigInt(minimumFee.value) - BigInt(extraCommandFee),
+    type: FEE_TYPES.BYTES_FEE,
+  };
   const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
-  const minimumFee = BigInt(bytesFee.value) + BigInt(extraCommandFee);
 
   return {
+    minimumFee: Number(minimumFee.value),
     isLoading: isSchemaLoading || isLoadingByteFee,
     isFetched: isSchemaFetched && isFetchedByteFee,
-    minimumFee: minimumFee.toString(),
-    transactionFee: (minimumFee + BigInt(priorityFee.value)).toString(),
+    transactionFee: (BigInt(minimumFee.value) + BigInt(priorityFee.value)).toString(),
     components,
   };
 };

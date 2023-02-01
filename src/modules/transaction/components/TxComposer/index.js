@@ -52,7 +52,7 @@ const TxComposer = ({
     module,
     command,
     nonce: auth?.data?.nonce,
-    fee: formProps.extraCommandFee || 0,
+    fee: 0,
     senderPublicKey: pubkey,
     params: commandParams,
     signatures: [],
@@ -113,7 +113,7 @@ const TxComposer = ({
       <TransactionPriority
         token={token}
         fee={transactionFee}
-        minFee={+minimumFee}
+        minFee={minimumFee}
         customFee={customFee ? customFee.value : undefined}
         moduleCommand={formProps.moduleCommand}
         setCustomFee={setCustomFee}

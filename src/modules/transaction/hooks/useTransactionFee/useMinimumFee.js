@@ -13,7 +13,7 @@ import { FEE_TYPES } from '../../constants';
  * @param {object} data.transactionJSON Transaction object as Lisk Element expects without fee
  * @returns {object} The fee object with a result value, loading and fetched state as boolean
  */
-export const useByteFee = ({ isFormValid, senderAddress, transactionJSON }) => {
+export const useMinimumFee = ({ isFormValid, senderAddress, transactionJSON, extraCommandFee }) => {
   const {
     data: auth,
     isLoading,
@@ -35,7 +35,7 @@ export const useByteFee = ({ isFormValid, senderAddress, transactionJSON }) => {
         isFetched: false,
       };
     }
-    const fee = computeTransactionMinFee(transactionJSON, paramsSchema, numberOfSignatures);
+    const fee = computeTransactionMinFee(transactionJSON, paramsSchema, numberOfSignatures, extraCommandFee);
 
     return {
       result: { value: fee, type: FEE_TYPES.BYTES_FEE },

@@ -1,2 +1,2 @@
-export * from './useByteFee';
+export * from './useMinimumFee';
 export * from './useTransactionFee';
