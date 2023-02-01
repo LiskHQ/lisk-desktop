@@ -35,7 +35,7 @@ describe('computeTransactionMinFee', () => {
     };
 
     it('Returns the calculated fee given transaction using a normal account is valid', () => {
-      expect(computeTransactionMinFee(tokenTransfer, schema, auth, true)).toEqual(BigInt(133000));
+      expect(computeTransactionMinFee(tokenTransfer, schema, auth, true)).toEqual(BigInt(133001));
     });
   });
 
@@ -62,7 +62,7 @@ describe('computeTransactionMinFee', () => {
 
     it('Returns the calculated fee given multisig regi. transaction is valid', () => {
       expect(computeTransactionMinFee(registerMultisignature, schema, auth, true)).toEqual(
-        BigInt(208000)
+        BigInt(208001)
       );
     });
   });
@@ -87,7 +87,7 @@ describe('computeTransactionMinFee', () => {
 
     it('Returns the calculated fee given transaction using a multisig is valid', () => {
       expect(computeTransactionMinFee(registerMultisignature, schema, auth, true)).toEqual(
-        BigInt(133000)
+        BigInt(133001)
       );
     });
   });

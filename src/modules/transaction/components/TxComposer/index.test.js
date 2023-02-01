@@ -18,7 +18,7 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 jest.mock('@liskhq/lisk-client', () => ({
   ...jest.requireActual('@liskhq/lisk-client'),
   transactions: {
-    computeMinFee: jest.fn().mockReturnValue(1000000n),
+    computeMinFee: jest.fn().mockReturnValue(10000000000n),
     getBytes: jest.fn().mockReturnValue({ length: 50 }),
   },
 }));
@@ -97,6 +97,7 @@ describe('TxComposer', () => {
       ...props,
       commandParams: {},
       formProps: {
+        isFormValid: true,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
         fields: { token: { availableBalance: 100 } },
         extraCommandFee: 100000000000,

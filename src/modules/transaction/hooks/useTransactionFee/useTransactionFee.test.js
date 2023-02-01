@@ -76,7 +76,7 @@ describe('useTransactionFee', () => {
       components: [],
       isFetched: false,
       isLoading: false,
-      minimumFee: '0',
+      minimumFee: 0,
       transactionFee: '0',
     });
   });
