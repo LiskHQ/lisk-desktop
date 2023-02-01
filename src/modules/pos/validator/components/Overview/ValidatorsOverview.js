@@ -92,7 +92,7 @@ const Overview = ({ registrations, totalBlocks, t }) => {
         <div className={styles.column}>
           <div className={styles.centered}>
             <h2 className={styles.title}>
-              <span>{t('Forging totals')}</span>
+              <span>{t('Generating totals')}</span>
             </h2>
             <div className={styles.list}>
               <NumericInfo title="Total blocks" value={totalBlocks} icon="totalBlocks" />

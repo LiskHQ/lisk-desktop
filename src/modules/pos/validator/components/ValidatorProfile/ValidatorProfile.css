@@ -262,7 +262,7 @@
         bottom: -14px;
       }
 
-      &.forgedBlocks {
+      &.generatedBlocks {
         padding-right: 20px;
         min-width: 140px;
         bottom: -19px;
@@ -372,22 +372,6 @@
       & > img {
         width: 100%;
         margin-bottom: -45px;
-      }
-
-      &.delegateActive {
-        padding-right: 10px;
-      }
-
-      &.delegateStandby {
-        padding-right: 10px;
-      }
-
-      &.delegatePunished {
-        padding-right: 10px;
-      }
-
-      &.delegateBanned {
-        padding-right: 10px;
       }
     }
   }

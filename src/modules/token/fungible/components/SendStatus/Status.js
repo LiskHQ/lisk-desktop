@@ -86,7 +86,7 @@ const TransactionStatus = ({
               data={{
                 formAddress: transactionJSON.params.recipientAddress,
                 label: recipientAccount.data.pos?.validator?.username ?? '',
-                isDelegate: !!recipientAccount.data.summary?.isDelegate,
+                isValidator: !!recipientAccount.data.summary?.isValidator,
               }}
             >
               <PrimaryButton className={`${styles.btn} bookmark-btn`}>

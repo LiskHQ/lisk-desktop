@@ -4,7 +4,7 @@ import { createContext } from 'react';
 const ValidatorRowContext = createContext({
   data: {
     value: '',
-    state: 'forging',
+    state: 'generating',
     status: 'active',
     time: '',
     totalStakeReceived: 0,

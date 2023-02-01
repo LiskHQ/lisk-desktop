@@ -9,7 +9,7 @@ const actionTypes = {
   addedToWatchList: 'ADDED_TO_WATCHLIST',
   removedFromWatchList: 'REMOVED_FROM_WATCHLIST',
   validatorRegistered: 'VALIDATOR_REGISTERED',
-  stakeDiscarded: 'VOTE_DISCARDED',
+  stakeDiscarded: 'STAKE_DISCARDED',
 };
 
 export default actionTypes;

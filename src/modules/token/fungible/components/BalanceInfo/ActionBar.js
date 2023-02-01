@@ -25,11 +25,11 @@ const ActionBar = ({
 }) => {
   const hostBalance = useSelector(selectAccountBalance) // @todo account has multiple balance now;
   const disableButtons = hostBalance === 0;
-  const vote = useSelector((state) => state.staking[address]);
+  const stake = useSelector((state) => state.staking[address]);
   const lskAddress = useSelector(selectLSKAddress);
   const initialValue = isWalletRoute ? {} : { recipient: address };
 
-  const stakeButtonTitle = vote ? t('Edit stake') : t('Add to stakes');
+  const stakeButtonTitle = stake ? t('Edit stake') : t('Add to stakes');
 
   const sendTitle = isWalletRoute
     ? t('Send {{token}}', { token: activeToken })
@@ -50,7 +50,7 @@ const ActionBar = ({
                 size="maxContent"
                 content={(
                   <SecondaryButton
-                    className={`${styles.voteButton} ${
+                    className={`${styles.stakeButton} ${
                       isBanned && styles.disabled
                     } ${!isBanned && 'open-add-stake-dialog'}`}
                     size="m"

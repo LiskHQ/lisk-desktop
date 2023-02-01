@@ -120,7 +120,7 @@ const defaultState = {
       },
     },
   },
-  delegate: {},
+  validator: {},
   settings,
   token: { active: 'LSK', list: { LSK: true } },
 };

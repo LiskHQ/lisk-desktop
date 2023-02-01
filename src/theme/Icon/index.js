@@ -85,7 +85,7 @@ import transactionSuccess from '@setup/react/assets/images/icons/transaction-suc
 import txDefault from '@setup/react/assets/images/icons/tx-default.svg';
 import txDefaultDark from '@setup/react/assets/images/icons/tx-default-dark.svg';
 import registerValidator from '@setup/react/assets/images/icons/tx-registerValidator.svg';
-import registerValidatorDark from '@setup/react/assets/images/icons/tx-delegate-dark.svg';
+import registerValidatorDark from '@setup/react/assets/images/icons/tx-validator-dark.svg';
 import stake from '@setup/react/assets/images/icons/tx-stake.svg';
 import user from '@setup/react/assets/images/icons/user.svg';
 import userActive from '@setup/react/assets/images/icons/user-active.svg';
@@ -121,8 +121,8 @@ import transactions from '@setup/react/assets/images/icons/transactions.svg';
 import transactionsDark from '@setup/react/assets/images/icons/transactions-dark.svg';
 import transactionsMonitor from '@setup/react/assets/images/icons/transactionsMonitor.svg';
 import transactionsMonitorActive from '@setup/react/assets/images/icons/transactionsMonitorActive.svg';
-import validatorsMonitor from '@setup/react/assets/images/icons/delegatesMonitor.svg';
-import validatorsMonitorActive from '@setup/react/assets/images/icons/delegatesMonitorActive.svg';
+import validatorsMonitor from '@setup/react/assets/images/icons/validatorsMonitor.svg';
+import validatorsMonitorActive from '@setup/react/assets/images/icons/validatorsMonitorActive.svg';
 import networkMonitor from '@setup/react/assets/images/icons/networkMonitor.svg';
 import networkMonitorActive from '@setup/react/assets/images/icons/networkMonitorActive.svg';
 import staking from '@setup/react/assets/images/icons/staking.svg';
@@ -135,8 +135,8 @@ import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
 import removeRed from '@setup/react/assets/images/icons/remove-red.svg';
 import totalBlocks from '@setup/react/assets/images/icons/total-blocks.svg';
 import totalBlocksDark from '@setup/react/assets/images/icons/total-blocks-dark.svg';
-import blocksForged from '@setup/react/assets/images/icons/blocks-forged.svg';
-import blocksForgedDark from '@setup/react/assets/images/icons/blocks-forged-dark.svg';
+import blocksGenerated from '@setup/react/assets/images/icons/blocks-generated.svg';
+import blocksGeneratedDark from '@setup/react/assets/images/icons/blocks-generated-dark.svg';
 import distribution from '@setup/react/assets/images/icons/distribution.svg';
 import clock from '@setup/react/assets/images/icons/clock.svg';
 import clockDark from '@setup/react/assets/images/icons/clock-dark.svg';
@@ -148,14 +148,14 @@ import calendar from '@setup/react/assets/images/icons/calendar.svg';
 import calendarDark from '@setup/react/assets/images/icons/calendar-dark.svg';
 import weight from '@setup/react/assets/images/icons/weight.svg';
 import weightDark from '@setup/react/assets/images/icons/weight-dark.svg';
-import reward from '@setup/react/assets/images/icons/forged-lsk.svg';
-import rewardDark from '@setup/react/assets/images/icons/forged-lsk-dark.svg';
+import reward from '@setup/react/assets/images/icons/generated-lsk.svg';
+import rewardDark from '@setup/react/assets/images/icons/generated-lsk-dark.svg';
 import productivity from '@setup/react/assets/images/icons/productivity.svg';
 import productivityDark from '@setup/react/assets/images/icons/productivity-dark.svg';
 import missedBlocks from '@setup/react/assets/images/icons/missed-blocks.svg';
 import missedBlocksDark from '@setup/react/assets/images/icons/missed-blocks-dark.svg';
-import forgedBlocks from '@setup/react/assets/images/icons/forged-blocks.svg';
-import forgedBlocksDark from '@setup/react/assets/images/icons/forged-blocks-dark.svg';
+import generatedBlocks from '@setup/react/assets/images/icons/generated-blocks.svg';
+import generatedBlocksDark from '@setup/react/assets/images/icons/generated-blocks-dark.svg';
 import consecutiveMissedBlocks from '@setup/react/assets/images/icons/consecutive-missed-blocks.svg';
 import consecutiveMissedBlocksDark from '@setup/react/assets/images/icons/consecutive-missed-blocks-dark.svg';
 import lock from '@setup/react/assets/images/icons/lock.svg';
@@ -179,23 +179,23 @@ import multiSignatureOutline from '@setup/react/assets/images/icons/multisignatu
 import multisigKeys from '@setup/react/assets/images/icons/keys-filled.svg';
 import multisigKeysDark from '@setup/react/assets/images/icons/keys-filled-dark.svg';
 import upload from '@setup/react/assets/images/icons/upload.svg';
-import validatorForged from '@setup/react/assets/images/icons/delegate-forged.svg';
-import validatorForgedDark from '@setup/react/assets/images/icons/delegate-forged-dark.svg';
-import validatorMissed from '@setup/react/assets/images/icons/delegate-missed.svg';
-import validatorMissedDark from '@setup/react/assets/images/icons/delegate-missed-dark.svg';
-import validatorWarning from '@setup/react/assets/images/icons/delegate-warning.svg';
-import validatorAwaiting from '@setup/react/assets/images/icons/delegate-awaiting.svg';
-import validatorAwaitingDark from '@setup/react/assets/images/icons/delegate-awaiting-dark.svg';
-import validatorActive from '@setup/react/assets/images/icons/delegate-active.svg';
-import validatorActiveDark from '@setup/react/assets/images/icons/delegate-active-dark.svg';
-import validatorStandby from '@setup/react/assets/images/icons/delegate-standby.svg';
-import validatorStandbyDark from '@setup/react/assets/images/icons/delegate-standby-dark.svg';
-import validatorIneligible from '@setup/react/assets/images/icons/delegate-ineligible.svg';
-import validatorIneligibleDark from '@setup/react/assets/images/icons/delegate-ineligible-dark.svg';
-import validatorPunished from '@setup/react/assets/images/icons/delegate-punished.svg';
-import validatorPunishedDark from '@setup/react/assets/images/icons/delegate-punished-dark.svg';
-import validatorBanned from '@setup/react/assets/images/icons/delegate-banned.svg';
-import validatorBannedDark from '@setup/react/assets/images/icons/delegate-banned-dark.svg';
+import validatorGenerated from '@setup/react/assets/images/icons/validator-generated.svg';
+import validatorGeneratedDark from '@setup/react/assets/images/icons/validator-generated-dark.svg';
+import validatorMissed from '@setup/react/assets/images/icons/validator-missed.svg';
+import validatorMissedDark from '@setup/react/assets/images/icons/validator-missed-dark.svg';
+import validatorWarning from '@setup/react/assets/images/icons/validator-warning.svg';
+import validatorAwaiting from '@setup/react/assets/images/icons/validator-awaiting.svg';
+import validatorAwaitingDark from '@setup/react/assets/images/icons/validator-awaiting-dark.svg';
+import validatorActive from '@setup/react/assets/images/icons/validator-active.svg';
+import validatorActiveDark from '@setup/react/assets/images/icons/validator-active-dark.svg';
+import validatorStandby from '@setup/react/assets/images/icons/validator-standby.svg';
+import validatorStandbyDark from '@setup/react/assets/images/icons/validator-standby-dark.svg';
+import validatorIneligible from '@setup/react/assets/images/icons/validator-ineligible.svg';
+import validatorIneligibleDark from '@setup/react/assets/images/icons/validator-ineligible-dark.svg';
+import validatorPunished from '@setup/react/assets/images/icons/validator-punished.svg';
+import validatorPunishedDark from '@setup/react/assets/images/icons/validator-punished-dark.svg';
+import validatorBanned from '@setup/react/assets/images/icons/validator-banned.svg';
+import validatorBannedDark from '@setup/react/assets/images/icons/validator-banned-dark.svg';
 import eyeInactive from '@setup/react/assets/images/icons/eye-inactive.svg';
 import eyeActive from '@setup/react/assets/images/icons/eye-active.svg';
 import liskIcon from '@setup/react/assets/images/icons/lisk-icon.svg';
@@ -270,8 +270,8 @@ export const icons = {
   feedback,
   feedbackActive,
   fileOutline,
-  forgedBlocks,
-  forgedBlocksDark,
+  generatedBlocks,
+  generatedBlocksDark,
   reward,
   rewardDark,
   help,
@@ -379,8 +379,8 @@ export const icons = {
   remove,
   totalBlocks,
   totalBlocksDark,
-  blocksForged,
-  blocksForgedDark,
+  blocksGenerated,
+  blocksGeneratedDark,
   distribution,
   clock,
   clockDark,
@@ -401,8 +401,8 @@ export const icons = {
   download,
   downloadBlue,
   upload,
-  validatorForged,
-  validatorForgedDark,
+  validatorGenerated,
+  validatorGeneratedDark,
   validatorMissed,
   validatorMissedDark,
   validatorWarning,

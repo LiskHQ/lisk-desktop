@@ -4,7 +4,7 @@ const actionTypes = {
   getTransactions: 'GET_TRANSACTIONS',
   getTransactionsSuccess: 'GET_TRANSACTIONS_SUCCESS',
   getTransactionSuccess: 'GET_TRANSACTION_SUCCESS',
-  transactionAddDelegateName: 'TRANSACTION_ADD_DELEGATE_NAME',
+  transactionAddValidatorName: 'TRANSACTION_ADD_VALIDATOR_NAME',
   transactionCleared: 'TRANSACTION_CLEARED',
   transactionLoadFailed: 'TRANSACTION_LOAD_FAILED',
   transactionLoadRequested: 'TRANSACTION_LOAD_REQUESTED',

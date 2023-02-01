@@ -17,7 +17,7 @@ const TransactionRow = ({
   layout,
   avatarSize,
   activeToken,
-  delegates,
+  validators,
   address,
   isWallet,
 }) => {
@@ -35,7 +35,7 @@ const TransactionRow = ({
           host,
           activeToken,
           avatarSize,
-          delegates,
+          validators,
           address,
         }}
       >

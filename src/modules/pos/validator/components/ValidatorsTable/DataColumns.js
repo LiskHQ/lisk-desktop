@@ -16,20 +16,20 @@ import {
   getStatusClass,
   getValidatorWeightClass,
   getRoundStateClass,
-  getForgingTimeClass,
+  getGeneratingTimeClass,
   getValidatorRankClass,
 } from './TableHeader';
 import ValidatorSummary from '../ValidatorSummary/ValidatorSummary';
 import { extractValidatorCommission } from '../../utils';
 
 const roundStates = {
-  forging: 'Forging',
+  generating: 'Generating',
   awaitingSlot: 'Awaiting slot',
   missedBlock: 'Missed slot',
 };
 
 const icons = {
-  forging: 'validatorForged',
+  generating: 'validatorGenerated',
   awaitingSlot: 'validatorAwaiting',
   missedBlock: 'validatorMissed',
 };
@@ -42,11 +42,11 @@ const validatorStatus = {
   ineligible: 'Ineligible',
 };
 
-const getValidatorStatus = (key, grossVotesReceived) => {
+const getValidatorStatus = (key, grossStakesReceived) => {
   if (key === 'banned' || key === 'punished' || key === 'active') {
     return [key, validatorStatus[key]];
   }
-  if (grossVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
+  if (grossStakesReceived < DEFAULT_STANDBY_THRESHOLD) {
     return ['ineligible', validatorStatus.ineligible];
   }
 
@@ -109,7 +109,7 @@ export const ValidatorDetails = () => {
     activeTab === 'sanctioned' ||
     activeTab === 'watched';
   const [key, val] = getValidatorStatus(status, totalStakeReceived);
-  const formattedVoteWeight = formatAmountBasedOnLocale({
+  const formattedStakeWeight = formatAmountBasedOnLocale({
     value: fromRawLsk(validatorWeight),
     format: '0a',
   });
@@ -151,7 +151,7 @@ export const ValidatorDetails = () => {
           >
             <ValidatorSummary
               validator={data}
-              weight={formattedVoteWeight}
+              weight={formattedStakeWeight}
               status={{
                 value: val,
                 className: `${styles.validatorStatus} ${styles[key]} ${styles[theme]}`,
@@ -205,7 +205,7 @@ export const RoundState = () => {
         <Tooltip
           position="left"
           size="maxContent"
-          content={<Icon className={styles.statusIcon} name="delegateWarning" />}
+          content={<Icon className={styles.statusIcon} name="validatorWarning" />}
           footer={<p>{time}</p>}
         >
           <p>{t('This validator will be punished in upcoming rounds')}</p>
@@ -230,13 +230,13 @@ export const ValidatorStatus = () => {
   );
 };
 
-export const ForgingTime = () => {
+export const GeneratingTime = () => {
   const {
     activeTab,
     data: { state },
     time,
   } = useContext(ValidatorRowContext);
   return (
-    <span className={getForgingTimeClass(activeTab)}>{state === 'missedBlock' ? '-' : time}</span>
+    <span className={getGeneratingTimeClass(activeTab)}>{state === 'missedBlock' ? '-' : time}</span>
   );
 };

@@ -71,7 +71,7 @@ describe('Unlock LSK modal', () => {
     nextStep,
   };
 
-  const initVotes = [
+  const initStakes = [
     { amount: '500000000000', validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
     { amount: '3000000000', validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
     { amount: '2000000000', validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
@@ -105,7 +105,7 @@ describe('Unlock LSK modal', () => {
           ...wallets.genesis,
           pos: {
             pendingUnlocks: initUnlocking,
-            sentVotes: initVotes,
+            sentStakes: initStakes,
           },
           sequence: { nonce: '0' },
         },
@@ -265,7 +265,7 @@ describe('Unlock LSK modal', () => {
             token: wallets.genesis.token,
             pos: {
               pendingUnlocks: [],
-              sentVotes: [],
+              sentStakes: [],
             },
           },
         },

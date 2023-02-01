@@ -70,7 +70,7 @@ export const mockCommandParametersSchemas = {
             dataType: 'bytes',
             fieldNumber: 9,
           },
-          maxHeightPrevoted: {
+          maxHeightPrestaked: {
             dataType: 'uint32',
             fieldNumber: 10,
           },
@@ -78,7 +78,7 @@ export const mockCommandParametersSchemas = {
             dataType: 'uint32',
             fieldNumber: 11,
           },
-          impliesMaxPrevotes: {
+          impliesMaxPrestakes: {
             dataType: 'boolean',
             fieldNumber: 12,
           },
@@ -120,9 +120,9 @@ export const mockCommandParametersSchemas = {
           'assetRoot',
           'eventRoot',
           'stateRoot',
-          'maxHeightPrevoted',
+          'maxHeightPrestaked',
           'maxHeightGenerated',
-          'impliesMaxPrevotes',
+          'impliesMaxPrestakes',
           'validatorsHash',
           'aggregateCommit',
           'signature',

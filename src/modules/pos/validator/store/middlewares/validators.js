@@ -10,7 +10,7 @@ const validatorsMiddleware =
       case actionTypes.addedToWatchList:
       case actionTypes.removedFromWatchList:
         next(action);
-        setInStorage('delegateWatchList', getState().watchList);
+        setInStorage('validatorWatchList', getState().watchList);
         break;
 
       case actionTypes.stakesSubmitted:

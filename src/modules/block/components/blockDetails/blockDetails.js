@@ -96,7 +96,7 @@ const getFields = (data = {}, token, t, currentHeight) => ({
     label: t('Net fee'),
     value: <TokenAmount val={data.totalFee} token={token} />,
   },
-  totalForged: {
+  totalGenerated: {
     label: t('Status'),
     value: <Icon name="checkmark" />,
   },

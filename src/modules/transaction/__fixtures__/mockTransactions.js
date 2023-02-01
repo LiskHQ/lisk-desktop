@@ -14,7 +14,7 @@ const transaction = (index) => ({
     amount: '150000000',
     recipientAddress: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     data: 'message',
-    votes:
+    stakes:
       index >= 15
         ? [
             {

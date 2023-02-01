@@ -61,15 +61,15 @@
   }
 }
 
-.votesColumnTitle {
+.stakesColumnTitle {
   justify-content: flex-start !important;
 }
 
-.votesColumn {
+.stakesColumn {
   display: inline-block;
 
-  & .vote,
-  & .unVote {
+  & .stake,
+  & .unStake {
     display: inline-block;
     width: 100%;
     text-align: left;
@@ -82,7 +82,7 @@
     width: 20px;
   }
 
-  & .vote {
+  & .stake {
     & .icon {
       color: var(--color-deep-green);
     }
@@ -272,7 +272,7 @@ header {
   }
 }
 
-.loadMoreVotesBtn {
+.loadMoreStakesBtn {
   @mixin contentLarge semi-bold;
 
   background-color: transparent;

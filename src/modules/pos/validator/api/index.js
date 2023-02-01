@@ -6,15 +6,15 @@ import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 export const httpPaths = {
   validators: `${HTTP_PREFIX}/accounts`,
-  stakesSent: `${HTTP_PREFIX}/pos/stakes`,
-  votesReceived: `${HTTP_PREFIX}/dpos/votes/received`,
-  forgers: `${HTTP_PREFIX}/generators`,
+  stakes: `${HTTP_PREFIX}/pos/stakes`,
+  stakers: `${HTTP_PREFIX}/pos/stakers`,
+  generators: `${HTTP_PREFIX}/generators`,
 };
 
 export const wsMethods = {
   validators: 'get.accounts',
-  forgers: 'get.delegates.next_forgers',
-  forgersRound: 'update.round',
+  generators: 'get.validators.next_generators',
+  generatorsRound: 'update.round',
 };
 
 const getValidatorProps = ({ address, publicKey, username }) => {
@@ -40,7 +40,7 @@ const getValidatorProps = ({ address, publicKey, username }) => {
 export const getValidator = ({ params = {}, network, baseUrl }) =>
   client.rest({
     url: httpPaths.validators,
-    params: { ...getValidatorProps(params), isDelegate: true },
+    params: { ...getValidatorProps(params), isValidator: true },
     network,
     baseUrl,
   });
@@ -72,7 +72,7 @@ const getRequests = (values) => {
       .filter((item) => regex[paramList.name].test(item))
       .map((item) => ({
         method: wsMethods.validators,
-        params: { [paramList.name]: item, isDelegate: true },
+        params: { [paramList.name]: item, isValidator: true },
       }));
   }
   return false;
@@ -109,7 +109,7 @@ export const getValidators = ({ network, params = {}, baseUrl }) => {
   }
 
   // Use HTTP to retrieve accounts with given sorting and pagination parameters
-  const normParams = { isDelegate: true };
+  const normParams = { isValidator: true };
   Object.keys(params).forEach((key) => {
     if (txFilters[key].test(params[key])) {
       normParams[txFilters[key].key] = params[key];
@@ -138,7 +138,7 @@ export const getValidators = ({ network, params = {}, baseUrl }) => {
  */
 export const getStakes = ({ params = {} }) =>
   client.rest({
-    url: httpPaths.stakesSent,
+    url: httpPaths.stakes,
     params: getValidatorProps({ address: params.address, publicKey: params.publicKey }),
   });
 
@@ -161,7 +161,7 @@ export const getValidatorList = ({ params = {} }) =>
   });
 
 /**
- * Retrieves list of votes given for a given validator.
+ * Retrieves list of stakers given for a given validator.
  *
  * @param {Object} data
  * @param {String?} data.params.address - Validator address
@@ -174,7 +174,7 @@ export const getValidatorList = ({ params = {} }) =>
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getVoters = ({ network, params = {}, baseUrl }) => {
+export const getStakers = ({ network, params = {}, baseUrl }) => {
   const pagination = {};
   Object.keys(params).forEach((key) => {
     if (txFilters[key] && txFilters[key].test(params[key])) {
@@ -187,7 +187,7 @@ export const getVoters = ({ network, params = {}, baseUrl }) => {
   });
 
   return client.rest({
-    url: httpPaths.votesReceived,
+    url: httpPaths.stakers,
     params: {
       ...account,
       ...pagination,
@@ -208,9 +208,9 @@ export const getVoters = ({ network, params = {}, baseUrl }) => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getForgers = ({ network, params = {}, baseUrl }) =>
+export const getGenerators = ({ network, params = {}, baseUrl }) =>
   client.rest({
-    url: httpPaths.forgers,
+    url: httpPaths.generators,
     params,
     network,
     baseUrl,
@@ -224,10 +224,10 @@ export const getForgers = ({ network, params = {}, baseUrl }) =>
  * @param {Function} onDisconnect - Function to be called when disconnect event fires
  * @param {Function} onReconnect - Function to be called when reconnect event fires
  */
-export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) => {
+export const generatorsSubscribe = (network, callback, onDisconnect, onReconnect) => {
   const node = network?.networks?.LSK?.serviceUrl;
   if (node) {
-    subscribe(`${node}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect);
+    subscribe(`${node}/blockchain`, wsMethods.generatorsRound, callback, onDisconnect, onReconnect);
   }
 };
 
@@ -236,6 +236,6 @@ export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) =
  *
  * @param {Object} network - Redux network state
  */
-export const forgersUnsubscribe = () => {
-  unsubscribe(wsMethods.forgersRound);
+export const generatorsUnsubscribe = () => {
+  unsubscribe(wsMethods.generatorsRound);
 };

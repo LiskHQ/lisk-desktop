@@ -24,13 +24,13 @@ describe('SearchBarWallets', () => {
     expect(wrapper).not.toContainMatchingElement('.account-row');
   });
 
-  it('should render properly delegate accounts', () => {
+  it('should render properly validator accounts', () => {
     const newProps = { ...props };
     newProps.wallets = [
       {
         address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
         balance: '120',
-        isDelegate: true,
+        isValidator: true,
         name: 'genesis_51',
         rank: 34,
       },

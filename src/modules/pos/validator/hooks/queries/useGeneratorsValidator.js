@@ -16,7 +16,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useForgersValidator = ({ config: customConfig = {}, options } = { }) => {
+export const useGeneratorsValidator = ({ config: customConfig = {}, options } = { }) => {
   const config = {
     url: `/api/${API_VERSION}/validator`,
     method: 'get',

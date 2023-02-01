@@ -25,7 +25,7 @@ describe('Add a new bookmark component', () => {
     history: {
       push: jest.fn(),
       location: {
-        search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isDelegate=false`,
+        search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isValidator=false`,
       },
     },
     account: {
@@ -98,7 +98,7 @@ describe('Add a new bookmark component', () => {
         history: {
           push: jest.fn(),
           location: {
-            search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isDelegate=true`,
+            search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isValidator=true`,
           },
         },
       });

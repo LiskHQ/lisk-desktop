@@ -10,7 +10,7 @@ describe('actions: watchList', () => {
     jest.restoreAllMocks();
   });
 
-  it('should create an action to add a delegate to the watchlist', () => {
+  it('should create an action to add a validator to the watchlist', () => {
     const expectedAction = {
       data,
       type: actionTypes.addedToWatchList,
@@ -18,7 +18,7 @@ describe('actions: watchList', () => {
     expect(addedToWatchList(data)).toEqual(expectedAction);
   });
 
-  it('should create an action to remove a delegate from the watchlist', () => {
+  it('should create an action to remove a validator from the watchlist', () => {
     const expectedAction = {
       data,
       type: actionTypes.removedFromWatchList,

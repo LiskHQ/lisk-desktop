@@ -74,7 +74,7 @@
     "transactionAsset transactionAsset";
 }
 
-.registerDelegate {
+.registerValidator {
   grid-template-areas:
     "illustration illustration"
     "sender sender"
@@ -109,7 +109,7 @@
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
-.registerDelegatePreview {
+.registerValidatorPreview {
   grid-template-areas:
     "illustration illustration"
     "sender sender"
@@ -153,7 +153,7 @@
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
-.reportDelegateMisbehavior {
+.reportValidatorMisbehavior {
   grid-template-areas:
     "illustration illustration"
     "sender sender"

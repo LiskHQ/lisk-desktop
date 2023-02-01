@@ -3,14 +3,14 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import fakeStore from '@tests/unit-test-utils/fakeStore';
-import delegatesList from '@tests/constants/validators';
+import validators from '@tests/constants/validators';
 import accounts from '@tests/constants/wallets';
 import Validators from './Validators';
 
-const activeDelegates = delegatesList.map((item) => ({ ...item }));
-activeDelegates.push({
+const activeValidators = validators.map((item) => ({ ...item }));
+activeValidators.push({
   username: 'additional',
-  vote: '0',
+  stake: '0',
   earnedRewards: '0',
   producedBlocks: 28,
   missedBlocks: 0,
@@ -19,7 +19,7 @@ activeDelegates.push({
   rank: 999,
   address: '14018336151296112016L',
   account: accounts.genesis,
-  delegateWeight: 0,
+  validatorWeight: 0,
 });
 
 describe('Validators monitor page', () => {
@@ -46,14 +46,14 @@ describe('Validators monitor page', () => {
   };
 
   function initSanctionedProps() {
-    props.sanctionedDelegates = {
+    props.sanctionedValidators = {
       isLoading: false,
       data: [
         {
           address: 'lsktaa9xuys6hztyaryvx6msu279mpkn9sz6w5or2',
           consecutiveMissedBlocks: 220,
           isBanned: true,
-          lastForgedHeight: 16695471,
+          lastGeneratedHeight: 16695471,
           producedBlocks: 1404,
           rank: 1563,
           registrationHeight: 16331164,
@@ -67,7 +67,7 @@ describe('Validators monitor page', () => {
           address: 'lsksaca4v9r3uotdzdhje3smwa49rvj2h2sn5yskt',
           consecutiveMissedBlocks: 0,
           isBanned: false,
-          lastForgedHeight: 16784595,
+          lastGeneratedHeight: 16784595,
           producedBlocks: 4929,
           rank: 1503,
           registrationHeight: 16270293,
@@ -81,7 +81,7 @@ describe('Validators monitor page', () => {
           address: 'lskr39gqjxhepd9o5txgmups9zjhjaadfjgm5dc87',
           consecutiveMissedBlocks: 229,
           isBanned: true,
-          lastForgedHeight: 16739690,
+          lastGeneratedHeight: 16739690,
           producedBlocks: 2014,
           rank: 1436,
           registrationHeight: 16270293,
@@ -104,7 +104,7 @@ describe('Validators monitor page', () => {
     props = {
       t: (key) => key,
       blocks,
-      standByDelegates: {
+      standByValidators: {
         isLoading: true,
         data: [],
         meta: { total: 100, count: 10, offset: 0 },
@@ -112,7 +112,7 @@ describe('Validators monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      sanctionedDelegates: {
+      sanctionedValidators: {
         isLoading: true,
         data: [],
 
@@ -120,7 +120,7 @@ describe('Validators monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      watchedDelegates: {
+      watchedValidators: {
         isLoading: true,
         data: [],
         loadData: jest.fn(),
@@ -128,7 +128,7 @@ describe('Validators monitor page', () => {
         urlSearchParams: {},
       },
       watchList: [],
-      delegatesCount: {
+      validatorsCount: {
         isLoading: false,
         data: '589',
         loadData: jest.fn(),
@@ -154,14 +154,14 @@ describe('Validators monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      votes: {
+      stakes: {
         isLoading: false,
         data: [
           {
             params: {
-              votes: [
+              stakes: [
                 {
-                  delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+                  validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
                   amount: '100000000',
                 },
               ],
@@ -182,7 +182,7 @@ describe('Validators monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      votedDelegates: {
+      stakedValidators: {
         isLoading: false,
         data: [{ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', username: 'test_del' }],
         loadData: jest.fn(),
@@ -203,7 +203,7 @@ describe('Validators monitor page', () => {
 
   it.skip('renders a page with header', () => {
     wrapper = setup(props);
-    expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Inside round');
+    expect(wrapper.find('BoxHeader.validators-table')).toIncludeText('Inside round');
   });
 
   it.skip('allows to switch to standby validators', () => {
@@ -212,9 +212,9 @@ describe('Validators monitor page', () => {
     expect(wrapper.find('.tab.standby')).toHaveClassName('active');
   });
 
-  it.skip('renders the forging status', () => {
+  it.skip('renders the generating status', () => {
     wrapper = setup(props);
-    expect(wrapper.find('a.validator-row')).toHaveLength(blocks.forgers.length);
+    expect(wrapper.find('a.validator-row')).toHaveLength(blocks.generators.length);
   });
 
   it.skip('properly sorts validators by their status', () => {
@@ -246,7 +246,7 @@ describe('Validators monitor page', () => {
     wrapper = setup(props);
     const updatedProps = { ...props, watchList: ['lsktaa9xuys6hztyaryvx6msu279mpkn9sz6w5or2'] };
     wrapper = setup(updatedProps);
-    expect(props.watchedDelegates.loadData).toHaveBeenCalledTimes(1);
+    expect(props.watchedValidators.loadData).toHaveBeenCalledTimes(1);
   });
 
   it.skip('does not display watched tab if watchlist is empty', () => {
@@ -254,9 +254,9 @@ describe('Validators monitor page', () => {
     expect(wrapper.find('.tab.watched')).not.toExist();
   });
 
-  it.skip('displays latest votes component if active tab is votes', () => {
+  it.skip('displays latest stakes component if active tab is stakes', () => {
     wrapper = mountWithRouter(Validators, props);
-    wrapper.find('.tab.votes').simulate('click');
+    wrapper.find('.tab.stakes').simulate('click');
     expect(wrapper.find('.transaction-row-wrapper')).toExist();
   });
 
@@ -275,7 +275,7 @@ describe('Validators monitor page', () => {
       .find('.filter-by-name')
       .last()
       .simulate('change', { target: { value: 'lisk' } });
-    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'sanctionedDelegates');
+    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'sanctionedValidators');
 
     wrapper = setup(updatedProps);
     switchTab('watched');
@@ -285,7 +285,7 @@ describe('Validators monitor page', () => {
       .simulate('change', { target: { value: 'li' } });
     expect(props.applyFilters).toHaveBeenCalledWith(
       { ...expectedArgs, search: 'li' },
-      'watchedDelegates'
+      'watchedValidators'
     );
 
     switchTab('standby');
@@ -293,6 +293,6 @@ describe('Validators monitor page', () => {
       .find('.filter-by-name')
       .last()
       .simulate('change', { target: { value: 'lisk' } });
-    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'standByDelegates');
+    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'standByValidators');
   });
 });

@@ -13,7 +13,7 @@ import styles from './ValidatorSummary.css';
 import { extractValidatorCommission } from '../../utils';
 
 const ValidatorSummary = ({ validator, status, weight }) => {
-  const { address, name, rank, commission, nextForgingTime } = validator;
+  const { address, name, rank, commission, nextGeneratingTime } = validator;
   const { t } = useTranslation();
 
   return (
@@ -58,7 +58,7 @@ const ValidatorSummary = ({ validator, status, weight }) => {
           <div>
             <span>{t('Last generated :')}</span>
             <span>
-              <DateTimeFromTimestamp time={nextForgingTime} />
+              <DateTimeFromTimestamp time={nextGeneratingTime} />
             </span>
           </div>
         </div>

@@ -35,7 +35,7 @@ const StakeSummary = ({
   removed = {},
   edited = {},
   added = {},
-  selfUnvote = {},
+  selfUnstake = {},
   prevStep,
   nextStep,
   formProps,
@@ -53,7 +53,7 @@ const StakeSummary = ({
       statusInfo: {
         locked,
         unlockable,
-        selfUnvote,
+        selfUnstake,
       },
     });
   };

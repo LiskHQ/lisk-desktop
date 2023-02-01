@@ -5,7 +5,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { usePosConstants } from '@pos/validator/hooks/queries/usePosConstants';
 
 /**
- * Creates a custom hook for votes unlocks queries
+ * Creates a custom hook for stakes unlocks queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {object} configuration.config - the query config

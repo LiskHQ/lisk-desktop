@@ -6,16 +6,16 @@ import routes from 'src/routes/routes';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './Overview.css';
 
-const Forger = ({ forger }) => (
-  <div className={`${styles.forger} forger-item`}>
-    <Link to={`${routes.explorer.path}?address=${forger.address}`}>
+const Generator = ({ generator }) => (
+  <div className={`${styles.generator} generator-item`}>
+    <Link to={`${routes.explorer.path}?address=${generator.address}`}>
       <WalletVisual
-        address={forger.address}
+        address={generator.address}
         className={styles.walletVisual}
       />
-      <span>{forger.name}</span>
+      <span>{generator.name}</span>
     </Link>
   </div>
 );
 
-export default Forger;
+export default Generator;

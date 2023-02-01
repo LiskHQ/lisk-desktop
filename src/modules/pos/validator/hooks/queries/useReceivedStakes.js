@@ -4,7 +4,7 @@ import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
- * Creates a custom hook for votes received queries
+ * Creates a custom hook for stakes received queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {object} configuration.config - the query config

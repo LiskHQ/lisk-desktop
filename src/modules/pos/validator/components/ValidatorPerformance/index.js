@@ -8,7 +8,7 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import ValidatorPerformance from './ValidatorPerformance';
 
 const apis = {
-  delegate: {
+  validator: {
     apiUtil: (network, { address }) => getValidator({ network, params: { address } }),
     getApiParams: (state, ownProps) => ({
       address: parseSearchParams(ownProps.location.search).address,

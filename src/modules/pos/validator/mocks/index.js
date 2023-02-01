@@ -5,7 +5,7 @@ import {
   mockSentStakes,
   mockReceivedStakes,
   mockUnlocks,
-  mockForgers,
+  mockGenerators,
   mockGenerator,
 } from '@pos/validator/__fixtures__';
 import composeMockList from 'src/modules/common/utils/composeMockList';
@@ -73,7 +73,7 @@ export const unlocks = rest.get(`*/api/${API_VERSION}/pos/unlocks`, async (req, 
 });
 
 export const validator = rest.get(`*/api/${API_VERSION}/validator`, async (req, res, ctx) =>
-  res(ctx.delay(20), ctx.json(mockForgers))
+  res(ctx.delay(20), ctx.json(mockGenerators))
 );
 
 export const generators = rest.get(`*/api/${API_VERSION}/generators`, async (req, res, ctx) => {

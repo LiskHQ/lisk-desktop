@@ -24,7 +24,7 @@ describe('StakeRow Component', () => {
             rank: 0,
             rewards: '0',
             username: 'free',
-            vote: '10000000000',
+            stake: '10000000000',
           },
         },
       },
