@@ -33,11 +33,11 @@ describe('lsk', () => {
     });
 
     it('should use default decimal value', () => {
-      expect(convertToDenom(100000000, { ...mockToken, symbol: 'ENV' })).to.be.equal('1');
-      expect(convertToDenom(100000000)).to.be.equal('1');
+      expect(convertToDenom(100000000, { ...mockToken, symbol: 'ENV' })).to.be.equal('0');
+      expect(convertToDenom(100000000)).to.be.equal('0');
     });
 
-    it('should use default decimal value', () => {
+    it('should use token`s decimal value', () => {
       expect(
         convertToDenom(100000000, {
           ...mockToken,

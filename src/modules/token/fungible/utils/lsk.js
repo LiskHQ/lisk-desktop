@@ -22,8 +22,10 @@ export const fromRawLsk = (value) =>
  * @returns {BigNumber} Amount value converted to the token symbol's denom
  */
 export const convertToDenom = (amount, token = {}) => {
-  const { decimals = 8 } =
+  const { decimals } =
     token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
+
+  if (!decimals) return '0';
 
   return new BigNumber(amount || 0).dividedBy(new BigNumber(BASE).pow(decimals)).toFixed();
 };
