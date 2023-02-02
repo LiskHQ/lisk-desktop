@@ -125,9 +125,9 @@ const TxComposer = ({
         composedFees={composedFees}
       />
       <Feedback
-        balance={formProps.fields?.token?.availableBalance}
         feedback={formProps.feedback}
         minRequiredBalance={minRequiredBalance}
+        token={formProps.fields?.token || {}}
       />
       <BoxFooter>
         <PrimaryButton

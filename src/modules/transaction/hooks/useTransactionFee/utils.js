@@ -16,19 +16,26 @@ import { fromTransactionJSON } from '../../utils/encoding';
  * @returns {bigint} the transaction fee in Beddows
  */
 
-export const computeTransactionMinFee = (transactionJSON, paramsSchema, numberOfSignatures, extraCommandFee) => {
+export const computeTransactionMinFee = (
+  transactionJSON,
+  paramsSchema,
+  numberOfSignatures,
+  extraCommandFee
+) => {
   const options = {
     numberOfSignatures,
     numberOfEmptySignatures: 0,
     additionalFee: BigInt(extraCommandFee),
   };
-  const minFee = transactions.computeMinFee(
-    fromTransactionJSON(transactionJSON, paramsSchema),
-    paramsSchema,
-    options
-  );
 
-  return minFee;
+  let convertedTx = {};
+  try {
+    convertedTx = fromTransactionJSON(transactionJSON, paramsSchema);
+  } catch (exp) {
+    convertedTx = {};
+  }
+
+  return transactions.computeMinFee(convertedTx, paramsSchema, options);
 };
 
 export const getParamsSchema = (transaction, schemas) => {
