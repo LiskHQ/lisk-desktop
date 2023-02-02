@@ -74,9 +74,12 @@ const TxComposer = ({
       });
     }
   }, [selectedPriority, transactionJSON.params]);
-  const minRequiredBalance = getMinRequiredBalance(transactionJSON, transactionFee);
+  const minRequiredBalance = getMinRequiredBalance(
+    transactionJSON,
+    transactionFee,
+    formProps.fields.token
+  );
   const { recipientChain, sendingChain } = formProps;
-
   const composedFees = [
     {
       title: 'Transaction',
