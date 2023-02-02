@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'src/utils/helpers';
-import { convertToDenom, fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertToDenom } from '@token/fungible/utils/lsk';
 import { getTxAmount } from '@transaction/utils/transaction';
 import styles from './txComposer.css';
 
-export const getMinRequiredBalance = (transaction, fee, token) =>
-  convertToDenom(fee, token) + (getTxAmount(transaction) || 0);
+export const getMinRequiredBalance = (transaction, fee) =>
+  BigInt(fee) + BigInt(getTxAmount(transaction) || 0);
 
 const Feedback = ({ minRequiredBalance, feedback, token }) => {
   const { t } = useTranslation();
@@ -21,7 +21,7 @@ const Feedback = ({ minRequiredBalance, feedback, token }) => {
     ? feedback[0]
     : t('The minimum required balance for this action is {{minRequiredBalance}} {{token}}', {
         token: token.symbol,
-        minRequiredBalance: fromRawLsk(minRequiredBalance),
+        minRequiredBalance: convertToDenom(minRequiredBalance, token),
       });
   return (
     <div className={`${styles.feedback} feedback`}>

@@ -61,7 +61,7 @@ describe('TxComposer', () => {
       formProps: {
         isFormValid: true,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-        fields: { token: { availableBalance: 100000000 } },
+        fields: { token: { availableBalance: 10000000000000 } },
         sendingChain: { chainID: '1' },
         recipientChain: { chainID: '2' },
       },
