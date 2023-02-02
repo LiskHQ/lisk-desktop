@@ -30,7 +30,6 @@ const TxSignatureCollector = ({
   fees,
   selectedPriority,
   confirmText,
-  t,
 }) => {
   const [sender] = useCurrentAccount();
   const { moduleCommandSchemas } = useCommandSchema();
@@ -125,7 +124,11 @@ const TxSignatureCollector = ({
       nextStep({ formProps, transactionJSON, statusInfo, sender });
     }
 
-    if (isEmpty(transactions.signedTransaction) && !transactions.txSignatureError && !sender.encryptedPassphrase) {
+    if (
+      isEmpty(transactions.signedTransaction) &&
+      !transactions.txSignatureError &&
+      !sender.encryptedPassphrase
+    ) {
       txVerification('', sender.metadata.pubkey);
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
@@ -137,7 +140,8 @@ const TxSignatureCollector = ({
           <Icon name="arrowLeftTailed" />
         </TertiaryButton>
         <EnterPasswordForm
-          title="Please provide your device password to sign a transaction."
+          title={t('Please enter your account password to sign this transaction.')}
+          confirmText={confirmText}
           onEnterPasswordSuccess={onEnterPasswordSuccess}
           isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
         />
@@ -146,17 +150,16 @@ const TxSignatureCollector = ({
   }
 
   return (
-    <div className={styles.container}>
-      <TertiaryButton className={styles.backButton} onClick={prevStep}>
-        <Icon name="arrowLeftTailed" />
-      </TertiaryButton>
-      <EnterPasswordForm
-        title={t("Please enter your account password to sign this transaction.")}
-        confirmText={confirmText}
-        onEnterPasswordSuccess={onEnterPasswordSuccess}
-        isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
-      />
-    </div>
+    <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
+      <BoxContent className={styles.content}>
+        <Illustration name={sender.metadata.hwInfo.deviceType} />
+        <h5>
+          {t('Please confirm the transaction on your {{deviceModel}}', {
+            deviceModel: sender.metadata.hwInfo.deviceModel,
+          })}
+        </h5>
+      </BoxContent>
+    </Box>
   );
 };
 export default TxSignatureCollector;
