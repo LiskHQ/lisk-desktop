@@ -10,7 +10,6 @@ import {
   validatePin,
   signMessage,
 } from '@libs/hwManager/communication';
-import { hwAccounts } from '@account/__fixtures__/hwAccounts';
 import { extractAddressFromPublicKey } from './account';
 import { getUsedHWAccounts } from './api';
 
@@ -138,10 +137,6 @@ export const getDeviceType = (deviceModel = '') => {
   return '';
 };
 
-const getAccountsList = () =>
-  // returns merged list of hardware wallet accounts
-  hwAccounts;
-
 export {
   getNewAccountByIndex,
   checkIfInsideLiskApp,
@@ -154,5 +149,4 @@ export {
   subscribeToDevicesList,
   validatePin,
   signMessageByHW,
-  getAccountsList,
 };
