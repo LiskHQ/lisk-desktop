@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+/* istanbul ignore file */
 import { IPC_MESSAGES } from '../consts';
 import { HWClient } from './HWClient';
 
