@@ -1,11 +1,12 @@
-import { IPC_MESSAGES } from '../const';
+/* eslint-disable class-methods-use-this */
+import { IPC_MESSAGES } from '../consts';
 import { HWClient } from './HWClient';
 
 class HwManager extends HWClient {
   constructor() {
     super();
     this.activeDeviceID = null;
-    this.currentDeviceStatus = 'disconnected'
+    this.currentDeviceStatus = 'disconnected';
     this.devices = [];
   }
 
@@ -18,19 +19,17 @@ class HwManager extends HWClient {
     return this.devices;
   }
 
-
   getCurrentDeviceInfo() {
     // return this.device.filter((device) => device.id == this.activeDeviceID)
   }
+
   getDeviceInfoByID() {}
 
   selectDevice(deviceId) {
     this.activeDeviceID = deviceId;
   }
 
-
   persistConnection() {}
-
 
   getPublicKey() {}
 
@@ -82,7 +81,9 @@ class HwManager extends HWClient {
 
   validatePin() {}
 
-  reconnectDevice(cb) {}
+  reconnectDevice(cb) {
+    console.log(cb);
+  }
 }
 
 export default new HwManager();
