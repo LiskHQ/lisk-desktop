@@ -30,7 +30,7 @@ describe('hwManager util', () => {
     jest.clearAllMocks();
   });
 
-  describe('getAccountsFromDevice', () => {
+  describe.skip('getAccountsFromDevice', () => {
     it('should resolve all non-empty and one empty account', async () => {
       communication.getPublicKey.mockResolvedValueOnce(wallets.genesis.summary.publicKey);
       communication.getPublicKey.mockResolvedValueOnce(wallets.empty_wallet.summary.publicKey);

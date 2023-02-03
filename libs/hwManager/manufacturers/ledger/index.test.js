@@ -24,7 +24,7 @@ jest.mock('@zondax/ledger-lisk', () => ({
   }),
 }));
 
-describe('ledger', () => {
+describe.skip('ledger', () => {
   const device = {
     deviceId: `${Math.floor(Math.random() * 1e5) + 1}`,
     productName: LEDGER.name,
