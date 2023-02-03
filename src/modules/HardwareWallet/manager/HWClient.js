@@ -1,9 +1,8 @@
-import { CLIENT } from '../const';
-
+import { CLIENT } from '../consts';
 
 export class HWClient {
   constructor() {
-    this.ipc = window.ipc
+    this.ipc = window.ipc;
   }
 
   executeCommand(action, payload) {
@@ -15,11 +14,10 @@ export class HWClient {
       });
       // Requesting data
       this.ipc.send(`${action}.${CLIENT.REQUEST}`, payload);
-    })
+    });
   }
 
   subscribe(event, cb) {
     this.ipc.on(event, cb);
   }
 }
-
