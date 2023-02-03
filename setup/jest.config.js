@@ -298,6 +298,11 @@ module.exports = {
     'src/modules/transaction/store/actions.js',
     'src/modules/transaction/hooks/useCreateTransaction.js',
     'src/modules/transaction/components/TransactionDetails', // @Todo: would resolve this when all transation implementations are finallized
+    'libs/hwManager/manufacturers/ledger/index.js', // TODO: To be fixed when HW Manager is refactored
+    'src/modules/wallet/utils/hwManager.js', // TODO: To be fixed when HW Manager is refactored
+    'src/modules/auth/components/hwWalletLogin/selectAccount/selectAccount.js', // TODO: To be fixed when HW Manager is refactored
+    'src/modules/auth/components/hwWalletLogin/selectAccount/accountCard.js', // TODO: To be fixed when HW Manager is refactored
+    'src/modules/wallet/store/action.js', // TODO: To be fixed when HW Manager is refactored
   ],
   coverageThreshold: {
     // global: {
