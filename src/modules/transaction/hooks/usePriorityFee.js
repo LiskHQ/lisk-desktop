@@ -7,12 +7,16 @@ const usePriorityFee = ({ selectedPriority, transactionJSON, paramsSchema, isEna
 
   if (!isEnabled) return { type: FEE_TYPES.PRIORITY_FEE, value: 0 };
 
-  const size = transactions.getBytes(
-    fromTransactionJSON(transactionJSON, paramsSchema),
-    paramsSchema
-  ).length;
+  try {
+    const size = transactions.getBytes(
+      fromTransactionJSON(transactionJSON, paramsSchema),
+      paramsSchema
+    )?.length;
 
-  return { type: FEE_TYPES.PRIORITY_FEE, value: size * feePerByte };
+    return { type: FEE_TYPES.PRIORITY_FEE, value: size * feePerByte || 0 };
+  } catch (exp) {
+    return { type: FEE_TYPES.PRIORITY_FEE, value: 0 };
+  }
 };
 
 export default usePriorityFee;
