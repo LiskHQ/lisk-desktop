@@ -71,9 +71,7 @@ const SendForm = (props) => {
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
   const { data: initializationFees } = useGetInitializationFees({ address: recipient.value });
-  const {
-    data: { messageFee },
-  } = useMessageFee({ address: recipient.value });
+  const { data: messageFee } = useMessageFee({ address: recipient.value });
 
   const extraCommandFee =
     sendingChain.chainID !== recipientChain.chainID
