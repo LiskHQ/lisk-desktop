@@ -1,4 +1,4 @@
-import { IPC_MESSAGES } from '../const';
+import { IPC_MESSAGES } from '../consts';
 import { HWClient } from './HWClient';
 
 class HwManager extends HWClient {
@@ -9,9 +9,15 @@ class HwManager extends HWClient {
     this.devices = [];
   }
 
-  createAccount() {}
+  createAccount() {
+    // @todo Add Create Account method here.
+    return this;
+  }
 
-  getAccounts() {}
+  getAccounts() {
+    // @todo Add Get Account method here.
+    return this;
+  }
 
   getDeviceList() {
     // this.executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null)
@@ -20,19 +26,27 @@ class HwManager extends HWClient {
 
 
   getCurrentDeviceInfo() {
-    // return this.device.filter((device) => device.id == this.activeDeviceID)
+    return this.device.filter((device) => device.id === this.activeDeviceID)
   }
-  getDeviceInfoByID() {}
+
+  getDeviceInfoByID(id) {
+    return this.device.filter((device) => device.id === id)
+  }
 
   selectDevice(deviceId) {
     this.activeDeviceID = deviceId;
   }
 
+  persistConnection() {
+    // @todo Add Persist Connection method here.
+    return this;
+  }
 
-  persistConnection() {}
 
-
-  getPublicKey() {}
+  getPublicKey() {
+    // @todo Add Get Public Key method here.
+    return this;
+  }
 
   getAddress(accountIndex) {
     const data = {
@@ -47,21 +61,9 @@ class HwManager extends HWClient {
   } // dump this on #4767
 
   listeningToDevices() {
-    // @todo may this devices list provided by the HWServer check for the event DEVICE_LIST_CHANGED or GET_CONNECTED_DEVICES_LIST
-    // this.subsscribe('connect', (newDevice) => {
-    //   const hasDevice = this.devices.find((device) => {
-    //     return // device.id === newDevice.id
-    //   })
-    //   if (!hasDevice) {
-    //     this.devices.push(device)
-    //   }
-    // })
-    //
-    // this.subsscribe('disconnected', (device) => {
-    //   this.devices = this.devices.find((device) => {
-    //     return // device.id !== newDevice.id
-    //   })
-    // })
+    // @todo may this devices list provided by the HWServer check for the
+    // event DEVICE_LIST_CHANGED or GET_CONNECTED_DEVICES_LIST
+    return this;
   }
 
   signMessage(accountIndex, message) {
@@ -76,13 +78,25 @@ class HwManager extends HWClient {
     });
   }
 
-  signTransaction() {}
+  signTransaction() {
+    // @todo Add Sign Transaction method here.
+    return this;
+  }
 
-  checkIfInsideLiskApp() {}
+  checkIfInsideLiskApp() {
+    // @todo Add Check If Inside Lisk App method here.
+    return this;
+  }
 
-  validatePin() {}
+  validatePin() {
+    // @todo Add Validate Pin method here.
+    return this;
+  }
 
-  reconnectDevice(cb) {}
+  reconnectDevice() {
+    // @todo Add Reconnect Device method here.
+    return this;
+  }
 }
 
 export default new HwManager();

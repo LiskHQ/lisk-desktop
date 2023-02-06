@@ -1,4 +1,4 @@
-import { CLIENT } from '../const';
+import { CLIENT } from '../consts';
 
 
 export class HWClient {

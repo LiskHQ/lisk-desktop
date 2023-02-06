@@ -361,9 +361,7 @@ const signUsingHW = async (wallet, schema, chainID, moduleCommand, transaction) 
 };
 
 export const sign = async (wallet, schema, chainID, transaction, privateKey, senderAccount) => {
-  console.log('sign', wallet);
   if (!isEmpty(wallet.hwInfo)) {
-    console.log('sign with HW');
     const moduleCommand = joinModuleAndCommand(transaction);
     return signUsingHW(wallet, schema, chainID, moduleCommand, transaction);
   }
