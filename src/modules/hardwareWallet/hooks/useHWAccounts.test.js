@@ -3,8 +3,8 @@ import { hwAccounts } from '../__fixtures__/hwAccounts';
 import useHWAccounts from './useHWAccounts';
 
 const mockState = {
-  settings: {
-    hardwareAccounts: hwAccounts,
+  hardwareWallet: {
+    accounts: hwAccounts,
   },
 };
 
