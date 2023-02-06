@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
-import { useGetInitializationFees } from '@auth/hooks/queries';
+import { useGetInitializationFees, useMessageFee } from '@auth/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
@@ -71,12 +71,17 @@ const SendForm = (props) => {
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
   const { data: initializationFees } = useGetInitializationFees({ address: recipient.value });
+  const { data: messageFee } = useMessageFee({ address: recipient.value });
+
+  const extraCommandFee =
+    sendingChain.chainID !== recipientChain.chainID
+      ? initializationFees?.data?.escrowAccount
+      : initializationFees?.data?.userAccount;
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     setMaxAmount(status.maxAmount);
   }, []);
-
   const onConfirm = useCallback((formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
@@ -85,7 +90,6 @@ const SendForm = (props) => {
       fees,
     });
   }, []);
-
   const handleRemoveMessage = useCallback(() => {
     setReference({ target: { value: '' } });
   }, []);
@@ -110,7 +114,6 @@ const SendForm = (props) => {
   useEffect(() => {
     setToken(getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens));
   }, [prevState?.transactionData, props.initialValue?.token, tokens]);
-
   useEffect(() => {
     setRecipientChain(
       getInitialRecipientChain(
@@ -145,22 +148,19 @@ const SendForm = (props) => {
       token,
       recipient,
     },
-    extraCommandFee: initializationFees?.data?.userAccount || 0,
+    extraCommandFee: extraCommandFee || 0,
   };
-
   let commandParams = {
     tokenID: token?.tokenID,
     amount: toRawLsk(amount.value),
     recipientAddress: recipient.value,
     data: reference.value,
   };
-
   if (sendingChain.chainID !== recipientChain.chainID) {
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
-      // TODO: Replace the message fee constant from service endpoint
-      messageFee: 50000000,
+      messageFee,
     };
   }
   return (
@@ -295,5 +295,4 @@ const SendForm = (props) => {
     </section>
   );
 };
-
 export default SendForm;
