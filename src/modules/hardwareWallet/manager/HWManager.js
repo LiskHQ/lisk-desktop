@@ -5,7 +5,7 @@ class HwManager extends HWClient {
   constructor() {
     super();
     this.activeDeviceID = null;
-    this.currentDeviceStatus = 'disconnected'
+    this.currentDeviceStatus = 'disconnected';
     this.devices = [];
   }
 
@@ -23,7 +23,6 @@ class HwManager extends HWClient {
     // this.executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null)
     return this.devices;
   }
-
 
   getCurrentDeviceInfo() {
     return this.device.filter((device) => device.id === this.activeDeviceID)

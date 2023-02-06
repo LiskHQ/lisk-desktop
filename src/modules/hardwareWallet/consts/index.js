@@ -1,7 +1,8 @@
+/* istanbul ignore file */
 export const CLIENT = {
   REQUEST: 'request',
   RESPONSE: 'result',
-}
+};
 export const IPC_MESSAGES = {
   CHECK_LEDGER: 'checkLedger',
   CONNECT: 'connect',
@@ -26,7 +27,6 @@ export const FUNCTION_TYPES = {
   [IPC_MESSAGES.SIGN_TRANSACTION]: 'signTransaction',
   [IPC_MESSAGES.SIGN_MSG]: 'signMessage',
 };
-
 
 export const ADD_DEVICE = 'add';
 export const REMOVE_DEVICE = 'remove';
