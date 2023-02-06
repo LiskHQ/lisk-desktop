@@ -42,17 +42,25 @@ class HwManager extends HWClient {
     return this;
   }
 
-
-  getPublicKey() {
-    // @todo Add Get Public Key method here.
-    return this;
-  }
-
-  getAddress(accountIndex) {
+  // Returns the account publicKey corresponding given account index
+  getPublicKey(index) {
     const data = {
       deviceId: this.activeDeviceID,
       showOnDevice: true,
-      index: accountIndex,
+      index,
+    };
+    return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
+      action: IPC_MESSAGES.GET_PUBLIC_KEY,
+      data,
+    });
+  }
+
+  // Returns the account address corresponding given account index
+  getAddress(index) {
+    const data = {
+      deviceId: this.activeDeviceID,
+      showOnDevice: true,
+      index,
     };
     return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
       action: IPC_MESSAGES.GET_ADDRESS,
