@@ -28,6 +28,11 @@ export const FUNCTION_TYPES = {
   [IPC_MESSAGES.SIGN_MSG]: 'signMessage',
 };
 
+export const DEVICE_STATUS = {
+  CONNECTED: 'connected',
+  DISCONNECTED: 'disconnected',
+};
+
 export const ADD_DEVICE = 'add';
 export const REMOVE_DEVICE = 'remove';
 export const PIN = 'pin';

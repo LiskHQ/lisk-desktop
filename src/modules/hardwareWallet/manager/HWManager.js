@@ -1,11 +1,11 @@
-import { IPC_MESSAGES } from '../consts';
+import { IPC_MESSAGES, DEVICE_STATUS } from '../consts';
 import { HWClient } from './HWClient';
 
 class HwManager extends HWClient {
   constructor() {
     super();
     this.activeDeviceID = null;
-    this.currentDeviceStatus = 'disconnected';
+    this.currentDeviceStatus = DEVICE_STATUS.DISCONNECTED;
     this.devices = [];
   }
 
@@ -32,10 +32,7 @@ class HwManager extends HWClient {
   }
 
   persistConnection() {
-    this.subscribe(
-      IPC_MESSAGES.DEVICE_LIST_CHANGED,
-      this.getDevices.bind(this),
-    );
+    this.subscribe(IPC_MESSAGES.DEVICE_LIST_CHANGED, this.getDevices.bind(this));
     // setTimeout(this.getDevices.bind(this), 0); // @todo Why the setTimeout?
   }
 
@@ -110,18 +107,20 @@ class HwManager extends HWClient {
       chainID,
       transactionBytes,
     };
-    return this.executeCommand(
-      IPC_MESSAGES.HW_COMMAND,
-      {
-        action: IPC_MESSAGES.SIGN_TRANSACTION,
-        data,
-      },
-    );
+    return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
+      action: IPC_MESSAGES.SIGN_TRANSACTION,
+      data,
+    });
   }
 
-  checkIfInsideLiskApp() {
-    // @todo Add Check If Inside Lisk App method here.
-    return this;
+  async checkAppStatus() {
+    const result = this.executeCommand(IPC_MESSAGES.CHECK_LEDGER, { id: this.activeDeviceID });
+    if (result?.model) {
+      this.currentDeviceStatus = DEVICE_STATUS.CONNECTED;
+    } else {
+      this.currentDeviceStatus = DEVICE_STATUS.DISCONNECTED;
+    }
+    return this.currentDeviceStatus;
   }
 
   validatePin() {
