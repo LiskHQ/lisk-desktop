@@ -71,10 +71,19 @@ class HwManager extends HWClient {
     return this;
   }
 
-  signMessage(accountIndex, message) {
+  /**
+   * Signs a given transaction for a given account index
+   * The account index must be a parameter to match the
+   * signTransaction method signature
+   *
+   * @param {number} index Account index
+   * @param {string} message
+   * @returns {promise}
+   */
+  signMessage(index, message) {
     const signature = {
       deviceId: this.activeDeviceID,
-      index: accountIndex,
+      index,
       message,
     };
     return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
@@ -83,8 +92,18 @@ class HwManager extends HWClient {
     });
   }
 
-  signTransaction(chainID, transactionBytes) {
-    const index = this.device.findIndex((device) => device.id === this.activeDeviceID)
+  /**
+   * Signs a given transaction for a given account index
+   * The account index must be a parameter since we may
+   * need to sign a transaction for a different account
+   * via WalletConnect
+   *
+   * @param {number} index Account index
+   * @param {Buffer} chainID
+   * @param {Buffer} transactionBytes
+   * @returns {promise}
+   */
+  signTransaction(index, chainID, transactionBytes) {
     const data = {
       deviceId: this.activeDeviceID,
       index,
