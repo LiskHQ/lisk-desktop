@@ -45,12 +45,11 @@ module.exports = {
     '^@auth(.*)$': resolve(__dirname, '../src/modules/auth/$1'),
     '^@wallet/(.*)$': resolve(__dirname, '../src/modules/wallet/$1'),
     '^@transaction(.*)$': resolve(__dirname, '../src/modules/transaction/$1'),
+    '^@hardwareWallet(.*)$': resolve(__dirname, '../src/modules/hardwareWallet/$1'),
     '^@update(.*)$': resolve(__dirname, '../src/modules/update/$1'),
     '^@views(.*)$': resolve(__dirname, '../packages/views/$1'),
     '^@packages(.*)$': resolve(__dirname, '../packages/$1'),
     '^@screens(.*)$': resolve(__dirname, '../packages/views/screens/$1'),
-    '^@shared(.*)$': resolve(__dirname, '../packages/views/shared/$1'),
-    '^@basics(.*)$': resolve(__dirname, '../packages/views/basics/$1'),
     '^@libs(.*)$': resolve(__dirname, '../libs/$1'),
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/tests/__mocks__/fileMock.js',
