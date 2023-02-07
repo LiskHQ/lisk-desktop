@@ -20,11 +20,11 @@ class HwManager extends HWClient {
   }
 
   getCurrentDeviceInfo() {
-    return this.device.filter((device) => device.id === this.activeDeviceID);
+    return this.devices.filter((device) => device.id === this.activeDeviceID);
   }
 
   getDeviceInfoByID(id) {
-    return this.device.filter((device) => device.id === id);
+    return this.devices.filter((device) => device.id === id);
   }
 
   selectDevice(deviceId) {
@@ -120,13 +120,9 @@ class HwManager extends HWClient {
    * @returns {string} connected or disconnected
    */
   async checkAppStatus() {
-    const result = this.executeCommand(IPC_MESSAGES.CHECK_LEDGER, { id: this.activeDeviceID });
-    if (result?.model) {
-      this.currentDeviceStatus = DEVICE_STATUS.CONNECTED;
-    } else {
-      this.currentDeviceStatus = DEVICE_STATUS.DISCONNECTED;
-    }
-    return this.currentDeviceStatus;
+    await  this.executeCommand(IPC_MESSAGES.CHECK_LEDGER, { id: this.activeDeviceID });
+    await this.getDevices();
+    return this.devices;
   }
 
   validatePin() {
