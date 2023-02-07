@@ -199,6 +199,7 @@ or "warn/action" ineastd of "red/green"
   --color-token-card-shadow: #eaeaea5c;
   --color-stakes-available: #4070f41a;
   --color-search-bar-background: #2e3855;
+  --color-success: #25ca95;
   --color-edit-button-background: var(--color-ghost-white);
   --color-edit-button-border: var(--color-very-light-gray);
 

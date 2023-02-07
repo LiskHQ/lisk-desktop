@@ -1,0 +1,103 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  margin-right: 29px;
+  position: relative;
+
+  & > button {
+    width: 20px;
+    height: 100% !important;
+    background-color: transparent;
+    padding: 0px 6px !important;
+    max-width: fit-content;
+    min-width: fit-content;
+    position: relative;
+
+    &.connected::after {
+      background-color: var(--color-success);
+    }
+
+    &.disconnected::after {
+      background-color: red;
+    }
+
+    &.standby::after {
+      background-color: var(--color-warning-border);
+    }
+
+    &::after {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      content: "";
+      display: block;
+      position: absolute;
+      margin-top: -25px;
+      margin-left: 14px;
+    }
+
+    & > img {
+      margin-top: 5px;
+    }
+  }
+
+  & > button ~ div {
+    margin-right: -23px;
+    margin-top: -18px;
+    width: 229px;
+  }
+}
+
+.dropdown {
+  width: 200px;
+  margin-right: 20px;
+  padding: 14px 16px 17px 16px;
+  border-radius: var(--border-radius-box);
+
+  & h6 {
+    font-family: var(--heading-font) !important;
+    font-size: var(--font-size-h6) !important;
+    color: var(--color-content-light) !important;
+    padding: 0px !important;
+    margin: 0px;
+
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+
+  & h6 ~ ul {
+    padding: 0px !important;
+    font-size: var(--paragraph-font-size-s) !important;
+    margin: 6px 0px 0px 0px;
+
+    &:hover {
+      background-color: transparent !important;
+      color: var(--color-slate-gray);
+    }
+
+    & > li {
+      display: flex;
+      flex-direction: row;
+      column-gap: 24px;
+      margin-top: 10px;
+    }
+
+    & > li > div {
+      width: 50%;
+      color: var(--color-slate-gray);
+    }
+
+    & > li > div:nth-child(2) {
+      color: var(--color-content-light);
+    }
+  }
+}
+
+.connected {
+  background-color: #25ca95;
+}
+
+.disconnected {
+  background-color: red;
+}

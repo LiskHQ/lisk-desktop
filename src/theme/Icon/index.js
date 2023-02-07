@@ -234,6 +234,7 @@ import receivedTransactionIcon from '@setup/react/assets/images/icons/received_t
 import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
 import commissionsIcon from '@setup/react/assets/images/icons/commissions.svg';
 import editActiveIcon from '@setup/react/assets/images/icons/editActive.svg';
+import hardwareWalletIcon from '@setup/react/assets/images/icons/hardware-wallet-icon.svg';
 
 export const icons = {
   academy,
@@ -468,6 +469,7 @@ export const icons = {
   arrowBlueRight,
   multisigKeys,
   multisigKeysDark,
+  hardwareWalletIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
