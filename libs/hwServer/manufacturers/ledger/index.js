@@ -122,11 +122,11 @@ const getAddress = async (transporter, { device, data }) => {
     transport = await transporter.open(device.path);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const { address } = await liskLedger.getAddressAndPubKey(ledgerAccount, data.showOnDevice);
+    const { address } = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
     transport.close();
     return address;
   } catch (error) {
-    if (transport) transport.close();
+    transport?.close();
     throw error;
   }
 };
