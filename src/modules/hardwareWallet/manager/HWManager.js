@@ -1,35 +1,38 @@
 import { IPC_MESSAGES } from '@libs/hwServer/constants';
-import { DEVICE_STATUS } from '../consts';
 import { HWClient } from './HWClient';
 
 class HwManager extends HWClient {
-  constructor() {
-    super();
-    this.activeDeviceID = null;
-    this.currentDeviceStatus = DEVICE_STATUS.DISCONNECTED;
-    this.devices = [];
-  }
-
   createAccount() {
     // @todo Add Create Account method here.
     return this;
   }
 
-  async getDevices() {
-    this.devices = await this.executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST);
-    return this.devices;
+  getDevices() {
+    return this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+      action: IPC_MESSAGES.GET_DEVICES,
+    });
   }
 
-  getCurrentDeviceInfo() {
-    return this.devices.filter((device) => device.id === this.activeDeviceID);
+  // Never used
+  getActiveDeviceInfo() {
+    return this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+      action: IPC_MESSAGES.GET_ACTIVE_DEVICE,
+    });
   }
 
+  // Never used
   getDeviceInfoByID(id) {
-    return this.devices.filter((device) => device.id === id);
+    return this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+      action: IPC_MESSAGES.GET_DEVICE,
+      data: { id },
+    });
   }
 
-  selectDevice(deviceId) {
-    this.activeDeviceID = deviceId;
+  selectDevice(id) {
+    return this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+      action: IPC_MESSAGES.SELECT_DEVICE,
+      data: { id },
+    });
   }
 
   persistConnection() {
@@ -39,34 +42,10 @@ class HwManager extends HWClient {
 
   // Returns the account publicKey corresponding given account index
   getPublicKey(index) {
-    const data = {
-      deviceId: this.activeDeviceID,
-      showOnDevice: true,
-      index,
-    };
     return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
       action: IPC_MESSAGES.GET_PUBLIC_KEY,
-      data,
+      data: { index },
     });
-  }
-
-  // Returns the account address corresponding given account index
-  getAddress(index) {
-    const data = {
-      deviceId: this.activeDeviceID,
-      showOnDevice: true,
-      index,
-    };
-    return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
-      action: IPC_MESSAGES.GET_ADDRESS,
-      data,
-    });
-  } // dump this on #4767
-
-  listeningToDevices() {
-    // @todo may this devices list provided by the HWServer check for the
-    // event DEVICE_LIST_CHANGED or GET_CONNECTED_DEVICES_LIST
-    return this;
   }
 
   /**
@@ -80,7 +59,6 @@ class HwManager extends HWClient {
    */
   signMessage(index, message) {
     const signature = {
-      deviceId: this.activeDeviceID,
       index,
       message,
     };
@@ -103,7 +81,6 @@ class HwManager extends HWClient {
    */
   signTransaction(index, chainID, transactionBytes) {
     const data = {
-      deviceId: this.activeDeviceID,
       index,
       chainID,
       transactionBytes,
@@ -120,20 +97,13 @@ class HwManager extends HWClient {
    * access it in turn
    * @returns {string} connected or disconnected
    */
+  // @todo rename to updateDevices
   async checkAppStatus() {
-    await  this.executeCommand(IPC_MESSAGES.CHECK_LEDGER, { id: this.activeDeviceID });
-    await this.getDevices();
-    return this.devices;
-  }
-
-  validatePin() {
-    // @todo Add Validate Pin method here.
-    return this;
-  }
-
-  reconnectDevice() {
-    // @todo Add Reconnect Device method here.
-    return this;
+    await  this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+      action: IPC_MESSAGES.CHECK_LEDGER,
+    });
+    const devices = await this.getDevices();
+    return devices;
   }
 }
 

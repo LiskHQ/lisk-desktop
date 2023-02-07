@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { publish, subscribe } from './utils';
-import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
+import { IPC_MESSAGES, FUNCTION_TYPES, METHOD_NAMES } from './constants';
 import manufacturers from './manufacturers';
 
 export class HwServer {
@@ -11,32 +11,33 @@ export class HwServer {
     this.transports = transports;
     this.pubSub = pubSub;
     this.devices = [];
+    this.activeDevice = null;
   }
 
   listening() {
     const { receiver } = this.pubSub;
     this.configure();
 
+    /**
+     * Use this event to call HWServer internal methods
+     * To manipulate and retrieve stored devices data
+     */
     subscribe(receiver, {
-      event: IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST,
-      action: async () => this.getDevices(),
-    });
-
-    subscribe(receiver, {
-      event: IPC_MESSAGES.CHECK_LEDGER,
-      action: async ({ id }) => {
-        const device = this.getDeviceById(id);
-        this.updateDevice(await manufacturers[device.manufacturer].checkIfInsideLiskApp({
-          transporter: this.transports[device.manufacturer],
-          device,
-        }));
+      event: IPC_MESSAGES.GET_DEVICE_INFO,
+      action: ({ action, data }) => {
+        const methodName = METHOD_NAMES[action];
+        return this[methodName](data);
       },
     });
 
+    /**
+     * Use this event to call functions in manufacturer
+     * directory to communicate with the hardware wallets
+     */
     subscribe(receiver, {
       event: IPC_MESSAGES.HW_COMMAND,
       action: async ({ action, data }) => {
-        const device = this.getDeviceById(data.deviceId);
+        const device = this.getDeviceById({ id: this.activeDevice });
         const functionName = FUNCTION_TYPES[action];
         const manufactureName = device.manufacturer;
         return manufacturers[manufactureName][functionName](
@@ -50,6 +51,15 @@ export class HwServer {
     });
   }
 
+  async checkLedger() {
+    const device = this.getDeviceById({ id: this.activeDevice });
+    const devices = await manufacturers[device.manufacturer].checkIfInsideLiskApp({
+      transporter: this.transports[device.manufacturer],
+      device,
+    })
+    this.updateDevice(devices);
+  }
+
   /**
    * Set transport for specific type of wallet.
    * @param {object} data -> Object with type and transport
@@ -60,12 +70,17 @@ export class HwServer {
     this.transports[name] = transport;
   }
 
+  async selectDevice({ id }) {
+    this.activeDevice = id;
+    return this.activeDevice;
+  }
+
   /**
    * Returns list  of connected devices
    * @returns {promise} Promise object with list of devices
    */
   async getDevices() {
-    return Promise.resolve(this.devices);
+    return this.devices;
   }
 
   /**
@@ -73,7 +88,7 @@ export class HwServer {
    * @param {string} id - Id of device
    * @returns {promise} device found or undefined
    */
-  getDeviceById(id) {
+  getDeviceById({ id }) {
     return this.devices.find(d => d.deviceId === id);
   }
 
@@ -128,27 +143,6 @@ export class HwServer {
     });
   }
 
-  pinCallback(type, callback) {
-    const { receiver } = this.pubSub;
-    receiver.once(IPC_MESSAGES.VALIDATE_PIN, (event, { pin }) => {
-      if (pin) {
-        callback(null, pin);
-      } else {
-        callback(IPC_MESSAGES.MISSING_PIN, null);
-      }
-    });
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  passphraseCallback(callback) {
-    callback(null, '' /* User passphrase here! */);
-    /** TODO this is a quick workaround.
-     * as pinCallback, this procedure needs to take the passphrase from the user
-     * in order to unlock secret wallets (principle of plausible deniability).
-     * More info: https://wiki.trezor.io/Passphrase
-     */
-  }
-
   /**
    * Start listeners set by setTransport
    */
@@ -157,8 +151,6 @@ export class HwServer {
       manufacturers[key].listener(this.transports[key], {
         add: data => this.addDevice(data),
         remove: data => this.removeDevice(data),
-        pinCallback: (type, callback) => this.pinCallback(type, callback),
-        passphraseCallback: callback => this.passphraseCallback(callback),
       });
     });
   }

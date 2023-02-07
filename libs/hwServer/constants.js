@@ -20,10 +20,23 @@ export const IPC_MESSAGES = {
   SIGN_TRANSACTION: 'SIGN_TX',
   SIGN_MSG: 'SIGN_MSG',
   VALIDATE_PIN: 'validateTrezorPin',
+  SELECT_DEVICE: 'selectDevice',
+  GET_DEVICE: 'getDeviceById',
+  GET_DEVICES: 'getDevices',
+  GET_ACTIVE_DEVICE: 'getActiveDevices',
 };
+
 export const FUNCTION_TYPES = {
   [IPC_MESSAGES.GET_PUBLIC_KEY]: 'getPublicKey',
   [IPC_MESSAGES.GET_ADDRESS]: 'getAddress',
   [IPC_MESSAGES.SIGN_TRANSACTION]: 'signTransaction',
   [IPC_MESSAGES.SIGN_MSG]: 'signMessage',
+};
+
+export const METHOD_NAMES = {
+  [IPC_MESSAGES.CHECK_LEDGER]: 'checkLedger',
+  [IPC_MESSAGES.SELECT_DEVICE]: 'selectDevice',
+  [IPC_MESSAGES.GET_DEVICE]: 'getDeviceById',
+  [IPC_MESSAGES.GET_DEVICES]: 'getDevices',
+  [IPC_MESSAGES.GET_ACTIVE_DEVICE]: 'getActiveDevices',
 };
