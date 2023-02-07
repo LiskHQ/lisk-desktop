@@ -106,6 +106,7 @@ const checkIfInsideLiskApp = async data => (
 /**
  * subscribeToDeviceConnected - Function.
  * Always listen for get the information of the new connected device
+ * Used only to show a toast message
  * @param {function} fn -> callback function
  */
 const subscribeToDeviceConnected = (fn) => {
@@ -115,6 +116,7 @@ const subscribeToDeviceConnected = (fn) => {
 /**
  * subscribeToDeviceDisconnected - Function.
  * Always listen for get the information of the disconnected device
+ * Used only to show a toast message
  * @param {function} fn -> callback function
  */
 const subscribeToDeviceDisconnected = (fn) => {
