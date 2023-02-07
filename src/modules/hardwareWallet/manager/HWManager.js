@@ -14,22 +14,17 @@ class HwManager extends HWClient {
     return this;
   }
 
-  getAccounts() {
-    // @todo Add Get Account method here.
-    return this;
-  }
-
-  getDeviceList() {
-    // this.executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null)
+  async getDevices() {
+    this.devices = await this.executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST);
     return this.devices;
   }
 
   getCurrentDeviceInfo() {
-    return this.device.filter((device) => device.id === this.activeDeviceID)
+    return this.device.filter((device) => device.id === this.activeDeviceID);
   }
 
   getDeviceInfoByID(id) {
-    return this.device.filter((device) => device.id === id)
+    return this.device.filter((device) => device.id === id);
   }
 
   selectDevice(deviceId) {
@@ -37,8 +32,11 @@ class HwManager extends HWClient {
   }
 
   persistConnection() {
-    // @todo Add Persist Connection method here.
-    return this;
+    this.subscribe(
+      IPC_MESSAGES.DEVICE_LIST_CHANGED,
+      this.getDevices.bind(this),
+    );
+    // setTimeout(this.getDevices.bind(this), 0); // @todo Why the setTimeout?
   }
 
   // Returns the account publicKey corresponding given account index
@@ -85,9 +83,21 @@ class HwManager extends HWClient {
     });
   }
 
-  signTransaction() {
-    // @todo Add Sign Transaction method here.
-    return this;
+  signTransaction(chainID, transactionBytes) {
+    const index = this.device.findIndex((device) => device.id === this.activeDeviceID)
+    const data = {
+      deviceId: this.activeDeviceID,
+      index,
+      chainID,
+      transactionBytes,
+    };
+    return this.executeCommand(
+      IPC_MESSAGES.HW_COMMAND,
+      {
+        action: IPC_MESSAGES.SIGN_TRANSACTION,
+        data,
+      },
+    );
   }
 
   checkIfInsideLiskApp() {
