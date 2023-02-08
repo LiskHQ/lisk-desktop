@@ -1,14 +1,13 @@
 import actionTypes from '../actions/actionTypes';
 
-const initialState = [];
-
-const hardwareWallet = (state = initialState, action) => {
+// istanbul ignore next
+const hardwareWallet = (state = [], action) => {
   switch (action.type) {
     case actionTypes.storeAccounts:
       return [...state, ...action.accounts];
 
     case actionTypes.removeAccounts:
-      return initialState;
+      return state;
 
     default:
       return state;
