@@ -6,7 +6,7 @@ import { getAccountsFromDevice, signMessageByHW, getNewAccountByIndex } from './
 
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 
-jest.mock('@libs/hwManager/communication', () => ({
+jest.mock('@libs/hwServer/communication', () => ({
   getPublicKey: jest.fn(),
   signTransaction: jest.fn(),
   signMessage: jest.fn(),
