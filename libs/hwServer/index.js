@@ -11,7 +11,7 @@ export class HwServer {
     this.transports = transports;
     this.pubSub = pubSub;
     this.devices = [];
-    this.activeDevice = null;
+    this.currentDeviceId = null;
   }
 
   listening() {
@@ -23,9 +23,9 @@ export class HwServer {
      * To manipulate and retrieve stored devices data
      */
     subscribe(receiver, {
-      event: IPC_MESSAGES.GET_DEVICE_INFO,
-      action: ({ action, data }) => {
-        const methodName = METHOD_NAMES[action];
+      event: IPC_MESSAGES.INVOKE,
+      action: (event , data) => {
+        const methodName = METHOD_NAMES[event];
         return this[methodName](data);
       },
     });
@@ -37,7 +37,7 @@ export class HwServer {
     subscribe(receiver, {
       event: IPC_MESSAGES.HW_COMMAND,
       action: async ({ action, data }) => {
-        const device = this.getDeviceById({ id: this.activeDevice });
+        const device = this.getDeviceById(this.currentDeviceId);
         const functionName = FUNCTION_TYPES[action];
         const manufactureName = device.manufacturer;
         return manufacturers[manufactureName][functionName](
@@ -51,8 +51,8 @@ export class HwServer {
     });
   }
 
-  async checkLedger() {
-    const device = this.getDeviceById({ id: this.activeDevice });
+  async checkLedger() { // needs freamwork chaking in a while in order to push keep the status (standby, connected, disconnected) and if it has changes call  this.deviceUpdate
+    const device = this.getDeviceById( this.currentDeviceId );
     const devices = await manufacturers[device.manufacturer].checkIfInsideLiskApp({
       transporter: this.transports[device.manufacturer],
       device,
@@ -70,9 +70,11 @@ export class HwServer {
     this.transports[name] = transport;
   }
 
+
   async selectDevice({ id }) {
-    this.activeDevice = id;
-    return this.activeDevice;
+    this.currentDeviceId = id;
+    this.deviceUpdate()
+    return this.currentDeviceId;
   }
 
   /**
@@ -88,7 +90,7 @@ export class HwServer {
    * @param {string} id - Id of device
    * @returns {promise} device found or undefined
    */
-  getDeviceById({ id }) {
+  getDeviceById(id) {
     return this.devices.find(d => d.deviceId === id);
   }
 
@@ -142,6 +144,18 @@ export class HwServer {
       payload: await this.getDevices(),
     });
   }
+
+  /**
+   * Publish event through sender with deviceId
+   */
+  deviceUpdate(deviceId) {
+    const { sender } = this.pubSub;
+    publish(sender, {
+      event: IPC_MESSAGES.DEVICE_UPDATE,
+      payload: { deviceId },
+    });
+  }
+
 
   /**
    * Start listeners set by setTransport

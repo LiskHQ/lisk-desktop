@@ -8,28 +8,26 @@ class HwManager extends HWClient {
   }
 
   getDevices() {
-    return this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+    return this.invoke({
       action: IPC_MESSAGES.GET_DEVICES,
     });
   }
 
-  // Never used
   getActiveDeviceInfo() {
-    return this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+    return this.invoke( {
       action: IPC_MESSAGES.GET_ACTIVE_DEVICE,
     });
   }
 
-  // Never used
   getDeviceInfoByID(id) {
-    return this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+    return this.invoke( {
       action: IPC_MESSAGES.GET_DEVICE,
       data: { id },
     });
   }
 
   selectDevice(id) {
-    return this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+    return this.invoke( {
       action: IPC_MESSAGES.SELECT_DEVICE,
       data: { id },
     });
@@ -42,7 +40,7 @@ class HwManager extends HWClient {
 
   // Returns the account publicKey corresponding given account index
   getPublicKey(index) {
-    return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
+    return this.executeCommand( {
       action: IPC_MESSAGES.GET_PUBLIC_KEY,
       data: { index },
     });
@@ -62,7 +60,7 @@ class HwManager extends HWClient {
       index,
       message,
     };
-    return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
+    return this.executeCommand({
       action: IPC_MESSAGES.SIGN_MSG,
       data: signature,
     });
@@ -85,7 +83,7 @@ class HwManager extends HWClient {
       chainID,
       transactionBytes,
     };
-    return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
+    return this.executeCommand({
       action: IPC_MESSAGES.SIGN_TRANSACTION,
       data,
     });
@@ -99,7 +97,7 @@ class HwManager extends HWClient {
    */
   // @todo rename to updateDevices
   async checkAppStatus() {
-    await  this.executeCommand(IPC_MESSAGES.GET_DEVICES_INFO, {
+    await  this.invoke( {
       action: IPC_MESSAGES.CHECK_LEDGER,
     });
     const devices = await this.getDevices();

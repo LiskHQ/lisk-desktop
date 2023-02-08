@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 export const CLIENT = {
   REQUEST: 'request',
   RESPONSE: 'result',
@@ -13,6 +12,7 @@ export const IPC_MESSAGES = {
   GET_ADDRESS: 'GET_ADDRESS',
   GET_CONNECTED_DEVICES_LIST: 'getConnectedDevicesList',
   GET_PUBLIC_KEY: 'GET_PUBLIC_KEY',
+  INVOKE: 'INVOKE',
   HW_COMMAND: 'hwCommand',
   HW_CONNECTED: 'hwConnected',
   HW_DISCONNECTED: 'hwDisconnected',
@@ -23,6 +23,7 @@ export const IPC_MESSAGES = {
   SELECT_DEVICE: 'selectDevice',
   GET_DEVICE: 'getDeviceById',
   GET_DEVICES: 'getDevices',
+  DEVICE_UPDATE: 'DEVICE_UPDATE',
   GET_ACTIVE_DEVICE: 'getActiveDevices',
 };
 export const FUNCTION_TYPES = {
