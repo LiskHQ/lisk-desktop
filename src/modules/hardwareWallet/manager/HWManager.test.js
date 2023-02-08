@@ -1,4 +1,4 @@
-import { mockAccounts, mockDevices } from 'src/modules/HardwareWallet/__fixtures__';
+import { mockAccounts, mockDevices } from 'src/modules/hardwareWallet/__fixtures__';
 import HWManager from './HWManager';
 
 describe("HWManager", () => {
