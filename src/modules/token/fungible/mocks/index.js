@@ -5,6 +5,7 @@ import {
   mockTokensSupported,
   mockTokensTopLskBalance,
   mockAppsTokens,
+  mockTokensAccountExists,
 } from '@token/fungible/__fixtures__';
 
 export const tokensBalance = rest.get(`*/api/${API_VERSION}/tokens`, async (req, res, ctx) => {
@@ -68,6 +69,14 @@ export const appsTokens = rest.get(
         offset,
       },
     };
+    return res(ctx.json(response));
+  }
+);
+
+export const tokenAccountExists = rest.get(
+  `*/api/${API_VERSION}/token/account/exists`,
+  async (_, res, ctx) => {
+    const response = mockTokensAccountExists;
     return res(ctx.json(response));
   }
 );

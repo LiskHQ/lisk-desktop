@@ -116,3 +116,10 @@ export const mockAppsTokens = {
   },
   links: {},
 };
+
+export const mockTokensAccountExists = {
+  data: {
+    isExists: false,
+  },
+  meta: {},
+};

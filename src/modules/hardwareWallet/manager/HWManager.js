@@ -16,7 +16,7 @@ class HwManager extends HWClient {
   getAccounts() {}
 
   getDeviceList() {
-    // this.executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null)
+    this.executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null);
     return this.devices;
   }
 
