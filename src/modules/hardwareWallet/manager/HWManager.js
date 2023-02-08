@@ -1,4 +1,5 @@
-import { IPC_MESSAGES, DEVICE_STATUS } from '../consts';
+import { IPC_MESSAGES } from '@libs/hwServer/constants';
+import { DEVICE_STATUS } from '../consts';
 import { HWClient } from './HWClient';
 
 class HwManager extends HWClient {

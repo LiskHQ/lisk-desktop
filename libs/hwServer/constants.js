@@ -1,8 +1,7 @@
 export const ADD_DEVICE = 'add';
-export const REMOVE_DEVICE = 'remove';
 export const RESPONSE = 'result';
 export const REQUEST = 'request';
-export const PIN = 'pin';
+export const PIN = 'pin'; // TODO: Remove when trezor logic is removed
 export const PASSPHRASE = 'passphrase';
 export const IPC_MESSAGES = {
   CHECK_LEDGER: 'checkLedger',
