@@ -35,7 +35,6 @@ class HwManager extends HWClient {
 
   persistConnection() {
     this.subscribe(IPC_MESSAGES.DEVICE_LIST_CHANGED, this.getDevices.bind(this));
-    // setTimeout(this.getDevices.bind(this), 0); // @todo Why the setTimeout?
   }
 
   // Returns the account publicKey corresponding given account index

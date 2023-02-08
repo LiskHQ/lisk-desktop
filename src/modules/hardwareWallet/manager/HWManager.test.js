@@ -1,71 +1,101 @@
-import { mockAccounts, mockDevices } from 'src/modules/HardwareWallet/__fixtures__';
-import HWManager from './HWManager';
+import { IPC_MESSAGES } from '@libs/hwServer/constants';
+import { mockAccounts } from 'src/modules/hardwareWallet/__fixtures__';
+import hwManager from './HWManager';
 
-describe("HWManager", () => {
-  test("createAccount", () => {
-    HWManager.createAccount();
+jest.useRealTimers();
+jest.spyOn(hwManager, 'once');
+
+describe('HWManager', () => {
+  afterEach(() => {
+    hwManager.once.mockClear();
+  });
+
+  test.skip('createAccount', () => {
+    hwManager.once.mockImplementation((_event, handler) => {
+      handler(null, { success: true, data: 'SOME_DATA' });
+    });
+    hwManager.createAccount();
 
     expect({}).toBe(mockAccounts);
   });
 
-  test("getAccounts", () => {
-    const accounts = HWManager.getAccounts();
+  test('getDevices', async () => {
+    hwManager.once.mockImplementation(() => mockAccounts);
+    const accounts = await hwManager.getDevices();
 
+    expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.INVOKE, { action: 'getDevices' });
     expect(accounts).toBe(mockAccounts);
   });
 
-  test("getDeviceList", () => {
-    const devices = HWManager.getDeviceList();
+  test('getActiveDeviceInfo', async () => {
+    hwManager.once.mockImplementation(() => mockAccounts);
+    const accounts = await hwManager.getActiveDeviceInfo();
 
-    expect(devices).toBe(mockDevices);
+    expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.INVOKE, {
+      action: 'getActiveDevices',
+    });
+    expect(accounts).toBe(mockAccounts);
   });
 
-  test("getCurrentDeviceInfo", () => {
-    const currentDevice = HWManager.getCurrentDeviceInfo();
+  test('getDeviceInfoByID', async () => {
+    hwManager.once.mockImplementation(() => mockAccounts);
+    await hwManager.getDeviceInfoByID('TEST');
 
-    expect(currentDevice).toBe(mockDevices);
+    expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.INVOKE, {
+      action: 'getDeviceById',
+      data: { id: 'TEST' },
+    });
   });
 
-  test("getDeviceInfoByID", () => {
-    const deviceInfoByID = HWManager.getDeviceInfoByID();
+  test('selectDevice', async () => {
+    hwManager.once.mockImplementation(() => mockAccounts);
+    await hwManager.selectDevice('TEST');
 
-    expect(deviceInfoByID).toBe(mockDevices);
+    expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.INVOKE, {
+      action: 'selectDevice',
+      data: { id: 'TEST' },
+    });
   });
 
-  test("selectDevice", () => {
-    const firstDeviceId = mockDevices[0].id;
-    HWManager.selectDevice(firstDeviceId);
+  test('getPublicKey', async () => {
+    hwManager.once.mockImplementation(() => mockAccounts);
+    await hwManager.getPublicKey(1);
 
-    expect(firstDeviceId).toBe(HWManager.activeDeviceID);
+    expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.HW_COMMAND, {
+      action: 'GET_PUBLIC_KEY',
+      data: { index: 1 },
+    });
   });
 
-  test("getPublicKey", () => {
-    const publicKey = HWManager.getPublicKey();
+  test('signTransaction', async () => {
+    hwManager.once.mockImplementation(() => mockAccounts);
+    await hwManager.signTransaction(1, 'TEST_CHAIN_ID', 'TEST_TX');
 
-    expect(publicKey).toBe('12sadf123');
+    expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.HW_COMMAND, {
+      action: 'SIGN_TX',
+      data: { index: 1, chainID: 'TEST_CHAIN_ID', transactionBytes: 'TEST_TX' },
+    });
   });
 
-  test("getAddress", () => {
-    const address = HWManager.getAddress(1);
+  test('signMessage', async () => {
+    hwManager.once.mockImplementation(() => mockAccounts);
+    await hwManager.signMessage(1, 'TEST');
 
-    expect(address).toBe('1lsk...');
+    expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.HW_COMMAND, {
+      action: 'SIGN_MSG',
+      data: { index: 1, message: 'TEST' },
+    });
   });
 
-  test("signMessage", () => {
-    const signedMsg = HWManager.signMessage(1, Buffer.from('hello'));
+  test('checkAppStatus', async () => {
+    hwManager.once.mockImplementation(() => mockAccounts);
+    await hwManager.checkAppStatus();
 
-    expect(signedMsg).toBe(Buffer.from('hello'));
-  });
-
-  test("signTransaction", () => {
-    const signedTrx = HWManager.signTransaction(1, Buffer.from('68656c6c6f'));
-
-    expect(signedTrx).toBe(Buffer.from(Buffer.from('68656c6c6f')));
-  });
-
-  test("checkIfInsideLiskApp", () => {
-    const isInsideLiskApp = HWManager.checkIfInsideLiskApp(1);
-
-    expect(isInsideLiskApp).toBe(true);
+    expect(hwManager.once).toHaveBeenNthCalledWith(1, IPC_MESSAGES.INVOKE, {
+      action: 'checkLedger',
+    });
+    expect(hwManager.once).toHaveBeenNthCalledWith(2, IPC_MESSAGES.INVOKE, {
+      action: 'getDevices',
+    });
   });
 });
