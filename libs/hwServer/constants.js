@@ -28,6 +28,11 @@ export const IPC_MESSAGES = {
   GET_ACTIVE_DEVICE: 'getActiveDevices',
 };
 
+export const CLIENT = {
+  REQUEST: 'request',
+  RESPONSE: 'result',
+};
+
 export const FUNCTION_TYPES = {
   [IPC_MESSAGES.GET_PUBLIC_KEY]: 'getPublicKey',
   [IPC_MESSAGES.GET_ADDRESS]: 'getAddress',

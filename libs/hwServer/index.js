@@ -4,10 +4,7 @@ import { IPC_MESSAGES, FUNCTION_TYPES, METHOD_NAMES } from './constants';
 import manufacturers from './manufacturers';
 
 export class HwServer {
-  constructor({
-    transports = {},
-    pubSub = {},
-  }) {
+  constructor({ transports = {}, pubSub = {} }) {
     this.transports = transports;
     this.pubSub = pubSub;
     this.devices = [];
@@ -24,8 +21,8 @@ export class HwServer {
      */
     subscribe(receiver, {
       event: IPC_MESSAGES.INVOKE,
-      action: (event , data) => {
-        const methodName = METHOD_NAMES[event];
+      action: ({ action, data }) => {
+        const methodName = METHOD_NAMES[action];
         return this[methodName](data);
       },
     });
@@ -40,23 +37,20 @@ export class HwServer {
         const device = this.getDeviceById(this.currentDeviceId);
         const functionName = FUNCTION_TYPES[action];
         const manufactureName = device.manufacturer;
-        return manufacturers[manufactureName][functionName](
-          this.transports[manufactureName],
-          {
-            device,
-            data,
-          },
-        );
+        return manufacturers[manufactureName][functionName](this.transports[manufactureName], {
+          device,
+          data,
+        });
       },
     });
   }
 
-  async checkLedger() { // needs freamwork chaking in a while in order to push keep the status (standby, connected, disconnected) and if it has changes call  this.deviceUpdate
-    const device = this.getDeviceById( this.currentDeviceId );
+  async checkLedger() {
+    const device = this.getDeviceById(this.currentDeviceId);
     const devices = await manufacturers[device.manufacturer].checkIfInsideLiskApp({
       transporter: this.transports[device.manufacturer],
       device,
-    })
+    });
     this.updateDevice(devices);
   }
 
@@ -70,10 +64,9 @@ export class HwServer {
     this.transports[name] = transport;
   }
 
-
   async selectDevice({ id }) {
     this.currentDeviceId = id;
-    this.deviceUpdate()
+    this.deviceUpdate();
     return this.currentDeviceId;
   }
 
@@ -91,7 +84,7 @@ export class HwServer {
    * @returns {promise} device found or undefined
    */
   getDeviceById(id) {
-    return this.devices.find(d => d.deviceId === id);
+    return this.devices.find((d) => d.deviceId === id);
   }
 
   /**
@@ -100,8 +93,8 @@ export class HwServer {
    */
   removeDevice(path) {
     const { sender } = this.pubSub;
-    const device = this.devices.find(d => d.path === path);
-    this.devices = this.devices.filter(d => d.path !== path);
+    const device = this.devices.find((d) => d.path === path);
+    this.devices = this.devices.filter((d) => d.path !== path);
     this.syncDevices();
     publish(sender, { event: IPC_MESSAGES.HW_DISCONNECTED, payload: { model: device.model } });
   }
@@ -130,7 +123,7 @@ export class HwServer {
    * @param {string} device.path
    */
   updateDevice(device) {
-    this.devices = this.devices.map(d => (d.path === device.path ? device : d));
+    this.devices = this.devices.map((d) => (d.path === device.path ? device : d));
     this.syncDevices();
   }
 
@@ -156,15 +149,14 @@ export class HwServer {
     });
   }
 
-
   /**
    * Start listeners set by setTransport
    */
   configure() {
     Object.keys(this.transports).forEach((key) => {
       manufacturers[key].listener(this.transports[key], {
-        add: data => this.addDevice(data),
-        remove: data => this.removeDevice(data),
+        add: (data) => this.addDevice(data),
+        remove: (data) => this.removeDevice(data),
       });
     });
   }

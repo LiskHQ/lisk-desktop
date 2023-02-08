@@ -1,5 +1,4 @@
-import { IPC_COMMANDS } from '@libs/hwServer/constants';
-import { CLIENT } from '../consts';
+import { IPC_MESSAGES, CLIENT } from '@libs/hwServer/constants';
 
 export class HWClient {
   constructor() {
@@ -19,11 +18,11 @@ export class HWClient {
   }
 
   executeCommand(payload) {
-    return this.once(IPC_COMMANDS.HW_COMMAND, payload);
+    return this.once(IPC_MESSAGES.HW_COMMAND, payload);
   }
 
   invoke(payload) {
-    return this.once(IPC_COMMANDS.INVOKE, payload);
+    return this.once(IPC_MESSAGES.INVOKE, payload);
   }
 
   subscribe(event, cb) {

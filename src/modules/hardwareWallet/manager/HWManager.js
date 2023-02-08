@@ -14,20 +14,20 @@ class HwManager extends HWClient {
   }
 
   getActiveDeviceInfo() {
-    return this.invoke( {
+    return this.invoke({
       action: IPC_MESSAGES.GET_ACTIVE_DEVICE,
     });
   }
 
   getDeviceInfoByID(id) {
-    return this.invoke( {
+    return this.invoke({
       action: IPC_MESSAGES.GET_DEVICE,
       data: { id },
     });
   }
 
   selectDevice(id) {
-    return this.invoke( {
+    return this.invoke({
       action: IPC_MESSAGES.SELECT_DEVICE,
       data: { id },
     });
@@ -40,7 +40,7 @@ class HwManager extends HWClient {
 
   // Returns the account publicKey corresponding given account index
   getPublicKey(index) {
-    return this.executeCommand( {
+    return this.executeCommand({
       action: IPC_MESSAGES.GET_PUBLIC_KEY,
       data: { index },
     });
@@ -97,7 +97,7 @@ class HwManager extends HWClient {
    */
   // @todo rename to updateDevices
   async checkAppStatus() {
-    await  this.invoke( {
+    await this.invoke({
       action: IPC_MESSAGES.CHECK_LEDGER,
     });
     const devices = await this.getDevices();
