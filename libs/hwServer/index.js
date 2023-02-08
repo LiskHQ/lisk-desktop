@@ -3,7 +3,7 @@ import { publish, subscribe } from './utils';
 import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
 import manufacturers from './manufacturers';
 
-export class HwManager {
+export class HwServer {
   constructor({
     transports = {},
     pubSub = {},

@@ -2,10 +2,10 @@
 import { ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid'; // eslint-disable-line import/no-extraneous-dependencies
 import { DeviceList } from 'trezor.js';
-import { HwManager } from '../../../libs/hwManager';
+import { HwServer } from '../../../libs/hwServer';
 import win from './win';
 
-export const hwM = new HwManager({
+export const hwS = new HwServer({
   transports: {
     Ledger: TransportNodeHid,
     Trezor: new DeviceList(),
