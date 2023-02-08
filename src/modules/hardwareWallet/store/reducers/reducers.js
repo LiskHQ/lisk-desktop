@@ -5,7 +5,7 @@ const initialState = [];
 const hardwareWallet = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.storeAccounts:
-      return [...state, action.data];
+      return [...state, ...action.accounts];
 
     case actionTypes.removeAccounts:
       return initialState;
