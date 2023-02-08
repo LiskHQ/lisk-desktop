@@ -160,9 +160,9 @@ const signMessage = async (transporter, { device, data }) => {
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
     // derivation path, message in buffer format
-    const signature = await liskLedger.signMessage(ledgerAccount, data.message);
+    const signature = await liskLedger.signMessage(ledgerAccount.derivePath(), data.message);
     transport.close();
-    return signature.slice(0, 64);
+    return signature;
   } catch (error) {
     if (transport) transport.close();
     throw new Error(error);
