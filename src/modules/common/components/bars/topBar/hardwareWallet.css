@@ -1,10 +1,13 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .wrapper {
-  margin-right: 29px;
+  margin-right: 16px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  & > button {
+  & .hwIcon {
     width: 20px;
     height: 100% !important;
     background-color: transparent;
@@ -14,7 +17,7 @@
     position: relative;
 
     &.connected::after {
-      background-color: var(--color-success);
+      background-color: var(--color-jade-green);
     }
 
     &.disconnected::after {
@@ -50,8 +53,7 @@
 
 .dropdown {
   width: 200px;
-  margin-right: 20px;
-  padding: 14px 16px 17px 16px;
+  padding: 24px 16px 17px 16px;
   border-radius: var(--border-radius-box);
 
   & h6 {
@@ -79,25 +81,76 @@
     & > li {
       display: flex;
       flex-direction: row;
-      column-gap: 24px;
       margin-top: 10px;
     }
 
     & > li > div {
-      width: 50%;
+      width: 35%;
       color: var(--color-slate-gray);
     }
 
     & > li > div:nth-child(2) {
+      width: 65%;
       color: var(--color-content-light);
     }
   }
 }
 
-.connected {
-  background-color: #25ca95;
+.statusWrapper {
+  border-radius: 5px;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--button-font-size-s);
+  width: fit-content;
+  padding: 0px 8px;
+  text-transform: capitalize;
+
+  &::before {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    margin-right: 8px;
+  }
+
+  &.standby {
+    border-color: var(--color-warning-border-transparent);
+    background-color: var(--color-warning-border-background-transparent);
+    color: var(--color-warning-border) !important;
+
+    &::before {
+      background-color: var(--color-warning-border);
+    }
+  }
+
+  &.connected {
+    border-color: var(--color-jade-green-border);
+    background-color: var(--color-jade-green-background);
+    color: var(--color-jade-green) !important;
+
+    &::before {
+      background-color: var(--color-jade-green);
+    }
+  }
+
+  &.disconnected {
+    border-color: var(--color-red-border);
+    background-color: var(--color-red-background);
+    color: var(--color-red) !important;
+
+    &::before {
+      background-color: var(--color-red);
+    }
+  }
 }
 
-.disconnected {
-  background-color: red;
+.hwStatusTooltip {
+  width: fit-content;
+  padding: 0px;
+  transform: translate(30px, -6px) !important;
+  background-color: var(--color-white);
 }

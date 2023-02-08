@@ -1,50 +1,59 @@
-import React, { useState } from 'react';
-import Dropdown from 'src/theme/Dropdown/dropdown';
+import React from 'react';
+import Tooltip from 'src/theme/Tooltip';
 import { useTranslation } from 'react-i18next';
 import Icon from 'src/theme/Icon';
-import { TertiaryButton } from 'src/theme/buttons';
 import styles from './hardwareWallet.css';
 
+const hwConnectionStatus = {
+  STAND_BY: 'standby',
+  DISCONNECTED: 'disconnected',
+  CONNECTED: 'connected',
+};
+
+const Status = ({ status }) => (
+  <div className={`${styles.statusWrapper} ${styles[status]}`}>
+    <b>{status === hwConnectionStatus.STAND_BY ? 'Stand by' : status}</b>
+  </div>
+);
+
 const HardwareWallet = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
   const { t } = useTranslation();
 
-  const status = 'standby';
+  const status = hwConnectionStatus.DISCONNECTED;
 
-  const closeDropdown = () => {
-    setShowDropdown(false);
-  };
-  const toggleShowDropdown = () => setShowDropdown((dropDownShowState) => !dropDownShowState);
-
+  // @TODO: actual values should be replaced when the useHWStatus hook is integrated by issue #4768
   const hwStatusInfo = [
     { label: 'Brand :', value: 'Ledger' },
     { label: 'Model :', value: 'Nano S' },
     { label: 'ID :', value: '23233' },
-    { label: 'Status :', value: 'Connected', isStatus: true },
+    { label: 'Status :', value: <Status status={status} /> },
   ];
 
   return (
     <section className={styles.wrapper}>
-      <TertiaryButton className={styles[status]} onClick={toggleShowDropdown}>
-        <Icon name="hardwareWalletIcon" />
-      </TertiaryButton>
-      <Dropdown
-        showDropdown={showDropdown}
-        className={styles.dropdown}
-        closeDropdown={closeDropdown}
+      <Tooltip
+        tooltipClassName={`${styles.hwStatusTooltip}`}
+        position="bottom left"
+        content={
+          <div className={`${styles.hwIcon} ${styles[status]}`}>
+            <Icon name="hardwareWalletIcon" />
+          </div>
+        }
       >
-        <h6>
-          <b>{t('Hardware wallet details')}</b>
-        </h6>
-        <ul>
-          {hwStatusInfo.map(({ label, value }) => (
-            <li key={label}>
-              <div>{label}</div>
-              <div>{value}</div>
-            </li>
-          ))}
-        </ul>
-      </Dropdown>
+        <div className={styles.dropdown}>
+          <h6>
+            <b>{t('Hardware wallet details')}</b>
+          </h6>
+          <ul>
+            {hwStatusInfo.map(({ label, value }) => (
+              <li key={label}>
+                <div>{label}</div>
+                <div>{value}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Tooltip>
     </section>
   );
 };
