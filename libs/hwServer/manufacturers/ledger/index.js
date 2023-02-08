@@ -4,6 +4,7 @@ import { transactions } from '@liskhq/lisk-client';
 
 import {
   ADD_DEVICE,
+  DEVICE_STATUS,
 } from '../../constants';
 import { LEDGER } from './constants';
 
@@ -25,6 +26,7 @@ const addDevice = (device, path, { add }) => {
     model: device.productName,
     path,
     manufacturer: LEDGER.name,
+    status: DEVICE_STATUS.STAND_BY,
   };
 
   devices.push(newDevice);
@@ -90,9 +92,9 @@ const checkIfInsideLiskApp = async ({
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount();
     const account = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
-    device.openApp = !!account;
+    device.status = account ? DEVICE_STATUS.CONNECTED : DEVICE_STATUS.DISCONNECTED;
   } catch (e) {
-    device.openApp = false;
+    device.status = DEVICE_STATUS.DISCONNECTED;
   }
   if (transport) transport.close();
   return device;

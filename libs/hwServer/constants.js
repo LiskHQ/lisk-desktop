@@ -28,6 +28,12 @@ export const IPC_MESSAGES = {
   GET_ACTIVE_DEVICE: 'getActiveDevices',
 };
 
+export const DEVICE_STATUS = {
+  CONNECTED: 'CONNECTED',
+  DISCONNECTED: 'DISCONNECTED',
+  STAND_BY: 'STAND_BY',
+};
+
 export const CLIENT = {
   REQUEST: 'request',
   RESPONSE: 'result',
