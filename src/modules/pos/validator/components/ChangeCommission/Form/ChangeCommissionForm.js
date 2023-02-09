@@ -30,11 +30,13 @@ export const ChangeCommissionForm = ({ nextStep }) => {
     });
   };
 
+  const newCommissionParam = convertCommissionToNumber(newCommission)
+  const isFormValid = newCommissionParam >= 0 && newCommissionParam <= 10000
   const formProps = {
-    isValid: true,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission,
-    params: { newCommission: convertCommissionToNumber(newCommission) },
+    params: { newCommission: newCommissionParam },
     fields: { newCommission },
+    isFormValid
   };
   const commandParams = {
     newCommission: convertCommissionToNumber(newCommission),
@@ -69,7 +71,7 @@ export const ChangeCommissionForm = ({ nextStep }) => {
                 isLoading={isLoading}
                 placeholder="*.**"
                 className={`${styles.input} select-name-input`}
-                // feedback={newCommission.message}
+                feedback={!isFormValid && t('Commission range is invalid')}
               />
             </div>
           </BoxContent>
