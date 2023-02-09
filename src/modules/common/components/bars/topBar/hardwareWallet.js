@@ -2,7 +2,7 @@ import React from 'react';
 import Tooltip from 'src/theme/Tooltip';
 import { useTranslation } from 'react-i18next';
 import Icon from 'src/theme/Icon';
-import { HW_CONNECTION_STATUS } from '@libs/hwManager/constants';
+import { HW_CONNECTION_STATUS } from '@libs/hwServer/constants';
 import styles from './hardwareWallet.css';
 
 const Status = ({ status }) => (
