@@ -1,4 +1,4 @@
-import * as communication from '@libs/hwManager/communication';
+import * as communication from '@libs/hwServer/communication';
 // import accounts from '@tests/constants/wallets';
 import { signTransactionByHW } from '.';
 
