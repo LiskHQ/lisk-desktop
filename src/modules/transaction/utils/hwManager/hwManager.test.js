@@ -2,7 +2,7 @@ import * as communication from '@libs/hwServer/communication';
 // import accounts from '@tests/constants/wallets';
 import { signTransactionByHW } from '.';
 
-jest.mock('@libs/hwManager/communication', () => ({
+jest.mock('@libs/hwServer/communication', () => ({
   signTransaction: jest.fn(),
 }));
 
