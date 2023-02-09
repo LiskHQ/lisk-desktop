@@ -29,9 +29,9 @@ export const IPC_MESSAGES = {
 };
 
 export const DEVICE_STATUS = {
-  CONNECTED: 'CONNECTED',
-  DISCONNECTED: 'DISCONNECTED',
-  STAND_BY: 'STAND_BY',
+  CONNECTED: 'connected',
+  DISCONNECTED: 'disconnected',
+  STAND_BY: 'standby',
 };
 
 export const CLIENT = {
