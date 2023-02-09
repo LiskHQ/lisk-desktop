@@ -22,6 +22,7 @@ const getModuleCommandTitle = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.reportValidatorMisbehavior]: t('Report validator misbehaviour'),
   [MODULE_COMMANDS_NAME_MAP.crossChainTransfer]: t('Cross chain transfer'),
   [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim rewards'),
+  [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Edit commission'),
 });
 
 const splitModuleAndCommand = (moduleCommand) => moduleCommand.split(':');
