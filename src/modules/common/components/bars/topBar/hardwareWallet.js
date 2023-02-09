@@ -2,24 +2,19 @@ import React from 'react';
 import Tooltip from 'src/theme/Tooltip';
 import { useTranslation } from 'react-i18next';
 import Icon from 'src/theme/Icon';
+import { HW_CONNECTION_STATUS } from '@libs/hwManager/constants';
 import styles from './hardwareWallet.css';
-
-const hwConnectionStatus = {
-  STAND_BY: 'standby',
-  DISCONNECTED: 'disconnected',
-  CONNECTED: 'connected',
-};
 
 const Status = ({ status }) => (
   <div className={`${styles.statusWrapper} ${styles[status]}`}>
-    <b>{status === hwConnectionStatus.STAND_BY ? 'Stand by' : status}</b>
+    <b>{status}</b>
   </div>
 );
 
 const HardwareWallet = () => {
   const { t } = useTranslation();
 
-  const status = hwConnectionStatus.DISCONNECTED;
+  const status = HW_CONNECTION_STATUS.DISCONNECTED;
 
   // @TODO: actual values should be replaced when the useHWStatus hook is integrated by issue #4768
   const hwStatusInfo = [

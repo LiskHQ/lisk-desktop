@@ -28,3 +28,9 @@ export const FUNCTION_TYPES = {
   [IPC_MESSAGES.SIGN_TRANSACTION]: 'signTransaction',
   [IPC_MESSAGES.SIGN_MSG]: 'signMessage',
 };
+
+export const HW_CONNECTION_STATUS = {
+  STAND_BY: 'standby',
+  DISCONNECTED: 'disconnected',
+  CONNECTED: 'connected',
+};
