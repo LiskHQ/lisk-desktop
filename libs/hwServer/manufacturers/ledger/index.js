@@ -2,9 +2,7 @@
 import { LedgerAccount, LiskApp } from '@zondax/ledger-lisk';
 import { transactions } from '@liskhq/lisk-client';
 
-import {
-  ADD_DEVICE,
-} from '../../constants';
+import { ADD_DEVICE, DEVICE_STATUS } from '../../constants';
 import { LEDGER } from './constants';
 
 // ============================================ //
@@ -25,6 +23,7 @@ const addDevice = (device, path, { add }) => {
     model: device.productName,
     path,
     manufacturer: LEDGER.name,
+    status: DEVICE_STATUS.STAND_BY,
   };
 
   devices.push(newDevice);
@@ -39,9 +38,9 @@ const addDevice = (device, path, { add }) => {
 const removeDevice = async (transport, { remove }) => {
   const connectedPaths = await transport.list();
   devices
-    .filter(device => !connectedPaths.includes(device.path))
-    .forEach(device => remove(device.path));
-  devices = devices.filter(device => connectedPaths.includes(device.path));
+    .filter((device) => !connectedPaths.includes(device.path))
+    .forEach((device) => remove(device.path));
+  devices = devices.filter((device) => connectedPaths.includes(device.path));
 };
 
 /**
@@ -80,19 +79,16 @@ const getLedgerAccount = (index = 0) => {
  * @param {object} param.transporter - Object for handle the ledger device.
  * @param {object} param.device - Object with device information.
  */
-const checkIfInsideLiskApp = async ({
-  transporter,
-  device,
-}) => {
+const checkIfInsideLiskApp = async ({ transporter, device }) => {
   let transport;
   try {
     transport = await transporter.open(device.path);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount();
     const account = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
-    device.openApp = !!account;
+    device.status = account ? DEVICE_STATUS.CONNECTED : DEVICE_STATUS.DISCONNECTED;
   } catch (e) {
-    device.openApp = false;
+    device.status = DEVICE_STATUS.DISCONNECTED;
   }
   if (transport) transport.close();
   return device;
@@ -106,8 +102,8 @@ const getPublicKey = async (transporter, { device, data }) => {
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
     const response = data.showOnDevice
-       ? await liskLedger.showAddressAndPubKey(ledgerAccount.derivePath())
-       : await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
+      ? await liskLedger.showAddressAndPubKey(ledgerAccount.derivePath())
+      : await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
     transport.close();
     return response.pubKey;
   } catch (error) {
@@ -122,11 +118,11 @@ const getAddress = async (transporter, { device, data }) => {
     transport = await transporter.open(device.path);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const { address } = await liskLedger.getAddressAndPubKey(ledgerAccount, data.showOnDevice);
+    const { address } = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
     transport.close();
     return address;
   } catch (error) {
-    if (transport) transport.close();
+    transport?.close();
     throw error;
   }
 };
@@ -160,9 +156,9 @@ const signMessage = async (transporter, { device, data }) => {
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
     // derivation path, message in buffer format
-    const signature = await liskLedger.signMessage(ledgerAccount, data.message);
+    const signature = await liskLedger.signMessage(ledgerAccount.derivePath(), data.message);
     transport.close();
-    return signature.slice(0, 64);
+    return signature;
   } catch (error) {
     if (transport) transport.close();
     throw new Error(error);

@@ -2,7 +2,7 @@ import React from 'react';
 import Tooltip from 'src/theme/Tooltip';
 import { useTranslation } from 'react-i18next';
 import Icon from 'src/theme/Icon';
-import { HW_CONNECTION_STATUS } from '@libs/hwServer/constants';
+import { DEVICE_STATUS } from '@libs/hwServer/constants';
 import styles from './hardwareWallet.css';
 
 const Status = ({ status }) => (
@@ -15,10 +15,10 @@ const HardwareWallet = () => {
   const { t } = useTranslation();
 
   /** @TODO:
-  * actual values should be replaced when the useHWStatus hook is integrated by issue #4768
-  * Also this component should return null when there is no current device connected.
-  */
-  const status = HW_CONNECTION_STATUS.STAND_BY;
+   * actual values should be replaced when the useHWStatus hook is integrated by issue #4768
+   * Also this component should return null when there is no current device connected.
+   */
+  const status = DEVICE_STATUS.STAND_BY;
   const hwStatusInfo = [
     { label: 'Brand :', value: 'Ledger' },
     { label: 'Model :', value: 'Nano S' },
