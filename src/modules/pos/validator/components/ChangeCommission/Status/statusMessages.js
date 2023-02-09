@@ -6,7 +6,7 @@ const ChangeCommissionMessages = t => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Change Commission succeeded'),
-    message: t('View your validator profile in the wallet page.'),
+    message: t('View your validator profile.'),
   },
 });
 
