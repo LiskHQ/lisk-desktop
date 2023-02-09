@@ -11,7 +11,6 @@ import Summary from '../Summary';
 import Status from '../Status';
 import styles from './ChangeCommissionDialog.css';
 
-
 export const ChangeCommission = ({ history }) => {
   const { t } = useTranslation();
 
@@ -21,7 +20,6 @@ export const ChangeCommission = ({ history }) => {
         className={styles.multiStep}
         prevPage={history.goBack}
         backButtonLabel={t('Back')}
-        // onChange={onMultiStepChange}
       >
         <Form />
         <Summary />
