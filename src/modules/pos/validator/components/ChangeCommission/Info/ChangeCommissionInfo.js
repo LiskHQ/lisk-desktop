@@ -14,11 +14,11 @@ export const ChangeCommissionInfo = ({ transactionJSON = {} }) => {
     <>
       <section className={styles.commission}>
         <label>{t('Old Commission')} (%)</label>
-        <label className={`${styles.label}`}>{currentCommission}</label>
+        <label className={`${styles.label}`} data-testid="current-commission">{convertCommissionToPercentage(currentCommission)}</label>
       </section>
       <section className={styles.commission}>
         <label>{t('New Commission')} (%)</label>
-        <label className={`${styles.label}`}>{convertCommissionToPercentage(transactionJSON.params.newCommission)}</label>
+        <label className={`${styles.label}`} data-testid="new-commission">{convertCommissionToPercentage(transactionJSON.params.newCommission)}</label>
       </section>
     </>
   );
