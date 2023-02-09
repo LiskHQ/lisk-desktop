@@ -14,9 +14,11 @@ const Status = ({ status }) => (
 const HardwareWallet = () => {
   const { t } = useTranslation();
 
-  const status = HW_CONNECTION_STATUS.DISCONNECTED;
-
-  // @TODO: actual values should be replaced when the useHWStatus hook is integrated by issue #4768
+  /** @TODO:
+  * actual values should be replaced when the useHWStatus hook is integrated by issue #4768
+  * Also this component should return null when there is no current device connected.
+  */
+  const status = HW_CONNECTION_STATUS.STAND_BY;
   const hwStatusInfo = [
     { label: 'Brand :', value: 'Ledger' },
     { label: 'Model :', value: 'Nano S' },

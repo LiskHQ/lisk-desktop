@@ -100,8 +100,6 @@
   border-radius: 5px;
   border: 1px solid transparent;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
   align-items: center;
   font-size: var(--button-font-size-s);
   width: fit-content;
