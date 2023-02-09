@@ -6,7 +6,7 @@ import styles from './AccountRow.css';
 
 function AccountRow({ account, onSelect, onRemove, truncate }) {
   const {
-    metadata: { name, address },
+    metadata: { name, address, isHW },
   } = account;
 
   return (
@@ -18,7 +18,9 @@ function AccountRow({ account, onSelect, onRemove, truncate }) {
     >
       <WalletVisual address={address} size={40} />
       <div className={styles.addressWrapper}>
-        <b className={`${styles.addressValue}`}>{name}</b>
+        <b className={`${styles.addressValue}`}>
+          <span>{name}</span> {isHW && <Icon name="hardwareWalletIcon" />}
+        </b>
         <p className={`${styles.addressValue}`}>{truncate ? truncateAddress(address) : address}</p>
       </div>
       {onRemove && (

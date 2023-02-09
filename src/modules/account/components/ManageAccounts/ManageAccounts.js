@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-
+import Spinner from 'src/theme/Spinner';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from 'src/theme/dialog/dialog';
@@ -25,6 +25,7 @@ export const ManageAccountsContent = ({
   const [, setAccount] = useCurrentAccount();
   const [showRemove, setShowRemove] = useState(false);
   const title = customTitle ?? t('Manage accounts');
+  const hwAccounts = [];
 
   const onAddAccount = useCallback(() => {
     history.push(routes.addAccountOptions.path);
@@ -46,16 +47,31 @@ export const ManageAccountsContent = ({
         <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
       </div>
       <Box className={styles.accountListWrapper}>
-        {accounts.map((account) => (
-          <AccountRow
-            key={account.metadata.address}
-            account={account}
-            onSelect={onSelectAccount}
-            onRemove={showRemove && removeAccount}
-            truncate={truncate}
-          />
-        ))}
+        <>
+          {accounts.map((account) => (
+            <AccountRow
+              key={account.metadata.address}
+              account={account}
+              onSelect={onSelectAccount}
+              onRemove={showRemove && removeAccount}
+              truncate={truncate}
+            />
+          ))}
+          {hwAccounts.map((account) => (
+            <AccountRow
+              key={account.metadata.address}
+              account={account}
+              onSelect={onSelectAccount}
+              onRemove={showRemove && removeAccount}
+              truncate={truncate}
+            />
+          ))}
+        </>
       </Box>
+      <div className={styles.loaderWrapper}>
+        <Spinner className={styles.spinner} />
+        <span>{t('Loading hardware wallet accounts…')}</span>
+      </div>
       {showRemove ? (
         <OutlineButton
           className={`${styles.button} ${styles.addAccountBtn}`}
@@ -97,6 +113,7 @@ function ManageAccounts(props) {
       </Dialog>
     );
   }
+
   return (
     <div className={`${styles.manageAccounts} ${grid.row}`}>
       <div
