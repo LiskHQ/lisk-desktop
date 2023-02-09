@@ -27,18 +27,18 @@ const AddAccountOptions = ({ history }) => {
           className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-12']} ${grid['col-lg-10']}`}
         >
           <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
-            <h1>{t('Add account')}</h1>
+            <h1>{t('Add your account')}</h1>
             <p>
-              {t('Select the applicable mode.')}
+              {t('Choose an option to add your account to Lisk wallet.')}
             </p>
             <div className={styles.selectRowWrapper}>
               <AddAccountOptionButton
-                text="Secret recovery phrase"
+                text={t('Secret recovery phrase')}
                 iconName="secretPassphrase"
                 onClick={() => history.push(routes.addAccountBySecretRecovery.path)}
               />
               <AddAccountOptionButton
-                text="Restore from file"
+                text={t('Restore from backup')}
                 iconName="accountUpload"
                 onClick={() => history.push(routes.addAccountByFile.path)}
               />

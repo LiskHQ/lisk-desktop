@@ -85,8 +85,8 @@ const TransactionStatus = ({
               component="addBookmark"
               data={{
                 formAddress: transactionJSON.params.recipientAddress,
-                label: recipientAccount.data.dpos?.delegate?.username ?? '',
-                isDelegate: !!recipientAccount.data.summary?.isDelegate,
+                label: recipientAccount.data.pos?.validator?.username ?? '',
+                isValidator: !!recipientAccount.data.summary?.isValidator,
               }}
             >
               <PrimaryButton className={`${styles.btn} bookmark-btn`}>

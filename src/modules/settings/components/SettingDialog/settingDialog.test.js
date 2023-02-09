@@ -16,7 +16,7 @@ describe('Setting', () => {
     info: {
       LSK: {
         ...wallets.genesis,
-        isDelegate: false,
+        isValidator: false,
         username: 'lisk-desktop',
       },
     },

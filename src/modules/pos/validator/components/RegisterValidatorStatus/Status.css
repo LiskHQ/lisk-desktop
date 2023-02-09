@@ -1,0 +1,24 @@
+.wrapper {
+  padding: var(--horizontal-padding-l);
+}
+
+.content {
+  & > h1 {
+    margin: 19px 0 16px 0;
+    padding: 0;
+  }
+
+  & > p {
+    margin: 0 0 32px 0;
+    padding: 0;
+  }
+
+  & > button {
+    margin: 0;
+    width: 431px !important;
+  }
+}
+
+.animation {
+  width: 230px;
+}

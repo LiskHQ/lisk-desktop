@@ -1,14 +1,14 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-.accountWraper:last-child {
+.accountWrapper:last-child {
   border-bottom: none;
 }
 
-.accountWraper:hover {
+.accountWrapper:hover {
   opacity: 0.8;
 }
 
-.accountWraper {
+.accountWrapper {
   width: 100%;
   display: flex;
   flex-direction: row;

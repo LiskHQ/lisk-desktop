@@ -25,13 +25,13 @@ describe('Add a new bookmark component', () => {
     history: {
       push: jest.fn(),
       location: {
-        search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isDelegate=false`,
+        search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isValidator=false`,
       },
     },
     account: {
       data: {
         summary: {},
-        dpos: {},
+        pos: {},
       },
       loadData: jest.fn(),
     },
@@ -84,9 +84,9 @@ describe('Add a new bookmark component', () => {
       });
     });
 
-    it('should not be possible to change delegate label', () => {
-      const accountAddress = accounts.delegate.summary.address;
-      const accountUsername = accounts.delegate.dpos.delegate.username;
+    it('should not be possible to change validator label', () => {
+      const accountAddress = accounts.validator.summary.address;
+      const accountUsername = accounts.validator.pos.validator.username;
       wrapper.find('input[name="address"]').first().simulate('change', {
         target: {
           value: accountAddress,
@@ -94,11 +94,11 @@ describe('Add a new bookmark component', () => {
         },
       });
       wrapper.setProps({
-        account: { ...props.account, data: accounts.delegate },
+        account: { ...props.account, data: accounts.validator },
         history: {
           push: jest.fn(),
           location: {
-            search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isDelegate=true`,
+            search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isValidator=true`,
           },
         },
       });

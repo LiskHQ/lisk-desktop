@@ -1,0 +1,302 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  --reverse-margin: calc(-1 * var(--horizontal-padding-l));
+
+  padding: var(--font-size-large);
+
+  & .container {
+    display: flex;
+    width: calc(100% + 2 * var(--horizontal-padding-l));
+    padding: 0;
+    margin: 4px var(--reverse-margin) var(--horizontal-padding-l) var(--reverse-margin);
+    border-radius: 0;
+  }
+
+  & .toggle {
+    padding-left: 0;
+    position: relative;
+    left: -8px;
+    top: -5px;
+  }
+
+  & .footer {
+    margin-top: 48px;
+  }
+
+  & .emptyState {
+    margin: 5px var(--reverse-margin) 0 var(--reverse-margin);
+    width: calc(100% + 2 * var(--horizontal-padding-l));
+  }
+
+  & .emptyState + div {
+    display: none;
+  }
+}
+
+.tableHeader::after {
+  left: 0px;
+  right: 0px;
+  width: 100%;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -24px;
+  width: 95%;
+
+  & > .title {
+    @mixin headingNormal;
+
+    color: var(--color-maastricht-blue);
+    padding: 20px 16px;
+  }
+
+  & > .stakesAvailableCounter {
+    @mixin contentLarge;
+
+    line-height: 15px;
+    padding: 20px;
+  }
+}
+
+.infoColumn {
+  width: 35%;
+  padding: 0;
+}
+
+.amountColumn {
+  padding: 0;
+  width: 30%;
+  color: var(--color-maastricht-blue);
+}
+
+.centerContent {
+  display: flex;
+  align-items: center;
+}
+
+.commissionsColumn,
+.newAmountColumn {
+  padding: 0;
+  display: flex;
+  flex: 1;
+  color: var(--color-maastricht-blue);
+}
+
+.commissionsColumn {
+  margin-left: 10px;
+}
+
+.validatorInfoContainer {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 16px;
+  width: calc(33% - 13px);
+}
+
+.validatorInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+
+  & span:first-child {
+    color: var(--color-maastricht-blue);
+  }
+
+  & span:nth-child(2) {
+    color: var(--color-blue-gray);
+  }
+}
+
+.editColumn {
+  padding: 0;
+  width: auto;
+}
+
+.contentScrollable {
+  overflow-y: auto;
+  max-height: 290px;
+  padding: 0px 20px 0;
+
+  & header {
+    padding: 21px 0 20px 0;
+    margin-top: 10px;
+  }
+}
+
+.stakeItemContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 6px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-platinum);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  & > span {
+    @mixin validatorName;
+
+    margin-right: 8px;
+    font-size: var(--font-size-h6);
+
+    &:last-of-type {
+      margin-left: 25px;
+    }
+  }
+
+  & img.editIcon {
+    display: none;
+  }
+
+  &:hover {
+    & img.editIcon {
+      display: block;
+      cursor: pointer;
+    }
+  }
+}
+
+.txPriority {
+  margin: 0 20px 20px 20px;
+}
+
+.editIconsContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 50px;
+  margin-right: 10px;
+}
+
+.editAmountInput {
+  height: 100%;
+  margin-bottom: 0;
+
+  & input {
+    height: 40px !important;
+    padding: 0 5px !important;
+
+    &:not([class~="error"]) {
+      & + div {
+        display: none;
+      }
+    }
+
+    & + div {
+      position: fixed;
+      z-index: 15;
+      width: max-content;
+      padding-top: 2px;
+      transform: translateY(0) translateX(-25%);
+
+      & span {
+        margin-top: 6px;
+        width: 60%;
+        position: relative;
+        background-color: var(--color-white) !important;
+        color: var(--color-slate-gray) !important;
+        border: 1px solid var(--color-platinum);
+        border-radius: var(--border-radius-standard);
+        box-shadow: var(--box-shadow-standard);
+      }
+
+      &::before {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        background: var(--color-white);
+        left: 30%;
+        transform: rotate(45deg);
+        border-color: var(--color-platinum);
+        border-style: solid;
+        border-width: 1px 0px 0px 1px;
+        z-index: 2;
+      }
+    }
+  }
+
+  /** hide the status spinner **/
+  & img {
+    display: none;
+  }
+}
+
+.formButtonsContainer {
+  margin-left: 20px;
+  display: flex;
+}
+
+.editStakeForm {
+  display: flex;
+  flex: 1;
+
+  & .formButtons {
+    padding: 0 8px;
+    border: none;
+    min-width: 64px;
+  }
+}
+
+.feedback {
+  width: 100%;
+  padding: 0 var(--horizontal-padding-m);
+  box-sizing: border-box;
+  margin-bottom: 10px;
+
+  & > span {
+    width: 100%;
+    background: var(--error-background-color);
+    color: var(--color-strong-white);
+    border-radius: var(--border-radius-standard);
+    display: block;
+    padding: var(--vertical-padding-s) var(--horizontal-padding-m);
+    box-sizing: border-box;
+  }
+}
+
+.stakeIndex {
+  counter-increment: validator-address;
+  content: counter(validator-address) ".";
+  position: absolute;
+  left: -16px;
+  color: var(--color-blue-gray);
+}
+
+.validatorUsername {
+  @mixin validatorName;
+
+  &.disabled {
+    color: var(--color-blue-gray) !important;
+  }
+}
+
+.validatorAddress {
+  @mixin contentLarge;
+}
+
+.oldAmountColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: var(--color-blue-gray);
+  margin-right: 10px;
+  margin-left: 4px;
+
+  &::before {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-content-light);
+    position: absolute;
+  }
+}

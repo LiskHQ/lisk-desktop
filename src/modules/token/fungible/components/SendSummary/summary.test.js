@@ -41,17 +41,6 @@ describe('Summary', () => {
         sendingChain: mockBlockchainApplications[0],
         recipientChain: mockBlockchainApplications[1],
       },
-      rawTx: {
-        params: {
-          recipient: { address: wallets.genesis.summary.address },
-          amount: 112300000,
-          data: 'message',
-          token: mockAppTokens[0],
-        },
-        moduleCommand: 'token:transfer',
-        sendingChain: mockBlockchainApplications[0],
-        recipientChain: mockBlockchainApplications[1],
-      },
       t: i18n.t,
       selectedPriority: { title: 'Normal', value: 1 },
       fees: {
@@ -71,10 +60,11 @@ describe('Summary', () => {
           amount: 112300000,
           data: 'transfer message',
           token: { tokenID: '00000000' },
+          recipient: { address: wallets.genesis.summary.address },
         },
         fields: {
           sendingChain: mockBlockchainApplications[0],
-          recipientChain: blockchainApplicationsExplore[0],
+          recipientChain: { ...blockchainApplicationsExplore[0], logo: { png: '', svg: '' } },
           token: mockTokensBalance.data[0],
           recipient: {
             address: wallets.genesis.summary.address,
@@ -92,7 +82,7 @@ describe('Summary', () => {
     expect(wrapper).toContainMatchingElement('.summary-header');
     expect(wrapper).toContainMatchingElement('.summary-content');
     expect(wrapper).toContainMatchingElement('.summary-footer');
-    expect(wrapper.find('button.confirm-button')).toHaveText('Send 1.123 LSK');
+    expect(wrapper.find('button.confirm-button')).toHaveText('Send');
     expect(wrapper.find('.amount-summary')).toIncludeText('1.123 LSK');
   });
 
@@ -113,12 +103,12 @@ describe('Summary', () => {
       <Summary
         {...{
           ...props,
-          rawTx: {
-            ...props.rawTx,
+          formProps: {
+            ...props.formProps,
             params: {
-              ...props.rawTx.params,
+              ...props.formProps.params,
               recipient: {
-                ...props.rawTx.params.recipient,
+                ...props.formProps.params.recipient,
                 title,
               },
             },

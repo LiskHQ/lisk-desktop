@@ -25,6 +25,8 @@ function MenuSelect({ value, children, onChange, className, select, disabled }) 
     };
   }, []);
 
+  useEffect(() => setSelectedValue(value), [value]);
+
   const selectedIndex = useMemo(
     () =>
       (children ?? []).reduce(

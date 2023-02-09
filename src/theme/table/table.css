@@ -15,8 +15,9 @@
       content: '';
       height: 1px;
       left: 20px;
-      position: absolute;
       right: 20px;
+      min-width: calc(100% - 40px);
+      position: absolute;
     }
 
     &::after {
@@ -26,14 +27,6 @@
     &::before {
       display: none;
       top: -1px;
-    }
-
-    &:nth-child(2) {
-      &::before {
-        display: block;
-        left: 20px;
-        right: 20px;
-      }
     }
 
     &:hover {
@@ -83,6 +76,17 @@
 
     color: var(--color-maastricht-blue);
     padding: 16px 8px;
+  }
+
+  &::after {
+    background-color: var(--color-platinum);
+    content: '';
+    height: 1px;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    min-width: calc(100% - 40px);
+    position: absolute;
   }
 }
 

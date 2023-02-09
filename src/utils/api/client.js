@@ -29,27 +29,28 @@ export class Client {
         reject(new Error('socket not connected'));
         return;
       }
-      const customParams = params && removeKeysWithoutValue(params )
-      this.socket.emit(
+      const customParams = params && removeKeysWithoutValue(params);
+      this.socketRPC.emit(
         'request',
         { method: event, params: customParams || data || {} },
-        (response) => {
-          if (Object.keys(response).length && response.error) {
-            return reject(response);
+        ({ result }) => {
+          if (Object.keys(result).length || result.error) {
+            return reject(result);
           }
-          return resolve(response);
+          return resolve(result);
         }
       );
     });
 
   rest = (config) => this.http?.request({ ...this.http.defaults, ...config });
 
-  call = ({ transformResult = async (data) => data, ...args }) => this[METHOD](args).then(transformResult);
+  call = ({ transformResult = async (data) => data, ...args }) =>
+    this[METHOD](args).then(transformResult);
 
   create({ ws, http } = {}) {
     if (ws) {
-      this.socket = io(ws, { transports: ['websocket'], path: '/blockchain' });
-      this.socketRPC = io(ws, { transports: ['websocket'], path: '/rpc-v3' });
+      this.socket = io(`${ws}/blockchain`, { transports: ['websocket'] });
+      this.socketRPC = io(`${ws}/rpc-v3`, { transports: ['websocket'] });
     }
     if (http) {
       const request = axios.create({

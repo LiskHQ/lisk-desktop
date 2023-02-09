@@ -14,7 +14,7 @@ const TransactionAmount = ({
       { config
         ? (
           <DiscreetMode shouldEvaluateForOtherAccounts>
-            <span className={config.style}>
+            <span className={`${styles.amountValue} ${config.style}`}>
               {config.sign}
               <TokenAmount
                 val={amount}

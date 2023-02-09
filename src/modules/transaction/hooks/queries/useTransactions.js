@@ -1,6 +1,18 @@
+import { useState, useCallback, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { TRANSACTIONS } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
+import client from 'src/utils/api/client';
+
+/* istanbul ignore next */
+export const useTransactionsConfig = (customConfig = {}) => ({
+  url: `/api/${API_VERSION}/transactions`,
+  method: 'get',
+  event: 'get.transactions',
+  ...customConfig,
+  params: { limit, ...(customConfig?.params || {}) },
+});
 
 /**
  * Creates a custom hook for transaction list query
@@ -35,17 +47,49 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useTransactions = ({ config: customConfig = {}, options } = {}) => {
-  const config = {
-    url: `/api/${API_VERSION}/transactions`,
-    method: 'get',
-    event: 'update.transactions',
-    ...customConfig,
-    params: { limit, ...(customConfig?.params || {}) },
-  };
-  return useCustomInfiniteQuery({
-    keys: [TRANSACTIONS],
+export const useTransactions = ({
+  keys = [TRANSACTIONS],
+  config: customConfig = {},
+  options,
+  getUpdate,
+} = {}) => {
+  const [hasUpdate, setHasUpdate] = useState(false);
+  const queryClient = useQueryClient();
+  const config = useTransactionsConfig(customConfig);
+
+  /* istanbul ignore next */
+  const transactionUpdate = useCallback(() => {
+    setHasUpdate(true);
+  }, []);
+
+  useEffect(() => {
+    if (getUpdate) {
+      /* istanbul ignore next */
+      client.socket.on('new.transactions', transactionUpdate);
+      client.socket.on('delete.transactions', transactionUpdate);
+    }
+    return () => {
+      client.socket.off('new.transactions', transactionUpdate);
+      client.socket.off('delete.transactions', transactionUpdate);
+    };
+  }, [getUpdate]);
+
+  /* istanbul ignore next */
+  const invalidateData = useCallback(async () => {
+    setHasUpdate(false);
+    await queryClient.invalidateQueries(TRANSACTIONS);
+    // @todo invalid this transaction by specific unique query with config
+  }, [queryClient, setHasUpdate]);
+
+  const response = useCustomInfiniteQuery({
+    keys,
     config,
     options,
   });
+
+  return {
+    ...response,
+    hasUpdate,
+    addUpdate: invalidateData,
+  };
 };

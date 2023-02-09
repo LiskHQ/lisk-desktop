@@ -1,0 +1,451 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.detailsContainer,
+.highlightContainer {
+  overflow: hidden;
+
+  & h1.heading {
+    @mixin headingNormal;
+
+    font-size: 20px;
+    padding-left: 8px;
+  }
+
+  & .content {
+    flex-flow: row nowrap;
+    margin-left: 0;
+    flex: 1;
+
+    & a {
+      text-decoration: none;
+    }
+  }
+
+  & > header {
+    padding-top: 0px !important;
+    padding-bottom: 16px !important;
+    height: fit-content !important;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  & .statsContainer {
+    flex-flow: row nowrap;
+  }
+
+  & .stakesWrapper {
+    width: 100%;
+
+    & > div:first-child {
+      height: fit-content;
+    }
+  }
+
+  & .stakesContainer {
+    display: flex !important;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: flex-start !important;
+    row-gap: 30px;
+    column-gap: 52px;
+    flex-wrap: wrap;
+
+    & > header {
+      display: none;
+    }
+
+    & button {
+      grid-column: 1/5;
+      margin-top: -15px;
+      border-top: none;
+    }
+  }
+
+  & .accountSummary {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+
+    & p {
+      @mixin addressFont;
+
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    & span {
+      @mixin contentNormal;
+
+      font-family: var(--heading-font);
+      font-size: var(--paragraph-font-size-s);
+      font-weight: 500;
+      margin: 0;
+      color: var(--color-blue-gray);
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .container {
+    & .statsContainer {
+      flex-flow: row wrap;
+    }
+
+    & .stakesContainer {
+      grid-template-columns: repeat(auto-fill, 33.3%);
+
+      & button {
+        grid-column: 1/4;
+      }
+    }
+  }
+}
+
+.details {
+  flex-shrink: 0;
+  flex-grow: 1;
+  border-radius: 5px !important;
+
+  & .itemContainer {
+    border-bottom: 1px solid var(--color-platinum);
+    padding: 16px 0;
+    margin-left: 0;
+
+    &:last-child {
+      border: none;
+      padding-bottom: 0;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    & > button {
+      width: 20px;
+      max-width: 20px;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 50%;
+    }
+  }
+
+  & .item {
+    margin-left: 16px;
+    flex: 1;
+
+    & .title {
+      @mixin contentNormal;
+
+      color: var(--color-slate-gray);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      & > button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & > img {
+          width: 14px;
+        }
+      }
+
+      &:global(.dark) {
+        color: var(--color-manatee-gray);
+      }
+    }
+
+    & .value {
+      margin-top: 8px;
+      color: var(--color-maastricht-blue);
+
+      &.capitalized {
+        text-transform: capitalize;
+      }
+
+      @media (--large-viewport) {
+        & :last-child {
+          @mixin contentSmall;
+        }
+      }
+    }
+  }
+}
+
+.column {
+  & .highlight {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    height: 156px;
+    border-radius: 5px !important;
+    flex: 1;
+    overflow: hidden;
+
+    &:nth-child(2) {
+      margin: 0;
+    }
+
+    & .content {
+      width: max-content;
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+      padding-top: 20px;
+
+      &.consecutiveMissedBlocks {
+        flex-basis: 50%;
+      }
+
+      &.reward {
+        width: 100%;
+        box-sizing: border-box;
+        padding-right: 20px;
+
+        & > .title > div {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          flex-wrap: wrap;
+        }
+
+        & > .title > div a {
+          font-size: var(--button-font-size-s);
+          font-weight: var(--font-weight-normal);
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+
+          & > img {
+            padding-left: 5px;
+          }
+        }
+      }
+
+      & .title {
+        @mixin contentNormal;
+
+        color: var(--color-slate-gray);
+        margin-bottom: 15px;
+
+        &:global(.dark) {
+          color: var(--color-manatee-gray);
+        }
+      }
+
+      & > *:not(.title):not(.highlighIcon) {
+        @mixin validatorPerformanceValueFont;
+
+        color: var(--color-maastricht-blue);
+      }
+    }
+
+    & .highlighIcon {
+      align-self: flex-end;
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      height: 120px;
+
+      & > img {
+        width: 100%;
+      }
+
+      &.productivity {
+        height: 122px;
+        min-width: 158px;
+        bottom: -14px;
+      }
+
+      &.generatedBlocks {
+        padding-right: 20px;
+        min-width: 140px;
+        bottom: -19px;
+
+        & img {
+          width: 100%;
+        }
+      }
+
+      &.consecutiveMissedBlocks {
+        right: 12px;
+        align-items: center;
+        height: 156px;
+        position: absolute;
+        min-width: 158px;
+        bottom: -10px;
+      }
+
+      &.reward {
+        height: 108px;
+        width: '100%';
+        padding-right: 20px;
+        position: relative;
+        right: 15px;
+        bottom: -9px;
+
+        & img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  & .full {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 332px;
+    border-radius: 5px;
+    flex: 1;
+
+    &:nth-child(2) {
+      margin: 0;
+    }
+
+    & .content {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 20px 0 20px;
+
+      & .title {
+        @mixin contentNormal;
+
+        color: var(--color-slate-gray);
+        margin-bottom: 15px;
+
+        &:global(.dark) {
+          color: var(--color-manatee-gray);
+        }
+      }
+
+      & .validatorDescription {
+        & p {
+          font-size: var(--font-size-small-secondary);
+        }
+
+        & p:first-child {
+          margin-bottom: 7px;
+        }
+
+        & p:last-child {
+          margin-top: 0 !important;
+        }
+
+        & p:only-child {
+          margin-top: var(--paragraph-font-size-s) !important;
+          margin-bottom: var(--paragraph-font-size-s) !important;
+        }
+
+        & .details {
+          & p {
+            color: var(--color-link-active);
+            cursor: pointer;
+          }
+        }
+
+        &:global(.dark) {
+          color: var(--color-manatee-gray);
+        }
+      }
+
+      & > *:not(.title):not(.validatorDescription):not(.highlighIcon) {
+        @mixin validatorPerformanceValueFont;
+
+        color: var(--color-maastricht-blue);
+      }
+    }
+
+    & .highlighIcon {
+      align-self: flex-end;
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      height: 120px;
+      width: 210px;
+
+      & > img {
+        width: 100%;
+        margin-bottom: -45px;
+      }
+    }
+  }
+}
+
+.icon {
+  height: 16px;
+}
+
+.stakerRow {
+  width: 238px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  & .address {
+    @mixin contentLargest;
+
+    padding-left: 10px;
+    color: var(--color-maastricht-blue);
+  }
+
+  &::after {
+    display: none;
+    position: absolute;
+    width: calc(100% - 30px);
+    height: 1px;
+    left: 15px;
+    margin-top: 60px;
+    z-index: 0;
+    background: var(--color-platinum);
+  }
+
+  &:nth-child(4n) {
+    &::after {
+      content: '';
+      display: block;
+    }
+  }
+
+  @media (--medium-viewport) {
+    &:nth-child(4n) {
+      &::after {
+        display: none;
+      }
+    }
+
+    &:nth-child(3n) {
+      &::after {
+        content: '';
+        display: block;
+      }
+    }
+  }
+}
+
+.totalStakes {
+  color: var(--color-slate-gray);
+  padding-left: 5px;
+}
+
+.header {
+  padding: 24px 0px;
+}
+
+.editBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: solid 1px var(--color-edit-button-border);
+  background-color: var(--color-edit-button-background);
+  cursor: pointer;
+}

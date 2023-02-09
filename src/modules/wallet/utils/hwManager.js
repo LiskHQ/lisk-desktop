@@ -9,7 +9,7 @@ import {
   subscribeToDevicesList,
   validatePin,
   signMessage,
-} from '@libs/hwManager/communication';
+} from '@libs/hwServer/communication';
 import { extractAddressFromPublicKey } from './account';
 import { getUsedHWAccounts } from './api';
 

@@ -205,3 +205,9 @@
     transform: rotate(-45deg);
   }
 }
+
+.sm {
+  width: 50%;
+  max-width: 503px;
+  min-width: 450px;
+}

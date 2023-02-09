@@ -1,12 +1,12 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import { truncateAddress } from '@wallet/utils/account';
-import styles from './walletsAndDeletegates.css';
+import styles from './walletsAndValidators.css';
 
 const Wallets = ({
   wallets, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
-  const isDelegate = wallets.some(wallet => wallet.isDelegate);
+  const isValidator = wallets.some(wallet => wallet.isValidator);
 
   return (
     <div className={`${styles.wrapper} accounts`}>
@@ -26,7 +26,7 @@ const Wallets = ({
             <WalletVisual address={wallet.address} />
             <div className={styles.walletInformation}>
               {
-                isDelegate
+                isValidator
                   ? (
                     <>
                       <div>
@@ -50,12 +50,12 @@ const Wallets = ({
               }
             </div>
             <span className={styles.accountBalance}>
-              {isDelegate
+              {isValidator
                 ? (
                   <span className={`${styles.tag} tag`}>
                     {
                       wallet.rank
-                        ? t('Delegate #{{rank}}', { rank: wallet.rank })
+                        ? t('Validator #{{rank}}', { rank: wallet.rank })
                         : '-'
                     }
                   </span>

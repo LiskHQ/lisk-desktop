@@ -3,15 +3,18 @@ import { useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { selectActiveTokenAccount, selectNetwork } from 'src/redux/selectors';
-import routes from 'src/routes/routes';
-import { extractAddressFromPublicKey } from '@wallet/utils/account';
+import { selectNetwork } from 'src/redux/selectors';
+import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
+import WalletVisual from '@wallet/components/walletVisual';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
+import { useCurrentAccount } from '@account/hooks';
 import BoxContent from 'src/theme/box/content';
 import BoxInfoText from 'src/theme/box/infoText';
 import Dialog from 'src/theme/dialog/dialog';
+import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
+import defaultBackgroundImage from '@setup/react/assets/images/default-chain-background.png';
 import Members from '../multisignatureMembers';
 
 import styles from './styles.css';
@@ -23,11 +26,15 @@ const emptyKeys = {
 };
 
 const MultisigAccountDetails = ({ t, wallet, history }) => {
-  const hostAccount = useSelector(selectActiveTokenAccount);
+  const [currentAccount] = useCurrentAccount();
   const network = useSelector(selectNetwork);
-  const isHost = history.location.pathname === routes.wallet.path;
-  const data = isHost ? hostAccount : wallet.data;
-  const { numberOfSignatures, optionalKeys, mandatoryKeys } = data.keys || emptyKeys;
+  const queryAddress = selectSearchParamValue(
+    history.location.search,
+    'address',
+  );
+  const address = queryAddress || currentAccount.metadata.address;
+  const { numberOfSignatures, optionalKeys, mandatoryKeys } = wallet.data.keys || emptyKeys;
+  const groupPublicKey = wallet.data.publicKey || currentAccount.metadata.pubkey;
 
   const members = useMemo(
     () =>
@@ -48,13 +55,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
   );
 
   useEffect(() => {
-    if (!isHost) {
-      const address = selectSearchParamValue(
-        history.location.search,
-        'address',
-      );
-      wallet.loadData({ address });
-    }
+    wallet.loadData({ address });
   }, [network]);
 
   return (
@@ -62,41 +63,58 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
       hasClose
       className={`${grid.row} ${grid['center-xs']} ${styles.container}`}
     >
+      <header className={styles.header}>
+        <img src={defaultBackgroundImage} className={styles.bg} />
+        <WalletVisual
+          address={address}
+          size={64}
+          className={styles.avatar}
+        />
+      </header>
       <Box isLoading={false} className={styles.wrapper}>
-        <BoxHeader>
-          <h1>{t('Multisignature account details')}</h1>
-        </BoxHeader>
         <BoxContent className={styles.mainContent}>
-          <BoxInfoText>
-            <span>
-              {t(
-                'This is a multisignature account that is controlled by a group of accounts.',
-              )}
-            </span>
-            <span>
-              <br />
-            </span>
-            <span>
-              {t(
-                'This account requires {{numberOfSignatures}} signatures to create a valid transaction.',
-                { numberOfSignatures },
-              )}
-            </span>
-          </BoxInfoText>
-          <Members members={members} t={t} />
-          <div className={styles.infoContainer}>
-            <div className={styles.numberOfSignatures}>
-              {t('Required signatures')}
-              <Tooltip position="top right" indent>
-                <span>
-                  {t(
-                    'To provide a required signature, use the "Sign multisignature" tool in the sidebar."',
-                  )}
-                </span>
-              </Tooltip>
+          <BoxInfoText className={styles.nameAndAddress}>
+            <div className={styles.accountName}>
+              <h3>{currentAccount.metadata.name}</h3>
+              <Icon name="multisigKeys" />
             </div>
-            <span>{numberOfSignatures}</span>
+            <div className={styles.row}>
+              <span className={styles.title}>{t('Address')}:</span>
+              <CopyToClipboard
+                value={address}
+                className={styles.rowValue}
+                text={truncateAddress(address)}
+              />
+            </div>
+            <div className={styles.row}>
+              <span className={styles.title}>{t('Public key')}:</span>
+              <CopyToClipboard
+                value={groupPublicKey}
+                className={styles.rowValue}
+                text={truncateAddress(groupPublicKey)}
+              />
+            </div>
+          </BoxInfoText>
+          <div className={styles.infoContainer}>
+            <div className={styles.column}>
+              <strong className={styles.sectionTitle}>{t('Multisignature details')}</strong>
+              <span className={styles.sectionValue}>{t('This account is a multisignature account.')}</span>
+            </div>
+            <div className={styles.column}>
+              <p>
+                {t('Required signatures')}
+                <Tooltip position="top left" indent>
+                  <span>
+                    {t(
+                      'To provide a required signature, use the "Sign multisignature" tool in the sidebar."',
+                    )}
+                  </span>
+                </Tooltip>
+              </p>
+              <span>{numberOfSignatures}</span>
+            </div>
           </div>
+          <Members members={members} t={t} size={40} className={styles.members} />
         </BoxContent>
       </Box>
     </Dialog>

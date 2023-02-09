@@ -25,11 +25,11 @@ const ActionBar = ({
 }) => {
   const hostBalance = useSelector(selectAccountBalance) // @todo account has multiple balance now;
   const disableButtons = hostBalance === 0;
-  const vote = useSelector((state) => state.voting[address]);
+  const stake = useSelector((state) => state.staking[address]);
   const lskAddress = useSelector(selectLSKAddress);
   const initialValue = isWalletRoute ? {} : { recipient: address };
 
-  const voteButtonTitle = vote ? t('Edit vote') : t('Add to votes');
+  const stakeButtonTitle = stake ? t('Edit stake') : t('Add to stakes');
 
   const sendTitle = isWalletRoute
     ? t('Send {{token}}', { token: activeToken })
@@ -41,43 +41,43 @@ const ActionBar = ({
         <div className={styles.actionRow}>
           {username && (
             <DialogLink
-              component={!isBanned && 'editVote'}
+              component={!isBanned && 'editStake'}
               data={pomStart}
-              className={`${styles.button} add-vote`}
+              className={`${styles.button}`}
             >
               <Tooltip
                 position="bottom"
                 size="maxContent"
                 content={(
                   <SecondaryButton
-                    className={`${styles.voteButton} ${
+                    className={`${styles.stakeButton} ${
                       isBanned && styles.disabled
-                    } ${!isBanned && 'open-add-vote-dialog'}`}
+                    } ${!isBanned && 'open-add-stake-dialog'}`}
                     size="m"
                   >
-                    {voteButtonTitle}
+                    {stakeButtonTitle}
                   </SecondaryButton>
                 )}
               >
                 <p>
                   {isBanned
-                    ? t('You cannot vote for this delegate')
-                    : t('Vote for delegate')}
+                    ? t('You cannot stake for this validator')
+                    : t('Stake for validator')}
                 </p>
               </Tooltip>
             </DialogLink>
           )}
           {!username && lskAddress === address && (
             <DialogLink
-              className={styles.registerDelegate}
-              component="registerDelegate"
+              className={styles.registerValidator}
+              component="registerValidator"
             >
               <TertiaryButton
-                className="register-delegate"
+                className="register-validator"
                 size="m"
                 disabled={disableButtons}
               >
-                {t('Register delegate')}
+                {t('Register validator')}
               </TertiaryButton>
             </DialogLink>
           )}

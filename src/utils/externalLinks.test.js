@@ -62,14 +62,14 @@ describe('externalLinks', () => {
     expect(history.replace).toHaveBeenCalledWith('/wallet?modal=send&recipient=1L&amount=100');
   });
 
-  it('opens voting queue modal', () => {
+  it('opens staking queue modal', () => {
     const callbacks = {};
     window.ipc = {
       on: (event, callback) => { callbacks[event] = callback; },
     };
 
     externalLinks.init();
-    callbacks.openUrl({}, 'lisk://vote?votes=delegate');
-    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=VotingQueue&votes=delegate');
+    callbacks.openUrl({}, 'lisk://stake?stakes=validator');
+    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=StakingQueue&stakes=validator');
   });
 });

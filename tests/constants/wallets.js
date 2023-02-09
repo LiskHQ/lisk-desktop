@@ -14,31 +14,31 @@ const wallets = {
     token: { balance: '9897000000000000' },
     sequence: { nonce: '1' },
     keys: { numberOfSignatures: 0, mandatoryKeys: [], optionalKeys: [] },
-    dpos: {
-      delegate: {},
-      sentVotes: [],
+    pos: {
+      validator: {},
+      sentStakes: [],
     },
   },
-  delegate: {
+  validator: {
     passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
     summary: {
       publicKey: '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19',
       serverPublicKey: '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19',
       address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
       balance: 1000e8,
-      isDelegate: true,
+      isValidator: true,
     },
     token: { balance: 1000e8 },
     sequence: { },
-    dpos: {
-      delegate: {
+    pos: {
+      validator: {
         username: 'genesis_17',
         consecutiveMissedBlocks: 0,
         isBanned: false,
-        lastForgedHeight: 618820,
+        lastGeneratedHeight: 618820,
         rank: 18,
         status: 'active',
-        totalVotesReceived: '100000000000',
+        totalStakeReceived: '100000000000',
       },
     },
   },
@@ -57,23 +57,23 @@ const wallets = {
       balance: '9897000000000000',
     },
     sequence: { nonce: '0' },
-    dpos: {
-      delegate: {},
-      sentVotes: [],
+    pos: {
+      validator: {},
+      sentStakes: [],
     },
   },
-  delegate_candidate: {
+  validator_candidate: {
     passphrase: 'right cat soul renew under climb middle maid powder churn cram coconut',
     summary: {
       publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
       serverPublicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
       address: 'lsksckkjs2c8dnu7vhcku825cp62ed6eyxd8pbt6p',
-      isDelegate: false,
+      isValidator: false,
     },
     token: { },
     sequence: { },
-    dpos: {
-      delegate: { username: 'test' },
+    pos: {
+      validator: { username: 'test' },
     },
   },
   multiSig_candidate: {
@@ -85,9 +85,9 @@ const wallets = {
     },
     token: {},
     sequence: { nonce: 1 },
-    dpos: {
-      delegate: {},
-      sentVotes: [],
+    pos: {
+      validator: {},
+      sentStakes: [],
     },
   },
   multiSig: {
@@ -108,9 +108,9 @@ const wallets = {
       mandatoryKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f'],
       optionalKeys: ['0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', '197cf311f678406bc72a8edfdc3dffe6f59f49c4550a860e4b68fb20382211d0'],
     },
-    dpos: {
-      delegate: {},
-      sentVotes: [],
+    pos: {
+      validator: {},
+      sentStakes: [],
     },
   },
   send_all_wallet: {
@@ -122,9 +122,9 @@ const wallets = {
     },
     token: { },
     sequence: { },
-    dpos: {
-      delegate: {},
-      sentVotes: [],
+    pos: {
+      validator: {},
+      sentStakes: [],
     },
   },
   without_initialization: {
@@ -136,9 +136,9 @@ const wallets = {
     },
     token: { balance: 0 },
     sequence: { },
-    dpos: {
-      delegate: {},
-      sentVotes: [],
+    pos: {
+      validator: {},
+      sentStakes: [],
     },
   },
   testnet_guy: {
@@ -149,19 +149,9 @@ const wallets = {
     },
     token: { balance: 200000000 },
     sequence: { },
-    dpos: {
-      delegate: {},
-      sentVotes: [],
-    },
-  },
-  mainnet_delegate: {
-    address: '2433857930558702776L',
-    summary: {
-    },
-    token: { },
-    sequence: { },
-    dpos: {
-      delegate: { username: 'tembo' },
+    pos: {
+      validator: {},
+      sentStakes: [],
     },
   },
   non_migrated: {
@@ -172,7 +162,7 @@ const wallets = {
       username: '',
       publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86',
       isMigrated: false,
-      isDelegate: false,
+      isValidator: false,
       isMultisignature: false,
     },
     token: {
@@ -186,13 +176,13 @@ const wallets = {
       mandatoryKeys: [],
       optionalKeys: [],
     },
-    dpos: {
-      delegate: {
+    pos: {
+      validator: {
         username: '',
         consecutiveMissedBlocks: 0,
-        lastForgedHeight: 0,
+        lastGeneratedHeight: 0,
         isBanned: false,
-        totalVotesReceived: '0',
+        totalStakeReceived: '0',
       },
     },
     legacy: {
@@ -223,7 +213,7 @@ const wallets = {
       ],
       optionalKeys: [],
     },
-    dpos: { delegate: {} },
+    validator: {},
   },
   wallet2P: {
     passphrase: 'steak avoid couple fog ability chalk jacket electric rifle fuel tuition van',
@@ -262,8 +252,8 @@ const wallets = {
         },
       ],
     },
-    dpos: {
-      delegate: {},
+    pos: {
+      validator: {},
       unlocking: [],
     },
   },
@@ -272,7 +262,7 @@ const wallets = {
     summary: {
       address: 'lskaror3zjhrg85edkfemyg7aoq4cq6jqycnxgkr9',
       balance: '0',
-      isDelegate: false,
+      isValidator: false,
       isMigrated: false,
       isMultisignature: false,
       legacyAddress: '13537424230540679628L',
@@ -283,13 +273,13 @@ const wallets = {
       address: '13537424230540679628L',
       balance: '12100000',
     },
-    dpos: {
-      delegate: {
+    pos: {
+      validator: {
         username: '',
         consecutiveMissedBlocks: 0,
-        lastForgedHeight: 0,
+        lastGeneratedHeight: 0,
         isBanned: false,
-        totalVotesReceived: '0',
+        totalStakeReceived: '0',
       },
     },
   },

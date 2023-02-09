@@ -2,7 +2,7 @@
 import { Then } from 'cypress-cucumber-preprocessor/steps';
 import { ss } from '../../../constants';
 
-And(/^I search for delegate ([^s]+)$/, function (string) {
+And(/^I search for validator ([^s]+)$/, function (string) {
   cy.wait(100);
   cy.get(ss.searchInput).type(string);
 });

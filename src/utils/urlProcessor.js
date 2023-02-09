@@ -2,9 +2,9 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import { getAccounts } from '@wallet/utils/api';
 import { regex } from 'src/const/regex';
 import { validateAddress } from 'src/utils/validators';
-import { voteEdited } from '@dpos/validator/store/actions/voting';
+import { stakeEdited } from '@pos/validator/store/actions/staking';
 
-const isUsernameValid = username => regex.name.test(username);
+const isUsernameValid = (username) => regex.name.test(username);
 
 /**
  * Returns an empty array if the given list is not an array
@@ -25,7 +25,7 @@ const normalizeUsernames = (usernames) => {
     return [];
   }
 
-  const areUsernamesValid = usernames.every(username => isUsernameValid(username));
+  const areUsernamesValid = usernames.every((username) => isUsernameValid(username));
 
   if (!areUsernamesValid) {
     return [];
@@ -36,7 +36,7 @@ const normalizeUsernames = (usernames) => {
 
 /**
  * Fetches the accounts corresponding to the usernames
- * passed by votes and unvotes query params
+ * passed by stakes and unstakes query params
  *
  * @param {String} search - Search string from history.location
  * @param {Object} network - network config from Redux store
@@ -44,31 +44,34 @@ const normalizeUsernames = (usernames) => {
  */
 const urlProcessor = (search, network) => {
   const params = parseSearchParams(search);
-  const votes = normalizeUsernames(params.votes);
-  const unvotes = normalizeUsernames(params.unvotes);
+  const stakes = normalizeUsernames(params.stakes);
+  const unstakes = normalizeUsernames(params.unstakes);
 
-  if (votes.length + unvotes.length === 0) {
+  if (stakes.length + unstakes.length === 0) {
     return { data: [] };
   }
 
   return getAccounts({
     network,
-    params: { usernameList: [...votes, ...unvotes] },
+    params: { usernameList: [...stakes, ...unstakes] },
   });
 };
 
-const setVotesByLaunchProtocol = search =>
-  async (dispatch, getState) => {
-    const { network } = getState();
-    const accounts = await urlProcessor(search, network);
+const setStakesByLaunchProtocol = (search) => async (dispatch, getState) => {
+  const { network } = getState();
+  const accounts = await urlProcessor(search, network);
 
-    return dispatch(
-      voteEdited(accounts.data
+  return dispatch(
+    stakeEdited(
+      accounts.data
         .filter(({ summary }) => validateAddress(summary.address) === 0)
-        .map(
-          ({ summary, dpos }) => ({ address: summary.address, username: dpos.delegate.username, amount: '' }),
-        )),
-    );
-  };
+        .map(({ summary, pos }) => ({
+          address: summary.address,
+          username: pos.validator.username,
+          amount: '',
+        }))
+    )
+  );
+};
 
-export default setVotesByLaunchProtocol;
+export default setStakesByLaunchProtocol;

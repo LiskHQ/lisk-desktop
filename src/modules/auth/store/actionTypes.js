@@ -1,5 +1,5 @@
 const actionTypes = {
-  accountAddVotes: 'ACCOUNT_ADD_VOTES',
+  accountAddStakes: 'ACCOUNT_ADD_STAKES',
   accountRemoved: 'ACCOUNT_REMOVED',
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
   accountUpdated: 'ACCOUNT_UPDATED',

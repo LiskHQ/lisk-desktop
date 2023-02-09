@@ -20,6 +20,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import TransactionEvents from '@transaction/components/TransactionEvents';
 import { useCurrentAccount } from '../../hooks';
+import styles from './accountDetails.css';
 
 const AccountDetails = ({ history }) => {
   const { t } = useTranslation();
@@ -68,7 +69,7 @@ const AccountDetails = ({ history }) => {
         <BoxHeader>
           <BoxTabs {...tabs} />
         </BoxHeader>
-        <BoxContent>
+        <BoxContent className={styles.content}>
           {activeTab === 'transactions' ? (
             <Transactions address={currentAddress} />
           ) : (

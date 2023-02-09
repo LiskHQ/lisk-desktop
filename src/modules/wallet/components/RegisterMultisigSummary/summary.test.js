@@ -37,7 +37,7 @@ jest.mock('@transaction/utils/hwManager');
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 describe('Multisignature Summary component', () => {
-  const mandatoryKeys = [accounts.genesis, accounts.delegate].map((item) => item.summary.publicKey);
+  const mandatoryKeys = [accounts.genesis, accounts.validator].map((item) => item.summary.publicKey);
 
   let wrapper;
   const props = {
@@ -91,7 +91,7 @@ describe('Multisignature Summary component', () => {
 
   useAuth.mockReturnValue({ data: mockAuth });
   useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.reduce(
+    mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
     )

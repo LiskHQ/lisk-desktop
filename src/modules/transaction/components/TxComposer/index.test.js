@@ -16,23 +16,16 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   }),
 }));
 
-jest.mock('@network/hooks/useCommandsSchema');
-
 describe('TxComposer', () => {
-  const transaction = {
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-  params: {
-      recipient: { address: accounts.genesis.summary.address },
-      amount: 100000,
-      data: 'test-data',
-      token: { tokenID: '00000000' },
-    },
-    isValid: true,
-    feedback: [],
+  const commandParams = {
+    tokenID: '00000000',
+    amount: 100000,
+    recipientAddress: accounts.genesis.summary.address,
+    data: 'test-data',
   };
   const props = {
     children: null,
-    transaction,
+    commandParams,
     onComposed: jest.fn(),
     onConfirm: jest.fn(),
     className: 'test-class-name',
@@ -41,15 +34,9 @@ describe('TxComposer', () => {
       moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     },
   };
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.reduce(
-      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
-      {}
-    )
-  );
 
   useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.reduce(
+    mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
     )
@@ -95,7 +82,7 @@ describe('TxComposer', () => {
       transaction: {
         isValid: true,
         feedback: [],
-        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
         params: {
           name: 'test_username',
           generatorKey: genKey,

@@ -6,7 +6,7 @@ Feature: Add bookmark
   #   When I click on searchIcon
 
   # @basic
-  # Scenario: Add a delegate to bookmarks
+  # Scenario: Add a validator to bookmarks
   #   And I search for account lskervshto3so95nq6eduvrzyvyw3z6s6th52vxjx
   #   Then I click on searchAccountRow
   #   Then I should be on Account page

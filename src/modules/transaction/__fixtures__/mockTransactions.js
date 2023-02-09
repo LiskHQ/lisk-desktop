@@ -14,14 +14,14 @@ const transaction = (index) => ({
     amount: '150000000',
     recipientAddress: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     data: 'message',
-    votes:
+    stakes:
       index >= 15
         ? [
             {
-              delegateAddress: 'lskkkb9gcggfqzsusrnu7zb9uzfop96u7596zr5w2',
+              validatorAddress: 'lskkkb9gcggfqzsusrnu7zb9uzfop96u7596zr5w2',
             },
             {
-              delegateAddress: 'lskma5wphbxzf8zkvwumtamjosauzdo5s2qepgrty',
+              validatorAddress: 'lskma5wphbxzf8zkvwumtamjosauzdo5s2qepgrty',
             },
           ]
         : undefined,

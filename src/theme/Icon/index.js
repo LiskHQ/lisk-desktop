@@ -12,6 +12,7 @@ import arrowLeftInactive from '@setup/react/assets/images/icons/arrow-left-inact
 import arrowLeftTailed from '@setup/react/assets/images/icons/arrow-left-tailed.svg';
 import arrowLeftTailedDark from '@setup/react/assets/images/icons/arrow-left-tailed-dark.svg';
 import arrowRight from '@setup/react/assets/images/icons/arrow-right.svg';
+import arrowBlueRight from '@setup/react/assets/images/icons/arrow-blue-right.svg';
 import arrowRightActive from '@setup/react/assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '@setup/react/assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '@setup/react/assets/images/icons/arrow-right-with-stroke.svg';
@@ -83,13 +84,9 @@ import transactionPending from '@setup/react/assets/images/icons/transaction-sta
 import transactionSuccess from '@setup/react/assets/images/icons/transaction-success.svg';
 import txDefault from '@setup/react/assets/images/icons/tx-default.svg';
 import txDefaultDark from '@setup/react/assets/images/icons/tx-default-dark.svg';
-import registerDelegate from '@setup/react/assets/images/icons/tx-delegate.svg';
-import registerDelegateDark from '@setup/react/assets/images/icons/tx-delegate-dark.svg';
-import vote from '@setup/react/assets/images/icons/tx-vote.svg';
-import voteDark from '@setup/react/assets/images/icons/tx-vote-dark.svg';
-import addedVotes from '@setup/react/assets/images/icons/added-votes.svg';
-import removedVotes from '@setup/react/assets/images/icons/removed-votes.svg';
-import totalVotes from '@setup/react/assets/images/icons/total-votes.svg';
+import registerValidator from '@setup/react/assets/images/icons/tx-registerValidator.svg';
+import registerValidatorDark from '@setup/react/assets/images/icons/tx-validator-dark.svg';
+import stake from '@setup/react/assets/images/icons/tx-stake.svg';
 import user from '@setup/react/assets/images/icons/user.svg';
 import userActive from '@setup/react/assets/images/icons/user-active.svg';
 import verifyMessageInputsView from '@setup/react/assets/images/icons/verify-message-inputs-view.svg';
@@ -124,12 +121,12 @@ import transactions from '@setup/react/assets/images/icons/transactions.svg';
 import transactionsDark from '@setup/react/assets/images/icons/transactions-dark.svg';
 import transactionsMonitor from '@setup/react/assets/images/icons/transactionsMonitor.svg';
 import transactionsMonitorActive from '@setup/react/assets/images/icons/transactionsMonitorActive.svg';
-import delegatesMonitor from '@setup/react/assets/images/icons/delegatesMonitor.svg';
-import delegatesMonitorActive from '@setup/react/assets/images/icons/delegatesMonitorActive.svg';
+import validatorsMonitor from '@setup/react/assets/images/icons/validatorsMonitor.svg';
+import validatorsMonitorActive from '@setup/react/assets/images/icons/validatorsMonitorActive.svg';
 import networkMonitor from '@setup/react/assets/images/icons/networkMonitor.svg';
 import networkMonitorActive from '@setup/react/assets/images/icons/networkMonitorActive.svg';
-import voting from '@setup/react/assets/images/icons/voting.svg';
-import votingActive from '@setup/react/assets/images/icons/votingActive.svg';
+import staking from '@setup/react/assets/images/icons/staking.svg';
+import stakingActive from '@setup/react/assets/images/icons/stakingActive.svg';
 import signOut from '@setup/react/assets/images/icons/signOut.svg';
 import plus from '@setup/react/assets/images/icons/plus.svg';
 import plusActive from '@setup/react/assets/images/icons/plusActive.svg';
@@ -138,8 +135,8 @@ import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
 import removeRed from '@setup/react/assets/images/icons/remove-red.svg';
 import totalBlocks from '@setup/react/assets/images/icons/total-blocks.svg';
 import totalBlocksDark from '@setup/react/assets/images/icons/total-blocks-dark.svg';
-import blocksForged from '@setup/react/assets/images/icons/blocks-forged.svg';
-import blocksForgedDark from '@setup/react/assets/images/icons/blocks-forged-dark.svg';
+import blocksGenerated from '@setup/react/assets/images/icons/blocks-generated.svg';
+import blocksGeneratedDark from '@setup/react/assets/images/icons/blocks-generated-dark.svg';
 import distribution from '@setup/react/assets/images/icons/distribution.svg';
 import clock from '@setup/react/assets/images/icons/clock.svg';
 import clockDark from '@setup/react/assets/images/icons/clock-dark.svg';
@@ -151,14 +148,14 @@ import calendar from '@setup/react/assets/images/icons/calendar.svg';
 import calendarDark from '@setup/react/assets/images/icons/calendar-dark.svg';
 import weight from '@setup/react/assets/images/icons/weight.svg';
 import weightDark from '@setup/react/assets/images/icons/weight-dark.svg';
-import reward from '@setup/react/assets/images/icons/forged-lsk.svg';
-import rewardDark from '@setup/react/assets/images/icons/forged-lsk-dark.svg';
+import reward from '@setup/react/assets/images/icons/generated-lsk.svg';
+import rewardDark from '@setup/react/assets/images/icons/generated-lsk-dark.svg';
 import productivity from '@setup/react/assets/images/icons/productivity.svg';
 import productivityDark from '@setup/react/assets/images/icons/productivity-dark.svg';
 import missedBlocks from '@setup/react/assets/images/icons/missed-blocks.svg';
 import missedBlocksDark from '@setup/react/assets/images/icons/missed-blocks-dark.svg';
-import forgedBlocks from '@setup/react/assets/images/icons/forged-blocks.svg';
-import forgedBlocksDark from '@setup/react/assets/images/icons/forged-blocks-dark.svg';
+import generatedBlocks from '@setup/react/assets/images/icons/generated-blocks.svg';
+import generatedBlocksDark from '@setup/react/assets/images/icons/generated-blocks-dark.svg';
 import consecutiveMissedBlocks from '@setup/react/assets/images/icons/consecutive-missed-blocks.svg';
 import consecutiveMissedBlocksDark from '@setup/react/assets/images/icons/consecutive-missed-blocks-dark.svg';
 import lock from '@setup/react/assets/images/icons/lock.svg';
@@ -168,8 +165,8 @@ import unlock from '@setup/react/assets/images/icons/unlock.svg';
 import loading from '@setup/react/assets/images/icons/loading.svg';
 import unlockToken from '@setup/react/assets/images/icons/tx-unlock.svg';
 import unlockTokenDark from '@setup/react/assets/images/icons/tx-unlock-dark.svg';
-import votingQueueInactive from '@setup/react/assets/images/icons/voting-queue-inactive.svg';
-import votingQueueActive from '@setup/react/assets/images/icons/voting-queue-active.svg';
+import stakingQueueInactive from '@setup/react/assets/images/icons/staking-queue-inactive.svg';
+import stakingQueueActive from '@setup/react/assets/images/icons/staking-queue-active.svg';
 import deleteIcon from '@setup/react/assets/images/icons/delete.svg';
 import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg';
 import arrowRightTailed from '@setup/react/assets/images/icons/arrow-right-tailed.svg';
@@ -179,24 +176,26 @@ import registerMultisignature from '@setup/react/assets/images/icons/multisignat
 import multisignatureTransaction from '@setup/react/assets/images/icons/multisignatureTransaction.svg';
 import multisignatureTransactionDark from '@setup/react/assets/images/icons/multisignatureTransaction-dark.svg';
 import multiSignatureOutline from '@setup/react/assets/images/icons/multisignature-outline.svg';
+import multisigKeys from '@setup/react/assets/images/icons/keys-filled.svg';
+import multisigKeysDark from '@setup/react/assets/images/icons/keys-filled-dark.svg';
 import upload from '@setup/react/assets/images/icons/upload.svg';
-import delegateForged from '@setup/react/assets/images/icons/delegate-forged.svg';
-import delegateForgedDark from '@setup/react/assets/images/icons/delegate-forged-dark.svg';
-import delegateMissed from '@setup/react/assets/images/icons/delegate-missed.svg';
-import delegateMissedDark from '@setup/react/assets/images/icons/delegate-missed-dark.svg';
-import delegateWarning from '@setup/react/assets/images/icons/delegate-warning.svg';
-import delegateAwaiting from '@setup/react/assets/images/icons/delegate-awaiting.svg';
-import delegateAwaitingDark from '@setup/react/assets/images/icons/delegate-awaiting-dark.svg';
-import delegateActive from '@setup/react/assets/images/icons/delegate-active.svg';
-import delegateActiveDark from '@setup/react/assets/images/icons/delegate-active-dark.svg';
-import delegateStandby from '@setup/react/assets/images/icons/delegate-standby.svg';
-import delegateStandbyDark from '@setup/react/assets/images/icons/delegate-standby-dark.svg';
-import delegateIneligible from '@setup/react/assets/images/icons/delegate-ineligible.svg';
-import delegateIneligibleDark from '@setup/react/assets/images/icons/delegate-ineligible-dark.svg';
-import delegatePunished from '@setup/react/assets/images/icons/delegate-punished.svg';
-import delegatePunishedDark from '@setup/react/assets/images/icons/delegate-punished-dark.svg';
-import delegateBanned from '@setup/react/assets/images/icons/delegate-banned.svg';
-import delegateBannedDark from '@setup/react/assets/images/icons/delegate-banned-dark.svg';
+import validatorGenerated from '@setup/react/assets/images/icons/validator-generated.svg';
+import validatorGeneratedDark from '@setup/react/assets/images/icons/validator-generated-dark.svg';
+import validatorMissed from '@setup/react/assets/images/icons/validator-missed.svg';
+import validatorMissedDark from '@setup/react/assets/images/icons/validator-missed-dark.svg';
+import validatorWarning from '@setup/react/assets/images/icons/validator-warning.svg';
+import validatorAwaiting from '@setup/react/assets/images/icons/validator-awaiting.svg';
+import validatorAwaitingDark from '@setup/react/assets/images/icons/validator-awaiting-dark.svg';
+import validatorActive from '@setup/react/assets/images/icons/validator-active.svg';
+import validatorActiveDark from '@setup/react/assets/images/icons/validator-active-dark.svg';
+import validatorStandby from '@setup/react/assets/images/icons/validator-standby.svg';
+import validatorStandbyDark from '@setup/react/assets/images/icons/validator-standby-dark.svg';
+import validatorIneligible from '@setup/react/assets/images/icons/validator-ineligible.svg';
+import validatorIneligibleDark from '@setup/react/assets/images/icons/validator-ineligible-dark.svg';
+import validatorPunished from '@setup/react/assets/images/icons/validator-punished.svg';
+import validatorPunishedDark from '@setup/react/assets/images/icons/validator-punished-dark.svg';
+import validatorBanned from '@setup/react/assets/images/icons/validator-banned.svg';
+import validatorBannedDark from '@setup/react/assets/images/icons/validator-banned-dark.svg';
 import eyeInactive from '@setup/react/assets/images/icons/eye-inactive.svg';
 import eyeActive from '@setup/react/assets/images/icons/eye-active.svg';
 import liskIcon from '@setup/react/assets/images/icons/lisk-icon.svg';
@@ -206,8 +205,8 @@ import warningYellow from '@setup/react/assets/images/icons/warning-yellow.svg';
 import linkIcon from '@setup/react/assets/images/icons/link-icon.svg';
 import refresh from '@setup/react/assets/images/icons/refresh.svg';
 import refreshActive from '@setup/react/assets/images/icons/refresh-active.svg';
-import reportDelegateMisbehavior from '@setup/react/assets/images/icons/reportDelegateMisbehavior.svg';
-import reportDelegateMisbehaviorDark from '@setup/react/assets/images/icons/reportDelegateMisbehavior-dark.svg';
+import reportValidatorMisbehavior from '@setup/react/assets/images/icons/reportValidatorMisbehavior.svg';
+import reportValidatorMisbehaviorDark from '@setup/react/assets/images/icons/reportValidatorMisbehavior-dark.svg';
 import downloadUpdateFinish from '@setup/react/assets/images/icons/download-update-finish.svg';
 import downloadUpdateProgress from '@setup/react/assets/images/icons/download-update-progress.svg';
 import whiteLinkIcon from '@setup/react/assets/images/icons/white-link-icon.svg';
@@ -233,6 +232,8 @@ import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-
 import transferArrow from '@setup/react/assets/images/icons/transfer-arrow.svg';
 import receivedTransactionIcon from '@setup/react/assets/images/icons/received_transaction_icon.svg';
 import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
+import commissionsIcon from '@setup/react/assets/images/icons/commissions.svg';
+import editActiveIcon from '@setup/react/assets/images/icons/editActive.svg';
 
 export const icons = {
   academy,
@@ -269,8 +270,8 @@ export const icons = {
   feedback,
   feedbackActive,
   fileOutline,
-  forgedBlocks,
-  forgedBlocksDark,
+  generatedBlocks,
+  generatedBlocksDark,
   reward,
   rewardDark,
   help,
@@ -316,10 +317,9 @@ export const icons = {
   transactionSuccess,
   txDefault,
   txDefaultDark,
-  registerDelegate,
-  registerDelegateDark,
-  vote,
-  voteDark,
+  registerValidator,
+  registerValidatorDark,
+  stake,
   user,
   userActive,
   verifyMessageInputsView,
@@ -333,9 +333,6 @@ export const icons = {
   warningIconBlue,
   warningRound,
   warningFolder,
-  addedVotes,
-  removedVotes,
-  totalVotes,
   qrCode,
   qrCodeActive,
   copyActive,
@@ -370,20 +367,20 @@ export const icons = {
   transactionsDark,
   transactionsMonitor,
   transactionsMonitorActive,
-  delegatesMonitor,
-  delegatesMonitorActive,
+  validatorsMonitor,
+  validatorsMonitorActive,
   networkMonitor,
   networkMonitorActive,
-  voting,
-  votingActive,
+  staking,
+  stakingActive,
   signOut,
   plus,
   plusActive,
   remove,
   totalBlocks,
   totalBlocksDark,
-  blocksForged,
-  blocksForgedDark,
+  blocksGenerated,
+  blocksGeneratedDark,
   distribution,
   clock,
   clockDark,
@@ -399,28 +396,28 @@ export const icons = {
   loading,
   unlockToken,
   unlockTokenDark,
-  votingQueueInactive,
-  votingQueueActive,
+  stakingQueueInactive,
+  stakingQueueActive,
   download,
   downloadBlue,
   upload,
-  delegateForged,
-  delegateForgedDark,
-  delegateMissed,
-  delegateMissedDark,
-  delegateWarning,
-  delegateAwaiting,
-  delegateAwaitingDark,
-  delegateActive,
-  delegateStandby,
-  delegateIneligible,
-  delegatePunished,
-  delegateBanned,
-  delegateActiveDark,
-  delegateStandbyDark,
-  delegateIneligibleDark,
-  delegatePunishedDark,
-  delegateBannedDark,
+  validatorGenerated,
+  validatorGeneratedDark,
+  validatorMissed,
+  validatorMissedDark,
+  validatorWarning,
+  validatorAwaiting,
+  validatorAwaitingDark,
+  validatorActive,
+  validatorStandby,
+  validatorIneligible,
+  validatorPunished,
+  validatorBanned,
+  validatorActiveDark,
+  validatorStandbyDark,
+  validatorIneligibleDark,
+  validatorPunishedDark,
+  validatorBannedDark,
   eyeActive,
   eyeInactive,
   liskIcon,
@@ -434,8 +431,8 @@ export const icons = {
   multisignatureTransactionDark,
   refresh,
   refreshActive,
-  reportDelegateMisbehavior,
-  reportDelegateMisbehaviorDark,
+  reportValidatorMisbehavior,
+  reportValidatorMisbehaviorDark,
   lockedBalance,
   lockedBalanceDark,
   downloadUpdateProgress,
@@ -466,6 +463,11 @@ export const icons = {
   transferArrow,
   receivedTransactionIcon,
   sentTransactionIcon,
+  commissionsIcon,
+  editActiveIcon,
+  arrowBlueRight,
+  multisigKeys,
+  multisigKeysDark,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

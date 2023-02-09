@@ -2,10 +2,11 @@ const moduleCommandNameMap = {
   transfer: 'token:transfer',
   crossChainTransfer: 'token:crossChaintransfer',
   registerMultisignature: 'auth:registerMultisignature',
-  registerDelegate: 'dpos:registerDelegate',
-  voteDelegate: 'dpos:voteDelegate',
-  unlock: 'dpos:unlock',
-  reportDelegateMisbehavior: 'dpos:reportDelegateMisbehavior',
+  registerValidator: 'pos:registerValidator',
+  stake: 'pos:stake',
+  unlock: 'pos:unlock',
+  claimRewards: 'pos:claimRewards',
+  reportValidatorMisbehavior: 'pos:reportMisbehavior',
   reclaim: 'legacy:reclaimLSK',
 };
 
@@ -20,19 +21,23 @@ const moduleCommandMap = {
   },
   [moduleCommandNameMap.unlock]: {
     maxFee: 1e7,
-    icon: 'unlockToken',
+    icon: 'unlock',
   },
-  [moduleCommandNameMap.voteDelegate]: {
-    maxFee: 1e8,
-    icon: 'vote',
-  },
-  [moduleCommandNameMap.registerDelegate]: {
-    maxFee: 25e8,
-    icon: 'registerDelegate',
-  },
-  [moduleCommandNameMap.reportDelegateMisbehavior]: {
+  [moduleCommandNameMap.claimRewards]: {
     maxFee: 1e7,
-    icon: 'reportDelegateMisbehavior',
+    icon: 'claimRewards',
+  },
+  [moduleCommandNameMap.stake]: {
+    maxFee: 1e8,
+    icon: 'stake',
+  },
+  [moduleCommandNameMap.registerValidator]: {
+    maxFee: 25e8,
+    icon: 'registerValidator',
+  },
+  [moduleCommandNameMap.reportValidatorMisbehavior]: {
+    maxFee: 1e7,
+    icon: 'reportValidatorMisbehavior',
   },
   [moduleCommandNameMap.registerMultisignature]: {
     maxFee: 5e8,

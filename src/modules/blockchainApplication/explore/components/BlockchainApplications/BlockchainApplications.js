@@ -40,7 +40,7 @@ const BlockchainApplications = ({
               id="blockchainApplications"
             />
             <SessionManager
-              name={t('Connections')}
+              name={t('Wallet connections')}
               id="SessionManager"
             />
           </TabsContainer>

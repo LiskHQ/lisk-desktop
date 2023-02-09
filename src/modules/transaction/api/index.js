@@ -12,7 +12,7 @@ import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleComman
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
-import { getDelegates } from '@dpos/validator/api';
+import { getValidators } from '@pos/validator/api';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';
@@ -87,23 +87,23 @@ export const getTransactions = ({ network, params, baseUrl }) => {
 };
 
 /**
- * Fetches and generates an array of monthly number of delegate
+ * Fetches and generates an array of monthly number of validator
  * registrations on Lisk blockchain.
  *
  * @param {Object} Network - Network setting from Redux store
- * @returns {Promise} Registered delegates list API call
+ * @returns {Promise} Registered validators list API call
  */
-export const getRegisteredDelegates = async ({ network }) => {
-  const delegates = await getDelegates({
+export const getRegisteredValidators = async ({ network }) => {
+  const validators = await getValidators({
     network,
     params: { limit: 1 },
   });
   const txs = await getTransactions({
     network,
-    params: { moduleCommand: 'dpos:registerDelegate', limit: 100 },
+    params: { moduleCommand: 'pos:registerValidator', limit: 100 },
   });
 
-  if (delegates.error || txs.error) {
+  if (validators.error || txs.error) {
     return Error('Error fetching data.');
   }
 
@@ -135,7 +135,7 @@ export const getRegisteredDelegates = async ({ network }) => {
 
         return acc;
       },
-      [[getDate(txs.data[0].block.timestamp), delegates.meta.total]]
+      [[getDate(txs.data[0].block.timestamp), validators.meta.total]]
     );
 
   // Add the date of one month before the last tx
@@ -219,7 +219,7 @@ export const getTransactionFee = async ({
   const allocateEmptySignaturesWithEmptyBuffer = (signatureCount) =>
     new Array(signatureCount).fill(Buffer.alloc(64));
 
-  // @TODO: impelement transaction fee calculation based on domain fee constants
+  // @TODO: implement transaction fee calculation based on domain fee constants
   const { mandatoryKeys, optionalKeys } = senderAccount;
   const minFee = transactions.computeMinFee(
     {
@@ -228,17 +228,17 @@ export const getTransactionFee = async ({
         ...transactionObject.params,
         ...(numberOfSignatures &&
           !transactionObject.params.signatures?.length && {
-            signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
-          }),
+          signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
+        }),
       },
     },
     paramsSchema,
     senderAccount.numberOfSignatures
       ? {
-          numberOfSignatures: senderAccount.numberOfSignatures,
-          numberOfEmptySignatures:
-            mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
-        }
+        numberOfSignatures: senderAccount.numberOfSignatures,
+        numberOfEmptySignatures:
+          mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
+      }
       : {}
   );
 
@@ -312,6 +312,20 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
   });
 };
 
+/**
+ * Dry run a transaction to verify if the transaction is valid to be broadcasted to network
+ * @param {*} param0 
+ * @returns 
+ * {
+  result: enum {
+    INVALID = -1,
+    FAIL = 0,
+    OK = 1,
+   },
+   errorMessage?: string, 
+   events: EventJSON [],
+}
+ */
 export const dryRun = ({ transaction, serviceUrl, network }) => {
   const moduleCommand = joinModuleAndCommand({
     module: transaction.module,

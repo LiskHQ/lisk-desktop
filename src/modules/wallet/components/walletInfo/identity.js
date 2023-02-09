@@ -34,7 +34,7 @@ const Identity = ({
     tooltipTruncated: `${styles.tooltip} ${styles.primary} ${styles.truncated}`,
     tooltipFull: `${styles.tooltip} ${styles.primaryTooltip} ${styles.full}`,
     spanTruncated: `${styles.text} ${styles.primary} ${styles.noSelect} account-primary`,
-    spanFull: `${styles.text} ${styles.primary} ${styles.noSelect} delegate-primary-full`,
+    spanFull: `${styles.text} ${styles.primary} ${styles.noSelect} validator-primary-full`,
   };
 
   if (hasTitle) {

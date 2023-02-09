@@ -22,7 +22,7 @@ import { fromTransactionJSON } from './encoding';
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
-const { transfer, voteDelegate, registerMultisignature, registerDelegate, reclaim, unlock } =
+const { transfer, stakeValidator, registerMultisignature, registerValidator, reclaim, unlock } =
   MODULE_COMMANDS_NAME_MAP;
 
 // TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
@@ -59,13 +59,13 @@ describe.skip('API: LSK Transactions', () => {
       expect(getTxAmount(tx)).toEqual(tx.params.amount);
     });
 
-    it('should return amount of votes in Beddows', () => {
+    it('should return amount of stakes in Beddows', () => {
       const tx = {
-        title: voteDelegate,
-        module: 'dpos',
-        command: 'voteDelegate',
+        title: stakeValidator,
+        module: 'pos',
+        command: 'stakeValidator',
         params: {
-          votes: [
+          stakes: [
             {
               amount: '100000000',
             },
@@ -82,7 +82,7 @@ describe.skip('API: LSK Transactions', () => {
     it('should return amount of unlock in Beddows', () => {
       const tx = {
         title: unlock,
-        module: 'dpos',
+        module: 'pos',
         command: 'unlock',
         params: {
           unlockObjects: [
@@ -107,7 +107,7 @@ describe.skip('API: LSK Transactions', () => {
         module: 'token',
         command: 'transfer',
         params: {
-          recipientAddress: accounts.delegate.summary.address,
+          recipientAddress: accounts.validator.summary.address,
           amount: 100000000,
           data: 'test',
           tokenID: '00000000',
@@ -129,45 +129,45 @@ describe.skip('API: LSK Transactions', () => {
       });
     });
 
-    it('creates a transaction object for vote transaction', () => {
+    it('creates a transaction object for stake transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        module: 'dpos',
-        command: 'voteDelegate',
+        module: 'pos',
+        command: 'stakeValidator',
         params: {
-          votes: [
+          stakes: [
             {
               amount: '100',
-              delegateAddress: accounts.genesis.summary.address,
+              validatorAddress: accounts.genesis.summary.address,
             },
             {
               amount: '-100',
-              delegateAddress: accounts.delegate.summary.address,
+              validatorAddress: accounts.validator.summary.address,
             },
           ],
         },
       };
-      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:voteDelegate']);
-      const [module, command] = splitModuleAndCommand(voteDelegate);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['pos:stake']);
+      const [module, command] = splitModuleAndCommand(stakeValidator);
       expect(txObj).toEqual({
         ...baseElementsTx,
         module,
         command,
         id: Buffer.alloc(0),
         params: {
-          votes: tx.params.votes.map((item) => ({
+          stakes: tx.params.stakes.map((item) => ({
             amount: BigInt(item.amount),
-            delegateAddress: expect.arrayContaining([]),
+            validatorAddress: expect.arrayContaining([]),
           })),
         },
       });
     });
 
-    it('creates a transaction object for delegate registration transaction', () => {
+    it('creates a transaction object for validator registration transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        module: 'dpos',
-        command: 'registerDelegate',
+        module: 'pos',
+        command: 'registerValidator',
         params: {
           name: 'username',
           generatorKey: genKey,
@@ -175,8 +175,8 @@ describe.skip('API: LSK Transactions', () => {
           proofOfPossession: pop,
         },
       };
-      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:registerDelegate']);
-      const [module, command] = splitModuleAndCommand(registerDelegate);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['pos:registerValidator']);
+      const [module, command] = splitModuleAndCommand(registerValidator);
       expect(txObj).toEqual({
         ...baseElementsTx,
         id: Buffer.alloc(0),
@@ -200,7 +200,7 @@ describe.skip('API: LSK Transactions', () => {
           amount: '10000000',
         },
       };
-      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['legacy:reclaim']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['legacy:reclaimLSK']);
       const [module, command] = splitModuleAndCommand(reclaim);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -216,10 +216,10 @@ describe.skip('API: LSK Transactions', () => {
     it('creates a transaction object for unlockToken transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        module: 'dpos',
+        module: 'pos',
         command: 'unlock',
       };
-      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:unlock']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['pos:unlock']);
       const [module, command] = splitModuleAndCommand(unlock);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -237,8 +237,8 @@ describe.skip('API: LSK Transactions', () => {
         command: 'registerMultisignature',
         params: {
           numberOfSignatures: 2,
-          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
-          optionalKeys: [accounts.delegate_candidate.summary.publicKey],
+          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.validator.summary.publicKey],
+          optionalKeys: [accounts.validator_candidate.summary.publicKey],
           signatures: [],
         },
       };
@@ -268,7 +268,7 @@ describe.skip('API: LSK Transactions', () => {
   //       command,
   //       params: {
   //         amount: BigInt(100000000),
-  //         recipientAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
+  //         recipientAddress: getAddressFromBase32Address(accounts.validator.summary.address),
   //         data: '',
   //         tokenID: mockAppTokens[0].tokenID,
   //       },
@@ -280,21 +280,21 @@ describe.skip('API: LSK Transactions', () => {
   //       id: '',
   //       params: {
   //         amount: '100000000',
-  //         recipient: { address: accounts.delegate.summary.address },
+  //         recipient: { address: accounts.validator.summary.address },
   //         data: '',
   //         token: { tokenID: mockAppTokens[0].tokenID },
   //       },
   //     });
   //   });
 
-  //   it('should a register delegate transaction with type signature of lisk service', () => {
-  //     const [module, command] = splitModuleAndCommand(registerDelegate);
+  //   it('should a register validator transaction with type signature of lisk service', () => {
+  //     const [module, command] = splitModuleAndCommand(registerValidator);
   //     const tx = {
   //       ...baseElementsTx,
   //       module,
   //       command,
   //       params: {
-  //         name: 'super_delegate',
+  //         name: 'super_validator',
   //         generatorKey: convertStringToBinary(genKey),
   //         blsKey: convertStringToBinary(blsKey),
   //         proofOfPossession: convertStringToBinary(pop),
@@ -303,10 +303,10 @@ describe.skip('API: LSK Transactions', () => {
 
   //     expect(elementTxToDesktopTx(tx)).toEqual({
   //       ...baseDesktopTx,
-  //       moduleCommand: registerDelegate,
+  //       moduleCommand: registerValidator,
   //       id: '',
   //       params: {
-  //         name: 'super_delegate',
+  //         name: 'super_validator',
   //         generatorKey: genKey,
   //         blsKey,
   //         proofOfPossession: pop,
@@ -314,17 +314,17 @@ describe.skip('API: LSK Transactions', () => {
   //     });
   //   });
 
-  //   it('should a vote delegate transaction with type signature of lisk service', () => {
-  //     const [module, command] = splitModuleAndCommand(voteDelegate);
+  //   it('should a stake validator transaction with type signature of lisk service', () => {
+  //     const [module, command] = splitModuleAndCommand(stakeValidator);
   //     const tx = {
   //       ...baseElementsTx,
   //       module,
   //       command,
   //       params: {
-  //         votes: [
+  //         stakes: [
   //           {
   //             amount: BigInt('100'),
-  //             delegateAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
+  //             validatorAddress: getAddressFromBase32Address(accounts.validator.summary.address),
   //           },
   //         ],
   //       },
@@ -332,13 +332,13 @@ describe.skip('API: LSK Transactions', () => {
 
   //     expect(elementTxToDesktopTx(tx)).toEqual({
   //       ...baseDesktopTx,
-  //       moduleCommand: voteDelegate,
+  //       moduleCommand: stakeValidator,
   //       id: '',
   //       params: {
-  //         votes: [
+  //         stakes: [
   //           {
   //             amount: '100',
-  //             delegateAddress: accounts.delegate.summary.address,
+  //             validatorAddress: accounts.validator.summary.address,
   //           },
   //         ],
   //       },
@@ -370,16 +370,16 @@ describe.skip('API: LSK Transactions', () => {
   //     const [module, command] = splitModuleAndCommand(unlock);
   //     const unlockObjects = [
   //       {
-  //         delegateAddress:
-  //           getAddressFromBase32Address(accounts.delegate.summary.address),
+  //         validatorAddress:
+  //           getAddressFromBase32Address(accounts.validator.summary.address),
   //         amount: BigInt('10000000'),
-  //         unvoteHeight: 1000000,
+  //         unstakeHeight: 1000000,
   //       },
   //       {
-  //         delegateAddress:
+  //         validatorAddress:
   //           getAddressFromBase32Address(accounts.send_all_wallet.summary.address),
   //         amount: BigInt('-10000000'),
-  //         unvoteHeight: 1000000,
+  //         unstakeHeight: 1000000,
   //       },
   //     ];
 
@@ -397,8 +397,8 @@ describe.skip('API: LSK Transactions', () => {
   //       params: {
   //         unlockObjects: tx.params.unlockObjects.map(item => ({
   //           amount: String(item.amount),
-  //           delegateAddress: getBase32AddressFromAddress(item.delegateAddress),
-  //           unvoteHeight: item.unvoteHeight,
+  //           validatorAddress: getBase32AddressFromAddress(item.validatorAddress),
+  //           unstakeHeight: item.unstakeHeight,
   //         })),
   //       },
   //     });
@@ -408,10 +408,10 @@ describe.skip('API: LSK Transactions', () => {
   //     const [module, command] = splitModuleAndCommand(registerMultisignature);
   //     const mandatoryKeys = [
   //       accounts.genesis.summary.publicKey,
-  //       accounts.delegate.summary.publicKey,
+  //       accounts.validator.summary.publicKey,
   //     ].map(key => convertStringToBinary(key));
   //     const optionalKeys = [
-  //       accounts.delegate_candidate.summary.publicKey,
+  //       accounts.validator_candidate.summary.publicKey,
   //     ].map(key => convertStringToBinary(key));
 
   //     const tx = {
@@ -434,10 +434,10 @@ describe.skip('API: LSK Transactions', () => {
   //         numberOfSignatures: 2,
   //         mandatoryKeys: [
   //           accounts.genesis.summary.publicKey,
-  //           accounts.delegate.summary.publicKey,
+  //           accounts.validator.summary.publicKey,
   //         ],
   //         optionalKeys: [
-  //           accounts.delegate_candidate.summary.publicKey,
+  //           accounts.validator_candidate.summary.publicKey,
   //         ],
   //         signatures: [],
   //       },
@@ -447,19 +447,19 @@ describe.skip('API: LSK Transactions', () => {
 
   describe('containsTransactionType', () => {
     it('should return true', () => {
-      let pending = [{ moduleCommand: voteDelegate }];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
+      let pending = [{ moduleCommand: stakeValidator }];
+      expect(containsTransactionType(pending, stakeValidator)).toEqual(true);
 
-      pending = [{ moduleCommand: transfer }, { moduleCommand: voteDelegate }];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
+      pending = [{ moduleCommand: transfer }, { moduleCommand: stakeValidator }];
+      expect(containsTransactionType(pending, stakeValidator)).toEqual(true);
     });
 
     it('should return false', () => {
       let pending = [];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
+      expect(containsTransactionType(pending, stakeValidator)).toEqual(false);
 
       pending = [{ moduleCommand: transfer }];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
+      expect(containsTransactionType(pending, stakeValidator)).toEqual(false);
     });
   });
 
@@ -481,7 +481,7 @@ describe.skip('API: LSK Transactions', () => {
       command: 0,
       params: {
         amount: BigInt(10000),
-        recipientAddress: getBase32AddressFromAddress(accounts.delegate.summary.address),
+        recipientAddress: getBase32AddressFromAddress(accounts.validator.summary.address),
         data: '',
         tokenID: mockAppTokens[0].tokenID,
       },

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TertiaryButton } from 'src/theme/buttons';
 import { useCommandSchema } from '@network/hooks';
 import Icon from 'src/theme/Icon';
@@ -28,10 +29,11 @@ const TxSignatureCollector = ({
   statusInfo,
   fees,
   selectedPriority,
-  t,
+  confirmText,
 }) => {
   const [sender] = useCurrentAccount();
   const { moduleCommandSchemas } = useCommandSchema();
+  const { t } = useTranslation();
 
   // here, we want to get the auth account details of the user presently wanting to sign the transaction
   const { data: account, isLoading: isGettingAuthData } = useAuth({
@@ -122,7 +124,11 @@ const TxSignatureCollector = ({
       nextStep({ formProps, transactionJSON, statusInfo, sender });
     }
 
-    if (isEmpty(transactions.signedTransaction) && !transactions.txSignatureError && !sender.encryptedPassphrase) {
+    if (
+      isEmpty(transactions.signedTransaction) &&
+      !transactions.txSignatureError &&
+      !sender.encryptedPassphrase
+    ) {
       txVerification('', sender.metadata.pubkey);
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
@@ -134,7 +140,8 @@ const TxSignatureCollector = ({
           <Icon name="arrowLeftTailed" />
         </TertiaryButton>
         <EnterPasswordForm
-          title="Please provide your device password to sign a transaction."
+          title={t('Please enter your account password to sign this transaction.')}
+          confirmText={confirmText}
           onEnterPasswordSuccess={onEnterPasswordSuccess}
           isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
         />
@@ -155,5 +162,4 @@ const TxSignatureCollector = ({
     </Box>
   );
 };
-
 export default TxSignatureCollector;

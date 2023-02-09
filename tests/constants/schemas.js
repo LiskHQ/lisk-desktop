@@ -50,8 +50,8 @@ const moduleCommandSchemas = {
       "signatures",
     ],
   },
-  "dpos:registerDelegate": {
-    $id: "/dpos/command/registerDelegateParams",
+  "pos:registerValidator": {
+    $id: "/pos/command/registerValidatorParams",
     type: "object",
     required: ["name", "generatorKey", "blsKey", "proofOfPossession"],
     properties: {
@@ -81,8 +81,8 @@ const moduleCommandSchemas = {
       },
     },
   },
-  "dpos:reportDelegateMisbehavior": {
-    $id: "/dpos/command/reportDelegateMisbehaviorParams",
+  "pos:reportValidatorMisbehavior": {
+    $id: "/pos/command/reportValidatorMisbehaviorParams",
     type: "object",
     required: ["header1", "header2"],
     properties: {
@@ -96,8 +96,8 @@ const moduleCommandSchemas = {
       },
     },
   },
-  "dpos:updateGeneratorKey": {
-    $id: "/dpos/command/updateGeneratorKeyParams",
+  "pos:updateGeneratorKey": {
+    $id: "/pos/command/updateGeneratorKeyParams",
     type: "object",
     required: ["generatorKey"],
     properties: {
@@ -109,21 +109,21 @@ const moduleCommandSchemas = {
       },
     },
   },
-  "dpos:voteDelegate": {
-    $id: "/dpos/command/voteDelegateParams",
+  "pos:stakeValidator": {
+    $id: "/pos/command/stakeValidatorParams",
     type: "object",
-    required: ["votes"],
+    required: ["stakes"],
     properties: {
-      votes: {
+      stakes: {
         type: "array",
         fieldNumber: 1,
         minItems: 1,
         maxItems: 20,
         items: {
           type: "object",
-          required: ["delegateAddress", "amount"],
+          required: ["validatorAddress", "amount"],
           properties: {
-            delegateAddress: {
+            validatorAddress: {
               dataType: "bytes",
               fieldNumber: 1,
               format: "lisk32",

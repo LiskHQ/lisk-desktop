@@ -20,6 +20,7 @@ import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures_
 import useMessageField from '../../hooks/useMessageField';
 import Form from './SendForm';
 import { useTokensBalance, useTokensSupported } from '../../hooks/queries';
+import { useTransferableTokens } from '../../hooks';
 
 const mockSetMessage = jest.fn();
 const mockSetCurrentApplication = jest.fn();
@@ -30,6 +31,7 @@ jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('@account/hooks/useCurrentAccount');
 jest.mock('@token/fungible/hooks/queries');
+jest.mock('../../hooks');
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.mock('@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore');
 
@@ -61,6 +63,16 @@ describe('Form', () => {
   useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
   useBlockchainApplicationExplore.mockReturnValue({ data: mockBlockchainApp, isSuccess: true });
   useBlockchainApplicationMeta.mockReturnValue({ data: mockBlockchainAppMeta, isSuccess: true });
+
+  useTransferableTokens.mockReturnValue({
+    data: mockTokensBalance.data.map((token) => ({
+      ...token,
+      tokenName: token.chainName,
+      logo: { svg: '', png: '' },
+    })),
+    isSuccess: true,
+    isLoading: false,
+  });
 
   beforeEach(() => {
     bookmarks = {
@@ -103,7 +115,7 @@ describe('Form', () => {
 
   it('should render properly with data from prevState', () => {
     const { address } = accounts.genesis.summary;
-    const rawTx = {
+    const formProps = {
       params: {
         recipient: {
           address,
@@ -119,11 +131,11 @@ describe('Form', () => {
 
     const wrapper = mountWithQueryClient(Form, {
       ...props,
-      prevState: { rawTx },
+      prevState: { formProps },
     });
     expect(wrapper.find('input.recipient')).toHaveValue(address);
-    expect(wrapper.find('.amount input')).toHaveValue(fromRawLsk(rawTx.params.amount));
-    expect(wrapper.find('textarea[name="reference"]')).toHaveValue(rawTx.params.data);
+    expect(wrapper.find('.amount input')).toHaveValue(fromRawLsk(formProps.params.amount));
+    expect(wrapper.find('textarea[name="reference"]')).toHaveValue(formProps.params.data);
   });
 
   it('should go to next step when submit button is clicked', async () => {
@@ -319,7 +331,7 @@ describe('Form', () => {
       expect(toChainDropdown.text()).toBe(mockCurrentApplication.chainName);
     });
 
-    it('Should pre-populate the the dropdown fields', () => {
+    it('Should pre-populate the dropdown fields', () => {
       props = {
         ...props,
         initialValue: {

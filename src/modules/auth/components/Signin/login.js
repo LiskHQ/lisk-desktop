@@ -20,7 +20,7 @@ import styles from './login.css';
 
 const RegisterTitle = ({ t }) => (
   <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
-    <h1>{t('Add account')}</h1>
+    <h1>{t('Add your account')}</h1>
     <p>
       {t('Enter your secret recovery phrase to manage your account.')}
     </p>

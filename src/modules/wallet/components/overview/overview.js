@@ -9,13 +9,13 @@ import TokenCard from '@wallet/components/TokenCard';
 import TokenCarousel from '@wallet/components/TokenCarousel/TokenCarousel';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import FlashMessageHolder from '@theme/flashMessage/holder';
-import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
+import WarnPunishedValidator from '@pos/validator/components/WarnPunishedValidator';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { SecondaryButton, PrimaryButton } from '@theme/buttons';
-import { useDelegates } from '@dpos/validator/hooks/queries';
+import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
 import styles from './overview.css';
@@ -27,13 +27,13 @@ const numOfBlockPerDay = 24 * 60 * 6;
 
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
   FlashMessageHolder.addMessage(
-    <WarnPunishedDelegate isBanned={isBanned} pomHeight={pomHeight} readMore={readMore} />,
-    'WarnPunishedDelegate'
+    <WarnPunishedValidator isBanned={isBanned} pomHeight={pomHeight} readMore={readMore} />,
+    'WarnPunishedValidator'
   );
 };
 
 const removeWarningMessage = () => {
-  FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+  FlashMessageHolder.deleteMessage('WarnPunishedValidator');
 };
 
 const Overview = ({ isWalletRoute, history }) => {
@@ -42,14 +42,16 @@ const Overview = ({ isWalletRoute, history }) => {
   const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
-  const { data: delegates } = useDelegates({ config: { params: { address } } });
+  const { data: validators } = useValidators({ config: { params: { address } } });
   const { data: account } = useAuth({ config: { params: { address } } });
 
-  const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
-  const { data: { height: currentHeight } } = useLatestBlock();
+  const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
+  const {
+    data: { height: currentHeight },
+  } = useLatestBlock();
 
-  const isBanned = delegate.isBanned;
-  const pomHeights = delegate.pomHeights;
+  const isBanned = validator.isBanned;
+  const pomHeights = validator.punishmentPeriods;
 
   const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
@@ -68,7 +70,7 @@ const Overview = ({ isWalletRoute, history }) => {
         isBanned,
         pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
         readMore: () => {
-          const url = 'https://lisk.com/blog/development/lisk-voting-process';
+          const url = 'https://lisk.com/blog/development/lisk-staking-process';
           window.open(url, 'rel="noopener noreferrer"');
         },
       });
@@ -114,6 +116,7 @@ const Overview = ({ isWalletRoute, history }) => {
           accountName={account?.meta?.name || name}
           detailsClassName={styles.accountSummary}
           truncate={false}
+          isMultisig={account?.data?.numberOfSignatures > 1}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>

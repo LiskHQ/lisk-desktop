@@ -23,7 +23,7 @@ const wsMethods = {
  * publicKey and passphrase to address.
  *
  * @param {Object} params
- * @param {String?} params.username Valid delegate username
+ * @param {String?} params.username Valid validator username
  * @param {String?} params.address Valid Lisk Address
  * @param {String?} params.passphrase Valid Mnemonic passphrase
  * @param {String?} params.publicKey Valid Lisk PublicKey
@@ -56,7 +56,7 @@ const getAccountParams = async (params) => {
  * @param {Object} data.network The network config from the Redux store
  * @param {String?} data.baseUrl Custom API URL
  * @param {Object} data.params
- * @param {String?} data.params.username Valid delegate username
+ * @param {String?} data.params.username Valid validator username
  * @param {String?} data.params.address Valid Lisk Address
  * @param {String?} data.params.passphrase Valid Mnemonic passphrase
  * @param {String?} data.params.publicKey Valid Lisk PublicKey
@@ -78,7 +78,10 @@ export const getAccount = async ({
     });
 
     if (response.data) {
-      const account = { keys: { ...response.data } };
+      const account = {
+        keys: { ...response.data },
+        publicKey: response.meta?.publicKey ?? '',
+      };
       return account;
     }
   } catch (e) {
@@ -118,16 +121,16 @@ const accountFilters = {
   },
 };
 
-const getRequests = (values, isDelegate) => {
+const getRequests = (values, isValidator) => {
   const paramList = values.find(item => Array.isArray(item.list) && item.list.length);
   if (paramList) {
     return paramList.list
       .filter(item => regex[paramList.name].test(item))
       .map((item) => {
-        const params = isDelegate
+        const params = isValidator
           ? {
             [paramList.name]: item,
-            isDelegate: true,
+            isValidator: true,
           } : {
             [paramList.name]: item,
           };
@@ -185,7 +188,7 @@ export const getUsedHWAccounts = async (publicKeyList) => {
  * @param {Object} data.network The network config from the Redux store
  * @param {String?} data.baseUrl Custom API URL
  * @param {Object} data.params
- * @param {String?} data.params.usernameList Valid delegate username
+ * @param {String?} data.params.usernameList Valid validator username
  * @param {String?} data.params.addressList Valid Lisk Address
  * @param {String?} data.params.publicKeyList Valid Lisk PublicKey
  * @param {String?} data.params.limit Used for pagination
@@ -204,7 +207,7 @@ export const getAccounts = async ({
     { name: 'address', list: params.addressList },
     { name: 'publicKey', list: params.publicKeyList },
     { name: 'username', list: params.usernameList },
-  ], params.isDelegate);
+  ], params.isValidator);
   if (requests.length) {
     return ws({
       requests,

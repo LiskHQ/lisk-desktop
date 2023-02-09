@@ -85,7 +85,7 @@
   letter-spacing: 0.1px;
 }
 
-@define-mixin delegateName {
+@define-mixin validatorName {
   font-family: var(--content-font);
   font-size: var(--subtitle-font-size-s);
   font-weight: var(--font-weight-semi-bold);
@@ -93,25 +93,17 @@
   line-height: 18.4px;
 }
 
-@define-mixin delegatePerformanceValueFont {
+@define-mixin validatorPerformanceValueFont {
   font-family: var(--heading-font);
   font-size: 22px;
   font-weight: 300;
   line-height: 22px;
 }
 
-@define-mixin voteStatusHeading $weight:  {
+@define-mixin stakeStatusHeading $weight:  {
   font-family: var(--heading-font);
   font-size: var(--font-size-h3);
   font-weight: var(--font-weight-$(weight));
   letter-spacing: 0;
   line-height: 25px;
-}
-
-@define-mixin voteStatusSubHeading $weight: semi-bold {
-  font-family: var(--content-font);
-  font-size: var(--font-size-h6);
-  font-weight: var(--font-weight-$(weight));
-  letter-spacing: 0;
-  line-height: 21px;
 }

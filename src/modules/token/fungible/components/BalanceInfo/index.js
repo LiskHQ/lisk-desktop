@@ -16,10 +16,10 @@ const BalanceInfo = ({
 }) => {
   const { address, balance = 0 } = account?.summary ?? {};
 
-  const isBanned = account?.dpos?.delegate?.isBanned;
-  const pomHeights = account?.dpos?.delegate?.pomHeights;
+  const isBanned = account?.pos?.validator?.isBanned;
+  const pomHeights = account?.pos?.validator?.punishmentPeriods;
   const pomStart = pomHeights?.length
-    ? { ...pomHeights[pomHeights.length - 1] }
+    ? pomHeights[pomHeights.length - 1]
     : {};
 
   return (
@@ -45,7 +45,7 @@ const BalanceInfo = ({
         </div>
         <ActionBar
           address={address}
-          username={account?.dpos?.delegate?.username}
+          username={account?.pos?.validator?.username}
           isWalletRoute={isWalletRoute}
           activeToken={activeToken}
           isBanned={isBanned}

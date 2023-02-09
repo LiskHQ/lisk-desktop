@@ -1,14 +1,15 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
+import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
-import { useDelegates } from '@dpos/validator/hooks/queries';
+import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { useFilter } from 'src/modules/common/hooks';
 
 import { mockBlocks } from '@block/__fixtures__';
-import { mockDelegates } from '@dpos/validator/__fixtures__';
+import { mockValidators } from '@pos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { renderWithRouter } from 'src/utils/testHelpers';
@@ -24,7 +25,7 @@ jest.mock('@account/hooks', () => ({
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@account/hooks');
 jest.mock('@block/hooks/queries/useBlocks');
-jest.mock('@dpos/validator/hooks/queries');
+jest.mock('@pos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('src/modules/common/hooks');
 
@@ -33,10 +34,10 @@ describe('AllTokens', () => {
 
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
   useAuth.mockReturnValue({ data: mockAuth });
-  useDelegates.mockReturnValue({ data: mockDelegates });
+  useValidators.mockReturnValue({ data: mockValidators });
   useBlocks.mockReturnValue({ data: mockBlocks });
 
-  it('should display properly', async () => {
+  it('should display token details properly', async () => {
     const props = {
       history,
     };
@@ -47,22 +48,23 @@ describe('AllTokens', () => {
     expect(screen.getByText('Request')).toBeTruthy();
     expect(screen.getByText('Send')).toBeTruthy();
     expect(screen.getByText('All tokens')).toBeTruthy();
-    expect(screen.getAllByAltText('arrowRightInactive')).toHaveLength(
-      mockTokensBalance.data.length
-    );
 
     tableHeaderMap(jest.fn((t) => t)).forEach(({ title }) => {
       expect(screen.getByText(title)).toBeTruthy();
     });
 
-    mockTokensBalance.data.forEach(({ name, symbol, availableBalance, lockedBalances }) => {
+    mockTokensBalance.data.forEach(({ chainName, symbol, availableBalance, lockedBalances }) => {
       const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
 
-      expect(screen.getByText(name)).toBeTruthy();
-      expect(screen.getByText(fromRawLsk(lockedBalance))).toBeTruthy();
-      expect(screen.queryByText(fromRawLsk(availableBalance))).toBeTruthy();
-      expect(screen.queryByText(fromRawLsk(+availableBalance + lockedBalance))).toBeTruthy();
-      expect( screen.getByText(/~10\.00/g)).toBeTruthy();
+      expect(screen.getByText(chainName)).toBeTruthy();
+      expect(screen.getByText(numeral(fromRawLsk(lockedBalance)).format('0'))).toBeTruthy();
+      expect(
+        screen.queryByText(numeral(fromRawLsk(availableBalance)).format('0,0.00'))
+      ).toBeTruthy();
+      expect(
+        screen.queryByText(numeral(fromRawLsk(+availableBalance + lockedBalance)).format('0,0.00'))
+      ).toBeTruthy();
+      expect(screen.getByText(/~10\.00/g)).toBeTruthy();
       expect(screen.getByAltText(symbol)).toBeTruthy();
     });
   });

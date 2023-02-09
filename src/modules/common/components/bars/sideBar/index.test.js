@@ -75,7 +75,7 @@ describe('SideBar', () => {
         'Transactions',
         'Blocks',
         'Accounts',
-        'Delegates',
+        'Validators',
       ];
 
       mockAppState.settings = { ...mockAppState.settings, sideBarExpanded: true };

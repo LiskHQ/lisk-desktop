@@ -22,7 +22,7 @@ Feature: Multisignature transaction
   #   When I clear input multisignatureEditorInput
   #   And I fill 2 in multisignatureEditorInput field
   #   Then I enter the publicKey of wallet2P at input 1
-  #   Then I enter the publicKey of delegate at input 2
+  #   Then I enter the publicKey of validator at input 2
   #   When I click on txNextBtn
   #   When I click on confirmButton
   #   Then msignSendButton should not exist
@@ -35,7 +35,7 @@ Feature: Multisignature transaction
 
   # @basic
   # Scenario: Sign transaction and send transaction (Mandatory, Mandatory)
-  #   Given I login as delegate on customNode
+  #   Given I login as validator on customNode
   #   And I wait 1 seconds
   #   When I click on signMultiSignTransactionToggle
   #   Then I paste transaction RegisterSecondPassphraseTx
@@ -89,7 +89,7 @@ Feature: Multisignature transaction
   #   When I click on addNewMembers
   #   Then I enter the publicKey of multiSig_candidate at input 1
   #   Then I enter the publicKey of genesis at input 2
-  #   Then I enter the publicKey of delegate at input 3
+  #   Then I enter the publicKey of validator at input 3
   #   Then I set 2 inputs as optional
   #   When I click on txNextBtn
   #   When I click on confirmButton
@@ -118,7 +118,7 @@ Feature: Multisignature transaction
   # # @advanced
   #   @basic
   # Scenario: Send transaction (Mandatory, Optional, Optional, 2 signatures)
-  #   Given I login as delegate on customNode
+  #   Given I login as validator on customNode
   #   And I wait 1 seconds
   #   When I click on signMultiSignTransactionToggle
   #   Then I paste transaction RegisterMultiSignGroupTx_third_sign

@@ -39,9 +39,9 @@ describe('Backup account recovery phrase flow', () => {
 
   it('Should successfully go though the flow', async () => {
     renderWithRouter(BackupRecoveryPhraseFlow, props);
-    expect(screen.getByText('Enter your password')).toBeTruthy();
+    expect(screen.getByText('Enter your account password')).toBeTruthy();
     expect(
-      screen.getByText('Please provide your device password to backup the recovery phrase.')
+      screen.getByText('Please enter your account password to backup the secret recovery phrase.')
     ).toBeTruthy();
     expect(screen.getByTestId('password')).toBeTruthy();
     expect(screen.getByText('Continue')).toBeTruthy();
@@ -51,13 +51,13 @@ describe('Backup account recovery phrase flow', () => {
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
-      expect(screen.getByText('Save your secret recovery phrase')).toBeTruthy();
+      expect(screen.getByText('Backup your secret recovery phrase')).toBeTruthy();
       expect(
         screen.getByText('Keep it safe as it is the only way to access your wallet.')
       ).toBeTruthy();
       expect(
         screen.getByText(
-          'Please carefully write down these 12 words and store them in a safe place.'
+          'Please write down these 12 words carefully, and store them in a safe place.'
         )
       ).toBeTruthy();
       expect(screen.getByText('Copy')).toBeTruthy();
@@ -90,7 +90,7 @@ describe('Backup account recovery phrase flow', () => {
       ).toBeTruthy();
       expect(screen.getByText('Download')).toBeTruthy();
 
-      fireEvent.click(screen.getByText('Continue to Wallet'));
+      fireEvent.click(screen.getByText('Continue to wallet'));
     });
   });
 });

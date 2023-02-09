@@ -19,22 +19,22 @@ const txBase = {
 };
 
 // @TODO: this would be re-instated when work is done in re-instating
-//  the transctions/delegate domain
-// const vote = {
+//  the transctions/validator domain
+// const stake = {
 //   moduleCommandID: '5:1',
 //   params: {
-//     votes: [
+//     stakes: [
 //       {
 //         amount: '2000000000',
-//         delegateAddress: accounts.delegate.summary.address,
+//         validatorAddress: accounts.validator.summary.address,
 //       },
 //     ],
 //   },
 // };
-// const registerDelegate = {
+// const registerValidator = {
 //   moduleCommandID: '5:0',
 //   params: {
-//     delegate: {
+//     validator: {
 //       username: 'sample_username',
 //     },
 //   },
@@ -96,14 +96,14 @@ describe('Transaction Row', () => {
   });
 
   // @TODO: this would be re-instated when work is done in re-instating
-  //  the transctions/delegate domain
-  // describe('Vote', () => {
+  //  the transctions/validator domain
+  // describe('Stake', () => {
   //   it('Should render in full layout mode', () => {
   //     const props = {
   //       ...baseProps,
   //       data: {
   //         ...txBase,
-  //         ...vote,
+  //         ...stake,
   //       },
   //       layout: 'full',
   //     };
@@ -115,7 +115,7 @@ describe('Transaction Row', () => {
   //     expect(wrapper.find('Amount').text()).toBe('-');
   //     expect(wrapper.find('Sender').
   //       text()).toBe(truncateAddress(accounts.genesis.summary.address));
-  //     expect(wrapper.find('Recipient').text()).toBe('Vote');
+  //     expect(wrapper.find('Recipient').text()).toBe('Stake');
   //     // We don't show the details in full mode
   //     expect(wrapper.find('Params')).toHaveLength(0);
   //   });
@@ -125,7 +125,7 @@ describe('Transaction Row', () => {
   //       ...baseProps,
   //       data: {
   //         ...txBase,
-  //         ...vote,
+  //         ...stake,
   //       },
   //       layout: 'hosted',
   //     };
@@ -135,23 +135,23 @@ describe('Transaction Row', () => {
   //       {},
   //     );
   //     expect(wrapper.find('Amount').text()).toBe('-');
-  //     expect(wrapper.find('Counterpart').text()).toBe('Vote');
+  //     expect(wrapper.find('Counterpart').text()).toBe('Stake');
   //     expect(wrapper.find('Sender')).toHaveLength(0);
   //     expect(wrapper.find('Recipient')).toHaveLength(0);
   //     expect(wrapper.find('Params').text()).toBe(
-  //       `${truncateAddress(accounts.delegate.summary.address)}20 LSK`,
+  //       `${truncateAddress(accounts.validator.summary.address)}20 LSK`,
   //     );
   //   });
   // });
 
   // @TODO: this would be re-instated when work is done in re-instating the transction domain
-  // describe('Register delegate', () => {
+  // describe('Register validator', () => {
   //   it('Should render in full layout mode', () => {
   //     const props = {
   //       ...baseProps,
   //       data: {
   //         ...txBase,
-  //         ...registerDelegate,
+  //         ...registerValidator,
   //       },
   //       layout: 'full',
   //     };
@@ -163,7 +163,7 @@ describe('Transaction Row', () => {
   //     expect(wrapper.find('Amount').text()).toBe('-');
   //     expect(wrapper.find('Sender').text())
   //     .toBe(truncateAddress(accounts.genesis.summary.address));
-  //     expect(wrapper.find('Recipient').text()).toBe('Register delegate');
+  //     expect(wrapper.find('Recipient').text()).toBe('Register validator');
   //     // We don't show the details in full mode
   //     expect(wrapper.find('Params')).toHaveLength(0);
   //   });
@@ -173,7 +173,7 @@ describe('Transaction Row', () => {
   //       ...baseProps,
   //       data: {
   //         ...txBase,
-  //         ...registerDelegate,
+  //         ...registerValidator,
   //       },
   //       layout: 'hosted',
   //     };
@@ -183,7 +183,7 @@ describe('Transaction Row', () => {
   //       {},
   //     );
   //     expect(wrapper.find('Amount').text()).toBe('-');
-  //     expect(wrapper.find('Counterpart').text()).toBe('Register delegate');
+  //     expect(wrapper.find('Counterpart').text()).toBe('Register validator');
   //     expect(wrapper.find('Sender')).toHaveLength(0);
   //     expect(wrapper.find('Recipient')).toHaveLength(0);
   //     expect(wrapper.find('Params').text()).toBe('sample_username');

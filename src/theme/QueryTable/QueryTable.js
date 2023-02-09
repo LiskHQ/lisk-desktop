@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Table from '../table';
 import { LoadNewButton } from './LoadNewButton';
 import styles from '../table/stickyHeader/stickyHeader.css';
@@ -9,6 +9,7 @@ export const QueryTable = ({
   button,
   scrollToSelector,
   transformResponse,
+  onFetched,
   ...props
 }) => {
   const {
@@ -20,6 +21,7 @@ export const QueryTable = ({
     hasNextPage,
     hasUpdate,
     addUpdate,
+    isFetched,
   } = queryHook(queryConfig);
 
   const handleClick = () => {
@@ -39,6 +41,12 @@ export const QueryTable = ({
       {button.label}
     </LoadNewButton>
   ) : null;
+
+  useEffect(() => {
+    if (isFetched && typeof onFetched === 'function') {
+      onFetched(response);
+    }
+  }, [isFetched]);
 
   return (
     <Table

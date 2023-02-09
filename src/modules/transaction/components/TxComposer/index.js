@@ -23,7 +23,7 @@ const TxComposer = ({
   className,
   buttonTitle,
   formProps = {},
-  commandParams = {},
+  commandParams,
 }) => {
   const { t } = useTranslation();
   // @todo Once the transactions are refactored and working, we should
@@ -79,6 +79,8 @@ const TxComposer = ({
 
   formProps.composedFees = composedFees;
   transactionJSON.fee = toRawLsk(status.fee.value);
+  // TODO: Temporary solution to process transaction, this will be resolved by #4632
+  transactionJSON.fee = transactionJSON.command === 'registerValidator' ? '1100000000' : '100000000';
 
   if (recipientChain && sendingChain) {
     formProps.recipientChain = recipientChain;
@@ -110,7 +112,7 @@ const TxComposer = ({
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() => onConfirm(formProps, transactionJSON, selectedPriority)}
+          onClick={() => onConfirm(formProps, transactionJSON, selectedPriority, composedFees)}
           disabled={!formProps.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {buttonTitle ?? t('Continue')}

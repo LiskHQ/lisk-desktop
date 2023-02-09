@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { hot } from 'react-hot-loader/root';
 import { bookmarksRetrieved } from 'src/modules/bookmark/store/action';
-import { watchListRetrieved } from 'src/modules/dpos/validator/store/actions/watchList';
+import { watchListRetrieved } from 'src/modules/pos/validator/store/actions/watchList';
 import NotFound from 'src/modules/common/components/NotFound';
 import useIpc from '@update/hooks/useIpc';
 import ConnectionProvider from '@libs/wcm/context/connectionProvider';
@@ -20,6 +20,7 @@ import CustomRoute from 'src/modules/common/components/customRoute';
 import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
 import routesMap from 'src/routes/routesMap';
+import { useTransactionUpdate } from '@transaction/hooks';
 import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
 import { useBlockchainApplicationMeta } from 'src/modules/blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
@@ -50,7 +51,10 @@ const App = ({ history }) => {
   useEffect(() => {
     setLoaded(true);
     // Initialize client on first render to get default application
-    client.create({ http: 'http://165.227.246.146:9901', ws: 'ws://165.227.246.146:9901/rpc-v3' });
+    client.create({
+      http: 'http://165.227.246.146:9901',
+      ws: 'ws://165.227.246.146:9901',
+    });
     dispatch(bookmarksRetrieved());
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
@@ -62,6 +66,7 @@ const App = ({ history }) => {
       setCurrentApplication(chainMetaData.data[0]);
     }
   }, [isLoading, chainMetaData]);
+  useTransactionUpdate(loaded);
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};

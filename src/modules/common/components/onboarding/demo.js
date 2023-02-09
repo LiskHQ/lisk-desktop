@@ -6,12 +6,12 @@ import Onboarding from './onboarding';
 const finalCallback = console.log;
 
 const getOnboardingSlides = () => ([{
-  title: ('Welcome to Lisk Delegates!'),
-  content: ('Lisk blockchain network is based on a Delegated Proof of Stake consensus algorithm, in which 101 delegates are chosen to run the network by the community.'),
-  illustration: 'welcomeLiskDelegates',
+  title: ('Welcome to Lisk Validators!'),
+  content: ('Lisk blockchain network is based on a Proof of Stake consensus algorithm, in which 101 validators are chosen to run the network by the community.'),
+  illustration: 'welcomeLiskValidators',
 }, {
   title: ('Your voice matters'),
-  content: ('In this section of Lisk you can vote for up to 101 delegates to run Lisk’s blockchain network and by doing so have a real impact on the Lisk ecosystem.'),
+  content: ('In this section of Lisk you can stake for up to 101 validators to run Lisk’s blockchain network, and by doing so have a real impact on the Lisk ecosystem.'),
   illustration: 'yourVoiceMatters',
 }]);
 
@@ -22,8 +22,8 @@ const OnboardingDemo = () => (
       <Onboarding
         slides={getOnboardingSlides()}
         finalCallback={finalCallback}
-        ctaLabel="Start voting"
-        name="delegateOnboarding"
+        ctaLabel="Start staking"
+        name="validatorOnboarding"
       />
     </DemoRenderer>
   </div>

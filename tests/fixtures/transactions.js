@@ -104,8 +104,8 @@ const getState = () => ({
               "signatures"
             ]
           },
-          'dpos:registerDelegate': {
-            $id: "/dpos/command/registerDelegateParams",
+          'pos:registerValidator': {
+            $id: "/pos/command/registerValidatorParams",
             type: "object",
             required: [
               "name",
@@ -140,14 +140,14 @@ const getState = () => ({
               }
             }
           },
-          'dpos:voteDelegate': {
-            $id: "/dpos/command/voteDelegateParams",
+          'pos:stakeValidator': {
+            $id: "/pos/command/stakeValidatorParams",
             type: "object",
             required: [
-              "votes"
+              "stakes"
             ],
             properties: {
-              votes: {
+              stakes: {
                 type: "array",
                 fieldNumber: 1,
                 minItems: 1,
@@ -155,11 +155,11 @@ const getState = () => ({
                 items: {
                   type: "object",
                   required: [
-                    "delegateAddress",
+                    "validatorAddress",
                     "amount"
                   ],
                   properties: {
-                    delegateAddress: {
+                    validatorAddress: {
                       dataType: "bytes",
                       fieldNumber: 1,
                       format: "lisk32"
@@ -173,44 +173,8 @@ const getState = () => ({
               }
             }
           },
-          'dpos:unlock': {
-            $id: "lisk/dpos/unlock",
-            type: "object",
-            required: [
-              "unlockObjects"
-            ],
-            properties: {
-              unlockObjects: {
-                fieldNumber: 1,
-                maxItems: 20,
-                minItems: 1,
-                type: "array",
-                items: {
-                  properties: {
-                    amount: {
-                      dataType: "uint64",
-                      fieldNumber: 2
-                    },
-                    delegateAddress: {
-                      dataType: "bytes",
-                      fieldNumber: 1,
-                      minLength: 20,
-                      maxLength: 20
-                    },
-                    unvoteHeight: {
-                      dataType: "uint32",
-                      fieldNumber: 3
-                    }
-                  },
-                  required: [
-                    "delegateAddress",
-                    "amount",
-                    "unvoteHeight"
-                  ],
-                  type: "object"
-                }
-              }
-            }
+          'pos:unlock': {
+            $id: "lisk/pos/unlock",
           },
           'legacy:reclaim': {
             $id: "lisk/legacy/reclaim",
@@ -243,7 +207,7 @@ const getState = () => ({
 });
 
 const transformedAccountTransaction = {
-  moduleCommand: 'dpos:voteDelegate',
+  moduleCommand: 'pos:stakeValidator',
   id: 'ad0e0acbe8a3ece3087c8362149ca39c470e565d268df32e57de5d3fe2e1ea5c',
   fee: '142000n',
   nonce: '2n',

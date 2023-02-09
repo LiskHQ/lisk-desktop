@@ -64,7 +64,7 @@ describe('TxSignatureCollector', () => {
       fee: '1000000',
       nonce: '1',
       params: {
-        recipient: accounts.delegate.summary.address,
+        recipient: accounts.validator.summary.address,
         amount: '100000000',
         data: '',
         tokenID: '0000000000000000',
@@ -76,7 +76,7 @@ describe('TxSignatureCollector', () => {
   };
 
   useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.reduce(
+    mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
     )
@@ -93,9 +93,9 @@ describe('TxSignatureCollector', () => {
 
   it('should render password input fit not used with HW', () => {
     render(<TxSignatureCollector {...props} />);
-    expect(screen.getByText('Enter your password')).toBeInTheDocument();
+    expect(screen.getByText('Enter your account password')).toBeInTheDocument();
     expect(
-      screen.getByText('Please provide your device password to sign a transaction.')
+      screen.getByText('Please enter your account password to sign this transaction.')
     ).toBeInTheDocument();
     expect(screen.getByText(mockCurrentAccount.metadata.name)).toBeInTheDocument();
     expect(screen.getByText(mockCurrentAccount.metadata.address)).toBeInTheDocument();

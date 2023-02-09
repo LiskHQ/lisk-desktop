@@ -39,7 +39,7 @@ const AddBookmark = ({
   const timeout = useRef(null);
 
   useEffect(() => {
-    const { formAddress, label, isDelegate } = parseSearchParams(
+    const { formAddress, label, isValidator } = parseSearchParams(
       history.location.search,
     );
     const bookmark = bookmarks[active].find(
@@ -65,14 +65,14 @@ const AddBookmark = ({
       {
         value: usernameValue,
         feedback: usernameFeedback,
-        readonly: isDelegate === 'true',
+        readonly: isValidator === 'true',
       },
     ]);
   }, []);
 
   useEffect(() => {
     if (account.data?.summary) {
-      const username = account.data.dpos?.delegate?.username ?? '';
+      const username = account.data.pos?.validator?.username ?? '';
       setFields([
         {
           value: account.data.summary.address,
@@ -155,7 +155,7 @@ const AddBookmark = ({
       wallet: {
         address: fields[0].value,
         title: fields[1].value,
-        isDelegate: fields[1].readonly,
+        isValidator: fields[1].readonly,
       },
     });
     onClose();

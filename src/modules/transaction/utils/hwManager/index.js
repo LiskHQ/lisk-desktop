@@ -1,5 +1,5 @@
 import { updateTransactionSignatures } from '@wallet/utils/hwManager';
-import { signTransaction } from '@libs/hwManager/communication';
+import { signTransaction } from '@libs/hwServer/communication';
 /**
  * signTransactionByHW - Function.
  * This function is used for sign a send hardware wallet transaction.

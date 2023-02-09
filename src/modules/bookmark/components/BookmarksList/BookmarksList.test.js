@@ -30,7 +30,7 @@ describe('BookmarksList', () => {
     expect(wrapper).not.toContainMatchingElement(EmptyState);
   });
 
-  it('should render LSK bookmakrs ONLY', () => {
+  it('should render LSK bookmarks ONLY', () => {
     expect(wrapper).toContainMatchingElement('.bookmark-list-container');
     expect(wrapper).toContainMatchingElements(
       props.limit,

@@ -44,9 +44,9 @@ const getFields = (t) => [
 ];
 const blackListTypes = [
   'auth:registerMultisignature',
-  'dpos:registerDelegate',
-  'dpos:voteDelegate',
-  'dpos:reportDelegateMisbehavior',
+  'pos:registerValidator',
+  'pos:stakeValidator',
+  'pos:reportValidatorMisbehavior',
 ];
 
 // eslint-disable-next-line max-statements
@@ -55,7 +55,9 @@ const Transactions = () => {
   const fields = getFields(t);
   const [innerFields, setInnerFields] = useState(fields);
   const [params, setParams] = useState();
-  const { data: { height: currentBlockHeight } } = useLatestBlock();
+  const {
+    data: { height: currentBlockHeight },
+  } = useLatestBlock();
   const activeToken = useSelector(selectActiveToken);
   const { sort, toggleSort } = useSort();
   const { filters, applyFilters, clearFilters } = useFilter({});
@@ -82,10 +84,7 @@ const Transactions = () => {
 
   const removeField = (rawFields, transactionType) =>
     rawFields.filter((field) => {
-      if (
-        (field.name === 'amount') &&
-        blackListTypes.some((type) => type === transactionType)
-      )
+      if (field.name === 'amount' && blackListTypes.some((type) => type === transactionType))
         return false;
 
       return true;
@@ -121,25 +120,24 @@ const Transactions = () => {
           />
         }
       />
+      <FilterBar
+        {...{ filters, formatters, t }}
+        clearFilter={(filterKey) => {
+          setInnerFields(fields);
+          clearTxnFilter(filterKey);
+        }}
+        clearAllFilters={() => {
+          setInnerFields(fields);
+          clearAllTxnFilters();
+        }}
+      />
       <BoxContent className={`${styles.content} transaction-results`}>
-        <FilterBar
-          {...{ filters, formatters, t }}
-          clearFilter={(filterKey) => {
-            setInnerFields(fields);
-            clearTxnFilter(filterKey);
-          }}
-          clearAllFilters={() => {
-            setInnerFields(fields);
-            clearAllTxnFilters();
-          }}
-        />
         <QueryTable
           showHeader
           button={{
-            className: 'load-latest',
             label: t('New transactions'),
           }}
-          queryHook={useTransactions}
+          queryHook={({ ...options }) => useTransactions({ ...options, getUpdate: true })}
           queryConfig={{ config: { params } }}
           row={TransactionRow}
           additionalRowProps={{

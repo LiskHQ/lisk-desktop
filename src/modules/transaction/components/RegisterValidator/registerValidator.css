@@ -1,0 +1,62 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.dataRow {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  width: 100%;
+  padding: var(--vertical-padding-l) 0px;
+  border-bottom: 1px solid var(--color-platinum);
+
+  &:first-of-type {
+    padding-top: 0 !important;
+    margin-top: -24px;
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  & > label {
+    @mixin contentNormal;
+
+    margin-bottom: 10px;
+    color: var(--color-content-light);
+  }
+
+  & > span {
+    font-weight: var(--font-weight-semi-bold);
+    display: block;
+    width: 100%;
+    word-break: break-all;
+    margin: 0;
+  }
+}
+
+.userInformation {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  & .walletVisual {
+    margin-right: 10px;
+  }
+
+  & .titles {
+    margin: 0;
+
+    & .username {
+      display: block;
+      width: 100%;
+      line-height: 20px;
+      font-weight: bold;
+    }
+
+    & .address {
+      display: block;
+      width: 100%;
+      line-height: 20px;
+    }
+  }
+}
