@@ -49,7 +49,7 @@ const EditAccountForm = ({ nextStep }) => {
     );
     dispatch(updateCurrentAccount({ name: accountName }));
     if (currentAccount.metadata.isHW) {
-      const currentHWAccounts = settings.hardwareAccounts?.[currentAccount.hw.model];
+      const currentHWAccounts = settings.hardwareAccounts[currentAccount.hw.model];
       const currentAccountIndex = currentAccount.metadata.accountIndex;
       const selectedAccount = currentHWAccounts.filter(
         (acc) => acc.metadata.accountIndex === currentAccountIndex
