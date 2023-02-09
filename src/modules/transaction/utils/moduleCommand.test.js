@@ -15,7 +15,7 @@ describe('Utils: moduleCommand', () => {
 
         expect(label).toBeDefined();
         expect(typeof label).toBe('string');
-        expect(t).toHaveBeenCalled();
+        expect(t).toHaveBeenCalledWith(label);
       });
     });
   });
@@ -28,7 +28,7 @@ describe('Utils: moduleCommand', () => {
 
         expect(label).toBeDefined();
         expect(typeof label).toBe('string');
-        expect(t).toHaveBeenCalled();
+        expect(t).toHaveBeenCalledWith(label);
       });
     });
   });
