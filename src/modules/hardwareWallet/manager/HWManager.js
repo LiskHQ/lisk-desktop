@@ -1,89 +1,106 @@
-/* eslint-disable class-methods-use-this */
-/* istanbul ignore file */
-import { IPC_MESSAGES } from '../consts';
+import { IPC_MESSAGES } from '@libs/hwServer/constants';
 import { HWClient } from './HWClient';
 
 class HwManager extends HWClient {
-  constructor() {
-    super();
-    this.activeDeviceID = null;
-    this.currentDeviceStatus = 'disconnected';
-    this.devices = [];
+  createAccount() {
+    // @todo Add Create Account method here.
+    return this;
   }
 
-  createAccount() {}
-
-  getAccounts() {}
-
-  getDeviceList() {
-    this.executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null);
-    return this.devices;
-  }
-
-  getCurrentDeviceInfo() {
-    // return this.device.filter((device) => device.id == this.activeDeviceID)
-  }
-
-  getDeviceInfoByID() {}
-
-  selectDevice(deviceId) {
-    this.activeDeviceID = deviceId;
-  }
-
-  persistConnection() {}
-
-  getPublicKey() {}
-
-  getAddress(accountIndex) {
-    const data = {
-      deviceId: this.activeDeviceID,
-      showOnDevice: true,
-      index: accountIndex,
-    };
-    return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
-      action: IPC_MESSAGES.GET_ADDRESS,
-      data,
+  getDevices() {
+    return this.invoke({
+      action: IPC_MESSAGES.GET_DEVICES,
     });
-  } // dump this on #4767
-
-  listeningToDevices() {
-    // @todo may this devices list provided by the HWServer check for the event DEVICE_LIST_CHANGED or GET_CONNECTED_DEVICES_LIST
-    // this.subsscribe('connect', (newDevice) => {
-    //   const hasDevice = this.devices.find((device) => {
-    //     return // device.id === newDevice.id
-    //   })
-    //   if (!hasDevice) {
-    //     this.devices.push(device)
-    //   }
-    // })
-    //
-    // this.subsscribe('disconnected', (device) => {
-    //   this.devices = this.devices.find((device) => {
-    //     return // device.id !== newDevice.id
-    //   })
-    // })
   }
 
-  signMessage(accountIndex, message) {
+  getActiveDeviceInfo() {
+    return this.invoke({
+      action: IPC_MESSAGES.GET_ACTIVE_DEVICE,
+    });
+  }
+
+  getDeviceInfoByID(id) {
+    return this.invoke({
+      action: IPC_MESSAGES.GET_DEVICE,
+      data: { id },
+    });
+  }
+
+  selectDevice(id) {
+    return this.invoke({
+      action: IPC_MESSAGES.SELECT_DEVICE,
+      data: { id },
+    });
+  }
+
+  persistConnection() {
+    this.subscribe(IPC_MESSAGES.DEVICE_LIST_CHANGED, this.getDevices.bind(this));
+  }
+
+  // Returns the account publicKey corresponding given account index
+  getPublicKey(index) {
+    return this.executeCommand({
+      action: IPC_MESSAGES.GET_PUBLIC_KEY,
+      data: { index },
+    });
+  }
+
+  /**
+   * Signs a given transaction for a given account index
+   * The account index must be a parameter to match the
+   * signTransaction method signature
+   *
+   * @param {number} index Account index
+   * @param {string} message
+   * @returns {promise}
+   */
+  signMessage(index, message) {
     const signature = {
-      deviceId: this.activeDeviceID,
-      index: accountIndex,
+      index,
       message,
     };
-    return this.executeCommand(IPC_MESSAGES.HW_COMMAND, {
+    return this.executeCommand({
       action: IPC_MESSAGES.SIGN_MSG,
       data: signature,
     });
   }
 
-  signTransaction() {}
+  /**
+   * Signs a given transaction for a given account index
+   * The account index must be a parameter since we may
+   * need to sign a transaction for a different account
+   * via WalletConnect
+   *
+   * @param {number} index Account index
+   * @param {Buffer} chainID
+   * @param {Buffer} transactionBytes
+   * @returns {promise}
+   */
+  signTransaction(index, chainID, transactionBytes) {
+    const data = {
+      index,
+      chainID,
+      transactionBytes,
+    };
+    return this.executeCommand({
+      action: IPC_MESSAGES.SIGN_TRANSACTION,
+      data,
+    });
+  }
 
-  checkIfInsideLiskApp() {}
-
-  validatePin() {}
-
-  reconnectDevice(cb) {
-    console.log(cb);
+  /**
+   * This method is used to check the status of the Ledger App
+   * If updates the status on the class and the React components can
+   * access it in turn
+   * @returns {string} connected or disconnected
+   */
+  // @todo rename to updateDevices
+  async checkAppStatus() {
+    await this.invoke({
+      action: IPC_MESSAGES.CHECK_LEDGER,
+    });
+    const devices = await this.getDevices();
+    return devices;
   }
 }
 
