@@ -4,7 +4,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import HWManager from '@hardwareWallet/manager/HWManager';
 import { selectSettings } from 'src/redux/selectors';
 import { storeAccounts, removeAccounts } from '@hardwareWallet/store/actions/actions';
-import useCheckInitializedAccount from '@common/hooks/useCheckInitializedAccount';
+import { getCheckInitializedAccount } from '@account/utils/getCheckInitializedAccount';
 
 const getNameFromAccount = (address, settings) => {
   const { hardwareAccounts } = settings;
@@ -31,8 +31,9 @@ const useManageHWAccounts = () => {
       const pubkey = await HWManager.getPublicKey(accountIndex);
       // try {
       const address = cryptography.address.getAddressFromPublicKey(Buffer.from(pubkey, 'hex'));
+      const config = { params: { address } };
       // eslint-disable-next-line no-await-in-loop
-      const isInitialized = await useCheckInitializedAccount(address);
+      const isInitialized = await getCheckInitializedAccount({config});
       if (!isInitialized) break;
       accounts.push({
         hw: deviceInfo,

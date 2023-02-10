@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { useAuth } from '@auth/hooks/queries';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
-import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { mockTokensBalance } from '@token/fungible/__fixtures__';
+import { mockAuth } from '@auth/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import useCheckInitializedAccount from './useCheckInitializedAccount';
 

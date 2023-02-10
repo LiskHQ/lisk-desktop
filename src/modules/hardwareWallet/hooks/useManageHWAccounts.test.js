@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 // import { cryptography } from '@liskhq/lisk-client';
-import useCheckInitializedAccount from '@common/hooks/useCheckInitializedAccount';
+import useCheckInitializedAccount from '@account/hooks/queries/useCheckInitializedAccount';
 // import { storeAccounts, removeAccounts } from '../store/actions/actions';
 import { hwAccounts } from '../__fixtures__/hwAccounts';
 import useManageHWAccounts from './useManageHWAccounts';
