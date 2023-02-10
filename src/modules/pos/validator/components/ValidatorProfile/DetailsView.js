@@ -1,5 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router';
+
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTheme } from '@theme/Theme';
 import { tokenMap } from '@token/fungible/consts/tokens';
@@ -9,11 +11,12 @@ import BoxHeader from '@theme/box/header';
 import Icon from '@theme/Icon';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './ValidatorProfile.css';
-import { extractValidatorCommission } from '../../utils';
+import { convertCommissionToPercentage } from '../../utils';
 
-const DetailsView = ({ data }) => {
+const DetailsView = ({ data, history, isMyProfile }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { rank } = data;
@@ -22,9 +25,6 @@ const DetailsView = ({ data }) => {
   const {
     data: { timestamp: latestBlockTimestamp },
   } = useLatestBlock();
-
-  const onEditCommision = () => {};
-
   const displayList = [
     {
       icon: 'star',
@@ -44,8 +44,8 @@ const DetailsView = ({ data }) => {
     {
       icon: 'commissionsIcon',
       label: t('Commission'),
-      value: `${extractValidatorCommission(data.commission)}%`,
-      onEdit: onEditCommision,
+      value: `${convertCommissionToPercentage(data.commission)}%`,
+      onEdit: !isMyProfile ? undefined : () => addSearchParamsToUrl(history, { modal: 'changeCommission' }),
     },
     {
       icon: 'calendar',
@@ -87,4 +87,4 @@ const DetailsView = ({ data }) => {
   );
 };
 
-export default DetailsView;
+export default withRouter(DetailsView);

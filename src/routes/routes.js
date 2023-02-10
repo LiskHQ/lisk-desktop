@@ -279,4 +279,8 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  changeCommission: {
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
 };

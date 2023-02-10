@@ -20,7 +20,7 @@ import {
   getValidatorRankClass,
 } from './TableHeader';
 import ValidatorSummary from '../ValidatorSummary/ValidatorSummary';
-import { extractValidatorCommission } from '../../utils';
+import { convertCommissionToPercentage } from '../../utils';
 
 const roundStates = {
   generating: 'Generating',
@@ -87,7 +87,7 @@ export const ValidatorCommission = () => {
 
   return (
     <span className={getValidatorWeightClass(activeTab)}>
-      <span>{extractValidatorCommission(commission).toFixed(2)}%</span>
+      <span>{convertCommissionToPercentage(commission)}%</span>
     </span>
   );
 };

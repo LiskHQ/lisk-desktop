@@ -4,7 +4,7 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
 import { mockValidators } from '../../__fixtures__';
 import ValidatorSummary from './ValidatorSummary';
-import { extractValidatorCommission } from '../../utils';
+import { convertCommissionToPercentage } from '../../utils';
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
@@ -35,7 +35,7 @@ describe('ValidatorSummary', () => {
     ).toBeTruthy();
     expect(screen.getByText('Commission :')).toBeTruthy();
     expect(screen.getByTestId('commission').innerHTML).toEqual(
-      `${extractValidatorCommission(props.validator.commission)}%`
+      `${convertCommissionToPercentage(props.validator.commission)}%`
     );
     expect(screen.getByText(props.weight)).toBeTruthy();
     expect(screen.getByText('Last generated :')).toBeTruthy();
