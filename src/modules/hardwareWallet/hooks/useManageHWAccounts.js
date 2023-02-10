@@ -8,7 +8,7 @@ import useCheckInitializedAccount from '@common/hooks/useCheckInitializedAccount
 
 const getNameFromAccount = (address, settings) => {
   const { hardwareAccounts } = settings;
-  const { deviceId } = HWManager.getDeviceInfo();
+  const { deviceId } = HWManager.getActiveDeviceInfo();
   if (Array.isArray(hardwareAccounts[deviceId])) {
     const storedAccount = hardwareAccounts[deviceId].filter(
       (account) => account.address === address
@@ -18,18 +18,19 @@ const getNameFromAccount = (address, settings) => {
   return null;
 };
 
-const useManageHWAccounts = async () => {
+const useManageHWAccounts = () => {
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
-  const deviceInfo = HWManager.getCurrentDeviceInfo();
+  const deviceInfo = HWManager.getActiveDeviceInfo();
 
   async function getAccounts() {
     const accounts = [];
     let accountIndex = 0;
     while (true) {
       // eslint-disable-next-line no-await-in-loop
-      const pubKey = await HWManager.getPublicKey(accountIndex);
-      const address = cryptography.address.getAddressFromPublicKey(pubKey);
+      const pubkey = await HWManager.getPublicKey(accountIndex);
+      // try {
+      const address = cryptography.address.getAddressFromPublicKey(Buffer.from(pubkey, 'hex'));
       // eslint-disable-next-line no-await-in-loop
       const isInitialized = await useCheckInitializedAccount(address);
       if (!isInitialized) break;
@@ -37,7 +38,7 @@ const useManageHWAccounts = async () => {
         hw: deviceInfo,
         metadata: {
           address,
-          pubKey,
+          pubkey,
           accountIndex,
           name: getNameFromAccount(address, settings),
           path: '',
@@ -49,9 +50,9 @@ const useManageHWAccounts = async () => {
     }
     return accounts;
   }
-  const accountsList = await getAccounts();
-  dispatch(storeAccounts(accountsList));
-
+  getAccounts().then((accList) => {
+    dispatch(storeAccounts(accList));
+  });
   useEffect(() => {
     if (deviceInfo.currentDeviceStatus === 'disconnected') {
       dispatch(removeAccounts());
