@@ -8,7 +8,7 @@ import {
 } from './useCurrentCommissionPercentage';
 
 jest.spyOn(validatorQueries, 'useValidators')
-describe('useC', () => {
+describe('useCurrentCommissionPercentage', () => {
   it('Initial values must be empty', () => {
     useValidators.mockReturnValue({ data: mockValidators })
     const { result } = renderHook(() => useCurrentCommissionPercentage('someAddress'));

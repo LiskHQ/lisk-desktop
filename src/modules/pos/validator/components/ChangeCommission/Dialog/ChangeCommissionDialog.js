@@ -9,7 +9,6 @@ import Dialog from '@theme/dialog/dialog';
 import { ChangeCommissionForm as Form } from '../Form';
 import Summary from '../Summary';
 import Status from '../Status';
-import styles from './ChangeCommissionDialog.css';
 
 export const ChangeCommission = ({ history }) => {
   const { t } = useTranslation();
@@ -17,7 +16,6 @@ export const ChangeCommission = ({ history }) => {
   return (
     <Dialog hasClose size="sm">
       <MultiStep
-        className={styles.multiStep}
         prevPage={history.goBack}
         backButtonLabel={t('Back')}
       >

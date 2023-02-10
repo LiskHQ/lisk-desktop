@@ -7,7 +7,6 @@ import { Input } from 'src/theme';
 import TxComposer from '@transaction/components/TxComposer';
 import { convertCommissionToNumber } from '@pos/validator/utils';
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
-import InputLabel from './InputLabel';
 import styles from './ChangeCommissionForm.css';
 
 export const ChangeCommissionForm = ({ nextStep }) => {
@@ -31,7 +30,7 @@ export const ChangeCommissionForm = ({ nextStep }) => {
   };
 
   const newCommissionParam = convertCommissionToNumber(newCommission)
-  const isFormValid = newCommissionParam >= 0 && newCommissionParam <= 10000
+  const isFormValid = newCommissionParam && newCommissionParam >= 0 && newCommissionParam <= 10000
   const formProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission,
     params: { newCommission: newCommissionParam },
@@ -39,7 +38,7 @@ export const ChangeCommissionForm = ({ nextStep }) => {
     isFormValid
   };
   const commandParams = {
-    newCommission: convertCommissionToNumber(newCommission),
+    newCommission: newCommissionParam,
   };
 
   return (
@@ -60,7 +59,9 @@ export const ChangeCommissionForm = ({ nextStep }) => {
             </p>
           </BoxHeader>
           <BoxContent className={`${styles.container} select-name-container`}>
-            <InputLabel title={t('Commission (%)')} />
+            <label className={styles.label}>
+              {t('Commission (%)')}
+            </label>
             <div className={styles.inputContainer}>
               <Input
                 data-name="change-commission"
@@ -71,7 +72,7 @@ export const ChangeCommissionForm = ({ nextStep }) => {
                 isLoading={isLoading}
                 placeholder="*.**"
                 className={`${styles.input} select-name-input`}
-                feedback={!isFormValid && t('Commission range is invalid')}
+                feedback={isFormValid ? undefined : t('Commission range is invalid')}
               />
             </div>
           </BoxContent>

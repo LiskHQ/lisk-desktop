@@ -16,7 +16,7 @@ jest.spyOn(commissionHook, 'useCurrentCommissionPercentage')
 
 describe('ChangeCommissionDialog', () => {
   it('should render properly', () => {
-    const currentCommission = 4000
+    const currentCommission = convertCommissionToPercentage(4000)
     const newCommission = 5000
     useCurrentCommissionPercentage.mockReturnValue({currentCommission})
     const transactionJSON = {
@@ -25,11 +25,10 @@ describe('ChangeCommissionDialog', () => {
       }
     }
 
-    const currentCommissionPercentage = convertCommissionToPercentage(currentCommission)
     const newCommissionPercentage = convertCommissionToPercentage(newCommission)
     renderWithRouterAndQueryClient(ChangeCommissionInfo, {transactionJSON});
 
-    expect(screen.getByTestId('current-commission')).toHaveTextContent(currentCommissionPercentage)
+    expect(screen.getByTestId('current-commission')).toHaveTextContent(currentCommission)
     expect(screen.getByTestId('new-commission')).toHaveTextContent(newCommissionPercentage)
   });
 });

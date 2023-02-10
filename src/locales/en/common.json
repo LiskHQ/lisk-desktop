@@ -633,7 +633,6 @@
   "This account needs to be reclaimed": "This account needs to be reclaimed",
   "This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.": "This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.",
   "This avatar will be linked to your new Lisk address.": "This avatar will be linked to your new Lisk address.",
-  "This delegate will be punished in upcoming rounds": "This delegate will be punished in upcoming rounds",
   "This is a legacy account and can not be used on this network.": "This is a legacy account and can not be used on this network.",
   "This is not a valid public key. Please enter the correct public key.": "This is not a valid public key. Please enter the correct public key.",
   "This password will be used for decrypting your account every time you initiate any transaction from your wallet, and also during backup or removal of an account from the wallet.": "This password will be used for decrypting your account every time you initiate any transaction from your wallet, and also during backup or removal of an account from the wallet.",

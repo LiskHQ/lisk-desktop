@@ -8,4 +8,4 @@ const mapDispatchToProps = {
   validatorRegistered,
 };
 
-export default connect(() => undefined, mapDispatchToProps)(ChangeCommissionSummary);
+export default connect(null, mapDispatchToProps)(ChangeCommissionSummary);

@@ -1,5 +1,3 @@
-@import '../../../../../../../setup/react/app/mixins.css';
-
 .summaryContainer {
   & > header {
     padding-left: 20px !important;
