@@ -24,7 +24,7 @@ describe('Switch account', () => {
     const wrapper = mountWithRouter(SwitchAccount);
 
     expect(wrapper.find(AccountRow)).toHaveLength(mockSavedAccounts.length);
-    expect(wrapper.find(AccountRow).first()).toHaveText(`${mockSavedAccounts[0].metadata.name}${mockSavedAccounts[0].metadata.address}`);
+    expect(wrapper.find(AccountRow).first()).toHaveText(`${mockSavedAccounts[0].metadata.name} ${mockSavedAccounts[0].metadata.address}`);
     expect(wrapper.find(OutlineButton).first()).toHaveText('Add another account');
   });
 });
