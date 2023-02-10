@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import mockSavedHwAccounts from '@tests/fixtures/hwAccounts';
 import { truncateAddress } from '@wallet/utils/account';
@@ -40,7 +40,7 @@ describe('Select Account Row', () => {
 
   it('Should show hw icon', async () => {
     const newProps = { ...props, account: mockSavedHwAccounts[0] };
-    render(<AccountRow {...newProps} />);
-    expect(screen.getByAltText('hardwareWalletIcon')).toBeTruthy();
+    const { getByAltText } = render(<AccountRow {...newProps} />);
+    expect(getByAltText('hardwareWalletIcon')).toBeTruthy();
   });
 });

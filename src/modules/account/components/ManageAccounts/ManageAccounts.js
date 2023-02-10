@@ -54,16 +54,7 @@ export const ManageAccountsContent = ({
       </div>
       <Box className={styles.accountListWrapper}>
         <>
-          {accounts.map((account) => (
-            <AccountRow
-              key={account.metadata.address}
-              account={account}
-              onSelect={onSelectAccount}
-              onRemove={showRemove && removeAccount}
-              truncate={truncate}
-            />
-          ))}
-          {hwAccounts.map((account) => (
+          {[...accounts, ...hwAccounts].map((account) => (
             <AccountRow
               key={account.metadata.address}
               account={account}
