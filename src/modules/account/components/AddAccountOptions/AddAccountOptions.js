@@ -42,6 +42,11 @@ const AddAccountOptions = ({ history }) => {
                 iconName="accountUpload"
                 onClick={() => history.push(routes.addAccountByFile.path)}
               />
+              <AddAccountOptionButton
+                text="Use a hardware wallet"
+                iconName="hwWalletIcon"
+                onClick={() => history.push(routes.hwWallet.path)}
+              />
             </div>
             <p>
               {t('Don’t have a Lisk account yet?')}

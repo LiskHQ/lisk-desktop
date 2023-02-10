@@ -111,7 +111,6 @@
     "stepDefinitions": "features/"
   },
   "dependencies": {
-    "@hirishh/lisk-ledger.js": "2.2.0",
     "@hookform/resolvers": "2.8.8",
     "@json-rpc-tools/utils": "1.7.6",
     "@ledgerhq/hw-transport": "6.3.0",
@@ -121,6 +120,7 @@
     "@tanstack/react-query-devtools": "4.2.1",
     "@walletconnect/sign-client": "2.0.0-rc.4",
     "@walletconnect/utils": "2.0.0-rc.4",
+    "@zondax/ledger-lisk": "0.0.1",
     "await-to-js": "2.1.1",
     "axios": "0.27.2",
     "bignumber.js": "8.0.1",

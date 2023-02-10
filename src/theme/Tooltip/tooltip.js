@@ -47,7 +47,7 @@ class Tooltip extends React.Component {
   }
 
   handleClose(event) {
-    if (this.wrapperRef && (event && !this.wrapperRef.contains(event.target))) {
+    if (this.wrapperRef && event && !this.wrapperRef.contains(event.target)) {
       document.removeEventListener('click', this.handleClose);
     }
     this.setState({
@@ -58,63 +58,71 @@ class Tooltip extends React.Component {
 
   render() {
     const {
-      title, children, footer, className, position = 'bottom',
-      alwaysShow, content, tooltipClassName, size, indent, noArrow
+      title,
+      children,
+      footer,
+      className,
+      position = 'bottom',
+      alwaysShow,
+      content,
+      tooltipClassName,
+      size,
+      indent,
+      noArrow,
     } = this.props;
-    const {
-      showTooltip,
-    } = this.state;
-    const {
-      infoIcon = '', tooltip = '',
-    } = this.props.styles || {};
-    const positionStyles = position.split(' ')
-      .filter(key => ['top', 'bottom', 'left', 'right'].indexOf(key) >= 0)
-      .map(key => styles[key])
+    const { showTooltip } = this.state;
+    const { infoIcon = '', tooltip = '' } = this.props.styles || {};
+    const positionStyles = position
+      .split(' ')
+      .filter((key) => ['top', 'bottom', 'left', 'right'].indexOf(key) >= 0)
+      .map((key) => styles[key])
       .join(' ');
-    return React.isValidElement(children) && (
-      <div
-        className={[styles.tooltipWrapper, className].join(' ')}
-        onMouseLeave={this.handleMouseLeave}
-        onMouseMove={this.handleMouseMove}
-        ref={this.setWrapperRef}
-      >
-        {React.isValidElement(content)
-          ? content
-          : (
+    return (
+      React.isValidElement(children) && (
+        <div
+          className={[styles.tooltipWrapper, className].join(' ')}
+          onMouseLeave={this.handleMouseLeave}
+          onMouseMove={this.handleMouseMove}
+          ref={this.setWrapperRef}
+        >
+          {React.isValidElement(content) ? (
+            content
+          ) : (
             <Icon
               name="tooltipQuestionMark"
               className={`${styles.infoIcon} ${infoIcon}`}
               onClick={this.handleClick}
             />
           )}
-        <div className={[
-          styles.tooltip,
-          positionStyles,
-          (alwaysShow || showTooltip) && styles.visible,
-          tooltip,
-          indent && styles.indent,
-          'tooltip-window',
-          styles[size],
-          tooltipClassName,
-        ].join(' ')}
-        >
-          {!noArrow && (
-            <span className={`${styles.tooltipArrow} tooltip-arrow`}>
-              <svg stroke="inherit" fill="currentColor" viewBox="0 0 14 28">
-                <path d="M13.307.5S.5 10.488.5 13.896c0 3.409 12.785 12.893 12.785 12.893" />
-              </svg>
-            </span>
-          )}
-          {title !== '' && (
-            <header>
-              <p className={`${styles.title}`}>{title}</p>
-            </header>
-          )}
-          <main>{children}</main>
-          {React.isValidElement(footer)
-            && <footer>{footer}</footer>}
+          <div
+            className={[
+              styles.tooltip,
+              positionStyles,
+              (alwaysShow || showTooltip) && styles.visible,
+              tooltip,
+              indent && styles.indent,
+              'tooltip-window',
+              styles[size],
+              tooltipClassName,
+            ].join(' ')}
+          >
+            {!noArrow && (
+              <span className={`${styles.tooltipArrow} tooltip-arrow`}>
+                <svg stroke="inherit" fill="currentColor" viewBox="0 0 14 28">
+                  <path d="M13.307.5S.5 10.488.5 13.896c0 3.409 12.785 12.893 12.785 12.893" />
+                </svg>
+              </span>
+            )}
+            {title !== '' && (
+              <header>
+                <p className={`${styles.title}`}>{title}</p>
+              </header>
+            )}
+            <main>{children}</main>
+            {React.isValidElement(footer) && <footer>{footer}</footer>}
+          </div>
         </div>
-      </div>
+      )
     );
   }
 }

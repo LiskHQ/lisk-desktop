@@ -1,53 +1,57 @@
 /* istanbul ignore file */
 import { publish, subscribe } from './utils';
-import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
+import { IPC_MESSAGES, FUNCTION_TYPES, METHOD_NAMES } from './constants';
 import manufacturers from './manufacturers';
 
-export class HwManager {
-  constructor({
-    transports = {},
-    pubSub = {},
-  }) {
+export class HwServer {
+  constructor({ transports = {}, pubSub = {} }) {
     this.transports = transports;
     this.pubSub = pubSub;
     this.devices = [];
+    this.currentDeviceId = null;
   }
 
   listening() {
     const { receiver } = this.pubSub;
     this.configure();
 
+    /**
+     * Use this event to call HWServer internal methods
+     * To manipulate and retrieve stored devices data
+     */
     subscribe(receiver, {
-      event: IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST,
-      action: async () => this.getDevices(),
-    });
-
-    subscribe(receiver, {
-      event: IPC_MESSAGES.CHECK_LEDGER,
-      action: async ({ id }) => {
-        const device = this.getDeviceById(id);
-        this.updateDevice(await manufacturers[device.manufacturer].checkIfInsideLiskApp({
-          transporter: this.transports[device.manufacturer],
-          device,
-        }));
+      event: IPC_MESSAGES.INVOKE,
+      action: ({ action, data }) => {
+        const methodName = METHOD_NAMES[action];
+        return this[methodName](data);
       },
     });
 
+    /**
+     * Use this event to call functions in manufacturer
+     * directory to communicate with the hardware wallets
+     */
     subscribe(receiver, {
       event: IPC_MESSAGES.HW_COMMAND,
       action: async ({ action, data }) => {
-        const device = this.getDeviceById(data.deviceId);
+        const device = this.getDeviceById(this.currentDeviceId);
         const functionName = FUNCTION_TYPES[action];
         const manufactureName = device.manufacturer;
-        return manufacturers[manufactureName][functionName](
-          this.transports[manufactureName],
-          {
-            device,
-            data,
-          },
-        );
+        return manufacturers[manufactureName][functionName](this.transports[manufactureName], {
+          device,
+          data,
+        });
       },
     });
+  }
+
+  async checkLedger() {
+    const device = this.getDeviceById(this.currentDeviceId);
+    const devices = await manufacturers[device.manufacturer].checkIfInsideLiskApp({
+      transporter: this.transports[device.manufacturer],
+      device,
+    });
+    this.updateDevice(devices);
   }
 
   /**
@@ -60,12 +64,18 @@ export class HwManager {
     this.transports[name] = transport;
   }
 
+  async selectDevice({ id }) {
+    this.currentDeviceId = id;
+    this.deviceUpdate();
+    return this.currentDeviceId;
+  }
+
   /**
    * Returns list  of connected devices
    * @returns {promise} Promise object with list of devices
    */
   async getDevices() {
-    return Promise.resolve(this.devices);
+    return this.devices;
   }
 
   /**
@@ -74,7 +84,7 @@ export class HwManager {
    * @returns {promise} device found or undefined
    */
   getDeviceById(id) {
-    return this.devices.find(d => d.deviceId === id);
+    return this.devices.find((d) => d.deviceId === id);
   }
 
   /**
@@ -83,8 +93,8 @@ export class HwManager {
    */
   removeDevice(path) {
     const { sender } = this.pubSub;
-    const device = this.devices.find(d => d.path === path);
-    this.devices = this.devices.filter(d => d.path !== path);
+    const device = this.devices.find((d) => d.path === path);
+    this.devices = this.devices.filter((d) => d.path !== path);
     this.syncDevices();
     publish(sender, { event: IPC_MESSAGES.HW_DISCONNECTED, payload: { model: device.model } });
   }
@@ -113,7 +123,7 @@ export class HwManager {
    * @param {string} device.path
    */
   updateDevice(device) {
-    this.devices = this.devices.map(d => (d.path === device.path ? device : d));
+    this.devices = this.devices.map((d) => (d.path === device.path ? device : d));
     this.syncDevices();
   }
 
@@ -128,25 +138,15 @@ export class HwManager {
     });
   }
 
-  pinCallback(type, callback) {
-    const { receiver } = this.pubSub;
-    receiver.once(IPC_MESSAGES.VALIDATE_PIN, (event, { pin }) => {
-      if (pin) {
-        callback(null, pin);
-      } else {
-        callback(IPC_MESSAGES.MISSING_PIN, null);
-      }
+  /**
+   * Publish event through sender with deviceId
+   */
+  deviceUpdate(deviceId) {
+    const { sender } = this.pubSub;
+    publish(sender, {
+      event: IPC_MESSAGES.DEVICE_UPDATE,
+      payload: { deviceId },
     });
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  passphraseCallback(callback) {
-    callback(null, '' /* User passphrase here! */);
-    /** TODO this is a quick workaround.
-     * as pinCallback, this procedure needs to take the passphrase from the user
-     * in order to unlock secret wallets (principle of plausible deniability).
-     * More info: https://wiki.trezor.io/Passphrase
-     */
   }
 
   /**
@@ -155,10 +155,8 @@ export class HwManager {
   configure() {
     Object.keys(this.transports).forEach((key) => {
       manufacturers[key].listener(this.transports[key], {
-        add: data => this.addDevice(data),
-        remove: data => this.removeDevice(data),
-        pinCallback: (type, callback) => this.pinCallback(type, callback),
-        passphraseCallback: callback => this.passphraseCallback(callback),
+        add: (data) => this.addDevice(data),
+        remove: (data) => this.removeDevice(data),
       });
     });
   }

@@ -15,6 +15,7 @@ import { isEmpty } from 'src/utils/helpers';
 import NavigationButtons from '@common/components/bars/topBar/navigationButtons';
 import styles from './topBar.css';
 import Network from './networkName';
+import HardwareWallet from './hardwareWallet';
 
 const TopBar = ({ stakeCount, location, history }) => {
   const disabled = location.pathname === routes.reclaim.path;
@@ -39,6 +40,7 @@ const TopBar = ({ stakeCount, location, history }) => {
         <SearchBar className={styles.searchBarProp} />
       </div>
       <div className={styles.group}>
+        <HardwareWallet />
         <Tooltip
           className={styles.tooltipWrapper}
           size="maxContent"

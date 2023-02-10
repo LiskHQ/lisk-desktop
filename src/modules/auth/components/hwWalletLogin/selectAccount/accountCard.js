@@ -28,14 +28,14 @@ const AccountCard = ({
 
   return (
     <div
-      id={account.summary?.address}
+      id={account?.address}
       className={`${styles.account} hw-account select-account`}
       onClick={() => onSelectAccount(account, index)}
       onMouseLeave={() => setAccountOnEditMode(false)}
     >
       <div className={styles.content}>
         <div>
-          <WalletVisual address={account.summary?.address || ''} size={40} />
+          <WalletVisual address={account?.address || ''} size={40} />
         </div>
         <div>
           <header className={styles.header}>
@@ -54,7 +54,7 @@ const AccountCard = ({
                   className={`${styles.saveBtn} save-account`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    onSaveNameAccounts(inputTitle, account.summary?.address);
+                    onSaveNameAccounts(inputTitle, account?.address);
                     setAccountOnEditMode(false);
                   }}
                 >
@@ -75,7 +75,7 @@ const AccountCard = ({
                   />
                 </p>
                 <p className={`${styles.accountAddress} row-address`}>
-                  {truncateAddress(account.summary?.address)}
+                  {truncateAddress(account?.address)}
                 </p>
               </>
             )}
@@ -84,7 +84,7 @@ const AccountCard = ({
             <p>{t('Balance:')}</p>
             <p>
               <TokenAmount
-                val={account.summary?.balance}
+                val={account?.availableBalance}
                 token={tokenMap.LSK.key}
               />
             </p>

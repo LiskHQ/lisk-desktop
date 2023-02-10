@@ -9,20 +9,20 @@ import {
   subscribeToDevicesList,
   validatePin,
   signMessage,
-} from '@libs/hwManager/communication';
+} from '@libs/hwServer/communication';
 import { extractAddressFromPublicKey } from './account';
-import { getAccounts } from './api';
+import { getUsedHWAccounts } from './api';
 
 const getAccountBundle = async (deviceId, network, offset) => {
   const publicKeyList = [];
 
-  for (let index = offset; index < offset + 10; index++) {
+  for (let index = offset; index < offset + 3; index++) {
     // eslint-disable-next-line no-await-in-loop
     const publicKey = await getPublicKey({ index, deviceId });
     publicKeyList.push(publicKey);
   }
-  const accounts = await getAccounts({ network, params: { publicKeyList } });
-  return accounts.data.filter(item => item.summary?.address);
+  const accounts = await getUsedHWAccounts(publicKeyList);
+  return accounts.filter(item => item.availableBalance);
 };
 
 /**
