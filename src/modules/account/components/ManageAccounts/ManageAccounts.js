@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
@@ -9,23 +10,28 @@ import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
+import useHWAccounts from 'src/modules/hardwareWallet/hooks/useHWAccounts';
+import { DEVICE_STATUS } from '@libs/hwServer/constants';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
 export const ManageAccountsContent = ({
   isRemoveAvailable,
-  title: customTitle,
   history,
   className,
   truncate,
+  title: customTitle,
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
   const [, setAccount] = useCurrentAccount();
   const [showRemove, setShowRemove] = useState(false);
   const title = customTitle ?? t('Manage accounts');
-  const hwAccounts = [];
+  const { accounts: hwAccounts } = useHWAccounts();
+
+  // @TODO: actual status should be replaced when the useHWStatus hook is integrated by issue #4768
+  const status = DEVICE_STATUS.STAND_BY;
 
   const onAddAccount = useCallback(() => {
     history.push(routes.addAccountOptions.path);
@@ -68,10 +74,12 @@ export const ManageAccountsContent = ({
           ))}
         </>
       </Box>
-      <div className={styles.loaderWrapper}>
-        <Spinner className={styles.spinner} />
-        <span>{t('Loading hardware wallet accounts…')}</span>
-      </div>
+      {(status === DEVICE_STATUS.STAND_BY || hwAccounts.length === 0) && (
+        <div className={styles.loaderWrapper}>
+          <Spinner className={styles.spinner} />
+          <span>{t('Loading hardware wallet accounts…')}</span>
+        </div>
+      )}
       {showRemove ? (
         <OutlineButton
           className={`${styles.button} ${styles.addAccountBtn}`}
