@@ -16,7 +16,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './ValidatorProfile.css';
 import { convertCommissionToPercentage } from '../../utils';
 
-const DetailsView = ({ data, history }) => {
+const DetailsView = ({ data, history, isMyProfile }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { rank } = data;
@@ -25,7 +25,6 @@ const DetailsView = ({ data, history }) => {
   const {
     data: { timestamp: latestBlockTimestamp },
   } = useLatestBlock();
-
   const displayList = [
     {
       icon: 'star',
@@ -46,7 +45,7 @@ const DetailsView = ({ data, history }) => {
       icon: 'commissionsIcon',
       label: t('Commission'),
       value: `${convertCommissionToPercentage(data.commission)}%`,
-      onEdit: () => addSearchParamsToUrl(history, { modal: 'changeCommission' }),
+      onEdit: !isMyProfile ? undefined : () => addSearchParamsToUrl(history, { modal: 'changeCommission' }),
     },
     {
       icon: 'calendar',

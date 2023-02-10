@@ -74,7 +74,7 @@ const ValidatorProfile = ({ history }) => {
       removeWarningMessage();
     }
   }, [address, validator, currentHeight]);
-
+  const isMyProfile = address === currentAddress
   if (!validator.address && !isLoadingValidators) {
     toast.info("This user isn't a validator");
     history.goBack();
@@ -86,7 +86,7 @@ const ValidatorProfile = ({ history }) => {
       <Heading
         className={styles.header}
         title={
-          address === currentAddress ? (
+          isMyProfile ? (
             t('My validator profile')
           ) : (
             <WalletVisualWithAddress
@@ -114,7 +114,7 @@ const ValidatorProfile = ({ history }) => {
         isLoading={isLoadingValidators}
         className={`${grid.row} ${styles.statsContainer} stats-container`}
       >
-        <DetailsView data={validator} />
+        <DetailsView data={validator} isMyProfile={isMyProfile} />
         <PerformanceView data={{ ...validator, producedBlocks: generatedBlocks?.meta?.total }} />
       </Box>
       <ValidatorStakesView address={address} />
