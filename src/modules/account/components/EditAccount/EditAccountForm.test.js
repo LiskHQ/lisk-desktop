@@ -98,7 +98,7 @@ describe('Edit account', () => {
     await waitFor(() => {
       fireEvent.click(screen.getByText('Done'));
     });
-    expect(mockDispatch).toHaveBeenCalledTimes(3);
+    expect(mockDispatch).toHaveBeenCalledTimes(2);
     expect(mockDispatch).toHaveBeenCalledWith(
       settingsUpdated(expect.objectContaining({ hardwareAccounts: { 'Nano S': [hwAccounts[0]] } }))
     );

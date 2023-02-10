@@ -44,21 +44,14 @@ const EditAccountForm = ({ nextStep }) => {
   const settings = useSelector(selectSettings);
 
   const onSubmit = async ({ accountName }) => {
-    dispatch(
-      updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })
-    );
     dispatch(updateCurrentAccount({ name: accountName }));
     if (currentAccount.metadata.isHW) {
       const currentHWAccounts = settings.hardwareAccounts[currentAccount.hw.model];
       const currentAccountIndex = currentAccount.metadata.accountIndex;
-      const selectedAccount = currentHWAccounts.filter(
+      const selectedAccount = currentHWAccounts.find(
         (acc) => acc.metadata.accountIndex === currentAccountIndex
       );
-      const updatedHWAccounts = currentHWAccounts.splice(
-        currentAccountIndex,
-        1,
-        selectedAccount[0]
-      );
+      const updatedHWAccounts = currentHWAccounts.splice(currentAccountIndex, 1, selectedAccount);
       dispatch(
         settingsUpdated({
           hardwareAccounts: {
@@ -66,6 +59,10 @@ const EditAccountForm = ({ nextStep }) => {
             [currentAccount.hw.model]: updatedHWAccounts,
           },
         })
+      );
+    } else {
+      dispatch(
+        updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })
       );
     }
     nextStep({
