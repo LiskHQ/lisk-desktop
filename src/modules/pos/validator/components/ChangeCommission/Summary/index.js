@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { validatorRegistered } from 'src/modules/pos/validator/store/actions/validator';
 import ChangeCommissionSummary from './ChangeCommissionSummary';
 
-
 const mapDispatchToProps = {
   validatorRegistered,
 };

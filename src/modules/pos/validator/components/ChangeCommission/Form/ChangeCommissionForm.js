@@ -11,7 +11,11 @@ import styles from './ChangeCommissionForm.css';
 
 export const ChangeCommissionForm = ({ nextStep }) => {
   const { t } = useTranslation();
-  const { currentCommission, isLoading, isSuccess: isCommissionSuccess } = useCurrentCommissionPercentage();
+  const {
+    currentCommission,
+    isLoading,
+    isSuccess: isCommissionSuccess,
+  } = useCurrentCommissionPercentage();
   const [newCommission, setNewCommission] = useState(currentCommission);
 
   useEffect(() => {
@@ -29,13 +33,13 @@ export const ChangeCommissionForm = ({ nextStep }) => {
     });
   };
 
-  const newCommissionParam = convertCommissionToNumber(newCommission)
-  const isFormValid = newCommissionParam && newCommissionParam >= 0 && newCommissionParam <= 10000
+  const newCommissionParam = convertCommissionToNumber(newCommission);
+  const isFormValid = newCommissionParam && newCommissionParam >= 0 && newCommissionParam <= 10000;
   const formProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission,
     params: { newCommission: newCommissionParam },
     fields: { newCommission },
-    isFormValid
+    isFormValid,
   };
   const commandParams = {
     newCommission: newCommissionParam,
@@ -59,9 +63,7 @@ export const ChangeCommissionForm = ({ nextStep }) => {
             </p>
           </BoxHeader>
           <BoxContent className={`${styles.container} select-name-container`}>
-            <label className={styles.label}>
-              {t('Commission (%)')}
-            </label>
+            <label className={styles.label}>{t('Commission (%)')}</label>
             <div className={styles.inputContainer}>
               <Input
                 data-name="change-commission"

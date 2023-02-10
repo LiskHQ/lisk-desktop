@@ -15,10 +15,7 @@ export const ChangeCommission = ({ history }) => {
 
   return (
     <Dialog hasClose size="sm">
-      <MultiStep
-        prevPage={history.goBack}
-        backButtonLabel={t('Back')}
-      >
+      <MultiStep prevPage={history.goBack} backButtonLabel={t('Back')}>
         <Form />
         <Summary />
         <TxSignatureCollector />
@@ -28,4 +25,4 @@ export const ChangeCommission = ({ history }) => {
   );
 };
 
-export const ChangeCommissionDialog = withRouter(ChangeCommission)
+export const ChangeCommissionDialog = withRouter(ChangeCommission);
