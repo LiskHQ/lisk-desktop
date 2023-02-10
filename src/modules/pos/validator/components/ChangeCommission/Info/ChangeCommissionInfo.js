@@ -4,7 +4,7 @@ import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentC
 import { convertCommissionToPercentage } from '@pos/validator/utils';
 import styles from './ChangeCommissionInfo.css';
 
-export const ChangeCommissionInfo = ({ transactionJSON = {} }) => {
+export const ChangeCommissionInfo = ({ transactionJSON }) => {
   const { t } = useTranslation();
   const { currentCommission } = useCurrentCommissionPercentage();
 

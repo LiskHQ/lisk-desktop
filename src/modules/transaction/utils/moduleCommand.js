@@ -10,6 +10,8 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Registrant'),
   [MODULE_COMMANDS_NAME_MAP.reportValidatorMisbehavior]: t('Reporter'),
   [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim rewards'),
+  [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Edit commission'),
+
 });
 
 const getModuleCommandTitle = (t = str => str) => ({
