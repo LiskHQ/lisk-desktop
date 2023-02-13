@@ -66,7 +66,7 @@ export class HwServer {
 
   async selectDevice({ id }) {
     this.currentDeviceId = id;
-    this.deviceUpdate();
+    this.deviceUpdate(id);
     return this.currentDeviceId;
   }
 
