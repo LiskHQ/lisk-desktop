@@ -23,6 +23,7 @@ import routesMap from 'src/routes/routesMap';
 import { useTransactionUpdate } from '@transaction/hooks';
 import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
+import useHwListener from 'src/modules/hardwareWallet/hooks/useHwListener';
 import { useBlockchainApplicationMeta } from 'src/modules/blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import {
   useApplicationManagement,
@@ -45,6 +46,7 @@ const App = ({ history }) => {
   const { data: chainMetaData, isLoading } = useBlockchainApplicationMeta();
   const { setApplication } = useApplicationManagement();
   const [, setCurrentApplication] = useCurrentApplication();
+  useHwListener();
 
   useIpc(history);
 
