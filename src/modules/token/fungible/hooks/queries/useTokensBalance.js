@@ -26,7 +26,7 @@ export const useTokensBalanceConfig = (config) => ({
   method: 'get',
   event: 'get.tokens',
   ...config,
-  params: { limit, ...(config?.params || {}) },
+  params: { limit, ...(config.params || {}) },
 });
 
 export const useTokensBalance = ({

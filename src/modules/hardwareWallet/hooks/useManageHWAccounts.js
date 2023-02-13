@@ -1,64 +1,43 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { cryptography } from '@liskhq/lisk-client';
-import HWManager from '@hardwareWallet/manager/HWManager';
-import { selectSettings } from 'src/redux/selectors';
+import { selectSettings, selectHWStatus } from 'src/redux/selectors';
 import { storeAccounts, removeAccounts } from '@hardwareWallet/store/actions/actions';
-import { getCheckInitializedAccount } from '@account/utils/getCheckInitializedAccount';
-
-const getNameFromAccount = (address, settings) => {
-  const { hardwareAccounts } = settings;
-  const { deviceId } = HWManager.getActiveDeviceInfo();
-  if (Array.isArray(hardwareAccounts[deviceId])) {
-    const storedAccount = hardwareAccounts[deviceId].filter(
-      (account) => account.address === address
-    );
-    return storedAccount.length ? storedAccount[0].name : null;
-  }
-  return null;
-};
+import { getHWAccounts } from '../utils/getHWAccounts';
 
 const useManageHWAccounts = () => {
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
-  const deviceInfo = HWManager.getActiveDeviceInfo();
+  const [prevDeviceId, setCurrentDeviceId] = useState();
+  const { deviceId, status } = useSelector(selectHWStatus);
 
-  async function getAccounts() {
-    const accounts = [];
-    let accountIndex = 0;
-    while (true) {
-      // eslint-disable-next-line no-await-in-loop
-      const pubkey = await HWManager.getPublicKey(accountIndex);
-      // try {
-      const address = cryptography.address.getAddressFromPublicKey(Buffer.from(pubkey, 'hex'));
-      const config = { params: { address } };
-      // eslint-disable-next-line no-await-in-loop
-      const isInitialized = await getCheckInitializedAccount({config});
-      if (!isInitialized) break;
-      accounts.push({
-        hw: deviceInfo,
-        metadata: {
-          address,
-          pubkey,
-          accountIndex,
-          name: getNameFromAccount(address, settings),
-          path: '',
-          isHW: true,
-          creationTime: new Date().toISOString(),
-        },
-      });
-      ++accountIndex;
+  const getNameFromAccount = (address) => {
+    const { hardwareAccounts } = settings;
+
+    if (Array.isArray(hardwareAccounts[deviceId])) {
+      const storedAccount = hardwareAccounts[deviceId].filter(
+        (account) => account.address === address
+      );
+      return storedAccount.length ? storedAccount[0].name : null;
     }
-    return accounts;
-  }
-  getAccounts().then((accList) => {
-    dispatch(storeAccounts(accList));
-  });
+    return null;
+  };
+
+  const addAccounts = () => {
+    if (prevDeviceId === deviceId || status !== 'connected') {
+      return;
+    }
+    setCurrentDeviceId(deviceId);
+    getHWAccounts(getNameFromAccount).then((accList) => {
+      dispatch(storeAccounts(accList));
+    });
+  };
+
   useEffect(() => {
-    if (deviceInfo.currentDeviceStatus === 'disconnected') {
+    addAccounts();
+    if (status === 'disconnected') {
       dispatch(removeAccounts());
     }
-  }, [deviceInfo.currentDeviceStatus]);
+  }, [status, deviceId]);
 };
 
 export default useManageHWAccounts;
