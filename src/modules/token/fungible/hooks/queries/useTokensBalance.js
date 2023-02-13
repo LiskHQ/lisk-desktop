@@ -49,7 +49,7 @@ export const useTokensBalance = ({
   const config = useTokensBalanceConfig({
     ...customConfig,
     transformResult,
-    params: { address, ...(customConfig?.params || {}) },
+    params: { address, ...(customConfig.params || {}) },
   });
 
   return useCustomInfiniteQuery({
