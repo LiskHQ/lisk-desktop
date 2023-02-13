@@ -18,9 +18,7 @@ const hwWalletMiddleware = store => next => (action) => {
      * @param {fn} function - callback function to execute toast dispatch after receive the data
      */
     subscribeToDeviceConnected((response) => {
-      toast.success(`${response.model} connected`);
       const { devices, model } = response;
-
       toast.success(`${model} connected`);
 
       if (devices?.length > 1) {
