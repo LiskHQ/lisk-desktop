@@ -191,6 +191,10 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  selectHardwareDeviceModal: {
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
   editStake: {
     isPrivate: true,
     forbiddenTokens: [],

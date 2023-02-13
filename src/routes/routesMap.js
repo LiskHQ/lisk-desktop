@@ -57,6 +57,8 @@ import SessionManager from '@blockchainApplication/connection/components/Session
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
 import RequestView from '@blockchainApplication/connection/components/RequestView';
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
+import SelectHardwareDeviceModal
+  from "src/modules/hardwareWallet/components/SelectHardwareDeviceModal/SelectHardwareDeviceModal";
 
 export default {
   wallet: AccountDetails,
@@ -89,6 +91,7 @@ export default {
   request: Request,
   lockedBalance: UnlockBalanceView,
   claimRewardsView: ClaimRewardsView,
+  selectHardwareDeviceModal: SelectHardwareDeviceModal,
   editStake: editStakeManager,
   stakingQueue: StakingQueue,
   deviceDisconnectDialog: DeviceDisconnect,
