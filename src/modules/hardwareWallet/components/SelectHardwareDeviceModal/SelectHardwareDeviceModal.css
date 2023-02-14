@@ -1,0 +1,31 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.SelectHardwareDeviceModal {
+  max-width: 485px;
+  width: calc(100% - var(--horizontal-margin));
+  padding: 10px var(--horizontal-padding-xl) 40px var(--horizontal-padding-xl);
+
+  & .boxHeaderProp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 8px;
+
+    & .hwTitle {
+      padding: 0;
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-very-bold);
+    }
+  }
+
+  & .boxInfoTextProp {
+    text-align: center;
+  }
+
+  & .backToWalletLink {
+    margin-top: 22px;
+    text-align: center;
+    font-weight: var(--font-weight-semi-bold);
+    font-size: var(--paragraph-font-size-s);
+  }
+}
