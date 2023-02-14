@@ -78,7 +78,7 @@ Then(/^I confirm data of ([^\s]+)$/, function (tx) {
 Then(/^I input second passphrase$/, function () {
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
-    const passphraseWordsArray = wallets.delegate.passphrase.split(' ');
+    const passphraseWordsArray = wallets.validator.passphrase.split(' ');
     cy.wrap($el, { log: false }).type(passphraseWordsArray[index], { log: false });
   });
 });

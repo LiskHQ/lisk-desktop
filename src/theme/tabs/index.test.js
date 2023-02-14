@@ -8,7 +8,7 @@ describe('Tabs', () => {
       value: 'All',
     },
     {
-      value: 'Voted',
+      value: 'Staked',
     }],
     active: 'All',
   };

@@ -46,4 +46,9 @@ h1 {
 
 .wrapper {
   margin-bottom: 25px;
+
+  & .content {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

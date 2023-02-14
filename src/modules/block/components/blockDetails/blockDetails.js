@@ -96,7 +96,7 @@ const getFields = (data = {}, token, t, currentHeight) => ({
     label: t('Net fee'),
     value: <TokenAmount val={data.totalFee} token={token} />,
   },
-  totalForged: {
+  totalGenerated: {
     label: t('Status'),
     value: <Icon name="checkmark" />,
   },
@@ -176,7 +176,7 @@ const BlockDetails = ({
         <BoxHeader>
           <BoxTabs {...tabs} />
         </BoxHeader>
-        <BoxContent>
+        <BoxContent className={styles.content}>
           {activeTab === 'transactions'
             ? <Transactions blockId={id} />
             : <TransactionEvents blockId={id} />}

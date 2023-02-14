@@ -5,7 +5,7 @@ import Icon from 'src/theme/Icon';
 import AccountManagementDropdown from '@account/components/AccountManagementDropdown';
 import DialogLink from 'src/theme/dialog/link';
 import Tooltip from 'src/theme/Tooltip';
-import VoteQueueToggle from 'src/modules/common/components/bars/topBar/voteQueueToggle';
+import StakeQueueToggle from '@common/components/bars/topBar/stakeQueueToggle';
 import DiscreteModeToggle from 'src/modules/settings/components/discreteModeToggle';
 import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle';
 import ApplicationManagementDropDown from '@blockchainApplication/manage/components/ApplicationManagementDropDown';
@@ -16,7 +16,7 @@ import NavigationButtons from '@common/components/bars/topBar/navigationButtons'
 import styles from './topBar.css';
 import Network from './networkName';
 
-const TopBar = ({ noOfVotes, location, history }) => {
+const TopBar = ({ stakeCount, location, history }) => {
   const disabled = location.pathname === routes.reclaim.path;
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -57,7 +57,7 @@ const TopBar = ({ noOfVotes, location, history }) => {
           <p>{t('Bookmarks')}</p>
         </Tooltip>
         <LightDarkToggle />
-        <VoteQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
+        <StakeQueueToggle t={t} stakeCount={stakeCount} disabled={disabled} />
         <DiscreteModeToggle />
         <ApplicationManagementDropDown />
         {location.pathname !== routes.register.path && <Network />}

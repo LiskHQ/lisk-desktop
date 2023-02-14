@@ -1,6 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import routes from 'src/routes/routes';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
 import Regular from '.';
@@ -38,7 +38,7 @@ describe('TransactionResult Regular', () => {
   };
 
   it('should render properly and call props.transactionBroadcasted', () => {
-    const wrapper = mount(<Regular {...props} />);
+    const wrapper = mountWithQueryClient(Regular, props);
     expect(wrapper.find('.test-class')).toExist();
     expect(wrapper.find('.result-box-header')).toHaveText(props.title);
     expect(wrapper.find('.body-message')).toHaveText(props.message);
@@ -50,15 +50,13 @@ describe('TransactionResult Regular', () => {
   });
 
   it('should render properly when error', () => {
-    const wrapper = mount(
-      <Regular
-        {...props}
-        status={{
-          code: txStatusTypes.signatureError,
-          message: 'test error',
-        }}
-      />
-    );
+    const wrapper = mountWithQueryClient(Regular, {
+      ...props,
+      status: {
+        code: txStatusTypes.signatureError,
+        message: 'test error',
+      },
+    });
     expect(wrapper.find('.test-class')).toExist();
     expect(wrapper.find('.result-box-header')).toHaveText(props.title);
     expect(wrapper.find('.body-message')).toHaveText(props.message);
@@ -70,14 +68,12 @@ describe('TransactionResult Regular', () => {
   });
 
   it('should navigate to wallet', () => {
-    const wrapper = mount(
-      <Regular
-        {...props}
-        status={{
-          code: txStatusTypes.broadcastSuccess,
-        }}
-      />
-    );
+    const wrapper = mountWithQueryClient(Regular, {
+      ...props,
+      status: {
+        code: txStatusTypes.broadcastSuccess,
+      },
+    });
     wrapper.find('.back-to-wallet-button').at(0).simulate('click');
     expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
   });

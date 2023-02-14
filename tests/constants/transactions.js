@@ -35,10 +35,10 @@ const sampleTransaction = {
     Buffer.from('4bfc0ab5e1b3c3fb1ca7362acc917775ce6345f26a261d592d83c62ad156e90221269a3b423516c2b84c1ebdd285d3bf83be688f5a158c1daf7245fecea0350a', 'hex'),
   ],
   params: {
-    votes: [
+    stakes: [
       {
         amount: BigInt(2000000000),
-        delegateAddress: Buffer.from('b9c228bae5f9a6f8a0bd7787b4c123bf1de4bedd', 'hex'),
+        validatorAddress: Buffer.from('b9c228bae5f9a6f8a0bd7787b4c123bf1de4bedd', 'hex'),
       },
     ],
   },

@@ -9,6 +9,17 @@
     margin-left: 10px;
     color: var(--color-content-light);
   }
+
+  & .accountName {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 8px;
+
+    & img {
+      width: 20px;
+      cursor: pointer;
+    }
+  }
 }
 
 .copyIcon {

@@ -23,7 +23,7 @@ describe('TableLoadingState', () => {
         classList: 'col-xs-2',
       },
       {
-        title: 'Forged',
+        title: 'Generated',
         classList: 'col-xs-1',
       },
     ],

@@ -1,0 +1,48 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.container {
+  @mixin contentNormal;
+
+  background-color: var(--color-stake-item-bg);
+  padding: 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  display: flex;
+
+  & a {
+    text-decoration: none;
+  }
+}
+
+.primaryText {
+  @mixin contentNormal semi-bold;
+
+  color: var(--color-ink-blue);
+  margin-right: 10px;
+}
+
+.value {
+  color: var(--color-maastricht-blue);
+  display: flex;
+}
+
+.arrowIcon {
+  margin: 0 5px;
+  color: var(--color-maastricht-blue);
+}
+
+.confirmed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  color: var(--color-blue-gray);
+
+  &::before {
+    content: '';
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    background-color: var(--color-blue-gray);
+  }
+}

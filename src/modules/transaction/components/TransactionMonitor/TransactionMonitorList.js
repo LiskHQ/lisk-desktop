@@ -44,9 +44,9 @@ const getFields = (t) => [
 ];
 const blackListTypes = [
   'auth:registerMultisignature',
-  'dpos:registerDelegate',
-  'dpos:voteDelegate',
-  'dpos:reportDelegateMisbehavior',
+  'pos:registerValidator',
+  'pos:stakeValidator',
+  'pos:reportValidatorMisbehavior',
 ];
 
 // eslint-disable-next-line max-statements

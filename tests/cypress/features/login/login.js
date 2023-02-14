@@ -95,5 +95,5 @@ Then(/^I should see lisk monitor features$/, function () {
   cy.get(ss.monitorNetwork).should('have.length', 1);
   cy.get(ss.monitorBlocks).should('have.length', 1);
   cy.get(ss.monitorAccounts).should('have.length', 1);
-  cy.get(ss.monitorDelegates).should('have.length', 1);
+  cy.get(ss.monitorValidators).should('have.length', 1);
 });

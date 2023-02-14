@@ -26,7 +26,7 @@ const defaultStore = {
   },
   search: {
     suggestions: {
-      delegates: [],
+      validators: [],
       addresses: [],
       transactions: [],
     },

@@ -1,5 +1,4 @@
-import { legacy } from '@liskhq/lisk-cryptography';
-import { codec } from '@liskhq/lisk-codec';
+import { codec as liskCodec, cryptography } from '@liskhq/lisk-client';
 import { mockNetworkStatus } from '@network/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__';
 import { mockCommandParametersSchemas } from '../../common/__fixtures__';
@@ -16,7 +15,7 @@ import {
 describe.skip('Transaction', () => {
   let tokenTransfer = new Transaction();
   const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-  const { privateKey, publicKey } = legacy.getKeys(recoveryPhrase);
+  const { privateKey, publicKey } = cryptography.legacy.getKeys(recoveryPhrase);
   const pubkey = publicKey.toString('hex');
   const module = 'token';
   const command = 'transfer';
@@ -25,7 +24,6 @@ describe.skip('Transaction', () => {
     tokenID: '0000000200000001',
     amount: '100000000', // amount in beddows
     recipientAddress: '00b1182b317a82e4b9c4a54119ced29f19b496de',
-    accountInitializationFee: '5000000',
     data: 'we have some information is here',
   };
   const transactionJSON = {
@@ -284,7 +282,7 @@ describe.skip('Transaction', () => {
         commandParametersSchemas: mockCommandParametersSchemas.data,
         encodedTransaction,
       });
-      const encodedParams = codec.encode(
+      const encodedParams = liskCodec.codec.encode(
         tokenTransfer._paramsSchema,
         tokenTransfer.transaction.params,
       );
@@ -325,7 +323,7 @@ describe.skip('Transaction', () => {
         commandParametersSchemas: mockCommandParametersSchemas.data,
         encodedTransaction,
       });
-      const encodedParams = codec.encode(
+      const encodedParams = liskCodec.codec.encode(
         tokenTransfer._paramsSchema,
         tokenTransfer.transaction.params,
       );

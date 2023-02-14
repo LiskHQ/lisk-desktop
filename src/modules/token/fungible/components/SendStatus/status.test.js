@@ -15,10 +15,10 @@ describe('unlock transaction Status', () => {
   const props = {
     t: (key) => key,
     account: accounts.genesis,
-    recipientAccount: { data: accounts.delegate },
+    recipientAccount: { data: accounts.validator },
     rawTx: {
       params: {
-        recipient: { address: accounts.delegate.summary.address },
+        recipient: { address: accounts.validator.summary.address },
       },
     },
     transactions: {
@@ -35,7 +35,7 @@ describe('unlock transaction Status', () => {
       module: 'token',
       command: 'transfer',
       params: {
-        recipientAddress: accounts.delegate.summary.address,
+        recipientAddress: accounts.validator.summary.address,
       },
       id: 'test_id',
       signatures: [accounts.genesis.summary.publicKey],
@@ -71,7 +71,7 @@ describe('unlock transaction Status', () => {
       component: 'addBookmark',
       data: {
         formAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        isDelegate: true,
+        isValidator: true,
         label: 'genesis_17',
       },
     });
@@ -102,10 +102,10 @@ describe('unlock transaction Status', () => {
   it('passes correct props to TxBroadcaster when transaction broadcast fails', () => {
     const propsWithError = {
       ...props,
-      recipientAccount: { data: accounts.delegate_candidate },
+      recipientAccount: { data: accounts.validator_candidate },
       rawTx: {
         params: {
-          recipient: { address: accounts.delegate_candidate.summary.address },
+          recipient: { address: accounts.validator_candidate.summary.address },
         },
       },
       transactions: {
@@ -148,7 +148,7 @@ describe('unlock transaction Status', () => {
       component: 'addBookmark',
       data: {
         formAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        isDelegate: true,
+        isValidator: true,
         label: 'genesis_17',
       },
     });
@@ -157,7 +157,7 @@ describe('unlock transaction Status', () => {
   it('should not show bookmark button if sent to self', () => {
     const propsToSelf = {
       ...props,
-      account: accounts.delegate,
+      account: accounts.validator,
     };
 
     const wrapper = shallow(<Status {...propsToSelf} />);
@@ -168,7 +168,7 @@ describe('unlock transaction Status', () => {
     const propsWithBookmarks = {
       ...props,
       bookmarks: {
-        LSK: [{ address: accounts.delegate.summary.address }],
+        LSK: [{ address: accounts.validator.summary.address }],
       },
     };
 
@@ -185,7 +185,7 @@ describe('unlock transaction Status', () => {
         signedTransaction: { signatures: ['123'] },
       },
       recipientAccount: {
-        data: accounts.delegate,
+        data: accounts.validator,
         loadData: jest.fn(),
       },
     };

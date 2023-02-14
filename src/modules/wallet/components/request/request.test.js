@@ -1,46 +1,63 @@
 import React from 'react';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { fireEvent, waitFor } from '@testing-library/dom';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import accounts from '@tests/constants/wallets';
 import Request from './request';
 
-jest.mock('src/modules/common/components/converter', () => (
-  function ConverterMock() {
-    return <span className="converted-price" />;
-  }
-));
+const mockCurrentAccount = mockSavedAccounts[0];
+jest.mock(
+  'src/modules/common/components/converter',
+  () =>
+    function ConverterMock() {
+      return <span className="converted-price" />;
+    }
+);
+jest.mock('@account/hooks/useCurrentAccount.js', () => ({
+  useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
+}));
 
 describe('Request', () => {
   let wrapper;
 
   const props = {
     address: accounts.genesis.summary.address,
-    t: v => v,
-  };
-  const routeConfig = {
-    pathname: 'wallet',
-    search: '?modal=request',
+    t: (v) => v,
   };
 
-  beforeEach(() => {
-    wrapper = mountWithRouter(Request, props, routeConfig);
-  });
+  it('should render modal properly', async () => {
+    wrapper = renderWithRouterAndQueryClient(Request, props);
 
-  it('Should update share link with amount and reference', () => {
-    const shareLink = `lisk://wallet/send?recipient=${props.address}`;
-    let evt;
-    expect(wrapper.find(Request).state('shareLink')).toMatch(shareLink);
+    expect(
+      wrapper.getByText(
+        'Simply scan the QR code using the Lisk Mobile app or any other QR code reader.'
+      )
+    ).toBeTruthy();
+    expect(
+      wrapper.getByText(
+        'Use the sharing link to easily request any amount of tokens from Lisk Desktop or Lisk Mobile users.'
+      )
+    ).toBeTruthy();
+    expect(wrapper.getByText('Account')).toBeTruthy();
+    expect(wrapper.getByText('Recipient Application')).toBeTruthy();
+    expect(wrapper.getByText('Account')).toBeTruthy();
+    expect(wrapper.getByText('Token')).toBeTruthy();
+    expect(wrapper.getByText('Add message (Optional)')).toBeTruthy();
+    expect(wrapper.getByText('Copy link')).toBeTruthy();
+    expect(wrapper.getByText('Request tokens')).toBeTruthy();
+    expect(
+      wrapper.getByTestId(`wallet-visual-${mockSavedAccounts[0].metadata.address}`)
+    ).toBeTruthy();
+    expect(wrapper.getByText(mockSavedAccounts[0].metadata.address)).toBeTruthy();
+    expect(wrapper.getByText(mockSavedAccounts[0].metadata.name)).toBeTruthy();
 
-    evt = { target: { name: 'reference', value: 'test' } };
-    wrapper.find('.add-message-button').at(0).simulate('click');
+    fireEvent.click(wrapper.getByText('Add message (Optional)'));
 
-    wrapper.find('div textarea[placeholder="Write message"]').simulate('change', evt);
-    expect(wrapper.find(Request).state('shareLink')).toMatch(`${shareLink}&${evt.target.name}=${evt.target.value}`);
-
-    evt = { target: { name: 'amount', value: 1 } };
-    wrapper.find('.fieldGroup').at(2).find('input').simulate('change', evt);
-    expect(wrapper.find(Request).state('shareLink')).toMatch(`${shareLink}&${evt.target.name}=${evt.target.value}`);
-
-    expect(wrapper.find('.recipient-application').at(0)).toBeTruthy();
-    expect(wrapper.find('.token').at(0)).toBeTruthy();
+    await waitFor(() => {
+      expect(wrapper.queryByText('Add message (Optional)')).toBeFalsy();
+      expect(wrapper.getByText('Message (Optional)')).toBeTruthy();
+      expect(wrapper.getByText('Remove')).toBeTruthy();
+      expect(wrapper.getByAltText('removeBlueIcon')).toBeTruthy();
+    });
   });
 });

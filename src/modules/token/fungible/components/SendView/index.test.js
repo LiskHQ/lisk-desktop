@@ -7,10 +7,13 @@ import {
   useCurrentApplication,
   useApplicationManagement,
 } from '@blockchainApplication/manage/hooks';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import { useCurrentAccount } from '@account/hooks';
 import wallets from '@tests/constants/wallets';
 import Send from './index';
 import { useTokensBalance, useTokensSupported } from '../../hooks/queries';
+import { useTransferableTokens } from '../../hooks';
 
 const mockSetCurrentApplication = jest.fn();
 const mockSetApplication = jest.fn();
@@ -21,7 +24,9 @@ jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('@account/hooks/useCurrentAccount');
 jest.mock('@transaction/api');
+jest.mock('../../hooks');
 jest.mock('@token/fungible/hooks/queries');
+jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
@@ -33,8 +38,18 @@ useApplicationManagement.mockReturnValue({
 
 useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
 useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
-useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false,  isSuccess: true });
-useTokensSupported.mockReturnValue({ data: mockTokensSupported, isLoading: false, isSuccess: true });
+useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
+useTokensSupported.mockReturnValue({
+  data: mockTokensSupported,
+  isLoading: false,
+  isSuccess: true,
+});
+useBlockchainApplicationMeta.mockReturnValue({ data: mockBlockchainAppMeta, isSuccess: true });
+useTransferableTokens.mockReturnValue({
+  data: mockTokensBalance.data.map((token) => ({ ...token, logo: { svg: '', png: '' } })),
+  isSuccess: true,
+  isLoading: false,
+});
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,

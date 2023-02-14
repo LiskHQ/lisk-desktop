@@ -1,6 +1,6 @@
 import routes from 'src/routes/routes';
 
-const menuLinks = t => ([
+const menuLinks = (t) => [
   [
     {
       icon: 'dashboardIcon',
@@ -47,10 +47,10 @@ const menuLinks = t => ([
       path: routes.wallets.path,
     },
     {
-      icon: 'delegatesMonitor',
-      id: 'delegates',
-      label: t('Delegates'),
-      path: routes.delegates.path,
+      icon: 'validatorsMonitor',
+      id: 'validators',
+      label: t('Validators'),
+      path: routes.validators.path,
     },
   ],
   [
@@ -81,6 +81,6 @@ const menuLinks = t => ([
       modal: 'settings',
     },
   ],
-]);
+];
 
 export default menuLinks;

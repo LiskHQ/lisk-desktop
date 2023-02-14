@@ -87,8 +87,8 @@
   grid-area: nonce;
 }
 
-.votes {
-  grid-area: votes;
+.stakes {
+  grid-area: stakes;
 
   & .label {
     @mixin contentNormal bold;
@@ -100,7 +100,7 @@
     text-align: left;
   }
 
-  &.voteValue {
+  &.stakeValue {
     @mixin contentLargest;
 
     display: flex;
@@ -153,18 +153,11 @@
   text-align: left;
 }
 
-.votesContainer {
+.stakesContainer {
   display: flex;
   align-content: flex-start;
   width: 100%;
   flex-wrap: wrap;
-}
-
-.voteTag {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
 }
 
 .walletInfo {

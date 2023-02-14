@@ -1,0 +1,63 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  width: 100%;
+  padding-top: 0px;
+  box-sizing: border-box;
+
+  & > header ~ div {
+    padding-top: 6px !important;
+    margin-top: 9px;
+  }
+}
+
+.stakesCountProp {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background-color: var(--color-stakes-available);
+}
+
+.searchIcon {
+  margin-top: 8px;
+  margin-left: -9px;
+}
+
+.rightHeaderSection {
+  flex: 1;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 16px;
+
+  & > span:first-child {
+    height: fit-content;
+    width: fit-content;
+  }
+}
+
+.filterTokens {
+  border-radius: 30px;
+  min-width: 250px !important;
+  max-width: 250px;
+  flex: 1;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: row;
+  column-gap: 16px;
+
+  & button {
+    padding: 0px 45px !important;
+  }
+}
+
+.tableHeader {
+  font-weight: 14px !important;
+  padding: 0px;
+  position: sticky;
+  top: -7px;
+  background-color: var(--color-white);
+  z-index: 1;
+}

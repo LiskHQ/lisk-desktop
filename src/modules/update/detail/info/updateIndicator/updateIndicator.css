@@ -24,7 +24,7 @@
     border-radius: 43px;
     background-color: var(--light-border-color);
 
-    & > .lineForged {
+    & > .lineGenerated {
       border-radius: 43px;
       background-color: var(--color-ultramarine-blue);
     }

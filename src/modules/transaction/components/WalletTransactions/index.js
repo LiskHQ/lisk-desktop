@@ -2,7 +2,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withFilters from 'src/utils/withFilters';
 import withData from 'src/utils/withData';
-import { getDelegates } from '@dpos/validator/api';
+import { getValidators } from '@pos/validator/api';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import TransactionsList from './TransactionList';
 import { normalizeTransactionParams } from '../../utils';
@@ -28,21 +28,21 @@ export default compose(
       }),
       defaultData: { data: [], meta: {} },
       autoload: true,
-      transformResponse: (response, oldData, urlSearchParams) => (
+      transformResponse: (response, oldData, urlSearchParams) =>
         urlSearchParams.offset
           ? { data: [...oldData.data, ...response.data], meta: response.meta }
-          : response
-      ),
+          : response,
     },
-    votedDelegates: {
-      apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+    stakedValidators: {
+      apiUtil: ({ networks }, params) => getValidators({ network: networks.LSK, params }),
       defaultData: [],
-      transformResponse: (response) => response.data.reduce((acc, delegate) => {
-        acc[delegate.address] = delegate;
-        return acc;
-      }, {}),
+      transformResponse: (response) =>
+        response.data.reduce((acc, validator) => {
+          acc[validator.address] = validator;
+          return acc;
+        }, {}),
     },
   }),
   withFilters('transactions', defaultFilters, defaultSort),
-  withTranslation(),
+  withTranslation()
 )(TransactionsList);

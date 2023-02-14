@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 
 import loginTypes from '@auth/const/loginTypes';
 import { getDeviceType } from '@wallet/utils/hwManager';

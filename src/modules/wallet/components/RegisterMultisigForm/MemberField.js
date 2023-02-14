@@ -37,6 +37,7 @@ const MemberField = ({
           onChange={changeIdentifier}
           placeholder={t('Public Key')}
           size="m"
+          value={publicKey}
         />
         <CategorySwitch changeCategory={changeCategory} isMandatory={isMandatory} index={index} />
       </div>

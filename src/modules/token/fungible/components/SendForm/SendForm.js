@@ -1,24 +1,26 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
+import { useGetInitializationFees, useMessageFee } from '@auth/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import { maxMessageLength } from '@transaction/configuration/transactions';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import {
+  useApplicationExploreAndMetaData,
+  useCurrentApplication,
+} from '@blockchainApplication/manage/hooks';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
-import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore';
-import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import TxComposer from '@transaction/components/TxComposer';
-import chainLogo from '@setup/react/assets/images/LISK.png';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
 import { useTransferableTokens } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
+import { getLogo } from '../../utils/service';
 import styles from './form.css';
 import MessageField from '../MessageField';
 
@@ -49,52 +51,37 @@ const getInitialToken = (transactionData, initialTokenId, tokens) => {
 // eslint-disable-next-line max-statements
 const SendForm = (props) => {
   const { account = {}, prevState, t, bookmarks, nextStep } = props;
-  const [currentApplication] = useCurrentApplication();
-  const [sendingChain, setSendingChain] = useState(
-    prevState?.transactionData?.sendingChain || currentApplication
-  );
-  const {
-    data: { data: activeApps = [] } = {},
-    isLoading: isLoadingActiveApps,
-    error: errorGettingActiveApps,
-  } = useBlockchainApplicationExplore({ config: { params: { state: 'active' } } });
-  const activeAppsList = activeApps.map((app) => app.chainID).join();
-  const { data: { data: applications = [] } = {} } = useBlockchainApplicationMeta({
-    config: { params: { chainID: activeAppsList } },
-    options: { enabled: !isLoadingActiveApps && !errorGettingActiveApps },
-  });
-  const [recipientChain, setRecipientChain] = useState(
-    getInitialRecipientChain(
-      prevState?.transactionData,
-      props.initialValue?.recipientApplication,
-      currentApplication,
-      applications
-    )
-  );
-  const { data: tokens } = useTransferableTokens(recipientChain);
-  const [token, setToken] = useState(
-    getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)
-  );
-
+  const [recipientChain, setRecipientChain] = useState({});
+  const [token, setToken] = useState({});
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
+  const [currentApplication] = useCurrentApplication();
+  const sendingChain = prevState?.transactionData?.sendingChain || currentApplication;
+  const { applications } = useApplicationExploreAndMetaData();
+  const { data: tokens } = useTransferableTokens(recipientChain);
 
   const [reference, setReference] = useMessageField(
-    getInitialData(props.prevState?.rawTx, props.initialValue?.reference)
+    getInitialData(props.prevState?.formProps, props.initialValue?.reference)
   );
   const [amount, setAmountField] = useAmountField(
-    getInitialAmount(props.prevState?.rawTx, props.initialValue?.amount),
-    account.summary?.balance,
+    getInitialAmount(props.prevState?.formProps, props.initialValue?.amount),
+    account.token?.balance,
     token?.symbol
   );
   const [recipient, setRecipientField] = useRecipientField(
-    getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient)
+    getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
+  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value });
+  const { data: messageFee } = useMessageFee({ address: recipient.value });
+
+  const extraCommandFee =
+    sendingChain.chainID !== recipientChain.chainID
+      ? initializationFees?.data?.escrowAccount
+      : initializationFees?.data?.userAccount;
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     setMaxAmount(status.maxAmount);
   }, []);
-
   const onConfirm = useCallback((formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
@@ -103,14 +90,13 @@ const SendForm = (props) => {
       fees,
     });
   }, []);
-
   const handleRemoveMessage = useCallback(() => {
     setReference({ target: { value: '' } });
   }, []);
 
-  const isValid = useMemo(
-    () =>
-      [amount, recipient, reference, recipientChain, sendingChain, token].reduce((result, item) => {
+  const isFormValid = useMemo(() => {
+    const areFieldsValid = [amount, recipient, reference, recipientChain, sendingChain].reduce(
+      (result, item) => {
         result =
           result &&
           !item?.error &&
@@ -118,12 +104,34 @@ const SendForm = (props) => {
           !Object.keys(result).length;
 
         return result;
-      }, true),
-    [amount, recipient, reference, recipientChain, sendingChain]
-  );
+      },
+      true
+    );
+    const isTokenValid = !!token && Object.keys(token).length;
+    return areFieldsValid && isTokenValid;
+  }, [amount, recipient, reference, recipientChain, sendingChain, token]);
+
+  useEffect(() => {
+    setToken(getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens));
+  }, [prevState?.transactionData, props.initialValue?.token, tokens]);
+  useEffect(() => {
+    setRecipientChain(
+      getInitialRecipientChain(
+        prevState?.transactionData,
+        props.initialValue?.recipientChain,
+        currentApplication,
+        applications
+      )
+    );
+  }, [
+    applications.length,
+    currentApplication,
+    props.initialValue?.recipientChain,
+    prevState?.transactionData,
+  ]);
 
   const sendFormProps = {
-    isValid,
+    isFormValid,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
       amount: toRawLsk(amount.value),
@@ -140,26 +148,21 @@ const SendForm = (props) => {
       token,
       recipient,
     },
+    extraCommandFee: extraCommandFee || 0,
   };
-
   let commandParams = {
     tokenID: token?.tokenID,
     amount: toRawLsk(amount.value),
     recipientAddress: recipient.value,
     data: reference.value,
-    accountInitializationFee: 5000000, // TODO: Replace the initalization fee constant from service endpoint
-    // ...(!+account?.sequence?.nonce && { accountInitializationFee: 5000000  }),
   };
-
   if (sendingChain.chainID !== recipientChain.chainID) {
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
-      // TODO: Replace the message fee constant from service endpoint
-      messageFee: 50000000,
+      messageFee,
     };
   }
-
   return (
     <section className={styles.wrapper}>
       <TxComposer
@@ -167,7 +170,7 @@ const SendForm = (props) => {
         onConfirm={onConfirm}
         formProps={sendFormProps}
         commandParams={commandParams}
-        buttonTitle={t('Go to confirmation')}
+        buttonTitle={t('Continue to summary')}
       >
         <>
           <BoxHeader className={styles.header}>
@@ -181,7 +184,6 @@ const SendForm = (props) => {
                 </label>
                 <MenuSelect
                   value={sendingChain}
-                  onChange={(value) => setSendingChain(value)}
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                   disabled
                 >
@@ -193,7 +195,7 @@ const SendForm = (props) => {
                     >
                       <img
                         className={styles.chainLogo}
-                        src={application.logo?.png || chainLogo}
+                        src={getLogo(application)}
                         alt="From application logo"
                       />
                       <span>{application.chainName}</span>
@@ -221,7 +223,7 @@ const SendForm = (props) => {
                     >
                       <img
                         className={styles.chainLogo}
-                        src={application.logo?.png}
+                        src={getLogo(application)}
                         alt="To application logo"
                       />
                       <span>{application.chainName}</span>
@@ -244,16 +246,16 @@ const SendForm = (props) => {
               <MenuSelect
                 value={token}
                 onChange={(value) => setToken(value)}
-                select={(selectedValue, option) => selectedValue?.name === option.name}
+                select={(selectedValue, option) => selectedValue?.tokenName === option.tokenName}
               >
                 {tokens.map((tokenValue) => (
                   <MenuItem
                     className={styles.chainOptionWrapper}
                     value={tokenValue}
-                    key={tokenValue.name}
+                    key={tokenValue.tokenName}
                   >
-                    <img className={styles.chainLogo} src={chainLogo} alt="Token logo" />
-                    <span>{tokenValue.name}</span>
+                    <img className={styles.chainLogo} src={getLogo(tokenValue)} alt="Token logo" />
+                    <span>{tokenValue.tokenName}</span>
                   </MenuItem>
                 ))}
               </MenuSelect>
@@ -293,5 +295,4 @@ const SendForm = (props) => {
     </section>
   );
 };
-
 export default SendForm;

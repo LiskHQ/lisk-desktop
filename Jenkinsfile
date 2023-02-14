@@ -17,8 +17,7 @@ pipeline {
 			steps {
 				nvm(getNodejsVersion()) {
 					sh '''
-						rm package-lock.json
-						npm i --registry https://npm.lisk.com
+						npm ci --registry https://npm.lisk.com
 						'''
 				}
 			}
@@ -82,7 +81,7 @@ pipeline {
 									# rm -rf ~/.lisk/
 									# install -D tests/dev_config_and_db/genesis_block.json ~/.lisk/lisk-core/config/devnet/genesis_block.json
 									# ./lisk-core/bin/lisk-core blockchain:import --force tests/dev_config_and_db/tokens_unlocked_dev_blockchain.db.tar.gz
-									# ./lisk-core/bin/lisk-core forger-info:import --force tests/dev_config_and_db/forger.db.tar.gz
+									# ./lisk-core/bin/lisk-core generator-info:import --force tests/dev_config_and_db/generator.db.tar.gz
 									# nohup ./lisk-core/bin/lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8080 --enable-http-api-plugin >lisk-core.out 2>lisk-core.err &
 									# echo $! >lisk-core.pid
 

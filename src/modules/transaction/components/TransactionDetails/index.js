@@ -14,4 +14,4 @@ export { default as Sender } from './sender';
 export { default as SignedAndRemainingMembersList } from './signedAndRemainingMembersList';
 export { default as TransactionId } from './transactionId';
 export { default as TxDate } from './txDate';
-export { default as Votes } from './votes';
+export { default as Stakes } from './stakes';

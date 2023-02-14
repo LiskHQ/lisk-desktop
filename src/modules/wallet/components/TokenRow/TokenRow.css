@@ -26,33 +26,6 @@
   }
 }
 
-.lockedBalance {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-
-  & > p:first-child {
-    flex: 1;
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-  & img {
-    width: 10px;
-  }
-
-  & > p ~ div {
-    display: flex;
-    margin-left: 10px;
-    padding: 10px;
-    cursor: pointer;
-  }
-}
-
 .token {
   padding: 20px 22px 20px 0px;
   display: flex;
@@ -90,13 +63,13 @@
   padding: 0px 10px 0px 10px;
   display: flex;
   align-items: center;
-  color: var(--color-content-light) !important;
 
+  &,
   & span {
-    @mixin headingSmall;
-
     color: var(--color-content-light) !important;
-    font-size: var(--paragraph-font-size-l) !important;
+    font-size: var(--subtitle-font-size-s) !important;
+    font-weight: var(--font-weight-semi-bold) !important;
+    font-family: var(--heading-font) !important;
   }
 }
 

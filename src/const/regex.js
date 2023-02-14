@@ -15,7 +15,7 @@ export const regex = {
   },
   lskAddressTrunk: /^(.{6})(.+)?(.{5})$/,
   publicKeyTrunk: /^(.{6})(.+)?(.{5})$/,
-  delegateSpecialChars: /[a-z0-9!@$&_.]+/g,
+  validatorSpecialChars: /[a-z0-9!@$&_.]+/g,
   htmlElements: /<(\w+).*?>([\s\S]*?)<\/\1>(.*)/,
   releaseSummary: /<h4>([\s\S]*?)<\/h4>/i,
   searchbar: /^(.{9})(.+)$/,

@@ -1,0 +1,24 @@
+.RewardsClaimableRow {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  color: var(--color-maastricht-blue);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  & .logoContainer {
+    display: flex;
+    align-items: center;
+
+    & .logo {
+      height: 24px;
+      border-radius: 50%;
+    }
+
+    & .tokenName {
+      margin-left: 8px;
+    }
+  }
+}

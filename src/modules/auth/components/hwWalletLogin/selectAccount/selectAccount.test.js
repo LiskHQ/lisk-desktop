@@ -21,8 +21,8 @@ describe('Select Account', () => {
         address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
         balance: 500000000,
       },
-      dpos: {
-        delegate: {
+      pos: {
+        validator: {
           username: 'ABCD',
         },
       },

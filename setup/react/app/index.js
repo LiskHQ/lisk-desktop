@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { hot } from 'react-hot-loader/root';
 import { bookmarksRetrieved } from 'src/modules/bookmark/store/action';
-import { watchListRetrieved } from 'src/modules/dpos/validator/store/actions/watchList';
+import { watchListRetrieved } from 'src/modules/pos/validator/store/actions/watchList';
 import NotFound from 'src/modules/common/components/NotFound';
 import useIpc from '@update/hooks/useIpc';
 import ConnectionProvider from '@libs/wcm/context/connectionProvider';

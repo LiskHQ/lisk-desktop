@@ -9,7 +9,7 @@ import client from 'src/utils/api/client';
 export const useTransactionsConfig = (customConfig = {}) => ({
   url: `/api/${API_VERSION}/transactions`,
   method: 'get',
-  event: 'update.transactions',
+  event: 'get.transactions',
   ...customConfig,
   params: { limit, ...(customConfig?.params || {}) },
 });
@@ -70,7 +70,7 @@ export const useTransactions = ({
     }
     return () => {
       client.socket.off('new.transactions', transactionUpdate);
-      client.socket.off('new.transactions', transactionUpdate);
+      client.socket.off('delete.transactions', transactionUpdate);
     };
   }, [getUpdate]);
 

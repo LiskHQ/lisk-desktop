@@ -1,5 +1,4 @@
 import React from 'react';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 
 const Summary = ({
@@ -7,16 +6,14 @@ const Summary = ({
   tokensTransferred,
   prevStep,
   nextStep,
-  token,
   formProps,
   transactionJSON,
   selectedPriority,
   fees,
   t,
 }) => {
-  const amount = fromRawLsk(transactionJSON.params.amount);
   const onConfirmAction = {
-    label: t('Send {{amount}} {{token}}', { amount, token }),
+    label: t('Send'),
     onClick: () => {
       nextStep({
         formProps,

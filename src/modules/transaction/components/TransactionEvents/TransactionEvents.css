@@ -1,5 +1,6 @@
 .content {
-  padding: 0 !important;
+  padding: 0 20px !important;
+  margin-top: -10px !important;
 }
 
 .wrapper {
@@ -57,12 +58,18 @@ h1 {
   padding: 5px 0px;
   position: sticky;
 
+  &::after {
+    left: 0;
+    right: 0;
+  }
+
   & > div:first-child {
     padding-left: 0px;
     padding-right: 16px;
   }
 
-  & > div:nth-child(3) {
+  & > div:nth-child(3),
+  & > div:nth-child(4) {
     padding-left: 8px !important;
   }
 

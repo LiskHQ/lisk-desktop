@@ -56,7 +56,7 @@ const getAddress = async (data) => {
 
 /**
  * signTransaction - Function.
- * Use for sign a transaction, this could be send or vote
+ * Use for sign a transaction, this could be send or stake
  * @param {object} data -> Object that contain the information about the device and data
  * @param {string} data.deviceId -> Id of the hw device
  * @param {number} data.index -> index of the account of which will extract information

@@ -20,7 +20,7 @@ describe('helpers', () => {
     });
     it('should return correct sign and styles for outgoing transfer', () => {
       const moduleCommand = MODULE_COMMANDS_NAME_MAP.transfer;
-      const recipient = wallets.delegate.summary.address;
+      const recipient = wallets.validator.summary.address;
       expect(getTxDirectionConfig(moduleCommand, host, recipient, styles)).toEqual({
         sign: '- ',
         style: '',

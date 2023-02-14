@@ -1,17 +1,19 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import { truncateTransactionID } from 'src/modules/wallet/utils/account';
-import { Link } from 'react-router-dom';
 
 import { TertiaryButton } from 'src/theme/buttons';
 import styles from './TransactionEventsRow.css';
 
-export const TransctionID = ({ id }) => (
-  <div className={`event-hash ${styles.transactionID} ${grid['col-xs-4']}`}>
-    <Link to={`/transactions/details?transactionID=${id}`}>
-      {id.length === 64 ? truncateTransactionID(id) : '-'}
-    </Link>
+export const TransactionID = ({ id }) => (
+  <div className={`event-hash ${styles.transactionID} ${grid['col-xs-3']}`}>
+    {id.length === 64 ? (
+      <Link to={`/transactions/details?transactionID=${id}`}>{truncateTransactionID(id)}</Link>
+    ) : (
+      '-'
+    )}
   </div>
 );
 
@@ -22,7 +24,7 @@ export const BlockHeight = ({ height, id }) => (
 );
 
 export const EventName = ({ name, isWallet }) => (
-  <div className={`${grid[`col-xs-${isWallet ? 2 : 3}`]} event-action ${styles.eventAction}`}>
+  <div className={`${grid[`col-xs-${isWallet ? 3 : 4}`]} event-action ${styles.eventAction}`}>
     {name}
   </div>
 );
@@ -33,7 +35,7 @@ export const EventModule = ({ module, isWallet }) => (
   </div>
 );
 
-export const EventIndex = ({ id }) => <div className={grid['col-xs-4']}>{id}</div>;
+export const EventIndex = ({ id }) => <div className={grid['col-xs-3']}>{id}</div>;
 
 export const CollapseToggle = ({ isCollapsed, onToggle }) => (
   <div className={`${styles.toggleButton} ${grid['col-xs-1']}`}>

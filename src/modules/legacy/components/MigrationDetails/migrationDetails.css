@@ -42,7 +42,6 @@
   width: 37px;
 
   &.noBalance {
-    padding-top: 30px;
     width: 30px;
   }
 }
@@ -50,4 +49,13 @@
 .copyIcon {
   filter: none;
   cursor: pointer;
+}
+
+.accountBalance {
+  display: flex;
+  column-gap: 3px;
+
+  & > div {
+    color: var(--color-ultramarine-blue);
+  }
 }

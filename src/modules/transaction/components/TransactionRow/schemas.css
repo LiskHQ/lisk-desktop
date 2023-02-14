@@ -1,6 +1,6 @@
 .container {
-  & .votes {
-    grid-area: votes;
+  & .stakes {
+    grid-area: stakes;
   }
 
   &::before {
@@ -135,7 +135,7 @@
     }
   }
 
-  &.vote {
+  &.stake {
     grid-template-areas: "sender date height assets";
 
     &::before {

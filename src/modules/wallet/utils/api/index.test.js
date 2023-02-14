@@ -9,7 +9,7 @@ jest.mock('src/utils/api/http', () => jest.fn().mockReturnValue([]));
 jest.mock('src/utils/api/ws', () => jest.fn().mockReturnValue([]));
 jest
   .spyOn(cryptography.address, 'getLisk32AddressFromPublicKey')
-  .mockReturnValue(accounts.delegate.summary.address);
+  .mockReturnValue(accounts.validator.summary.address);
 
 describe('API: LSK Account', () => {
   const network = {
@@ -110,11 +110,11 @@ describe('API: LSK Account', () => {
   describe('getAccount', () => {
     const {
       summary: { address, publicKey, privateKey },
-      dpos: {
-        delegate: { username },
+      pos: {
+        validator: { username },
       },
       passphrase,
-    } = accounts.delegate;
+    } = accounts.validator;
 
     it('should call http with right params, prioritizing 1. username', async () => {
       http.mockImplementation(() => Promise.resolve({ data: [{ summary: { publicKey } }] }));
@@ -268,6 +268,7 @@ describe('API: LSK Account', () => {
             publicKey,
           },
         },
+        publicKey: '',
       });
     });
 
@@ -305,6 +306,7 @@ describe('API: LSK Account', () => {
             privateKey,
           },
         },
+        publicKey: '',
       });
     });
   });

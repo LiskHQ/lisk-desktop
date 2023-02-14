@@ -23,7 +23,7 @@ const LiskTransactions = {
       sender: { address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' },
       params: {
         recipient: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-        votes: [],
+        stakes: [],
       },
       meta: {
         recipient: {
@@ -36,12 +36,12 @@ const LiskTransactions = {
       amount: '0.008',
       token: 'LSK',
       type: 1,
-      moduleCommand: 'dpos:registerDelegate',
+      moduleCommand: 'pos:registerValidator',
       senderPublicKey: accounts.genesis.summary.publicKey,
       sender: { address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' },
       params: {
         recipientAddress: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-        votes: [],
+        stakes: [],
       },
     },
     {
@@ -54,7 +54,7 @@ const LiskTransactions = {
       senderPublicKey: accounts.genesis.summary.publicKey,
       params: {
         recipientAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        votes: [],
+        stakes: [],
       },
     },
     {
@@ -62,12 +62,12 @@ const LiskTransactions = {
       amount: '25',
       token: 'LSK',
       type: 3,
-      moduleCommand: 'dpos:voteDelegate',
+      moduleCommand: 'pos:stake',
       senderPublicKey: accounts.genesis.summary.publicKey,
       sender: { address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy' },
       params: {
         recipientAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        votes: [],
+        stakes: [],
       },
     },
   ],

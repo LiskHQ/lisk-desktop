@@ -8,7 +8,7 @@ jest.mock('@transaction/api/index');
 
 describe('actions: legacy', () => {
   const dispatch = jest.fn();
-  const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.commands.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );

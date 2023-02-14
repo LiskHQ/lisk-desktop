@@ -1,0 +1,43 @@
+.ClaimRewardsForm {
+  padding: 20px 20px 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  & .title {
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-content-light);
+    margin: 0;
+  }
+
+  & .description {
+    margin: 16px 0 4px 0;
+    color: var(--color-slate-gray);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  & .tableContainer {
+    width: 100%;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--color-platinum);
+
+    & .tableHeader {
+      padding: 0;
+
+      & > * {
+        &:last-child {
+          justify-content: flex-start;
+          text-align: left;
+        }
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

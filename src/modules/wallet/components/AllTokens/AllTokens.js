@@ -75,7 +75,6 @@ const AllTokens = ({ history }) => {
           row={TokenRow}
           header={header(t)}
           headerClassName={styles.tableHeader}
-          additionalRowProps={{ address }}
         />
       </BoxContent>
     </Box>

@@ -2,7 +2,7 @@
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import { ss, accounts, urls } from '../../../constants';
 
-Given(/^I am on Wallet page of delegate$/, function () {
+Given(/^I am on Wallet page of validator$/, function () {
   cy.visit(`${urls.explorer}?address=lskdxwf9kgmfghoeevqhrkcruy8j7xpkw57un9avq`);
 });
 

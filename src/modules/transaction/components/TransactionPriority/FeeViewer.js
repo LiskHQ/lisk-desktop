@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import Input from 'src/theme/Input/Input';
@@ -30,8 +30,7 @@ const FeesViewer = ({
 }) => {
   const { t } = useTranslation();
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const composedFeeList = useMemo(() =>
-    Object.keys(fees).map(feeKey => ({ title: feeKey, value: fees[feeKey] })), [fees]);
+  const composedFeeList = fees.filter(({ isHidden }) => !isHidden);
 
   const onInputFocus = (e) => {
     e.preventDefault();
@@ -87,7 +86,6 @@ const FeesViewer = ({
 
   return (
     <div className={styles.feesListWrapper}>
-
       {composedFeeList.map(({ title, value }) => (
         <div className={styles.feeRow} key={title}>
           <span>{title}</span>

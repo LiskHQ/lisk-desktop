@@ -221,11 +221,11 @@ export class BookmarksList extends React.Component {
                             <TertiaryButton
                               onClick={(e) => this.editBookmark(e, bookmark)}
                               className={`bookmarks-edit-button ${
-                                bookmark.isDelegate ? styles.hide : ''
+                                bookmark.isValidator ? styles.hide : ''
                               }`}
                               size="m"
                               disabled={
-                                bookmark.isDelegate || bookmark.disabled
+                                bookmark.isValidator || bookmark.disabled
                               }
                             >
                               <Icon name="edit" />
@@ -236,7 +236,7 @@ export class BookmarksList extends React.Component {
                               position="bottom left"
                               size="maxContent"
                               indent
-                              content={<Icon name="delegateWarning" />}
+                              content={<Icon name="validatorWarning" />}
                             >
                               <span>
                                 {t('This is a legacy account and can not be used on this network.')}

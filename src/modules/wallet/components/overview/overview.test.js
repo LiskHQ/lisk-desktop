@@ -1,14 +1,15 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
+import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import { useDelegates } from '@dpos/validator/hooks/queries';
+import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 
 import { mockBlocks } from '@block/__fixtures__';
-import { mockDelegates } from '@dpos/validator/__fixtures__';
+import { mockValidators } from '@pos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
@@ -24,7 +25,7 @@ jest.mock('@account/hooks', () => ({
 
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@account/hooks');
-jest.mock('@dpos/validator/hooks/queries');
+jest.mock('@pos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
@@ -43,7 +44,7 @@ describe('Overview', () => {
       isSuccess: true,
     });
     useAuth.mockReturnValue({ data: mockAuth });
-    useDelegates.mockReturnValue({ data: mockDelegates });
+    useValidators.mockReturnValue({ data: mockValidators });
     useBlocks.mockReturnValue({ data: mockBlocks });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
@@ -66,9 +67,17 @@ describe('Overview', () => {
     mockTokensBalance.data.forEach(({ symbol, availableBalance, lockedBalances }) => {
       const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
 
-      expect(screen.queryByText(`${fromRawLsk(lockedBalance)} ${symbol.toUpperCase()}`));
-      expect(screen.queryByText(`${fromRawLsk(availableBalance)}`));
-      expect(screen.queryByText(`${fromRawLsk(+availableBalance + lockedBalance)}`));
+      expect(
+        screen.queryByText(
+          `${numeral(fromRawLsk(lockedBalance)).format('0')} ${symbol.toUpperCase()}`
+        )
+      );
+      expect(screen.queryByText(`${numeral(fromRawLsk(availableBalance)).format('0,0.00')}`));
+      expect(
+        screen.queryByText(
+          `${numeral(fromRawLsk(+availableBalance + lockedBalance)).format('0,0.00')}`
+        )
+      );
       expect(screen.getByAltText(symbol)).toBeTruthy();
     });
   });

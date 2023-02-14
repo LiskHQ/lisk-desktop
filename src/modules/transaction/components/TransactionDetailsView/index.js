@@ -20,7 +20,7 @@ import header from './headerMap';
 import { splitModuleAndCommand } from '../../utils';
 
 const TransactionDetails = ({ location }) => {
-  const transactionID = parseSearchParams(location.search).transactionId;
+  const transactionID = parseSearchParams(location.search).transactionID;
   const { t } = useTranslation();
   const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
 

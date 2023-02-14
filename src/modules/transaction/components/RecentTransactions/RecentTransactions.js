@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
 import Icon from 'src/theme/Icon';
-import Table from 'src/theme/table';
+import { QueryTable } from '@theme/QueryTable';
 import TransactionRow from '../TransactionRow';
 import styles from './RecentTransactions.css';
 import header from './RecentTransactionsHeaderMap';
@@ -44,17 +44,17 @@ export const NotSignedIn = withTranslation()(({ t }) => (
 
 const RecentTransactions = ({ className, t }) => {
   const [currentAccount] = useCurrentAccount();
-  const host = currentAccount?.metadata?.address;
-  const { data: transactions } = useTransactions({ config: {
-    params: { limit: 5, address: host },
-    options: { enabled: !!host }
-  }});
+  const [hasTxs, setHasTxs] = useState(false);
+  const currentAddress = currentAccount?.metadata?.address;
   const token = useSelector(state => state.token);
   const { data: { height: currentBlockHeight } } = useLatestBlock();
 
+  const onSuccess = (response) => {
+    setHasTxs(response?.data?.length > 0);
+  };
+
   return (
     <Box
-      isLoading={transactions?.isLoading}
       className={`${styles.box} ${className}`}
     >
       <BoxHeader>
@@ -63,29 +63,36 @@ const RecentTransactions = ({ className, t }) => {
         </h2>
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <Table
-          data={transactions?.data || []}
-          isLoading={transactions?.isLoading}
+        <QueryTable
+          queryHook={useTransactions}
+          queryConfig={{
+            config: {
+              params: { limit: 5, address: currentAddress },
+              options: { enabled: !!currentAddress }
+            },
+          }}
           row={TransactionRow}
           header={header(t)}
-          error={
-            transactions?.error?.code !== 404 ? transactions?.error : undefined
-          }
           canLoadMore={false}
           additionalRowProps={{
             activeToken: token.active,
-            host,
+            host: currentAddress,
             currentBlockHeight,
             layout: 'minimal',
             avatarSize: 40,
           }}
-          emptyState={host ? NoTransactions : NotSignedIn}
+          emptyState={currentAddress ? NoTransactions : NotSignedIn}
+          onFetched={onSuccess}
         />
-        <div className={styles.viewAll}>
-          <Link to={routes.wallet.path} className="view-all">
-            {t('View all')}
-          </Link>
-        </div>
+        {
+          hasTxs && (
+            <div className={styles.viewAll}>
+              <Link to={routes.wallet.path} className="view-all">
+                {t('View all')}
+              </Link>
+            </div>
+          )
+        }
       </BoxContent>
     </Box>
   );

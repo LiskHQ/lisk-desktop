@@ -3,8 +3,8 @@ import history from 'src/utils/history';
 const sendRegex = /^\/(wallet|wallet\/send|main\/transactions\/send)$/;
 const sendRedirect = '/wallet?modal=send';
 
-const voteRegex = /^\/(main\/voting\/vote|delegates\/vote|vote)$/;
-const voteRedirect = '/wallet?modal=VotingQueue';
+const stakeRegex = /^\/(main\/staking\/stake|validator\/stake|stake)$/;
+const stakeRedirect = '/wallet?modal=StakingQueue';
 
 export const externalLinks = {
   init: () => {
@@ -24,8 +24,8 @@ export const externalLinks = {
           let redirectUrl = normalizedUrl;
           if (normalizedUrl.match(sendRegex)) {
             redirectUrl = sendRedirect + (searchParams ? `&${searchParams}` : '');
-          } else if (normalizedUrl.match(voteRegex)) {
-            redirectUrl = voteRedirect + (searchParams ? `&${searchParams}` : '');
+          } else if (normalizedUrl.match(stakeRegex)) {
+            redirectUrl = stakeRedirect + (searchParams ? `&${searchParams}` : '');
           }
 
           // @todo do we need to both push and replace?

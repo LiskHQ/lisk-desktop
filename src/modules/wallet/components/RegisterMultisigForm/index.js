@@ -20,13 +20,14 @@ const placeholderMember = {
 };
 
 const getInitialMembersState = (prevState) => {
-  if (prevState.rawTx) {
+  if (prevState.transactionJSON && prevState.transactionJSON.params) {
+    const { mandatoryKeys, optionalKeys } = prevState.transactionJSON.params;
     return [
-      ...prevState.rawTx.params.mandatoryKeys.map((item) => ({
+      ...mandatoryKeys.map((item) => ({
         isMandatory: true,
         publicKey: item,
       })),
-      ...prevState.rawTx.params.optionalKeys.map((item) => ({
+      ...optionalKeys.map((item) => ({
         isMandatory: false,
         publicKey: item,
       })),
@@ -35,7 +36,7 @@ const getInitialMembersState = (prevState) => {
 
   return [];
 };
-const getInitialSignaturesState = (prevState) => prevState.numberOfSignatures ?? 2;
+const getInitialSignaturesState = (prevState) => prevState.transactionJSON?.params?.numberOfSignatures ?? 2;
 
 export const validateState = ({ mandatoryKeys, optionalKeys, numberOfSignatures, t }) => {
   const messages = validators
@@ -132,7 +133,7 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
 
   const multisignatureFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
-    isValid: feedback.error === 0,
+    isFormValid: feedback.error === 0,
     feedback: feedback.messages,
     fields: {
       token: defaultToken,

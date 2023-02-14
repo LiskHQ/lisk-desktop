@@ -2,6 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import styles from './TransactionInfo.css';
 import CustomTransactionInfo from './CustomTransactionInfo';
 
@@ -68,7 +69,21 @@ const TransactionInfo = ({
             <label>{Number(transactionJSON.nonce)}</label>
           </div>
         </section>
-        <Members t={t} members={[...account.keys.mandatoryKeys, ...account.keys.optionalKeys]} />
+        <Members
+          t={t}
+          members={[
+            ...account.keys.mandatoryKeys.map((publicKey) => ({
+              publicKey,
+              isMandatory: true,
+              address: extractAddressFromPublicKey(publicKey),
+            })),
+            ...account.keys.optionalKeys.map((publicKey) => ({
+              publicKey,
+              isMandatory: false,
+              address: extractAddressFromPublicKey(publicKey),
+            })),
+          ]}
+        />
       </>
     )}
   </>

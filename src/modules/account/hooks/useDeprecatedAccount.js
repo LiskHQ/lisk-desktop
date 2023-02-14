@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { useEffect, useState } from 'react';
-import { useDelegates, useSentVotes, useUnlocks } from '@dpos/validator/hooks/queries';
+import { useValidators, useSentStakes, useUnlocks } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { useLegacy } from '@legacy/hooks/queries';
 import { useDispatch } from 'react-redux';
@@ -17,7 +17,7 @@ const defaultAccount = {
     balance: '10000000000000',
     username: '',
     isMigrated: true,
-    isDelegate: false,
+    isValidator: false,
     isMultisignature: false,
   },
   // @todo same here.
@@ -33,9 +33,9 @@ const defaultAccount = {
     mandatoryKeys: [],
     optionalKeys: [],
   },
-  dpos: {
-    delegate: {},
-    sentVotes: [],
+  pos: {
+    validator: {},
+    sentStakes: [],
     unlocking: [],
   },
 };
@@ -48,22 +48,22 @@ export const useDeprecatedAccount = (accountInfo) => {
   const [account, setAccount] = useState(defaultAccount);
 
   const {
-    data: sentVotes,
-    isLoading: isSentVotesLoading,
-    isSuccess: isSentVotesSuccess,
-  } = useSentVotes({ config: { params: { address } } });
+    data: sentStakes,
+    isLoading: isSentStakesLoading,
+    isSuccess: isSentStakesSuccess,
+  } = useSentStakes({ config: { params: { address } } });
   useEffect(() => {
-    if (!isSentVotesSuccess) {
+    if (!isSentStakesSuccess) {
       return;
     }
     setAccount((state) => ({
       ...state,
-      dpos: {
-        ...state.dpos,
-        sentVotes: sentVotes?.data?.votes || [],
+      pos: {
+        ...state.pos,
+        sentStakes: sentStakes?.data?.stakes || [],
       },
     }));
-  }, [sentVotes, isSentVotesSuccess]);
+  }, [sentStakes, isSentStakesSuccess]);
 
   const {
     data: auth,
@@ -95,35 +95,34 @@ export const useDeprecatedAccount = (accountInfo) => {
   }, [auth, isAuthSuccess, pubkey]);
 
   const {
-    data: delegates,
-    isLoading: isDelegatesLoading,
-    isSuccess: isDelegatesSuccess,
-  } = useDelegates({ config: { params: { address } } });
+    data: validators,
+    isLoading: isValidatorsLoading,
+    isSuccess: isValidatorsSuccess,
+  } = useValidators({ config: { params: { address } } });
   useEffect(() => {
-    if (!isDelegatesSuccess) {
+    if (!isValidatorsSuccess) {
       return;
     }
-    const delegate = delegates.data[0];
+    const validator = validators.data[0];
     setAccount((state) => ({
       ...state,
       summary: {
         ...state.summary,
-        isDelegate: !!delegate?.name,
+        isValidator: !!validator?.name,
       },
-      dpos: {
-        ...state.dpos,
-        delegate: {
-          username: delegate?.name || '',
-          consecutiveMissedBlocks: delegate?.consecutiveMissedBlocks,
-          lastForgedHeight: delegate?.lastGeneratedHeight,
-          isBanned: delegate?.isBanned,
-          totalVotesReceived: delegate?.totalVotesReceived,
+      pos: {
+        ...state.pos,
+        validator: {
+          username: validator?.name || '',
+          consecutiveMissedBlocks: validator?.consecutiveMissedBlocks,
+          lastGeneratedHeight: validator?.lastGeneratedHeight,
+          isBanned: validator?.isBanned,
+          totalStakeReceived: validator?.totalStakeReceived,
         },
       },
     }));
-  }, [delegates, isDelegatesSuccess]);
+  }, [validators, isValidatorsSuccess]);
 
-  // TODO: For any given account maximum possible votes, unlocks is 10
   // Cross check other query params limit as well
   const {
     data: unlocks,
@@ -136,13 +135,9 @@ export const useDeprecatedAccount = (accountInfo) => {
     }
     setAccount((state) => ({
       ...state,
-      dpos: {
-        ...state.dpos,
-        unlocking: (unlocks?.data?.unlocking || []).map((unlock) => ({
-          delegateAddress: unlock.delegateAddress,
-          amount: unlock.amount,
-          height: unlock.unvoteHeight,
-        })),
+      pos: {
+        ...state.pos,
+        pendingUnlocks: unlocks?.data?.pendingUnlocks ?? [],
       },
     }));
   }, [unlocks, isUnlocksSuccess]);
@@ -163,10 +158,12 @@ export const useDeprecatedAccount = (accountInfo) => {
         isMigrated: legacy?.data?.balance === '0',
         legacyAddress: legacy?.data?.legacyAddress,
       },
-      ...(legacy?.data && {legacy: {
+      ...(legacy?.data && {
+        legacy: {
           address: legacy.data.legacyAddress,
           balance: legacy.data.balance,
-        }}),
+        },
+      }),
     }));
   }, [legacy, isLegacySuccess]);
 
@@ -195,16 +192,16 @@ export const useDeprecatedAccount = (accountInfo) => {
   return {
     isLoading:
       isAuthLoading ||
-      isDelegatesLoading ||
+      isValidatorsLoading ||
       isUnlocksLoading ||
-      isSentVotesLoading ||
+      isSentStakesLoading ||
       isLegacyLoading ||
       isTokenLoading,
     isSuccess:
       isAuthSuccess &&
-      isDelegatesSuccess &&
+      isValidatorsSuccess &&
       isUnlocksSuccess &&
-      isSentVotesSuccess &&
+      isSentStakesSuccess &&
       isLegacySuccess &&
       isTokenSuccess,
   };

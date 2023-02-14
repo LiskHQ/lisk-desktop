@@ -23,12 +23,19 @@
   }
 }
 
+.title {
+  margin: 0px;
+  margin-bottom: 6px;
+  font-family: var(--heading-font);
+  font-weight: var(--font-weight-bold);
+}
+
 .container {
   width: 100% !important;
   overflow-y: auto !important;
 
   & > .header {
-    & > h1 {
+    & > h5 {
       @mixin headingNormal bold;
 
       margin: 0;
@@ -37,6 +44,7 @@
 
   & > div:first-child {
     padding: 0px !important;
+    margin-bottom: 34px;
   }
 
   & .infoContainer {
@@ -74,4 +82,8 @@
   @mixin contentNormal;
 
   font-size: 16px;
+}
+
+.actionBtn {
+  max-width: 244px;
 }

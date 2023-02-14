@@ -7,9 +7,10 @@ import {
   mockCcm,
   mockCommandParametersSchemas,
 } from '../__fixtures__';
+import { mockInvoke } from '../__fixtures__/mockInvoke';
 
 export const webSocketRPC = rest.get(
-  '*/rpc-v3',
+  '*/socket.io/',
   (_, res, ctx) => res(
     ctx.status(200),
     ctx.set('Connection', 'keep-alive'),
@@ -17,16 +18,6 @@ export const webSocketRPC = rest.get(
     ctx.body('data: SUCCESS\n\n'),
   ),
 );
-export const webSocket = rest.get(
-  '*/blockchain',
-  (_, res, ctx) => res(
-    ctx.status(200),
-    ctx.set('Connection', 'keep-alive'),
-    ctx.set('Content-Type', 'text/event-stream'),
-    ctx.body('data: SUCCESS\n\n'),
-  ),
-);
-
 export const newsFeed = rest.get(
   `*/api/${API_VERSION}/newsfeed`,
   async (req, res, ctx) => {
@@ -48,6 +39,14 @@ export const marketPrices = rest.get(
   `*/api/${API_VERSION}/market/prices`,
   async (_, res, ctx) => {
     const response = mockPrices;
+    return res(ctx.json(response));
+  },
+);
+
+export const initializationFees = rest.post(
+  `*/api/${API_VERSION}/invoke`,
+  async (_, res, ctx) => {
+    const response = mockInvoke;
     return res(ctx.json(response));
   },
 );

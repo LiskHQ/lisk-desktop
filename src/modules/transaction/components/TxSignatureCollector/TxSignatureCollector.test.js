@@ -64,7 +64,7 @@ describe('TxSignatureCollector', () => {
       fee: '1000000',
       nonce: '1',
       params: {
-        recipient: accounts.delegate.summary.address,
+        recipient: accounts.validator.summary.address,
         amount: '100000000',
         data: '',
         tokenID: '0000000000000000',
@@ -75,12 +75,12 @@ describe('TxSignatureCollector', () => {
     transactionDoubleSigned: jest.fn(),
   };
 
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
   useAuth.mockReturnValue({ data: mockAuth, isLoading: false });
   useTxInitiatorAccount.mockReturnValue({
     txInitiatorAccount: { ...mockAuth.data, ...mockAuth.meta, keys: { ...mockAuth.data } },

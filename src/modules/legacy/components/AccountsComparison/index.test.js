@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { truncateAddress } from '@wallet/utils/account';
+import { useGetInitializationFees } from '@auth/hooks/queries';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
@@ -15,6 +16,7 @@ jest.mock('src/utils/searchParams', () => ({
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0]]),
 }));
+jest.mock('@auth/hooks/queries/useGetInitializationFees');
 
 const mockNonMigrated = wallets.non_migrated;
 
@@ -36,6 +38,7 @@ window.open = jest.fn();
 describe('Reclaim balance screen', () => {
   let props;
 
+  useGetInitializationFees.mockReturnValue({ data: { data: { userAccount: 5000000 } } });
   beforeEach(() => {
     props = {
       t: (v) => v,
@@ -45,7 +48,7 @@ describe('Reclaim balance screen', () => {
     };
   });
 
-  it('should render legacy and new addresses', () => {
+  it('should render legacy and new addresses', async () => {
     const wrapper = mountWithRouterAndQueryClient(Reclaim, props, {});
     const html = wrapper.html();
     expect(html).toContain(wallets.non_migrated.legacy.address);
@@ -85,7 +88,7 @@ describe('Reclaim balance screen', () => {
     );
   });
 
-  it('should have the first step checked if balance is above dust threshold', () => {
+  it('should not have the first step displayed if balance is above dust threshold', () => {
     useSelector.mockImplementation(
       jest.fn(() => ({
         ...mockNonMigrated,
@@ -94,7 +97,6 @@ describe('Reclaim balance screen', () => {
     );
 
     const wrapper = mountWithRouterAndQueryClient(Reclaim, props, {});
-    expect(wrapper.find('li.step').at(0)).toHaveClassName('.check')
-    expect(wrapper.find('li.step').at(1)).toHaveClassName('.green')
-  })
+    expect(wrapper.find('li.step').at(1)).toEqual({});
+  });
 });

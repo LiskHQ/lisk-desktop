@@ -1,12 +1,10 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import { getLogo } from '@token/fungible/utils/service';
 import styles from './send.css';
-import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
-const Send = ({
-  formProps = {}, transactionJSON, t,
-}) => (
+const Send = ({ formProps = {}, transactionJSON, t }) => (
   <>
     <section className={styles.msignRow}>
       <div className={styles.col}>
@@ -14,15 +12,18 @@ const Send = ({
           <div>
             <label>{t('From Application')}</label>
             <div className={styles.chainWrapper}>
-              <img className={styles.chainLogo} src={chainLogo} />
-              <span>{formProps.fields.sendingChain.name}</span>
+              <img className={styles.chainLogo} src={getLogo(formProps.fields.sendingChain)} />
+              <span>{formProps.fields.sendingChain.chainName}</span>
             </div>
           </div>
           <div>
             <label>{t('To Application')}</label>
             <div className={styles.chainWrapper}>
-              <img className={styles.chainLogo} src={chainLogo} />
-              <span>{formProps.fields.recipientChain.name}</span>
+              <img
+                className={styles.chainLogo}
+                src={getLogo(formProps.fields.recipientChain)}
+              />
+              <span>{formProps.fields.recipientChain.chainName}</span>
             </div>
           </div>
         </div>
@@ -32,10 +33,7 @@ const Send = ({
       <div className={styles.col}>
         <label>{t('Amount')}</label>
         <span className={`${styles.valueText} amount-summary`}>
-          <TokenAmount
-            val={transactionJSON.params.amount}
-            token={formProps.fields.token.symbol}
-          />
+          <TokenAmount val={transactionJSON.params.amount} token={formProps.fields.token.symbol} />
         </span>
       </div>
     </section>

@@ -48,7 +48,7 @@
   "build": {
     "asar": true,
     "appId": "io.lisk.hub",
-    "copyright": "Copyright © 2016-2021 Lisk",
+    "copyright": "Copyright © 2016-2023 Lisk",
     "afterSign": "electron-builder-notarize",
     "protocols": {
       "name": "lisk",
@@ -116,7 +116,7 @@
     "@json-rpc-tools/utils": "1.7.6",
     "@ledgerhq/hw-transport": "6.3.0",
     "@ledgerhq/hw-transport-node-hid": "6.6.0",
-    "@liskhq/lisk-client": "6.0.0-alpha.6",
+    "@liskhq/lisk-client": "6.0.0-alpha.13",
     "@tanstack/react-query": "4.0.10",
     "@tanstack/react-query-devtools": "4.2.1",
     "@walletconnect/sign-client": "2.0.0-rc.4",
@@ -160,7 +160,6 @@
     "react": "16.14.0",
     "react-chartjs-2": "=2.8.0",
     "react-copy-to-clipboard": "5.0.3",
-    "react-countdown": "2.2.1",
     "react-dom": "16.14.0",
     "react-fast-compare": "2.0.4",
     "react-highlight-words": "0.17.0",

@@ -1,13 +1,11 @@
 /* eslint-disable max-statements */
 import React, { useMemo } from 'react';
 import { withRouter } from 'react-router';
-import { tokenMap } from '@token/fungible/consts/tokens';
+import { useGetInitializationFees } from '@auth/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
-// import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
+import { useTransactionFee } from '@transaction/hooks/useTransactionFee/useTransactionFee';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';
-// import { toRawLsk } from '@token/fungible/utils/lsk';
-import { getFeeStatus } from '@transaction/utils/helpers';
 import { splitModuleAndCommand } from 'src/modules/transaction/utils';
 import styles from './summary.css';
 
@@ -20,13 +18,14 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
     amount: wallet.legacy?.balance,
   };
 
-  const [selectedPriority /* priorityOptions */, ,] = useTransactionPriority();
+  const [selectedPriority] = useTransactionPriority();
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const transactionJSON = useMemo(
     () => ({
+      id: '',
       module,
       command,
-      fee: 132000, // @TODO: fee value should be gotten from service
+      fee: 0,
       signatures: [],
       nonce: wallet.sequence?.nonce,
       senderPublicKey: wallet.summary?.publicKey,
@@ -34,20 +33,19 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
     }),
     [wallet.legacy?.balance, module, command, wallet.sequence?.nonce, wallet.summary?.publicKey]
   );
-  // const { minFee } = useTransactionFeeCalculation({
-  //   selectedPriority,
-  //   token: tokenMap.LSK.key,
-  //   wallet,
-  //   priorityOptions,
-  //   transactionJSON,
-  // });
+  const { data: initializationFees } = useGetInitializationFees({
+    address: wallet.summary?.address,
+  });
 
-  // transactionJSON.fee = toRawLsk(minFee.value); // @TODO: this should be reinstated when fee value is to be gotten from service
-  formProps.composedFees = {
-    Transaction: getFeeStatus({ fee: { value: 0.00132 }, token: tokenMap.LSK.key }),
-    // Transaction: getFeeStatus({ fee: minFee, token: tokenMap.LSK.key }), // @TODO: this should be reinstated when fee value is to be gotten from service
-    Initialisation: getFeeStatus({ fee: { value: 0.05 }, token: tokenMap.LSK.key }),
-  };
+  const { transactionFee } = useTransactionFee({
+    transactionJSON,
+    selectedPriority,
+    isFormValid: true,
+    senderAddress: wallet.summary?.address,
+    extraCommandFee: initializationFees?.data?.userAccount,
+  });
+
+  transactionJSON.fee = transactionFee;
 
   const onSubmit = () => {
     nextStep({
@@ -58,7 +56,8 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
   };
 
   const onConfirmAction = {
-    label: t('Continue'),
+    label: t('Confirm and send'),
+    className: styles.actionBtn,
     onClick: onSubmit,
   };
 
@@ -71,15 +70,14 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
 
   return (
     <TransactionSummary
-      hasCancel
-      hasNoTopCancelButton
+      noFeeStatus
       title={t('Transaction Summary')}
       className={styles.container}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       formProps={formProps}
       transactionJSON={transactionJSON}
-      selectedPriority={selectedPriority}
+      selectedPriority={{ value: 'low' }}
       fees={fees}
     />
   );

@@ -59,11 +59,11 @@ describe('helpers', () => {
   describe('filterObjectPropsWithValue', () => {
     it('works properly with arrays', () => {
       expect(filterObjectPropsWithValue({
-        genesis_14: 'notVotedYet',
-        genesis_15: 'unvotes',
-        genesis_16: 'unvotes',
-        genesis_17: 'votes',
-      }, 'unvotes')).toEqual(['genesis_15', 'genesis_16']);
+        genesis_14: 'notStakedYet',
+        genesis_15: 'unstakes',
+        genesis_16: 'unstakes',
+        genesis_17: 'stakes',
+      }, 'unstakes')).toEqual(['genesis_15', 'genesis_16']);
     });
   });
   describe('sizeOfString', () => {

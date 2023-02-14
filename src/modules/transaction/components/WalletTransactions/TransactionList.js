@@ -21,7 +21,7 @@ const Transactions = ({
   clearFilter,
   clearAllFilters,
   t,
-  votedDelegates,
+  stakedValidators,
   address,
   confirmedLength,
 }) => {
@@ -35,15 +35,15 @@ const Transactions = ({
     const addressList =
       transactions.data.data &&
       transactions.data.data.reduce((acc, data) => {
-        if (data.title === 'vote') {
-          const votesList = data.params.votes || [];
-          const dataAddresses = votesList.map((vote) => vote.delegateAddress);
+        if (data.title === 'stake') {
+          const stakesList = data.params.stakes || [];
+          const dataAddresses = stakesList.map((stake) => stake.validatorAddress);
           return acc.concat(dataAddresses);
         }
         return acc;
       }, []);
     if (addressList.length > 0) {
-      votedDelegates.loadData({ addressList });
+      stakedValidators.loadData({ addressList });
     }
   }, [transactions.data.data]);
 
@@ -97,7 +97,7 @@ const Transactions = ({
           additionalRowProps={{
             activeToken,
             host: address,
-            delegates: votedDelegates.data,
+            validators: stakedValidators.data,
             currentBlockHeight,
             layout: 'hosted',
             avatarSize: 40,

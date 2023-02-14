@@ -14,14 +14,6 @@
     text-transform: capitalize;
   }
 
-  &::before {
-    content: '';
-    min-width: 100%;
-    position: absolute;
-    height: 1px;
-    border-top: 1px var(--color-platinum) solid;
-  }
-
   & > div {
     display: flex;
     flex-direction: row;
@@ -100,6 +92,14 @@
 
 .rowWrapper {
   width: 100%;
+
+  &::after {
+    content: '';
+    min-width: calc(100% - 40px);
+    position: absolute;
+    height: 1px;
+    background-color: var(--color-platinum);
+  }
 }
 
 .jsonContainer {

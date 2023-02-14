@@ -24,7 +24,7 @@ const getOnboardingSlides = (t) => [
   {
     title: t('Stay Informed'),
     content: t(
-      'Keep up-to-date with announcements from the Lisk Foundation. Check what network delegates have been up to with dedicated profile pages.',
+      'Keep up-to-date with announcements from the Lisk Foundation. Check what network validators have been up to with dedicated profile pages.',
     ),
     illustration: 'builtAroundCommunity',
   },
@@ -38,7 +38,7 @@ const getOnboardingSlides = (t) => [
   {
     title: t('Get Involved'),
     content: t(
-      'Community is key. Vote for delegates, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.',
+      'Community is key. Stake for validators, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.',
     ),
     illustration: 'timeToContribute',
   },

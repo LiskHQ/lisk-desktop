@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from 'src/theme/Theme';
-import welcomeLiskDelegates from '@setup/react/assets/images/illustrations/illustration-welcome-to-lisk-delegates-dark.svg';
+import welcomeLiskValidators from '@setup/react/assets/images/illustrations/illustration-welcome-to-lisk-validators-dark.svg';
 import yourVoiceMatters from '@setup/react/assets/images/illustrations/illustration-your-voice-matters-dark.svg';
 import getRewarded from '@setup/react/assets/images/illustrations/illustration-get-rewarded-dark.svg';
 import expandYourKnowledge from '@setup/react/assets/images/illustrations/illustration-expand-your-knowledge-dark.svg';
@@ -15,10 +15,10 @@ import transactionPending from '@setup/react/assets/images/illustrations/transac
 import transactionPendingDark from '@setup/react/assets/images/illustrations/transaction-pending-dark.svg';
 import transactionError from '@setup/react/assets/images/illustrations/transaction-error.svg';
 import transactionErrorDark from '@setup/react/assets/images/illustrations/transaction-error-dark.svg';
-import votingSuccessDark from '@setup/react/assets/images/illustrations/voting-submitted-dark.svg';
-import votingSuccess from '@setup/react/assets/images/illustrations/voting-submitted.svg';
-import votingError from '@setup/react/assets/images/illustrations/voting-failed.svg';
-import votingErrorDark from '@setup/react/assets/images/illustrations/voting-failed-dark.svg';
+import stakingSuccessDark from '@setup/react/assets/images/illustrations/staking-submitted-dark.svg';
+import stakingSuccess from '@setup/react/assets/images/illustrations/staking-submitted.svg';
+import stakingError from '@setup/react/assets/images/illustrations/staking-error.svg';
+import stakingErrorDark from '@setup/react/assets/images/illustrations/staking-error-dark.svg';
 import pageNotFound from '@setup/react/assets/images/illustrations/illustration-page-not-found.svg';
 import pageNotFoundDark from '@setup/react/assets/images/illustrations/illustration-page-not-found-dark.svg';
 import errorBoundaryPage from '@setup/react/assets/images/illustrations/illustration-error-boundary-page.svg';
@@ -54,9 +54,11 @@ import trezorHwRejectionDark from '@setup/react/assets/images/illustrations/hw-r
 import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
 import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
+import validatorRegistrationSuccess from '@setup/react/assets/images/illustrations/validator-registration-success.svg';
+import validatorRegistrationError from '@setup/react/assets/images/illustrations/validator-registration-error.svg';
 
 export const illustrations = {
-  welcomeLiskDelegates,
+  welcomeLiskValidators,
   yourVoiceMatters,
   getRewarded,
   expandYourKnowledge,
@@ -66,8 +68,8 @@ export const illustrations = {
   trezorDark,
   transactionSuccess,
   transactionError,
-  votingSuccess,
-  votingError,
+  stakingSuccess,
+  stakingError,
   pageNotFound,
   errorBoundaryPage,
   hubReadyToGo,
@@ -87,8 +89,8 @@ export const illustrations = {
   emptyWalletDark,
   pageNotFoundDark,
   errorBoundaryPageDark,
-  votingSuccessDark,
-  votingErrorDark,
+  stakingSuccessDark,
+  stakingErrorDark,
   transactionSuccessDark,
   transactionErrorDark,
   emptyBookmarksListDark,
@@ -109,6 +111,8 @@ export const illustrations = {
   ledgerNanoHwRejection,
   ledgerNanoHwRejectionDark,
   addApplicationSuccess,
+  validatorRegistrationSuccess,
+  validatorRegistrationError,
 };
 
 const Illustration = ({ name, className, noTheme, ...props }) => {

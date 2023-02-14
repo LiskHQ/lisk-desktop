@@ -10,7 +10,7 @@
   padding: var(--horizontal-padding-l) 0;
 
   & > h1 {
-    @mixin headingLarge bold;
+    @mixin stakeStatusHeading very-bold;
 
     margin-bottom: 20px;
     color: var(--color-maastricht-blue);
@@ -26,13 +26,17 @@
   & > p {
     @mixin contentLarge;
 
-    margin: 10px 0;
+    margin: 0;
     text-align: center;
+
+    & > button {
+      font-size: 15px;
+    }
   }
 
   & > p {
     color: var(--color-slate-gray);
-    max-width: 70%;
+    max-width: 76%;
   }
 
   & .button {
@@ -41,13 +45,20 @@
   }
 
   & > img {
-    width: 210px;
+    width: 132px;
     margin-top: var(--horizontal-padding-l);
+    margin-bottom: 32px;
   }
 }
 
 .backToWallet {
-  margin-top: 30px;
+  margin-top: 32px;
   margin-bottom: 30px;
   width: 160px;
+}
+
+.retryBtn {
+  width: 100%;
+  max-width: 354px;
+  margin-top: 50px;
 }

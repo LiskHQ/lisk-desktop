@@ -21,7 +21,7 @@ const AccountCreated = ({ t }) => (
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <Link
         className={`${registerStyles.button} login-button`}
-        to={routes.manageAccounts.path}
+        to={routes.addAccountBySecretRecovery.path}
       >
         <PrimaryButton className={registerStyles.continueBtn}>
           {t('Continue to dashboard')}

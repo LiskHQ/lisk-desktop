@@ -1,0 +1,40 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.statsContainer {
+  display: flex;
+
+  & .stakeStats {
+    padding: 0 var(--horizontal-padding-m);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid var(--color-platinum);
+
+    & span:first-child {
+      margin-right: 6px;
+    }
+
+    &:last-child {
+      border: 0;
+    }
+
+    & .addedNumeral {
+      color: var(--color-jade-green);
+    }
+
+    & .editedNumeral {
+      color: var(--color-ink-blue);
+    }
+
+    & .removedNumeral {
+      color: var(--color-maastricht-blue);
+    }
+  }
+
+  & .statText {
+    @mixin contentLargest;
+
+    line-height: 15px;
+    color: var(--color-blue-gray);
+  }
+}

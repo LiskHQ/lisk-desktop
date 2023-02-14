@@ -24,8 +24,8 @@ global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () => Promise.resolve({
       data: [{
-        moduleCommand: 'dpos:voteDelegate',
-        schema: state.network.networks.LSK.moduleCommandSchemas['dpos:voteDelegate'],
+        moduleCommand: 'pos:stake',
+        schema: state.network.networks.LSK.moduleCommandSchemas['pos:stake'],
       }],
       meta: { total: 0 },
     }),

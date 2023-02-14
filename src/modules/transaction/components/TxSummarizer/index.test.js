@@ -47,10 +47,10 @@ describe('TxSummarizer', () => {
       formProps: {
         isValid: true,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-        composedFees: { Transaction: '1 LSK', CCM: '1 LSK', Initialisation: '1 LSK' },
+        composedFees: [{ isHidden: false, title: 'test', value: '1 LSK' }],
         fields: {
           sendingChain: mockBlockchainApplications[0],
-          recipientChain: blockchainApplicationsExplore[0],
+          recipientChain: { ...blockchainApplicationsExplore[0], logo: { png: '', svg: '' } },
           token: mockTokensBalance.data[0],
           recipient: {
             address: wallets.genesis.summary.address,
@@ -115,8 +115,8 @@ describe('TxSummarizer', () => {
   it('should display tx fee for regular account', () => {
     // Regular account
     const wrapper = mount(<TxSummarizer {...props} />);
-    expect(wrapper.find('.fee-value-Transaction')).toExist();
-    expect(wrapper.find('.fee-value-Transaction').text()).toContain('1 LSK');
+    expect(wrapper.find('.fee-value-test')).toExist();
+    expect(wrapper.find('.fee-value-test').text()).toContain('1 LSK');
 
     // multisig account
     const newProps = {
@@ -153,7 +153,7 @@ describe('TxSummarizer', () => {
         moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
         params: {
           mandatoryKeys: [wallets.genesis.summary.publicKey],
-          optionalKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],
+          optionalKeys: [wallets.validator.summary.publicKey, wallets.multiSig.summary.publicKey],
           numberOfSignatures: 2,
         },
       },

@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable  max-lines, import/no-extraneous-dependencies */
 import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter, Router } from 'react-router-dom';
@@ -269,3 +269,35 @@ export const renderWithStore = (Component, props, store) =>
       <Component {...props} />
     </Provider>
   );
+
+/**
+ * render's components that requires access Redux store with react router
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ * @param {Object} store - A fake Redux store object
+ *
+ * @returns {Object} Mounted component
+ */
+export const renderWithRouterAndStore = (Component, props, store) =>
+  render(
+    <Provider store={configureStore()(store)}>
+      <MemoryRouter initialEntries={[props?.history ?? defaultHistoryProps]}>
+        <Component {...props} />
+      </MemoryRouter>
+    </Provider>
+  );
+
+export const renderWithRouterAndStoreAndQueryClient = (Component, props = {}, store) => {
+  const queryClient = new QueryClient();
+
+  return render(
+    <Provider store={configureStore()(store)}>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter initialEntries={[props?.history ?? defaultHistoryProps]}>
+          <Component {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    </Provider>
+  );
+};

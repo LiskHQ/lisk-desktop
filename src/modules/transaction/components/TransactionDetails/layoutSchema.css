@@ -63,18 +63,18 @@
     "transactionAsset transactionAsset";
 }
 
-.voteLayout {
+.stakeLayout {
   grid-template-areas:
     "illustration illustration"
     "sender sender"
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "votes votes"
+    "stakes stakes"
     "transactionAsset transactionAsset";
 }
 
-.registerDelegate {
+.registerValidator {
   grid-template-areas:
     "illustration illustration"
     "sender sender"
@@ -100,16 +100,16 @@
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
-.votePreview {
+.stakePreview {
   grid-template-areas:
     "illustration illustration"
     "sender sender"
-    "votes votes"
+    "stakes stakes"
     "transactionId fee"
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
-.registerDelegatePreview {
+.registerValidatorPreview {
   grid-template-areas:
     "illustration illustration"
     "sender sender"
@@ -153,7 +153,7 @@
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
-.reportDelegateMisbehavior {
+.reportValidatorMisbehavior {
   grid-template-areas:
     "illustration illustration"
     "sender sender"

@@ -2,14 +2,14 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
-  Confirmations, TxDate, Amount, Fee, NumberOfSignatures, Votes,
+  Confirmations, TxDate, Amount, Fee, NumberOfSignatures, Stakes,
   BlockId, BlockHeight, Members, SignedAndRemainingMembersList, PrettyJson,
 } from 'src/modules/transaction/components/TransactionDetails';
 import styles from './layoutSchema.css';
 
 const {
-  transfer, voteDelegate, unlock, registerDelegate, registerMultisignature,
-  reportDelegateMisbehavior, reclaim,
+  transfer, stakeValidator, unlock, registerValidator, registerMultisignature,
+  reportValidatorMisbehavior, reclaim,
 } = MODULE_COMMANDS_NAME_MAP;
 
 const baseComponents = [Illustration, Sender];
@@ -26,21 +26,21 @@ export const LayoutSchema = {
     components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],
     className: styles.transferPreview,
   },
-  [voteDelegate]: {
-    components: [...baseComponents, ...timeComponents, Votes, PrettyJson],
-    className: styles.voteLayout,
+  [stakeValidator]: {
+    components: [...baseComponents, ...timeComponents, Stakes, PrettyJson],
+    className: styles.stakeLayout,
   },
-  [`${voteDelegate}-preview`]: {
-    components: [...previewBaseComponents, Votes, ...restComponents],
-    className: styles.votePreview,
+  [`${stakeValidator}-preview`]: {
+    components: [...previewBaseComponents, Stakes, ...restComponents],
+    className: styles.stakePreview,
   },
-  [registerDelegate]: {
+  [registerValidator]: {
     components: [...baseComponents, ...timeComponents, PrettyJson],
-    className: styles.registerDelegate,
+    className: styles.registerValidator,
   },
-  [`${registerDelegate}-preview`]: {
+  [`${registerValidator}-preview`]: {
     components: [...previewBaseComponents, ...restComponents],
-    className: styles.registerDelegatePreview,
+    className: styles.registerValidatorPreview,
   },
   [registerMultisignature]: {
     components: [...baseComponents, ...timeComponents, Members, NumberOfSignatures, PrettyJson],
@@ -58,9 +58,9 @@ export const LayoutSchema = {
     components: [...previewBaseComponents, Amount, ...restComponents],
     className: styles.unlockTokenPreview,
   },
-  [reportDelegateMisbehavior]: {
+  [reportValidatorMisbehavior]: {
     components: [...baseComponents, ...timeComponents, PrettyJson],
-    className: styles.reportDelegateMisbehavior,
+    className: styles.reportValidatorMisbehavior,
   },
   [reclaim]: {
     components: [...baseComponents, ...timeComponents, Amount, PrettyJson],

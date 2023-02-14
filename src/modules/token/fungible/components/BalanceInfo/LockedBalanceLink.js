@@ -5,8 +5,8 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import DialogLink from 'src/theme/dialog/link';
 import {
-  calculateBalanceLockedInUnvotes,
-  calculateBalanceLockedInVotes,
+  calculateBalanceLockedInUnstakes,
+  calculateBalanceLockedInStakes,
 } from '@wallet/utils/account';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import Icon from 'src/theme/Icon';
@@ -36,23 +36,23 @@ const LockedBalanceLink = ({
   account, isWalletRoute, style, icon,
 }) => {
   const host = useSelector((state) => selectActiveTokenAccount(state));
-  let lockedInVotes = 0;
+  let lockedInStakes = 0;
 
   if (isWalletRoute && host) {
-    lockedInVotes = useSelector((state) =>
-      calculateBalanceLockedInVotes(state.voting));
+    lockedInStakes = useSelector((state) =>
+      calculateBalanceLockedInStakes(state.staking));
   } else {
-    lockedInVotes = calculateBalanceLockedInUnvotes(account.dpos?.sentVotes);
+    lockedInStakes = calculateBalanceLockedInUnstakes(account.pos?.sentStakes);
   }
 
-  const lockedInUnvotes = isWalletRoute && host
-    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking)
-    : calculateBalanceLockedInUnvotes(account.dpos?.unlocking);
+  const lockedInUnstakes = isWalletRoute && host
+    ? calculateBalanceLockedInUnstakes(host.pos?.unlocking)
+    : calculateBalanceLockedInUnstakes(account.pos?.unlocking);
 
-  if (lockedInUnvotes + lockedInVotes > 0) {
+  if (lockedInUnstakes + lockedInStakes > 0) {
     return (
       <Link
-        sum={lockedInUnvotes + lockedInVotes}
+        sum={lockedInUnstakes + lockedInStakes}
         style={style}
         icon={icon}
         isWalletRoute={isWalletRoute}

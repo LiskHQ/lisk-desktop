@@ -19,7 +19,7 @@ Feature: Wallet
 
   # @basic
   # Scenario: Send LSK to this account
-  #   Given I am on Wallet page of delegate
+  #   Given I am on Wallet page of validator
   #   And I wait 1 seconds
   #   When I send LSK
   #   Then I should have lskdxwf9kgmfghoeevqhrkcruy8j7xpkw57un9avq in recipient field

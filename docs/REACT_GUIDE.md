@@ -31,7 +31,7 @@ There are still cases where `this.props` is used, like here https://github.com/L
 ## What should be inside render function of a component?
 
 1. `this.props` destructuring, if props are used.
-2. all other variable definitions that are needed, e.g. https://github.com/LiskHQ/lisk-desktop/blob/796ce53fa637a6806b2ac3279dcf1d893f0805db/src/components/votesPreview/index.js#L37-L54
+2. all other variable definitions that are needed, e.g. https://github.com/LiskHQ/lisk-desktop/blob/796ce53fa637a6806b2ac3279dcf1d893f0805db/src/components/stakesPreview/index.js#L37-L54
 3. exactly one `return` statement with JSX of the component
 
 There shouldn't be multiple `return` statements with some `if-else` or `switch-case` statements, this might mean that the component should be split into multiple components. 

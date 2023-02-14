@@ -1,61 +1,61 @@
 export const tokensBalance = [
   {
     tokenID: '0000000100000000',
-    name: 'Lisk',
+    chainName: 'Lisk',
     symbol: 'LSK',
     availableBalance: '1000000000',
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '1000000',
+        amount: '10000000000',
       },
     ],
   },
   {
     tokenID: '0000000200000000',
-    name: 'Colecti',
+    chainName: 'Colecti',
     symbol: 'COL',
     availableBalance: '70000000',
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '5400000',
+        amount: '500000000',
       },
     ],
   },
   {
     tokenID: '0000000300000000',
-    name: 'Enevti',
+    chainName: 'Enevti',
     symbol: 'EVT',
     availableBalance: '15000000',
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '8000000',
+        amount: '8000000000',
       },
     ],
   },
   {
     tokenID: '0000000400000000',
-    name: 'DoEdu',
+    chainName: 'DoEdu',
     symbol: 'DEU',
     availableBalance: '43000000',
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '24000000',
+        amount: '4000000000',
       },
     ],
   },
   {
     tokenID: '0000000500000000',
-    name: 'Kalipo',
+    chainName: 'Kalipo',
     symbol: 'KAL',
     availableBalance: '27000000',
     lockedBalances: [
       {
         moduleID: '5',
-        amount: '12000000',
+        amount: '2000000000',
       },
     ],
   },
@@ -66,7 +66,7 @@ export const escrowedAmounts = [
     escrowChainID: '00000001',
     tokenID: '0000000100000000',
     amount: '50000000',
-    name: 'Lisk',
+    chainName: 'Lisk',
     symbol: 'LSK',
   },
 ];

@@ -67,7 +67,7 @@ describe.skip('App', () => {
       },
       search: {
         suggestions: {
-          delegates: [],
+          validators: [],
           addresses: [],
           transactions: [],
         },

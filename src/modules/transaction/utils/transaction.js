@@ -1,7 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable max-lines */
 import { transactions, cryptography, codec } from '@liskhq/lisk-client';
-import { constants } from '@liskhq/lisk-cryptography';
 import { to } from 'await-to-js';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { DEFAULT_NUMBER_OF_SIGNATURES } from '@transaction/configuration/transactions';
@@ -15,8 +14,7 @@ import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
 
-const { transfer, voteDelegate, unlock, reclaim, registerMultisignature } =
-  MODULE_COMMANDS_NAME_MAP;
+const { transfer, stake, reclaim, registerMultisignature } = MODULE_COMMANDS_NAME_MAP;
 
 // @todo import the following 4 values from lisk-elements (#4497)
 const ED25519_PUBLIC_KEY_LENGTH = 32;
@@ -29,8 +27,8 @@ const multisigRegMsgSchema = {
     address: {
       dataType: 'bytes',
       fieldNumber: 1,
-      minLength: constants.BINARY_ADDRESS_LENGTH,
-      maxLength: constants.BINARY_ADDRESS_LENGTH,
+      minLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
+      maxLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
     },
     nonce: {
       dataType: 'uint64',
@@ -94,7 +92,7 @@ const convertObjectToHex = (data) => {
   // eslint-disable-next-line no-restricted-syntax, no-unused-vars, guard-for-in
   for (const key in data) {
     const value = data[key];
-    if (key === 'votes' || key === 'unlockObjects') {
+    if (key === 'stakes') {
       obj[key] = value.map((item) => convertObjectToHex(item));
     } else if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
       obj[key] = convertObjectToHex(value);
@@ -166,7 +164,7 @@ const normalizeTransactionParams = (params) =>
  * @param {Object} transaction The transaction object
  * @returns {String} Amount in Beddows/Satoshi
  */
-const getTxAmount = ({ module, command, params, moduleCommand }) => {
+const getTxAmount = ({ module, command, params = {}, moduleCommand }) => {
   if (!moduleCommand) {
     moduleCommand = joinModuleAndCommand({ module, command });
   }
@@ -174,14 +172,8 @@ const getTxAmount = ({ module, command, params, moduleCommand }) => {
     return params.amount;
   }
 
-  if (moduleCommand === unlock) {
-    return params.unlockObjects.reduce(
-      (sum, unlockObject) => sum + parseInt(unlockObject.amount, 10),
-      0
-    );
-  }
-  if (moduleCommand === voteDelegate) {
-    return params.votes.reduce((sum, vote) => sum + Number(vote.amount), 0);
+  if (moduleCommand === stake) {
+    return params.stakes.reduce((sum, stakeObject) => sum + Number(stakeObject.amount), 0);
   }
 
   return undefined;
@@ -236,8 +228,6 @@ export const computeTransactionId = ({ transaction, schema }) => {
 };
 
 const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, senderAccount) => {
-  // since we sign multisignature registration as a normal tx, we can set this to false.
-  // const isGroupRegistration = moduleCommand === registerMultisignature;
   const keys = getKeys({
     senderAccount,
     transaction,
@@ -252,8 +242,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
       optionalKeys: keys.optionalKeys.map(convertStringToBinary),
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
-    schema,
-    false // @todo if you want to send tokens, and you are the group and a member, is this True? (#4506)
+    schema
   );
 
   return signedTransaction;
@@ -308,7 +297,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     }
   }
 
-  // Sign the tx only if the account is the initator of the tx
+  // Sign the tx only if the account is the initiator of the tx
 
   const { mandatoryKeys, optionalKeys, numberOfSignatures } = wallet.keys;
   const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;

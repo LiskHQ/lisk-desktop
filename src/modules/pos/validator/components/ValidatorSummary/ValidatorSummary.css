@@ -1,0 +1,114 @@
+.wrapper {
+  width: 419px !important;
+  padding: 24px;
+  box-sizing: border-box;
+  height: 225px !important;
+  overflow: hidden;
+  box-shadow: var(--box-shadow-popover);
+  border-radius: var(--border-radius-box);
+  position: absolute;
+  background-color: var(--color-white);
+
+  & .validatorDetails {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    position: relative;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+
+      &:nth-child(2) {
+        margin-left: 8px;
+      }
+
+      &:last-child {
+        position: absolute;
+        right: 0px;
+      }
+
+      & > .validatorName {
+        @mixin headingSmall;
+
+        margin-top: 0;
+        margin-bottom: 5px;
+        color: var(--color-maastricht-blue);
+        font-family: var(--content-font);
+
+        & > span {
+          @mixin contentNormal;
+
+          margin-left: 0px;
+          font-weight: var(--font-weight-semi-bold);
+          font-size: 16px;
+        }
+
+        & > span:last-child {
+          @mixin contentNormal;
+
+          margin-left: 10px;
+          font-size: var(--button-font-size-s);
+          padding: 2px 8px !important;
+          border-radius: 6px !important;
+        }
+      }
+
+      & > .validatorAddress {
+        @mixin contentNormal;
+
+        margin: 0;
+        font-size: var(--paragraph-font-size-s);
+        color: var(--color-slate-gray);
+      }
+    }
+  }
+
+  & > header {
+    padding: 0px !important;
+  }
+
+  & > header ~ div {
+    padding: 0px !important;
+  }
+
+  & > header ~ div > p {
+    white-space: break-spaces;
+    margin-top: 20px;
+    font-size: var(--paragraph-font-size-s);
+    font-weight: var(--font-weight-normal);
+  }
+}
+
+.summaryDetails {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 15px;
+
+  & > div {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+
+    &:nth-of-type(2n) {
+      width: 60%;
+    }
+
+    & > span:first-child {
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--color-slate-gray);
+    }
+
+    & > span:last-child {
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-content-light);
+      padding-left: 5px;
+    }
+  }
+}

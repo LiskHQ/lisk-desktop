@@ -71,8 +71,8 @@ Given(/^I am on (.*?) page$/, function (page) {
   page = page.toLowerCase();
   cy.server();
   switch (page) {
-    case 'register delegate':
-      cy.visit(urls.registerDelegate);
+    case 'register validator':
+      cy.visit(urls.registerValidator);
       break;
     default:
       cy.visit(urls[page]);
@@ -123,20 +123,20 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     case 'unlocking':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock');
       break;
-    case 'voting':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate vote');
+    case 'staking':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Validator stake');
       break;
-    case 'delegate registration':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate registration');
+    case 'validator registration':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Validator registration');
       break;
-    case 'register delegate':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register delegate');
+    case 'register validator':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register validator');
       break;
     case 'register multisignature group':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register multisig. group');
       break;
-    case 'vote':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Vote');
+    case 'stake':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Stake');
       break;
   }
 });
@@ -172,11 +172,11 @@ Then(/^I should see (\d+) (\w+) in table$/, function (number, rowType) {
     case 'transactions':
       cy.get(ss.transactionRow).should('have.length', number);
       break;
-    case 'votes':
+    case 'stakes':
       cy.get(ss.transactionRow).should('have.length', number);
       break;
-    case 'delegates':
-      cy.get(ss.delegateRow).should('have.length', number);
+    case 'validators':
+      cy.get(ss.validatorRow).should('have.length', number);
       break;
   }
 });
@@ -194,7 +194,7 @@ Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
     case 'account':
       cy.get(ss.accountName).contains(identifier.substr(0, 10));
       break;
-    case 'delegates':
+    case 'validators':
       cy.get(ss.accountName).should('have.text', identifier);
       break;
     case 'tx details':

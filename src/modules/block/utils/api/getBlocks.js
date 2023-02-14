@@ -10,7 +10,7 @@ import blocksFiltersMap from '@block/map/blocksFiltersMap';
  * @param {Array<String>?} data.params.addressList - List of account addresses
  * @param {Date?} data.params.dateFrom - Starting timestamp
  * @param {Date?} data.params.dateTo - Ending timestamp
- * @param {String?} data.params.generator - Address or username of delegate the forger
+ * @param {String?} data.params.generator - Address or username of validator the generator
  * @param {Number?} data.params.offset - Index of the first result
  * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the

@@ -7,7 +7,7 @@ import {
   EventName,
   CollapseToggle,
   BlockHeight,
-  TransctionID,
+  TransactionID,
 } from './components';
 
 const TransactionEventRow = ({ data: transactionEvent, isWallet }) => {
@@ -25,9 +25,9 @@ const TransactionEventRow = ({ data: transactionEvent, isWallet }) => {
     <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
       <div className={`transaction-event-row ${styles.container}`}>
         {isWallet ? <BlockHeight height={height} id={id} /> : <EventIndex id={index} />}
-        {isWallet && topics?.length > 0 && <TransctionID id={topics[0]} />}
+        {isWallet && topics?.length > 0 && <TransactionID id={topics[0]} />}
         <EventModule module={module} isWallet={isWallet} />
-        <EventName name={name} isWallet={isWallet}  />
+        <EventName name={name} isWallet={isWallet} />
         <CollapseToggle
           isWallet={isWallet}
           isCollapsed={isCollapsed}

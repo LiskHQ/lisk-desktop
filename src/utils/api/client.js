@@ -30,14 +30,14 @@ export class Client {
         return;
       }
       const customParams = params && removeKeysWithoutValue(params);
-      this.socket.emit(
+      this.socketRPC.emit(
         'request',
         { method: event, params: customParams || data || {} },
-        (response) => {
-          if (Object.keys(response).length && response.error) {
-            return reject(response);
+        ({ result }) => {
+          if (Object.keys(result).length || result.error) {
+            return reject(result);
           }
-          return resolve(response);
+          return resolve(result);
         }
       );
     });

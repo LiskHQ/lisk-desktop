@@ -1,7 +1,6 @@
 import * as keys from '@tests/constants/keys';
-import { codec } from '@liskhq/lisk-codec';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import { utils } from '@liskhq/lisk-cryptography';
+import { cryptography, codec } from '@liskhq/lisk-client';
 import {
   decodeTransaction,
   encodeTransaction,
@@ -10,14 +9,14 @@ import {
   toTransactionJSON,
 } from './encoding';
 
-jest.spyOn(codec, 'decode');
-jest.spyOn(codec, 'toJSON');
-jest.spyOn(codec, 'decodeJSON');
-jest.spyOn(codec, 'encode');
-jest.spyOn(utils, 'hash');
+jest.spyOn(codec.codec, 'decode');
+jest.spyOn(codec.codec, 'toJSON');
+jest.spyOn(codec.codec, 'decodeJSON');
+jest.spyOn(codec.codec, 'encode');
+jest.spyOn(cryptography.utils, 'hash');
 
 describe('encoding', () => {
-  const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.commands.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );
@@ -38,8 +37,8 @@ describe('encoding', () => {
   it('should create tx from json when params is an object', () => {
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1',
       params: {
         blsKey: keys.blsKey,
@@ -53,8 +52,8 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON, moduleCommandSchemas)).toEqual({
       fee: 0n,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: 1n,
       params: {},
       signatures: [],
@@ -64,12 +63,12 @@ describe('encoding', () => {
   });
 
   it('should create tx from json when params is a string', () => {
-    codec.decode.mockReturnValue('params-decoded');
+    codec.codec.decode.mockReturnValue('params-decoded');
 
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1',
       params: '',
       signatures: [],
@@ -78,8 +77,8 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON, moduleCommandSchemas)).toEqual({
       fee: 0n,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: 1n,
       params: 'params-decoded',
       signatures: [],
@@ -89,12 +88,12 @@ describe('encoding', () => {
   });
   
   it('should create tx from json when no paramSchema is provided', () => {
-    codec.decode.mockReturnValue('params-decoded');
+    codec.codec.decode.mockReturnValue('params-decoded');
 
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1',
       params: '',
       signatures: [],
@@ -103,8 +102,8 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON)).toEqual({
       fee: 0n,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: 1n,
       params: {},
       signatures: [],
@@ -114,12 +113,12 @@ describe('encoding', () => {
   });
 
   it('should create transaction whoose id is an empty buffer', () => {
-    codec.decode.mockReturnValue('params-decoded');
+    codec.codec.decode.mockReturnValue('params-decoded');
 
     const transactionJSON = {
       fee: 0,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1',
       params: '',
       signatures: [],
@@ -128,8 +127,8 @@ describe('encoding', () => {
 
     expect(fromTransactionJSON(transactionJSON)).toEqual({
       fee: 0n,
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: 1n,
       params: {},
       signatures: [],
@@ -139,13 +138,13 @@ describe('encoding', () => {
   });
 
   it('should create json from tx', () => {
-    codec.toJSON.mockReturnValue({ key: 'test-value' });
-    codec.decodeJSON.mockReturnValue({ key: 'test-params' });
+    codec.codec.toJSON.mockReturnValue({ key: 'test-value' });
+    codec.codec.decodeJSON.mockReturnValue({ key: 'test-params' });
 
     const transaction = {
       fee: '0n',
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1n',
       params: Buffer.from('params'),
       signatures: [],
@@ -161,12 +160,12 @@ describe('encoding', () => {
   });
 
   it('should encode tx', () => {
-    codec.encode.mockReturnValue({ key: 'test-encoded' });
+    codec.codec.encode.mockReturnValue({ key: 'test-encoded' });
 
     const transaction = {
       fee: '0n',
-      module: 'dpos',
-      command: 'registerDelegate',
+      module: 'pos',
+      command: 'registerValidator',
       nonce: '1n',
       params: Buffer.from('params'),
       signatures: [],
@@ -178,7 +177,7 @@ describe('encoding', () => {
   });
 
   it('should encode tx with an empty buffer when paramSchema is not provided', () => {
-    codec.encode.mockReturnValue({});
+    codec.codec.encode.mockReturnValue({});
 
     const transaction = {
       id: '123456',
@@ -188,10 +187,10 @@ describe('encoding', () => {
   });
 
   it('should decode tx with an empty object when paramSchema is not provided', () => {
-    codec.decode.mockReturnValue({
+    codec.codec.decode.mockReturnValue({
       nonce: '1n',
     });
-    utils.hash.mockReturnValue(Buffer.from('test-id'));
+    cryptography.utils.hash.mockReturnValue(Buffer.from('test-id'));
 
     expect(decodeTransaction(Buffer.alloc(0))).toEqual({
       id: Buffer.from('test-id'),

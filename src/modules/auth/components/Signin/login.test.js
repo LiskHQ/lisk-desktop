@@ -17,7 +17,7 @@ describe('Login', () => {
   i18next.on = jest.fn();
 
   const account = {
-    isDelegate: false,
+    isValidator: false,
     address: '16313739661670634666L',
     username: 'lisk-desktop',
   };

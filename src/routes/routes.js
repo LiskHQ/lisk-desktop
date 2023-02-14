@@ -30,14 +30,14 @@ export default {
     forbiddenTokens: [],
     exact: true,
   },
-  delegates: {
-    path: '/delegates',
+  validators: {
+    path: '/validators',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],
   },
-  delegateProfile: {
-    path: '/delegates/profile',
+  validatorProfile: {
+    path: '/validators/profile',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],
@@ -134,8 +134,8 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  sentVotes: {
-    path: '/delegates/profile/votes',
+  sentStakes: {
+    path: '/validators/profile/stakes',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],
@@ -171,7 +171,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  registerDelegate: {
+  registerValidator: {
     isPrivate: true,
     forbiddenTokens: [],
   },
@@ -187,11 +187,15 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  editVote: {
+  claimRewardsView: {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  votingQueue: {
+  editStake: {
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
+  stakingQueue: {
     isPrivate: true,
     forbiddenTokens: [],
   },
@@ -215,7 +219,7 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  delegatePerformance: {
+  validatorPerformance: {
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -273,6 +277,10 @@ export const modals = {
   },
   connectionStatus: {
     isPrivate: false,
+    forbiddenTokens: [],
+  },
+  changeCommission: {
+    isPrivate: true,
     forbiddenTokens: [],
   },
 };

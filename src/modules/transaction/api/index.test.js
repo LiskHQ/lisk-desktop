@@ -2,7 +2,7 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { getTxAmount, convertBinaryToString } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
-import * as delegates from '@dpos/validator/api';
+import * as validators from '@pos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
 import { fromTransactionJSON } from '@transaction/utils/encoding';
@@ -12,11 +12,11 @@ import {
   getTransactions,
   getTransactionStats,
   getTransactionFee,
-  getRegisteredDelegates,
+  getRegisteredValidators,
   dryRun,
 } from './index';
 
-const { voteDelegate, unlock } = MODULE_COMMANDS_NAME_MAP;
+const { stake } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
 
 jest.mock('src/utils/api/http', () =>
@@ -27,13 +27,13 @@ jest.mock('src/utils/api/ws', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
 );
 
-jest.mock('@dpos/validator/api', () => ({
-  getDelegates: jest.fn(),
+jest.mock('@pos/validator/api', () => ({
+  getValidators: jest.fn(),
 }));
 
 describe('API: LSK Transactions', () => {
   const sampleId = 'sample_id';
-  const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.commands.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );
@@ -108,7 +108,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('getRegisteredDelegates', () => {
+  describe('getRegisteredValidators', () => {
     beforeEach(() => {
       http.mockReset();
     });
@@ -118,17 +118,17 @@ describe('API: LSK Transactions', () => {
       http.mockRejectedValue(Error('Error fetching data.'));
 
       // call and anticipate failure
-      await expect(getRegisteredDelegates({ network })).rejects.toThrow('Error fetching data.');
+      await expect(getRegisteredValidators({ network })).rejects.toThrow('Error fetching data.');
     });
 
-    it('should return correct stats of registered delegates', async () => {
-      // create sample delegate registration transactions
+    it('should return correct stats of registered validators', async () => {
+      // create sample validator registration transactions
       const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4].map((d) => ({
         block: { timestamp: new Date(`2020-${d}-1`).getTime() / 1000 },
       }));
 
       // mock internals
-      delegates.getDelegates.mockResolvedValue({
+      validators.getValidators.mockResolvedValue({
         data: {},
         meta: { total: 100 },
       });
@@ -138,7 +138,7 @@ describe('API: LSK Transactions', () => {
       });
 
       // Call and expect right values
-      const response = await getRegisteredDelegates({ network });
+      const response = await getRegisteredValidators({ network });
       expect(response).toEqual([
         ['2020-3', 90],
         ['2020-4', 93],
@@ -175,37 +175,19 @@ describe('API: LSK Transactions', () => {
       expect(getTxAmount(tx)).toEqual(tx.params.amount);
     });
 
-    it('should return amount of votes in Beddows', () => {
+    it('should return amount of stakes in Beddows', () => {
       const tx = {
-        title: voteDelegate,
-        module: 'dpos',
-        command: 'voteDelegate',
+        title: stake,
+        module: 'pos',
+        command: 'stake',
         params: {
-          votes: [
+          stakes: [
             {
+              validatorAddress: accounts.validator.summary.address,
               amount: '100000000',
             },
             {
-              amount: '100000000',
-            },
-          ],
-        },
-      };
-
-      expect(getTxAmount(tx)).toEqual(200000000);
-    });
-
-    it('should return amount of unlock in Beddows', () => {
-      const tx = {
-        title: unlock,
-        module: 'dpos',
-        command: 'unlock',
-        params: {
-          unlockObjects: [
-            {
-              amount: '100000000',
-            },
-            {
+              validatorAddress: accounts.validator.summary.address,
               amount: '100000000',
             },
           ],
@@ -223,18 +205,18 @@ describe('API: LSK Transactions', () => {
     };
 
     it('should return fee in Beddows', async () => {
-      const voteTx = {
-        module: 'dpos',
-        command: 'voteDelegate',
+      const stakeTx = {
+        module: 'pos',
+        command: 'stake',
         params: {
-          votes: [
-            { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
-            { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
+          stakes: [
+            { validatorAddress: accounts.genesis.summary.address, amount: '100000000' },
+            { validatorAddress: accounts.validator.summary.address, amount: '-100000000' },
           ],
         },
       };
       const result = await getTransactionFee({
-        transactionJSON: { ...baseTx, ...voteTx },
+        transactionJSON: { ...baseTx, ...stakeTx },
         selectedPriority,
         network,
         moduleCommandSchemas,
@@ -242,14 +224,14 @@ describe('API: LSK Transactions', () => {
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
-    it('should calculate fee of vote tx', async () => {
-      const voteTx = {
-        module: 'dpos',
-        command: 'voteDelegate',
+    it('should calculate fee of stake tx', async () => {
+      const stakeTx = {
+        module: 'pos',
+        command: 'stake',
         params: {
-          votes: [
+          stakes: [
             {
-              delegateAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
+              validatorAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
               amount: 10,
             },
           ],
@@ -257,7 +239,7 @@ describe('API: LSK Transactions', () => {
       };
 
       const result = await getTransactionFee({
-        transactionJSON: { ...baseTx, ...voteTx },
+        transactionJSON: { ...baseTx, ...stakeTx },
         selectedPriority,
         network,
         moduleCommandSchemas,
@@ -265,10 +247,10 @@ describe('API: LSK Transactions', () => {
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
-    it('should calculate fee of register delegate tx', async () => {
-      const registerDelegateTx = {
-        module: 'dpos',
-        command: 'registerDelegate',
+    it('should calculate fee of register validator tx', async () => {
+      const registerValidatorTx = {
+        module: 'pos',
+        command: 'registerValidator',
         params: {
           name: 'some_username',
           generatorKey: genKey,
@@ -278,7 +260,7 @@ describe('API: LSK Transactions', () => {
       };
 
       const result = await getTransactionFee({
-        transactionJSON: { ...baseTx, ...registerDelegateTx },
+        transactionJSON: { ...baseTx, ...registerValidatorTx },
         selectedPriority,
         network,
         moduleCommandSchemas,
@@ -310,8 +292,8 @@ describe('API: LSK Transactions', () => {
         command: 'registerMultisignature',
         params: {
           numberOfSignatures: 2,
-          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
-          optionalKeys: [accounts.delegate_candidate.summary.publicKey],
+          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.validator.summary.publicKey],
+          optionalKeys: [accounts.validator_candidate.summary.publicKey],
           signatures: [],
         },
       };
@@ -347,19 +329,19 @@ describe('API: LSK Transactions', () => {
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
-    it('should calculate fee of multisignature voteDelegate tx', async () => {
-      const multisigVoteTx = {
-        module: 'dpos',
-        command: 'voteDelegate',
+    it('should calculate fee of multisignature stake tx', async () => {
+      const multisigStakeTx = {
+        module: 'pos',
+        command: 'stake',
         params: {
-          votes: [
-            { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
-            { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
+          stakes: [
+            { validatorAddress: accounts.genesis.summary.address, amount: '100000000' },
+            { validatorAddress: accounts.validator.summary.address, amount: '-100000000' },
           ],
         },
       };
       const result = await getTransactionFee({
-        transactionJSON: { ...baseTx, ...multisigVoteTx },
+        transactionJSON: { ...baseTx, ...multisigStakeTx },
         selectedPriority,
         numberOfSignatures: 10,
         moduleCommandSchemas,
@@ -368,19 +350,19 @@ describe('API: LSK Transactions', () => {
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
-    it('should calculate fee of multisignature registerDelegate tx', async () => {
-      const multisigRegisterDelegateTx = {
-        module: 'dpos',
-        command: 'registerDelegate',
+    it('should calculate fee of multisignature registerValidator tx', async () => {
+      const multisigRegisterValidatorTx = {
+        module: 'pos',
+        command: 'registerValidator',
         params: {
-          username: 'user_name',
+          name: 'user_name',
           generatorKey: convertBinaryToString(genKey),
           blsKey: convertBinaryToString(blsKey),
           proofOfPossession: convertBinaryToString(pop),
         },
       };
       const result = await getTransactionFee({
-        transactionJSON: { ...baseTx, ...multisigRegisterDelegateTx },
+        transactionJSON: { ...baseTx, ...multisigRegisterValidatorTx },
         selectedPriority,
         numberOfSignatures: 64,
         network,
@@ -392,22 +374,8 @@ describe('API: LSK Transactions', () => {
 
     it.skip('should calculate fee of multisignature unlock tx', async () => {
       const multisigUnlockTx = {
-        module: 'dpos',
+        module: 'pos',
         command: 'unlock',
-        params: {
-          unlockObjects: [
-            {
-              delegateAddress: accounts.genesis.summary.address,
-              amount: '-10000000',
-              unvoteHeight: 1500,
-            },
-            {
-              delegateAddress: accounts.delegate_candidate.summary.address,
-              amount: '-340000000',
-              unvoteHeight: 1500,
-            },
-          ],
-        },
       };
       const result = await getTransactionFee({
         transactionJSON: { ...baseTx, ...multisigUnlockTx },
@@ -431,10 +399,13 @@ describe('API: LSK Transactions', () => {
         params: {
           amount: 100000000,
           recipientAddress: 'lsk3ay4z7wqjczbo5ogcqxgxx23xyacxmycwxfh4d',
-          data: ''
-        }
+          data: '',
+        },
       };
-      const transaction = fromTransactionJSON(transactionJSON, network.networks.LSK.moduleCommandSchemas['token:transfer']);
+      const transaction = fromTransactionJSON(
+        transactionJSON,
+        network.networks.LSK.moduleCommandSchemas['token:transfer']
+      );
       await dryRun({
         transaction,
         serviceUrl,
@@ -446,7 +417,8 @@ describe('API: LSK Transactions', () => {
         method: 'POST',
         path: '/api/v3/transactions/dryrun',
         data: {
-          transaction: '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f321d1080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+          transaction:
+            '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f321d1080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
         },
       });
     });

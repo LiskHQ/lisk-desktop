@@ -66,6 +66,10 @@
   &:disabled {
     opacity: 0.58;
     cursor: default;
+
+    &:hover {
+      color: initial;
+    }
   }
 }
 

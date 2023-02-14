@@ -5,7 +5,7 @@ import SignInTooltipWrapper from './signInTooltipWrapper';
 describe('SignInTooltipWrapper', () => {
   const history = {
     location: {
-      pathname: '/delegates/',
+      pathname: '/validators/',
       search: '',
     },
   };

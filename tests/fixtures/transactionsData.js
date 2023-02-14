@@ -30,8 +30,8 @@ export default [
   },
   {
     id: '827028a55e5a28f96437bf87531c61255b737ceb3407989dfd41985ed6d5453b',
-    moduleCommand: 'dpos:registerDelegate',
-    moduleAssetName: 'dpos:registerDelegate',
+    moduleCommand: 'pos:registerValidator',
+    moduleAssetName: 'pos:registerValidator',
     fee: '1000268000',
     height: 329,
     nonce: '2',
@@ -43,7 +43,7 @@ export default [
     sender: {
       address: 'lskatchyvyh9y3tz3mmpu9z3kptw56c6qcw4k7fks',
       publicKey: '2f3dfb37326c6c42af28d04e6b6a76865430ade3d26969f1b86e3987b500bbaf',
-      username: 'multisig_delegateacc',
+      username: 'multisig_validatoracc',
     },
     signatures: [
       '9105041cb8dc0d20def295cfbf1fa10e242e121ca82de5d63d5ae457e1a6a81c8ae92d2ca445b369bc73aec9838f10f779b0f5788220713a5e7f0bfb103ace0c',
@@ -51,7 +51,7 @@ export default [
       '9b568bbe264dfb775f6d55a58592c077daa30f6d6abb1e914def734119aa709fe6c08ffe2fdd44375645d377e754dce17c755e2940751a11e786e8198e01ad06',
     ],
     params: {
-      username: 'multisig_delegateacc',
+      username: 'multisig_validatoracc',
     },
     isPending: false,
   },
@@ -70,7 +70,7 @@ export default [
     sender: {
       address: 'lskatchyvyh9y3tz3mmpu9z3kptw56c6qcw4k7fks',
       publicKey: '2f3dfb37326c6c42af28d04e6b6a76865430ade3d26969f1b86e3987b500bbaf',
-      username: 'multisig_delegateacc',
+      username: 'multisig_validatoracc',
     },
     signatures: [
       'b7ec0e305d7f8f8ca533eda1576f0c39e6ab256979b2e10a1ca2dd1db89228b4bac0dd63a469852ceafea3b8ed8c38e327aab420694c35f1324f19fc37db0702',
@@ -92,8 +92,8 @@ export default [
   },
   {
     id: 'a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca',
-    moduleCommand: 'dpos:voteDelegate',
-    moduleAssetName: 'dpos:voteDelegate',
+    moduleCommand: 'pos:stakeValidator',
+    moduleAssetName: 'pos:stakeValidator',
     fee: '144000',
     height: 454,
     nonce: '137',
@@ -110,9 +110,9 @@ export default [
       '4edc354c9d40d1e9280db9744e584a7058ac6a779a73a647e3388cbf05e6351c592c111390d209ae6e87746167a3f58779192065c9e6650c237bf6466d1bd503',
     ],
     params: {
-      votes: [
+      stakes: [
         {
-          delegateAddress: 'lsk9gf9y56k8emm4byye44c92av2fzd65om95kxp8',
+          validatorAddress: 'lsk9gf9y56k8emm4byye44c92av2fzd65om95kxp8',
           amount: '-30000000000',
         },
       ],
@@ -121,8 +121,8 @@ export default [
   },
   {
     id: '1f1aa24b49859d825cc5ace36b5554a1ee65556852b0c1f5c043853c697a2651',
-    moduleCommand: 'dpos:reportDelegateMisbehavior',
-    moduleAssetName: 'dpos:reportDelegateMisbehavior',
+    moduleCommand: 'pos:reportValidatorMisbehavior',
+    moduleAssetName: 'pos:reportValidatorMisbehavior',
     fee: '10000000',
     height: 15334905,
     nonce: '6',
@@ -148,8 +148,8 @@ export default [
         generatorKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
         params: {
-          maxHeightPreviouslyForged: 15329877,
-          maxHeightPrevoted: 15329809,
+          maxHeightPreviouslyGenerated: 15329877,
+          maxHeightPrestaked: 15329809,
           seedReveal: '9df2fee500047174fe19c4454d32c0e2',
         },
         signature: 'fcab8714c33e635e8c5827c054383488c4873472a0b73657d7d8af39f4291324850b76897082f3e477ffc01975e019431945cd1bc079274e10ed9ada5c7a2405',
@@ -163,8 +163,8 @@ export default [
         generatorKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
         params: {
-          maxHeightPreviouslyForged: 15329877,
-          maxHeightPrevoted: 15329809,
+          maxHeightPreviouslyGenerated: 15329877,
+          maxHeightPrestaked: 15329809,
           seedReveal: '9df2fee500047174fe19c4454d32c0e2',
         },
         signature: 'b749358492ce7ef8ae351b5d3c63fb798af049569a8e410f621be113d80b190a4204e87cfbc29f5188713731f50220622674474382cf384cfe6b68d6dc14c90c',

@@ -2,12 +2,10 @@ import { act } from 'react-dom/test-utils';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import wallets from '@tests/constants/wallets';
 import Form, { validateState } from './index';
 
-jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
@@ -36,11 +34,6 @@ getTransactionFee.mockImplementation((params) => {
   };
 });
 
-useTransactionFeeCalculation.mockImplementation(() => ({
-  minFee: { value: 0.001 },
-  fee: { value: 0.01 },
-}));
-
 describe('Multisignature editor component', () => {
   let wrapper;
   const props = {
@@ -66,11 +59,11 @@ describe('Multisignature editor component', () => {
     wrapper = mountWithQueryClient(Form, {
       ...props,
       prevState: {
-        numberOfSignatures: 3,
-        rawTx: {
+        transactionJSON: {
           params: {
             mandatoryKeys: [{}, {}],
             optionalKeys: [{}, {}, {}],
+            numberOfSignatures: 3,
           },
         },
       },
@@ -116,7 +109,7 @@ describe('Multisignature editor component', () => {
     wrapper
       .find('input.msign-pk-input')
       .at(1)
-      .simulate('change', { target: { value: wallets.delegate.summary.publicKey } });
+      .simulate('change', { target: { value: wallets.validator.summary.publicKey } });
     act(() => {
       wrapper.update();
     });
@@ -128,11 +121,11 @@ describe('Multisignature editor component', () => {
     const propsWithPrev = {
       ...props,
       prevState: {
-        rawTx: {
+        transactionJSON: {
           params: {
             numberOfSignatures: 2,
             optionalKeys: [wallets.genesis.summary.publicKey],
-            mandatoryKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],
+            mandatoryKeys: [wallets.validator.summary.publicKey, wallets.multiSig.summary.publicKey],
           },
         },
       },

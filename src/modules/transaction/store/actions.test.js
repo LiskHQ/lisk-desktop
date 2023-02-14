@@ -20,7 +20,7 @@ import {
 
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
-jest.mock('@dpos/validator/api');
+jest.mock('@pos/validator/api');
 jest.mock('src/utils/api/http');
 
 // TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
@@ -78,9 +78,11 @@ describe.skip('actions: transactions', () => {
 
     it('should dispatch getTransactionsSuccess action if resolved and default argument values are used', async () => {
       // Arrange
-      const transactionData = [{
-        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-      }];
+      const transactionData = [
+        {
+          address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+        },
+      ];
       httpApi.mockResolvedValue({
         data: transactionData,
         meta: { total: 0 },
@@ -196,13 +198,24 @@ describe.skip('actions: transactions', () => {
           senderPublicKey: Buffer.from(accounts.genesis.summary.publicKey, 'hex'),
           nonce: BigInt(49),
           fee: BigInt(209000),
-          signatures: ['', Buffer.from('d8a75de09db6ea245c9ddba429956e941adb657024fd01ae3223620a6da2f5dada722a2fc7f8a0c795a2bde8c4a18847b1ac633b21babbf4a628df22f84c5600', 'hex')],
+          signatures: [
+            '',
+            Buffer.from(
+              'd8a75de09db6ea245c9ddba429956e941adb657024fd01ae3223620a6da2f5dada722a2fc7f8a0c795a2bde8c4a18847b1ac633b21babbf4a628df22f84c5600',
+              'hex'
+            ),
+          ],
           params: {
-            recipientAddress: getAddressFromBase32Address('lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt'),
+            recipientAddress: getAddressFromBase32Address(
+              'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt'
+            ),
             amount: BigInt(100000),
             data: '2f',
           },
-          id: Buffer.from('7c98f8f3a042000abac0d1c38e6474f0571347d9d2a25929bcbac2a29747e31d', 'hex'),
+          id: Buffer.from(
+            '7c98f8f3a042000abac0d1c38e6474f0571347d9d2a25929bcbac2a29747e31d',
+            'hex'
+          ),
         },
       },
     });
@@ -224,8 +237,7 @@ describe.skip('actions: transactions', () => {
     it.skip('should create an action to store signature error', async () => {
       // Prepare the store
       const error = new Error('error signing tx');
-      jest.spyOn(transactionUtils, 'sign')
-        .mockImplementation(() => error);
+      jest.spyOn(transactionUtils, 'sign').mockImplementation(() => error);
 
       // Consume the utility
       await transactionDoubleSigned()(dispatch, getStateWithTx);
@@ -245,9 +257,7 @@ describe.skip('actions: transactions', () => {
     it('should dispatch broadcastedTransactionSuccess action if there are no errors', async () => {
       // Arrange
       httpApi.mockResolvedValue({ data: sampleTransaction });
-      jest
-        .spyOn(global, 'Date')
-        .mockImplementationOnce(() => new Date('2021-09-15T11:07:29.864Z'));
+      jest.spyOn(global, 'Date').mockImplementationOnce(() => new Date('2021-09-15T11:07:29.864Z'));
       const expectedAction = {
         type: actionTypes.broadcastedTransactionSuccess,
         data: sampleTransaction,
@@ -329,7 +339,9 @@ describe.skip('actions: transactions', () => {
 
     it('should create an action to store double signed tx', async () => {
       // Consume the utility
-      jest.spyOn(transactionUtils, 'signMultisigTransaction').mockImplementation(() => [{ id: 1 }, undefined]);
+      jest
+        .spyOn(transactionUtils, 'signMultisigTransaction')
+        .mockImplementation(() => [{ id: 1 }, undefined]);
       await multisigTransactionSigned(params)(dispatch, getStateWithTx);
 
       // Prepare expectations
@@ -345,7 +357,9 @@ describe.skip('actions: transactions', () => {
     it('should create an action to store signature error', async () => {
       // Prepare the store
       const error = { message: 'error signing tx' };
-      jest.spyOn(transactionUtils, 'signMultisigTransaction').mockImplementation(() => [undefined, error]);
+      jest
+        .spyOn(transactionUtils, 'signMultisigTransaction')
+        .mockImplementation(() => [undefined, error]);
 
       // Consume the utility
       await multisigTransactionSigned(params)(dispatch, getStateWithTx);
@@ -383,7 +397,7 @@ describe.skip('actions: transactions', () => {
 
     it('should return the tx ready to be broadcasted', () => {
       expect(signatureSkipped(props)).toEqual(
-        expect.objectContaining({ type: actionTypes.signatureSkipped }),
+        expect.objectContaining({ type: actionTypes.signatureSkipped })
       );
     });
   });

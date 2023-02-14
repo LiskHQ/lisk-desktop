@@ -84,7 +84,7 @@
     }
   }
 
-  & .registerDelegate {
+  & .registerValidator {
     @mixin contentLarge semi-bold;
 
     line-height: 40px;

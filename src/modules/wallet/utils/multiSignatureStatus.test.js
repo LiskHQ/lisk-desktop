@@ -29,9 +29,9 @@ describe('TxSignatureCollector', () => {
       publicKey: '8b5118c707192b165051e5dfb7d791fbb87987eea05ddf58b7838d50bfd01d45',
       legacyAddress: '1775591385560590229L',
       balance: '10000000000000',
-      username: 'eni_delegate',
+      username: 'eni_validator',
       isMigrated: true,
-      isDelegate: true,
+      isValidator: true,
       isMultisignature: false,
     },
     keys: {
