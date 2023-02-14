@@ -36,19 +36,31 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
 /**
  *
  * @param {Object} state
- * @param {type: String, data: Object} action
+ * @param {type: String, app: Object, apps: Object, chainId: String} action
  */
-export const applications = (state = initialState.applications, { type, application, chainId }) => {
+export const applications = (state = initialState.applications, { type, app, apps, chainId }) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
       // In cases where a new node for an existing application is being added,
       // the new node url should be appended to the apis array of the application
-      if (application.chainID in state) {
-        state[application.chainID].serviceURLs.push(application.serviceURLs);
+      if (app.chainID in state) {
+        state[app.chainID].serviceURLs.push(app.serviceURLs);
       } else {
-        state[application.chainID] = application;
+        state[app.chainID] = app;
       }
       return state;
+
+    case actionTypes.setApplications: {
+      apps.forEach((application) => {
+        if (application.chainID in state) {
+          state[application.chainID].serviceURLs.push(application.serviceURLs);
+        } else {
+          state[application.chainID] = application;
+        }
+      });
+
+      return state;
+    }
 
     case actionTypes.deleteApplicationByChainId: {
       delete state[chainId];
@@ -96,7 +108,10 @@ const persistConfig = {
 };
 
 const blockChainApplicationsReducer = combineReducers({
-  pins, applications, current, node,
+  pins,
+  applications,
+  current,
+  node,
 });
 
 export const blockChainApplications = persistReducer(persistConfig, blockChainApplicationsReducer);
