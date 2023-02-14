@@ -10,9 +10,10 @@ export const initialState = {
 /**
  *
  * @param {Object} state
- * @param {type: String, chainId: string} action
+ * @param {Object} action
  */
-export const hardwareWallet = (state = initialState, { type, payload }) => {
+export const hardwareWallet = (state = initialState, action) => {
+  const { type, payload } = action;
   switch (type) {
     case DEVICE_UPDATE: {
       return { ...state, activeHardwareDeviceId: payload };

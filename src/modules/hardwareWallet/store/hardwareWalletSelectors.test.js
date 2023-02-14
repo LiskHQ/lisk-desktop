@@ -1,4 +1,3 @@
-import { initialState } from 'src/modules/hardwareWallet/store/hardwareWalletReducer';
 import {
   selectActiveHardwareDevice,
   selectActiveHardwareDeviceId,
@@ -6,16 +5,19 @@ import {
 } from './hardwareWalletSelectors';
 
 describe('HardwareWallet selectors', () => {
+  const mockState = {
+    hardwareWallet: {
+      hardwareDevices: [{ deviceId: '1' }, { deviceId: '2' }],
+      activeHardwareDeviceId: '',
+    },
+  };
   it('Should select ActiveHardwareDevice', async () => {
-    const state = { hardwareWallet: { ...initialState } };
-    expect(selectActiveHardwareDevice(state)).toBeFalsy();
+    expect(selectActiveHardwareDevice(mockState)).toBeFalsy();
   });
   it('Should select ActiveHardwareDeviceId', async () => {
-    const state = { hardwareWallet: { ...initialState } };
-    expect(selectActiveHardwareDeviceId(state)).toEqual('');
+    expect(selectActiveHardwareDeviceId(mockState)).toEqual('');
   });
   it('Should select HardwareDevices', async () => {
-    const state = { hardwareWallet: { ...initialState } };
-    expect(selectHardwareDevices(state)).toEqual([]);
+    expect(selectHardwareDevices(mockState)).toEqual(mockState.hardwareWallet.hardwareDevices);
   });
 });

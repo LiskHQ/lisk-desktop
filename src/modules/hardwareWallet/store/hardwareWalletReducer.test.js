@@ -3,7 +3,7 @@ import { hardwareWallet, initialState } from './hardwareWalletReducer';
 
 const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
 
-describe('Auth reducer', () => {
+describe('HardwareWallet reducer', () => {
   it('Should update hardwareDevices when dispatching DEVICE_LIST_CHANGED', async () => {
     const updatedDevices = [
       {
@@ -32,5 +32,22 @@ describe('Auth reducer', () => {
       activeHardwareDeviceId: selectedDeviceId,
     };
     expect(hardwareWallet(initialState, actionData)).toEqual(expectedState);
+  });
+
+  it('Should update activeHardwareDeviceId when dispatching DEVICE_UPDATE', async () => {
+    const selectedDeviceId = '1';
+    const actionData = {
+      type: DEVICE_UPDATE,
+      payload: selectedDeviceId,
+    };
+    const expectedState = {
+      hardwareDevices: initialState.hardwareDevices,
+      activeHardwareDeviceId: selectedDeviceId,
+    };
+    expect(hardwareWallet(initialState, actionData)).toEqual(expectedState);
+  });
+
+  it('Should return default state', async () => {
+    expect(hardwareWallet(initialState, {})).toEqual(initialState);
   });
 });
