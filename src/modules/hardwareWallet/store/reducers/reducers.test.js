@@ -20,14 +20,14 @@ describe('reducer: hardware wallet', () => {
     },
     version: 1,
   };
-  const state = [];
+  const state = { deviceId: 0, status: 'disconnected', accounts: [] };
 
   it('stores the list of accounts', () => {
     const action = {
       type: actionTypes.storeAccounts,
       accounts: [...hwAccounts, testHWWallet],
     };
-    const expectedData = [...state, ...action.accounts];
+    const expectedData = { ...state, accounts: [...state.accounts, ...action.accounts] };
     const updatedState = hardwareWallet(state, action);
     expect(updatedState).toEqual(expectedData);
   });
