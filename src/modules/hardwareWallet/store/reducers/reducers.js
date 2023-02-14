@@ -1,6 +1,5 @@
 import actionTypes from '../actions/actionTypes';
 
-// istanbul ignore next
 const initAccounts = [];
 const initState = {
   deviceId: 0,
@@ -8,6 +7,7 @@ const initState = {
   accounts: initAccounts,
 };
 
+// istanbul ignore next
 const hardwareWallet = (state = initState, action) => {
   switch (action.type) {
     case actionTypes.storeAccounts:
