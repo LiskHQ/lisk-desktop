@@ -2,7 +2,7 @@ import { IPC_MESSAGES } from '@libs/hwServer/constants';
 
 const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
 
-const initialState = {
+export const initialState = {
   hardwareDevices: [],
   activeHardwareDeviceId: '',
 };

@@ -1,5 +1,5 @@
 export const selectHardwareDevices = (state) => state.hardwareWallet.hardwareDevices;
-export const selectActiveHardwareDeviceId = (state) => state.hardwareWallet.activeHardwareDevice;
+export const selectActiveHardwareDeviceId = (state) => state.hardwareWallet.activeHardwareDeviceId;
 export const selectActiveHardwareDevice = (state) => {
   const hardwareDevices = selectHardwareDevices(state);
   const activeDeviceId = selectActiveHardwareDeviceId(state);
