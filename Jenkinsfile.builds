@@ -37,8 +37,8 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							sh '''
 							npm ci
-							cp -R /Users/jenkins/fonts/basierCircle src/assets/fonts
-							cp -R /Users/jenkins/fonts/gilroy src/assets/fonts
+							cp -R /Users/jenkins/fonts/basierCircle setup/react/assets/fonts
+							cp -R /Users/jenkins/fonts/gilroy setup/react/assets/fonts
 							npm run build
 							npm run install:electron:dependencies
 							npm run dist:mac -- --publish never
