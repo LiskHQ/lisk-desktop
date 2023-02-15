@@ -1,19 +1,19 @@
 import actionTypes from './actionTypes';
-import { storeAccounts, removeAccounts } from './actions';
+import { storeHWAccounts, removeHWAccounts } from './actions';
 import { hwAccounts } from '../../__fixtures__/hwAccounts';
 
 describe('actions: hardware wallet', () => {
   it('stores the list of accounts', () => {
     const expectedAction = {
-      type: actionTypes.storeAccounts,
+      type: actionTypes.storeHWAccounts,
       accounts: hwAccounts,
     };
-    expect(storeAccounts(hwAccounts)).toEqual(expectedAction);
+    expect(storeHWAccounts(hwAccounts)).toEqual(expectedAction);
   });
   it('removes the list of accounts', () => {
     const expectedAction = {
-      type: actionTypes.removeAccounts,
+      type: actionTypes.removeHWAccounts,
     };
-    expect(removeAccounts(hwAccounts)).toEqual(expectedAction);
+    expect(removeHWAccounts(hwAccounts)).toEqual(expectedAction);
   });
 });

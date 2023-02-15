@@ -1,10 +1,10 @@
 import actionTypes from './actionTypes';
 
-export const storeAccounts = (accounts) => ({
-  type: actionTypes.storeAccounts,
+export const storeHWAccounts = (accounts) => ({
+  type: actionTypes.storeHWAccounts,
   accounts,
 });
 
-export const removeAccounts = () => ({
-  type: actionTypes.removeAccounts,
+export const removeHWAccounts = () => ({
+  type: actionTypes.removeHWAccounts,
 });

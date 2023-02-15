@@ -26,7 +26,7 @@ export const hwAccounts = [
       name: 'masoud123',
       pubkey: '49dc55a205bf1fecbee41bde6e354eaa85fdc3c2809e85f5720a83986fad4b0a',
       path: '',
-      accountIndex: 2,
+      accountIndex: 1,
       isHW: true,
       address: 'lsk5d58ubcybferq92wh3x82ca24bgef3tzqrdayu',
       creationTime: '2022-12-08T15:30:39.979Z',

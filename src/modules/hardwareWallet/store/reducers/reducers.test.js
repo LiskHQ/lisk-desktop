@@ -24,7 +24,7 @@ describe('reducer: hardware wallet', () => {
 
   it('stores the list of accounts', () => {
     const action = {
-      type: actionTypes.storeAccounts,
+      type: actionTypes.storeHWAccounts,
       accounts: [...hwAccounts, testHWWallet],
     };
     const expectedData = { ...state, accounts: [...state.accounts, ...action.accounts] };
@@ -34,7 +34,7 @@ describe('reducer: hardware wallet', () => {
 
   it('removes the list of accounts', () => {
     const action = {
-      type: actionTypes.removeAccounts,
+      type: actionTypes.removeHWAccounts,
     };
     const updatedState = hardwareWallet(state, action);
     expect(updatedState).toEqual(state);

@@ -10,12 +10,12 @@ const initState = {
 // istanbul ignore next
 const hardwareWallet = (state = initState, action) => {
   switch (action.type) {
-    case actionTypes.storeAccounts:
+    case actionTypes.storeHWAccounts:
       return {
         ...state,
         accounts: action.accounts,
       };
-    case actionTypes.removeAccounts:
+    case actionTypes.removeHWAccounts:
       return {
         ...state,
         accounts: initAccounts,

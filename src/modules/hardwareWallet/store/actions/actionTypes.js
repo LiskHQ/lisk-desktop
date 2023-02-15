@@ -1,6 +1,6 @@
 const actionTypes = {
-  storeAccounts: 'STORE_ACCOUNTS',
-  removeAccounts: 'REMOVE_ACCOUNTS',
+  storeHWAccounts: 'STORE_HW_ACCOUNTS',
+  removeHWAccounts: 'REMOVE_HW_ACCOUNTS',
 };
 
 export default actionTypes;
