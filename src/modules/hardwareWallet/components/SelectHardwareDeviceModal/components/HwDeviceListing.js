@@ -1,51 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  selectActiveHardwareDeviceId,
-  selectHardwareDevices,
-} from 'src/modules/hardwareWallet/store/hardwareWalletSelectors';
-import HWManager from 'src/modules/hardwareWallet/manager/HWManager';
-import Icon from '@theme/Icon';
-import CheckBox from '@theme/CheckBox';
-import styles from './HwDeviceListing.css';
+import { selectHardwareDevices } from 'src/modules/hardwareWallet/store/hardwareWalletSelectors';
+import HwDeviceItem from 'src/modules/hardwareWallet/components/SelectHardwareDeviceModal/components/HwDeviceItem';
 
-function HwDeviceListing() {
+function HwDeviceListing({ className }) {
   const hwDevices = useSelector(selectHardwareDevices);
 
-  function onSelect(id) {
-    HWManager.selectDevice(id);
-  }
-
   return (
-    <div className={styles.hwDeviceListing}>
+    <div className={className}>
       {hwDevices.map((hwDevice) => (
-        <HwDeviceItem key={hwDevice.deviceId} hwDevice={hwDevice} onSelect={onSelect} />
+        <HwDeviceItem key={hwDevice.deviceId} hwDevice={hwDevice} />
       ))}
     </div>
   );
 }
 
 export default HwDeviceListing;
-
-function HwDeviceItem({ hwDevice, onSelect }) {
-  const activeHardwareDeviceId = useSelector(selectActiveHardwareDeviceId);
-
-  function onChange() {
-    onSelect(hwDevice.deviceId);
-  }
-
-  return (
-    <div key={hwDevice.deviceId} className={styles.hwDevice}>
-      <Icon name="iconLedgerDevice" className={styles.hwWalletIcon} />
-      <div className={styles.infoContainer}>
-        <h5 className={styles.modelInfo}>{hwDevice.model}</h5>
-        <span className={styles.deviceId}>{hwDevice.deviceId}</span>
-      </div>
-      <CheckBox
-        className={styles.checkBox}
-        checked={activeHardwareDeviceId === hwDevice.deviceId}
-        onChange={onChange}
-      />
-    </div>
-  );
-}
