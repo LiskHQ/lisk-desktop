@@ -42,7 +42,7 @@ describe('useApplicationManagement hook', () => {
     const { setApplication } = result.current;
     const expectedAction = {
       type: actionTypes.addApplicationByChainId,
-      application: mockApplications[3],
+      app: mockApplications[3],
     };
     act(() => {
       setApplication(mockApplications[3]);
