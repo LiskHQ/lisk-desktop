@@ -1,6 +1,6 @@
 import actionTypes from './actionTypes';
 
-export const storeHWAccounts = (accounts) => ({
+export const setHWAccounts = (accounts) => ({
   type: actionTypes.storeHWAccounts,
   accounts,
 });

@@ -2,9 +2,9 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { IPC_MESSAGES } from '@libs/hwServer/constants';
 import {
-  setDeviceListChanged,
-  setDeviceUpdated,
-} from 'src/modules/hardwareWallet/store/hardwareWalletActions';
+  setHardwareWalletDevices,
+  setCurrentDevice,
+} from 'src/modules/hardwareWallet/store/actions';
 
 const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
 
@@ -17,10 +17,10 @@ function useHwListener() {
 
   useEffect(() => {
     ipc.on(DEVICE_LIST_CHANGED, (action, data) => {
-      dispatch(setDeviceListChanged(data));
+      dispatch(setHardwareWalletDevices(data));
     });
     ipc.on(DEVICE_UPDATE, (action, data) => {
-      dispatch(setDeviceUpdated(data));
+      dispatch(setCurrentDevice(data));
     });
   }, []);
 }

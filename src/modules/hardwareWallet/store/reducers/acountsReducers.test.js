@@ -1,9 +1,9 @@
 import { hwAccounts } from '../../__fixtures__/hwAccounts';
 import actionTypes from '../actions/actionTypes';
-import hardwareWallet from './reducers';
+import { accounts } from './acountsReducers';
 
 describe('reducer: hardware wallet', () => {
-  const testHWWallet = {
+  const testHWWalletAccount = {
     hw: {
       deviceId: '20231',
       model: 'Nano S',
@@ -20,15 +20,15 @@ describe('reducer: hardware wallet', () => {
     },
     version: 1,
   };
-  const state = { deviceId: 0, status: 'disconnected', accounts: [] };
+  const state = [];
 
   it('stores the list of accounts', () => {
     const action = {
       type: actionTypes.storeHWAccounts,
-      accounts: [...hwAccounts, testHWWallet],
+      accounts: [...hwAccounts, testHWWalletAccount],
     };
     const expectedData = { ...state, accounts: [...state.accounts, ...action.accounts] };
-    const updatedState = hardwareWallet(state, action);
+    const updatedState = accounts(state, action);
     expect(updatedState).toEqual(expectedData);
   });
 
@@ -36,7 +36,7 @@ describe('reducer: hardware wallet', () => {
     const action = {
       type: actionTypes.removeHWAccounts,
     };
-    const updatedState = hardwareWallet(state, action);
+    const updatedState = accounts(state, action);
     expect(updatedState).toEqual(state);
   });
 
@@ -44,7 +44,7 @@ describe('reducer: hardware wallet', () => {
     const action = {
       type: 'INVALID_ACTION',
     };
-    const updatedState = hardwareWallet(state, action);
+    const updatedState = accounts(state, action);
     expect(updatedState).toEqual(state);
   });
 });

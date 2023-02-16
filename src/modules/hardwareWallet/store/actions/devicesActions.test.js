@@ -1,8 +1,8 @@
 import { IPC_MESSAGES } from '@libs/hwServer/constants';
 import {
-  setDeviceListChanged,
-  setDeviceUpdated,
-} from './hardwareWalletActions';
+  setHardwareWalletDevices,
+  setCurrentDevice,
+} from './devicesActions';
 
 const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
 
@@ -19,7 +19,7 @@ describe('hardwareWalletActions', () => {
       payload: devices,
     };
 
-    expect(setDeviceListChanged(devices)).toEqual(expectedAction);
+    expect(setHardwareWalletDevices(devices)).toEqual(expectedAction);
   });
 
   it('should create an action to update activeHardwareDeviceId', () => {
@@ -28,6 +28,6 @@ describe('hardwareWalletActions', () => {
       payload: '1',
     };
 
-    expect(setDeviceUpdated('1')).toEqual(expectedAction);
+    expect(setCurrentDevice('1')).toEqual(expectedAction);
   });
 });

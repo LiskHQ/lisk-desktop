@@ -6,7 +6,7 @@ export { default as token } from '@token/fungible/store/reducer';
 export { default as transactions } from '@transaction/store/reducer';
 export { default as appUpdates } from '@update/store/reducers/appUpdates';
 export { default as staking } from '@pos/validator/store/reducers/staking';
-export { hardwareWallet } from 'src/modules/hardwareWallet/store/hardwareWalletReducer';
+export { hardwareWallet } from '@hardwareWallet/store/reducers';
 export { default as watchList } from '@pos/validator/store/reducers/watchList';
 export { account } from '@account/store/reducer';
 export { blockChainApplications } from '@blockchainApplication/manage/store/reducer';

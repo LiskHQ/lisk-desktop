@@ -2,7 +2,7 @@ import {
   selectActiveHardwareDevice,
   selectActiveHardwareDeviceId,
   selectHardwareDevices,
-} from './hardwareWalletSelectors';
+} from '../selectors';
 
 describe('HardwareWallet selectors', () => {
   const mockState = {

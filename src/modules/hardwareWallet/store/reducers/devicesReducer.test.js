@@ -1,5 +1,5 @@
 import { IPC_MESSAGES } from '@libs/hwServer/constants';
-import { hardwareWallet, initialState } from './hardwareWalletReducer';
+import { devices, initialState } from './devicesReducer';
 
 const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
 
@@ -18,7 +18,7 @@ describe('HardwareWallet reducer', () => {
       hardwareDevices: updatedDevices,
       activeHardwareDeviceId: initialState.activeHardwareDeviceId,
     };
-    expect(hardwareWallet(initialState, actionData)).toEqual(expectedState);
+    expect(devices(initialState, actionData)).toEqual(expectedState);
   });
 
   it('Should update activeHardwareDeviceId when dispatching DEVICE_UPDATE', async () => {
@@ -31,7 +31,7 @@ describe('HardwareWallet reducer', () => {
       hardwareDevices: initialState.hardwareDevices,
       activeHardwareDeviceId: selectedDeviceId,
     };
-    expect(hardwareWallet(initialState, actionData)).toEqual(expectedState);
+    expect(devices(initialState, actionData)).toEqual(expectedState);
   });
 
   it('Should update activeHardwareDeviceId when dispatching DEVICE_UPDATE', async () => {
@@ -44,10 +44,10 @@ describe('HardwareWallet reducer', () => {
       hardwareDevices: initialState.hardwareDevices,
       activeHardwareDeviceId: selectedDeviceId,
     };
-    expect(hardwareWallet(initialState, actionData)).toEqual(expectedState);
+    expect(devices(initialState, actionData)).toEqual(expectedState);
   });
 
   it('Should return default state', async () => {
-    expect(hardwareWallet(initialState, {})).toEqual(initialState);
+    expect(devices(initialState, {})).toEqual(initialState);
   });
 });
