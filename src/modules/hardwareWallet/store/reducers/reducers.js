@@ -1,28 +1,52 @@
+import { combineReducers } from 'redux';
 import actionTypes from '../actions/actionTypes';
 
-const initAccounts = [];
-const initState = {
-  deviceId: 0,
-  status: 'disconnected',
-  accounts: initAccounts,
-};
+const accountsInitState = [];
 
-// istanbul ignore next
-const hardwareWallet = (state = initState, action) => {
+/**
+ *
+ * @param {Object} state
+ * @param {type: String, account: Array} action
+ */
+const accounts = (state = accountsInitState, action) => {
   switch (action.type) {
     case actionTypes.storeHWAccounts:
-      return {
-        ...state,
-        accounts: action.accounts,
-      };
+      return action.accounts;
+
     case actionTypes.removeHWAccounts:
-      return {
-        ...state,
-        accounts: initAccounts,
-      };
+      return accountsInitState;
+
     default:
       return state;
   }
 };
 
-export default hardwareWallet;
+const currentDeviceInitState = {
+  deviceId: 0,
+  model: '',
+  brand: '',
+  status: 'disconnected',
+};
+
+/**
+ *
+ * @param {Object} state
+ * @param {type: String, data: Object} action
+ */
+const currentDevice = (state = currentDeviceInitState, action) => {
+  switch (action.type) {
+    case actionTypes.updateHWData:
+      return {
+        ...state,
+        ...action.data,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  currentDevice,
+  accounts,
+});
