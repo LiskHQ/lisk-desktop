@@ -35,7 +35,7 @@ export const useGetDefaultApplication = () => {
     config: {
       params: {
         chainID: extractAppMetaDataToChainIds(applicationsMetadata),
-        limit: applicationsMetadata?.length,
+        limit: applicationsMetadata.length,
       },
     },
     client: metaDataClient,
