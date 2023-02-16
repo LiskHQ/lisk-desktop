@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSettings, selectHW } from 'src/redux/selectors';
-import { storeHWAccounts, removeHWAccounts } from '@hardwareWallet/store/actions/actions';
+import { setHWAccounts, removeHWAccounts } from '@hardwareWallet/store/actions';
 import { getNameFromAccount } from '../utils/getNameFromAccount';
 import { getHWAccounts } from '../utils/getHWAccounts';
 
@@ -18,7 +18,7 @@ const useManageHWAccounts = () => {
     setCurrentDeviceId(deviceId);
     getHWAccounts(getNameFromAccount, settings, deviceId)
       .then((accList) => {
-        dispatch(storeHWAccounts(accList));
+        dispatch(setHWAccounts(accList));
       })
       .catch((err) => console.log({ err }));
   };

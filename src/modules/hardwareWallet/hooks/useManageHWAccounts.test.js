@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { useSelector } from 'react-redux';
-import { storeHWAccounts, removeHWAccounts } from '../store/actions/actions';
+import { setHWAccounts, removeHWAccounts } from '../store/actions';
 import { hwAccounts } from '../__fixtures__/hwAccounts';
 import { getHWAccounts } from '../utils/getHWAccounts';
 import useManageHWAccounts from './useManageHWAccounts';
@@ -38,7 +38,7 @@ describe('useManageHWAccounts hook', () => {
 
     await waitFor(() => {
       expect(mockDispatch).toHaveBeenCalledTimes(1);
-      const hwWalletAccountsDetails = storeHWAccounts(hwAccounts);
+      const hwWalletAccountsDetails = setHWAccounts(hwAccounts);
       expect(mockDispatch).toHaveBeenCalledWith(expect.objectContaining(hwWalletAccountsDetails));
     });
   });

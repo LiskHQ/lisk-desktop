@@ -24,7 +24,7 @@ describe('reducer: hardware wallet', () => {
 
   it('stores the list of accounts', () => {
     const action = {
-      type: actionTypes.storeHWAccounts,
+      type: actionTypes.setHWAccounts,
       accounts: [...hwAccounts, testHWWalletAccount],
     };
     const expectedData = { ...state, accounts: [...state.accounts, ...action.accounts] };

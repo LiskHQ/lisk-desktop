@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useDispatch } from 'react-redux';
 import { IPC_MESSAGES } from '@libs/hwServer/constants';
-import {setDeviceListChanged, setDeviceUpdated} from "src/modules/hardwareWallet/store/hardwareWalletActions";
+import {setHardwareWalletDevices, setCurrentDevice} from "@hardwareWallet/store/actions";
 import useHwListener from './useHwListener';
 
 const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
@@ -42,17 +42,17 @@ describe('useIpc', () => {
 
     callbacks[DEVICE_LIST_CHANGED]({}, devices);
     expect(mockDispatch).toHaveBeenCalledWith(
-      setDeviceListChanged(devices)
+      setHardwareWalletDevices(devices)
     );
   });
 
   it('Should dispatch setDeviceUpdated when ipc receives DEVICE_UPDATE', () => {
     expect(ipc.on).toHaveBeenCalled();
-    const deviceId = '1';
+    const device = {deviceId: '1'};
 
-    callbacks[DEVICE_UPDATE]({}, deviceId);
+    callbacks[DEVICE_UPDATE]({}, device);
     expect(mockDispatch).toHaveBeenCalledWith(
-      setDeviceUpdated(deviceId)
+      setCurrentDevice(device)
     );
   });
 });

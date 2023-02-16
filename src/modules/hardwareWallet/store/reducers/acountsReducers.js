@@ -4,7 +4,7 @@ const initAccounts = [];
 
 export const accounts = (state = initAccounts, {type, accounts: hwAccount= initAccounts}) => {
   switch (type) {
-    case actionTypes.storeHWAccounts:
+    case actionTypes.setHWAccounts:
       return hwAccount;
     case actionTypes.removeHWAccounts:
       return initAccounts;
