@@ -4,6 +4,7 @@ import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import actionTypes from '../store/actionTypes';
 import { useApplicationManagement } from './useApplicationManagement';
+import { useCurrentApplication } from './useCurrentApplication';
 
 jest.mock('./queries/useBlockchainApplicationMeta', () => ({
   useBlockchainApplicationMeta: jest.fn(() => ({
@@ -25,16 +26,14 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
   useDispatch: () => mockDispatch,
 }));
-jest.mock('./useCurrentApplication', () => ({
-  useCurrentApplication: jest.fn(() => (
-    [mockCurrentApplication, mockSetApplication]
-  )),
-}));
+jest.mock('./useCurrentApplication');
 
 describe('useApplicationManagement hook', () => {
   beforeEach(() => {
     mockDispatch.mockClear();
   });
+
+  useCurrentApplication.mockImplementation(() => [mockCurrentApplication, mockSetApplication]);
 
   const { result } = renderHook(() => useApplicationManagement(), { wrapper });
 
@@ -46,6 +45,19 @@ describe('useApplicationManagement hook', () => {
     };
     act(() => {
       setApplication(mockApplications[3]);
+    });
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
+  });
+
+  it('setApplications should dispatch an action', () => {
+    const { setApplications } = result.current;
+    const expectedAction = {
+      type: actionTypes.setApplications,
+      apps: mockApplications,
+    };
+    act(() => {
+      setApplications(mockApplications);
     });
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
@@ -97,5 +109,22 @@ describe('useApplicationManagement hook', () => {
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
     expect(mockSetApplication).toHaveBeenCalledTimes(1);
     expect(mockSetApplication).toHaveBeenCalledWith(mockApplications[0]);
+  });
+
+  it('deleteApplicationByChainId should not dispatch an action if application is default', async () => {
+    jest.clearAllMocks();
+    useCurrentApplication.mockImplementation(() => [mockApplications[1], mockSetApplication]);
+
+    const {
+      result: { current },
+    } = renderHook(() => useApplicationManagement(), { wrapper });
+
+    const { deleteApplicationByChainId } = current;
+    act(() => {
+      deleteApplicationByChainId(mockCurrentApplication.chainID);
+    });
+    await flushPromises();
+    expect(mockDispatch).not.toHaveBeenCalledTimes(1);
+    expect(mockSetApplication).not.toHaveBeenCalledTimes(1);
   });
 });
