@@ -63,14 +63,16 @@ export const useTransactions = ({
   }, []);
 
   useEffect(() => {
-    if (getUpdate) {
+    if (getUpdate && client.socket) {
       /* istanbul ignore next */
       client.socket.on('new.transactions', transactionUpdate);
       client.socket.on('delete.transactions', transactionUpdate);
     }
     return () => {
-      client.socket.off('new.transactions', transactionUpdate);
-      client.socket.off('delete.transactions', transactionUpdate);
+      if (client.socket) {
+        client.socket.off('new.transactions', transactionUpdate);
+        client.socket.off('delete.transactions', transactionUpdate);
+      }
     };
   }, [getUpdate]);
 
@@ -84,7 +86,7 @@ export const useTransactions = ({
   const response = useCustomInfiniteQuery({
     keys,
     config,
-    options,
+    options: { ...options, enabled: !!(client.socket || client.http) },
   });
 
   return {

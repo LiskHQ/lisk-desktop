@@ -15,9 +15,10 @@ export function useCurrentApplication() {
   const setApplication = useCallback(
     (application) => {
       dispatch(setCurrentApplication(application));
+      // @TODO: probe to verify if serviceURL is reachable
       /* istanbul ignore next */
-      client.create(application.serviceURLs[0]);
-      setCurrentNode(application.serviceURLs[0]);
+      client.create(application.serviceURLs[1]);
+      setCurrentNode(application.serviceURLs[1]);
     },
     [],
   );

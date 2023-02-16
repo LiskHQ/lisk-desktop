@@ -1,16 +1,16 @@
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addApplication, deleteApplication } from '../store/action';
+import { addApplication, deleteApplication, setApplications as setApps } from '../store/action';
 import { selectApplications } from '../store/selectors';
 import { useCurrentApplication } from './useCurrentApplication';
 import { usePinBlockchainApplication } from './usePinBlockchainApplication';
-import { useBlockchainApplicationMeta } from './queries/useBlockchainApplicationMeta';
+import { useApplicationExploreAndMetaData } from './useApplicationExploreAndMetaData';
 
 // eslint-disable-next-line max-statements
 export function useApplicationManagement() {
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
-  const { data: defaultApplications } = useBlockchainApplicationMeta();
+  const { applications: defaultApplications } = useApplicationExploreAndMetaData();
 
   const { checkPinByChainId, pins } = usePinBlockchainApplication();
   const applicationsObject = useSelector(selectApplications);
@@ -29,7 +29,9 @@ export function useApplicationManagement() {
     dispatch(addApplication(application));
   }, []);
 
-  const setApplications = (apps) => dispatch(setApplications(apps));
+  const setApplications = (apps) => {
+    dispatch(setApps(apps));
+  };
 
   const getApplicationByChainId = useCallback(
     (chainId) => applications.find((app) => app.chainID === chainId),
@@ -37,10 +39,12 @@ export function useApplicationManagement() {
   );
 
   const deleteApplicationByChainId = useCallback((chainId) => {
+    if (currentApplication.isDefault) return;
+
     dispatch(deleteApplication(chainId));
     if (currentApplication.chainID === chainId) {
       // Set Lisk as default if application in use is being deleted
-      setCurrentApplication(defaultApplications.data[0]);
+      setCurrentApplication(defaultApplications[0]);
     }
   }, []);
 

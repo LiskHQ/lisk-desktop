@@ -13,9 +13,12 @@ import ipcLocale from 'src/utils/ipcLocale';
 import updateApp from '@update/utils/updateApp';
 import i18n from 'src/utils/i18n/i18n';
 import App from './app';
+import ApplicationBootstrap from './app/ApplicationBootstrap';
 
 // eslint-disable-next-line no-extend-native
-BigInt.prototype.toJSON = function () { return `${this.toString()}n`; };
+BigInt.prototype.toJSON = function () {
+  return `${this.toString()}n`;
+};
 
 ipcLocale.init(i18n);
 updateApp.init();
@@ -39,16 +42,20 @@ const queryClient = new QueryClient({
 });
 const rootElement = document.getElementById('app');
 
-const renderWithRouter = Component => (
+const renderWithRouter = (Component) => (
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistedStore}>
-        <Router>
-          <I18nextProvider i18n={i18n}>
-            <Component />
-          </I18nextProvider>
-        </Router>
-        <ReactQueryDevtools />
+        <ApplicationBootstrap>
+          <>
+            <Router>
+              <I18nextProvider i18n={i18n}>
+                <Component />
+              </I18nextProvider>
+            </Router>
+            <ReactQueryDevtools />
+          </>
+        </ApplicationBootstrap>
       </PersistGate>
     </Provider>
   </QueryClientProvider>

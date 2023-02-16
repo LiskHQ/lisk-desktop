@@ -27,6 +27,7 @@ const config = {
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(false),
       VERSION: JSON.stringify(version),
+      DEFAULT_NETWORK: 'devnet',
     }),
   ],
 };

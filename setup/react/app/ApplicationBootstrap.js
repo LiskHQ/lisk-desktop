@@ -1,36 +1,43 @@
 import React, { useEffect } from 'react';
-import client from 'src/utils/api/client';
-import { METADATA_HOST } from 'src/const/config';
 import {
-  useApplicationExploreAndMetaData,
+  useGetDefaultApplication,
   useApplicationManagement,
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
+import { useTransactionUpdate } from '@transaction/hooks';
+import { PrimaryButton } from 'src/theme/buttons';
 
 const ApplicationBootstrap = ({ children }) => {
-  const { applications = [], isFetched, error, isLoading } = useApplicationExploreAndMetaData();
+  const {
+    applications: defaultApps = [],
+    isFetched,
+    error,
+    isLoading,
+    retry,
+  } = useGetDefaultApplication();
   const { setApplications } = useApplicationManagement();
   const [, setCurrentApplication] = useCurrentApplication();
 
-  useEffect(() => {
-    // Initialize client on first render to get default application
-    client.create({
-      http: METADATA_HOST.http,
-      ws: METADATA_HOST.ws,
-    });
-  }, []);
+  useTransactionUpdate();
 
   useEffect(() => {
-    if (applications.length) {
-      setCurrentApplication(applications[0]);
-      setApplications(applications);
+    if (defaultApps.length && isFetched) {
+      setCurrentApplication(defaultApps[0]);
+      setApplications(defaultApps);
     }
   }, [isFetched]);
 
-  if (isLoading) return <div> Loading ... </div>;
-  if (error) return <div>error</div>;
+  if (error) {
+    // @TODO: this return should be replaced with an actual error message page
+    return (
+      <div>
+        error
+        <PrimaryButton onClick={retry}>Retry</PrimaryButton>
+      </div>
+    );
+  }
 
-  return children;
+  return !isLoading && isFetched ? children : null;
 };
 
 export default ApplicationBootstrap;

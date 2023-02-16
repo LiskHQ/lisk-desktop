@@ -77,10 +77,10 @@ export const applications = (state = initialState.applications, { type, app, app
  * @param {Object} state
  * @param {type: String, application: Object} action
  */
-export const current = (state = initialState.current, { type, application }) => {
+export const current = (state = initialState.current, { type, app }) => {
   switch (type) {
     case actionTypes.setCurrentApplication:
-      return application;
+      return app;
     default:
       return state;
   }
