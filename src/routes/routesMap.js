@@ -56,7 +56,7 @@ import SessionManager from '@blockchainApplication/connection/components/Session
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
 import RequestView from '@blockchainApplication/connection/components/RequestView';
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
-import SelectHardwareDeviceModal from 'src/modules/hardwareWallet/components/SelectHardwareDeviceModal';
+import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardwareDeviceModal';
 
 export default {
   wallet: AccountDetails,

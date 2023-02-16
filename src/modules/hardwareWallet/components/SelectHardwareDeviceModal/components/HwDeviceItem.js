@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import CheckBox from '@theme/CheckBox';
 import Icon from '@theme/Icon';
-import { selectActiveHardwareDeviceId } from 'src/modules/hardwareWallet/store/hardwareWalletSelectors';
-import HWManager from "src/modules/hardwareWallet/manager/HWManager";
+import { selectActiveHardwareDeviceId } from '@hardwareWallet/store/selectors';
+import HWManager from "@hardwareWallet/manager/HWManager";
 import styles from './HwDeviceItem.css';
 
 function HwDeviceItem({ hwDevice }) {

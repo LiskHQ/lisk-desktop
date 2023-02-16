@@ -4,7 +4,7 @@ import { IPC_MESSAGES } from '@libs/hwServer/constants';
 import {
   setHardwareWalletDevices,
   setCurrentDevice,
-} from 'src/modules/hardwareWallet/store/actions';
+} from '@hardwareWallet/store/actions';
 
 const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
 

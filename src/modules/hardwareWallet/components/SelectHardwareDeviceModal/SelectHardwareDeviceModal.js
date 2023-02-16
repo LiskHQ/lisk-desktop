@@ -6,7 +6,7 @@ import BoxInfoText from '@theme/box/infoText';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import routes from 'src/routes/routes';
-import HwDeviceListing from 'src/modules/hardwareWallet/components/SelectHardwareDeviceModal/components/HwDeviceListing';
+import HwDeviceListing from '@hardwareWallet/components/SelectHardwareDeviceModal/components/HwDeviceListing';
 import styles from './SelectHardwareDeviceModal.css';
 
 function SelectHardwareDeviceModal() {
