@@ -27,7 +27,9 @@ const selectNetworkIdentifier = (state) => state.network.networks?.LSK?.networkI
 const selectNetworkName = (state) => state.network.name;
 const selectActiveTokenNetwork = (state) => state.network.networks[state.token.active];
 const selectStaking = (state) => state.staking;
+const selectHW = (state) => state.hardwareWallet;
 const selectHWAccounts = (state) => state.hardwareWallet?.accounts || [];
+const selectHWStatus = (state) => state.hardwareWallet.status;
 
 export {
   selectStaking,
@@ -47,5 +49,7 @@ export {
   selectNetworkIdentifier,
   selectNetworkName,
   selectActiveTokenNetwork,
+  selectHW,
   selectHWAccounts,
+  selectHWStatus,
 };

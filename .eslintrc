@@ -40,11 +40,10 @@
           ["@legacy", "./src/modules/legacy/"],
           ["@message", "./src/modules/message/"],
           ["@auth", "./src/modules/auth/"],
+          ["@hardwareWallet", "./src/modules/hardwareWallet/"],
           ["@views", "./packages/views"],
           ["@screens", "./packages/views/screens"],
           ["@packages", "./packages"],
-          ["@basics", "./packages/views/basics"],
-          ["@shared", "./packages/views/shared"],
           ["@libs", "./libs"]
         ],
         "extensions": [".js"]

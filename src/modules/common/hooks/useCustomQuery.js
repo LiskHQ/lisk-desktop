@@ -21,13 +21,14 @@ export const useCustomQuery = ({
   keys,
   config = {},
   options = {},
-  client = defaultClient
+  client = defaultClient,
+  queryFn,
 }) => {
   const [{ chainID }] = useCurrentApplication();
 
   return useQuery(
     [...keys, chainID, config],
-    async () => client.call(config),
+    async () => queryFn ? queryFn({config, client}) : client.call(config),
     options,
   );
 };
