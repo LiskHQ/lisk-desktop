@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { accounts } from './acountsReducers';
+import { accounts } from './accountsReducers';
 import { currentDevice } from './currentDeviceReducer';
 import { devices } from './devicesReducer';
 

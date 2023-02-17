@@ -10,7 +10,7 @@ export const initialState = [];
 export const devices = (state = initialState, action) => {
   const { type, devices: newDevices } = action;
   switch (type) {
-    case actionTypes.changeDevices: {
+    case actionTypes.setDevices: {
       return newDevices;
     }
     default:

@@ -29,7 +29,7 @@ const selectActiveTokenNetwork = (state) => state.network.networks[state.token.a
 const selectStaking = (state) => state.staking;
 const selectHW = (state) => state.hardwareWallet.currentDevice;
 const selectHWAccounts = (state) => state.hardwareWallet?.accounts || [];
-const selectHWStatus = (state) => state.hardwareWallet.status;
+const selectHWStatus = (state) => state.hardwareWallet.currentDevice.status;
 
 export {
   selectStaking,

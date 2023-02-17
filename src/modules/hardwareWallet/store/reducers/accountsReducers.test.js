@@ -1,8 +1,8 @@
 import { hwAccounts } from '../../__fixtures__/hwAccounts';
 import actionTypes from '../actions/actionTypes';
-import { accounts } from './acountsReducers';
+import { accounts } from './accountsReducers';
 
-describe('reducer: hardware wallet', () => {
+describe('reducer: hardware wallet accounts', () => {
   const testHWWalletAccount = {
     hw: {
       deviceId: '20231',
@@ -24,10 +24,10 @@ describe('reducer: hardware wallet', () => {
 
   it('stores the list of accounts', () => {
     const action = {
-      type: actionTypes.storeHWAccounts,
+      type: actionTypes.setHWAccounts,
       accounts: [...hwAccounts, testHWWalletAccount],
     };
-    const expectedData = { ...state, accounts: [...state.accounts, ...action.accounts] };
+    const expectedData = [...state, ...action.accounts];
     const updatedState = accounts(state, action);
     expect(updatedState).toEqual(expectedData);
   });

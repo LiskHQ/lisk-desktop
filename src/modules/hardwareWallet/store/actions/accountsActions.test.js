@@ -5,7 +5,7 @@ import actionTypes from './actionTypes';
 describe('actions: hardware wallet', () => {
   it('stores the list of accounts', () => {
     const expectedAction = {
-      type: actionTypes.storeHWAccounts,
+      type: actionTypes.setHWAccounts,
       accounts: hwAccounts,
     };
     expect(setHWAccounts(hwAccounts)).toEqual(expectedAction);
