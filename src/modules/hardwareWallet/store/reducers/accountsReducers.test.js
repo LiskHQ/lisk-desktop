@@ -1,6 +1,6 @@
 import { hwAccounts } from '../../__fixtures__/hwAccounts';
 import actionTypes from '../actions/actionTypes';
-import { accounts } from './acountsReducers';
+import { accounts } from './accountsReducers';
 
 describe('reducer: hardware wallet', () => {
   const testHWWalletAccount = {
@@ -27,7 +27,7 @@ describe('reducer: hardware wallet', () => {
       type: actionTypes.setHWAccounts,
       accounts: [...hwAccounts, testHWWalletAccount],
     };
-    const expectedData = { ...state, accounts: [...state.accounts, ...action.accounts] };
+    const expectedData = [...state, ...action.accounts];
     const updatedState = accounts(state, action);
     expect(updatedState).toEqual(expectedData);
   });
