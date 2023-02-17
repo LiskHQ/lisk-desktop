@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import CheckBox from '@theme/CheckBox';
 import Icon from '@theme/Icon';
-import { selectActiveHardwareDeviceId } from '@hardwareWallet/store/selectors';
+import { selectActiveHardwareDeviceId } from '@hardwareWallet/store/selectors/hwSelectors';
 import HWManager from "@hardwareWallet/manager/HWManager";
 import styles from './HwDeviceItem.css';
 
