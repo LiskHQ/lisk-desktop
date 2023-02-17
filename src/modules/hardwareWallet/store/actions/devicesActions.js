@@ -1,13 +1,11 @@
-import { IPC_MESSAGES } from '@libs/hwServer/constants';
-
-const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
+import actionTypes from '@hardwareWallet/store/actions/actionTypes';
 
 export const setHardwareWalletDevices = (devices) => ({
-  type: `HW_${DEVICE_LIST_CHANGED}`,
+  type: actionTypes.setDevices,
   devices,
 });
 
 export const setCurrentDevice = ({device}) => ({
-  type: `HW_${DEVICE_UPDATE}`,
+  type: actionTypes.setCurrentDevice,
   device,
 });

@@ -12,7 +12,7 @@ export const initialState = {
 export const currentDevice = (state = initialState, action) => {
   const { type, device } = action;
   switch (type) {
-    case actionTypes.deviceUpdate: {
+    case actionTypes.setCurrentDevice: {
       return device;
     }
     default:

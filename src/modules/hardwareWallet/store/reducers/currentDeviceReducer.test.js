@@ -5,7 +5,7 @@ describe('HardwareWallet current device reducer', () => {
 
   it('updates current device', () => {
     const action = {
-      type: actionTypes.deviceUpdate,
+      type: actionTypes.setCurrentDevice,
       device: {
         deviceId: '20231',
         model: 'Nano S',

@@ -4,8 +4,8 @@ const {DEVICE_LIST_CHANGED, DEVICE_UPDATE} = IPC_MESSAGES
 const actionTypes = {
   setHWAccounts: 'HW_ACCOUNTS_ADD',
   removeHWAccounts: 'HW_ACCOUNTS_REMOVE',
-  changeDevices: `HW_${DEVICE_LIST_CHANGED}`,
-  deviceUpdate: `HW_${DEVICE_UPDATE}`,
+  setDevices: `HW_${DEVICE_LIST_CHANGED}`,
+  setCurrentDevice: `HW_${DEVICE_UPDATE}`,
 };
 
 export default actionTypes;
