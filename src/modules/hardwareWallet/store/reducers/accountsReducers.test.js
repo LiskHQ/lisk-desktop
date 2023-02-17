@@ -2,7 +2,7 @@ import { hwAccounts } from '../../__fixtures__/hwAccounts';
 import actionTypes from '../actions/actionTypes';
 import { accounts } from './accountsReducers';
 
-describe('reducer: hardware wallet', () => {
+describe('reducer: hardware wallet accounts', () => {
   const testHWWalletAccount = {
     hw: {
       deviceId: '20231',

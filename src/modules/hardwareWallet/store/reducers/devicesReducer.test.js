@@ -1,13 +1,12 @@
 import actionTypes from '@hardwareWallet/store/actions/actionTypes';
 import { devices, initialState } from './devicesReducer';
 
-
-describe('HardwareWallet reducer', () => {
+describe('HardwareWallet reducer devices', () => {
   it('Should update hardwareDevices when dispatching actionTypes.setDevices', async () => {
     const updatedDevices = [
       {
         deviceId: '3',
-      }
+      },
     ];
     const actionData = {
       type: actionTypes.setDevices,
