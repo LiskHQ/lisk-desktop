@@ -1,33 +1,28 @@
-import { IPC_MESSAGES } from '@libs/hwServer/constants';
-import {
-  setHardwareWalletDevices,
-  setCurrentDevice,
-} from './devicesActions';
-
-const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
-
+import actionTypes from './actionTypes';
+import { setHardwareWalletDevices, setCurrentDevice } from './devicesActions';
 
 describe('hardwareWalletActions', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it('should create an action to update activeHardwareDeviceId', () => {
-    const devices = [{deviceId: '1'}];
+  it('should create an action to update devices', () => {
+    const devices = [{ deviceId: '1' }];
     const expectedAction = {
-      type: DEVICE_LIST_CHANGED,
-      payload: devices,
+      type: actionTypes.setDevices,
+      devices,
     };
 
     expect(setHardwareWalletDevices(devices)).toEqual(expectedAction);
   });
 
-  it('should create an action to update activeHardwareDeviceId', () => {
+  it('should create an action to update device', () => {
+    const device = { deviceId: '1' };
     const expectedAction = {
-      type: DEVICE_UPDATE,
-      payload: '1',
+      type: actionTypes.setCurrentDevice,
+      device,
     };
 
-    expect(setCurrentDevice('1')).toEqual(expectedAction);
+    expect(setCurrentDevice({ device })).toEqual(expectedAction);
   });
 });
