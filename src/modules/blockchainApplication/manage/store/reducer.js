@@ -51,15 +51,25 @@ export const applications = (state = initialState.applications, { type, app, app
       return state;
 
     case actionTypes.setApplications: {
-      apps.forEach((application) => {
-        if (application.chainID in state) {
-          state[application.chainID].serviceURLs.push(application.serviceURLs);
-        } else {
-          state[application.chainID] = application;
-        }
-      });
+      return apps.reduce(
+        (result, application) => {
+          if (application.chainID in result) {
+            return {
+              ...result,
+              [application.chainID]: {
+                ...result[application.chainID],
+                serviceURLs: [
+                  ...result[application.chainID].serviceURLs,
+                  ...application.serviceURLs,
+                ],
+              },
+            };
+          }
 
-      return state;
+          return { ...result, [application.chainID]: application };
+        },
+        { ...state }
+      );
     }
 
     case actionTypes.deleteApplicationByChainId: {
