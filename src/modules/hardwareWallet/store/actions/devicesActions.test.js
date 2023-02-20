@@ -23,6 +23,6 @@ describe('hardwareWalletActions', () => {
       device,
     };
 
-    expect(setCurrentDevice({ device })).toEqual(expectedAction);
+    expect(setCurrentDevice(device)).toEqual(expectedAction);
   });
 });
