@@ -66,7 +66,7 @@ export class HwServer {
 
   async selectDevice({ id }) {
     this.currentDeviceId = id;
-    this.deviceUpdate();
+    this.deviceUpdate(id);
     return this.currentDeviceId;
   }
 
@@ -111,7 +111,10 @@ export class HwServer {
     const { sender } = this.pubSub;
     this.devices.push(device);
     this.syncDevices();
-    publish(sender, { event: IPC_MESSAGES.HW_CONNECTED, payload: { model: device.model } });
+    publish(sender, {
+      event: IPC_MESSAGES.HW_CONNECTED,
+      payload: { model: device.model, devices: this.devices },
+    });
   }
 
   /**
