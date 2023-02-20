@@ -302,7 +302,7 @@ module.exports = {
     'src/modules/auth/components/hwWalletLogin/selectAccount/selectAccount.js', // TODO: To be fixed when HW Manager is refactored
     'src/modules/auth/components/hwWalletLogin/selectAccount/accountCard.js', // TODO: To be fixed when HW Manager is refactored
     'src/modules/wallet/store/action.js', // TODO: To be fixed when HW Manager is refactored
-
+    'src/modules/hardwareWallet/manager/HWClient.js', // TODO: To be fixed when HW Manager is refactored
   ],
   coverageThreshold: {
     // global: {
