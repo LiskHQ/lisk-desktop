@@ -10,17 +10,15 @@ export function useCurrentApplication() {
 
   const currentApplication = useSelector(selectCurrentApplication);
 
+  // we need to remove useCurrentNode because its seems we are not using it anywhere
   const { setCurrentNode } = useCurrentNode();
 
-  const setApplication = useCallback(
-    (application) => {
-      dispatch(setCurrentApplication(application));
-      /* istanbul ignore next */
-      client.create(application.serviceURLs[0]);
-      setCurrentNode(application.serviceURLs[0]);
-    },
-    [],
-  );
+  const setApplication = useCallback((application, applicationNode) => {
+    dispatch(setCurrentApplication(application));
+    /* istanbul ignore next */
+    client.create(applicationNode || application.serviceURLs[0]);
+    setCurrentNode(applicationNode || application.serviceURLs[0]);
+  }, []);
 
   return [currentApplication ?? {}, setApplication];
 }
