@@ -6,6 +6,7 @@ import {
   addApplication,
   deleteApplication,
   setCurrentApplication,
+  setApplications,
 } from './action';
 
 const chainId = mockApplications[0].chainID;
@@ -28,10 +29,19 @@ describe('actions:  blockchainApplication', () => {
   it('should create an action to add blockchain application', () => {
     const expectedAction = {
       type: actionTypes.addApplicationByChainId,
-      application: sampleBlockchainApplication,
+      app: sampleBlockchainApplication,
     };
 
     expect(addApplication(sampleBlockchainApplication)).toEqual(expectedAction);
+  });
+  
+  it('should create an action to add blockchain applications', () => {
+    const expectedAction = {
+      type: actionTypes.setApplications,
+      apps: mockApplications.slice(0,2),
+    };
+
+    expect(setApplications(mockApplications.slice(0,2))).toEqual(expectedAction);
   });
 
   it('should create an action to delete blockchain application', () => {
@@ -46,7 +56,7 @@ describe('actions:  blockchainApplication', () => {
   it('should create an action to set current application', () => {
     const expectedAction = {
       type: actionTypes.setCurrentApplication,
-      application: mockApplications[0],
+      app: mockApplications[0],
     };
 
     expect(setCurrentApplication(mockApplications[0])).toEqual(expectedAction);

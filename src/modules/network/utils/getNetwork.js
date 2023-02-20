@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import networks, { networkKeys } from '@network/configuration/networks';
+import { DEFAULT_NETWORK } from 'src/const/config';
 
 export const getNetworksList = () => {
   const { t } = useTranslation();
@@ -10,7 +11,8 @@ export const getNetworksList = () => {
 };
 
 // Return mainnet as back off network name when cache/local storage does not exists
-export const getNetworkName = (network = {}) => network?.name || networkKeys.alphanet;
+// @TODO: incase the network name is customNode, this needs to be properly handled here
+export const getNetworkName = (network = {}) => network?.name || DEFAULT_NETWORK;
 
 /**
  * Returns human readable error messages
@@ -24,6 +26,4 @@ export const getConnectionErrorMessage = (error) => {
   return error && error.message
     ? t(`Unable to connect to the node, Error: ${error.message}`)
     : t('Unable to connect to the node, no response from the server.');
-
-}
-
+};

@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import io from 'socket.io-client';
 import axios from 'axios';
-import { METHOD } from 'src/const/config';
+import { /* METADATA_HOST, */ METHOD } from 'src/const/config';
 import qs from 'querystring-es3';
 import { removeKeysWithoutValue } from '../removeKeysWithoutValue';
 
@@ -64,3 +64,5 @@ export class Client {
 }
 
 export default new Client();
+
+export const metaDataClient = new Client();

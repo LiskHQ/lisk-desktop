@@ -12,15 +12,13 @@ export function useCurrentApplication() {
 
   const { setCurrentNode } = useCurrentNode();
 
-  const setApplication = useCallback(
-    (application) => {
-      dispatch(setCurrentApplication(application));
-      /* istanbul ignore next */
-      client.create(application.serviceURLs[0]);
-      setCurrentNode(application.serviceURLs[0]);
-    },
-    [],
-  );
+  const setApplication = useCallback((application) => {
+    dispatch(setCurrentApplication(application));
+    // @TODO: probe to verify if serviceURL is reachable
+    /* istanbul ignore next */
+    client.create(application.serviceURLs[0]);
+    setCurrentNode(application.serviceURLs[0]);
+  }, []);
 
   return [currentApplication ?? {}, setApplication];
 }

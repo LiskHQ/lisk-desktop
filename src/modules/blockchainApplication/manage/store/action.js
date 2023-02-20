@@ -15,9 +15,19 @@ export const toggleApplicationPin = (chainId) => ({
  *
  * @returns {Object} - Action object
  */
-export const addApplication = (application) => ({
+export const addApplication = (app) => ({
   type: actionTypes.addApplicationByChainId,
-  application,
+  app,
+});
+
+/**
+ * Trigger this action to add blockchain application
+ *
+ * @returns {Object} - Action object
+ */
+export const setApplications = (apps) => ({
+  type: actionTypes.setApplications,
+  apps,
 });
 
 /**
@@ -35,9 +45,9 @@ export const deleteApplication = (chainId) => ({
  *
  * @returns {Object} - Action object
  */
-export const setCurrentApplication = (application) => ({
+export const setCurrentApplication = (app) => ({
   type: actionTypes.setCurrentApplication,
-  application,
+  app,
 });
 
 /**
