@@ -38,15 +38,11 @@ const App = ({ history }) => {
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
 
-  const { data: chainMetaData, isLoading } = useBlockchainApplicationMeta();
-  const { setApplication } = useApplicationManagement();
-  const [, setCurrentApplication] = useCurrentApplication();
   useHwListener();
   useIpc(history);
 
   useEffect(() => {
     setLoaded(true);
-
     dispatch(bookmarksRetrieved());
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
