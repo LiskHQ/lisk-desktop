@@ -29,6 +29,7 @@ import {
   useCurrentApplication,
 } from 'src/modules/blockchainApplication/manage/hooks';
 import './variables.css';
+import useHwListener from "src/modules/hardwareWallet/hooks/useHwListener";
 import styles from './app.css';
 
 if (MOCK_SERVICE_WORKER) {
@@ -45,7 +46,7 @@ const App = ({ history }) => {
   const { data: chainMetaData, isLoading } = useBlockchainApplicationMeta();
   const { setApplication } = useApplicationManagement();
   const [, setCurrentApplication] = useCurrentApplication();
-
+  useHwListener();
   useIpc(history);
 
   useEffect(() => {

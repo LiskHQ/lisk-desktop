@@ -100,7 +100,7 @@
         "newIsCapExceptions": ["mnemonic"]
       }
     ],
-
+    "no-constant-condition": ["error", { "checkLoops": false }],
     "react/prop-types": "off",
     "no-plusplus": "off",
     "no-underscore-dangle": "off",

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { selectHWAccounts } from 'src/redux/selectors';
+import { selectHWAccounts } from '@hardwareWallet/store/selectors/hwSelectors';
 
 const useHWAccounts = () => {
   const hwAccounts = useSelector(selectHWAccounts);
