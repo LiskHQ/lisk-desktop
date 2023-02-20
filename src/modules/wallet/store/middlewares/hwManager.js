@@ -19,7 +19,7 @@ const hwWalletMiddleware = store => next => (action) => {
     subscribeToDeviceConnected((response) => {
       const { model, deviceLength } = response;
       const label = `${model} connected.`
-      toast(<DeviceToast label={label} showSelectHardwareDeviceModalLink={deviceLength > 1} />);
+      toast.info(<DeviceToast label={label} showSelectHardwareDeviceModalLink={deviceLength > 1} />);
     });
 
     /**
