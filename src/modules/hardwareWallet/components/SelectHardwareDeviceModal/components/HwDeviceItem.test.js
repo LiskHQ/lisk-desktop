@@ -5,7 +5,9 @@ import HwDeviceItem from './HwDeviceItem';
 
 const mockSelector = {
   hardwareWallet: {
-    activeHardwareDeviceId: '123',
+    currentDevice: {
+      deviceId: '123',
+    },
   },
 };
 
@@ -31,7 +33,7 @@ describe('HwDeviceItem', () => {
   it('Should have check checkbox if deviceId === active device', () => {
     const props = {
       hwDevice: {
-        deviceId: mockSelector.hardwareWallet.activeHardwareDeviceId,
+        deviceId: mockSelector.hardwareWallet.currentDevice.deviceId,
         model: 'Ledger Nano s',
       },
     };
