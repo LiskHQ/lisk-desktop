@@ -38,7 +38,7 @@ describe('BlockchainApplication reducer', () => {
       };
       const actionData = {
         type: actionTypes.addApplicationByChainId,
-        application: newApplication,
+        app: newApplication,
       };
       const changedState = applications(applicationsMap, actionData);
 
@@ -54,13 +54,38 @@ describe('BlockchainApplication reducer', () => {
 
       expect(changedState).not.toHaveProperty(actionData.chainId);
     });
+  
+    it('Should return list of applications with the newly added applications', async () => {
+      const newApplication1 = {
+        name: 'New app',
+        chainID: '00002000',
+        state: 'active',
+        apis: [{ rest: 'https://service.newapp1.com', rpc: 'wss://service.newapp1.com' }],
+        lastUpdated: 78946123,
+      };
+      const newApplication2 = {
+        name: 'New app2',
+        chainID: '00004000',
+        state: 'active',
+        apis: [{ rest: 'https://service.newapp2.com', rpc: 'wss://service.newapp2.com' }],
+        lastUpdated: 78945123,
+      };
+      const actionData = {
+        type: actionTypes.setApplications,
+        apps: [newApplication1, newApplication2],
+      };
+      const changedState = applications(applicationsMap, actionData);
+
+      expect(changedState).toHaveProperty(newApplication1.chainID, newApplication1);
+      expect(changedState).toHaveProperty(newApplication2.chainID, newApplication2);
+    });
   });
 
   describe('current', () => {
     it('Should return current application if setCurrentApplication action type is triggered', async () => {
       const actionData = {
         type: actionTypes.setCurrentApplication,
-        application: mockApplicationsManage[0],
+        app: mockApplicationsManage[0],
       };
       expect(current({}, actionData)).toEqual(mockApplicationsManage[0]);
     });
