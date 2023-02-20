@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ConnectionContext from './connectionContext';
 import { createSignClient } from '../utils/connectionCreator';
+import { useWalletConnectEventsManager } from '../hooks/useConnectionEventsManager';
+import { usePairings } from '../hooks/usePairings';
 
 const ConnectionProvider = ({ children }) => {
   const [session, setSession] = useState({
@@ -9,7 +11,7 @@ const ConnectionProvider = ({ children }) => {
     loaded: false,
   });
   const [events, setEvents] = useState([]);
-  const [pairings, setPairings] = useState([]);
+  const { pairings, setPairings } = usePairings();
 
   const pushEvent = (event) => {
     setEvents([...events, event]);
@@ -19,6 +21,10 @@ const ConnectionProvider = ({ children }) => {
     const newEvents = events.filter(e => e.name !== event.name);
     setEvents(newEvents);
   };
+
+  useWalletConnectEventsManager({
+    pushEvent, session, setSession,
+  });
 
   const value = {
     events,
