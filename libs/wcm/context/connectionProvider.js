@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ConnectionContext from './connectionContext';
 import { createSignClient } from '../utils/connectionCreator';
-import { useWalletConnectEventsManager } from '../hooks/useConnectionEventsManager';
+import { useConnectionEventsManager } from '../hooks/useConnectionEventsManager';
 import { usePairings } from '../hooks/usePairings';
 
 const ConnectionProvider = ({ children }) => {
@@ -22,7 +22,7 @@ const ConnectionProvider = ({ children }) => {
     setEvents(newEvents);
   };
 
-  useWalletConnectEventsManager({
+  useConnectionEventsManager({
     pushEvent, session, setSession,
   });
 

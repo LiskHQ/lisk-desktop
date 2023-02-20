@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import { EVENTS } from '../constants/lifeCycle';
@@ -14,21 +13,24 @@ jest.mock('@libs/wcm/utils/connectionCreator', () => ({
     session: { get: jest.fn(topic => ({ topic })) },
   },
 }));
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
+
+const mockDisconnect = jest.fn();
+jest.mock('./usePairings', () => ({
+  usePairings: () => ({
+    disconnect: (...args) => mockDisconnect(...args),
+  }),
+}));
 
 const pushEvent = jest.fn();
-const disconnect = jest.fn();
 const setSession = jest.fn();
-
-jest.spyOn(React, 'useContext').mockImplementation(() => ({
-  pushEvent,
-  disconnect,
-  setSession,
-  session: { data: false, request: false },
-}));
+const session = { data: false, request: false };
 
 describe('useConnectionEventsManager', () => {
   it('Binds listeners to wc events', () => {
-    renderHook(() => useConnectionEventsManager());
+    renderHook(() => useConnectionEventsManager({ pushEvent, session, setSession }));
 
     Object.keys(EVENTS).forEach((eventName) => {
       expect(client.on).toHaveBeenCalledWith(EVENTS[eventName], expect.any(Function));
@@ -36,7 +38,7 @@ describe('useConnectionEventsManager', () => {
   });
 
   it('Pushes events into stack', () => {
-    renderHook(() => useConnectionEventsManager());
+    renderHook(() => useConnectionEventsManager({ pushEvent, session, setSession }));
 
     Object.keys(EVENTS).forEach((eventName) => {
       const event = {
@@ -51,7 +53,7 @@ describe('useConnectionEventsManager', () => {
   });
 
   it('Stores the event and calls setSession on session request', () => {
-    renderHook(() => useConnectionEventsManager());
+    renderHook(() => useConnectionEventsManager({ pushEvent, session, setSession }));
     const event = {
       name: EVENTS.SESSION_REQUEST,
       meta: {
@@ -69,7 +71,7 @@ describe('useConnectionEventsManager', () => {
   });
 
   it('Stores the event and calls disconnect on session delete', () => {
-    renderHook(() => useConnectionEventsManager());
+    renderHook(() => useConnectionEventsManager({ pushEvent, session, setSession }));
     const event = {
       name: EVENTS.SESSION_DELETE,
       meta: {
@@ -80,6 +82,6 @@ describe('useConnectionEventsManager', () => {
     // Trigger the event
     client.listeners[EVENTS.SESSION_DELETE](event.meta);
 
-    expect(disconnect).toHaveBeenCalledWith(event.meta.topic);
+    expect(mockDisconnect).toHaveBeenCalledWith(event.meta.topic);
   });
 });

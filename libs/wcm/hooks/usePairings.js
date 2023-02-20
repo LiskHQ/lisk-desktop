@@ -74,7 +74,7 @@ export const usePairings = () => {
       const activePairings = client.pairing.getAll({ active: true });
       setPairings([{ loaded: true }, ...activePairings]);
     }
-  }, [client]);
+  }, []);
 
   return {
     pairings,

@@ -3,7 +3,7 @@ import { client } from '@libs/wcm/utils/connectionCreator';
 import { EVENTS } from '../constants/lifeCycle';
 import { usePairings } from './usePairings';
 
-export const useWalletConnectEventsManager = ({
+export const useConnectionEventsManager = ({
   pushEvent, session, setSession,
 }) => {
   const { disconnect } = usePairings();
