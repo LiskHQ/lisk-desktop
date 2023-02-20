@@ -1,8 +1,8 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import routesMap from 'src/routes/routesMap';
 import NotFound from 'src/modules/common/components/NotFound';
@@ -11,7 +11,7 @@ import routes from 'src/routes/routes';
 import styles from './app.css';
 
 const MainRouter = ({ history }) => {
-  const { events } = useContext(ConnectionContext);
+  const { events } = useEvents();
   const routesList = Object.keys(routes);
 
   useEffect(() => {

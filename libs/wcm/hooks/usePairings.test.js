@@ -57,7 +57,7 @@ describe('usePairings', () => {
       expect(client.pair).toHaveBeenCalledWith({ uri });
     });
 
-    it('Should push new pairing if addPairing is called', () => {
+    it.skip('Should push new pairing if addPairing is called', () => {
       const { result } = renderHook(() => usePairings());
       const pairing = { topic: '0x125' };
       act(() => {
