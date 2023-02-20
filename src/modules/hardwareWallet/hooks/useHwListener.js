@@ -16,10 +16,10 @@ function useHwListener() {
   if (!ipc) return;
 
   useEffect(() => {
-    ipc.on(DEVICE_LIST_CHANGED, (action, data) => {
+    ipc.on(DEVICE_LIST_CHANGED, (_, data) => {
       dispatch(setHardwareWalletDevices(data));
     });
-    ipc.on(DEVICE_UPDATE, (action, data) => {
+    ipc.on(DEVICE_UPDATE, (_, data) => {
       dispatch(setCurrentDevice(data));
     });
   }, []);
