@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { client } from '@libs/wcm/utils/connectionCreator';
-import usePairings from './usePairings';
+import { usePairings } from './usePairings';
 
 const setPairings = jest.fn();
 const defaultPairings = [{ topic: '0x123' }, { topic: '0x456' }];
