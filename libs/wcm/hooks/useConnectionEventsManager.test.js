@@ -2,7 +2,7 @@ import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import { EVENTS } from '../constants/lifeCycle';
-import useConnectionEventsManager from './useConnectionEventsManager';
+import { useConnectionEventsManager } from './useConnectionEventsManager';
 
 const listeners = {};
 jest.mock('@libs/wcm/utils/connectionCreator', () => ({
