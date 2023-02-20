@@ -1,11 +1,10 @@
-import { useEffect, useContext, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getSdkError } from '@walletconnect/utils';
 import { client } from '../utils/connectionCreator';
-import ConnectionContext from '../context/connectionContext';
 import { ERROR_CASES, STATUS } from '../constants/lifeCycle';
 
-const usePairings = () => {
-  const { pairings, setPairings } = useContext(ConnectionContext);
+export const usePairings = () => {
+  const [pairings, setPairings] = useState([]);
 
   /**
    * Sets the pairing URI as an acknowledgement to the client.
@@ -87,5 +86,3 @@ const usePairings = () => {
     refreshPairings,
   };
 };
-
-export default usePairings;
