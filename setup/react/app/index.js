@@ -23,6 +23,7 @@ import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
 
 import './variables.css';
+import useHwListener from "src/modules/hardwareWallet/hooks/useHwListener";
 import styles from './app.css';
 
 if (MOCK_SERVICE_WORKER) {
@@ -37,6 +38,10 @@ const App = ({ history }) => {
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
 
+  const { data: chainMetaData, isLoading } = useBlockchainApplicationMeta();
+  const { setApplication } = useApplicationManagement();
+  const [, setCurrentApplication] = useCurrentApplication();
+  useHwListener();
   useIpc(history);
 
   useEffect(() => {

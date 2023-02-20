@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { useSelector } from 'react-redux';
-import { storeHWAccounts, removeHWAccounts } from '../store/actions/actions';
+import { setHWAccounts, removeHWAccounts } from '../store/actions';
 import { hwAccounts } from '../__fixtures__/hwAccounts';
 import { getHWAccounts } from '../utils/getHWAccounts';
 import useManageHWAccounts from './useManageHWAccounts';
@@ -10,8 +10,10 @@ jest.useRealTimers();
 const mockDispatch = jest.fn();
 const mockAppState = {
   hardwareWallet: {
-    deviceId: 20231,
-    status: 'connected',
+    currentDevice: {
+      deviceId: 20231,
+      status: 'connected',
+    },
   },
   settings: {
     hardwareAccounts: {},
@@ -38,7 +40,7 @@ describe('useManageHWAccounts hook', () => {
 
     await waitFor(() => {
       expect(mockDispatch).toHaveBeenCalledTimes(1);
-      const hwWalletAccountsDetails = storeHWAccounts(hwAccounts);
+      const hwWalletAccountsDetails = setHWAccounts(hwAccounts);
       expect(mockDispatch).toHaveBeenCalledWith(expect.objectContaining(hwWalletAccountsDetails));
     });
   });
@@ -46,8 +48,10 @@ describe('useManageHWAccounts hook', () => {
   it('removes the list of accounts when the device is disconnected', async () => {
     const updatedMockAppState = {
       hardwareWallet: {
-        deviceId: 20231,
-        status: 'disconnected',
+        currentDevice: {
+          deviceId: 20231,
+          status: 'disconnected',
+        },
         accounts: hwAccounts,
       },
       settings: {
