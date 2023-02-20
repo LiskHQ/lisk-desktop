@@ -1,0 +1,35 @@
+.hwDevice {
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-very-light-gray);
+
+  & .hwWalletIcon {
+    height: 40px;
+    width: 40px;
+  }
+
+  & .infoContainer {
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+
+    & .modelInfo {
+      margin: 0;
+      font-family: var(--heading-font);
+      font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-maastricht-blue);
+    }
+
+    & .deviceId {
+      margin-top: 12px;
+      font-size: var(--paragraph-font-size-s);
+      color: var(--color-blue-gray);
+    }
+  }
+
+  & .checkBox {
+    margin-left: auto;
+  }
+}

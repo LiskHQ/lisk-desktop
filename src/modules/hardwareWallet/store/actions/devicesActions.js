@@ -5,7 +5,7 @@ export const setHardwareWalletDevices = (devices) => ({
   devices,
 });
 
-export const setCurrentDevice = ({ device }) => ({
+export const setCurrentDevice = (device) => ({
   type: actionTypes.setCurrentDevice,
   device,
 });

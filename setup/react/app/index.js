@@ -23,7 +23,7 @@ import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
 
 import './variables.css';
-import useHwListener from "src/modules/hardwareWallet/hooks/useHwListener";
+import useHwListener from "@hardwareWallet/hooks/useHwListener";
 import styles from './app.css';
 
 if (MOCK_SERVICE_WORKER) {
