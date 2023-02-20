@@ -90,7 +90,7 @@ class HwManager extends HWClient {
 
   /**
    * This method is used to check the status of the Ledger App
-   * If updates the status on the class and the React components can
+   * It updates the status on the class and the React components can
    * access it in turn
    * @returns {string} connected or disconnected
    */
