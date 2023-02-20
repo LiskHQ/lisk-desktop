@@ -4,7 +4,7 @@ import SelectHardwareDeviceModal from './SelectHardwareDeviceModal';
 
 const mockStore = {
   hardwareWallet: {
-    hardwareDevices: [
+    devices: [
       {
         deviceId: '13123123',
         model: 'Ledger Nano S',
@@ -14,7 +14,9 @@ const mockStore = {
         model: 'Ledger Nano X',
       },
     ],
-    activeHardwareDeviceId: '44523123',
+    currentDevice: {
+      deviceId: '44523123',
+    },
   },
 };
 
