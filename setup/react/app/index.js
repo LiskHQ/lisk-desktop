@@ -13,21 +13,15 @@ import NotFound from 'src/modules/common/components/NotFound';
 import useIpc from '@update/hooks/useIpc';
 import ConnectionProvider from '@libs/wcm/context/connectionProvider';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
-import client from 'src/utils/api/client';
 import DialogHolder from 'src/theme/dialog/holder';
 import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
 import CustomRoute from 'src/modules/common/components/customRoute';
 import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
 import routesMap from 'src/routes/routesMap';
-import { useTransactionUpdate } from '@transaction/hooks';
 import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
-import { useBlockchainApplicationMeta } from 'src/modules/blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
-import {
-  useApplicationManagement,
-  useCurrentApplication,
-} from 'src/modules/blockchainApplication/manage/hooks';
+
 import './variables.css';
 import useHwListener from "src/modules/hardwareWallet/hooks/useHwListener";
 import styles from './app.css';
@@ -43,31 +37,16 @@ const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
-  const { data: chainMetaData, isLoading } = useBlockchainApplicationMeta();
-  const { setApplication } = useApplicationManagement();
-  const [, setCurrentApplication] = useCurrentApplication();
+
   useHwListener();
   useIpc(history);
 
   useEffect(() => {
     setLoaded(true);
-    // Initialize client on first render to get default application
-    client.create({
-      http: 'http://165.227.246.146:9901',
-      ws: 'ws://165.227.246.146:9901',
-    });
     dispatch(bookmarksRetrieved());
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);
-
-  useEffect(() => {
-    if (!isLoading && chainMetaData) {
-      chainMetaData.data.map((data) => setApplication(data));
-      setCurrentApplication(chainMetaData.data[0]);
-    }
-  }, [isLoading, chainMetaData]);
-  useTransactionUpdate(loaded);
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};

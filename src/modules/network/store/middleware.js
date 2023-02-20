@@ -1,33 +1,35 @@
-import { networkKeys } from '@network/configuration/networks';
+import networks from '@network/configuration/networks';
 import analytics from 'src/utils/analytics';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import { settingsUpdated } from 'src/modules/settings/store/actions';
+import { DEFAULT_NETWORK } from 'src/const/config';
 import { networkSelected, networkStatusUpdated, networkConfigSet } from './action';
 import actionTypes from './actionTypes';
 
 const readStoredNetwork = ({ dispatch, getState }) => {
-  const {
-    statistics, statisticsRequest, statisticsFollowingDay, network,
-  } = getState().settings;
+  const { statistics, statisticsRequest, statisticsFollowingDay, network } = getState().settings;
 
-  const config = network?.name && network?.address
-    ? network
-    : {
-      // TODO: Revert to mainnet;
-      name: networkKeys.devNet,
-      address: network?.networks?.devNet?.serviceUrl,
-    };
+  const config =
+    network?.name && network?.address
+      ? network
+      : {
+          // This wouold always read the default network from the config
+          name: DEFAULT_NETWORK,
+          address: networks[DEFAULT_NETWORK].serviceUrl,
+        };
   dispatch(networkSelected(config));
   dispatch(networkStatusUpdated({ online: true }));
 
   if (!statistics) {
     analytics.checkIfAnalyticsShouldBeDisplayed({
-      statisticsRequest, statisticsFollowingDay, statistics,
+      statisticsRequest,
+      statisticsFollowingDay,
+      statistics,
     });
   }
 };
 
-const network = (store) => next => async (action) => {
+const network = (store) => (next) => async (action) => {
   next(action);
   switch (action.type) {
     case settingsActionTypes.settingsRetrieved:
@@ -40,7 +42,7 @@ const network = (store) => next => async (action) => {
     case actionTypes.customNetworkStored:
     case actionTypes.customNetworkRemoved:
       store.dispatch(
-        settingsUpdated({ storedCustomNetwork: store.getState().network.storedCustomNetwork }),
+        settingsUpdated({ storedCustomNetwork: store.getState().network.storedCustomNetwork })
       );
       break;
     default:

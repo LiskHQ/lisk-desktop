@@ -23,7 +23,7 @@ export const getNetworkStatus = ({ baseUrl }) =>
   });
 
 const getServiceUrl = ({ name, address = 'http://165.227.246.146:9901' }) => {
-  if ([networkKeys.mainNet, networkKeys.testNet].includes(name)) {
+  if ([networkKeys.mainnet, networkKeys.testNet].includes(name)) {
     return networks[name].serviceUrl;
   }
   return address;

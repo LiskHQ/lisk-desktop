@@ -1,4 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
+import client from 'src/utils/api/client';
 import { mockTransactions } from '@transaction/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { LIMIT as defaultLimit } from 'src/const/config';
@@ -51,6 +52,29 @@ describe('useTransactions hook', () => {
   });
 
   it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useTransactions(), { wrapper });
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = {
+      data: mockTransactions.data.slice(0, defaultLimit),
+      meta: {
+        ...mockTransactions.meta,
+        count: defaultLimit,
+        offset: 0,
+      },
+    };
+
+    expect(result.current.data).toEqual(expectedResponse);
+  });
+
+  it('fetches data without params correctly when client it created', async () => {
+    jest.spyOn(client, 'create').mockImplementation(function () {
+      this.socket = null;
+    });
+    client.create({
+      http: '',
+      ws: '',
+    });
     const { result, waitFor } = renderHook(() => useTransactions(), { wrapper });
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
