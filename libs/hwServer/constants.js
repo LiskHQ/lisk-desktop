@@ -4,7 +4,7 @@ export const REQUEST = 'request';
 export const PIN = 'pin'; // TODO: Remove when trezor logic is removed
 export const PASSPHRASE = 'passphrase';
 export const IPC_MESSAGES = {
-  CHECK_LEDGER: 'checkLedger',
+  CHECK_LEDGER: 'checkStatus',
   CONNECT: 'connect',
   DEVICE_LIST_CHANGED: 'hwDeviceListChanged',
   DISCONNECT: 'disconnect',
@@ -47,7 +47,7 @@ export const FUNCTION_TYPES = {
 };
 
 export const METHOD_NAMES = {
-  [IPC_MESSAGES.CHECK_LEDGER]: 'checkLedger',
+  [IPC_MESSAGES.CHECK_LEDGER]: 'checkStatus',
   [IPC_MESSAGES.SELECT_DEVICE]: 'selectDevice',
   [IPC_MESSAGES.GET_DEVICE]: 'getDeviceById',
   [IPC_MESSAGES.GET_DEVICES]: 'getDevices',
