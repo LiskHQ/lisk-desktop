@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, render } from '@testing-library/react';
 import HwDeviceListing from './HwDeviceListing';
 
-const hardwareDevices = [
+const devices = [
   {
     deviceId: '13123123',
     model: 'Ledger Nano S',
@@ -15,7 +15,10 @@ const hardwareDevices = [
 
 const mockSelector = {
   hardwareWallet: {
-    hardwareDevices,
+    devices,
+    currentDevice: {
+      deviceId: '123',
+    },
   },
 };
 
@@ -26,7 +29,7 @@ jest.mock('react-redux', () => ({
 describe('HwDeviceListing', () => {
   it('Should render properly', () => {
     render(<HwDeviceListing />);
-    hardwareDevices.forEach((hwDevice) => {
+    devices.forEach((hwDevice) => {
       expect(screen.getByText(hwDevice.model)).toBeTruthy();
       expect(screen.getByText(hwDevice.deviceId)).toBeTruthy();
       expect(screen.getByText(hwDevice.model)).toBeTruthy();
