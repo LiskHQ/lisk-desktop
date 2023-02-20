@@ -9,9 +9,11 @@ import { toTransactionJSON } from '../../utils/encoding';
 import RequestedTxStatus from '.';
 
 jest.mock('copy-to-clipboard');
-jest.mock('@libs/wcm/hooks/useSession', () => () => (
-  { respond: jest.fn() }
-));
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  useSession: () => (
+    { respond: jest.fn() }
+  ),
+}));
 
 describe('TransactionResult RequestedTxStatus', () => {
   const props = {
