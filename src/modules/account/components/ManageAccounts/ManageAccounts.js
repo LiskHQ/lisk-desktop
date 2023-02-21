@@ -10,7 +10,7 @@ import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import useHWAccounts from 'src/modules/hardwareWallet/hooks/useHWAccounts';
+import useHWAccounts from '@hardwareWallet/hooks/useHWAccounts';
 import { DEVICE_STATUS } from '@libs/hwServer/constants';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';

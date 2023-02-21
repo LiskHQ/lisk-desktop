@@ -1,5 +1,7 @@
+import React from 'react';
 import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utils/hwManager';
+import DeviceToast from '@hardwareWallet/components/DeviceToast/DeviceToast';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import history from 'src/utils/history';
 import actionTypes from 'src/modules/common/store/actionTypes';
@@ -15,7 +17,9 @@ const hwWalletMiddleware = store => next => (action) => {
      * @param {fn} function - callback function to execute toast dispatch after receive the data
      */
     subscribeToDeviceConnected((response) => {
-      toast.success(`${response.model} connected`);
+      const { model, deviceLength } = response;
+      const label = `${model} connected.`
+      toast.info(<DeviceToast label={label} showSelectHardwareDeviceModalLink={deviceLength > 1} />);
     });
 
     /**

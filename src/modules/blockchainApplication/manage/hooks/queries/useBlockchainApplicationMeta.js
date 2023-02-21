@@ -36,7 +36,11 @@ export const useBlockchainApplicationMeta = ({
     method: 'get',
     ...customConfig,
     event: 'get.blockchain.apps.meta',
-    params: { limit, ...(customConfig?.params || {}), network },
+    params: {
+      limit,
+      ...(customConfig?.params || {}),
+      network,
+    },
   };
 
   return useCustomInfiniteQuery({

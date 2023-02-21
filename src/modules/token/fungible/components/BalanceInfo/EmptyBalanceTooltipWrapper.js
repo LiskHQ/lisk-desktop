@@ -8,7 +8,7 @@ import styles from './BalanceInfo.css';
 
 const getMessage = networkName => {
   switch (networkName) {
-    case networkKeys.mainNet:
+    case networkKeys.mainnet:
       return 'Purchase LSK from an exchange, or request LSK from another Lisk user through the wallet panel.';
     case networkKeys.testNet:
       return 'Request LSK from the Lisk Testnet faucet, or request LSK from another Lisk user through the wallet panel.';
