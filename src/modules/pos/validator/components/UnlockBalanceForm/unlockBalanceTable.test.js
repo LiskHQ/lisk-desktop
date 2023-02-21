@@ -1,21 +1,23 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { calculateSentStakesAmount, calculateUnlockableAmount } from '@wallet/utils/account';
+import {calculateSentStakesAmount, calculateUnlockableAmount, getLockedPendingUnlocks} from '@wallet/utils/account';
 import { mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import BalanceTable from './BalanceTable';
 
-describe('unlock transaction Status', () => {
+describe('unlockBalanceTable', () => {
   let wrapper;
   
-  const pendingUnlockableUnlocks = mockUnlocks.data.pendingUnlocks;
+  const pendingUnlocks = mockUnlocks.data.pendingUnlocks;
   const stakes = mockSentStakes.data.stakes;
   const currentBlockHeight = 5000;
 
+  const lockedPendingUnlocks = getLockedPendingUnlocks(pendingUnlocks);
+
   const props = {
     sentStakesAmount: calculateSentStakesAmount(stakes),
-    unlockableAmount: calculateUnlockableAmount(pendingUnlockableUnlocks),
+    unlockableAmount: calculateUnlockableAmount(pendingUnlocks),
     currentBlockHeight,
-    pendingUnlockableUnlocks,
+    lockedPendingUnlocks,
   };
 
   it('renders properly', () => {
@@ -23,11 +25,11 @@ describe('unlock transaction Status', () => {
     expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
     expect(wrapper.find('.locked-balance').text()).toEqual('280 LSK');
     expect(wrapper.find('.available-balance').text()).toEqual('4,550 LSK');
-    expect(wrapper.find('.unlocking-balance')).toHaveLength(pendingUnlockableUnlocks.length);
+    expect(wrapper.find('.unlocking-balance')).toHaveLength(lockedPendingUnlocks.length);
   });
 
   it('should not show pendingUnlockableUnlocks if undefined', () => {
-    wrapper = mount(<BalanceTable {...props} pendingUnlockableUnlocks={undefined} />);
+    wrapper = mount(<BalanceTable {...props} lockedPendingUnlocks={undefined} />);
     expect(wrapper.find('.unlocking-balance')).toHaveLength(0);
   });
 
