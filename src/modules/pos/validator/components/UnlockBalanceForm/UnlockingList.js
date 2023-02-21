@@ -29,8 +29,8 @@ const UnlockingListItem = ({ pendingUnlockableUnlock, t, currentBlockHeight }) =
 /**
  * displays a list of stake amounts that can be unlocked sometime in the future
  */
-const UnlockingList = ({ pendingUnlockableUnlocks, currentBlockHeight, t }) =>
-  pendingUnlockableUnlocks
+const UnlockingList = ({ lockedPendingUnlocks, currentBlockHeight, t }) =>
+  lockedPendingUnlocks
     .sort((unstakeA, unstakeB) => unstakeB.unstakeHeight - unstakeA.unstakeHeight)
     .map((pendingUnlockableUnlock, i) => (
       <UnlockingListItem

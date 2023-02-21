@@ -197,12 +197,12 @@ export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
  */
 export const calculateUnlockableAmount = (pendingUnlocks = []) =>
   pendingUnlocks.reduce(
-    (sum, pendingUnlock) => (sum + (pendingUnlock.unlockable ? parseInt(pendingUnlock.amount, 10) : 0)),
+    (sum, pendingUnlock) => (sum + (!pendingUnlock.isLocked ? parseInt(pendingUnlock.amount, 10) : 0)),
     0
   );
 
-export const getPendingUnlockableUnlocks = (pendingUnlocks = []) =>
-  pendingUnlocks?.filter((pendingUnlock)=> !pendingUnlock.unlockable);
+export const getLockedPendingUnlocks = (pendingUnlocks = []) =>
+  pendingUnlocks?.filter((pendingUnlock)=> pendingUnlock.isLocked);
 
 /**
  * returns the balance that can not be unlocked at the current block height

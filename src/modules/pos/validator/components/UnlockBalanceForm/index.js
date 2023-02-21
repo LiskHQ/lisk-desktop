@@ -14,7 +14,7 @@ import styles from './unlockBalance.css';
 const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const { data: latestBlock } = useLatestBlock();
-  const { pendingUnlockableUnlocks, sentStakesAmount, unlockableAmount } = useUnlockableCalculator();
+  const { lockedPendingUnlocks, sentStakesAmount, unlockableAmount } = useUnlockableCalculator();
 
   const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -52,7 +52,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
               sentStakesAmount={sentStakesAmount}
               unlockableAmount={unlockableAmount}
               currentBlockHeight={latestBlock?.height ?? 0}
-              pendingUnlockableUnlocks={pendingUnlockableUnlocks}
+              lockedPendingUnlocks={lockedPendingUnlocks}
             />
           </BoxContent>
         </>
