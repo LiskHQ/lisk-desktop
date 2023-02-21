@@ -5,24 +5,21 @@ import {
   setHardwareWalletDevices,
   setCurrentDevice,
 } from '@hardwareWallet/store/actions';
+import HWManager from "@hardwareWallet/manager/HWManager";
 
 const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
 
 function useHwListener() {
   const dispatch = useDispatch();
-
-  const { ipc } = window;
-
-  if (!ipc) return;
-
+  const {on} = window?.ipc || {}
   useEffect(() => {
-    ipc.on(DEVICE_LIST_CHANGED, (_, data) => {
+    HWManager.subscribe(DEVICE_LIST_CHANGED, (_, data) => {
       dispatch(setHardwareWalletDevices(data));
     });
-    ipc.on(DEVICE_UPDATE, (_, data) => {
+    HWManager.subscribe(DEVICE_UPDATE, (_, data) => {
       dispatch(setCurrentDevice(data));
     });
-  }, []);
+  }, [dispatch, on]);
 }
 
 export default useHwListener;
