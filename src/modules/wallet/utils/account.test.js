@@ -6,7 +6,7 @@ import {
   extractPrivateKey,
   extractAddressFromPublicKey,
   calculateUnlockableAmount,
-  getPendingUnlockableUnlocks,
+  getLockedPendingUnlocks,
   calculateBalanceLockedInStakes,
   extractAddressFromPassphrase,
   calculateRemainingAndSignedMembers,
@@ -163,7 +163,7 @@ describe('Utils: Account', () => {
           },
         ];
 
-        expect(getPendingUnlockableUnlocks(unlocking)).toEqual([
+        expect(getLockedPendingUnlocks(unlocking)).toEqual([
           {
             amount: '3000000000',
             unstakeHeight: 100,
