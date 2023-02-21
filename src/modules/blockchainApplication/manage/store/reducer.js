@@ -44,11 +44,15 @@ export const applications = (state = initialState.applications, { type, app, app
       // In cases where a new node for an existing application is being added,
       // the new node url should be appended to the apis array of the application
       if (app.chainID in state) {
-        state[app.chainID].serviceURLs.push(app.serviceURLs);
-      } else {
-        state[app.chainID] = app;
+        return {
+          ...state,
+          [app.chainID]: {
+            serviceURLs: app.serviceURLs,
+          },
+        };
       }
-      return state;
+
+      return { ...state, [app.chainID]: app };
 
     case actionTypes.setApplications: {
       return apps.reduce(
@@ -58,10 +62,7 @@ export const applications = (state = initialState.applications, { type, app, app
               ...result,
               [application.chainID]: {
                 ...result[application.chainID],
-                serviceURLs: [
-                  ...result[application.chainID].serviceURLs,
-                  ...application.serviceURLs,
-                ],
+                serviceURLs: application.serviceURLs,
               },
             };
           }
