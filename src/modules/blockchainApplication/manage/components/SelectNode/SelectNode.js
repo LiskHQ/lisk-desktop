@@ -8,7 +8,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
-import { useApplicationManagement, useCurrentApplication /* useCurrentNode */ } from '../../hooks';
+import { useApplicationManagement, useCurrentApplication } from '../../hooks';
 import styles from './SelectNode.css';
 
 const NodeComponent = ({ node, selectAppNode }) => (
@@ -29,7 +29,6 @@ const SelectNode = ({ history, location }) => {
   const chainId = parseSearchParams(location.search).chainId;
   const [, setApplication] = useCurrentApplication();
   const { getApplicationByChainId } = useApplicationManagement();
-  // const { setCurrentNode } = useCurrentNode();
   const application = getApplicationByChainId(chainId);
   const chainLogo = null;
 
