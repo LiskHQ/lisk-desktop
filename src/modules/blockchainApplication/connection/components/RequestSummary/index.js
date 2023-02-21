@@ -1,3 +1,4 @@
+/* istanbul ignore file */ // @todo Add unit tests by #4824
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
@@ -46,6 +47,8 @@ const RequestSummary = ({ nextStep }) => {
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
     const transactionJSON = toTransactionJSON(transaction, moduleCommandSchemas[moduleCommand]);
+    // @todo remove the hardcoded normalized
+    // values according to #4824
     nextStep({
       transactionJSON,
       formProps: {
