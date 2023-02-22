@@ -41,34 +41,11 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
 export const applications = (state = initialState.applications, { type, app, apps, chainId }) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
-      // In cases where a new node for an existing application is being added,
-      // the new node url should be appended to the apis array of the application
-      if (app.chainID in state) {
-        return {
-          ...state,
-          [app.chainID]: {
-            serviceURLs: app.serviceURLs,
-          },
-        };
-      }
-
       return { ...state, [app.chainID]: app };
 
     case actionTypes.setApplications: {
       return apps.reduce(
-        (result, application) => {
-          if (application.chainID in result) {
-            return {
-              ...result,
-              [application.chainID]: {
-                ...result[application.chainID],
-                serviceURLs: application.serviceURLs,
-              },
-            };
-          }
-
-          return { ...result, [application.chainID]: application };
-        },
+        (result, application) => ({ ...result, [application.chainID]: application }),
         { ...state }
       );
     }
