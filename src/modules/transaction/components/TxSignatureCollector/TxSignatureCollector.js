@@ -164,7 +164,7 @@ const TxSignatureCollector = ({
         <Illustration name={hwDeviceName} />
         <h5>
           {t('Please confirm the transaction on your {{deviceModel}}', {
-            deviceModel: sender.hw.model,
+            deviceModel: sender.hw?.model,
           })}
         </h5>
       </BoxContent>
