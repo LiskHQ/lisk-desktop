@@ -156,7 +156,7 @@ const TxSignatureCollector = ({
     return <HWReconnect />;
   }
 
-  const hwDeviceName = `${sender?.hw.brand.toLowerCase()}${sender?.hw.model.split(' ')[0]}`;
+  const hwDeviceName = `${sender.hw?.brand.toLowerCase()}${sender.hw?.model.split(' ')[0]}`;
 
   return (
     <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
