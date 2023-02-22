@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import {calculateSentStakesAmount, calculateUnlockableAmount, getLockedPendingUnlocks} from '@wallet/utils/account';
+import {calculateSentStakesAmount, calculateUnlockedAmount, getLockedPendingUnlocks} from '@wallet/utils/account';
 import { mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import BalanceTable from './BalanceTable';
 
@@ -15,7 +15,7 @@ describe('unlockBalanceTable', () => {
 
   const props = {
     sentStakesAmount: calculateSentStakesAmount(stakes),
-    unlockableAmount: calculateUnlockableAmount(pendingUnlocks),
+    unlockedAmount: calculateUnlockedAmount(pendingUnlocks),
     currentBlockHeight,
     lockedPendingUnlocks,
   };
@@ -34,7 +34,7 @@ describe('unlockBalanceTable', () => {
   });
 
   it('should not show available-balance if 0', () => {
-    wrapper = mount(<BalanceTable {...props} unlockableAmount={0} />);
+    wrapper = mount(<BalanceTable {...props} unlockedAmount={0} />);
     expect(wrapper.find('.available-balance')).toHaveLength(0);
   });
 

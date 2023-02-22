@@ -1,6 +1,6 @@
 import {
   calculateSentStakesAmount,
-  calculateUnlockableAmount,
+  calculateUnlockedAmount,
   getLockedPendingUnlocks,
 } from '@wallet/utils/account';
 import { useSentStakes, useUnlocks } from '@pos/validator/hooks/queries';
@@ -19,11 +19,13 @@ const useUnlockableCalculator = () => {
 
   const pendingUnlocks = unlocks?.data?.pendingUnlocks;
 
-  const unlockableAmount = calculateUnlockableAmount(pendingUnlocks);
+  console.log('useUnlockableCalculator pendingUnlocks', pendingUnlocks);
+
+  const unlockedAmount = calculateUnlockedAmount(pendingUnlocks);
   const lockedPendingUnlocks = getLockedPendingUnlocks(pendingUnlocks);
   const sentStakesAmount = calculateSentStakesAmount(sentStakes?.data?.stakes);
 
-  return { lockedPendingUnlocks, sentStakesAmount, unlockableAmount };
+  return { lockedPendingUnlocks, sentStakesAmount, unlockedAmount };
 };
 
 export default useUnlockableCalculator;
