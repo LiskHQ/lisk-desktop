@@ -44,7 +44,7 @@ const SelectAccount = ({
 
   const getAccountsFromDeviceM = async () => {
     const [error, accounts] = await to(
-      getAccountsFromDevice({ device, network }),
+      getAccountsFromDevice(),
     );
     if (error) {
       toast.error(`Error retrieving accounts from device: ${error}`);
@@ -122,6 +122,8 @@ const SelectAccount = ({
     const activeDevice = devices.find((d) => d.deviceId === device.deviceId);
     if (!activeDevice) prevStep({ reset: true });
   }, [currentAccount, devices, device]);
+
+  console.log('Render hwAccounts', hwAccounts);
 
   return (
     <div className={styles.selectAccountWrapper}>

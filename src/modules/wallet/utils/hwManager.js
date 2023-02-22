@@ -1,48 +1,53 @@
 // eslint-disable-next-line import/no-unresolved
 import i18next from 'i18next';
-import {
-  checkIfInsideLiskApp,
-  getAddress,
-  getPublicKey,
-  subscribeToDeviceConnected,
-  subscribeToDeviceDisconnected,
-  subscribeToDevicesList,
-  validatePin,
-  signMessage,
-} from '@libs/hwServer/communication';
+// import {
+//   checkIfInsideLiskApp,
+//   getAddress,
+//   getPublicKey,
+//   subscribeToDeviceConnected,
+//   subscribeToDeviceDisconnected,
+//   subscribeToDevicesList,
+//   validatePin,
+//   signMessage,
+// } from '@libs/hwServer/communication';
+import hwManager from '@hardwareWallet/manager/HWManager';
 import { extractAddressFromPublicKey } from './account';
 import { getUsedHWAccounts } from './api';
 
-const getAccountBundle = async (deviceId, network, offset) => {
+const getAccountBundle = async (offset) => {
   const publicKeyList = [];
 
   for (let index = offset; index < offset + 3; index++) {
     // eslint-disable-next-line no-await-in-loop
-    const publicKey = await getPublicKey({ index, deviceId });
+    const publicKey = await hwManager.getPublicKey(index);
     publicKeyList.push(publicKey);
   }
   const accounts = await getUsedHWAccounts(publicKeyList);
-  return accounts.filter(item => item.availableBalance);
+  const filteredList = accounts.filter(item => item.availableBalance);
+
+  return !offset && !filteredList.length ? [accounts[0]] : filteredList;
 };
 
 /**
  * getAccountsFromDevice - Function.
  * This function is used for retrieve the accounts from an hw device, using public keys.
  */
-const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
+const getAccountsFromDevice = async () => {
   let accounts = [];
+  console.log('getAccountsFromDevice');
 
   for (let index = 0; index <= accounts.length; index += 10) {
     // eslint-disable-next-line no-await-in-loop
-    const result = await getAccountBundle(deviceId, network, index);
+    const result = await getAccountBundle(index);
     // eslint-disable-next-line no-await-in-loop
     accounts = [...accounts, ...result];
   }
+  console.log('getAccountsFromDevice result', accounts);
   return accounts;
 };
 
-const getNewAccountByIndex = async ({ device: { deviceId }, index }) => {
-  const publicKey = await getPublicKey({ index, deviceId });
+const getNewAccountByIndex = async ({ index }) => {
+  const publicKey = await hwManager.getPublicKey(index);
 
   return {
     summary: {
@@ -113,11 +118,10 @@ const signMessageByHW = async ({
   message,
 }) => {
   try {
-    const signature = await signMessage({
-      deviceId: wallet.hwInfo.deviceId,
-      index: wallet.hwInfo.derivationIndex,
+    const signature = await hwManager.signMessage(
+      wallet.hwInfo.derivationIndex,
       message,
-    });
+    );
 
     if (!signature) {
       throw new Error(i18next.t(
@@ -147,14 +151,14 @@ export const getDeviceType = (deviceModel = '') => {
 
 export {
   getNewAccountByIndex,
-  checkIfInsideLiskApp,
+  // checkIfInsideLiskApp,
   getAccountsFromDevice,
-  getAddress,
-  getPublicKey,
+  // getAddress,
+  // getPublicKey,
   updateTransactionSignatures,
-  subscribeToDeviceConnected,
-  subscribeToDeviceDisconnected,
-  subscribeToDevicesList,
-  validatePin,
+  // subscribeToDeviceConnected,
+  // subscribeToDeviceDisconnected,
+  // subscribeToDevicesList,
+  // validatePin,
   signMessageByHW,
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { subscribeToDevicesList } from '@wallet/utils/hwManager';
+import hwManager from '@hardwareWallet/manager/HWManager';
 import routes from 'src/routes/routes';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Loading from './loading';
@@ -18,6 +18,11 @@ const HardwareWalletLogin = ({
 }) => {
   const [devices, setDevices] = useState([]);
 
+  const getDevices = async () => {
+    const response = await hwManager.getDevices();
+    setDevices(response);
+  };
+
   useEffect(() => {
     settingsUpdated({
       token: {
@@ -26,9 +31,7 @@ const HardwareWalletLogin = ({
       },
     });
 
-    const deviceListener = subscribeToDevicesList(setDevices);
-
-    return deviceListener.unsubscribe;
+    getDevices();
   }, []);
 
   const goBack = () => {

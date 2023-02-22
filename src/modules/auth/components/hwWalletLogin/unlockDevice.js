@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { checkIfInsideLiskApp } from '@wallet/utils/hwManager';
+import hwManager from '@hardwareWallet/manager/HWManager';
 import { TertiaryButton } from '@theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import Spinner from '@theme/Spinner';
@@ -12,14 +12,14 @@ const UnlockDevice = ({
   const selected = devices.find((d) => d.deviceId === deviceId) || {};
 
   const checkIfAppRunning = async () => {
-    await checkIfInsideLiskApp({ id: deviceId });
+    await hwManager.checkAppStatus();
   };
 
   const navigateIfNeeded = () => {
     clearTimeout(timeOut.current);
     if (!selected.model) {
       prevStep({ reset: true });
-    } else if (selected.openApp) {
+    } else if (selected.status === 'connected') {
       nextStep({ device: selected });
     } else {
       timeOut.current = setTimeout(checkIfAppRunning, 1000);
