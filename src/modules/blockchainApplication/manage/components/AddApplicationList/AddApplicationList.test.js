@@ -1,4 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore';
@@ -46,7 +46,7 @@ describe('AddApplicationList', () => {
 
     expect(screen.getByText('Add Application')).toBeTruthy();
     expect(screen.getByPlaceholderText('Search by name or application URL')).toBeTruthy();
-    
+
     expect(screen.getByText('Test app 2')).toBeTruthy();
     expect(screen.getByText('5 LSK')).toBeTruthy();
 
