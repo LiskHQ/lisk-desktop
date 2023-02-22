@@ -19,8 +19,6 @@ const useUnlockableCalculator = () => {
 
   const pendingUnlocks = unlocks?.data?.pendingUnlocks;
 
-  console.log('useUnlockableCalculator pendingUnlocks', pendingUnlocks);
-
   const unlockedAmount = calculateUnlockedAmount(pendingUnlocks);
   const lockedPendingUnlocks = getLockedPendingUnlocks(pendingUnlocks);
   const sentStakesAmount = calculateSentStakesAmount(sentStakes?.data?.stakes);
