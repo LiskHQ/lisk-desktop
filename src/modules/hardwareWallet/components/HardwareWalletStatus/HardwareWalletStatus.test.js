@@ -1,10 +1,10 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
-import HardwareWallet from './hardwareWallet';
+import { HardwareWalletStatus } from './HardwareWalletStatus';
 
 describe('hardwareWallet', () => {
   beforeEach(() => {
-    render(<HardwareWallet />);
+    render(<HardwareWalletStatus />);
   });
 
   // @TODO: we should update test when the useHWStatus hook has been integrated
