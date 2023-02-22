@@ -3,10 +3,12 @@ import HWManager from '@hardwareWallet/manager/HWManager';
 import { cryptography } from '@liskhq/lisk-client';
 import { getCheckInitializedAccount } from '@account/utils/getCheckInitializedAccount';
 
-export const getHWAccounts = async (getNameFromAccount, settings, deviceId) => {
+export const getHWAccounts = async ({
+  getName,
+  device // fetch device from HWManager
+}) => {
   const accounts = [];
   let accountIndex = 0;
-  const deviceInfo = HWManager.getActiveDeviceInfo();
   while (true) {
     const pubkey = await HWManager.getPublicKey(accountIndex);
     const address = cryptography.address.getAddressFromPublicKey(Buffer.from(pubkey, 'hex'));
@@ -14,7 +16,7 @@ export const getHWAccounts = async (getNameFromAccount, settings, deviceId) => {
     const isInitialized = await getCheckInitializedAccount({ config });
     if (!isInitialized) {
       accounts.push({
-        hw: deviceInfo,
+        hw: device,
         metadata: {
           address,
           pubkey,
@@ -28,12 +30,12 @@ export const getHWAccounts = async (getNameFromAccount, settings, deviceId) => {
       break;
     }
     accounts.push({
-      hw: deviceInfo,
+      hw: device,
       metadata: {
         address,
         pubkey,
         accountIndex,
-        name: getNameFromAccount(address, settings, deviceId),
+        name: getName(address, device.model),
         path: '',
         isHW: true,
         creationTime: new Date().toISOString(),

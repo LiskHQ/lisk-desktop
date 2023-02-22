@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSettings } from 'src/redux/selectors';
 import { setHWAccounts, removeHWAccounts } from '@hardwareWallet/store/actions';
-import { selectActiveHardwareDevice } from '@hardwareWallet/store/selectors/hwSelectors';
+import { useHWStatus } from '@hardwareWallet/hooks/useHWStatus';
 import { getNameFromAccount } from '../utils/getNameFromAccount';
 import { getHWAccounts } from '../utils/getHWAccounts';
 
@@ -10,14 +10,18 @@ const useManageHWAccounts = () => {
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
   const [prevDeviceId, setCurrentDeviceId] = useState();
-  const { deviceId, status } = useSelector(selectActiveHardwareDevice);
-
+  const device = useHWStatus();
+  const { deviceId, status } = device;
+  const getName = (address, model) => getNameFromAccount(address, settings, model)
   const addAccounts = () => {
     if (prevDeviceId === deviceId || status !== 'connected') {
       return;
     }
     setCurrentDeviceId(deviceId);
-    getHWAccounts(getNameFromAccount, settings, deviceId)
+    getHWAccounts({
+      getName,
+      device,
+    })
       .then((accList) => {
         dispatch(setHWAccounts(accList));
       })
