@@ -26,17 +26,17 @@ export const usePairings = () => {
         message: e.message,
       };
     }
-  }, []);
+  }, [client]);
 
   const removePairing = useCallback((topic) => {
     const newPairings = pairings.filter(pairing => pairing.topic !== topic);
     // Also inform the bridge
     setPairings(newPairings);
-  }, []);
+  }, [pairings]);
 
   const addPairing = useCallback((pairing) => {
     setPairings([...pairings, pairing]);
-  }, []);
+  }, [pairings]);
 
   /**
    * Disconnect a given pairing. Removes the pairing from context and the bridge.
@@ -59,7 +59,7 @@ export const usePairings = () => {
         message: e.message,
       };
     }
-  }, []);
+  }, [client]);
 
   /**
    * Retrieves the active parings and refreshes the list.
@@ -67,14 +67,14 @@ export const usePairings = () => {
   const refreshPairings = useCallback(async () => {
     const activePairings = client.pairing.getAll({ active: true });
     setPairings([{ loaded: true }, ...activePairings]);
-  }, []);
+  }, [client]);
 
   useEffect(() => {
     if (client?.pairing?.getAll && pairings?.length === 0) {
       const activePairings = client.pairing.getAll({ active: true });
       setPairings([{ loaded: true }, ...activePairings]);
     }
-  }, []);
+  }, [client]);
 
   return {
     pairings,

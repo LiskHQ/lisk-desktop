@@ -5,7 +5,7 @@ import ConnectionContext from '@libs/wcm/context/connectionContext';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import AccountRow from '@account/components/AccountRow';
 import { useAccounts } from '@account/hooks/useAccounts';
-import { useCommandSchema } from '@network/hooks';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';

@@ -38,15 +38,12 @@ describe('usePairings', () => {
 
     it('Should remove pairings if removePairing is called', () => {
       const { result } = renderHook(() => usePairings());
-      const { removePairing, addPairing } = result.current;
-      act(() => {
-        addPairing(defaultPairings[0]);
-      });
-      expect(result.current.pairings).toEqual([defaultPairings[0]]);
+      const { removePairing } = result.current;
+      expect(result.current.pairings).toEqual([loaded, ...defaultPairings]);
       act(() => {
         removePairing(defaultPairings[0].topic);
       });
-      expect(result.current.pairings).toEqual([]);
+      expect(result.current.pairings).toEqual([loaded, defaultPairings[1]]);
     });
 
     it('Should call client.pair if a URI is provided with setUri method', () => {
@@ -57,7 +54,7 @@ describe('usePairings', () => {
       expect(client.pair).toHaveBeenCalledWith({ uri });
     });
 
-    it.skip('Should push new pairing if addPairing is called', () => {
+    it('Should push new pairing if addPairing is called', () => {
       const { result } = renderHook(() => usePairings());
       const pairing = { topic: '0x125' };
       act(() => {
