@@ -275,7 +275,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  RequestView: {
+  requestView: {
     isPrivate: false,
     forbiddenTokens: [],
   },
