@@ -8,7 +8,7 @@ import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { EVENTS, ACTIONS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
-import useSession from '@libs/wcm/hooks/useSession';
+import { useSession } from '@libs/wcm/hooks/useSession';
 import BlockchainAppDetailsHeader from '../../../explore/components/BlockchainAppDetailsHeader';
 import AccountsSelector from './AccountsSelector';
 import styles from './connectionSummary.css';
