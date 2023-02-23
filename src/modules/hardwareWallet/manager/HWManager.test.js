@@ -1,5 +1,5 @@
 import { IPC_MESSAGES } from '@libs/hwServer/constants';
-import { mockAccounts } from 'src/modules/hardwareWallet/__fixtures__';
+import { mockHWAccounts } from 'src/modules/hardwareWallet/__fixtures__';
 import hwManager from './HWManager';
 
 jest.useRealTimers();
@@ -16,29 +16,29 @@ describe('HWManager', () => {
     });
     hwManager.createAccount();
 
-    expect({}).toBe(mockAccounts);
+    expect({}).toBe(mockHWAccounts);
   });
 
   test('getDevices', async () => {
-    hwManager.once.mockImplementation(() => mockAccounts);
+    hwManager.once.mockImplementation(() => mockHWAccounts);
     const accounts = await hwManager.getDevices();
 
     expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.INVOKE, { action: 'getDevices' });
-    expect(accounts).toBe(mockAccounts);
+    expect(accounts).toBe(mockHWAccounts);
   });
 
   test('getActiveDeviceInfo', async () => {
-    hwManager.once.mockImplementation(() => mockAccounts);
+    hwManager.once.mockImplementation(() => mockHWAccounts);
     const accounts = await hwManager.getActiveDeviceInfo();
 
     expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.INVOKE, {
       action: 'getActiveDevices',
     });
-    expect(accounts).toBe(mockAccounts);
+    expect(accounts).toBe(mockHWAccounts);
   });
 
   test('getDeviceInfoByID', async () => {
-    hwManager.once.mockImplementation(() => mockAccounts);
+    hwManager.once.mockImplementation(() => mockHWAccounts);
     await hwManager.getDeviceInfoByID('TEST');
 
     expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.INVOKE, {
@@ -48,7 +48,7 @@ describe('HWManager', () => {
   });
 
   test('selectDevice', async () => {
-    hwManager.once.mockImplementation(() => mockAccounts);
+    hwManager.once.mockImplementation(() => mockHWAccounts);
     await hwManager.selectDevice('TEST');
 
     expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.INVOKE, {
@@ -58,7 +58,7 @@ describe('HWManager', () => {
   });
 
   test('getPublicKey', async () => {
-    hwManager.once.mockImplementation(() => mockAccounts);
+    hwManager.once.mockImplementation(() => mockHWAccounts);
     await hwManager.getPublicKey(1);
 
     expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.HW_COMMAND, {
@@ -68,7 +68,7 @@ describe('HWManager', () => {
   });
 
   test('signTransaction', async () => {
-    hwManager.once.mockImplementation(() => mockAccounts);
+    hwManager.once.mockImplementation(() => mockHWAccounts);
     await hwManager.signTransaction(1, 'TEST_CHAIN_ID', 'TEST_TX');
 
     expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.HW_COMMAND, {
@@ -78,7 +78,7 @@ describe('HWManager', () => {
   });
 
   test('signMessage', async () => {
-    hwManager.once.mockImplementation(() => mockAccounts);
+    hwManager.once.mockImplementation(() => mockHWAccounts);
     await hwManager.signMessage(1, 'TEST');
 
     expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.HW_COMMAND, {
@@ -88,11 +88,11 @@ describe('HWManager', () => {
   });
 
   test('checkAppStatus', async () => {
-    hwManager.once.mockImplementation(() => mockAccounts);
+    hwManager.once.mockImplementation(() => mockHWAccounts);
     await hwManager.checkAppStatus();
 
     expect(hwManager.once).toHaveBeenNthCalledWith(1, IPC_MESSAGES.INVOKE, {
-      action: 'checkLedger',
+      action: 'checkStatus',
     });
     expect(hwManager.once).toHaveBeenNthCalledWith(2, IPC_MESSAGES.INVOKE, {
       action: 'getDevices',

@@ -1,4 +1,4 @@
-export const hwAccounts = [
+export const mockHWAccounts = [
   {
     hw: {
       deviceId: '20231',

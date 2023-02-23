@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { useSelector } from 'react-redux';
 import { setHWAccounts, removeHWAccounts } from '../store/actions';
-import { hwAccounts } from '../__fixtures__/hwAccounts';
+import { mockHWAccounts } from '../__fixtures__';
 import { getHWAccounts } from '../utils/getHWAccounts';
 import useManageHWAccounts from './useManageHWAccounts';
 
@@ -27,7 +27,7 @@ jest.mock('react-redux', () => ({
 }));
 
 jest.mock('../utils/getHWAccounts');
-getHWAccounts.mockResolvedValue(hwAccounts);
+getHWAccounts.mockResolvedValue(mockHWAccounts);
 
 describe('useManageHWAccounts hook', () => {
   afterEach(() => {
@@ -40,7 +40,7 @@ describe('useManageHWAccounts hook', () => {
 
     await waitFor(() => {
       expect(mockDispatch).toHaveBeenCalledTimes(1);
-      const hwWalletAccountsDetails = setHWAccounts(hwAccounts);
+      const hwWalletAccountsDetails = setHWAccounts(mockHWAccounts);
       expect(mockDispatch).toHaveBeenCalledWith(expect.objectContaining(hwWalletAccountsDetails));
     });
   });
@@ -52,7 +52,7 @@ describe('useManageHWAccounts hook', () => {
           deviceId: 20231,
           status: 'disconnected',
         },
-        accounts: hwAccounts,
+        accounts: mockHWAccounts,
       },
       settings: {
         hardwareAccounts: {

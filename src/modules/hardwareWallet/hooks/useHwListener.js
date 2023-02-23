@@ -10,6 +10,7 @@ import HWManager from "@hardwareWallet/manager/HWManager";
 const { DEVICE_LIST_CHANGED, DEVICE_UPDATE } = IPC_MESSAGES;
 
 function useHwListener() {
+  console.log('HWManager', HWManager)
   const dispatch = useDispatch();
   const {on} = window?.ipc || {}
   useEffect(() => {

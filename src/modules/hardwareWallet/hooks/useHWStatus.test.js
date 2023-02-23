@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
+import { mockHWCurrentDevice } from '@hardwareWallet/__fixtures__';
 import { useSelector } from 'react-redux';
-import useHWStatus from './useHWStatus';
+import { useHWStatus } from './useHWStatus';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -11,12 +12,7 @@ describe('useHWStatus hook', () => {
   it('returns the device details', () => {
     const mockAppState = {
       hardwareWallet: {
-        currentDevice: {
-          deviceId: 23560,
-          model: 'Nano S Plus',
-          brand: 'Ledger',
-          status: 'connected',
-        },
+        currentDevice: mockHWCurrentDevice,
       },
     };
     useSelector.mockImplementation((callback) => callback(mockAppState));
