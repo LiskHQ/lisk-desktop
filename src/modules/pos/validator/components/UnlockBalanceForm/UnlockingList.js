@@ -11,16 +11,16 @@ const getPendingTime = (unstakeHeight, unlockHeight) => {
   return moment().to(momentSeconds, true);
 };
 
-const UnlockingListItem = ({ pendingUnlockableUnlock, t, currentBlockHeight }) => (
+const UnlockingListItem = ({ lockedPendingUnlock, t, currentBlockHeight }) => (
   <li className="unlocking-balance">
     <p>
-      <TokenAmount val={pendingUnlockableUnlock.amount} token={tokenMap.LSK.key} />
+      <TokenAmount val={lockedPendingUnlock.amount} token={tokenMap.LSK.key} />
     </p>
     <p>
       <Icon name="loading" />
       {`${t('will be available to unlock in')} ${getPendingTime(
         currentBlockHeight,
-        pendingUnlockableUnlock.expectedUnlockableHeight
+        lockedPendingUnlock.expectedUnlockableHeight
       )}`}
     </p>
   </li>
@@ -29,13 +29,13 @@ const UnlockingListItem = ({ pendingUnlockableUnlock, t, currentBlockHeight }) =
 /**
  * displays a list of stake amounts that can be unlocked sometime in the future
  */
-const UnlockingList = ({ pendingUnlockableUnlocks, currentBlockHeight, t }) =>
-  pendingUnlockableUnlocks
+const UnlockingList = ({ lockedPendingUnlocks, currentBlockHeight, t }) =>
+  lockedPendingUnlocks
     .sort((unstakeA, unstakeB) => unstakeB.unstakeHeight - unstakeA.unstakeHeight)
-    .map((pendingUnlockableUnlock, i) => (
+    .map((lockedPendingUnlock, i) => (
       <UnlockingListItem
         key={`${i}-unlocking-balance-list`}
-        pendingUnlockableUnlock={pendingUnlockableUnlock}
+        lockedPendingUnlock={lockedPendingUnlock}
         currentBlockHeight={currentBlockHeight}
         t={t}
       />

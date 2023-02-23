@@ -14,7 +14,7 @@ import styles from './unlockBalance.css';
 const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const { data: latestBlock } = useLatestBlock();
-  const { pendingUnlockableUnlocks, sentStakesAmount, unlockableAmount } = useUnlockableCalculator();
+  const { lockedPendingUnlocks, sentStakesAmount, unlockedAmount } = useUnlockableCalculator();
 
   const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -27,8 +27,8 @@ const UnlockBalanceForm = ({ nextStep }) => {
 
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
-    isValid: unlockableAmount > 0,
-    unlockableAmount,
+    isValid: unlockedAmount > 0,
+    unlockedAmount,
   };
 
   return (
@@ -36,7 +36,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
       <TxComposer
         onConfirm={onConfirm}
         formProps={unlockBalanceFormProps}
-        buttonTitle={getUnlockButtonTitle(unlockableAmount, t)}
+        buttonTitle={getUnlockButtonTitle(unlockedAmount, t)}
       >
         <>
           <BoxHeader className={styles.header}>
@@ -50,9 +50,9 @@ const UnlockBalanceForm = ({ nextStep }) => {
             </p>
             <BalanceTable
               sentStakesAmount={sentStakesAmount}
-              unlockableAmount={unlockableAmount}
+              unlockedAmount={unlockedAmount}
               currentBlockHeight={latestBlock?.height ?? 0}
-              pendingUnlockableUnlocks={pendingUnlockableUnlocks}
+              lockedPendingUnlocks={lockedPendingUnlocks}
             />
           </BoxContent>
         </>
