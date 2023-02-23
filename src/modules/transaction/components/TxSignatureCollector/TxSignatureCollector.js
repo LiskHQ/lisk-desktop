@@ -152,7 +152,7 @@ const TxSignatureCollector = ({
     );
   }
 
-  if (status && status !== 'connected') {
+  if (status !== 'connected') {
     return <HWReconnect />;
   }
 
