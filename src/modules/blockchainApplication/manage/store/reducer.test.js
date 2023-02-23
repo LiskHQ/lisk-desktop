@@ -1,9 +1,9 @@
-import mockApplicationsManage, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
+import mockApplicationsManage, {
+  applicationsMap,
+} from '@tests/fixtures/blockchainApplicationsManage';
 import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import actionTypes from './actionTypes';
-import {
-  pins, applications, current, node,
-} from './reducer';
+import { pins, applications, current } from './reducer';
 
 describe('BlockchainApplication reducer', () => {
   describe('pins', () => {
@@ -22,8 +22,7 @@ describe('BlockchainApplication reducer', () => {
         chainId: mockApplicationsExplore[0].chainID,
       };
 
-      expect(pins([mockApplicationsExplore[0].chainID], actionData)).not
-        .toContain(actionData.data);
+      expect(pins([mockApplicationsExplore[0].chainID], actionData)).not.toContain(actionData.data);
     });
   });
 
@@ -54,7 +53,7 @@ describe('BlockchainApplication reducer', () => {
 
       expect(changedState).not.toHaveProperty(actionData.chainId);
     });
-  
+
     it('Should return list of applications with the newly added applications', async () => {
       const newApplication1 = {
         name: 'New app',
@@ -88,16 +87,6 @@ describe('BlockchainApplication reducer', () => {
         app: mockApplicationsManage[0],
       };
       expect(current({}, actionData)).toEqual(mockApplicationsManage[0]);
-    });
-  });
-
-  describe('node', () => {
-    it('Should return application node if setApplicationNode action type is triggered', async () => {
-      const actionData = {
-        type: actionTypes.setApplicationNode,
-        nodeInfo: mockApplicationsManage[0].serviceURLs[0],
-      };
-      expect(node({}, actionData)).toEqual(mockApplicationsManage[0].serviceURLs[0]);
     });
   });
 });

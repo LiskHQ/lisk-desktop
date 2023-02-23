@@ -12,7 +12,6 @@ const initialState = {
   pins: [],
   applications: {},
   current: null,
-  node: {},
 };
 
 /**
@@ -74,32 +73,17 @@ export const current = (state = initialState.current, { type, app }) => {
   }
 };
 
-/**
- *
- * @param {Object} state
- * @param {type: String, nodeInfo: Object} action
- */
-export const node = (state = initialState.node, { type, nodeInfo }) => {
-  switch (type) {
-    case actionTypes.setApplicationNode:
-      return nodeInfo;
-    default:
-      return state;
-  }
-};
-
 const persistConfig = {
   storage,
   key: 'blockChainApplications',
   whitelist: ['pins', 'applications'],
-  blacklist: ['current', 'node'],
+  blacklist: ['current'],
 };
 
 const blockChainApplicationsReducer = combineReducers({
   pins,
   applications,
   current,
-  node,
 });
 
 export const blockChainApplications = persistReducer(persistConfig, blockChainApplicationsReducer);
