@@ -32,7 +32,7 @@ describe('unlockBalanceTable', () => {
     expect(wrapper.find('.unlocking-balance')).toHaveLength(lockedPendingUnlocks.length);
   });
 
-  it('should not show pendingUnlockableUnlocks if undefined', () => {
+  it('should not show lockedPendingUnlocks if undefined', () => {
     wrapper = mount(<BalanceTable {...props} lockedPendingUnlocks={undefined} />);
     expect(wrapper.find('.unlocking-balance')).toHaveLength(0);
   });
