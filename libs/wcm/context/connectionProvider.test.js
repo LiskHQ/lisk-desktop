@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
-import useSession from '../hooks/useSession';
+import { useSession } from '../hooks/useSession';
 import ConnectionProvider from './connectionProvider';
 
 jest.mock('@walletconnect/utils', () => ({

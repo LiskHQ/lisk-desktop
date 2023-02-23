@@ -3,10 +3,10 @@ import { formatJsonRpcResult } from '@json-rpc-tools/utils'
 import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
 import { onApprove, onReject } from '../utils/sessionHandlers';
-import usePairings from './usePairings';
+import { usePairings } from './usePairings';
 import { EVENTS, STATUS } from '../constants/lifeCycle';
 
-const useSession = () => {
+export const useSession = () => {
   const { events, removeEvent, session, setSession } = useContext(ConnectionContext);
   const { refreshPairings } = usePairings();
 
@@ -91,5 +91,3 @@ const useSession = () => {
     setSession,
   };
 };
-
-export default useSession;
