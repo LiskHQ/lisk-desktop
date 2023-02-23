@@ -1,12 +1,16 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import {calculateSentStakesAmount, calculateUnlockedAmount, getLockedPendingUnlocks} from '@wallet/utils/account';
+import {
+  calculateSentStakesAmount,
+  calculateUnlockedAmount,
+  getLockedPendingUnlocks,
+} from '@wallet/utils/account';
 import { mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import BalanceTable from './BalanceTable';
 
 describe('unlockBalanceTable', () => {
   let wrapper;
-  
+
   const pendingUnlocks = mockUnlocks.data.pendingUnlocks;
   const stakes = mockSentStakes.data.stakes;
   const currentBlockHeight = 5000;
