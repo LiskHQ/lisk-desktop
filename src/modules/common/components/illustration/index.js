@@ -53,6 +53,8 @@ import trezorHwRejection from '@setup/react/assets/images/illustrations/hw-rejec
 import trezorHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-trezor-dark.svg';
 import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
 import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
+import hwReconnection from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect.svg';
+import hwReconnectionDark from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect-dark.svg';
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
 import validatorRegistrationSuccess from '@setup/react/assets/images/illustrations/validator-registration-success.svg';
 import validatorRegistrationError from '@setup/react/assets/images/illustrations/validator-registration-error.svg';
@@ -110,6 +112,8 @@ export const illustrations = {
   trezorHwRejectionDark,
   ledgerNanoHwRejection,
   ledgerNanoHwRejectionDark,
+  hwReconnection,
+  hwReconnectionDark,
   addApplicationSuccess,
   validatorRegistrationSuccess,
   validatorRegistrationError,
@@ -117,14 +121,9 @@ export const illustrations = {
 
 const Illustration = ({ name, className, noTheme, ...props }) => {
   const theme = useTheme();
-  const themed = theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
-  return (
-    <img
-      src={illustrations[themed]}
-      className={className}
-      {...props}
-    />
-  );
+  const themed =
+    theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
+  return <img src={illustrations[themed]} className={className} {...props} />;
 };
 
 Illustration.propTypes = {
