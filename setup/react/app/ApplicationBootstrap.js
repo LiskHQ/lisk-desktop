@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   useGetDefaultApplication,
   useApplicationManagement,
@@ -17,13 +17,15 @@ const ApplicationBootstrap = ({ children }) => {
   } = useGetDefaultApplication();
   const { setApplications } = useApplicationManagement();
   const [, setCurrentApplication] = useCurrentApplication();
+  const [isFirstTimeLoading, setIsFirstTimeLoading] = useState(true);
 
   useTransactionUpdate();
 
   useEffect(() => {
-    if (defaultApps.length && isFetched) {
+    if (defaultApps.length && isFetched && isFirstTimeLoading) {
       setCurrentApplication(defaultApps[0]);
       setApplications(defaultApps);
+      setIsFirstTimeLoading(false);
     }
   }, [isFetched]);
 
@@ -37,7 +39,7 @@ const ApplicationBootstrap = ({ children }) => {
     );
   }
 
-  return !isLoading && isFetched ? children : null;
+  return (!isLoading && isFetched) || !isFirstTimeLoading ? children : null;
 };
 
 export default ApplicationBootstrap;

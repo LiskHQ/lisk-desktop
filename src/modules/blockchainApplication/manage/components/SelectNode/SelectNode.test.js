@@ -4,7 +4,6 @@ import mockBlockChainApplications, { applicationsMap } from '@tests/fixtures/blo
 import SelectNode from './SelectNode';
 
 const mockSetCurrentApplication = jest.fn();
-const mockSetCurrentNode = jest.fn();
 const mockCurrentApplication = mockBlockChainApplications[0];
 
 const mockDispatch = jest.fn();
@@ -19,11 +18,6 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 
-jest.mock('../../hooks/useCurrentNode', () => ({
-  useCurrentNode: () => ({
-    setCurrentNode: mockSetCurrentNode,
-  }),
-}));
 jest.mock('../../hooks/useCurrentApplication', () => ({
   useCurrentApplication: () => ([mockCurrentApplication, mockSetCurrentApplication]),
 }));
@@ -50,8 +44,6 @@ describe('SelectNode', () => {
     expect(screen.getAllByTestId('application-node-row')).toHaveLength(2);
     fireEvent.click(screen.getAllByTestId('application-node-row')[0]);
     expect(mockSetCurrentApplication).toHaveBeenCalledTimes(1);
-    expect(mockSetCurrentApplication).toHaveBeenCalledWith(selectedApplication);
-    expect(mockSetCurrentNode).toHaveBeenCalledTimes(1);
-    expect(mockSetCurrentNode).toHaveBeenCalledWith(mockBlockChainApplications[4].serviceURLs[0]);
+    expect(mockSetCurrentApplication).toHaveBeenCalledWith(selectedApplication, mockBlockChainApplications[4].serviceURLs[0]);
   });
 });

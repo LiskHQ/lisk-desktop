@@ -10,14 +10,10 @@ import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWr
 import { useCheckLegacyAccount } from '@legacy/hooks/queries';
 import ErrorBoundary from './errorBoundary';
 
-const checkNetwork = (state) =>
-  !!state.network.name &&
-  !!(state.network.networks && state.network.networks.LSK && state.network.networks.LSK.serviceUrl);
-
 // eslint-disable-next-line max-statements
 const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, history }) => {
   const token = useSelector((state) => state.token);
-  const isNetworkSet = useSelector(checkNetwork);
+  const isNetworkSet = useSelector(({ network }) => !!network.name);
   const [currentAccount] = useCurrentAccount();
   const isAuthenticated = !!currentAccount?.metadata?.address;
   const { isMigrated } = useCheckLegacyAccount(currentAccount?.metadata?.pubkey);

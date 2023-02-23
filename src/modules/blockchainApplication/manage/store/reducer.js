@@ -12,7 +12,6 @@ const initialState = {
   pins: [],
   applications: {},
   current: null,
-  node: {},
 };
 
 /**
@@ -41,33 +40,11 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
 export const applications = (state = initialState.applications, { type, app, apps, chainId }) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
-      // In cases where a new node for an existing application is being added,
-      // the new node url should be appended to the apis array of the application
-      if (app.chainID in state) {
-        state[app.chainID].serviceURLs.push(app.serviceURLs);
-      } else {
-        state[app.chainID] = app;
-      }
-      return state;
+      return { ...state, [app.chainID]: app };
 
     case actionTypes.setApplications: {
       return apps.reduce(
-        (result, application) => {
-          if (application.chainID in result) {
-            return {
-              ...result,
-              [application.chainID]: {
-                ...result[application.chainID],
-                serviceURLs: [
-                  ...result[application.chainID].serviceURLs,
-                  ...application.serviceURLs,
-                ],
-              },
-            };
-          }
-
-          return { ...result, [application.chainID]: application };
-        },
+        (result, application) => ({ ...result, [application.chainID]: application }),
         { ...state }
       );
     }
@@ -96,32 +73,17 @@ export const current = (state = initialState.current, { type, app }) => {
   }
 };
 
-/**
- *
- * @param {Object} state
- * @param {type: String, nodeInfo: Object} action
- */
-export const node = (state = initialState.node, { type, nodeInfo }) => {
-  switch (type) {
-    case actionTypes.setApplicationNode:
-      return nodeInfo;
-    default:
-      return state;
-  }
-};
-
 const persistConfig = {
   storage,
   key: 'blockChainApplications',
   whitelist: ['pins', 'applications'],
-  blacklist: ['current', 'node'],
+  blacklist: ['current'],
 };
 
 const blockChainApplicationsReducer = combineReducers({
   pins,
   applications,
   current,
-  node,
 });
 
 export const blockChainApplications = persistReducer(persistConfig, blockChainApplicationsReducer);
