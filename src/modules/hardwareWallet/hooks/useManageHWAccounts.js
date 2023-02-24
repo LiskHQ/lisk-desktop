@@ -9,15 +9,15 @@ import { getHWAccounts } from '../utils/getHWAccounts';
 const useManageHWAccounts = () => {
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
-  const [prevDeviceId, setCurrentDeviceId] = useState();
+  const [prevDevicePath, setCurrentDevicePath] = useState();
   const device = useHWStatus();
-  const { deviceId, status } = device;
+  const { path, status } = device;
   const getName = (address, model) => getNameFromAccount(address, settings, model)
   const addAccounts = () => {
-    if (prevDeviceId === deviceId || status !== 'connected') {
+    if (prevDevicePath === path || status !== 'connected') {
       return;
     }
-    setCurrentDeviceId(deviceId);
+    setCurrentDevicePath(path);
     getHWAccounts({
       getName,
       device,
@@ -33,7 +33,7 @@ const useManageHWAccounts = () => {
     if (status === 'disconnected') {
       dispatch(removeHWAccounts());
     }
-  }, [status, deviceId]);
+  }, [status, path]);
 };
 
 export default useManageHWAccounts;

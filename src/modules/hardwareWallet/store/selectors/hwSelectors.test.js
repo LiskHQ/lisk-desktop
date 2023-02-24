@@ -3,6 +3,7 @@ import {
   selectActiveHardwareDeviceId,
   selectHardwareDevices,
   selectHWStatus,
+  selectHWAccounts,
 } from './hwSelectors';
 
 describe('HardwareWallet selectors', () => {
@@ -13,8 +14,19 @@ describe('HardwareWallet selectors', () => {
         { deviceId: '2', status: 'connected' },
       ],
       currentDevice: { deviceId: '1', status: 'connected' },
+      accounts: [{ id: 1 }],
     },
   };
+  const mockEmptyState = { hardwareWallet: {} };
+  it('ActiveHardwareDevice Should return empty object ', async () => {
+    expect(selectActiveHardwareDevice(mockEmptyState)).toEqual({});
+  });
+  it('selectHWAccounts Should return empty array ', async () => {
+    expect(selectHWAccounts(mockEmptyState)).toEqual([]);
+  });
+  it('selectHWAccounts Should return list of accounts', async () => {
+    expect(selectHWAccounts(mockState)).toEqual(mockState.hardwareWallet.accounts);
+  });
   it('Should select ActiveHardwareDevice', async () => {
     expect(selectActiveHardwareDevice(mockState)).toEqual(mockState.hardwareWallet.currentDevice);
   });

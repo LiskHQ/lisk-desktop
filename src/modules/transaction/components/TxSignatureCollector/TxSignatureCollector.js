@@ -10,7 +10,7 @@ import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from '@auth/components/EnterPasswordForm';
 import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
-import useHWStatus from '@hardwareWallet/hooks/useHWStatus';
+import { useHWStatus } from '@hardwareWallet/hooks/useHWStatus';
 import HWReconnect from '@hardwareWallet/components/HWReconnect/HWReconnect';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand } from '../../utils';

@@ -3,6 +3,7 @@ export const mockHWAccounts = [
     hw: {
       deviceId: '20231',
       model: 'Nano S',
+      path: 'c://2',
       brand: 'Ledger',
     },
     metadata: {
@@ -20,6 +21,7 @@ export const mockHWAccounts = [
     hw: {
       deviceId: '20231',
       model: 'Nano S',
+      path: 'c://1',
       brand: 'Ledger',
     },
     metadata: {
