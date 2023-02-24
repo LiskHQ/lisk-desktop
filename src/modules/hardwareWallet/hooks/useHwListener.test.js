@@ -14,7 +14,7 @@ const mockSubscribe = jest.fn((event, callback) => {
     callbacks[event] = callback;
   })
 jest.mock('@hardwareWallet/manager/HWManager', () => ({
-  subscribe: mockSubscribe
+  subscribe: (...arg) => mockSubscribe(...arg)
 }));
 
 describe('useIpc', () => {
@@ -31,6 +31,7 @@ describe('useIpc', () => {
   });
 
   it('Should dispatch setDeviceUpdated when ipc receives DEVICE_LIST_CHANGED', () => {
+    renderHook(() => useHwListener());
     expect(mockSubscribe).toHaveBeenCalled();
     const devices = [{ deviceId: '1' }];
     callbacks[DEVICE_LIST_CHANGED]({}, devices);
@@ -40,6 +41,7 @@ describe('useIpc', () => {
   });
 
   it('Should dispatch setDeviceUpdated when ipc receives DEVICE_UPDATE', () => {
+    renderHook(() => useHwListener());
     expect(mockSubscribe).toHaveBeenCalled();
     const device = {deviceId: '1'};
 
