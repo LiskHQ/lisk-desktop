@@ -1,9 +1,9 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
+import moment from 'moment';
 import accounts from '@tests/constants/wallets';
 import { truncateAddress } from '@wallet/utils/account';
 import Row from '.';
 import { mockTransactions } from '../../__fixtures__';
-import moment from 'moment';
 
 const txBase = {
   sender: { address: accounts.genesis.summary.address },
