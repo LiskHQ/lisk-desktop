@@ -40,7 +40,6 @@ export class HwServer {
       event: IPC_MESSAGES.HW_COMMAND,
       action: async ({ action, data }) => {
         const device = this.getCurrentDevice();
-        console.log('device', action, device)
         const functionName = FUNCTION_TYPES[action];
         const manufactureName = device.manufacturer;
         return manufacturers[manufactureName][functionName](this.transports[manufactureName], {

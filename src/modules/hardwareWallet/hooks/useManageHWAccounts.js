@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSettings } from 'src/redux/selectors';
@@ -12,6 +13,7 @@ const useManageHWAccounts = () => {
   const [prevDevicePath, setCurrentDevicePath] = useState();
   const device = useHWStatus();
   const { path, status } = device;
+  /* istanbul ignore next */
   const getName = (address, model) => getNameFromAccount(address, settings, model)
   const addAccounts = () => {
     if (prevDevicePath === path || status !== 'connected') {
@@ -29,10 +31,11 @@ const useManageHWAccounts = () => {
   };
 
   useEffect(() => {
-    addAccounts();
     if (status === 'disconnected') {
       dispatch(removeHWAccounts());
+      return
     }
+    addAccounts();
   }, [status, path]);
 };
 

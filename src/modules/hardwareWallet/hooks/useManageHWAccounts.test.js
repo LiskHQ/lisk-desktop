@@ -1,17 +1,19 @@
+import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useSelector } from 'react-redux';
 import { useHWStatus } from '@hardwareWallet/hooks/useHWStatus';
-import  * as spyHWStatus  from '@hardwareWallet/hooks/useHWStatus';
+import * as spyHWStatus from '@hardwareWallet/hooks/useHWStatus';
 import { setHWAccounts, removeHWAccounts } from '../store/actions';
 import { mockHWAccounts, mockHWCurrentDevice } from '../__fixtures__';
 import { getHWAccounts } from '../utils/getHWAccounts';
-import { getNameFromAccount } from '../utils/getNameFromAccount';
 import useManageHWAccounts from './useManageHWAccounts';
-import * as utils from '../utils/getNameFromAccount'
+import * as utils from '../utils/getNameFromAccount';
 
+const mockSetter = jest.fn();
 jest.useRealTimers();
-jest.spyOn(spyHWStatus, 'useHWStatus')
-jest.spyOn(utils, 'getNameFromAccount')
+jest.spyOn(spyHWStatus, 'useHWStatus');
+jest.spyOn(utils, 'getNameFromAccount');
+jest.spyOn(React, 'useState').mockImplementationOnce(() => ['', mockSetter]);
 const mockDispatch = jest.fn();
 const mockAppState = {
   hardwareWallet: {
@@ -43,10 +45,17 @@ describe('useManageHWAccounts hook', () => {
 
     await waitFor(() => {
       expect(mockDispatch).toHaveBeenCalledTimes(1);
-      expect(getNameFromAccount).toHaveBeenCalled();
+      expect(mockSetter).toHaveBeenCalledWith(mockHWCurrentDevice.path);
       const hwWalletAccountsDetails = setHWAccounts(mockHWAccounts);
       expect(mockDispatch).toHaveBeenCalledWith(expect.objectContaining(hwWalletAccountsDetails));
     });
+  });
+
+  it('ignore account if status is standby', async () => {
+    useSelector.mockImplementation((callback) => callback(mockAppState));
+    useHWStatus.mockReturnValue({ ...mockHWCurrentDevice,path: 'smtelse',  status: 'standby' });
+    renderHook(() => useManageHWAccounts());
+    expect(mockDispatch).not.toHaveBeenCalled();
   });
 
   it('removes the list of accounts when the device is disconnected', async () => {
@@ -67,7 +76,7 @@ describe('useManageHWAccounts hook', () => {
         },
       },
     };
-    useHWStatus.mockReturnValue(mockHWCurrentDevice);
+    useHWStatus.mockReturnValue({ ...mockHWCurrentDevice, status: 'disconnected' });
     useSelector.mockImplementation((callback) => callback(updatedMockAppState));
     const { waitFor } = renderHook(() => useManageHWAccounts());
 

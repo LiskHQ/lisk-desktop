@@ -31,7 +31,7 @@ export const ManageAccountsContent = ({
   const title = customTitle ?? t('Manage accounts');
   const { accounts: hwAccounts } = useHWAccounts();
 
-  const {status} = useHWStatus();
+  const { status } = useHWStatus();
 
   const onAddAccount = useCallback(() => {
     history.push(routes.addAccountOptions.path);
