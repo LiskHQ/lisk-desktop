@@ -1,6 +1,8 @@
 import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
 import { screen, render, fireEvent, waitFor } from '@testing-library/react';
+import { renderWithStore, renderWithRouterAndStore } from 'src/utils/testHelpers';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import accounts from '@tests/constants/wallets';
@@ -11,12 +13,34 @@ import TxSignatureCollector from './TxSignatureCollector';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
 const mockCurrentAccount = mockSavedAccounts[0];
-const address = mockSavedAccounts[0].metadata.address;
+const address = mockCurrentAccount.metadata.address;
 const mockSetCurrentAccount = jest.fn();
+const mockAppState = {
+  hardwareWallet: {
+    currentDevice: {
+      deviceId: 0,
+      model: '',
+      brand: '',
+      status: '',
+    },
+  },
+};
 
 jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('@auth/hooks/queries/useAuth');
 jest.mock('../../hooks/useTxInitiatorAccount');
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: jest.fn(() => ({
+    t: (str, values = {}) => {
+      if (!values) return str;
+      return Object.keys(values).reduce(
+        (acc, curr) => acc.replace(`{{${curr}}}`, values[curr]),
+        str
+      );
+    },
+  })),
+}));
 
 jest.mock('@account/utils/encryptAccount', () => ({
   decryptAccount: jest.fn().mockResolvedValue({
@@ -31,9 +55,9 @@ jest.mock('@auth/store/action', () => ({
   secondPassphraseRemoved: jest.fn(),
 }));
 jest.mock('@account/hooks', () => ({
-  useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetCurrentAccount]),
+  useCurrentAccount: jest.fn(() => [mockCurrentAccount, mockSetCurrentAccount]),
   useAccounts: jest.fn(() => ({
-    getAccountByAddress: jest.fn().mockReturnValue(mockSavedAccounts[0]),
+    getAccountByAddress: jest.fn().mockReturnValue(mockCurrentAccount),
   })),
 }));
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
@@ -58,7 +82,7 @@ describe('TxSignatureCollector', () => {
     actionFunction: jest.fn(),
     multisigTransactionSigned: jest.fn(),
     transactionJSON: {
-      senderPublicKey: mockSavedAccounts[0].metadata.pubkey,
+      senderPublicKey: mockCurrentAccount.metadata.pubkey,
       module: 'token',
       command: 'transfer',
       fee: '1000000',
@@ -89,10 +113,11 @@ describe('TxSignatureCollector', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    useCurrentAccount.mockReturnValue([mockCurrentAccount, mockSetCurrentAccount]);
   });
 
   it('should render password input fit not used with HW', () => {
-    render(<TxSignatureCollector {...props} />);
+    renderWithStore(TxSignatureCollector, props, mockAppState);
     expect(screen.getByText('Enter your account password')).toBeInTheDocument();
     expect(
       screen.getByText('Please enter your account password to sign this transaction.')
@@ -102,39 +127,86 @@ describe('TxSignatureCollector', () => {
     expect(screen.getByText('Continue')).toBeInTheDocument();
   });
 
-  // this should be re-instated when HW fix has been done
-  it.skip('should HW pending view if connected to one', () => {
-    const hwInfo = {
-      deviceId: '123',
-      deviceModel: 'Ledger Nano S',
-    };
-    const hwProps = {
-      ...props,
-      account: {
-        ...props.account,
-        hwInfo,
+  it('should display the hardware reconnect view if HW is standby or disconnected', () => {
+    const mockDisconnectedAppState = {
+      hardwareWallet: {
+        currentDevice: {
+          deviceId: 20350,
+          model: 'Nano S Plus',
+          brand: 'Ledger',
+          status: 'disconnected',
+        },
       },
     };
-    render(<TxSignatureCollector {...hwProps} />);
-    expect(
-      screen.getByText(`Please confirm the transaction on your ${hwInfo.deviceModel}`)
-    ).toBeInTheDocument();
+    const mockHWAcct = {
+      ...mockCurrentAccount,
+      metadata: {
+        ...mockCurrentAccount.metadata,
+        isHW: true,
+      },
+    };
+    useCurrentAccount.mockReturnValue([mockHWAcct, mockSetCurrentAccount]);
+    renderWithRouterAndStore(TxSignatureCollector, props, mockDisconnectedAppState);
+    expect(screen.getByText('Reconnect to hardware wallet')).toBeInTheDocument();
   });
 
   // this should be re-instated when HW fix has been done
-  it.skip('should call actionFunction if connected to HW', () => {
-    const hwInfo = {
-      deviceId: '123',
-      deviceModel: 'Ledger Nano S',
-    };
-    const hwProps = {
-      ...props,
-      account: {
-        ...props.account,
-        hwInfo,
+  it('should HW pending view if connected to one', () => {
+    const mockConnectedAppState = {
+      hardwareWallet: {
+        currentDevice: {
+          deviceId: 20350,
+          model: 'Nano S Plus',
+          brand: 'Ledger',
+          status: 'connected',
+        },
       },
     };
-    render(<TxSignatureCollector {...hwProps} />);
+    const mockHWAcct = {
+      ...mockCurrentAccount,
+      hw: {
+        deviceId: 20350,
+        model: 'Nano S Plus',
+        brand: 'Ledger',
+      },
+      metadata: {
+        ...mockCurrentAccount.metadata,
+        isHW: true,
+      },
+    };
+    useCurrentAccount.mockReturnValue([mockHWAcct, mockSetCurrentAccount]);
+    renderWithRouterAndStore(TxSignatureCollector, props, mockConnectedAppState);
+    expect(
+      screen.getByText('Please confirm the transaction on your Nano S Plus')
+    ).toBeInTheDocument();
+  });
+
+  // this should be fixed when HW transaction signing is fixed
+  it.skip('should call actionFunction if connected to HW', async () => {
+    const mockConnectedAppState = {
+      hardwareWallet: {
+        currentDevice: {
+          deviceId: 20350,
+          model: 'Nano S Plus',
+          brand: 'Ledger',
+          status: 'connected',
+        },
+      },
+    };
+    const mockHWAcct = {
+      ...mockCurrentAccount,
+      hw: {
+        deviceId: 20350,
+        model: 'Nano S Plus',
+        brand: 'Ledger',
+      },
+      metadata: {
+        ...mockCurrentAccount.metadata,
+        isHW: true,
+      },
+    };
+    useCurrentAccount.mockReturnValue([mockHWAcct, mockSetCurrentAccount]);
+    renderWithStore(TxSignatureCollector, props, mockConnectedAppState);
     expect(props.actionFunction).toHaveBeenCalled();
   });
 
@@ -145,9 +217,9 @@ describe('TxSignatureCollector', () => {
         ...props.transactionJSON,
         module: 'auth',
         command: 'registerMultisignature',
-      }
-    }
-    render(<TxSignatureCollector {...formProps} />);
+      },
+    };
+    renderWithStore(TxSignatureCollector, formProps, mockAppState);
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
       target: { value: 'DeykUBjUn7uZHYv!' },
     });
@@ -158,7 +230,7 @@ describe('TxSignatureCollector', () => {
   });
 
   it('should call action function on continue button click', async () => {
-    render(<TxSignatureCollector {...props} />);
+    renderWithStore(TxSignatureCollector, props, mockAppState);
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
       target: { value: 'DeykUBjUn7uZHYv!' },
     });
@@ -167,10 +239,10 @@ describe('TxSignatureCollector', () => {
       expect(props.actionFunction).toHaveBeenCalled();
     });
   });
-  
+
   it('should call action function if no keys', async () => {
     useAuth.mockReturnValue({ isLoading: false });
-    render(<TxSignatureCollector {...props} />);
+    renderWithStore(TxSignatureCollector, props, mockAppState);
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
       target: { value: 'DeykUBjUn7uZHYv!' },
     });
@@ -179,8 +251,9 @@ describe('TxSignatureCollector', () => {
       expect(props.actionFunction).toHaveBeenCalled();
     });
   });
+
   it('should call action function on continue button click', async () => {
-    render(<TxSignatureCollector {...props} />);
+    renderWithStore(TxSignatureCollector, props, mockAppState);
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
       target: { value: 'DeykUBjUn7uZHYv!' },
     });
@@ -210,11 +283,11 @@ describe('TxSignatureCollector', () => {
         signedTransaction: { id: '123', signatures: [] },
       },
     };
-    render(<TxSignatureCollector {...signedTransactionProps} />);
+    renderWithStore(TxSignatureCollector, signedTransactionProps, mockAppState);
     expect(props.nextStep).toHaveBeenCalled();
   });
 
-    // @TODO: should be re-instated if double tx signing is reinstated
+  // @TODO: should be re-instated if double tx signing is reinstated
   it.skip('should call transactionDoubleSigned', () => {
     const signedTransactionProps = {
       ...props,

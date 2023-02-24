@@ -290,6 +290,7 @@ or "warn/action" ineastd of "red/green"
   --color-strong-ink-blue: #254898;
   --tab-border-color: #4070f4;
   --color-active-tab: #000;
+  --color-zodiac-blue: #fff;
   --color-zodiac-blue--satin-deep-black: var(--color-satin-deep-black);
   --color-periwinkle-blue--manatee-gray: var(--color-manatee-gray);
   --color-search-container: var(--color-body-bg);

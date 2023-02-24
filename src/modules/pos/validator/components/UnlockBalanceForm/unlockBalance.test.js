@@ -176,7 +176,7 @@ describe('Unlock LSK modal', () => {
         },
         isValid: true,
         moduleCommand: 'pos:unlock',
-        unlockableAmount: 455000000000,
+        unlockedAmount: 455000000000,
       },
       fees: {
         Initialisation: '0.1 LSK',
@@ -198,7 +198,7 @@ describe('Unlock LSK modal', () => {
           },
           isValid: true,
           moduleCommand: 'pos:unlock',
-          unlockableAmount: 455000000000,
+          unlockedAmount: 455000000000,
         },
         fees: {
           Initialisation: '0.1 LSK',

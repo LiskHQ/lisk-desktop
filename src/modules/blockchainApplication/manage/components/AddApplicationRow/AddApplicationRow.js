@@ -18,20 +18,17 @@ const DepositAmount = ({ amount }) => (
   </span>
 );
 
-const AddApplicationRow = ({
-  data,
-  className,
-}) => (
-  <div data-testid="applications-row" className={`application-row ${styles.container}`}>
-    <DialogLink
-      className={`${grid.row} ${className} blockchain-application-add-row`}
-      component="blockChainApplicationDetails"
-      data={{ chainId: data.chainID, mode: 'addApplication' }}
-    >
-      <ChainName title={data.chainName} logo={liskLogo} />
-      <DepositAmount amount={data.depositedLsk} />
-    </DialogLink>
-  </div>
-);
+const AddApplicationRow = ({ data, className }) => (
+    <div data-testid="applications-row" className={`application-row ${styles.container}`}>
+      <DialogLink
+        className={`${grid.row} ${className} blockchain-application-add-row`}
+        component="blockChainApplicationDetails"
+        data={{ chainId: data.chainID, mode: 'addApplication' }}
+      >
+        <ChainName title={data.name} logo={liskLogo} />
+        <DepositAmount amount={data.depositedLsk} />
+      </DialogLink>
+    </div>
+  );
 
 export default AddApplicationRow;

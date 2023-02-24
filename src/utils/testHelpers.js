@@ -5,6 +5,8 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
+import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { context as wsContext } from '@blockchainApplication/connection/__fixtures__/requestSummary';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 /**
@@ -299,5 +301,24 @@ export const renderWithRouterAndStoreAndQueryClient = (Component, props = {}, st
         </MemoryRouter>
       </QueryClientProvider>
     </Provider>
+  );
+};
+
+/**
+ * Renders components that are wrapped in QueryClientProvider
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ *
+ * @returns {Object} Rendered component
+ */
+export const renderWithQueryClientAndWC = (Component, props) => {
+  const queryClient = new QueryClient();
+  return render(
+    <ConnectionContext.Provider value={wsContext}>
+      <QueryClientProvider client={queryClient}>
+        <Component {...props} />
+      </QueryClientProvider>
+    </ConnectionContext.Provider>
   );
 };

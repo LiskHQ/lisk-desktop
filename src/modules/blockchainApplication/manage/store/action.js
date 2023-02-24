@@ -49,13 +49,3 @@ export const setCurrentApplication = (app) => ({
   type: actionTypes.setCurrentApplication,
   app,
 });
-
-/**
- * Trigger this action to set current blockchain application node
- *
- * @returns {Object} - Action object
- */
-export const setApplicationNode = (nodeInfo) => ({
-  type: actionTypes.setApplicationNode,
-  nodeInfo,
-});
