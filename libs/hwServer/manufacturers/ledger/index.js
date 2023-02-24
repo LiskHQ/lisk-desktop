@@ -86,8 +86,8 @@ const checkLiskAppStatus = async ({ transporter, path }) => {
     transport = await transporter.open(path);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(0);
-    const hasAccount = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
-    status = hasAccount ? DEVICE_STATUS.CONNECTED : DEVICE_STATUS.STAND_BY;
+    const { pubKey } = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
+    status = pubKey ? DEVICE_STATUS.CONNECTED : DEVICE_STATUS.STAND_BY;
   } catch (e) {
     status = DEVICE_STATUS.DISCONNECTED;
   }

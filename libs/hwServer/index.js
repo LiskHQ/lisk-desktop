@@ -8,8 +8,11 @@ export class HwServer {
     this.transports = transports;
     this.pubSub = pubSub;
     this.devices = [];
-    this.currentDevicePath = null;
-    this.currentDeviceStatus = DEVICE_STATUS.DISCONNECTED;
+    this.currentDevice = {
+      path: null,
+      status: DEVICE_STATUS.DISCONNECTED,
+      manufacturer: null
+    };
     this.intervalId = null;
   }
 
@@ -52,9 +55,9 @@ export class HwServer {
       clearInterval(this.intervalId);
     }
 
-    const status = await this.checkStatus(this.currentDevicePath)
-    if (status !== this.currentDeviceStatus) {
-      this.currentDeviceStatus = status;
+    const status = await this.checkStatus(this.currentDevice.path)
+    if (status !== this.currentDevice.status) {
+      this.currentDevice.status = status;
       await this.pushDeviceUpdate();
     }
     this.intervalId = setInterval(() => {
@@ -63,12 +66,11 @@ export class HwServer {
   }
 
   async checkStatus(path) {
-    const device = await this.getDeviceByPath(path);
     if (!path) {
-      return null;
+      return DEVICE_STATUS.DISCONNECTED;
     }
-    return manufacturers[device.manufacturer].checkLiskAppStatus({
-      transporter: this.transports[device.manufacturer],
+    return manufacturers[this.currentDevice.manufacturer].checkLiskAppStatus({
+      transporter: this.transports[this.currentDevice.manufacturer],
       path,
     })
   }
@@ -83,8 +85,11 @@ export class HwServer {
     this.transports[name] = transport;
   }
 
-  async selectDevice({ path }) {
-    this.currentDevicePath = path;
+  async selectDevice({ path, manufacturer }) {
+    this.currentDevice = {
+      path,
+      manufacturer
+    };
     await this.statusListener()
     await this.pushDeviceUpdate();
   }
@@ -112,10 +117,10 @@ export class HwServer {
    * @returns {promise} device found or undefined
    */
   getCurrentDevice() {
-    const device = this.getDeviceByPath(this.currentDevicePath);
+    const device = this.getDeviceByPath(this.currentDevice.path);
     return {
       ...device,
-      status: this.currentDeviceStatus,
+      status: this.currentDevice.status,
     };
   }
 
