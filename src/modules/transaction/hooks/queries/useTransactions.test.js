@@ -1,8 +1,10 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import client from 'src/utils/api/client';
 import { mockTransactions } from '@transaction/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { LIMIT as defaultLimit } from 'src/const/config';
+import * as useCustomInfiniteQuerySpy from '@common/hooks/useCustomInfiniteQuery';
+import { useCustomInfiniteQuery } from '@common/hooks';
 import { useTransactions } from './useTransactions';
 
 jest.useRealTimers();
@@ -65,6 +67,15 @@ describe('useTransactions hook', () => {
     };
 
     expect(result.current.data).toEqual(expectedResponse);
+  });
+
+  it('shouldnt fetch data options.enabled === false', async () => {
+    jest.spyOn(useCustomInfiniteQuerySpy, 'useCustomInfiniteQuery');
+    const options = { enabled: false };
+    renderHook(() => useTransactions({ options }), { wrapper });
+    expect(useCustomInfiniteQuery).toBeCalledWith(
+      expect.objectContaining({ options: { enabled: false } })
+    );
   });
 
   it('fetches data without params correctly when client it created', async () => {
