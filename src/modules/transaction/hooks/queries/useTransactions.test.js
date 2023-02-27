@@ -69,15 +69,6 @@ describe('useTransactions hook', () => {
     expect(result.current.data).toEqual(expectedResponse);
   });
 
-  it('shouldnt fetch data options.enabled === false', async () => {
-    jest.spyOn(useCustomInfiniteQuerySpy, 'useCustomInfiniteQuery');
-    const options = { enabled: false };
-    renderHook(() => useTransactions({ options }), { wrapper });
-    expect(useCustomInfiniteQuery).toBeCalledWith(
-      expect.objectContaining({ options: { enabled: false } })
-    );
-  });
-
   it('fetches data without params correctly when client it created', async () => {
     jest.spyOn(client, 'create').mockImplementation(function () {
       this.socket = null;
@@ -99,5 +90,25 @@ describe('useTransactions hook', () => {
     };
 
     expect(result.current.data).toEqual(expectedResponse);
+  });
+
+  it('should pass enabled === false to useCustomInfiniteQuery when enabled is set to false', async () => {
+    jest.resetAllMocks();
+    jest.spyOn(useCustomInfiniteQuerySpy, 'useCustomInfiniteQuery');
+    const options = { enabled: false };
+    renderHook(() => useTransactions({ options }), { wrapper });
+    expect(useCustomInfiniteQuery).toBeCalledWith(
+      expect.objectContaining({ options: { enabled: false } })
+    );
+  });
+
+  it('should pass enabled === false to useCustomInfiniteQuery when enabled is set to false but getUpdate is set to true', async () => {
+    jest.resetAllMocks();
+    jest.spyOn(useCustomInfiniteQuerySpy, 'useCustomInfiniteQuery');
+    const configuration = { options: { enabled: false }, getUpdate: true };
+    renderHook(() => useTransactions(configuration), { wrapper });
+    expect(useCustomInfiniteQuery).toBeCalledWith(
+      expect.objectContaining({ options: { enabled: false } })
+    );
   });
 });
