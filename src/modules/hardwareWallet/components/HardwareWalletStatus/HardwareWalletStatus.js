@@ -1,9 +1,9 @@
 import React from 'react';
-import Tooltip from 'src/theme/Tooltip';
+import Tooltip from '@theme/Tooltip';
 import { useTranslation } from 'react-i18next';
-import Icon from 'src/theme/Icon';
-import { DEVICE_STATUS } from '@libs/hwServer/constants';
-import styles from './hardwareWallet.css';
+import Icon from '@theme/Icon';
+import { useHWStatus } from '@hardwareWallet/hooks/useHWStatus';
+import styles from './HardwareWalletStatus.css';
 
 const Status = ({ status }) => (
   <div className={`${styles.statusWrapper} ${styles[status]}`}>
@@ -11,19 +11,15 @@ const Status = ({ status }) => (
   </div>
 );
 
-const HardwareWallet = () => {
+export const HardwareWalletStatus = () => {
   const { t } = useTranslation();
+  const {manufacturer, model, deviceId, status} = useHWStatus()
 
-  /** @TODO:
-   * actual values should be replaced when the useHWStatus hook is integrated by issue #4768
-   * Also this component should return null when there is no current device connected.
-   */
-  const status = DEVICE_STATUS.STAND_BY;
   const hwStatusInfo = [
-    { label: 'Brand :', value: 'Ledger' },
-    { label: 'Model :', value: 'Nano S' },
-    { label: 'ID :', value: '23233' },
-    { label: 'Status :', value: <Status status={status} /> },
+    { label: `${t('Brand')} : `, value: manufacturer },
+    { label: `${t('Model')} : `, value: model },
+    { label: `${t('ID')} : `, value: deviceId },
+    { label: `${t('Status')} : `, value: <Status status={status} /> },
   ];
 
   return (
@@ -55,4 +51,3 @@ const HardwareWallet = () => {
   );
 };
 
-export default HardwareWallet;

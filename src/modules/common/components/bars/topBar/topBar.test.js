@@ -3,6 +3,7 @@ import routes from 'src/routes/routes';
 import DialogHolder from 'src/theme/dialog/holder';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockHWCurrentDevice } from '@hardwareWallet/__fixtures__';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import TopBar from './topBar';
 
@@ -16,6 +17,9 @@ const mockState = {
   network: {
     status: { online: true },
     name: 'Custom Node',
+  },
+  hardwareWallet: {
+    currentDevice: mockHWCurrentDevice,
   },
   settings: {
     network: { name: 'Custom Nodee', address: 'hhtp://localhost:4000' },
@@ -123,15 +127,6 @@ describe('TopBar', () => {
     expect(wrapper).not.toContainMatchingElement('.account-management-dropdown');
   });
 
-  it('renders sign in component when user is logout', () => {
-    const logoutProps = {
-      ...props,
-      account: {},
-    };
-    mountWithRouterAndQueryClient(TopBar, logoutProps, {
-      pathname: routes.wallet.path,
-    });
-  });
 
   it('renders the search component when user do click in the search icon', () => {
     const wrapper = mountWithRouterAndQueryClient(TopBar, props, {

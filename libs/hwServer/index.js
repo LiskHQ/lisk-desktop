@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { publish, subscribe } from './utils';
-import { IPC_MESSAGES, FUNCTION_TYPES, METHOD_NAMES } from './constants';
+import { DEVICE_STATUS, FUNCTION_TYPES, IPC_MESSAGES, METHOD_NAMES } from './constants';
 import manufacturers from './manufacturers';
 
 export class HwServer {
@@ -8,7 +8,12 @@ export class HwServer {
     this.transports = transports;
     this.pubSub = pubSub;
     this.devices = [];
-    this.currentDeviceId = null;
+    this.currentDevice = {
+      path: null,
+      status: DEVICE_STATUS.DISCONNECTED,
+      manufacturer: null
+    };
+    this.intervalId = null;
   }
 
   listening() {
@@ -34,7 +39,7 @@ export class HwServer {
     subscribe(receiver, {
       event: IPC_MESSAGES.HW_COMMAND,
       action: async ({ action, data }) => {
-        const device = this.getDeviceById(this.currentDeviceId);
+        const device = this.getCurrentDevice();
         const functionName = FUNCTION_TYPES[action];
         const manufactureName = device.manufacturer;
         return manufacturers[manufactureName][functionName](this.transports[manufactureName], {
@@ -45,13 +50,29 @@ export class HwServer {
     });
   }
 
-  async checkLedger() {
-    const device = this.getDeviceById(this.currentDeviceId);
-    const devices = await manufacturers[device.manufacturer].checkIfInsideLiskApp({
-      transporter: this.transports[device.manufacturer],
-      device,
-    });
-    this.updateDevice(devices);
+  async statusListener() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+
+    const status = await this.checkStatus(this.currentDevice.path)
+    if (status !== this.currentDevice.status) {
+      this.currentDevice.status = status;
+      await this.pushDeviceUpdate();
+    }
+    this.intervalId = setInterval(() => {
+      this.statusListener()
+    }, 1000);
+  }
+
+  async checkStatus(path) {
+    if (!path) {
+      return DEVICE_STATUS.DISCONNECTED;
+    }
+    return manufacturers[this.currentDevice.manufacturer].checkLiskAppStatus({
+      transporter: this.transports[this.currentDevice.manufacturer],
+      path,
+    })
   }
 
   /**
@@ -64,10 +85,13 @@ export class HwServer {
     this.transports[name] = transport;
   }
 
-  async selectDevice({ id }) {
-    this.currentDeviceId = id;
-    this.deviceUpdate(id);
-    return this.currentDeviceId;
+  async selectDevice({ path, manufacturer }) {
+    this.currentDevice = {
+      path,
+      manufacturer
+    };
+    await this.statusListener()
+    await this.pushDeviceUpdate();
   }
 
   /**
@@ -83,20 +107,33 @@ export class HwServer {
    * @param {string} id - Id of device
    * @returns {promise} device found or undefined
    */
-  getDeviceById(id) {
-    return this.devices.find((d) => d.deviceId === id);
+  getDeviceByPath(path) {
+    return this.devices.find((d) => d.path === path);
+  }
+
+  /**
+   * Return the device with matching ID
+   * @param {string} id - Id of device
+   * @returns {promise} device found or undefined
+   */
+  getCurrentDevice() {
+    const device = this.getDeviceByPath(this.currentDevice.path);
+    return {
+      ...device,
+      status: this.currentDevice.status,
+    };
   }
 
   /**
    * Remove a specific hwWallet from the manager
    * @param {string} path - Path of hWWallet that should be removed
    */
-  removeDevice(path) {
+  async removeDevice(path) {
     const { sender } = this.pubSub;
-    const device = this.devices.find((d) => d.path === path);
+    const removedDevice = await this.getDeviceByPath(path);
     this.devices = this.devices.filter((d) => d.path !== path);
-    this.syncDevices();
-    publish(sender, { event: IPC_MESSAGES.HW_DISCONNECTED, payload: { model: device.model } });
+    await this.pushDevicesListChange();
+    publish(sender, { event: IPC_MESSAGES.HW_DISCONNECTED, payload: removedDevice });
   }
 
   /**
@@ -107,10 +144,13 @@ export class HwServer {
    * @param {string} device.model
    * @param {string} device.path
    */
-  addDevice(device) {
+  async addDevice(device) {
     const { sender } = this.pubSub;
     this.devices.push(device);
-    this.syncDevices();
+    await this.pushDevicesListChange();
+    if (this.devices.length === 1) {
+      await this.selectDevice(device);
+    }
     publish(sender, {
       event: IPC_MESSAGES.HW_CONNECTED,
       payload: { model: device.model, devices: this.devices },
@@ -118,37 +158,26 @@ export class HwServer {
   }
 
   /**
-   * Update device on devices list based on the path
-   * @param {Object} device - Device object containing (deviceId, model, label, path)
-   * @param {string} device.deviceId
-   * @param {string} device.label
-   * @param {string} device.model
-   * @param {string} device.path
-   */
-  updateDevice(device) {
-    this.devices = this.devices.map((d) => (d.path === device.path ? device : d));
-    this.syncDevices();
-  }
-
-  /**
    * Publish event through sender with deviceList
    */
-  async syncDevices() {
+  async pushDevicesListChange() {
     const { sender } = this.pubSub;
+    const devices = await this.getDevices();
     publish(sender, {
       event: IPC_MESSAGES.DEVICE_LIST_CHANGED,
-      payload: await this.getDevices(),
+      payload: devices,
     });
   }
 
   /**
    * Publish event through sender with deviceId
    */
-  deviceUpdate(deviceId) {
+  async pushDeviceUpdate() {
     const { sender } = this.pubSub;
+    const currentDevice = this.getCurrentDevice();
     publish(sender, {
       event: IPC_MESSAGES.DEVICE_UPDATE,
-      payload: { deviceId },
+      payload: currentDevice,
     });
   }
 

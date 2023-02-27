@@ -156,10 +156,10 @@ const signMessage = (transporter, { device, data }) => {
   });
 };
 
-const checkIfInsideLiskApp = async ({ device }) => device;
+const checkLiskAppStatus = async ({ device }) => device;
 
 export default {
-  checkIfInsideLiskApp,
+  checkLiskAppStatus,
   getAddress,
   getPublicKey,
   listener,

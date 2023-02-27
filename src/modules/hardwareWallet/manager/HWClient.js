@@ -26,6 +26,6 @@ export class HWClient {
   }
 
   subscribe(event, cb) {
-    this.ipc.on(event, cb);
+    this.ipc?.on(event, cb);
   }
 }

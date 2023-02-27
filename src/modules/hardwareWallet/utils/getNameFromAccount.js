@@ -1,11 +1,11 @@
-export const getNameFromAccount = (address, settings, deviceId) => {
+export const getNameFromAccount = (address, settings, model) => {
   const { hardwareAccounts } = settings;
-
-  if (Array.isArray(hardwareAccounts[deviceId])) {
-    const storedAccount = hardwareAccounts[deviceId].filter(
-      (account) => account.address === address
-    );
-    return storedAccount.length ? storedAccount[0].name : null;
+  const accounts = hardwareAccounts[model];
+  try {
+    const { name } = accounts.find((account) => account.address === address);
+    return name;
+  } catch (e) {
+    return null;
   }
-  return null;
+
 };
