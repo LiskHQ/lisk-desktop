@@ -156,7 +156,7 @@ const TxSignatureCollector = ({
     return <HWReconnect />;
   }
 
-  const hwDeviceName = `${sender.hw?.brand.toLowerCase()}${sender.hw?.model.split(' ')[0]}`;
+  const hwDeviceName = `${sender?.hw?.brand.toLowerCase()}${sender?.hw?.model.split(' ')[0]}`;
 
   return (
     <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
@@ -164,7 +164,7 @@ const TxSignatureCollector = ({
         <Illustration name={hwDeviceName} />
         <h5>
           {t('Please confirm the transaction on your {{deviceModel}}', {
-            deviceModel: sender.hw?.model,
+            deviceModel: sender?.hw?.model,
           })}
         </h5>
       </BoxContent>
