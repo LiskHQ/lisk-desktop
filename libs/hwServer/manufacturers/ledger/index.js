@@ -23,7 +23,6 @@ const addDevice = (device, path, { add }) => {
     model: device.productName,
     path,
     manufacturer: LEDGER.name,
-    status: DEVICE_STATUS.STAND_BY,
   };
 
   devices.push(newDevice);
@@ -72,26 +71,28 @@ const getLedgerAccount = (index = 0) => {
 };
 
 /**
- * checkIfInsideLiskApp - function - Validate if after using the pin to unblock ledger device
+ * checkLiskAppStatus - function - Validate if after using the pin to unblock ledger device
  * the user is inside the LSK App, if not then will show the device as connected but not
  * able to get accounts from the device.
  * @param {object} param - Object with 2 elements, a transport and device.
  * @param {object} param.transporter - Object for handle the ledger device.
  * @param {object} param.device - Object with device information.
  */
-const checkIfInsideLiskApp = async ({ transporter, device }) => {
+// eslint-disable-next-line max-statements
+const checkLiskAppStatus = async ({ transporter, path }) => {
   let transport;
+  let status
   try {
-    transport = await transporter.open(device.path);
+    transport = await transporter.open(path);
     const liskLedger = new LiskApp(transport);
-    const ledgerAccount = getLedgerAccount();
-    const account = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
-    device.status = account ? DEVICE_STATUS.CONNECTED : DEVICE_STATUS.DISCONNECTED;
+    const ledgerAccount = getLedgerAccount(0);
+    const { pubKey } = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
+    status = pubKey ? DEVICE_STATUS.CONNECTED : DEVICE_STATUS.STAND_BY;
   } catch (e) {
-    device.status = DEVICE_STATUS.DISCONNECTED;
+    status = DEVICE_STATUS.DISCONNECTED;
   }
   if (transport) transport.close();
-  return device;
+  return status;
 };
 
 // eslint-disable-next-line max-statements
@@ -166,7 +167,7 @@ const signMessage = async (transporter, { device, data }) => {
 };
 
 export default {
-  checkIfInsideLiskApp,
+  checkLiskAppStatus,
   getAddress,
   getPublicKey,
   listener,

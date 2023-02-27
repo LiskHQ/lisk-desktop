@@ -1,10 +1,10 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { hwAccounts } from '../__fixtures__/hwAccounts';
+import { mockHWAccounts } from '../__fixtures__';
 import useHWAccounts from './useHWAccounts';
 
 const mockState = {
   hardwareWallet: {
-    accounts: hwAccounts,
+    accounts: mockHWAccounts,
   },
 };
 
@@ -15,6 +15,6 @@ jest.mock('react-redux', () => ({
 describe('useHWAccounts', () => {
   const { result } = renderHook(() => useHWAccounts());
   it('returns the list of hardware wallet accounts', () => {
-    expect(result.current.accounts).toEqual(hwAccounts);
+    expect(result.current.accounts).toEqual(mockHWAccounts);
   });
 });

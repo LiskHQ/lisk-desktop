@@ -1,2 +1,3 @@
-export * from './mockDevices';
-export * from './mockAccounts';
+export * from './mockHWDevices';
+export * from './mockHWAccounts';
+export * from './mockHWCurrentDevice';

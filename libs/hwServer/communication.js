@@ -100,7 +100,7 @@ const signMessage = async (data) => {
  * @param {string} data.id -> Id of the hw device
  */
 const checkIfInsideLiskApp = async data => (
-  executeCommand(IPC_MESSAGES.CHECK_LEDGER, data)
+  executeCommand(IPC_MESSAGES.CHECK_STATUS, data)
 );
 
 /**

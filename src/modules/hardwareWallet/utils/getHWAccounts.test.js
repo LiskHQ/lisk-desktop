@@ -1,12 +1,11 @@
 import { useSelector } from 'react-redux';
 import { getCheckInitializedAccount } from 'src/modules/account/utils/getCheckInitializedAccount';
-import { hwAccounts } from '../__fixtures__/hwAccounts';
+import { mockHWAccounts, mockHWCurrentDevice } from '../__fixtures__';
 import { getHWAccounts } from './getHWAccounts';
 import { getNameFromAccount } from './getNameFromAccount';
 
 jest.useRealTimers();
 
-const mockHWAccounts = hwAccounts;
 const mockGetCheckInitializedAccount = getCheckInitializedAccount;
 
 jest.mock('@liskhq/lisk-client', () => ({
@@ -39,7 +38,7 @@ describe('getHWAccounts', () => {
     const mockAppState = {
       settings: {
         hardwareAccounts: {
-          20231: [
+          [mockHWCurrentDevice.model]: [
             {
               address: 'lskdgtenb76rf93bzd56cqn6ova46wfvoesbk4hnd',
               name: 'masoud123',
@@ -54,7 +53,7 @@ describe('getHWAccounts', () => {
     };
     useSelector.mockImplementation((callback) => callback(mockAppState));
 
-    expect(await getHWAccounts(getNameFromAccount, mockAppState.settings, 20231)).toEqual(
+    expect(await getHWAccounts({getName: (address, device) => getNameFromAccount(address, mockAppState.settings, device), device: mockHWCurrentDevice})).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           metadata: expect.objectContaining({

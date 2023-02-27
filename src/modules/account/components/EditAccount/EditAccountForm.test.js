@@ -1,12 +1,11 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { hwAccounts } from 'src/modules/hardwareWallet/__fixtures__/hwAccounts';
+import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
 import { settingsUpdated } from 'src/redux/actions';
 import { useCurrentAccount } from '@account/hooks/useCurrentAccount';
 import EditAccountForm from './EditAccountForm';
 
-const mockHWAccounts = hwAccounts;
 const mockDispatch = jest.fn();
 const mockSelector = {
   settings: {
@@ -87,7 +86,7 @@ describe('Edit account', () => {
   });
 
   it('allows for editing hardware wallet account name', async () => {
-    useCurrentAccount.mockReturnValue([hwAccounts[0], jest.fn()]);
+    useCurrentAccount.mockReturnValue([mockHWAccounts[0], jest.fn()]);
     renderWithRouter(EditAccountForm, props);
 
     const updatedAccountName = 'updated_hw_account';
@@ -100,7 +99,7 @@ describe('Edit account', () => {
     });
     expect(mockDispatch).toHaveBeenCalledTimes(2);
     expect(mockDispatch).toHaveBeenCalledWith(
-      settingsUpdated(expect.objectContaining({ hardwareAccounts: { 'Nano S': [hwAccounts[0]] } }))
+      settingsUpdated(expect.objectContaining({ hardwareAccounts: { 'Nano S': [mockHWAccounts[0]] } }))
     );
   });
 });
