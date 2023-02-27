@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertToDenom } from '@token/fungible/utils/lsk';
 import { Input } from 'src/theme';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
@@ -40,6 +40,7 @@ const AmountField = ({
   name,
   displayConverter,
   useMaxWarning,
+  token,
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
@@ -49,7 +50,7 @@ const AmountField = ({
     e.preventDefault();
     setIsMaximum(true);
     const value = formatAmountBasedOnLocale({
-      value: fromRawLsk(maxAmount.value),
+      value: convertToDenom(maxAmount.value, token),
       format: '0.[00000000]',
     });
     onChange({ value }, maxAmount);
@@ -76,7 +77,7 @@ const AmountField = ({
   useEffect(() => {
     if (isMaximum) {
       const value = formatAmountBasedOnLocale({
-        value: fromRawLsk(maxAmount.value),
+        value: convertToDenom(maxAmount.value),
         format: '0.[00000000]',
       });
       onChange({ value }, maxAmount);
@@ -122,7 +123,7 @@ const AmountField = ({
               <span>
                 {t(
                   'Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK',
-                  { maxAmount: fromRawLsk(maxAmount.value) },
+                  { maxAmount: convertToDenom(maxAmount.value) },
                 )}
               </span>
             </Tooltip>

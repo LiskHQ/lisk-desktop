@@ -42,6 +42,22 @@ export const toRawLsk = (value) => {
 };
 
 /**
+ * Converts a given token amount to its token symbol denom
+ *
+ * @param {BigNumber|number} amount - Amount value to be converted
+ * @param {BigNumber|number} token - Token value merged with its equivalent metadata
+ * @returns {BigNumber} Amount value converted to the token symbol's denom
+ */
+ export const convertToDenom = (amount, token = {}) => {
+  const { decimals } =
+    token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
+
+  if (!decimals) return '0';
+
+  return new BigNumber(amount || 0).dividedBy(new BigNumber(BASE).pow(decimals)).toFixed();
+};
+
+/**
  * After a new block is created and broadcasted
  * it takes a few ms for Lisk Service
  * to update transactions index, so we need to wait

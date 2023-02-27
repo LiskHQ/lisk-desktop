@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Tooltip from 'src/theme/Tooltip';
 import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertToDenom } from '@token/fungible/utils/lsk';
 import { useDeprecatedAccount } from '@account/hooks';
 import { useGetInitializationFees } from '@auth/hooks/queries';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
@@ -52,7 +52,7 @@ const AccountsComparison = ({ t }) => {
           <li className={`${styles.step} ${hasAccountInitialized ? styles.check : styles.green}`}>
             <div>
               {t('Deposit at least {{amount}} LSK to your new account', {
-                amount: fromRawLsk(extraCommandFee),
+                amount: convertToDenom(extraCommandFee, wallet.token?.[0]),
               })}
               <Tooltip position="right" size="m">
                 <>

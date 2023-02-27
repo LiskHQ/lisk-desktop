@@ -262,6 +262,7 @@ const SendForm = (props) => {
             </div>
             <AmountField
               amount={amount}
+              token={token}
               onChange={setAmountField}
               maxAmount={maxAmount}
               displayConverter

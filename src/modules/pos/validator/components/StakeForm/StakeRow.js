@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+/* eslint-disable max-statements */
+import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { stakeEdited, stakeDiscarded } from 'src/redux/actions';
 import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
@@ -15,9 +16,9 @@ import AmountField from 'src/modules/common/components/amountField';
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import styles from './stakeForm.css';
 import { convertCommissionToPercentage } from '../../utils';
+import { usePosConstants } from '../../hooks/queries';
 
 const componentState = Object.freeze({ editing: 1, notEditing: 2 });
-const token = tokenMap.LSK.key;
 
 const StakeRow = ({
   t = (s) => s,
@@ -31,6 +32,13 @@ const StakeRow = ({
   const dispatch = useDispatch();
   const [stakeAmount, setStakeAmount] = useStakeAmountField(fromRawLsk(unconfirmed));
   const truncatedAddress = truncateAddress(address);
+
+  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
+  const { data: tokens } = useTokensBalance({
+    config: { params: { tokenID: posConstants?.data?.posTokenID, address } },
+    options: { enabled: !isGettingPosConstants },
+  });
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
@@ -77,10 +85,10 @@ const StakeRow = ({
           <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
             {!!confirmed && (
               <span className={`${styles.oldAmountColumn}`}>
-                <TokenAmount val={confirmed} token={token} />
+                <TokenAmount val={confirmed} token={token.symbol} />
               </span>
             )}
-            {!!unconfirmed && <TokenAmount val={unconfirmed} token={token} />}
+            {!!unconfirmed && <TokenAmount val={unconfirmed} token={token.symbol} />}
           </span>
           <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
             <span onClick={changeToEditingMode}>
@@ -97,6 +105,7 @@ const StakeRow = ({
           onSubmit={handleFormSubmission}
         >
           <AmountField
+            token={token}
             amount={stakeAmount}
             onChange={setStakeAmount}
             displayConverter={false}

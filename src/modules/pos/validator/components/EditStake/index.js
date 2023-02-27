@@ -195,6 +195,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 </p>
 
                 <AmountField
+                  token={token}
                   amount={stakeAmount}
                   onChange={setStakeAmount}
                   maxAmount={{ value: maxAmount }}
