@@ -24,16 +24,18 @@ function AccountRow({ account, onSelect, onRemove, truncate }) {
           <b className={`${styles.addressValue}`}>
             <span>{name}</span> {isHW && <Icon name="hardwareWalletIcon" />}
           </b>
-          {!(isHW && isNew) ? null : (<div>
-            <span className={styles.new}>{t('New')}</span>
-            <Tooltip
-              size="m"
-              tooltipClassName={`${styles.tooltipContainer}`}
-              position="left"
-            >
-              <p>{t('Transfer tokens to the uninitialized new account to utilize all the wallet features. At any given time, only one uninitialized account can be created.')}</p>
-            </Tooltip>
-          </div>)}
+          {!(isHW && isNew) ? null : (
+            <div>
+              <span className={styles.new}>{t('New')}</span>
+              <Tooltip size="m" tooltipClassName={`${styles.tooltipContainer}`} position="left">
+                <p>
+                  {t(
+                    'Transfer tokens to the uninitialized new account to utilize all the wallet features. At any given time, only one uninitialized account can be created.'
+                  )}
+                </p>
+              </Tooltip>
+            </div>
+          )}
         </div>
         <p className={`${styles.addressValue}`}>{truncate ? truncateAddress(address) : address}</p>
       </div>
