@@ -8,6 +8,27 @@
   opacity: 0.8;
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.new {
+  background-color: var(--color-ultramarine-blue);
+  padding: 2px 8px;
+  border-radius: 2.5px;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+}
+
+.tooltipContainer {
+  white-space: normal;
+  width: 230px;
+  word-wrap: break-word;
+}
+
 .accountWrapper {
   width: 100%;
   display: flex;

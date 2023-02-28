@@ -24,6 +24,7 @@ export const getHWAccounts = async ({
           name: 'New account',
           path: '',
           isHW: true,
+          isNew: true,
           creationTime: new Date().toISOString(),
         },
       });
