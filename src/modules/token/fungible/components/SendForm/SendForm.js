@@ -19,7 +19,7 @@ import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
 import { useTransferableTokens } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
-import { getLogo } from '../../utils/service';
+import { getLogo } from '../../utils/helpers';
 import styles from './form.css';
 import MessageField from '../MessageField';
 
