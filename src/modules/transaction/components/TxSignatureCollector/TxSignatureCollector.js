@@ -33,14 +33,14 @@ const TxSignatureCollector = ({
   selectedPriority,
   confirmText,
 }) => {
-  const [sender] = useCurrentAccount();
+  const [currentAccount] = useCurrentAccount();
   const { moduleCommandSchemas } = useCommandSchema();
   const { t } = useTranslation();
   const { status } = useHWStatus();
 
   // here, we want to get the auth account details of the user presently wanting to sign the transaction
   const { data: account, isLoading: isGettingAuthData } = useAuth({
-    config: { params: { address: sender.metadata.address } },
+    config: { params: { address: currentAccount?.metadata.address } },
   });
 
   // here, we want to get the auth account details of the account that initiated the transaction.
@@ -48,7 +48,7 @@ const TxSignatureCollector = ({
     transactionJSON,
   });
 
-  const isTransactionAuthor = transactionJSON.senderPublicKey === sender.metadata.pubkey;
+  const isTransactionAuthor = transactionJSON.senderPublicKey === currentAccount?.metadata.pubkey;
   const isAuthorAccountMultisignature =
     [...(account?.data?.mandatoryKeys || []), ...(account?.data?.optionalKeys || [])].length > 0;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
@@ -107,7 +107,7 @@ const TxSignatureCollector = ({
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) =>
-    txVerification(privateKey, sender.metadata.pubkey);
+    txVerification(privateKey, currentAccount?.metadata.pubkey);
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {
@@ -119,24 +119,24 @@ const TxSignatureCollector = ({
       //   transactionDoubleSigned(moduleCommandSchemas);
       //   return;
       // }
-      nextStep({ formProps, transactionJSON, statusInfo, sender });
+      nextStep({ formProps, transactionJSON, statusInfo, sender: currentAccount });
       return;
     }
 
     if (transactions.txSignatureError) {
-      nextStep({ formProps, transactionJSON, statusInfo, sender });
+      nextStep({ formProps, transactionJSON, statusInfo, sender: currentAccount });
     }
 
     if (
       isEmpty(transactions.signedTransaction) &&
       !transactions.txSignatureError &&
-      !sender.encryptedPassphrase
+      !currentAccount?.encryptedPassphrase
     ) {
-      txVerification('', sender.metadata.pubkey);
+      txVerification('', currentAccount?.metadata.pubkey);
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
-  if (!sender.metadata.isHW) {
+  if (!currentAccount?.metadata.isHW) {
     return (
       <div className={styles.container}>
         <TertiaryButton className={styles.backButton} onClick={prevStep}>
@@ -156,7 +156,7 @@ const TxSignatureCollector = ({
     return <HWReconnect />;
   }
 
-  const hwDeviceName = `${sender?.hw?.brand.toLowerCase()}${sender?.hw?.model.split(' ')[0]}`;
+  const hwDeviceName = `${currentAccount?.hw?.brand.toLowerCase()}${currentAccount?.hw?.model.split(' ')[0]}`;
 
   return (
     <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
@@ -164,7 +164,7 @@ const TxSignatureCollector = ({
         <Illustration name={hwDeviceName} />
         <h5>
           {t('Please confirm the transaction on your {{deviceModel}}', {
-            deviceModel: sender?.hw?.model,
+            deviceModel: currentAccount?.hw?.model,
           })}
         </h5>
       </BoxContent>
