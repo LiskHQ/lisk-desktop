@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop, max-statements */
 import HWManager from '@hardwareWallet/manager/HWManager';
-import { cryptography } from '@liskhq/lisk-client';
+import { extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
 import { getCheckInitializedAccount } from '@account/utils/getCheckInitializedAccount';
 
 export const getHWAccounts = async ({
@@ -11,7 +11,7 @@ export const getHWAccounts = async ({
   let accountIndex = 0;
   while (true) {
     const pubkey = await HWManager.getPublicKey(accountIndex);
-    const address = cryptography.address.getAddressFromPublicKey(Buffer.from(pubkey, 'hex'));
+    const address = extractAddressFromPublicKey(pubkey);
     const config = { params: { address } };
     const isInitialized = await getCheckInitializedAccount({ config });
     if (!isInitialized) {
