@@ -69,7 +69,7 @@ describe('BlockchainApplicationDetails', () => {
 
   it('should invoke togglePin', () => {
     fireEvent.click(screen.getByTestId('pin-button'));
-    expect(mockTogglePin).toHaveBeenCalledWith('test-chain-id');
+    expect(mockTogglePin).toHaveBeenCalledWith('00000001');
   });
 
   it('should show application as unpinned', () => {
@@ -91,7 +91,7 @@ describe('BlockchainApplicationDetails', () => {
   it('should remove blockchain application', () => {
     fireEvent.click(screen.getByText('Remove application now'));
     expect(props.nextStep).toHaveBeenCalledWith(
-      expect.objectContaining({ application: props.application.data })
+      expect.objectContaining({ application: props.application })
     );
   });
 });
