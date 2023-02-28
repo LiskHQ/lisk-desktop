@@ -2,7 +2,10 @@ import moment from 'moment';
 import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { usePinBlockchainApplication, useApplicationManagement } from '@blockchainApplication/manage/hooks';
+import {
+  usePinBlockchainApplication,
+  useApplicationManagement,
+} from '@blockchainApplication/manage/hooks';
 import RemoveApplicationDetails from '.';
 
 const mockedPins = ['1111'];
@@ -25,7 +28,7 @@ useApplicationManagement.mockReturnValue({
 describe('BlockchainApplicationDetails', () => {
   const props = {
     location: {
-      search: 'chainId=test-chain-id',
+      search: 'chainId=00000001',
     },
     application: {
       data: mockBlockchainApplications[0],
@@ -43,9 +46,8 @@ describe('BlockchainApplicationDetails', () => {
   });
 
   it('should display properly', () => {
-    const {
-      chainName, address, state, lastCertificateHeight, lastUpdated,
-    } = mockBlockchainApplications[0];
+    const { chainName, address, state, lastCertificateHeight, lastUpdated } =
+      mockBlockchainApplications[0];
 
     expect(screen.getByText(chainName)).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
@@ -71,13 +73,11 @@ describe('BlockchainApplicationDetails', () => {
   });
 
   it('should show application as unpinned', () => {
-    usePinBlockchainApplication.mockReturnValue(
-      {
-        togglePin: mockTogglePin,
-        pins: mockedPins,
-        checkPinByChainId: jest.fn().mockReturnValue(false),
-      },
-    );
+    usePinBlockchainApplication.mockReturnValue({
+      togglePin: mockTogglePin,
+      pins: mockedPins,
+      checkPinByChainId: jest.fn().mockReturnValue(false),
+    });
 
     renderWithRouter(RemoveApplicationDetails, props);
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
@@ -90,7 +90,8 @@ describe('BlockchainApplicationDetails', () => {
 
   it('should remove blockchain application', () => {
     fireEvent.click(screen.getByText('Remove application now'));
-    expect(props.nextStep)
-      .toHaveBeenCalledWith(expect.objectContaining({ application: props.application }));
+    expect(props.nextStep).toHaveBeenCalledWith(
+      expect.objectContaining({ application: props.application.data })
+    );
   });
 });

@@ -74,7 +74,7 @@ const RemoveApplicationDetails = ({ location, application, onCancel, nextStep })
         <Box className={styles.headerContainer}>
           <p>{t('Remove application')}</p>
           <div>
-            <img src={getLogo(application)} />
+            <img src={getLogo(application.data)} />
           </div>
         </Box>
         <Box className={styles.detailsWrapper}>
