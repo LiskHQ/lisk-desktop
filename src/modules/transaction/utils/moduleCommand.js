@@ -2,12 +2,16 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 
 const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.transfer]: t('Sender'),
+  [MODULE_COMMANDS_NAME_MAP.crossChainTransfer]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.reclaim]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.unlock]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.stake]: t('Staker'),
   [MODULE_COMMANDS_NAME_MAP.registerValidator]: t('Account username'),
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Registrant'),
   [MODULE_COMMANDS_NAME_MAP.reportValidatorMisbehavior]: t('Reporter'),
+  [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim rewards'),
+  [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Edit commission'),
+
 });
 
 const getModuleCommandTitle = (t = str => str) => ({
@@ -19,6 +23,8 @@ const getModuleCommandTitle = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Register multisignature'),
   [MODULE_COMMANDS_NAME_MAP.reportValidatorMisbehavior]: t('Report validator misbehaviour'),
   [MODULE_COMMANDS_NAME_MAP.crossChainTransfer]: t('Cross chain transfer'),
+  [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim rewards'),
+  [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Edit commission'),
 });
 
 const splitModuleAndCommand = (moduleCommand) => moduleCommand.split(':');
