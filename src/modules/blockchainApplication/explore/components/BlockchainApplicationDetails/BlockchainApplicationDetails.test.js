@@ -61,9 +61,9 @@ describe('BlockchainApplicationDetails', () => {
 
   // @todo: Loading and error tests will be handled in #4539
   it('should display properly', () => {
-    const { name, state, lastCertificateHeight, lastUpdated } = mockBlockchainApp.data[0];
+    const { name, status, lastCertificateHeight, lastUpdated } = mockBlockchainApp.data[0];
     expect(screen.getByText(name)).toBeTruthy();
-    expect(screen.getByText(state)).toBeTruthy();
+    expect(screen.getByText(status)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();
     expect(screen.getByText(moment(lastUpdated).format('DD MMM YYYY'))).toBeTruthy();
 

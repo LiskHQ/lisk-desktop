@@ -13,7 +13,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @param {string} [configuration.config.params.chainID] - application chain ID
  * @param {string} [configuration.config.params.name] - application name
  * @param {string} [configuration.config.params.search] - application search string
- * @param {string} [configuration.config.params.state] - application state
+ * @param {string} [configuration.config.params.status] - application status
  * @param {string} [configuration.config.params.isDefault] - default applications filter
  * @param {string} configuration.options - the query options
  *

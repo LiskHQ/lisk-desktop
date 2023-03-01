@@ -42,12 +42,12 @@ describe('BlockchainApplicationFlow', () => {
 
   it('should display properly', () => {
     const {
-      chainName, address, state, lastCertificateHeight, lastUpdated,
+      chainName, address, status, lastCertificateHeight, lastUpdated,
     } = mockManagedApplications[0];
 
     expect(screen.getByText(chainName)).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
-    expect(screen.getByText(state)).toBeTruthy();
+    expect(screen.getByText(status)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();
     expect(screen.getByText(moment(lastUpdated).format('DD MMM YYYY'))).toBeTruthy();
 
