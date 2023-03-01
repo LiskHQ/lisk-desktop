@@ -3,7 +3,7 @@ import DialogLink from 'src/theme/dialog/link';
 import { getLogo } from 'src/redux/actions';
 import Icon from 'src/theme/Icon';
 import Converter from 'src/modules/common/components/converter';
-import { convertFromRawDenom } from 'src/modules/token/fungible/utils/lsk';
+import { convertFromBaseDenom } from 'src/modules/token/fungible/utils/lsk';
 import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import styles from './TokenCard.css';
 
@@ -22,7 +22,7 @@ const TokenCard = ({ lockedBalance, address, token }) => {
       <div>
         <TokenAmount className={styles.tokenAmount} val={availableBalance} token={symbol} />
         {symbol === 'LSK' && (
-          <Converter className={styles.fiatBalance} value={convertFromRawDenom(availableBalance, token)} />
+          <Converter className={styles.fiatBalance} value={convertFromBaseDenom(availableBalance, token)} />
         )}
         {!lockedBalance ? null : (
           <DialogLink

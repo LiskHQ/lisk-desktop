@@ -5,7 +5,7 @@ import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 
 import { stakeEdited, stakeDiscarded } from 'src/redux/actions';
 import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
-import { convertFromRawDenom, convertToRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Box from '@theme/box';
@@ -37,7 +37,7 @@ const StakeRow = ({
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
-  const [stakeAmount, setStakeAmount] = useStakeAmountField(convertFromRawDenom(unconfirmed, token));
+  const [stakeAmount, setStakeAmount] = useStakeAmountField(convertFromBaseDenom(unconfirmed, token));
   const truncatedAddress = truncateAddress(address);
 
 
@@ -47,7 +47,7 @@ const StakeRow = ({
       stakeEdited([
         {
           address,
-          amount: convertToRawDenom(stakeAmount.value, token),
+          amount: convertToBaseDenom(stakeAmount.value, token),
         },
       ])
     );

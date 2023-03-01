@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 
 import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
-import { convertFromRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Tooltip from 'src/theme/Tooltip';
@@ -69,7 +69,7 @@ export const ValidatorWeight = () => {
     token,
   } = useContext(ValidatorRowContext);
   const formatted = formatAmountBasedOnLocale({
-    value: convertFromRawDenom(validatorWeight, token),
+    value: convertFromBaseDenom(validatorWeight, token),
     format: '0a',
   });
 
@@ -112,7 +112,7 @@ export const ValidatorDetails = () => {
     activeTab === 'watched';
   const [key, val] = getValidatorStatus(status, totalStakeReceived);
   const formattedStakeWeight = formatAmountBasedOnLocale({
-    value: convertFromRawDenom(validatorWeight, token),
+    value: convertFromBaseDenom(validatorWeight, token),
     format: '0a',
   });
 

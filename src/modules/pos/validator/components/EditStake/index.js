@@ -7,7 +7,7 @@ import {
   removeThenAppendSearchParamsToUrl,
 } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
-import { convertFromRawDenom, convertToRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useCommandSchema } from '@network/hooks';
 import Dialog from 'src/theme/dialog/dialog';
@@ -102,7 +102,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   }, [sentStakes, address, staking]);
 
   const [stakeAmount, setStakeAmount, isGettingPosToken] = useStakeAmountField(
-    convertFromRawDenom(staking[address]?.unconfirmed || validatorStake?.amount || 0, token)
+    convertFromBaseDenom(staking[address]?.unconfirmed || validatorStake?.amount || 0, token)
   );
   const mode = validatorStake || staking[address] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
@@ -131,7 +131,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     stakeEdited([
       {
         validator,
-        amount: convertToRawDenom(stakeAmount.value, token),
+        amount: convertToBaseDenom(stakeAmount.value, token),
       },
     ]);
 
@@ -144,7 +144,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     stakeEdited([
       {
         validator,
-        amount: convertToRawDenom(0),
+        amount: convertToBaseDenom(0),
       },
     ]);
     removeSearchParamsFromUrl(history, ['modal']);

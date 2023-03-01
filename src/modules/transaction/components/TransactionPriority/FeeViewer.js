@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { convertFromRawDenom, convertToRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
 import Input from 'src/theme/Input/Input';
 import Icon from 'src/theme/Icon';
 import Spinner from 'src/theme/Spinner';
@@ -8,13 +8,13 @@ import styles from './TransactionPriority.css';
 
 const isCustomFeeValid = (value, maxFee, minFee, token) => {
   if (!value) return false;
-  const rawValue = convertToRawDenom(parseFloat(value), token);
+  const rawValue = convertToBaseDenom(parseFloat(value), token);
 
   if (rawValue > maxFee) {
     return false;
   }
 
-  return rawValue >= convertToRawDenom(minFee, token);
+  return rawValue >= convertToBaseDenom(minFee, token);
 };
 
 // eslint-disable-next-line max-statements
@@ -80,7 +80,7 @@ const FeesViewer = ({
         onBlur={onInputBlur}
         onFocus={onInputFocus}
         status={!isCustomFeeValid(feeValue, maxFee, minFee, token) ? 'error' : 'ok'}
-        feedback={`fee must be between ${minFee} and ${convertFromRawDenom(maxFee, token)}`}
+        feedback={`fee must be between ${minFee} and ${convertFromBaseDenom(maxFee, token)}`}
       />
     );
   }

@@ -1,11 +1,11 @@
 import { filterIncomingTransactions } from '@transaction/utils/helpers';
-import { convertFromRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import i18n from 'src/utils/i18n/i18n';
 import { toast } from 'react-toastify';
 
 export const showNotificationsForIncomingTransactions = (transactions, account, token) => {
   filterIncomingTransactions(transactions, account).forEach((transaction) => {
-    const amount = convertFromRawDenom(transaction.params.amount, token);
+    const amount = convertFromBaseDenom(transaction.params.amount, token);
 
     if (amount > 0) {
       const message = transaction.params.data

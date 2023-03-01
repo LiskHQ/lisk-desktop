@@ -8,7 +8,7 @@ import BoxContent from 'src/theme/box/content';
 import BoxRow from 'src/theme/box/row';
 import Icon from 'src/theme/Icon';
 import Converter from 'src/modules/common/components/converter';
-import { convertFromRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import LockedBalanceLink from '@token/fungible/components/BalanceInfo/LockedBalanceLink';
 import Skeleton from '@common/components/skeleton';
@@ -40,7 +40,7 @@ const WalletDetails = ({ t, tokens, className, isWalletRoute, isLoading }) => (
                     <div>
                       <Converter
                         className={styles.fiatValue}
-                        value={convertFromRawDenom(token.availableBalance, token)}
+                        value={convertFromBaseDenom(token.availableBalance, token)}
                         error=""
                       />
                     </div>

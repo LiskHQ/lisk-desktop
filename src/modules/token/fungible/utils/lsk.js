@@ -41,20 +41,11 @@ export const toRawLsk = (value) => {
   return new BigNumber(amount * new BigNumber(10).pow(8)).decimalPlaces(0).toNumber();
 };
 
-/**
- * Converts a given token amount to its token symbol denom
- *
- * @param {BigNumber|number} amount - Amount value to be converted
- * @param {BigNumber|number} token - Token value merged with its equivalent metadata
- * @returns {BigNumber} Amount value converted to the token symbol's denom
- */
- export const convertFromRawDenom = (amount, token = {}) => {
+const getTokenDecimals = (token) => {
   const { decimals } =
     token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
 
-  if (!decimals) return '0';
-
-  return new BigNumber(amount || 0).dividedBy(new BigNumber(BASE).pow(decimals)).toFixed();
+  return decimals
 };
 
 /**
@@ -64,9 +55,23 @@ export const toRawLsk = (value) => {
  * @param {BigNumber|number} token - Token value merged with its equivalent metadata
  * @returns {BigNumber} Amount value converted to the token symbol's denom
  */
- export const convertToRawDenom = (amount, token = {}) => {
-  const { decimals } =
-    token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
+export const convertFromBaseDenom = (amount, token = {}) => {
+  const decimals = getTokenDecimals(token)
+
+  if (!decimals) return '0';
+
+  return new BigNumber(amount || 0).dividedBy(new BigNumber(BASE).pow(decimals)).toFixed();
+};
+
+/**
+ * Converts from denom denoted by the token symobl to a smaller unit
+ *
+ * @param {BigNumber|number} amount - Amount value to be converted
+ * @param {BigNumber|number} token - Token value merged with its equivalent metadata
+ * @returns {BigNumber} Amount value converted from the token symbol's denom
+ */
+export const convertToBaseDenom = (amount, token = {}) => {
+  const decimals = getTokenDecimals(token)
 
   if (!decimals) return '0';
 

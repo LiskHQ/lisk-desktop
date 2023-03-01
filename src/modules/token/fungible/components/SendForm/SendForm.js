@@ -5,7 +5,7 @@ import AmountField from '@common/components/amountField';
 import { useGetInitializationFees, useMessageFee } from '@auth/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
-import { convertToRawDenom, convertFromRawDenom } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom, convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import { maxMessageLength } from '@transaction/configuration/transactions';
@@ -27,7 +27,7 @@ import MessageField from '../MessageField';
 const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
 const getInitialAmount = (rawTx, initialValue, token) =>
   Number(rawTx?.params.amount)
-    ? convertFromRawDenom(rawTx?.params.amount, token)
+    ? convertFromBaseDenom(rawTx?.params.amount, token)
     : initialValue || '';
 const getInitialRecipient = (rawTx, initialValue) =>
   rawTx?.params.recipient.address || initialValue || '';
@@ -135,7 +135,7 @@ const SendForm = (props) => {
     isFormValid,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
-      amount: convertToRawDenom(amount.value, token),
+      amount: convertToBaseDenom(amount.value, token),
       data: reference.value,
       recipient: {
         address: recipient.value,
@@ -153,7 +153,7 @@ const SendForm = (props) => {
   };
   let commandParams = {
     tokenID: token?.tokenID,
-    amount: convertToRawDenom(amount.value, token),
+    amount: convertToBaseDenom(amount.value, token),
     recipientAddress: recipient.value,
     data: reference.value,
   };

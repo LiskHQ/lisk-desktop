@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { convertFromRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { kFormatter } from 'src/utils/helpers';
 import { useCurrentAccount } from '@account/hooks';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
@@ -152,7 +152,7 @@ const Overview = () => {
           (acc, item) => ({
             txCountList: [...acc.txCountList, item.transactionCount],
             txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
-            txVolumeList: [...acc.txVolumeList, convertFromRawDenom(item.volume, token)],
+            txVolumeList: [...acc.txVolumeList, convertFromBaseDenom(item.volume, token)],
           }),
           {
             txCountList: [],

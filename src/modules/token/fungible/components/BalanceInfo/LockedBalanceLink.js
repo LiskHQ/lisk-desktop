@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { convertFromRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import DialogLink from 'src/theme/dialog/link';
 import {
   calculateBalanceLockedInUnstakes,
@@ -22,13 +22,13 @@ const Link = ({ sum, style, icon, isWalletRoute }) => {
       component="lockedBalance"
     >
       <Icon name={icon || 'lock'} />
-      {`${convertFromRawDenom(sum, token)} ${tokenMap.LSK.key}`}
+      {`${convertFromBaseDenom(sum, token)} ${tokenMap.LSK.key}`}
       <Icon name="arrowRightCircle" />
     </DialogLink>
   ) : (
     <div className={`${styles.lockedBalance} ${styles.pointer} ${style}`}>
       <Icon name={icon || 'lock'} />
-      {`${convertFromRawDenom(sum, token)} ${tokenMap.LSK.key}`}
+      {`${convertFromBaseDenom(sum, token)} ${tokenMap.LSK.key}`}
     </div>
   );
 };

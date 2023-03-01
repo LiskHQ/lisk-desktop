@@ -9,7 +9,7 @@ import {
   MODULE_COMMANDS_NAME_MAP,
 } from 'src/modules/transaction/configuration/moduleCommand';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
-import { convertFromRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
 import { getValidators } from '@pos/validator/api';
@@ -250,7 +250,7 @@ export const getTransactionFee = async ({
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
   const cappedFee = Math.min(calculatedFee, maxCommandFee);
-  const feeInLsk = convertFromRawDenom(cappedFee, token);
+  const feeInLsk = convertFromBaseDenom(cappedFee, token);
   const roundedValue = Number(feeInLsk).toFixed(7).toString();
   const feedback = transactionJSON.amount === '' ? '-' : `${roundedValue ? '' : 'Invalid amount'}`;
 

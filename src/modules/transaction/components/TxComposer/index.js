@@ -9,7 +9,7 @@ import { useCurrentAccount } from '@account/hooks';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
-import { convertFromRawDenom, convertToRawDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback, { getMinRequiredBalance } from './Feedback';
@@ -70,7 +70,7 @@ const TxComposer = ({
     if (typeof onComposed === 'function') {
       onComposed({}, formProps, {
         ...transactionJSON,
-        fee: convertToRawDenom(transactionFee, formProps.fields.token),
+        fee: convertToBaseDenom(transactionFee, formProps.fields.token),
       });
     }
   }, [selectedPriority, transactionJSON.params]);
@@ -81,7 +81,7 @@ const TxComposer = ({
     {
       title: 'Transaction',
       value: getFeeStatus({
-        fee: Number(convertFromRawDenom(transactionFee, formProps.fields.token)),
+        fee: Number(convertFromBaseDenom(transactionFee, formProps.fields.token)),
         token,
         customFee,
       }),
@@ -91,7 +91,7 @@ const TxComposer = ({
       title: 'Message',
       value: getFeeStatus({
         fee: Number(
-          convertFromRawDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
+          convertFromBaseDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
         ),
         token,
         customFee,
