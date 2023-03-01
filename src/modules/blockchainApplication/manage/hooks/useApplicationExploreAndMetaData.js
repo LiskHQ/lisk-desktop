@@ -6,7 +6,7 @@ export const useApplicationExploreAndMetaData = ({ appState = 'active' } = {}) =
     data: { data: activeApps = [] } = {},
     isLoading: isLoadingActiveApps,
     error: errorGettingActiveApps,
-  } = useBlockchainApplicationExplore({ config: { params: { state: appState } } });
+  } = useBlockchainApplicationExplore({ config: { params: { status: appState } } });
 
   const activeAppsList = activeApps.map((app) => app.chainID).join();
 

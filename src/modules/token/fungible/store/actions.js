@@ -30,7 +30,7 @@ export const tokensTransferred = (
       transactionJSON,
       wallet,
       schema: moduleCommandSchemas[formProps.moduleCommand],
-      chainID: state.network.networks.LSK.chainID,
+      chainID: formProps.fields.sendingChain.chainID,
       privateKey,
       senderAccount,
     }),
