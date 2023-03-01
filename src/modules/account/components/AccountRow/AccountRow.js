@@ -24,7 +24,7 @@ function AccountRow({ account, onSelect, onRemove, truncate }) {
           <b className={`${styles.addressValue}`}>
             <span>{name}</span> {isHW && <Icon name="hardwareWalletIcon" />}
           </b>
-          {!(isHW && isNew) ? null : (
+          {isHW && isNew && (
             <div>
               <span className={styles.new}>{t('New')}</span>
               <Tooltip size="m" tooltipClassName={`${styles.tooltipContainer}`} position="left">
