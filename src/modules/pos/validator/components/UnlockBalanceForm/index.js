@@ -1,6 +1,8 @@
+/* eslint-disable max-statements */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
@@ -9,12 +11,18 @@ import getUnlockButtonTitle from '../../utils/getUnlockButtonTitle';
 import useUnlockableCalculator from '../../hooks/useUnlockableCalculator';
 import BalanceTable from './BalanceTable';
 import styles from './unlockBalance.css';
+import { usePosConstants } from '../../hooks/queries';
 
-// eslint-disable-next-line max-statements
 const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const { data: latestBlock } = useLatestBlock();
   const { lockedPendingUnlocks, sentStakesAmount, unlockedAmount } = useUnlockableCalculator();
+  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
+  const { data: tokens } = useTokensBalance({
+    config: { params: { tokenID: posConstants?.posTokenID } },
+    options: { enabled: !isGettingPosConstants },
+  });
+  const dposToken = tokens?.data?.[0] || {};
 
   const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -27,7 +35,10 @@ const UnlockBalanceForm = ({ nextStep }) => {
 
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
-    isValid: unlockedAmount > 0,
+    fields: {
+      token: dposToken,
+    },
+    isFormValid: unlockedAmount > 0,
     unlockedAmount,
   };
 

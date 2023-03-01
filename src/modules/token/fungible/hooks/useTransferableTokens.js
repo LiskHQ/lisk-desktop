@@ -10,15 +10,12 @@ export const useTransferableTokens = (application) => {
     data: { data: myTokens = [] } = {},
     isSuccess: isTokensSuccess,
     isLoading: isTokenLoading,
-  } = useTokensBalance({ options: { enabled: !!application?.serviceURLs?.[0] } });
+  } = useTokensBalance();
   const {
     data: { data: { supportedTokens } = {} } = {},
     isSuccess: isSupportedSuccess,
     isLoading: isSupportLoading,
-  } = useTokensSupported({
-    client: client.current,
-    options: { enabled: !!application?.serviceURLs?.[0] },
-  });
+  } = useTokensSupported({ client: client.current });
   return useMemo(() => {
     const isSuccess = isTokensSuccess && isSupportedSuccess;
     const isLoading = isTokenLoading || isSupportLoading;

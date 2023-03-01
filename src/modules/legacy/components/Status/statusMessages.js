@@ -6,7 +6,7 @@ const reclaimBalanceMessages = t => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Reclaimed LSK tokens'),
-    message: t('Your balance will be transfered in a few seconds.'),
+    message: t('Your tokens will be deposited to your account.'),
   },
   [txStatusTypes.broadcastError]: {
     title: t('Reclaim LSK tokens failed'),

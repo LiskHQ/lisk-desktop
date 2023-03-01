@@ -2,7 +2,7 @@ const blockchainApplicationsManage = [
   {
     chainName: 'Lisk',
     chainID: '00000001',
-    state: 'active',
+    status: 'active',
     serviceURLs: [{ rest: 'http://165.227.246.146:9901', ws: 'ws://165.227.246.146:9901/rpc-v3' }],
     address: 'lsk24cd35u49jd8szo3pnsqe5dsxwrnazyqqqg5eu',
     logo: {
@@ -16,7 +16,7 @@ const blockchainApplicationsManage = [
   {
     chainName: 'Colecti',
     chainID: 'mi34vyyd12g2lkf0rza1irws',
-    state: 'active',
+    status: 'active',
     serviceURLs: [{ rest: 'https://service.colecti.com', ws: 'wss://service.colecti.com' }],
     address: 'lsk2423d5u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     logo: {
@@ -30,7 +30,7 @@ const blockchainApplicationsManage = [
   {
     chainName: 'Enevti',
     chainID: 'aq86llsb35u4syc8aet7xenf',
-    state: 'active',
+    status: 'active',
     serviceURLs: [{ rest: 'https://service.enevti.com', ws: 'wss://service.enevti.com' }],
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazvftqg5eu',
     logo: {
@@ -44,7 +44,7 @@ const blockchainApplicationsManage = [
   {
     chainName: 'DoEdu',
     chainID: 'aq96eeqk77r4syc8aet9fcey',
-    state: 'terminated',
+    status: 'terminated',
     serviceURLs: [{ rest: 'https://service.doedu.com', ws: 'wss://service.doedu.com' }],
     address: 'lsk24cd35u4jdq8szo3pnsqe5dmdfrnazyqqqg5eu',
     logo: {
@@ -58,7 +58,7 @@ const blockchainApplicationsManage = [
   {
     chainName: 'Kalipo',
     chainID: 'aq25derd17a4syc8aet3pryt',
-    state: 'active',
+    status: 'active',
     serviceURLs: [
       { rest: 'https://service.kalipo.com', ws: 'wss://service.kalipo.com' },
       { rest: 'https://testnet.kalipo.com', ws: 'wss://testnet.kalipo.com' },
@@ -75,7 +75,7 @@ const blockchainApplicationsManage = [
   {
     chainName: 'Lisk DEX',
     chainID: 'dz38fkbb35u4jdq8szo3pnsq',
-    state: 'active',
+    status: 'active',
     serviceURLs: [{ rest: 'https://service.liskdex.com', ws: 'wss://service.liskdex.com' }],
     address: 'lsk24cd35u4fwq8szo3pnsqe5dsxwrnazyqqqg5eu',
     logo: {

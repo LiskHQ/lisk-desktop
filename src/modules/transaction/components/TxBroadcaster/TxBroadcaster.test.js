@@ -36,12 +36,12 @@ describe('TxBroadcaster', () => {
     },
   };
 
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
 
   it('should render Regular component with props', () => {
     const wrapper = mountWithQueryClient(TxBroadcaster, props);

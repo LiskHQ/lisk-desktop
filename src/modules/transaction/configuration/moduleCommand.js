@@ -8,6 +8,7 @@ const moduleCommandNameMap = {
   claimRewards: 'pos:claimRewards',
   reportValidatorMisbehavior: 'pos:reportMisbehavior',
   reclaim: 'legacy:reclaimLSK',
+  changeCommission: 'pos:changeCommission'
 };
 
 const moduleCommandMap = {
@@ -44,6 +45,10 @@ const moduleCommandMap = {
     icon: 'multisignatureTransaction',
   },
   [moduleCommandNameMap.reclaim]: {
+    maxFee: 1e7,
+    icon: 'txDefault',
+  },
+  [moduleCommandNameMap.changeCommission]: {
     maxFee: 1e7,
     icon: 'txDefault',
   },
