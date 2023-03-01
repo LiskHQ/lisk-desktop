@@ -135,11 +135,11 @@ const signTransaction = async (transporter, { device, data }) => {
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
     const txToBeSigned = Buffer.concat([
-      Buffer.from(transactions.TAG_TRANSACTION, 'hex'),
+      Buffer.from(transactions.TAG_TRANSACTION, 'utf8'),
       Buffer.from(data.chainID, 'hex'),
       data.transactionBytes,
     ]);
-    // derivation path, tx message in buffer format
+
     const signature = await liskLedger.sign(ledgerAccount.derivePath(), txToBeSigned);
     transport.close();
     return signature;
