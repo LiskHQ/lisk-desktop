@@ -2,7 +2,7 @@ const blockchainApplicationsExplore = [
   {
     chainName: 'Test app',
     chainID: '00000001',
-    state: 'active',
+    status: 'active',
     apis: [{ rest: 'https://service.testappone.com', rpc: 'wss://service.testappone.com' }],
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     lastCertificateHeight: 1000,
@@ -12,7 +12,7 @@ const blockchainApplicationsExplore = [
   {
     chainName: 'Test app 2',
     chainID: '00000002',
-    state: 'active',
+    status: 'active',
     apis: [
       { rest: 'https://service.testapptwo.com', rpc: 'wss://service.testapptwo.com' },
       { rest: 'https://testnet.testapptwo.com', rpc: 'wss://testnet.testapptwo.com' },
