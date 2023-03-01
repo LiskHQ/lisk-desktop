@@ -38,7 +38,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   });
   const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const { state, lastCertificateHeight, lastUpdated } =
+  const { status, lastCertificateHeight, lastUpdated } =
     aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
 
@@ -66,8 +66,8 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     },
     {
       header: t('Status'),
-      className: `${styles.detailContentText} ${styles.statusChip} ${styles[state]} chain-status`,
-      content: t(state),
+      className: `${styles.detailContentText} ${styles.statusChip} ${styles[status]} chain-status`,
+      content: t(status),
     },
     {
       header: t('Last Update'),
