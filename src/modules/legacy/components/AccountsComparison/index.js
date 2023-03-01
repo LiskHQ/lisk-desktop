@@ -19,6 +19,7 @@ const AccountsComparison = ({ t }) => {
   const nonce = wallet.sequence?.nonce;
   const { data: initializationFees } = useGetInitializationFees({
     address: wallet.summary?.address,
+    tokenID: wallet.token?.[0]?.tokenID,
   });
   const extraCommandFee = initializationFees?.data?.userAccount;
   const hasEnoughBalance = Number(wallet.token?.[0]?.availableBalance) >= extraCommandFee;
