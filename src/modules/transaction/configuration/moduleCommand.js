@@ -8,7 +8,9 @@ const moduleCommandNameMap = {
   claimRewards: 'pos:claimRewards',
   reportValidatorMisbehavior: 'pos:reportMisbehavior',
   reclaim: 'legacy:reclaimLSK',
-  changeCommission: 'pos:changeCommission'
+  changeCommission: 'pos:changeCommission',
+  registerKeys: 'legacy:registerKeys',
+  registerSidechain: 'interoperability:registerSidechain',
 };
 
 const moduleCommandMap = {

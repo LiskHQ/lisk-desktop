@@ -25,6 +25,7 @@ const getMaxAmount = async ({
   mandatoryKeys,
   optionalKeys,
   moduleCommandSchemas,
+  token
 }) => {
   const totalUnconfirmedStakes = Object.values(staking)
     .filter((stake) => stake.confirmed < stake.unconfirmed)
@@ -67,6 +68,7 @@ const getMaxAmount = async ({
         transaction
       ),
       moduleCommandSchemas,
+      token,
     }
   );
 

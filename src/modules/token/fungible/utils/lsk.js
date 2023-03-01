@@ -48,13 +48,29 @@ export const toRawLsk = (value) => {
  * @param {BigNumber|number} token - Token value merged with its equivalent metadata
  * @returns {BigNumber} Amount value converted to the token symbol's denom
  */
- export const convertToDenom = (amount, token = {}) => {
+ export const convertFromRawDenom = (amount, token = {}) => {
   const { decimals } =
     token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
 
   if (!decimals) return '0';
 
   return new BigNumber(amount || 0).dividedBy(new BigNumber(BASE).pow(decimals)).toFixed();
+};
+
+/**
+ * Converts a given token amount to its token symbol denom
+ *
+ * @param {BigNumber|number} amount - Amount value to be converted
+ * @param {BigNumber|number} token - Token value merged with its equivalent metadata
+ * @returns {BigNumber} Amount value converted to the token symbol's denom
+ */
+ export const convertToRawDenom = (amount, token = {}) => {
+  const { decimals } =
+    token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
+
+  if (!decimals) return '0';
+
+  return new BigNumber(amount || 0).multipliedBy(new BigNumber(BASE).pow(decimals)).toFixed();
 };
 
 /**

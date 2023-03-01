@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
-import { convertToDenom } from '@token/fungible/utils/lsk';
+import { convertFromRawDenom } from '@token/fungible/utils/lsk';
 import { Input } from 'src/theme';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
@@ -50,7 +50,7 @@ const AmountField = ({
     e.preventDefault();
     setIsMaximum(true);
     const value = formatAmountBasedOnLocale({
-      value: convertToDenom(maxAmount.value, token),
+      value: convertFromRawDenom(maxAmount.value, token),
       format: '0.[00000000]',
     });
     onChange({ value }, maxAmount);
@@ -77,7 +77,7 @@ const AmountField = ({
   useEffect(() => {
     if (isMaximum) {
       const value = formatAmountBasedOnLocale({
-        value: convertToDenom(maxAmount.value),
+        value: convertFromRawDenom(maxAmount.value, token),
         format: '0.[00000000]',
       });
       onChange({ value }, maxAmount);
@@ -123,7 +123,7 @@ const AmountField = ({
               <span>
                 {t(
                   'Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK',
-                  { maxAmount: convertToDenom(maxAmount.value) },
+                  { maxAmount: convertFromRawDenom(maxAmount.value) },
                 )}
               </span>
             </Tooltip>

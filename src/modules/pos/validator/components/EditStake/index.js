@@ -7,7 +7,7 @@ import {
   removeThenAppendSearchParamsToUrl,
 } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
-import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromRawDenom, convertToRawDenom } from '@token/fungible/utils/lsk';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useCommandSchema } from '@network/hooks';
 import Dialog from 'src/theme/dialog/dialog';
@@ -36,9 +36,7 @@ import { useStakesRetrieved } from '../../store/actions/staking';
 const getTitles = (t) => ({
   edit: {
     title: t('Edit stake'),
-    description: t(
-      'After changing your Stake amount, it will be added to the staking queue.'
-    ),
+    description: t('After changing your Stake amount, it will be added to the staking queue.'),
   },
   add: {
     title: t('Add to staking queue'),
@@ -104,7 +102,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   }, [sentStakes, address, staking]);
 
   const [stakeAmount, setStakeAmount, isGettingPosToken] = useStakeAmountField(
-    fromRawLsk(staking[address]?.unconfirmed || validatorStake?.amount || 0)
+    convertFromRawDenom(staking[address]?.unconfirmed || validatorStake?.amount || 0, token)
   );
   const mode = validatorStake || staking[address] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
@@ -121,6 +119,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
       mandatoryKeys,
       optionalKeys,
       moduleCommandSchemas,
+      token,
     }).then(setMaxAmount);
   }, [token, auth, network, staking]);
 
@@ -132,7 +131,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     stakeEdited([
       {
         validator,
-        amount: toRawLsk(stakeAmount.value),
+        amount: convertToRawDenom(stakeAmount.value, token),
       },
     ]);
 
@@ -145,7 +144,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     stakeEdited([
       {
         validator,
-        amount: toRawLsk(0),
+        amount: convertToRawDenom(0),
       },
     ]);
     removeSearchParamsFromUrl(history, ['modal']);

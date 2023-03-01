@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from 'src/utils/validators';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromRawDenom } from '@token/fungible/utils/lsk';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { selectLSKAddress } from 'src/redux/selectors';
 import { regex } from 'src/const/regex';
@@ -102,9 +102,9 @@ const useStakeAmountField = (initialValue) => {
       isLoading: true,
     });
     const feedback = getAmountFeedbackAndError(
-      value - fromRawLsk(previouslyConfirmedStake - totalUnconfirmedStake),
+      value - convertFromRawDenom(previouslyConfirmedStake - totalUnconfirmedStake, token),
       balance,
-      -1 * fromRawLsk(previouslyConfirmedStake),
+      -1 * convertFromRawDenom(previouslyConfirmedStake, token),
       value
     );
     loaderTimeout = setTimeout(() => {

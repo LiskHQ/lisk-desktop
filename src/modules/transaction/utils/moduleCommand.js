@@ -17,6 +17,7 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
 const getModuleCommandTitle = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.transfer]: t('Transfer'),
   [MODULE_COMMANDS_NAME_MAP.reclaim]: t('Reclaim'),
+  [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim Rewards'),
   [MODULE_COMMANDS_NAME_MAP.unlock]: t('Unlock'),
   [MODULE_COMMANDS_NAME_MAP.stake]: t('Stake'),
   [MODULE_COMMANDS_NAME_MAP.registerValidator]: t('Register validator'),
@@ -25,6 +26,8 @@ const getModuleCommandTitle = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.crossChainTransfer]: t('Cross chain transfer'),
   [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim rewards'),
   [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Edit commission'),
+  [MODULE_COMMANDS_NAME_MAP.registerSidechain]: t('Register side chain'),
+  [MODULE_COMMANDS_NAME_MAP.registerKeys]: t('Register keys'),
 });
 
 const splitModuleAndCommand = (moduleCommand) => moduleCommand.split(':');

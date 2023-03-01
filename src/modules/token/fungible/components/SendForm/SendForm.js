@@ -5,7 +5,7 @@ import AmountField from '@common/components/amountField';
 import { useGetInitializationFees, useMessageFee } from '@auth/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
-import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertToRawDenom, convertFromRawDenom } from '@token/fungible/utils/lsk';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import { maxMessageLength } from '@transaction/configuration/transactions';
@@ -25,8 +25,10 @@ import styles from './form.css';
 import MessageField from '../MessageField';
 
 const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
-const getInitialAmount = (rawTx, initialValue) =>
-  Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '';
+const getInitialAmount = (rawTx, initialValue, token) =>
+  Number(rawTx?.params.amount)
+    ? convertFromRawDenom(rawTx?.params.amount, token)
+    : initialValue || '';
 const getInitialRecipient = (rawTx, initialValue) =>
   rawTx?.params.recipient.address || initialValue || '';
 const getInitialRecipientChain = (
@@ -58,13 +60,12 @@ const SendForm = (props) => {
   const sendingChain = prevState?.transactionData?.sendingChain || currentApplication;
   const { applications } = useApplicationExploreAndMetaData();
   const { data: tokens } = useTransferableTokens(recipientChain);
-
   const [reference, setReference] = useMessageField(
     getInitialData(props.prevState?.formProps, props.initialValue?.reference)
   );
   const [amount, setAmountField] = useAmountField(
-    getInitialAmount(props.prevState?.formProps, props.initialValue?.amount),
-    account.token?.balance,
+    getInitialAmount(props.prevState?.formProps, props.initialValue?.amount, token),
+    account.summary?.balance,
     token?.symbol
   );
   const [recipient, setRecipientField] = useRecipientField(
@@ -134,7 +135,7 @@ const SendForm = (props) => {
     isFormValid,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
-      amount: toRawLsk(amount.value),
+      amount: convertToRawDenom(amount.value, token),
       data: reference.value,
       recipient: {
         address: recipient.value,
@@ -152,7 +153,7 @@ const SendForm = (props) => {
   };
   let commandParams = {
     tokenID: token?.tokenID,
-    amount: toRawLsk(amount.value),
+    amount: convertToRawDenom(amount.value, token),
     recipientAddress: recipient.value,
     data: reference.value,
   };

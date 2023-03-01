@@ -11,6 +11,7 @@ import ActionBar from './ActionBar';
 import styles from './BalanceInfo.css';
 
 // eslint-disable-next-line complexity
+// @Todo: this component needs to be removed cleaningly because it seems it not used in the application
 const BalanceInfo = ({
   t, activeToken, isWalletRoute, account,
 }) => {

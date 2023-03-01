@@ -5,7 +5,7 @@ import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 
 import { stakeEdited, stakeDiscarded } from 'src/redux/actions';
 import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
-import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromRawDenom, convertToRawDenom } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Box from '@theme/box';
@@ -30,8 +30,6 @@ const StakeRow = ({
     unconfirmed === '' ? componentState.editing : componentState.notEditing
   );
   const dispatch = useDispatch();
-  const [stakeAmount, setStakeAmount] = useStakeAmountField(fromRawLsk(unconfirmed));
-  const truncatedAddress = truncateAddress(address);
 
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
   const { data: tokens } = useTokensBalance({
@@ -39,6 +37,9 @@ const StakeRow = ({
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+  const [stakeAmount, setStakeAmount] = useStakeAmountField(convertFromRawDenom(unconfirmed, token));
+  const truncatedAddress = truncateAddress(address);
+
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
@@ -46,7 +47,7 @@ const StakeRow = ({
       stakeEdited([
         {
           address,
-          amount: toRawLsk(stakeAmount.value),
+          amount: convertToRawDenom(stakeAmount.value, token),
         },
       ])
     );

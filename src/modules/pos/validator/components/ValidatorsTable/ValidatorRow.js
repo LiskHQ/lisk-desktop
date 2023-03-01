@@ -9,10 +9,12 @@ import ValidatorRowContext from '../../context/validatorRowContext';
 import validatorStyles from '../ValidatorsMonitorView/Validators.css';
 import styles from './Schemas.css';
 import LayoutSchema from './LayoutSchema';
+import usePosToken from '../../hooks/usePosToken';
 
 const ValidatorRow = ({ data, className, activeTab, watchList, setActiveTab }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { token } = usePosToken();
   const formattedGeneratingTime = getGeneratingTime(data.nextAllocatedTime);
 
   const isWatched = watchList.find((address) => address === data.address);
@@ -42,6 +44,7 @@ const ValidatorRow = ({ data, className, activeTab, watchList, setActiveTab }) =
     >
       <ValidatorRowContext.Provider
         value={{
+          token,
           data,
           activeTab,
           watched: isWatched,
