@@ -750,7 +750,7 @@
   "You will be able to:": "You will be able to:",
   "You will be notified when your transaction is confirmed.": "You will be notified when your transaction is confirmed.",
   "Your LSK tokens could not be reclaimed, you can try again or report to us via email": "Your LSK tokens could not be reclaimed, you can try again or report to us via email",
-  "Your account just received {{amount}} {{token}} {{message}}": "Your account just received {{amount}} {{token}} {{message}}",
+  "Your account just received {{amount}} {{tokenSymbol}} {{message}}": "Your account just received {{amount}} {{tokenSymbol}} {{message}}",
   "Your multisignatures groups": "Your multisignatures groups",
   "Your name": "Your name",
   "Your signature was successful": "Your signature was successful",
