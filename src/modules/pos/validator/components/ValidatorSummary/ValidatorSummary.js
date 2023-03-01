@@ -10,7 +10,7 @@ import WalletVisual from 'src/modules/wallet/components/walletVisual';
 import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './ValidatorSummary.css';
-import { extractValidatorCommission } from '../../utils';
+import { convertCommissionToPercentage } from '../../utils';
 
 const ValidatorSummary = ({ validator, status, weight }) => {
   const { address, name, rank, commission, nextGeneratingTime } = validator;
@@ -53,7 +53,7 @@ const ValidatorSummary = ({ validator, status, weight }) => {
           </div>
           <div>
             <span>{t('Commission :')}</span>
-            <span data-testid="commission">{extractValidatorCommission(commission)}%</span>
+            <span data-testid="commission">{convertCommissionToPercentage(commission)}%</span>
           </div>
           <div>
             <span>{t('Last generated :')}</span>

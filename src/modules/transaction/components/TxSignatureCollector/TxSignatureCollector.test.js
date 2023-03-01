@@ -100,12 +100,12 @@ describe('TxSignatureCollector', () => {
     transactionDoubleSigned: jest.fn(),
   };
 
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
   useAuth.mockReturnValue({ data: mockAuth, isLoading: false });
   useTxInitiatorAccount.mockReturnValue({
     txInitiatorAccount: { ...mockAuth.data, ...mockAuth.meta, keys: { ...mockAuth.data } },

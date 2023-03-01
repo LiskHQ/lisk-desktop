@@ -1,26 +1,46 @@
 import { mountWithQueryClient } from 'src/utils/testHelpers';
-import { useCommandSchema } from '@network/hooks/useCommandsSchema';
-import wallets from '@tests/constants/wallets';
 import * as keys from '@tests/constants/keys';
-import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
-import { usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
 import RegisterValidatorForm from '.';
 
-jest.mock('../../hooks/queries');
-jest.mock('@token/fungible/hooks/queries');
+const mockCurrentAccount = mockSavedAccounts[0];
 
-jest.mock('@network/hooks/useCommandsSchema');
+jest.mock('../../hooks/queries', () => ({
+  ...jest.requireActual(),
+  usePosConstants: jest.fn().mockReturnValue({ data: mockPosConstants }),
+}));
+jest.mock('@token/fungible/hooks/queries/useTokensBalance');
+jest.mock('@account/hooks/useCurrentAccount', () => ({
+  useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
+}));
 jest.mock('../../hooks/useValidatorName', () => jest.fn());
 jest.mock('../../hooks/useValidatorKey', () => jest.fn());
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
     isLoading: false,
+  }),
+}));
+jest.mock('@auth/hooks/queries', () => ({
+  ...jest.requireActual('@auth/hooks/queries'),
+  useAuth: jest.fn().mockReturnValue({ data: mockAuth }),
+}));
+
+jest.mock('@network/hooks/useCommandsSchema', () => ({
+  useCommandSchema: jest.fn().mockReturnValue({
+    isLoading: false,
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    ),
   }),
 }));
 
@@ -56,14 +76,17 @@ describe('RegisterValidatorForm', () => {
   const setName = jest.fn();
   const setKey = jest.fn();
 
-  usePosConstants.mockReturnValue({ data: mockPosConstants });
-  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
-      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
-      {}
-    )
-  );
+  useTokensBalance.mockReturnValue({
+    data: {
+      ...mockTokensBalance,
+      data: mockTokensBalance.data.map((token) => ({
+        ...token,
+        availableBalance: 1500000000,
+        denomUnits: [{ denom: 'lsk', decimals: 8 }],
+      })),
+    },
+    isLoading: false,
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -169,38 +192,6 @@ describe('RegisterValidatorForm', () => {
       error: false,
       message: '',
     };
-    const rawTx = {
-      transactionJSON: {
-        fee: '1100000000',
-        module: 'pos',
-        command: 'registerValidator',
-        nonce: '1',
-        params: {
-          blsKey: blsKey.value,
-          generatorKey: genKey.value,
-          proofOfPossession: pop.value,
-          name: validName.value,
-        },
-        signatures: [],
-        senderPublicKey: wallets.genesis.summary.publicKey,
-      },
-      formProps: {
-        composedFees: {
-          Initialisation: '0 LSK',
-          Transaction: '0 LSK',
-        },
-        fields: {
-          token: mockTokensBalance.data[0],
-        },
-        isValid: true,
-        moduleCommand: 'pos:registerValidator',
-      },
-      fees: {
-        Initialisation: '0 LSK',
-        Transaction: '0 LSK',
-      },
-      selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
-    };
 
     it('accept a valid form', () => {
       useValidatorKey.mockReturnValueOnce([genKey, setKey]);
@@ -209,7 +200,7 @@ describe('RegisterValidatorForm', () => {
       useValidatorName.mockReturnValue([validName, setName]); // valid
       const wrapper = mountWithQueryClient(RegisterValidatorForm, props);
       wrapper.find('button.confirm-btn').simulate('click');
-      expect(props.nextStep).toHaveBeenCalledWith(rawTx);
+      expect(props.nextStep).toMatchSnapshot();
     });
   });
 });

@@ -17,10 +17,19 @@ describe('Validator Registration Summary', () => {
   const props = {
     validatorRegistered: jest.fn(),
     formProps: {
-      composedFees: {
-        Initialisation: '0 LSK',
-        Transaction: '0 LSK',
-      },
+      composedFees: [
+        {
+          title: 'Transaction',
+          value: '0 LSK',
+          components: [],
+        },
+        {
+          title: 'Message',
+          value: '0 LSK',
+          isHidden: true,
+          components: [],
+        },
+      ],
       isValid: true,
       moduleCommand: 'pos:registerValidator',
     },

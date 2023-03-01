@@ -1,39 +1,62 @@
-import { useMemo } from 'react';
+// @Todo: this should be fixed in this issue #4521
+/* istanbul ignore file */
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
-import { useAuth } from '@auth/hooks/queries/useAuth';
-import { computeTransactionMinFee, getParamsSchema } from './utils';
+import { getParamsSchema } from './utils';
+import usePriorityFee from '../usePriorityFee';
+import { FEE_TYPES } from '../../constants';
+import { useMinimumFee } from '.';
+
 /**
  *
  * @param {object} data
- * @param {boolean} data.isValid Whether the transaction is valid or not. TxComposer defines this
+ * @param {boolean} data.isFormValid Whether the transaction form is valid or not. TxComposer defines this
  * @param {string} data.senderAddress The sender address in Lisk 32 format
  * @param {object} data.transaction Transaction object as Lisk Element expects without fee
  * @returns {object} The fee object with a total value, and a component value as an array of fees
  * that contribute in the total value
  */
-export const useTransactionFee = ({ isValid, senderAddress, transaction }) => {
-  const {
-    data: auth,
-    isLoading,
-    isFetched,
-  } = useAuth({ config: { params: { address: senderAddress } } });
+export const useTransactionFee = ({
+  isFormValid,
+  transactionJSON,
+  senderAddress,
+  selectedPriority = [],
+  extraCommandFee = 0,
+}) => {
   const {
     moduleCommandSchemas,
     isLoading: isSchemaLoading,
     isFetched: isSchemaFetched,
   } = useCommandSchema();
-  const schema = getParamsSchema(transaction, moduleCommandSchemas);
+  const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
 
-  const fee = useMemo(
-    () => computeTransactionMinFee(transaction, schema, auth, isValid && !isSchemaLoading),
-    [transaction, schema, auth, isValid, isSchemaLoading]
-  );
+  const {
+    result: minimumFee,
+    isLoading: isLoadingByteFee,
+    isFetched: isFetchedByteFee,
+  } = useMinimumFee({
+    senderAddress,
+    isFormValid,
+    transactionJSON,
+    extraCommandFee,
+  });
 
-  // @todo Assert the returned value when all fee components are defined
+  const priorityFee = usePriorityFee({
+    selectedPriority,
+    transactionJSON,
+    paramsSchema,
+    isEnabled: !!paramsSchema && isFormValid,
+  });
+  const bytesFee = {
+    value: BigInt(minimumFee.value) - BigInt(extraCommandFee),
+    type: FEE_TYPES.BYTES_FEE,
+  };
+  const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
+
   return {
-    isLoading: isSchemaLoading || /* istanbul ignore next */ isLoading,
-    isFetched: isSchemaFetched && /* istanbul ignore next */ isFetched,
-    total: fee,
-    components: [{ value: fee, type: 'bytesFee' }],
+    components,
+    isLoading: isSchemaLoading || isLoadingByteFee,
+    isFetched: isSchemaFetched && isFetchedByteFee,
+    transactionFee: (BigInt(minimumFee.value) + BigInt(priorityFee.value)).toString(),
+    minimumFee: minimumFee.value,
   };
 };

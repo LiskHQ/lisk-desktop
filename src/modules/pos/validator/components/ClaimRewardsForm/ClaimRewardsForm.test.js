@@ -4,7 +4,6 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from '@account/hooks';
 import { mockRewardsClaimableWithToken } from '@pos/reward/__fixtures__';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import ClaimRewardsForm from './index';
 
@@ -16,7 +15,6 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 }));
 jest.mock('@transaction/hooks/useTransactionPriority');
 jest.mock('@block/hooks/queries/useLatestBlock');
-jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
 
 jest.mock('@account/hooks/useCurrentAccount');
@@ -35,11 +33,6 @@ describe('ClaimRewardsForm', () => {
       { title: 'Custom', value: undefined },
     ],
   ]);
-  useTransactionFeeCalculation.mockImplementation(() => ({
-    fee: { value: '0.1' },
-    maxAmount: 0.1,
-    minFee: 0.001,
-  }));
 
   const nextStep = jest.fn();
 
