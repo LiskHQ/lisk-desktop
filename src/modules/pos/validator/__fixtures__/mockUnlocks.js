@@ -4,7 +4,7 @@ const generateUnlock = (index) => ({
   tokenID: '0000000000000000',
   unstakeHeight: 30 + index,
   expectedUnlockableHeight: 300 + index,
-  unlockable: index > 3,
+  isLocked: index < 4,
 });
 
 const data = {

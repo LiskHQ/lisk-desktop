@@ -1,11 +1,10 @@
-import { useEffect, useContext, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getSdkError } from '@walletconnect/utils';
 import { client } from '../utils/connectionCreator';
-import ConnectionContext from '../context/connectionContext';
 import { ERROR_CASES, STATUS } from '../constants/lifeCycle';
 
-const usePairings = () => {
-  const { pairings, setPairings } = useContext(ConnectionContext);
+export const usePairings = () => {
+  const [pairings, setPairings] = useState([]);
 
   /**
    * Sets the pairing URI as an acknowledgement to the client.
@@ -27,17 +26,17 @@ const usePairings = () => {
         message: e.message,
       };
     }
-  }, []);
+  }, [client]);
 
   const removePairing = useCallback((topic) => {
     const newPairings = pairings.filter(pairing => pairing.topic !== topic);
     // Also inform the bridge
     setPairings(newPairings);
-  }, []);
+  }, [pairings]);
 
   const addPairing = useCallback((pairing) => {
     setPairings([...pairings, pairing]);
-  }, []);
+  }, [pairings]);
 
   /**
    * Disconnect a given pairing. Removes the pairing from context and the bridge.
@@ -60,7 +59,7 @@ const usePairings = () => {
         message: e.message,
       };
     }
-  }, []);
+  }, [client]);
 
   /**
    * Retrieves the active parings and refreshes the list.
@@ -68,7 +67,7 @@ const usePairings = () => {
   const refreshPairings = useCallback(async () => {
     const activePairings = client.pairing.getAll({ active: true });
     setPairings([{ loaded: true }, ...activePairings]);
-  }, []);
+  }, [client]);
 
   useEffect(() => {
     if (client?.pairing?.getAll && pairings?.length === 0) {
@@ -87,5 +86,3 @@ const usePairings = () => {
     refreshPairings,
   };
 };
-
-export default usePairings;

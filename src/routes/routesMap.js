@@ -26,6 +26,7 @@ import ClaimRewardsView from '@pos/validator/components/ClaimRewardsView';
 import editStakeManager from '@pos/validator/manager/editStakeManager';
 import StakingQueue from '@pos/validator/manager/stakingQueueManager';
 import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
+import {ChangeCommissionDialog} from '@pos/validator/components/ChangeCommission/Dialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
@@ -119,4 +120,5 @@ export default {
   requestView: RequestView,
   connectionSummary: ConnectionSummary,
   connectionStatus: ConnectionStatus,
+  changeCommission: ChangeCommissionDialog
 };

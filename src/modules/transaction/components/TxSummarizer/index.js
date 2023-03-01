@@ -19,6 +19,7 @@ const TxSummarizer = ({
   confirmButton,
   cancelButton,
   wallet,
+  width = "medium",
   t,
   secondPassphraseStored,
   className,
@@ -50,7 +51,7 @@ const TxSummarizer = ({
   };
 
   return (
-    <Box width="medium" className={`${styles.wrapper} ${className} summary`}>
+    <Box width={width} className={`${styles.wrapper} ${className} summary`}>
       {title && (
         <BoxHeader className={`${styles.header} summary-header`}>
           {!hasNoTopCancelButton ? (

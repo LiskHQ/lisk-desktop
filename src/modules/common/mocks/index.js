@@ -7,6 +7,7 @@ import {
   mockCcm,
   mockCommandParametersSchemas,
 } from '../__fixtures__';
+import { mockInvoke } from '../__fixtures__/mockInvoke';
 
 export const webSocketRPC = rest.get(
   '*/socket.io/',
@@ -38,6 +39,14 @@ export const marketPrices = rest.get(
   `*/api/${API_VERSION}/market/prices`,
   async (_, res, ctx) => {
     const response = mockPrices;
+    return res(ctx.json(response));
+  },
+);
+
+export const initializationFees = rest.post(
+  `*/api/${API_VERSION}/invoke`,
+  async (_, res, ctx) => {
+    const response = mockInvoke;
     return res(ctx.json(response));
   },
 );

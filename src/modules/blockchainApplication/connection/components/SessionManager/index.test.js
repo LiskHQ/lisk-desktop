@@ -1,7 +1,7 @@
 import React from 'react';
 import { mountWithRouter } from 'src/utils/testHelpers';
-import usePairings from '@libs/wcm/hooks/usePairings';
-import useSession from '@libs/wcm/hooks/useSession';
+import { usePairings } from '@libs/wcm/hooks/usePairings';
+import { useSession } from '@libs/wcm/hooks/useSession';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import ConnectionContext from '@libs/wcm/context/connectionContext';

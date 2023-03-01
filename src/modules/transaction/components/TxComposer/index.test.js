@@ -4,55 +4,70 @@ import { mountWithQueryClient, mountWithQueryAndProps } from 'src/utils/testHelp
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
+import * as encodingUtils from '../../utils/encoding';
 import TxComposer from './index';
 
-
 jest.mock('@network/hooks/useCommandsSchema');
-
+jest.spyOn(encodingUtils, 'fromTransactionJSON').mockImplementation((tx) => tx);
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
     isLoading: false,
   }),
 }));
+jest.mock('@liskhq/lisk-client', () => ({
+  ...jest.requireActual('@liskhq/lisk-client'),
+  transactions: {
+    computeMinFee: jest.fn().mockReturnValue(10000000000n),
+    getBytes: jest.fn().mockReturnValue({ length: 50 }),
+  },
+}));
 
 describe('TxComposer', () => {
-  const commandParams = {
-    tokenID: '00000000',
-    amount: 100000,
-    recipientAddress: accounts.genesis.summary.address,
-    data: 'test-data',
+  const transaction = {
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+    params: {
+      recipient: { address: accounts.genesis.summary.address },
+      amount: 100000,
+      data: 'test-data',
+      token: { tokenID: '00000000' },
+    },
+    isFormValid: true,
+    feedback: [],
   };
   const props = {
     children: null,
-    commandParams,
+    transaction,
     onComposed: jest.fn(),
     onConfirm: jest.fn(),
     className: 'test-class-name',
     buttonTitle: 'test-button-title',
     formProps: {
       moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+      fields: { token: { availableBalance: 10000 } },
     },
   };
 
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
 
   it('should render TxComposer correctly for a valid tx', () => {
     const newProps = {
       ...props,
       formProps: {
-        isValid: true,
+        isFormValid: true,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-        fields: { token: { availableBalance: 100000000 } },
+        fields: { token: { availableBalance: 10000000000000 } },
         sendingChain: { chainID: '1' },
-        recipientChain: { chainID: '2' }
+        recipientChain: { chainID: '2' },
       },
+      commandParams: {},
     };
+
     const wrapper = mountWithQueryClient(TxComposer, newProps);
     expect(wrapper.find('TransactionPriority')).toExist();
     expect(wrapper.find('Feedback').html()).toEqual(null);
@@ -63,8 +78,9 @@ describe('TxComposer', () => {
   it('should render TxComposer correctly for an invalid tx', () => {
     const newProps = {
       ...props,
+      commandParams: {},
       formProps: {
-        isValid: false,
+        isFormValid: false,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
         fields: { token: { availableBalance: 1000000000000000 } },
         feedback: ['Test error feedback'],
@@ -79,8 +95,27 @@ describe('TxComposer', () => {
   it('should render TxComposer correctly if the balance is insufficient', () => {
     const newProps = {
       ...props,
+      commandParams: {},
+      formProps: {
+        isFormValid: true,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
+        fields: {
+          token: {
+            availableBalance: 100,
+            symbol: 'LSK',
+            denomUnits: [
+              {
+                denom: 'lsk',
+                decimals: 8,
+                aliases: ['Lisk'],
+              },
+            ],
+          },
+        },
+        extraCommandFee: 100000000000,
+      },
       transaction: {
-        isValid: true,
+        isFormValid: true,
         feedback: [],
         moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
         params: {

@@ -11,6 +11,7 @@ import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import useHWAccounts from '@hardwareWallet/hooks/useHWAccounts';
+import { useHWStatus } from '@hardwareWallet/hooks/useHWStatus';
 import { DEVICE_STATUS } from '@libs/hwServer/constants';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
@@ -30,8 +31,7 @@ export const ManageAccountsContent = ({
   const title = customTitle ?? t('Manage accounts');
   const { accounts: hwAccounts } = useHWAccounts();
 
-  // @TODO: actual status should be replaced when the useHWStatus hook is integrated by issue #4768
-  const status = DEVICE_STATUS.STAND_BY;
+  const { status } = useHWStatus();
 
   const onAddAccount = useCallback(() => {
     history.push(routes.addAccountOptions.path);

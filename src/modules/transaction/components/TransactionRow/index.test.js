@@ -1,4 +1,5 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
+import moment from 'moment';
 import accounts from '@tests/constants/wallets';
 import { truncateAddress } from '@wallet/utils/account';
 import Row from '.';
@@ -77,7 +78,8 @@ describe('Transaction Row', () => {
       expect(wrapper.find('Sender').text()).toBe(
         `${props.data.sender.name}${truncateAddress(props.data.sender.address)}`
       );
-      expect(wrapper.find('Date').text()).toBe('23 Nov 197004:51 PM');
+      const dateTime = moment(props.data.block.timestamp * 1000);
+      expect(wrapper.find('Date').text()).toBe(dateTime.format('DD MMM YYYYhh:mm A'));
       expect(wrapper.find('Status')).toHaveLength(1);
     });
 

@@ -275,12 +275,16 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  RequestView: {
+  requestView: {
     isPrivate: false,
     forbiddenTokens: [],
   },
   connectionStatus: {
     isPrivate: false,
+    forbiddenTokens: [],
+  },
+  changeCommission: {
+    isPrivate: true,
     forbiddenTokens: [],
   },
 };

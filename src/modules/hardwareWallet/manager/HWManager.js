@@ -97,7 +97,7 @@ class HwManager extends HWClient {
   // @todo rename to updateDevices
   async checkAppStatus() {
     await this.invoke({
-      action: IPC_MESSAGES.CHECK_LEDGER,
+      action: IPC_MESSAGES.CHECK_STATUS,
     });
     const devices = await this.getDevices();
     return devices;

@@ -330,9 +330,11 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
 };
 
 // eslint-disable-next-line max-statements
-const signUsingHW = async (wallet, schema, chainID, transaction) => {
+const signUsingHW = async (wallet, schema, chainID, moduleCommand, transaction) => {
+  const isGroupRegistration = moduleCommand === registerMultisignature;
+  const transactionBytes = transactions.getSigningBytes(transaction, schema);
   const [error, signedTransaction] = await to(
-    signTransactionByHW({ wallet, chainID, transaction, schema })
+    signTransactionByHW(wallet, chainID, transaction, transactionBytes)
   );
   if (error) {
     throw error;
@@ -345,7 +347,6 @@ const signUsingHW = async (wallet, schema, chainID, transaction) => {
   const senderIndex = members.indexOf(wallet.summary.publicKey);
   const isSender = transaction.senderPublicKey === wallet.summary.publicKey;
 
-  const isGroupRegistration = joinModuleAndCommand(transaction) === registerMultisignature;
   if (isGroupRegistration && isSender && senderIndex > -1) {
     const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
       if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
@@ -361,7 +362,8 @@ const signUsingHW = async (wallet, schema, chainID, transaction) => {
 
 export const sign = async (wallet, schema, chainID, transaction, privateKey, senderAccount) => {
   if (!isEmpty(wallet.hwInfo)) {
-    return signUsingHW(wallet, schema, chainID, transaction);
+    const moduleCommand = joinModuleAndCommand(transaction);
+    return signUsingHW(wallet, schema, chainID, moduleCommand, transaction);
   }
 
   if (senderAccount.mandatoryKeys?.length + senderAccount.optionalKeys?.length > 0) {

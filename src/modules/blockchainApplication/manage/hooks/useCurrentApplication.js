@@ -3,21 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import client from 'src/utils/api/client';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
-import { useCurrentNode } from './useCurrentNode';
 
 export function useCurrentApplication() {
   const dispatch = useDispatch();
 
   const currentApplication = useSelector(selectCurrentApplication);
 
-  const { setCurrentNode } = useCurrentNode();
-
-  const setApplication = useCallback((application) => {
+  const setApplication = useCallback((application, applicationNode) => {
     dispatch(setCurrentApplication(application));
-    // @TODO: probe to verify if serviceURL is reachable
     /* istanbul ignore next */
-    client.create(application.serviceURLs[0]);
-    setCurrentNode(application.serviceURLs[0]);
+    client.create(applicationNode || application.serviceURLs[0]);
   }, []);
 
   return [currentApplication ?? {}, setApplication];

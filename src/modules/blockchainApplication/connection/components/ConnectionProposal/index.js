@@ -6,7 +6,7 @@ import Dialog from '@theme/dialog/dialog';
 import { PrimaryButton } from 'src/theme/buttons';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { Input } from 'src/theme';
-import usePairings from '@libs/wcm/hooks/usePairings';
+import { usePairings } from '@libs/wcm/hooks/usePairings';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import styles from './ConnectionProposal.css';

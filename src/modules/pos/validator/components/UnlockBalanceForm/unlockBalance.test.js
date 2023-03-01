@@ -1,15 +1,18 @@
 import { act } from 'react-dom/test-utils';
 import networks from '@network/configuration/networks';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuth } from '@auth/__fixtures__';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { mountWithQueryAndProps } from 'src/utils/testHelpers';
 import * as hwManager from '@transaction/utils/hwManager';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockBlocks } from '@block/__fixtures__';
 import { signTransaction } from '@transaction/api';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import {
   usePosConstants,
   useSentStakes,
@@ -17,8 +20,8 @@ import {
   useValidators,
 } from '@pos/validator/hooks/queries';
 import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
-import { mockPosConstants } from '@pos/validator/__fixtures__/mockPosConstants';
-import UnlockBalanceForm from './index';
+import UnlockBalanceForm from '.';
+import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
@@ -28,12 +31,14 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 }));
 jest.mock('@transaction/hooks/useTransactionPriority');
 jest.mock('@block/hooks/queries/useLatestBlock');
-jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
 jest.mock('@pos/validator/store/actions/staking', () => ({
   balanceUnlocked: jest.fn(),
 }));
 jest.mock('@transaction/utils/hwManager');
+jest.mock('@token/fungible/hooks/queries');
+jest.mock('../../hooks/queries');
+jest.mock('@auth/hooks/queries');
 jest.mock('@pos/validator/hooks/queries');
 
 describe('Unlock LSK modal', () => {
@@ -48,18 +53,16 @@ describe('Unlock LSK modal', () => {
       { title: 'Custom', value: undefined },
     ],
   ]);
-  useTransactionFeeCalculation.mockImplementation(() => ({
-    fee: { value: '0.1' },
-    maxAmount: 0.1,
-    minFee: 0.001,
-  }));
+
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
+  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+  usePosConstants.mockReturnValue({ data: mockPosConstants });
+  useAuth.mockReturnValue({ data: mockAuth });
   useValidators.mockImplementation(({ config }) => ({
     data: getMockValidators(config.params?.address),
   }));
   useSentStakes.mockReturnValue({ data: mockSentStakes });
   useUnlocks.mockReturnValue({ data: mockUnlocks });
-  usePosConstants.mockReturnValue({ data: mockPosConstants });
 
   const nextStep = jest.fn();
 
@@ -104,7 +107,7 @@ describe('Unlock LSK modal', () => {
             pendingUnlocks: initUnlocking,
             sentStakes: initStakes,
           },
-          sequence: { nonce: '178' },
+          sequence: { nonce: '0' },
         },
       },
     },
@@ -131,9 +134,10 @@ describe('Unlock LSK modal', () => {
   const transactionJSON = {
     module: 'pos',
     command: 'unlock',
-    nonce: '178',
-    fee: '100000000',
-    senderPublicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+    params: {},
+    nonce: '0',
+    fee: '0',
+    senderPublicKey: 'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535',
     signatures: [],
   };
 
@@ -170,18 +174,39 @@ describe('Unlock LSK modal', () => {
     expect(props.nextStep).toBeCalledWith({
       transactionJSON,
       formProps: {
-        composedFees: {
-          Transaction: '0.1 LSK',
-          Initialisation: '0.1 LSK',
-        },
-        isValid: true,
+        composedFees: [
+          {
+            title: 'Transaction',
+            value: '0 LSK',
+            components: [],
+          },
+          {
+            title: 'Message',
+            value: '0 LSK',
+            isHidden: true,
+            components: [],
+          },
+        ],
+        isFormValid: true,
         moduleCommand: 'pos:unlock',
-        unlockableAmount: 455000000000,
+        fields: {
+          token: mockTokensBalance.data[0],
+        },
+        unlockedAmount: 455000000000,
       },
-      fees: {
-        Initialisation: '0.1 LSK',
-        Transaction: '0.1 LSK',
-      },
+      fees: [
+        {
+          title: 'Transaction',
+          value: '0 LSK',
+          components: [],
+        },
+        {
+          title: 'Message',
+          value: '0 LSK',
+          isHidden: true,
+          components: [],
+        },
+      ],
       selectedPriority: { selectedIndex: 1 },
     });
   });
@@ -192,18 +217,39 @@ describe('Unlock LSK modal', () => {
       expect.objectContaining({
         transactionJSON,
         formProps: {
-          composedFees: {
-            Transaction: '0.1 LSK',
-            Initialisation: '0.1 LSK',
-          },
-          isValid: true,
+          composedFees: [
+            {
+              title: 'Transaction',
+              value: '0 LSK',
+              components: [],
+            },
+            {
+              title: 'Message',
+              value: '0 LSK',
+              isHidden: true,
+              components: [],
+            },
+          ],
+          isFormValid: true,
           moduleCommand: 'pos:unlock',
-          unlockableAmount: 455000000000,
+          fields: {
+            token: mockTokensBalance.data[0],
+          },
+          unlockedAmount: 455000000000,
         },
-        fees: {
-          Initialisation: '0.1 LSK',
-          Transaction: '0.1 LSK',
-        },
+        fees: [
+          {
+            title: 'Transaction',
+            value: '0 LSK',
+            components: [],
+          },
+          {
+            title: 'Message',
+            value: '0 LSK',
+            isHidden: true,
+            components: [],
+          },
+        ],
         selectedPriority: { selectedIndex: 1 },
       })
     );
