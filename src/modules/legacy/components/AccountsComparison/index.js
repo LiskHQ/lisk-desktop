@@ -6,9 +6,9 @@ import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { useDeprecatedAccount } from '@account/hooks';
+import { useGetInitializationFees } from '@auth/hooks/queries';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import { dustThreshold } from '@wallet/configuration/constants';
 import MigrationDetails from '../MigrationDetails';
 import styles from './reclaim.css';
 
@@ -17,7 +17,11 @@ const AccountsComparison = ({ t }) => {
   useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
   const nonce = wallet.sequence?.nonce;
-  const hasEnoughBalance = Number(wallet.token?.[0]?.availableBalance) >= dustThreshold;
+  const { data: initializationFees } = useGetInitializationFees({
+    address: wallet.summary?.address,
+  });
+  const extraCommandFee = initializationFees?.data?.userAccount;
+  const hasEnoughBalance = Number(wallet.token?.[0]?.availableBalance) >= extraCommandFee;
   const hasAccountInitialized = hasEnoughBalance && Number(nonce) >= 0;
 
   return (
@@ -48,7 +52,7 @@ const AccountsComparison = ({ t }) => {
           <li className={`${styles.step} ${hasAccountInitialized ? styles.check : styles.green}`}>
             <div>
               {t('Deposit at least {{amount}} LSK to your new account', {
-                amount: fromRawLsk(dustThreshold),
+                amount: fromRawLsk(extraCommandFee),
               })}
               <Tooltip position="right" size="m">
                 <>

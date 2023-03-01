@@ -1,14 +1,12 @@
 /* eslint-disable max-statements */
 import React, { useMemo } from 'react';
 import { withRouter } from 'react-router';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useGetInitializationFees } from '@auth/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
+import { useTransactionFee } from '@transaction/hooks/useTransactionFee/useTransactionFee';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';
-import { toRawLsk } from '@token/fungible/utils/lsk';
 import { splitModuleAndCommand } from 'src/modules/transaction/utils';
-import { parseSearchParams } from 'src/utils/searchParams';
 import styles from './summary.css';
 
 const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
@@ -19,12 +17,8 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
   const commandParams = {
     amount: wallet.legacy?.balance,
   };
-  const { tokenID } = parseSearchParams(history.location.search);
 
-  const { data: tokens } = useTokensBalance({ config: { params: { tokenID } } });
-  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
-
-  const [selectedPriority, , priorityOptions] = useTransactionPriority();
+  const [selectedPriority] = useTransactionPriority();
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const transactionJSON = useMemo(
     () => ({
@@ -39,18 +33,19 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
     }),
     [wallet.legacy?.balance, module, command, wallet.sequence?.nonce, wallet.summary?.publicKey]
   );
-
-  const { minFee } = useTransactionFeeCalculation({
-    selectedPriority,
-    priorityOptions,
-    token,
-    wallet,
-    transactionJSON,
+  const { data: initializationFees } = useGetInitializationFees({
+    address: wallet.summary?.address,
   });
 
-  // @TODO: This issue should be resolved with #4632
-  const accountInitializationFee = 0.04;
-  transactionJSON.fee = toRawLsk(+minFee.value + accountInitializationFee);
+  const { transactionFee } = useTransactionFee({
+    transactionJSON,
+    selectedPriority,
+    isFormValid: true,
+    senderAddress: wallet.summary?.address,
+    extraCommandFee: initializationFees?.data?.userAccount,
+  });
+
+  transactionJSON.fee = transactionFee;
 
   const onSubmit = () => {
     nextStep({

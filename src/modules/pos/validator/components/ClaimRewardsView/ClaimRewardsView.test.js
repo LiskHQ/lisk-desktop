@@ -10,7 +10,7 @@ jest.mock('@walletconnect/sign-client', () => ({
   init: jest.fn().mockResolvedValue(Promise.resolve({ mock: true })),
 }));
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 
 jest.mock('@network/hooks/useCommandsSchema');
@@ -18,12 +18,12 @@ jest.mock('@auth/hooks/queries');
 
 describe('ClaimRewardsView', () => {
   useAuth.mockReturnValue({ data: mockAuth });
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.commands.reduce(
+  useCommandSchema.mockReturnValue({
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
-    )
-  );
+    ),
+  });
 
   it('should render properly', () => {
     renderWithRouterAndQueryClient(ClaimRewardsView);

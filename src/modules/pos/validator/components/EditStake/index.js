@@ -30,7 +30,7 @@ import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
 import { useValidators, usePosConstants, useSentStakes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
-import { extractValidatorCommission } from '../../utils';
+import { convertCommissionToPercentage } from '../../utils';
 import { useStakesRetrieved } from '../../store/actions/staking';
 
 const getTitles = (t) => ({
@@ -183,7 +183,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <p>{validator.name}</p>
                 <p>{validator.address}</p>
                 <p>
-                  Commission: <span>{extractValidatorCommission(validator.commission)}%</span>
+                  Commission: <span>{convertCommissionToPercentage(validator.commission)}%</span>
                 </p>
               </BoxInfoText>
               <label className={styles.fieldGroup}>

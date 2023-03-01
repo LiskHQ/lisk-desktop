@@ -10,24 +10,26 @@ describe('Utils: moduleCommand', () => {
   describe('getModuleCommandSenderLabel', () => {
     it('should return a dictionary of strings', () => {
       const t = jest.fn(str => str);
-      const dict = getModuleCommandSenderLabel(t);
-      const label = dict[MODULE_COMMANDS_NAME_MAP.transfer];
+      Object.values(MODULE_COMMANDS_NAME_MAP).forEach((moduleCommand) => {
+        const label = getModuleCommandSenderLabel(t)[moduleCommand];
 
-      expect(label).toBeDefined();
-      expect(typeof label).toBe('string');
-      expect(t).toHaveBeenCalled();
+        expect(label).toBeDefined();
+        expect(typeof label).toBe('string');
+        expect(t).toHaveBeenCalledWith(label);
+      });
     });
   });
 
   describe('getModuleCommandTitle', () => {
     it('should return a dictionary of strings', () => {
       const t = jest.fn(str => str);
-      const dict = getModuleCommandTitle(t);
-      const label = dict[MODULE_COMMANDS_NAME_MAP.transfer];
+      Object.values(MODULE_COMMANDS_NAME_MAP).forEach((moduleCommand) => {
+        const label = getModuleCommandTitle(t)[moduleCommand];
 
-      expect(label).toBeDefined();
-      expect(typeof label).toBe('string');
-      expect(t).toHaveBeenCalled();
+        expect(label).toBeDefined();
+        expect(typeof label).toBe('string');
+        expect(t).toHaveBeenCalledWith(label);
+      });
     });
   });
 

@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import classNames from 'classnames';
 import BoxHeader from '@theme/box/header';
 import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import TxComposer from '@transaction/components/TxComposer';
 import { useCurrentAccount } from '@account/hooks';
 import { QueryTable } from '@theme/QueryTable';
 import getRewardsClaimableHeader from '@pos/validator/components/ClaimRewardsForm/utils/getRewardsClaimableHeader';
 import RewardsClaimableRow from '@pos/validator/components/ClaimRewardsForm/RewardsClaimableRow';
 import styles from './ClaimRewardsForm.css';
+import { usePosConstants } from '../../hooks/queries';
 
 const ClaimRewardsForm = ({ nextStep }) => {
   const { t } = useTranslation();
-  const [{ metadata: { address } }] = useCurrentAccount();
+  const [
+    {
+      metadata: { address },
+    },
+  ] = useCurrentAccount();
   const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
+  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
+  const { data: tokens } = useTokensBalance({
+    config: { params: { tokenID: posConstants?.data?.posTokenID, address } },
+    options: { enabled: !isGettingPosConstants },
+  });
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -27,7 +39,8 @@ const ClaimRewardsForm = ({ nextStep }) => {
 
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.claimRewards,
-    isValid: rewardsClaimable?.data?.length > 0,
+    isFormValid: rewardsClaimable?.data?.length > 0 && !!token,
+    fields: { token },
   };
 
   const rewardsClaimableHeader = getRewardsClaimableHeader(t);

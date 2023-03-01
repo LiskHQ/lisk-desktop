@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "fees": Array [
+          Object {
+            "components": Array [
+              Object {
+                "type": "bytesFee",
+                "value": 328000n,
+              },
+            ],
+            "title": "Transaction",
+            "value": "10.00328 LSK",
+          },
+          Object {
+            "components": Array [],
+            "isHidden": true,
+            "title": "Message",
+            "value": "0 LSK",
+          },
+        ],
+        "formProps": Object {
+          "composedFees": Array [
+            Object {
+              "components": Array [
+                Object {
+                  "type": "bytesFee",
+                  "value": 328000n,
+                },
+              ],
+              "title": "Transaction",
+              "value": "10.00328 LSK",
+            },
+            Object {
+              "components": Array [],
+              "isHidden": true,
+              "title": "Message",
+              "value": "0 LSK",
+            },
+          ],
+          "extraCommandFee": "1000000000",
+          "fields": Object {
+            "token": Object {
+              "availableBalance": 1500000000,
+              "chainName": "Lisk",
+              "denomUnits": Array [
+                Object {
+                  "decimals": 8,
+                  "denom": "lsk",
+                },
+              ],
+              "lockedBalances": Array [
+                Object {
+                  "amount": "10000000000",
+                  "moduleID": "5",
+                },
+              ],
+              "symbol": "LSK",
+              "tokenID": "0000000100000000",
+            },
+          },
+          "isFormValid": true,
+          "moduleCommand": "pos:registerValidator",
+        },
+        "selectedPriority": Object {
+          "selectedIndex": 0,
+          "title": "Normal",
+          "value": 0,
+        },
+        "transactionJSON": Object {
+          "command": "registerValidator",
+          "fee": "1000328000",
+          "module": "pos",
+          "nonce": "0",
+          "params": Object {
+            "blsKey": "830ce8c4a0b4f40b9b2bd2f16e835676b003ae28ec367432af9bfaa4d5201051786643620eff288077c1e7a8415c0285",
+            "generatorKey": "dcad7c69505d549803fb6a755e81cdcb0a33ea95b6476e2585149f8a42c9c882",
+            "name": "some_name",
+            "proofOfPossession": "722b19e4b302e3e13ef097b417b651feadc8e28754530119911561c27b9478cdcd6b7ada331037bbda778b0b325aab5a79f34b31ea780acd01bf67d38268c43ea0ea75a5e757a76165253e1e20680c4cfd884ed63f5663c7b940e67162d5f715",
+          },
+          "senderPublicKey": "cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535",
+          "signatures": Array [],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;

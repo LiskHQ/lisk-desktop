@@ -1,7 +1,6 @@
 import { transactions } from '@liskhq/lisk-client';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
-
-export const ZERO_FEE = BigInt(0);
+import { fromTransactionJSON } from '../../utils/encoding';
 
 /**
  * This is solution uses the same logic as implemented in transactions utility.
@@ -9,35 +8,34 @@ export const ZERO_FEE = BigInt(0);
  *
  * @param {object} transaction transaction object in JSON format
  * @param {object} paramsSchema transaction schema as retrieved from Service
- * @param {object} auth the auth WS response data
+ * @param {int} numberOfSignatures number of signatures on the sender account
  * @param {array} priorities list of objects with value (number) and title (string), and selected (boolean)
  * @param {boolean} isTxValid defines if the form was validated successfully
  * @param {bigint} extraFee
  *
  * @returns {bigint} the transaction fee in Beddows
  */
+
 export const computeTransactionMinFee = (
-  transaction,
+  transactionJSON,
   paramsSchema,
-  auth,
-  isTxValid,
+  numberOfSignatures,
+  extraCommandFee
 ) => {
-  if (!isTxValid || !paramsSchema || !auth) return ZERO_FEE;
-
-  // @todo define the numberOfEmptySignatures based on the auth and number
-  // of existing signatures in the transaction
-
   const options = {
-    numberOfSignatures: auth.numberOfSignatures || 1,
+    numberOfSignatures,
     numberOfEmptySignatures: 0,
+    additionalFee: BigInt(extraCommandFee),
   };
-  const minFee = transactions.computeMinFee(
-    transaction,
-    paramsSchema,
-    options,
-  );
 
-  return minFee;
+  let convertedTx = {};
+  try {
+    convertedTx = fromTransactionJSON(transactionJSON, paramsSchema);
+  } catch (exp) {
+    convertedTx = {};
+  }
+
+  return transactions.computeMinFee(convertedTx, paramsSchema, options);
 };
 
 export const getParamsSchema = (transaction, schemas) => {

@@ -13,7 +13,7 @@ import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditStake from './index';
 import { useValidators, useSentStakes, usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
-import { extractValidatorCommission } from '../../utils';
+import { convertCommissionToPercentage } from '../../utils';
 
 jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
@@ -86,7 +86,7 @@ describe('EditStake', () => {
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
     expect(screen.getByText('Available balance:')).toBeTruthy();
     expect(screen.getByText('Commission:')).toBeTruthy();
-    expect(screen.getByText(`${extractValidatorCommission(validator.commission)}%`)).toBeTruthy();
+    expect(screen.getByText(`${convertCommissionToPercentage(validator.commission)}%`)).toBeTruthy();
     expect(
       screen.getByText(
         `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
