@@ -1,0 +1,48 @@
+.DeviceToast {
+  display: flex;
+  color: var(--color-white);
+
+  & .resetButtonStyles {
+    background: none;
+    outline: none;
+    border: none;
+  }
+
+  & .selectLinkLabel {
+    cursor: pointer;
+    margin-left: 4px;
+    text-decoration: underline;
+    color: var(--color-ultramarine-blue);
+  }
+
+  & .closeIcon {
+    margin-left: 12px;
+    align-items: center;
+    box-sizing: border-box;
+    color: var(--color-ultramarine-blue);
+    cursor: pointer;
+    display: flex;
+    height: 16px;
+    justify-content: center;
+    width: 16px;
+
+    &::before,
+    &::after {
+      background-color: currentColor;
+      color: inherit;
+      content: '';
+      height: 16px;
+      position: absolute;
+      width: 3px;
+      border-radius: 3px;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+}

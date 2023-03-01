@@ -11,6 +11,7 @@ import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle
 import ApplicationManagementDropDown from '@blockchainApplication/manage/components/ApplicationManagementDropDown';
 import SearchBar from 'src/modules/search/manager/searchBarManager';
 import { useCurrentAccount } from '@account/hooks';
+import { HardwareWalletStatus } from '@hardwareWallet/components/HardwareWalletStatus';
 import { isEmpty } from 'src/utils/helpers';
 import NavigationButtons from '@common/components/bars/topBar/navigationButtons';
 import styles from './topBar.css';
@@ -39,6 +40,7 @@ const TopBar = ({ stakeCount, location, history }) => {
         <SearchBar className={styles.searchBarProp} />
       </div>
       <div className={styles.group}>
+        <HardwareWalletStatus />
         <Tooltip
           className={styles.tooltipWrapper}
           size="maxContent"

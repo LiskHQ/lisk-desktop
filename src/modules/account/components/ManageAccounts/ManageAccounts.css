@@ -80,3 +80,26 @@
   flex-direction: column;
   padding: 20px 24px;
 }
+
+.loaderWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  & > .spinner {
+    color: var(--color-ultramarine-blue);
+    margin: 10px 0px 20px 0px;
+
+    & > span {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  & > span {
+    color: var(--color-slate-gray);
+    font-size: var(--paragraph-font-size-s);
+  }
+}

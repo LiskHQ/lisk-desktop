@@ -12,7 +12,6 @@ const initialState = {
   pins: [],
   applications: {},
   current: null,
-  node: {},
 };
 
 /**
@@ -36,19 +35,19 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
 /**
  *
  * @param {Object} state
- * @param {type: String, data: Object} action
+ * @param {type: String, app: Object, apps: Object, chainId: String} action
  */
-export const applications = (state = initialState.applications, { type, application, chainId }) => {
+export const applications = (state = initialState.applications, { type, app, apps, chainId }) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
-      // In cases where a new node for an existing application is being added,
-      // the new node url should be appended to the apis array of the application
-      if (application.chainID in state) {
-        state[application.chainID].serviceURLs.push(application.serviceURLs);
-      } else {
-        state[application.chainID] = application;
-      }
-      return state;
+      return { ...state, [app.chainID]: app };
+
+    case actionTypes.setApplications: {
+      return apps.reduce(
+        (result, application) => ({ ...result, [application.chainID]: application }),
+        { ...state }
+      );
+    }
 
     case actionTypes.deleteApplicationByChainId: {
       delete state[chainId];
@@ -65,24 +64,10 @@ export const applications = (state = initialState.applications, { type, applicat
  * @param {Object} state
  * @param {type: String, application: Object} action
  */
-export const current = (state = initialState.current, { type, application }) => {
+export const current = (state = initialState.current, { type, app }) => {
   switch (type) {
     case actionTypes.setCurrentApplication:
-      return application;
-    default:
-      return state;
-  }
-};
-
-/**
- *
- * @param {Object} state
- * @param {type: String, nodeInfo: Object} action
- */
-export const node = (state = initialState.node, { type, nodeInfo }) => {
-  switch (type) {
-    case actionTypes.setApplicationNode:
-      return nodeInfo;
+      return app;
     default:
       return state;
   }
@@ -92,11 +77,13 @@ const persistConfig = {
   storage,
   key: 'blockChainApplications',
   whitelist: ['pins', 'applications'],
-  blacklist: ['current', 'node'],
+  blacklist: ['current'],
 };
 
 const blockChainApplicationsReducer = combineReducers({
-  pins, applications, current, node,
+  pins,
+  applications,
+  current,
 });
 
 export const blockChainApplications = persistReducer(persistConfig, blockChainApplicationsReducer);

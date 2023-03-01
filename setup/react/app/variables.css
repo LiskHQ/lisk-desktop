@@ -111,6 +111,8 @@ or "warn/action" ineastd of "red/green"
   --color-ufo-green: #00a04b;
   --color-deep-green: #00d563;
   --color-jade-green: #2bd67b;
+  --color-jade-green-border: #2bd67b33;
+  --color-jade-green-background: #2bd67b0d;
   --color-pale-pink: #ffd0d1;
   --color-silver: #eef0f7;
   --color-black: #000;
@@ -133,6 +135,8 @@ or "warn/action" ineastd of "red/green"
   --color-constant-white: #fff;
   --color-danger: #ff7721;
   --color-red: #ff4557;
+  --color-red-border: #ff455733;
+  --color-red-background: #ff45570d;
   --color-content: #19224d;
   --color-content-light: #0c152e;
   --color-primary-very-light: #e8f0fa;
@@ -180,6 +184,8 @@ or "warn/action" ineastd of "red/green"
   --color-tooltip-bg: rgb(255, 255, 255, 0.7);
   --color-tooltip-arrow: rgb(255, 255, 255, 0.7);
   --color-warning-border: #f7e36d;
+  --color-warning-border-transparent: #f7e36d33;
+  --color-warning-border-background-transparent: #f7e36d19;
   --color-warning-bg: #fffce8;
   --color-tx-priority-btn-bg: var(--color-ink-blue);
   --color-tx-priority-btn-default: var(--color-maastricht-blue);
@@ -199,6 +205,7 @@ or "warn/action" ineastd of "red/green"
   --color-token-card-shadow: #eaeaea5c;
   --color-stakes-available: #4070f41a;
   --color-search-bar-background: #2e3855;
+  --color-success: #25ca95;
   --color-edit-button-background: var(--color-ghost-white);
   --color-edit-button-border: var(--color-very-light-gray);
 
@@ -283,6 +290,7 @@ or "warn/action" ineastd of "red/green"
   --color-strong-ink-blue: #254898;
   --tab-border-color: #4070f4;
   --color-active-tab: #000;
+  --color-zodiac-blue: #fff;
   --color-zodiac-blue--satin-deep-black: var(--color-satin-deep-black);
   --color-periwinkle-blue--manatee-gray: var(--color-manatee-gray);
   --color-search-container: var(--color-body-bg);

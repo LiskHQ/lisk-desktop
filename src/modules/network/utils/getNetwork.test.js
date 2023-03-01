@@ -23,7 +23,7 @@ describe('Utils: getNetwork', () => {
   describe('getNetworkName', () => {
     it('should return alphanet if network config does not have name set', () => {
       const network = {};
-      expect(getNetworkName(network)).toEqual('alphanet');
+      expect(getNetworkName(network)).toEqual('devnet');
     });
 
     it('should return customNode', () => {

@@ -64,6 +64,8 @@ export const useTransactionUpdate = (isLoading) => {
   }, [chainID, isLoading]);
 
   useEffect(() => {
+    if (!client.socket) return () => {};
+
     connect();
     return () => client.socket.off('new.transactions');
   }, [chainID]);

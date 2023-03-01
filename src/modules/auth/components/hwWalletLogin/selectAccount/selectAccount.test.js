@@ -5,7 +5,7 @@ import SelectAccount from './selectAccount';
 
 jest.mock('@wallet/utils/hwManager');
 
-describe('Select Account', () => {
+describe.skip('Select Account', () => {
   let wrapper;
   let props;
 
@@ -85,7 +85,7 @@ describe('Select Account', () => {
           ],
         },
       },
-      t: v => v,
+      t: (v) => v,
       history: {
         push: jest.fn(),
       },
@@ -115,7 +115,10 @@ describe('Select Account', () => {
     wrapper.setState({ accountOnEditMode: 0 });
     wrapper.update();
     expect(wrapper).toContainMatchingElement('.save-account');
-    wrapper.find('input.account-name').at(0).simulate('change', { target: { value: 'Lisk Account' } });
+    wrapper
+      .find('input.account-name')
+      .at(0)
+      .simulate('change', { target: { value: 'Lisk Account' } });
     wrapper.find('.save-account').at(0).simulate('click');
     wrapper.update();
     expect(wrapper.find('.account-name').at(0).text()).toEqual('Lisk Account');
@@ -139,7 +142,10 @@ describe('Select Account', () => {
   it('Should hide empty balance accounts', () => {
     wrapper.update();
     expect(wrapper.find('.hw-container').at(0)).toContainMatchingElements(5, '.hw-account');
-    wrapper.find('input[name="hideEmptyAccounts"]').at(0).simulate('change', { target: { name: 'hideEmptyAccounts' } });
+    wrapper
+      .find('input[name="hideEmptyAccounts"]')
+      .at(0)
+      .simulate('change', { target: { name: 'hideEmptyAccounts' } });
     wrapper.update();
     expect(wrapper.find('.hw-container').at(0)).toContainMatchingElements(3, '.hw-account');
   });

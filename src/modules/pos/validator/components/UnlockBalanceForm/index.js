@@ -16,9 +16,7 @@ import { usePosConstants } from '../../hooks/queries';
 const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const { data: latestBlock } = useLatestBlock();
-  const { pendingUnlockableUnlocks, sentStakesAmount, unlockableAmount } =
-    useUnlockableCalculator();
-
+  const { lockedPendingUnlocks, sentStakesAmount, unlockedAmount } = useUnlockableCalculator();
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
   const { data: tokens } = useTokensBalance({
     config: { params: { tokenID: posConstants?.posTokenID } },
@@ -37,11 +35,11 @@ const UnlockBalanceForm = ({ nextStep }) => {
 
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
-    isFormValid: unlockableAmount > 0,
-    unlockableAmount,
     fields: {
       token: dposToken,
     },
+    isFormValid: unlockedAmount > 0,
+    unlockedAmount,
   };
 
   return (
@@ -49,7 +47,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
       <TxComposer
         onConfirm={onConfirm}
         formProps={unlockBalanceFormProps}
-        buttonTitle={getUnlockButtonTitle(unlockableAmount, t)}
+        buttonTitle={getUnlockButtonTitle(unlockedAmount, t)}
       >
         <>
           <BoxHeader className={styles.header}>
@@ -63,9 +61,9 @@ const UnlockBalanceForm = ({ nextStep }) => {
             </p>
             <BalanceTable
               sentStakesAmount={sentStakesAmount}
-              unlockableAmount={unlockableAmount}
+              unlockedAmount={unlockedAmount}
               currentBlockHeight={latestBlock?.height ?? 0}
-              pendingUnlockableUnlocks={pendingUnlockableUnlocks}
+              lockedPendingUnlocks={lockedPendingUnlocks}
             />
           </BoxContent>
         </>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -11,6 +11,8 @@ import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import { PrimaryButton } from 'src/theme/buttons';
+import { settingsUpdated } from 'src/redux/actions';
+import { selectSettings } from 'src/redux/selectors';
 import { updateCurrentAccount, updateAccount } from '../../store/action';
 import styles from './EditAccountForm.css';
 
@@ -39,12 +41,30 @@ const EditAccountForm = ({ nextStep }) => {
   } = useForm({ resolver: yupResolver(editAccountFormSchema) });
   const formValues = watch();
   const [currentAccount] = useCurrentAccount();
+  const settings = useSelector(selectSettings);
 
   const onSubmit = async ({ accountName }) => {
-    dispatch(
-      updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })
-    );
     dispatch(updateCurrentAccount({ name: accountName }));
+    if (currentAccount.metadata.isHW) {
+      const currentHWAccounts = settings.hardwareAccounts[currentAccount.hw.model];
+      const currentAccountIndex = currentAccount.metadata.accountIndex;
+      const selectedAccount = currentHWAccounts.find(
+        (acc) => acc.metadata.accountIndex === currentAccountIndex
+      );
+      const updatedHWAccounts = currentHWAccounts.splice(currentAccountIndex, 1, selectedAccount);
+      dispatch(
+        settingsUpdated({
+          hardwareAccounts: {
+            ...settings.hardwareAccounts,
+            [currentAccount.hw.model]: updatedHWAccounts,
+          },
+        })
+      );
+    } else {
+      dispatch(
+        updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })
+      );
+    }
     nextStep({
       accountName,
     });

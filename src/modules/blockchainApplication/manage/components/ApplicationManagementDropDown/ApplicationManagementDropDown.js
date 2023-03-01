@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { getLogo } from 'src/redux/actions';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
@@ -19,7 +20,7 @@ const ApplicationManagementList = ({ history }) => {
         onClick={handleShowApplications}
       >
         <div className={styles.chainLogo}>
-          <Icon name="liskLogoWhiteNormalized" />
+          <img src={getLogo({ logo: currentApplication?.logo || {} })} />
         </div>
         <span>{currentApplication?.chainName}</span>
         <Icon name="dropdownArrowIcon" />

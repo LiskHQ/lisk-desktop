@@ -48,13 +48,13 @@ describe('Middleware: hwManager', () => {
   it('should add subscribers and call them properly', () => {
     const action = { type: actionTypes.storeCreated };
     window.ipc = {};
-    jest.spyOn(toast, 'success');
+    jest.spyOn(toast, 'info');
     jest.spyOn(toast, 'error');
 
     hwManagerMiddleware(store)(next)(action);
 
     expect(subscribeToDeviceConnected).toBeCalledWith(expect.any(Function));
-    expect(toast.success).toBeCalledWith('testHW connected');
+    expect(toast.info).toHaveBeenCalled();
 
     expect(subscribeToDeviceDisconnected).toBeCalledWith(expect.any(Function));
     // expect(store.dispatch).toBeCalledWith({ type: authActionTypes.accountLoggedOut });

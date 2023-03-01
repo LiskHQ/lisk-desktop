@@ -44,8 +44,8 @@ const defaultAccount = {
 export const useDeprecatedAccount = (accountInfo) => {
   const [currentAccount] = useCurrentAccount();
   const dispatch = useDispatch();
-  const { pubkey, address } = accountInfo || currentAccount.metadata || {};
-  const [account, setAccount] = useState(defaultAccount);
+  const { pubkey, address, hwInfo } = accountInfo || currentAccount.metadata || {};
+  const [account, setAccount] = useState({ ...defaultAccount, hwInfo });
 
   const {
     data: sentStakes,

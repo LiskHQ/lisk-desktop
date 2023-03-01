@@ -195,6 +195,10 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  selectHardwareDeviceModal: {
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
   stakingQueue: {
     isPrivate: true,
     forbiddenTokens: [],
@@ -271,7 +275,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  RequestView: {
+  requestView: {
     isPrivate: false,
     forbiddenTokens: [],
   },
