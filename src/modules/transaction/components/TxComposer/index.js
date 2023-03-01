@@ -111,7 +111,7 @@ const TxComposer = ({
     <Box className={className}>
       {children}
       <TransactionPriority
-        token={token}
+        token={formProps.fields.token}
         fee={transactionFee}
         minFee={minimumFee}
         customFee={customFee ? customFee.value : undefined}

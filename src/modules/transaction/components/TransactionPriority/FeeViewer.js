@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromRawDenom, convertToRawDenom } from '@token/fungible/utils/lsk';
 import Input from 'src/theme/Input/Input';
 import Icon from 'src/theme/Icon';
 import Spinner from 'src/theme/Spinner';
 import styles from './TransactionPriority.css';
 
-const isCustomFeeValid = (value, maxFee, minFee) => {
+const isCustomFeeValid = (value, maxFee, minFee, token) => {
   if (!value) return false;
-  const rawValue = toRawLsk(parseFloat(value));
+  const rawValue = convertToRawDenom(parseFloat(value), token);
 
   if (rawValue > maxFee) {
     return false;
   }
 
-  return rawValue >= toRawLsk(minFee);
+  return rawValue >= convertToRawDenom(minFee, token);
 };
 
 // eslint-disable-next-line max-statements
@@ -27,6 +27,7 @@ const FeesViewer = ({
   minFee,
   fees,
   setCustomFee,
+  token,
 }) => {
   const { t } = useTranslation();
   const [showEditIcon, setShowEditIcon] = useState(false);
@@ -46,7 +47,7 @@ const FeesViewer = ({
     e.preventDefault();
     const newValue = e.target.value;
     onInputFee(newValue);
-    if (isCustomFeeValid(newValue, maxFee, minFee)) {
+    if (isCustomFeeValid(newValue, maxFee, minFee, token)) {
       setCustomFee({ value: newValue, feedback: '', error: false });
     } else {
       setCustomFee({ value: undefined, feedback: 'invalid custom fee', error: true });
@@ -78,8 +79,8 @@ const FeesViewer = ({
         onChange={onInputChange}
         onBlur={onInputBlur}
         onFocus={onInputFocus}
-        status={!isCustomFeeValid(feeValue, maxFee, minFee) ? 'error' : 'ok'}
-        feedback={`fee must be between ${minFee} and ${fromRawLsk(maxFee)}`}
+        status={!isCustomFeeValid(feeValue, maxFee, minFee, token) ? 'error' : 'ok'}
+        feedback={`fee must be between ${minFee} and ${convertFromRawDenom(maxFee, token)}`}
       />
     );
   }
