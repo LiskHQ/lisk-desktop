@@ -14,47 +14,49 @@ jest.mock('@token/fungible/hooks/queries');
 beforeEach(() => jest.clearAllMocks());
 
 describe('useGetInitializationFees hook', () => {
+  const address = 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg';
+
   it('should not call the useInvoke query if token is still loading', () => {
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: true });
     useAuth.mockReturnValue({ data: mockAuth, isLoading: false });
     const { result } = renderHook(
-      () => useGetInitializationFees({ address: 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg' }),
+      () => useGetInitializationFees({ address }),
       { wrapper }
     );
 
     expect(result.current.data).toBe(null);
   });
 
-  it('does not call the useInoke query if auth is still loading', () => {
+  it('does not call the useInvoke query if auth is still loading', () => {
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
     useAuth.mockReturnValue({ data: mockAuth, isLoading: true });
     const { result } = renderHook(
-      () => useGetInitializationFees({ address: 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg' }),
+      () => useGetInitializationFees({ address }),
       { wrapper }
     );
 
     expect(result.current.data).toBe(null);
   });
 
-  it('does not call the useInoke query if both auth and token is still loading', () => {
+  it('does not call the useInvoke query if both auth and token is still loading', () => {
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: true });
     useAuth.mockReturnValue({ data: mockAuth, isLoading: true });
     const { result } = renderHook(
-      () => useGetInitializationFees({ address: 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg' }),
+      () => useGetInitializationFees({ address }),
       { wrapper }
     );
 
     expect(result.current.data).toBe(null);
   });
 
-  it('does not call the useInoke query if account is not initialized', async () => {
+  it('does not call the useInvoke query if account is not initialized', async () => {
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
     useAuth.mockReturnValue({
       data: mockAuth,
       isLoading: false,
     });
     const { result, waitFor } = renderHook(
-      () => useGetInitializationFees({ address: 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg' }),
+      () => useGetInitializationFees({ address }),
       { wrapper }
     );
 
@@ -66,14 +68,14 @@ describe('useGetInitializationFees hook', () => {
     });
   });
 
-  it('does not call the useInoke query if account is not initialized', () => {
+  it('does not call the useInvoke query if account is not initialized', () => {
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
     useAuth.mockReturnValue({
       data: { ...mockAuth, data: { ...mockAuth.data, nonce: '2' } },
       isLoading: false,
     });
     const { result } = renderHook(
-      () => useGetInitializationFees({ address: 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg' }),
+      () => useGetInitializationFees({ address }),
       { wrapper }
     );
 

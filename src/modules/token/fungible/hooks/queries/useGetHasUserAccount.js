@@ -5,8 +5,7 @@ export const useGetHasUserAccount = ({ options = {}, config: customConfig = {}, 
     data: {
       endpoint: 'token_hasUserAccount',
       params: {
-        address: customConfig.params?.address,
-        tokenID: customConfig.params?.tokenID,
+        ...customConfig.params,
       },
     },
   };

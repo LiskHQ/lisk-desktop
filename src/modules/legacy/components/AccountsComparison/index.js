@@ -6,7 +6,7 @@ import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { useDeprecatedAccount } from '@account/hooks';
-import { useGetInitializationFees } from '@auth/hooks/queries';
+import { useGetInitializationFees } from '@token/fungible/hooks/queries';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import MigrationDetails from '../MigrationDetails';

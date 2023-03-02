@@ -15,49 +15,7 @@ import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
 
 const { transfer, stake, reclaim, registerMultisignature } = MODULE_COMMANDS_NAME_MAP;
-
-// @todo import the following 4 values from lisk-elements (#4497)
-const ED25519_PUBLIC_KEY_LENGTH = 32;
-export const MESSAGE_TAG_MULTISIG_REG = 'LSK_RMSG_';
-const multisigRegMsgSchema = {
-  $id: '/auth/command/regMultisigMsg',
-  type: 'object',
-  required: ['address', 'nonce', 'numberOfSignatures', 'mandatoryKeys', 'optionalKeys'],
-  properties: {
-    address: {
-      dataType: 'bytes',
-      fieldNumber: 1,
-      minLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
-      maxLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
-    },
-    nonce: {
-      dataType: 'uint64',
-      fieldNumber: 2,
-    },
-    numberOfSignatures: {
-      dataType: 'uint32',
-      fieldNumber: 3,
-    },
-    mandatoryKeys: {
-      type: 'array',
-      items: {
-        dataType: 'bytes',
-        minLength: ED25519_PUBLIC_KEY_LENGTH,
-        maxLength: ED25519_PUBLIC_KEY_LENGTH,
-      },
-      fieldNumber: 4,
-    },
-    optionalKeys: {
-      type: 'array',
-      items: {
-        dataType: 'bytes',
-        minLength: ED25519_PUBLIC_KEY_LENGTH,
-        maxLength: ED25519_PUBLIC_KEY_LENGTH,
-      },
-      fieldNumber: 5,
-    },
-  },
-};
+const MESSAGE_TAG_MULTISIG_REG = 'LSK_RMSG_';
 
 export const convertStringToBinary = (value) => Buffer.from(value, 'hex');
 export const convertBinaryToString = (value) => {
@@ -248,7 +206,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
   return signedTransaction;
 };
 
-const signMultisigRegParams = (chainIDBuffer, transaction, privateKeyBuffer) => {
+const signMessageSignature = (chainIDBuffer, transaction, privateKeyBuffer, messageSignature) => {
   const message = {
     mandatoryKeys: transaction.params.mandatoryKeys,
     optionalKeys: transaction.params.optionalKeys,
@@ -257,12 +215,12 @@ const signMultisigRegParams = (chainIDBuffer, transaction, privateKeyBuffer) => 
     nonce: transaction.nonce,
   };
 
-  const data = codec.codec.encode(multisigRegMsgSchema, message);
+  const data = codec.codec.encode(messageSignature, message);
   return cryptography.ed.signData(MESSAGE_TAG_MULTISIG_REG, chainIDBuffer, data, privateKeyBuffer);
 };
 
 // eslint-disable-next-line max-statements
-const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) => {
+const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, options) => {
   const moduleCommand = joinModuleAndCommand(transaction);
   const isGroupRegistration = moduleCommand === registerMultisignature;
   const chainIDBuffer = Buffer.from(chainID, 'hex');
@@ -283,7 +241,9 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
 
     if (senderIndex > -1) {
-      const memberSignature = signMultisigRegParams(chainIDBuffer, transaction, privateKeyBuffer);
+      const { messageSchema } = options;
+      const memberSignature = signMessageSignature(chainIDBuffer, transaction, privateKeyBuffer, messageSchema);
+  
       // @todo use correct index once SDK exposes the sort endpoint (#4497)
       const signatures = [...Array(members.length).keys()].map((index) => {
         if (index === senderIndex) return memberSignature;
@@ -360,7 +320,7 @@ const signUsingHW = async (wallet, schema, chainID, moduleCommand, transaction) 
   return { ...signedTransaction, id };
 };
 
-export const sign = async (wallet, schema, chainID, transaction, privateKey, senderAccount) => {
+export const sign = async (wallet, schema, chainID, transaction, privateKey, senderAccount, options) => {
   if (!isEmpty(wallet.hwInfo)) {
     const moduleCommand = joinModuleAndCommand(transaction);
     return signUsingHW(wallet, schema, chainID, moduleCommand, transaction);
@@ -370,7 +330,7 @@ export const sign = async (wallet, schema, chainID, transaction, privateKey, sen
     return signMultisigUsingPrivateKey(schema, chainID, transaction, privateKey, senderAccount);
   }
 
-  return signUsingPrivateKey(wallet, schema, chainID, transaction, privateKey);
+  return signUsingPrivateKey(wallet, schema, chainID, transaction, privateKey, options);
 };
 
 /**
@@ -394,7 +354,8 @@ const signMultisigTransaction = async (
   schema,
   chainID,
   privateKey,
-  txInitiatorAccount
+  txInitiatorAccount,
+  options,
 ) => {
   /**
    * Define keys.
@@ -426,7 +387,8 @@ const signMultisigTransaction = async (
       chainID,
       transaction,
       privateKey,
-      isRegisterMultisignature ? senderAccount : txInitiatorAccount
+      isRegisterMultisignature ? senderAccount : txInitiatorAccount,
+      options,
     );
     return [result];
   } catch (e) {
