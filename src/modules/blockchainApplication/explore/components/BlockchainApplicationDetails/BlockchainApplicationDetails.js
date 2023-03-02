@@ -6,19 +6,19 @@ import Box from 'src/theme/box';
 import { useSelector } from 'react-redux';
 import { selectActiveToken } from 'src/redux/selectors';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
+import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
-import { useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
+import { useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './BlockchainApplicationDetails.css';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useBlockchainApplicationMeta';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
 
 const deposit = 5e10;
@@ -38,8 +38,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   });
   const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const { status, lastCertificateHeight, lastUpdated } =
-    aggregatedApplicationData;
+  const { status, lastCertificateHeight, lastUpdated, logo } = aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
@@ -84,7 +83,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   const app = {
     data: {
       ...aggregatedApplicationData,
-      icon: liskLogo,
+      icon: getLogo({ logo }),
       bg: defaultBackgroundImage,
     },
   };
@@ -94,17 +93,14 @@ const BlockchainApplicationDetails = ({ history, location }) => {
       <div className={styles.wrapper}>
         <BlockchainAppDetailsHeader
           application={app}
-          chainAction={(
+          chainAction={
             <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
-          )}
+          }
         />
         <div className={styles.balanceRow}>
-          <ValueAndLabel
-            label={t('Deposited:')}
-            direction="horizontal"
-          >
+          <ValueAndLabel label={t('Deposited:')} direction="horizontal">
             <span className={styles.value}>
               <TokenAmount val={deposit} token={active} />
             </span>
@@ -115,24 +111,20 @@ const BlockchainApplicationDetails = ({ history, location }) => {
             <ValueAndLabel
               key={index}
               className={styles.detail}
-              label={(
+              label={
                 <span className={styles.headerText}>
                   <>
                     {header.text || header}
                     {header.toolTipText && (
                       <Tooltip position="right">
-                        <p>
-                          {header.toolTipText}
-                        </p>
+                        <p>{header.toolTipText}</p>
                       </Tooltip>
                     )}
                   </>
                 </span>
-              )}
+              }
             >
-              <span className={className}>
-                {content}
-              </span>
+              <span className={className}>{content}</span>
             </ValueAndLabel>
           ))}
         </Box>
