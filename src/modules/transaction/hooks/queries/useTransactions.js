@@ -83,10 +83,17 @@ export const useTransactions = ({
     // @todo invalid this transaction by specific unique query with config
   }, [queryClient, setHasUpdate]);
 
+  function getIsEnabled() {
+    const isDisabled = options?.enabled === false;
+    const isGetUpdatePassed = getUpdate ? !!(client.socket || client.http) : true;
+
+    return !isDisabled && isGetUpdatePassed;
+  }
+
   const response = useCustomInfiniteQuery({
     keys,
     config,
-    options: { ...options, enabled: !!(client.socket || client.http) },
+    options: { ...options, enabled: getIsEnabled() },
   });
 
   return {

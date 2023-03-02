@@ -1,8 +1,10 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import client from 'src/utils/api/client';
 import { mockTransactions } from '@transaction/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { LIMIT as defaultLimit } from 'src/const/config';
+import * as useCustomInfiniteQuerySpy from '@common/hooks/useCustomInfiniteQuery';
+import { useCustomInfiniteQuery } from '@common/hooks';
 import { useTransactions } from './useTransactions';
 
 jest.useRealTimers();
@@ -88,5 +90,25 @@ describe('useTransactions hook', () => {
     };
 
     expect(result.current.data).toEqual(expectedResponse);
+  });
+
+  it('should pass enabled === false to useCustomInfiniteQuery when enabled is set to false', async () => {
+    jest.resetAllMocks();
+    jest.spyOn(useCustomInfiniteQuerySpy, 'useCustomInfiniteQuery');
+    const options = { enabled: false };
+    renderHook(() => useTransactions({ options }), { wrapper });
+    expect(useCustomInfiniteQuery).toBeCalledWith(
+      expect.objectContaining({ options: { enabled: false } })
+    );
+  });
+
+  it('should pass enabled === false to useCustomInfiniteQuery when enabled is set to false but getUpdate is set to true', async () => {
+    jest.resetAllMocks();
+    jest.spyOn(useCustomInfiniteQuerySpy, 'useCustomInfiniteQuery');
+    const configuration = { options: { enabled: false }, getUpdate: true };
+    renderHook(() => useTransactions(configuration), { wrapper });
+    expect(useCustomInfiniteQuery).toBeCalledWith(
+      expect.objectContaining({ options: { enabled: false } })
+    );
   });
 });
