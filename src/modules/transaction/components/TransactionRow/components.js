@@ -169,7 +169,7 @@ export const Amount = () => {
 };
 
 export const Fee = ({ t }) => {
-  const { data, activeToken, token } = useContext(TransactionRowContext);
+  const { data, token } = useContext(TransactionRowContext);
 
   return (
     <span className={styles.transactionFeeCell}>
