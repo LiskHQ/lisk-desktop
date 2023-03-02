@@ -11,6 +11,8 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.reportValidatorMisbehavior]: t('Reporter'),
   [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim rewards'),
   [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Edit commission'),
+  [MODULE_COMMANDS_NAME_MAP.registerKeys]: t('Register keys'),
+  [MODULE_COMMANDS_NAME_MAP.registerSidechain]: t(''),
 
 });
 
