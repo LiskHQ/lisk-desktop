@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { getLogo } from 'src/redux/actions';
+import { getLogo } from '@token/fungible/utils/helpers';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
