@@ -2,7 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Box from 'src/theme/box';
-import TokenAmount from '@token/fungible/components/tokenAmount';
+import FormattedNumber from 'src/modules/common/components/FormattedNumber';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import { TertiaryButton, PrimaryButton, OutlineButton } from 'src/theme/buttons';
@@ -20,9 +21,7 @@ const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
 const chainLogo = null;
 
-const RemoveApplicationDetails = ({
-  location, application, onCancel, nextStep,
-}) => {
+const RemoveApplicationDetails = ({ location, application, onCancel, nextStep }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search)?.chainId;
   // TODO: this needs to be reinstated when the set application flow is completed
@@ -30,9 +29,7 @@ const RemoveApplicationDetails = ({
 
   // const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const {
-    chainName, state, address, lastCertificateHeight, lastUpdated,
-  } = application.data;
+  const { chainName, state, address, lastCertificateHeight, lastUpdated } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -108,8 +105,8 @@ const RemoveApplicationDetails = ({
             <a
               className={`${styles.appLink}`}
               target="_blank"
-                // eslint-disable-next-line
-                // TODO: this is just a place holder link pending when its part of the response payload from service
+              // eslint-disable-next-line
+              // TODO: this is just a place holder link pending when its part of the response payload from service
               href={serviceUrl}
             >
               <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
@@ -120,9 +117,7 @@ const RemoveApplicationDetails = ({
             <span>{t('Deposited:')}</span>
             {/* TODO: this is a placeholder value pending when its part of service response */}
             <span>
-              <TokenAmount val={deposit} />
-              {' '}
-              LSK
+              <FormattedNumber val={fromRawLsk(deposit)} /> LSK
             </span>
           </div>
           <Box className={styles.footerDetailsRow}>
@@ -130,24 +125,20 @@ const RemoveApplicationDetails = ({
               <ValueAndLabel
                 key={index}
                 className={styles.detail}
-                label={(
+                label={
                   <span className={styles.headerText}>
                     <>
                       {header.text || header}
                       {header.toolTipText && (
-                      <Tooltip position="right">
-                        <p>
-                          {header.toolTipText}
-                        </p>
-                      </Tooltip>
+                        <Tooltip position="right">
+                          <p>{header.toolTipText}</p>
+                        </Tooltip>
                       )}
                     </>
                   </span>
-                  )}
+                }
               >
-                <span className={className}>
-                  {content}
-                </span>
+                <span className={className}>{content}</span>
               </ValueAndLabel>
             ))}
           </Box>

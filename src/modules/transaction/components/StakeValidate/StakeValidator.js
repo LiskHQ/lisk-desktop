@@ -1,22 +1,28 @@
 import React from 'react';
+import usePosToken from 'src/modules/pos/validator/hooks/usePosToken';
 import StakeItem from '../StakeItem';
 import styles from '../TransactionInfo/TransactionInfo.css'; // @todo create dedicated css file for this component
 
-const ItemList = ({ items, heading }) => (
-  <div className={styles.contentItem}>
-    <span className={styles.contentHeading}>{heading}</span>
-    <div className={styles.stakeItems}>
-      {Object.keys(items).map((address) => (
-        <StakeItem
-          key={`stake-item-${address}`}
-          address={address}
-          stake={items[address]}
-          title={items[address].username}
-        />
-      ))}
+const ItemList = ({ items, heading }) => {
+  const { token } = usePosToken();
+
+  return (
+    <div className={styles.contentItem}>
+      <span className={styles.contentHeading}>{heading}</span>
+      <div className={styles.stakeItems}>
+        {Object.keys(items).map((address) => (
+          <StakeItem
+            key={`stake-item-${address}`}
+            address={address}
+            stake={items[address]}
+            title={items[address].username}
+            token={token}
+          />
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const InfoColumn = ({ title, children, className }) => (
   <div className={`${styles.infoColumn} ${className}`}>

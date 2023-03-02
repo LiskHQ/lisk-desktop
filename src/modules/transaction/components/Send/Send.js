@@ -19,10 +19,7 @@ const Send = ({ formProps = {}, transactionJSON, t }) => (
           <div>
             <label>{t('To Application')}</label>
             <div className={styles.chainWrapper}>
-              <img
-                className={styles.chainLogo}
-                src={getLogo(formProps.fields.recipientChain)}
-              />
+              <img className={styles.chainLogo} src={getLogo(formProps.fields.recipientChain)} />
               <span>{formProps.fields.recipientChain.chainName}</span>
             </div>
           </div>
@@ -33,7 +30,7 @@ const Send = ({ formProps = {}, transactionJSON, t }) => (
       <div className={styles.col}>
         <label>{t('Amount')}</label>
         <span className={`${styles.valueText} amount-summary`}>
-          <TokenAmount val={transactionJSON.params.amount} token={formProps.fields.token.symbol} />
+          <TokenAmount val={transactionJSON.params.amount} token={formProps.fields.token} />
         </span>
       </div>
     </section>

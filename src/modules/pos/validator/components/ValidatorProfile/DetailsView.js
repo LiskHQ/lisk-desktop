@@ -1,10 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTheme } from '@theme/Theme';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
@@ -15,6 +13,7 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './ValidatorProfile.css';
 import { convertCommissionToPercentage } from '../../utils';
+import usePosToken from '../../hooks/usePosToken';
 
 const DetailsView = ({ data, history, isMyProfile }) => {
   const theme = useTheme();
@@ -25,6 +24,8 @@ const DetailsView = ({ data, history, isMyProfile }) => {
   const {
     data: { timestamp: latestBlockTimestamp },
   } = useLatestBlock();
+  const { token } = usePosToken()
+
   const displayList = [
     {
       icon: 'star',
@@ -39,7 +40,7 @@ const DetailsView = ({ data, history, isMyProfile }) => {
     {
       icon: 'weight',
       label: t('Validator weight'),
-      value: <TokenAmount val={data.validatorWeight} token={tokenMap.LSK.key} />,
+      value: <TokenAmount val={data.validatorWeight} token={token} />,
     },
     {
       icon: 'commissionsIcon',

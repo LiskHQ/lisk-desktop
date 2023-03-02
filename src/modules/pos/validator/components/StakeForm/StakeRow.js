@@ -1,7 +1,6 @@
 /* eslint-disable max-statements */
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 
 import { stakeEdited, stakeDiscarded } from 'src/redux/actions';
 import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
@@ -16,7 +15,6 @@ import AmountField from 'src/modules/common/components/amountField';
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import styles from './stakeForm.css';
 import { convertCommissionToPercentage } from '../../utils';
-import { usePosConstants } from '../../hooks/queries';
 
 const componentState = Object.freeze({ editing: 1, notEditing: 2 });
 
@@ -25,18 +23,12 @@ const StakeRow = ({
   data: { address, commission, username, confirmed, unconfirmed },
   index,
   history,
+  token
 }) => {
   const [state, setState] = useState(
     unconfirmed === '' ? componentState.editing : componentState.notEditing
   );
   const dispatch = useDispatch();
-
-  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-  const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: posConstants?.data?.posTokenID, address } },
-    options: { enabled: !isGettingPosConstants },
-  });
-  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
   const [stakeAmount, setStakeAmount] = useStakeAmountField(convertFromBaseDenom(unconfirmed, token));
   const truncatedAddress = truncateAddress(address);
 
@@ -86,10 +78,10 @@ const StakeRow = ({
           <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
             {!!confirmed && (
               <span className={`${styles.oldAmountColumn}`}>
-                <TokenAmount val={confirmed} token={token.symbol} />
+                <TokenAmount val={confirmed} token={token} />
               </span>
             )}
-            {!!unconfirmed && <TokenAmount val={unconfirmed} token={token.symbol} />}
+            {!!unconfirmed && <TokenAmount val={unconfirmed} token={token} />}
           </span>
           <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
             <span onClick={changeToEditingMode}>

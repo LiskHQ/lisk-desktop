@@ -66,7 +66,9 @@ const getStakeStats = (stakes, account) => {
   const numOfRemovedStakes = Object.keys(stakesStats.removed).length;
 
   const resultingNumOfStakes = numOfAddedStakes + numOfEditedStakes + numOfUntouchedStakes;
-  const availableStakes = STAKE_LIMIT - (numOfEditedStakes + numOfUntouchedStakes + numOfRemovedStakes + numOfAddedStakes);
+  const availableStakes =
+    STAKE_LIMIT -
+    (numOfEditedStakes + numOfUntouchedStakes + numOfRemovedStakes + numOfAddedStakes);
 
   return {
     ...stakesStats,
@@ -168,8 +170,8 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
     isFormValid: !feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending,
     fields: {
-      token: posToken
-    }
+      token: posToken,
+    },
   };
   const commandParams = {
     stakes: normalizedStakes,
@@ -210,6 +212,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
                     canLoadMore={false}
                     additionalRowProps={{
                       history,
+                      token: posToken,
                     }}
                     headerClassName={styles.tableHeader}
                   />

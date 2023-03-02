@@ -189,7 +189,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <p className={styles.availableBalance}>
                   <span>{t('Available balance: ')}</span>
                   <span>
-                    <TokenAmount token={token.symbol} val={token.availableBalance} />
+                    <TokenAmount token={token} val={token.availableBalance} />
                   </span>
                 </p>
 

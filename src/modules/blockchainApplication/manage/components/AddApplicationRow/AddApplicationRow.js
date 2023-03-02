@@ -1,7 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
+import FormattedNumber from 'src/modules/common/components/FormattedNumber';
 import DialogLink from 'src/theme/dialog/link';
-import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './AddApplicationRow.css';
 
@@ -14,7 +15,7 @@ const ChainName = ({ title, logo }) => (
 
 const DepositAmount = ({ amount }) => (
   <span className={`deposit-amount ${styles.amount} ${grid['col-xs-6']}`}>
-    <TokenAmount val={amount} token="LSK" />
+    <FormattedNumber val={fromRawLsk(amount)} /> LSK
   </span>
 );
 

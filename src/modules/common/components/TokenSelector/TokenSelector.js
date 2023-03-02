@@ -23,7 +23,7 @@ export const TokenSelector = ({ styles, onChange, value }) => {
         <span className={styles.balance}>
           {t('Balance')}:&nbsp;&nbsp;
           <span>
-            <TokenAmount val={value.availableBalance} token={value.symbol} />
+            <TokenAmount val={value.availableBalance} token={value} />
           </span>
         </span>
       )}

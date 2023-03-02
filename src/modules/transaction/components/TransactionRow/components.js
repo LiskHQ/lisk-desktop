@@ -142,7 +142,7 @@ export const Date = ({ t }) => {
 };
 
 export const Amount = () => {
-  const { data, layout, activeToken, host } = useContext(TransactionRowContext);
+  const { data, layout, activeToken, host, token } = useContext(TransactionRowContext);
 
   if (layout !== 'full') {
     return (
@@ -160,16 +160,16 @@ export const Amount = () => {
   }
   return (
     <span className={styles.amount}>
-      <TokenAmount val={getTxAmount(data)} token={activeToken} />
+      <TokenAmount val={getTxAmount(data)} token={token} />
       <span className={`${styles.fee} hideOnLargeViewPort`}>
-        <TokenAmount val={data.fee} token={activeToken} />
+        <TokenAmount val={data.fee} token={token} />
       </span>
     </span>
   );
 };
 
 export const Fee = ({ t }) => {
-  const { data, activeToken } = useContext(TransactionRowContext);
+  const { data, activeToken, token } = useContext(TransactionRowContext);
 
   return (
     <span className={styles.transactionFeeCell}>
@@ -177,7 +177,7 @@ export const Fee = ({ t }) => {
         title={t('Transaction')}
         position="bottom"
         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
-        content={<TokenAmount val={data.fee} token={activeToken} />}
+        content={<TokenAmount val={data.fee} token={token} />}
         size="s"
       >
         <p>{getModuleCommandTitle(t)[data.moduleCommand]}</p>

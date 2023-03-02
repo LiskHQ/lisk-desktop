@@ -1,5 +1,5 @@
 import React from 'react';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import DiscreetMode from 'src/modules/common/components/discreetMode';
 import FormattedNumber from 'src/modules/common/components/FormattedNumber';
 
@@ -35,13 +35,13 @@ const TokenAmount = ({
   Wrapper = DiscreetMode,
 }) => {
   if (val === undefined) return <span />;
-  let value = convert === false ? val : fromRawLsk(val);
+  let value = convert === false ? val : convertFromBaseDenom(val, token);
   if (showInt) value = getInt(value);
   else if (showRounded) value = trim(value);
   return (
     <Wrapper {...(className && { className })}>
       <FormattedNumber val={value} />
-      {token && ` ${token}`}
+      {token && ` ${token.symbol || ''}`}
     </Wrapper>
   );
 };

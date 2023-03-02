@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { DoughnutChart } from '@common/components/charts';
-import TokenAmount from '@token/fungible/components/tokenAmount';
+import FormattedNumber from 'src/modules/common/components/FormattedNumber';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
@@ -79,7 +79,7 @@ const BlockchainApplicationStatistics = () => {
               </Tooltip>
             </div>
             <p className={`${styles.statsInfo} stats-info-value`}>
-              <TokenAmount Wrapper={React.Fragment} token="LSK" val={amount} />
+              <FormattedNumber val={fromRawLsk(amount)} /> LSK
             </p>
           </div>
           <div>

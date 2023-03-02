@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from 'src/routes/routes';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -20,23 +19,18 @@ const WalletDetails = ({ t, tokens, className, isWalletRoute, isLoading }) => (
       <h1>{t('Wallet details')}</h1>
     </BoxHeader>
     <BoxContent className={`${styles.container} coin-container`}>
-      {!isLoading && tokens?.map ? tokens?.map((token) => (
-        <BoxRow
-          key={`${token.tokenID}`}
-          className={`${styles.row} coin-row`}
-        >
-          <Link
-            to={routes.wallet.path}
-            className={styles.link}
-          >
-            <Icon name="lskIcon" />
-            <div className={styles.details}>
-              <span>
-                {t('{{acctToken}} balance', { acctToken: tokenMap.LSK.key })}
-              </span>
-              <div className={styles.valuesRow}>
+      {!isLoading && tokens?.map ? (
+        tokens?.map((token) => (
+          <BoxRow key={`${token.tokenID}`} className={`${styles.row} coin-row`}>
+            <Link to={routes.wallet.path} className={styles.link}>
+              <Icon name="lskIcon" />
+              <div className={styles.details}>
+                <span>{t('{{acctToken}} balance', { acctToken: token.symbol })}</span>
+                <div className={styles.valuesRow}>
                   <div className={`${styles.cryptoValue} balance-value`}>
-                    <div><TokenAmount val={token.availableBalance} token={tokenMap.LSK.key} /></div>
+                    <div>
+                      <TokenAmount val={token.availableBalance} token={token} />
+                    </div>
                     <div>
                       <Converter
                         className={styles.fiatValue}
@@ -46,18 +40,19 @@ const WalletDetails = ({ t, tokens, className, isWalletRoute, isLoading }) => (
                     </div>
                   </div>
                   <LockedBalanceLink
-                    activeToken={tokenMap.LSK.key}
+                    activeToken={token.symbol}
                     isWalletRoute={isWalletRoute}
                     style={styles.lockedBalance}
                     icon="lockedBalance"
                     // TODO: Fix locked balance details
                     account={{}}
                   />
+                </div>
               </div>
-            </div>
-          </Link>
-        </BoxRow>
-      )) : (
+            </Link>
+          </BoxRow>
+        ))
+      ) : (
         <Skeleton className={styles.skeletonLoader} height="96px" width="100%" />
       )}
     </BoxContent>

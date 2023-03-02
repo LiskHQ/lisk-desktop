@@ -20,7 +20,7 @@ const TokenCard = ({ lockedBalance, address, token }) => {
         <img alt={symbol} className={styles.tokenLogo} src={getLogo(token)} />
       </div>
       <div>
-        <TokenAmount className={styles.tokenAmount} val={availableBalance} token={symbol} />
+        <TokenAmount className={styles.tokenAmount} val={availableBalance} token={token} />
         {symbol === 'LSK' && (
           <Converter className={styles.fiatBalance} value={convertFromBaseDenom(availableBalance, token)} />
         )}
@@ -31,7 +31,7 @@ const TokenCard = ({ lockedBalance, address, token }) => {
             data={{ address }}
             className={styles.lockedBalance}
           >
-            <Icon name="lock" /> <TokenAmount val={lockedBalance} token={symbol} />
+            <Icon name="lock" /> <TokenAmount val={lockedBalance} token={token} />
           </DialogLink>
         )}
       </div>

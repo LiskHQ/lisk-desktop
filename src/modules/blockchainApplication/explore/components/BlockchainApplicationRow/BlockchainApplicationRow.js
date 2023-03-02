@@ -4,13 +4,14 @@ import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks
 import DialogLink from 'src/theme/dialog/link';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
+import FormattedNumber from 'src/modules/common/components/FormattedNumber';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './BlockchainApplicationRow.css';
 
 const DepositAmount = ({ amount }) => (
   <span className={`deposit-amount ${styles.amount} ${grid['col-xs-3']}`}>
-    <TokenAmount val={amount} token="LSK" />
+    <FormattedNumber val={fromRawLsk(amount)} /> LSK
   </span>
 );
 
