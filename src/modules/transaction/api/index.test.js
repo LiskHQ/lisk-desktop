@@ -19,7 +19,7 @@ import {
 
 const { stake } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
-const mockToken = mockAppsTokens[0];
+const mockToken = mockAppsTokens.data[0];
 
 jest.mock('src/utils/api/http', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))

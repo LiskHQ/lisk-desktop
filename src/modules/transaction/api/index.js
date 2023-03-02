@@ -250,8 +250,8 @@ export const getTransactionFee = async ({
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
   const cappedFee = Math.min(calculatedFee, maxCommandFee);
-  const feeInLsk = convertFromBaseDenom(cappedFee, token);
-  const roundedValue = Number(feeInLsk).toFixed(7).toString();
+  const fee = convertFromBaseDenom(cappedFee, token);
+  const roundedValue = Number(fee).toFixed(7).toString();
   const feedback = transactionJSON.amount === '' ? '-' : `${roundedValue ? '' : 'Invalid amount'}`;
 
   return {
