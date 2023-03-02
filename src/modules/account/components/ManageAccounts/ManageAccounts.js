@@ -65,7 +65,7 @@ export const ManageAccountsContent = ({
           ))}
         </>
       </Box>
-      {(status === DEVICE_STATUS.STAND_BY || hwAccounts.length === 0) && (
+      {(status === DEVICE_STATUS.STAND_BY && hwAccounts.length === 0) && (
         <div className={styles.loaderWrapper}>
           <Spinner className={styles.spinner} />
           <span>{t('Loading hardware wallet accounts…')}</span>

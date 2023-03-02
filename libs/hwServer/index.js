@@ -55,7 +55,7 @@ export class HwServer {
       clearInterval(this.intervalId);
     }
 
-    const status = await this.checkStatus(this.currentDevice.path)
+    const status = await this.checkStatus(this.currentDevice)
     if (status !== this.currentDevice.status) {
       this.currentDevice.status = status;
       await this.pushDeviceUpdate();
@@ -65,12 +65,12 @@ export class HwServer {
     }, 1000);
   }
 
-  async checkStatus(path) {
-    if (!path) {
+  async checkStatus({path, manufacturer}) {
+    if (!path || !manufacturer) {
       return DEVICE_STATUS.DISCONNECTED;
     }
-    return manufacturers[this.currentDevice.manufacturer].checkLiskAppStatus({
-      transporter: this.transports[this.currentDevice.manufacturer],
+    return manufacturers[manufacturer].checkLiskAppStatus({
+      transporter: this.transports[manufacturer],
       path,
     })
   }
@@ -86,11 +86,13 @@ export class HwServer {
   }
 
   async selectDevice({ path, manufacturer }) {
+    const status = await this.checkStatus({path, manufacturer})
     this.currentDevice = {
       path,
+      status,
       manufacturer
     };
-    await this.statusListener()
+    await this.statusListener();
     await this.pushDeviceUpdate();
   }
 
