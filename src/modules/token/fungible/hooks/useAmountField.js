@@ -41,7 +41,7 @@ const useAmountField = (initialValue, balance, token) => {
     ];
     let { message: feedback } = validateAmountFormat({
       value,
-      token: token?.symbol,
+      token,
       funds: Number(maxAmount) + Number(MIN_ACCOUNT_BALANCE),
       checklist: [...checklist, 'MIN_BALANCE'],
     });

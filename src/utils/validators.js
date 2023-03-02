@@ -2,7 +2,7 @@ import { cryptography, transactions } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 import { regex as reg } from 'src/const/regex';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom } from '@token/fungible/utils/lsk';
 import i18n from 'src/utils/i18n/i18n';
 
 /**
@@ -64,7 +64,7 @@ export const validateLSKPublicKey = (publicKey) => {
  */
 export const validateAmountFormat = ({
   value,
-  token = 'LSK',
+  token,
   locale = i18n.language,
   funds,
   checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT'],
@@ -74,26 +74,25 @@ export const validateAmountFormat = ({
   const { maxFloating } = reg.amount[locale];
   const errors = {
     NEGATIVE_STAKE: {
-      message: i18n.t('Stake amount can\'t be zero or negative.'),
+      message: i18n.t("Stake amount can't be zero or negative."),
       fn: () =>
-        numeral(value).value() < minValue
-        || numeral(inputValue).value() < 0
-        || Object.is(numeral(inputValue).value(), -0),
+        numeral(value).value() < minValue ||
+        numeral(inputValue).value() < 0 ||
+        Object.is(numeral(inputValue).value(), -0),
     },
     NEGATIVE_AMOUNT: {
-      message: i18n.t('Amount can\'t be negative.'),
+      message: i18n.t("Amount can't be negative."),
       fn: () => numeral(value).value() < 0,
     },
     ZERO: {
-      message: i18n.t('Amount can\'t be zero.'),
+      message: i18n.t("Amount can't be zero."),
       fn: () => numeral(Math.abs(value)).value() === 0,
     },
     FORMAT: {
-      message: i18n.t('Provide a correct amount of {{token}}', { token }),
+      message: i18n.t('Provide a correct amount of {{token}}', { token: token?.symbol || '' }),
       fn: () => {
         try {
-          // converting LSK to Beddows will ensure the value is under beddows
-          transactions.convertLSKToBeddows(value.toString());
+          transactions.convertToBaseDenom(value.toString(), token);
           return !isNumeric(value);
         } catch (error) {
           return true;
@@ -110,22 +109,24 @@ export const validateAmountFormat = ({
     },
     INSUFFICIENT_FUNDS: {
       message: i18n.t('Provided amount is higher than your current balance.'),
-      fn: () => funds < toRawLsk(numeral(value).value()),
+      fn: () => funds < convertToBaseDenom(numeral(value).value(), token),
     },
     INSUFFICIENT_STAKE_FUNDS: {
       message: i18n.t('The provided amount is higher than your available staking balance.'),
-      fn: () => funds < toRawLsk(numeral(value).value()),
+      fn: () => funds < convertToBaseDenom(numeral(value).value(), token),
     },
     MIN_BALANCE: {
-      message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
+      message: i18n.t(
+        'Provided amount will result in a wallet with less than the minimum balance.'
+      ),
       fn: () => {
-        const rawValue = toRawLsk(numeral(value).value());
+        const rawValue = convertToBaseDenom(numeral(value).value(), token);
         return funds - rawValue < MIN_ACCOUNT_BALANCE;
       },
     },
   };
 
-  const errorType = checklist.find(type => errors[type].fn());
+  const errorType = checklist.find((type) => errors[type].fn());
   return {
     error: !!errorType,
     message: errorType ? errors[errorType].message : '',
