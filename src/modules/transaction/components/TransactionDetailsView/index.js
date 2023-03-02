@@ -36,7 +36,6 @@ const TransactionDetails = ({ location }) => {
   } = useTransactions({
     config: { params: { transactionID } },
   });
-
   const transaction = useMemo(() => transactions?.data?.[0] || {}, [transactions]);
   const transactionDetailList = useMemo(() => {
     if (error || isEmpty(transactions?.data)) return [];
