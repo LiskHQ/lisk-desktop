@@ -13,7 +13,7 @@ jest.mock('@liskhq/lisk-client', () => ({
   cryptography: {
     ...jest.requireActual('@liskhq/lisk-client').cryptography,
     address: {
-      getAddressFromPublicKey: jest.fn(() => 'lskdgtenb76rf93bzd56cqn6ova46wfvoesbk4hnd'),
+      getLisk32AddressFromPublicKey: jest.fn(() => 'lskdgtenb76rf93bzd56cqn6ova46wfvoesbk4hnd'),
     },
   },
 }));
@@ -53,7 +53,12 @@ describe('getHWAccounts', () => {
     };
     useSelector.mockImplementation((callback) => callback(mockAppState));
 
-    expect(await getHWAccounts({getName: (address, device) => getNameFromAccount(address, mockAppState.settings, device), device: mockHWCurrentDevice})).toEqual(
+    expect(
+      await getHWAccounts({
+        getName: (address, device) => getNameFromAccount(address, mockAppState.settings, device),
+        device: mockHWCurrentDevice,
+      })
+    ).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           metadata: expect.objectContaining({

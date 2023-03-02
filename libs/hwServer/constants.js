@@ -51,5 +51,5 @@ export const METHOD_NAMES = {
   [IPC_MESSAGES.SELECT_DEVICE]: 'selectDevice',
   [IPC_MESSAGES.GET_DEVICE]: 'getDeviceById',
   [IPC_MESSAGES.GET_DEVICES]: 'getDevices',
-  [IPC_MESSAGES.GET_ACTIVE_DEVICE]: 'getActiveDevices',
+  [IPC_MESSAGES.GET_ACTIVE_DEVICE]: 'getCurrentDevice',
 };
