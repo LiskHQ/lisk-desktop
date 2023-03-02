@@ -164,6 +164,7 @@ const SendForm = (props) => {
       messageFee,
     };
   }
+
   return (
     <section className={styles.wrapper}>
       <TxComposer

@@ -42,10 +42,9 @@ export const toRawLsk = (value) => {
 };
 
 const getTokenDecimals = (token) => {
-  const { decimals } =
-    token.denomUnits?.find?.(({ denom }) => denom === token.symbol.toLowerCase()) || {};
+  const { decimals } = token.denomUnits?.find?.(({ denom }) => denom === token.displayDenom) || {};
 
-  return decimals
+  return decimals;
 };
 
 /**
@@ -56,7 +55,7 @@ const getTokenDecimals = (token) => {
  * @returns {BigNumber} Amount value converted to the token symbol's denom
  */
 export const convertFromBaseDenom = (amount, token = {}) => {
-  const decimals = getTokenDecimals(token)
+  const decimals = getTokenDecimals(token);
 
   if (!decimals) return '0';
 
@@ -71,7 +70,10 @@ export const convertFromBaseDenom = (amount, token = {}) => {
  * @returns {BigNumber} Amount value converted from the token symbol's denom
  */
 export const convertToBaseDenom = (amount, token = {}) => {
-  const decimals = getTokenDecimals(token)
+  // eslint-disable-next-line no-restricted-globals
+  if (isNaN(amount)) return '0';
+
+  const decimals = getTokenDecimals(token);
 
   if (!decimals) return '0';
 

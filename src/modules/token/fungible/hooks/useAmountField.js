@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
@@ -55,6 +55,10 @@ const useAmountField = (initialValue, balance, token) => {
   const [amountField, setAmountField] = useState(
     getAmountFieldState(initialValue, getAmountFeedbackAndError)
   );
+
+  useEffect(() => {
+    setAmountField(getAmountFieldState(initialValue, getAmountFeedbackAndError));
+  }, [initialValue]);
 
   const onAmountInputChange = ({ value }, maxAmount) => {
     const { leadingPoint } = regex.amount[i18n.language];

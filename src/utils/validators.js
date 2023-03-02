@@ -92,7 +92,7 @@ export const validateAmountFormat = ({
       message: i18n.t('Provide a correct amount of {{token}}', { token: token?.symbol || '' }),
       fn: () => {
         try {
-          transactions.convertToBaseDenom(value.toString(), token);
+          convertToBaseDenom(value.toString(), token);
           return !isNumeric(value);
         } catch (error) {
           return true;
