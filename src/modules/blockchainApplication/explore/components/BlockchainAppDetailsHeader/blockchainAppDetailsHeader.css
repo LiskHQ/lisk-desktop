@@ -8,7 +8,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: var(--color-ultramarine-blue);
 
   & > img.logo {
     position: absolute;
@@ -35,6 +34,10 @@
   align-items: center;
   justify-content: center;
   margin-top: 51px;
+}
+
+.loadingDetailsWrapper {
+  align-items: inherit;
 }
 
 .chainNameWrapper {
@@ -72,4 +75,8 @@
     height: 16px;
     margin-right: 8px;
   }
+}
+
+.skeleton {
+  margin: 10px auto;
 }
