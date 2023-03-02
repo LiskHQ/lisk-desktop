@@ -15,6 +15,7 @@ import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/
 import { useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { getLogo } from '@token/fungible/utils/helpers';
+import Illustration from 'src/modules/common/components/illustration';
 import styles from './BlockchainApplicationDetails.css';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useBlockchainApplicationMeta';
@@ -29,7 +30,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   const active = useSelector(selectActiveToken);
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
-  // @todo: Loading and error states will be handled in #4539
+
   const { data: onChainData } = useBlockchainApplicationExplore({
     config: { params: { chainID: chainId } },
   });
@@ -87,6 +88,19 @@ const BlockchainApplicationDetails = ({ history, location }) => {
       bg: defaultBackgroundImage,
     },
   };
+
+  if (!onChainData || !offChainData)
+    return (
+      <Dialog hasClose className={`${grid.row} ${grid['center-xs']}`}>
+        <div className={`${styles.wrapper} ${styles.errorWrapper}`}>
+          <Illustration name="applicationDetailsError" />
+          <div className={styles.errorText}>{t("Couldn't load application data")}</div>
+          <div className={styles.retryBtn}>
+            <TertiaryButton>Try again</TertiaryButton>
+          </div>
+        </div>
+      </Dialog>
+    );
 
   return (
     <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>

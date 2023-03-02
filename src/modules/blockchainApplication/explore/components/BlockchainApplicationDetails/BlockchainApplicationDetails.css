@@ -98,3 +98,21 @@
   border-radius: 10px;
   font-weight: 500;
 }
+
+.errorWrapper {
+  padding: 40px 24px;
+
+  & img {
+    margin: 40px;
+  }
+
+  & .errorText {
+    @mixin contentLarge;
+
+    color: var(--color-slate-gray);
+  }
+
+  & .retryBtn {
+    margin-bottom: 20px;
+  }
+}
