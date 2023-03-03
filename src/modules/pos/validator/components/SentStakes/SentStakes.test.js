@@ -8,9 +8,11 @@ import { truncateAddress } from '@wallet/utils/account';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { mockRewardsClaimable } from '@pos/reward/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import SentStakes from './SentStakes';
 import tableHeaderMap from './tableHeaderMap';
-import { useSentStakes, usePosConstants, useUnlocks, useValidators } from '../../hooks/queries';
+import { usePosConstants, useSentStakes, useUnlocks, useValidators } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -23,14 +25,15 @@ jest.mock('@token/fungible/hooks/queries');
 jest.mock('@pos/reward/hooks/queries');
 jest.mock('src/modules/common/hooks');
 jest.mock('../../hooks/queries');
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('SentStakes', () => {
   const props = {
     history: { location: { search: '' } },
   };
 
-  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimable });
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0]})
 
   useValidators.mockImplementation(({ config }) => ({
     data: getMockValidators(config.params?.address),
