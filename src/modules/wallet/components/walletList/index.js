@@ -10,7 +10,7 @@ const WalletTable = () => {
   const [params, setParams] = useState({ sort: 'balance:desc' });
   const { t } = useTranslation();
   const { data: tokens } = useTokensBalance();
-  const token = tokens?.data?.[0] || {};
+  const token = tokens?.data?.[0];
 
   return (
     <QueryTable
