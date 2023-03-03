@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { TokenSelector } from '.';
@@ -17,6 +17,7 @@ describe('TokenSelector', () => {
     value: {
       availableBalance: 1000000000,
       symbol: 'LSK',
+      ...mockAppsTokens.data[0],
     },
   };
 

@@ -2,13 +2,13 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
 import numeral from 'numeral';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
-import { mockTokensBalance } from '@token/fungible/__fixtures__';
+import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import TokenRow from './TokenRow';
 
 describe('TokenRow', () => {
   it('should display properly', async () => {
     const props = {
-      data: mockTokensBalance.data[0],
+      data: { ...mockTokensBalance.data[0], ...mockAppsTokens.data[0] },
     };
     renderWithRouter(TokenRow, props);
 
