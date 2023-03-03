@@ -41,6 +41,10 @@
 }
 
 .chainNameWrapper {
+  & .skeleton:first-of-type {
+    margin: 20px auto 15px;
+  }
+
   & > span {
     font-size: 28px;
     font-weight: 700;
@@ -61,6 +65,10 @@
 .addressRow {
   & span {
     font-size: 14px;
+  }
+
+  & .skeleton:last-of-type {
+    margin-bottom: 0;
   }
 }
 

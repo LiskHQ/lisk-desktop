@@ -10,7 +10,7 @@ import loadingBackgroundImage from '../../../../../../setup/react/assets/images/
 import loadingChainLogo from '../../../../../../setup/react/assets/images/loading-chain-logo.png';
 import styles from './blockchainAppDetailsHeader.css';
 
-const BlockchainAppDetailsHeader = ({ application, chainAction, loading }) => {
+const BlockchainAppDetailsHeader = ({ application, chainAction, loading = true }) => {
   const { t } = useTranslation();
   const { name, address, projectPage, icon, bg } = application.data;
 
@@ -25,14 +25,12 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading }) => {
 
           <Box className={`${styles.detailsWrapper} ${styles.loadingDetailsWrapper}`}>
             <div className={styles.chainNameWrapper}>
-              <Skeleton width="25%" className={styles.skeleton} />
+              <Skeleton className={styles.skeleton} width="25%" />
             </div>
             <Box className={styles.addressRow}>
+              <Skeleton className={styles.skeleton} width="50%" />
               <Skeleton className={styles.skeleton} width="25%" />
             </Box>
-            <div className={styles.addressRow}>
-              <Skeleton className={styles.skeleton} width="25%" />
-            </div>
           </Box>
         </>
       ) : (

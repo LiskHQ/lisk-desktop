@@ -18,6 +18,16 @@
   background-color: var(--color-white);
 }
 
+.skeleton {
+  margin: 10px auto;
+}
+
+.skeletonWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .balanceRow {
   display: flex;
   align-items: center;

@@ -16,6 +16,7 @@ import { useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { getLogo } from '@token/fungible/utils/helpers';
 import Illustration from 'src/modules/common/components/illustration';
+import Skeleton from 'src/modules/common/components/skeleton/Skeleton';
 import styles from './BlockchainApplicationDetails.css';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useBlockchainApplicationMeta';
@@ -31,10 +32,20 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
 
-  const { data: onChainData } = useBlockchainApplicationExplore({
+  const {
+    data: onChainData,
+    refetch: refetchOnChainData,
+    isLoading: onChainLoading,
+    isError: isOnChainDataError,
+  } = useBlockchainApplicationExplore({
     config: { params: { chainID: chainId } },
   });
-  const { data: offChainData } = useBlockchainApplicationMeta({
+  const {
+    data: offChainData,
+    refetch: refetchOffChainData,
+    isLoading: offChainLoading,
+    isError: isOffChainDataError,
+  } = useBlockchainApplicationMeta({
     config: { params: { chainID: chainId } },
   });
   const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
@@ -53,6 +64,11 @@ const BlockchainApplicationDetails = ({ history, location }) => {
       { modal: 'addApplicationSuccess', chainId: aggregatedApplicationData.chainID },
       ['modal', 'chainId', 'mode']
     );
+  };
+
+  const reloadAppDetails = () => {
+    refetchOnChainData();
+    refetchOffChainData();
   };
 
   const footerDetails = [
@@ -89,14 +105,14 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     },
   };
 
-  if (!onChainData || !offChainData)
+  if (isOnChainDataError || isOffChainDataError)
     return (
       <Dialog hasClose className={`${grid.row} ${grid['center-xs']}`}>
         <div className={`${styles.wrapper} ${styles.errorWrapper}`}>
           <Illustration name="applicationDetailsError" />
           <div className={styles.errorText}>{t("Couldn't load application data")}</div>
           <div className={styles.retryBtn}>
-            <TertiaryButton>Try again</TertiaryButton>
+            <TertiaryButton onClick={reloadAppDetails}>Try again</TertiaryButton>
           </div>
         </div>
       </Dialog>
@@ -112,35 +128,47 @@ const BlockchainApplicationDetails = ({ history, location }) => {
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
           }
+          loading={onChainLoading || offChainLoading}
         />
         <div className={styles.balanceRow}>
-          <ValueAndLabel label={t('Deposited:')} direction="horizontal">
-            <span className={styles.value}>
-              <TokenAmount val={deposit} token={active} />
-            </span>
-          </ValueAndLabel>
+          {onChainLoading || offChainLoading ? (
+            <Skeleton className={styles.skeleton} width="25%" />
+          ) : (
+            <ValueAndLabel label={t('Deposited:')} direction="horizontal">
+              <span className={styles.value}>
+                <TokenAmount val={deposit} token={active} />
+              </span>
+            </ValueAndLabel>
+          )}
         </div>
         <Box className={styles.footerDetailsRow}>
-          {footerDetails.map(({ header, content, className }, index) => (
-            <ValueAndLabel
-              key={index}
-              className={styles.detail}
-              label={
-                <span className={styles.headerText}>
-                  <>
-                    {header.text || header}
-                    {header.toolTipText && (
-                      <Tooltip position="right">
-                        <p>{header.toolTipText}</p>
-                      </Tooltip>
-                    )}
-                  </>
-                </span>
-              }
-            >
-              <span className={className}>{content}</span>
-            </ValueAndLabel>
-          ))}
+          {onChainLoading || offChainLoading
+            ? footerDetails.map((_, idx) => (
+                <div className={styles.skeletonWrapper} key={idx}>
+                  <Skeleton className={styles.skeleton} width="50%" />
+                  <Skeleton className={styles.skeleton} width="50%" />
+                </div>
+              ))
+            : footerDetails.map(({ header, content, className }, index) => (
+                <ValueAndLabel
+                  key={index}
+                  className={styles.detail}
+                  label={
+                    <span className={styles.headerText}>
+                      <>
+                        {header.text || header}
+                        {header.toolTipText && (
+                          <Tooltip position="right">
+                            <p>{header.toolTipText}</p>
+                          </Tooltip>
+                        )}
+                      </>
+                    </span>
+                  }
+                >
+                  <span className={className}>{content}</span>
+                </ValueAndLabel>
+              ))}
         </Box>
         {mode === 'addApplication' ? (
           <Box className={styles.footerButton}>
