@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
 import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
