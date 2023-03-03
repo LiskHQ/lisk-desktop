@@ -1,7 +1,7 @@
 // @todo: this should be re-instated when the issue with lisk-client is fixed
 /* istanbul ignore file */
 import { to } from 'await-to-js';
-import { selectActiveTokenAccount } from 'src/redux/selectors';
+// import { selectActiveTokenAccount } from 'src/redux/selectors';
 import actionTypes from '@transaction/store/actionTypes';
 import { signTransaction } from '@transaction/api/index';
 
@@ -24,7 +24,8 @@ export const tokensTransferred = (
 
 ) => async (dispatch, getState) => {
   const state = getState();
-  const wallet = selectActiveTokenAccount(state);
+  // const wallet = selectActiveTokenAccount(state);
+  const wallet = state.account.current;
   const [error, tx] = await to(
     signTransaction({
       transactionJSON,

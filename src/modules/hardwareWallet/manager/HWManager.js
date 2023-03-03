@@ -72,16 +72,15 @@ class HwManager extends HWClient {
    * via WalletConnect
    *
    * @param {number} index Account index
-   * @param {Buffer} chainID
-   * @param {Buffer} transactionBytes
+   * @param {String} message Unsigned message as hex string
    * @returns {promise}
    */
-  signTransaction(index, chainID, transactionBytes) {
+  signTransaction(index, message) {
     const data = {
       index,
-      chainID,
-      transactionBytes,
+      message,
     };
+
     return this.executeCommand({
       action: IPC_MESSAGES.SIGN_TRANSACTION,
       data,
