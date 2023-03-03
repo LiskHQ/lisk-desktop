@@ -30,7 +30,7 @@ const TokenAmount = ({
   val,
   showRounded,
   showInt,
-  token,
+  token = {},
   convert = true,
   Wrapper = DiscreetMode,
 }) => {

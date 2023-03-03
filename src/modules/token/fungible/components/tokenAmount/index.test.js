@@ -21,4 +21,8 @@ describe('LiskAmount', () => {
     const wrapper = mount(<LiskAmount val={inputValue} showRounded token={mockToken} />);
     expect(wrapper.text()).to.be.equal(expectedValue);
   });
+  it('should return 0', () => {
+    const wrapper = mount(<LiskAmount val="12" />);
+    expect(wrapper.text()).to.be.equal('0');
+  });
 });

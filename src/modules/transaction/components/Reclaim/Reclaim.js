@@ -6,7 +6,7 @@ import styles from './Reclaim.css';
 
 const Reclaim = ({ account, t, transactionJSON }) => {
   const { data: tokens } = useTokensBalance();
-  const token = tokens?.data?.[0] || {};
+  const token = tokens?.data?.[0]
 
   return (
     <>
