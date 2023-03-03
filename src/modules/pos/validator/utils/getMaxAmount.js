@@ -74,8 +74,8 @@ const getMaxAmount = async ({
   // If the "sum of stake amounts + fee + dust" exceeds balance
   // return 10 LSK less, since stakes must be multiplications of 10 LSK.
   if (
-    maxStakeAmount + convertToBaseDenom(maxAmountFee.value, token) <=
-    balance - totalUnconfirmedStakes + currentStake - MIN_ACCOUNT_BALANCE
+    BigInt(maxStakeAmount) + BigInt(convertToBaseDenom(maxAmountFee.value, token)) <=
+    BigInt(balance - totalUnconfirmedStakes + currentStake - MIN_ACCOUNT_BALANCE)
   ) {
     return maxStakeAmount;
   }
