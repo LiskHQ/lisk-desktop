@@ -1,4 +1,4 @@
-import { cryptography, transactions } from '@liskhq/lisk-client';
+import { cryptography } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 import { regex as reg } from 'src/const/regex';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
