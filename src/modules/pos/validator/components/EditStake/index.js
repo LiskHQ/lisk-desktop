@@ -8,7 +8,6 @@ import {
 } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
 import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useCommandSchema } from '@network/hooks';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
@@ -28,10 +27,11 @@ import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
-import { useValidators, usePosConstants, useSentStakes } from '../../hooks/queries';
+import { useValidators, useSentStakes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
 import { convertCommissionToPercentage } from '../../utils';
 import { useStakesRetrieved } from '../../store/actions/staking';
+import usePosToken from '../../hooks/usePosToken';
 
 const getTitles = (t) => ({
   edit: {
@@ -77,13 +77,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     data: { height: currentHeight },
   } = useLatestBlock();
 
-  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-
-  const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: posConstants?.posTokenID } },
-    options: { enabled: !isGettingPosConstants },
-  });
-  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+  const { token } = usePosToken();
 
   const { data: authData } = useAuth({ config: { params: { address } } });
   const auth = useMemo(() => ({ ...authData?.data, ...authData?.meta }), [authData]);

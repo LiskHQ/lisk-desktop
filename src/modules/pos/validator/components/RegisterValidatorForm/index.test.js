@@ -6,7 +6,6 @@ import { mockAuth } from 'src/modules/auth/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
-// import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
