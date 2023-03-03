@@ -30,7 +30,7 @@ const DetailsView = ({ data, history, isMyProfile }) => {
     {
       icon: 'star',
       label: t('Rank'),
-      value: rank || '-',
+      value: rank ?? '-',
     },
     {
       icon: 'clockActive',

@@ -8,6 +8,8 @@ import { mockBlocks } from '@block/__fixtures__';
 import { mockValidators, mockReceivedStakes, mockSentStakes } from '@pos/validator/__fixtures__';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { mockAppsTokens } from '@token/fungible/__fixtures__'
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
 import ValidatorProfile from './ValidatorProfile';
 import { useValidators, useReceivedStakes, useSentStakes } from '../../hooks/queries';
@@ -20,6 +22,8 @@ jest.mock('@account/hooks', () => ({
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('../../hooks/queries');
+jest.mock('@pos/validator/hooks/usePosToken')
+
 
 describe('Validator Profile', () => {
   let wrapper;
@@ -40,6 +44,7 @@ describe('Validator Profile', () => {
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
   useSentStakes.mockReturnValue({ data: mockSentStakes });
   useReceivedStakes.mockReturnValue({ data: mockReceivedStakes });
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0]})
 
   it('Should render active validator profile details', () => {
     useSentStakes.mockReturnValue({
