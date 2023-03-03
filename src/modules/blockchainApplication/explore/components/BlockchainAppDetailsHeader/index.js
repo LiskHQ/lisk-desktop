@@ -10,7 +10,7 @@ import loadingBackgroundImage from '../../../../../../setup/react/assets/images/
 import loadingChainLogo from '../../../../../../setup/react/assets/images/loading-chain-logo.png';
 import styles from './blockchainAppDetailsHeader.css';
 
-const BlockchainAppDetailsHeader = ({ application, chainAction, loading = true }) => {
+const BlockchainAppDetailsHeader = ({ application, chainAction, loading }) => {
   const { t } = useTranslation();
   const { name, address, projectPage, icon, bg } = application.data;
 
@@ -60,13 +60,7 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading = true }
               </ValueAndLabel>
             </Box>
             <div className={styles.addressRow}>
-              <Link
-                className={`${styles.appLink}`}
-                target="_blank"
-                // eslint-disable-next-line
-                // TODO: this is just a place holder link pending when its part of the response payload from service
-                to={projectPage}
-              >
+              <Link className={`${styles.appLink}`} target="_blank" to={projectPage}>
                 <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
                 {t(projectPage)}
               </Link>
