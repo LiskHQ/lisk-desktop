@@ -2,16 +2,22 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { truncateAddress } from '@wallet/utils/account';
 import wallets from '@tests/constants/wallets';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import MigrationDetails from './index';
+
+jest.mock('@token/fungible/hooks/queries');
 
 describe('MigrationDetails component', () => {
   const props = {
     wallet: {
       ...wallets.empty_wallet,
-      token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: 0 }],
+      token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: 0, ...mockAppsTokens.data[0] }],
     },
     showBalance: true,
   };
+
+  useTokensBalance.mockReturnValue({ data: mockAppsTokens });
 
   it('should render properly', () => {
     const wrapper = mount(<MigrationDetails {...props} />);
