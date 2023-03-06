@@ -14,7 +14,7 @@ import { usePosConstants } from '../../hooks/queries';
 
 const mockCurrentAccount = mockSavedAccounts[0];
 
-jest.mock('../../hooks/queries');
+jest.mock('../../hooks/queries/usePosConstants');
 jest.mock('@token/fungible/hooks/queries/useTokensBalance');
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),

@@ -1,5 +1,6 @@
+/* eslint-disable complexity */
 import React from 'react';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom, fromRawLsk } from '@token/fungible/utils/lsk';
 import DiscreetMode from 'src/modules/common/components/discreetMode';
 import FormattedNumber from 'src/modules/common/components/FormattedNumber';
 
@@ -26,6 +27,7 @@ const getInt = (value) => value.replace(IntegerReg, '');
  * @param {Function? | ReactNode?} params.Wrapper A node wrapper. Default DiscreetMode.
  */
 const TokenAmount = ({
+  isLsk,
   className,
   val,
   showRounded,
@@ -35,13 +37,17 @@ const TokenAmount = ({
   Wrapper = DiscreetMode,
 }) => {
   if (val === undefined) return <span />;
-  let value = convert === false ? val : convertFromBaseDenom(val, token);
+
+  const converted = isLsk ? fromRawLsk(val) : convertFromBaseDenom(val, token);
+  let value = !convert ? val : converted;
+
   if (showInt) value = getInt(value);
   else if (showRounded) value = trim(value);
+
   return (
     <Wrapper {...(className && { className })}>
       <FormattedNumber val={value} />
-      {token && ` ${token.symbol || ''}`}
+      {token && ` ${isLsk ? 'LSK' : token.symbol || ''}`}
     </Wrapper>
   );
 };

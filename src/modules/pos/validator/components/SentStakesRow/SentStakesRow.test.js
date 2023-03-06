@@ -1,7 +1,7 @@
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { fireEvent, screen } from '@testing-library/react';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
-import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
 import { useValidators } from '@pos/validator/hooks/queries';
 import SentStakesRow from './SentStakesRow';
@@ -28,7 +28,11 @@ describe('SentStakesRow', () => {
 
     expect(screen.getByText(name)).toBeTruthy();
     expect(screen.getByText(truncateAddress(address))).toBeTruthy();
-    expect(screen.queryByText(`${fromRawLsk(amount)} ${props.token.symbol}`));
+    expect(
+      screen.queryByText(
+        `${convertFromBaseDenom(amount, mockAppsTokens.data[0])} ${props.token.symbol}`
+      )
+    );
     expect(screen.getByAltText('deleteIcon')).toBeTruthy();
     expect(screen.getByAltText('edit')).toBeTruthy();
 

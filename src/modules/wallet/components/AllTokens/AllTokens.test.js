@@ -5,7 +5,7 @@ import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { useFilter } from 'src/modules/common/hooks';
 
 import { mockBlocks } from '@block/__fixtures__';
@@ -65,12 +65,22 @@ describe('AllTokens', () => {
       const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
 
       expect(screen.getByText(chainName)).toBeTruthy();
-      expect(screen.getByText(numeral(fromRawLsk(lockedBalance)).format('0'))).toBeTruthy();
       expect(
-        screen.queryByText(numeral(fromRawLsk(availableBalance)).format('0,0.00'))
+        screen.getByText(
+          numeral(convertFromBaseDenom(lockedBalance, mockAppsTokens.data[0])).format('0')
+        )
       ).toBeTruthy();
       expect(
-        screen.queryByText(numeral(fromRawLsk(+availableBalance + lockedBalance)).format('0,0.00'))
+        screen.queryByText(
+          numeral(convertFromBaseDenom(availableBalance, mockAppsTokens.data[0])).format('0,0.00')
+        )
+      ).toBeTruthy();
+      expect(
+        screen.queryByText(
+          numeral(
+            convertFromBaseDenom(+availableBalance + lockedBalance, mockAppsTokens.data[0])
+          ).format('0,0.00')
+        )
       ).toBeTruthy();
       expect(screen.getByText(/~10\.00/g)).toBeTruthy();
       expect(screen.getByAltText(symbol)).toBeTruthy();

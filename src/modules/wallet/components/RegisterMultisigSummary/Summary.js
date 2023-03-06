@@ -76,7 +76,7 @@ const Summary = ({
       nextStep({ formProps, transactionJSON, sender }, 2);
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
-  
+
   return (
     <section className={styles.wrapper}>
       <TransactionSummary

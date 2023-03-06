@@ -2,8 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Box from 'src/theme/box';
-import FormattedNumber from 'src/modules/common/components/FormattedNumber';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import { TertiaryButton, PrimaryButton, OutlineButton } from 'src/theme/buttons';
@@ -117,7 +116,7 @@ const RemoveApplicationDetails = ({ location, application, onCancel, nextStep })
             <span>{t('Deposited:')}</span>
             {/* TODO: this is a placeholder value pending when its part of service response */}
             <span>
-              <FormattedNumber val={fromRawLsk(deposit)} /> LSK
+              <TokenAmount isLsk val={deposit} />
             </span>
           </div>
           <Box className={styles.footerDetailsRow}>

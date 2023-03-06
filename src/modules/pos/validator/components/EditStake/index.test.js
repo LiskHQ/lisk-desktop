@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { convertToBaseDenom, fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom, convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import numeral from 'numeral';
 import { renderWithRouterAndQueryClient, renderWithRouterAndStore } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -96,9 +96,9 @@ describe('EditStake', () => {
     ).toBeTruthy();
     expect(
       screen.getByText(
-        `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
-          token.symbol
-        }`
+        `${numeral(convertFromBaseDenom(token.availableBalance, mockAppsTokens.data[0])).format(
+          '0,0.[0000000000000]'
+        )} ${token.symbol}`
       )
     ).toBeTruthy();
     expect(

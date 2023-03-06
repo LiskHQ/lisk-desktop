@@ -2,7 +2,8 @@ import { act } from 'react-dom/test-utils';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import wallets from '@tests/constants/wallets';
 import Form, { validateState } from './index';
 
@@ -24,8 +25,9 @@ const mockFeeFactor = 100;
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
 getTransactionFee.mockImplementation((params) => {
   const selectedTransactionPriority = params.selectedPriority.selectedIndex;
-  const fees = fromRawLsk(
-    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor
+  const fees = convertFromBaseDenom(
+    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
+    mockAppsTokens.data[0]
   );
   return {
     value: fees,
@@ -125,7 +127,10 @@ describe('Multisignature editor component', () => {
           params: {
             numberOfSignatures: 2,
             optionalKeys: [wallets.genesis.summary.publicKey],
-            mandatoryKeys: [wallets.validator.summary.publicKey, wallets.multiSig.summary.publicKey],
+            mandatoryKeys: [
+              wallets.validator.summary.publicKey,
+              wallets.multiSig.summary.publicKey,
+            ],
           },
         },
       },

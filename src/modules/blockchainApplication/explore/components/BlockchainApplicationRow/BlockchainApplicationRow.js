@@ -1,17 +1,16 @@
 import React, { useCallback, useMemo } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import DialogLink from 'src/theme/dialog/link';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import FormattedNumber from 'src/modules/common/components/FormattedNumber';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './BlockchainApplicationRow.css';
 
 const DepositAmount = ({ amount }) => (
   <span className={`deposit-amount ${styles.amount} ${grid['col-xs-3']}`}>
-    <FormattedNumber val={fromRawLsk(amount)} /> LSK
+    <TokenAmount isLsk val={amount}  />
   </span>
 );
 
@@ -23,9 +22,7 @@ const ChainId = ({ id }) => (
 
 const ChainStatus = ({ status, t }) => (
   <div className={grid['col-xs-2']}>
-    <span className={`chain-status ${styles.statusChip} ${styles[status]}`}>
-      {t(status)}
-    </span>
+    <span className={`chain-status ${styles.statusChip} ${styles[status]}`}>{t(status)}</span>
   </div>
 );
 
@@ -44,22 +41,24 @@ const Pin = ({ isPinned, onTogglePin }) => (
   </div>
 );
 
-const BlockchainApplicationRow = ({
-  data,
-  className,
-  t,
-}) => {
+const BlockchainApplicationRow = ({ data, className, t }) => {
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
 
-  const handleTogglePin = useCallback((event) => {
-    event.stopPropagation();
-    togglePin(data.chainID);
-  }, [togglePin]);
+  const handleTogglePin = useCallback(
+    (event) => {
+      event.stopPropagation();
+      togglePin(data.chainID);
+    },
+    [togglePin]
+  );
 
-  const application = useMemo(() => ({
-    ...data,
-    isPinned: checkPinByChainId(data.chainID),
-  }), [checkPinByChainId]);
+  const application = useMemo(
+    () => ({
+      ...data,
+      isPinned: checkPinByChainId(data.chainID),
+    }),
+    [checkPinByChainId]
+  );
 
   return (
     <div data-testid="applications-row" className={`application-row ${styles.container}`}>

@@ -2,15 +2,14 @@
 import React from 'react';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { statusMessages } from '@transaction/configuration/statusConfig';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
-import FormattedNumber from 'src/modules/common/components/FormattedNumber';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './styles.css';
 
 const unlockTime = 5;
 
 const LiskAmountFormatted = ({ val }) => (
   <span className={styles.subHeadingBold}>
-    <FormattedNumber val={fromRawLsk(val)} /> LSK
+    <TokenAmount isLsk val={val} />
   </span>
 );
 

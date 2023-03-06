@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import TokenAmount from '@token/fungible/components/tokenAmount';
@@ -11,17 +11,13 @@ import ActionBar from './ActionBar';
 import styles from './BalanceInfo.css';
 
 // eslint-disable-next-line complexity
-// @Todo: this component needs to be removed cleaningly because it seems it not used in the application
-const BalanceInfo = ({
-  t, activeToken, isWalletRoute, account,
-}) => {
+// @Todo: this component needs to be removed cleanly because it seems it not used in the application
+const BalanceInfo = ({ t, activeToken, isWalletRoute, account }) => {
   const { address, balance = 0 } = account?.summary ?? {};
 
   const isBanned = account?.pos?.validator?.isBanned;
   const pomHeights = account?.pos?.validator?.punishmentPeriods;
-  const pomStart = pomHeights?.length
-    ? pomHeights[pomHeights.length - 1]
-    : {};
+  const pomStart = pomHeights?.length ? pomHeights[pomHeights.length - 1] : {};
 
   return (
     <Box className={`${styles.wrapper}`}>
@@ -33,7 +29,7 @@ const BalanceInfo = ({
               <TokenAmount val={balance} token={activeToken} />
               <Converter
                 className={styles.fiatValue}
-                value={fromRawLsk(balance)}
+                value={convertFromBaseDenom(balance, activeToken)}
                 error=""
               />
             </div>

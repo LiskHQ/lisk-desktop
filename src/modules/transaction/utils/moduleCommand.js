@@ -1,6 +1,6 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 
-const getModuleCommandSenderLabel = (t = str => str) => ({
+const getModuleCommandSenderLabel = (t = (str) => str) => ({
   [MODULE_COMMANDS_NAME_MAP.transfer]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.crossChainTransfer]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.reclaim]: t('Sender'),
@@ -12,11 +12,10 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim rewards'),
   [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Edit commission'),
   [MODULE_COMMANDS_NAME_MAP.registerKeys]: t('Register keys'),
-  [MODULE_COMMANDS_NAME_MAP.registerSidechain]: t(''),
-
+  [MODULE_COMMANDS_NAME_MAP.registerSidechain]: t('Register side chain'),
 });
 
-const getModuleCommandTitle = (t = str => str) => ({
+const getModuleCommandTitle = (t = (str) => str) => ({
   [MODULE_COMMANDS_NAME_MAP.transfer]: t('Transfer'),
   [MODULE_COMMANDS_NAME_MAP.reclaim]: t('Reclaim'),
   [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim Rewards'),

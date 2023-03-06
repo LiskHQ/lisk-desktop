@@ -5,7 +5,7 @@ import { usePosConstants } from './queries';
 
 const usePosToken = (props) => {
   const [currentAccount] = useCurrentAccount();
-  const { address } = props?.address || currentAccount.metadata || {};
+  const { address } = props || currentAccount.metadata || {};
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
   const { data: tokens, isLoading: isLoadingTokenBalance } = useTokensBalance({

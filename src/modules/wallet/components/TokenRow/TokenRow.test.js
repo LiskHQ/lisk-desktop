@@ -1,7 +1,7 @@
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
 import numeral from 'numeral';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import TokenRow from './TokenRow';
 
@@ -18,12 +18,24 @@ describe('TokenRow', () => {
     expect(screen.getByText(chainName)).toBeTruthy();
     expect(
       screen.queryByText(
-        `${numeral(fromRawLsk(lockedBalance)).format('0,0.00')} ${symbol.toUpperCase()}`
+        `${numeral(convertFromBaseDenom(lockedBalance, mockAppsTokens.data[0])).format(
+          '0,0.00'
+        )} ${symbol.toUpperCase()}`
       )
     );
-    expect(screen.queryByText(`${numeral(fromRawLsk(availableBalance)).format('0,0.00')}`));
     expect(
-      screen.queryByText(`${numeral(fromRawLsk(+availableBalance + lockedBalance)).format('0')}`)
+      screen.queryByText(
+        `${numeral(convertFromBaseDenom(availableBalance, mockAppsTokens.data[0])).format(
+          '0,0.00'
+        )}`
+      )
+    );
+    expect(
+      screen.queryByText(
+        `${numeral(
+          convertFromBaseDenom(+availableBalance + lockedBalance, mockAppsTokens.data[0])
+        ).format('0')}`
+      )
     );
     expect(screen.getByText(/~10\.00/g)).toBeTruthy();
     expect(screen.getByAltText(symbol)).toBeTruthy();

@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -23,15 +22,16 @@ const StakeRow = ({
   data: { address, commission, username, confirmed, unconfirmed },
   index,
   history,
-  token
+  token,
 }) => {
   const [state, setState] = useState(
     unconfirmed === '' ? componentState.editing : componentState.notEditing
   );
   const dispatch = useDispatch();
-  const [stakeAmount, setStakeAmount] = useStakeAmountField(convertFromBaseDenom(unconfirmed, token));
+  const [stakeAmount, setStakeAmount] = useStakeAmountField(
+    convertFromBaseDenom(unconfirmed, token)
+  );
   const truncatedAddress = truncateAddress(address);
-
 
   const handleFormSubmission = (e) => {
     e.preventDefault();

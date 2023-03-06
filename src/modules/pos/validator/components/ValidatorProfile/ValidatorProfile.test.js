@@ -8,9 +8,9 @@ import { mockBlocks } from '@block/__fixtures__';
 import { mockValidators, mockReceivedStakes, mockSentStakes } from '@pos/validator/__fixtures__';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
-import { mockAppsTokens } from '@token/fungible/__fixtures__'
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
-import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import ValidatorProfile from './ValidatorProfile';
 import { useValidators, useReceivedStakes, useSentStakes } from '../../hooks/queries';
 
@@ -22,8 +22,7 @@ jest.mock('@account/hooks', () => ({
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('../../hooks/queries');
-jest.mock('@pos/validator/hooks/usePosToken')
-
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('Validator Profile', () => {
   let wrapper;
@@ -44,7 +43,7 @@ describe('Validator Profile', () => {
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
   useSentStakes.mockReturnValue({ data: mockSentStakes });
   useReceivedStakes.mockReturnValue({ data: mockReceivedStakes });
-  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0]})
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
 
   it('Should render active validator profile details', () => {
     useSentStakes.mockReturnValue({
@@ -90,9 +89,9 @@ describe('Validator Profile', () => {
     expect(screen.getByText(mockValidators.data[0].rank)).toBeTruthy();
     expect(
       screen.getByText(
-        `${numeral(fromRawLsk(mockValidators.data[0].validatorWeight)).format(
-          '0,0.[0000000000000]'
-        )} LSK`
+        `${numeral(
+          convertFromBaseDenom(mockValidators.data[0].validatorWeight, mockAppsTokens.data[0])
+        ).format('0,0.[0000000000000]')} LSK`
       )
     ).toBeTruthy();
     expect(screen.getByTestId('date-timestamp')).toBeTruthy();

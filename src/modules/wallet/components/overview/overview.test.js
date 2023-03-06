@@ -6,7 +6,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 
 import { mockBlocks } from '@block/__fixtures__';
 import { mockValidators } from '@pos/validator/__fixtures__';
@@ -74,13 +74,23 @@ describe('Overview', () => {
 
       expect(
         screen.queryByText(
-          `${numeral(fromRawLsk(lockedBalance)).format('0')} ${symbol.toUpperCase()}`
+          `${numeral(convertFromBaseDenom(lockedBalance, mockAppsTokens.data[0])).format(
+            '0'
+          )} ${symbol.toUpperCase()}`
         )
       );
-      expect(screen.queryByText(`${numeral(fromRawLsk(availableBalance)).format('0,0.00')}`));
       expect(
         screen.queryByText(
-          `${numeral(fromRawLsk(+availableBalance + lockedBalance)).format('0,0.00')}`
+          `${numeral(convertFromBaseDenom(availableBalance, mockAppsTokens.data[0])).format(
+            '0,0.00'
+          )}`
+        )
+      );
+      expect(
+        screen.queryByText(
+          `${numeral(
+            convertFromBaseDenom(+availableBalance + lockedBalance, mockAppsTokens.data[0])
+          ).format('0,0.00')}`
         )
       );
       expect(screen.getByAltText(symbol)).toBeTruthy();
