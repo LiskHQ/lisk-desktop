@@ -1,6 +1,5 @@
 /* istanbul ignore file */
 import { LedgerAccount, LiskApp } from '@zondax/ledger-lisk';
-import { transactions } from '@liskhq/lisk-client';
 
 import { ADD_DEVICE, DEVICE_STATUS } from '../../constants';
 import { LEDGER } from './constants';
