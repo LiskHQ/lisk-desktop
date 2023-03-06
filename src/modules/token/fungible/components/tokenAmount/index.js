@@ -47,7 +47,7 @@ const TokenAmount = ({
   return (
     <Wrapper {...(className && { className })}>
       <FormattedNumber val={value} />
-      {token && ` ${isLsk ? 'LSK' : token.symbol || ''}`}
+      {isLsk ? ' LSK' : ` ${token?.symbol || ''}`}
     </Wrapper>
   );
 };

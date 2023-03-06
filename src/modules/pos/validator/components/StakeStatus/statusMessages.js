@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { statusMessages } from '@transaction/configuration/statusConfig';
 import TokenAmount from '@token/fungible/components/tokenAmount';
