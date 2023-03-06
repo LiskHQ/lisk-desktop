@@ -21,7 +21,6 @@ const SelectAccount = ({
   devices,
   // history,
   settings,
-  network,
   settingsUpdated,
   t,
 }) => {
@@ -122,8 +121,6 @@ const SelectAccount = ({
     const activeDevice = devices.find((d) => d.deviceId === device.deviceId);
     if (!activeDevice) prevStep({ reset: true });
   }, [currentAccount, devices, device]);
-
-  console.log('Render hwAccounts', hwAccounts);
 
   return (
     <div className={styles.selectAccountWrapper}>

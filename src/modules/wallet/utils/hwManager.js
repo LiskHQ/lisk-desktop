@@ -34,7 +34,6 @@ const getAccountBundle = async (offset) => {
  */
 const getAccountsFromDevice = async () => {
   let accounts = [];
-  console.log('getAccountsFromDevice');
 
   for (let index = 0; index <= accounts.length; index += 10) {
     // eslint-disable-next-line no-await-in-loop
@@ -42,7 +41,6 @@ const getAccountsFromDevice = async () => {
     // eslint-disable-next-line no-await-in-loop
     accounts = [...accounts, ...result];
   }
-  console.log('getAccountsFromDevice result', accounts);
   return accounts;
 };
 

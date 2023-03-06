@@ -9,7 +9,6 @@ import { getTransactionSignatureStatus } from '@wallet/components/signMultisigVi
 import { getKeys } from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { isEmpty } from 'src/utils/helpers';
 import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
