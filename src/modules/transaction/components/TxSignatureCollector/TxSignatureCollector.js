@@ -134,7 +134,7 @@ const TxSignatureCollector = ({
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
-  if (!currentAccount?.metadata.isHW) {
+  if (!currentAccount?.metadata?.isHW) {
     return (
       <div className={styles.container}>
         <TertiaryButton className={styles.backButton} onClick={prevStep}>

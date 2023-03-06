@@ -343,7 +343,7 @@ const signUsingHW = async (wallet, schema, chainID, moduleCommand, transaction) 
 };
 
 export const sign = async (wallet, schema, chainID, transaction, privateKey, senderAccount) => {
-  if (wallet.metadata.isHW) {
+  if (wallet.metadata?.isHW) {
     const moduleCommand = joinModuleAndCommand(transaction);
     return signUsingHW(wallet, schema, chainID, moduleCommand, transaction);
   }
