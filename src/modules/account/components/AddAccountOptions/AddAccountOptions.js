@@ -17,7 +17,7 @@ const AddAccountOptionButton = ({ iconName, text, onClick }) => (
   </button>
 );
 
-const AddAccountOptions = ({ history }) => {
+const AddAccountOptions = ({ history, location: { search } }) => {
   const { t } = useTranslation();
 
   return (
@@ -28,29 +28,28 @@ const AddAccountOptions = ({ history }) => {
         >
           <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
             <h1>{t('Add your account')}</h1>
-            <p>
-              {t('Choose an option to add your account to Lisk wallet.')}
-            </p>
+            <p>{t('Choose an option to add your account to Lisk wallet.')}</p>
             <div className={styles.selectRowWrapper}>
               <AddAccountOptionButton
                 text={t('Secret recovery phrase')}
                 iconName="secretPassphrase"
-                onClick={() => history.push(routes.addAccountBySecretRecovery.path)}
+                onClick={() =>
+                  history.push({ pathname: routes.addAccountBySecretRecovery.path, search })
+                }
               />
               <AddAccountOptionButton
                 text={t('Restore from backup')}
                 iconName="accountUpload"
-                onClick={() => history.push(routes.addAccountByFile.path)}
+                onClick={() => history.push({ pathname: routes.addAccountByFile.path, search })}
               />
               <AddAccountOptionButton
                 text="Use a hardware wallet"
                 iconName="hwWalletIcon"
-                onClick={() => history.push(routes.hwWallet.path)}
+                onClick={() => history.push({ pathname: routes.hwWallet.path, search })}
               />
             </div>
             <p>
-              {t('Don’t have a Lisk account yet?')}
-              {' '}
+              {t('Don’t have a Lisk account yet?')}{' '}
               <Link to={routes.register.path}>Create one now</Link>
             </p>
           </div>
