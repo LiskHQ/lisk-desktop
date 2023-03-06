@@ -1,0 +1,19 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.HWConfirm {
+  text-align: center;
+
+  & .headerText {
+    margin: 40px 0 0 0;
+    font-weight: var(--font-weight-very-bold);
+  }
+
+  & .description {
+    margin: 16px 0 0 0;
+    color: var(--color-blue-gray);
+  }
+
+  & .transactionConfirmFooterProp {
+    margin-top: 36px;
+  }
+}

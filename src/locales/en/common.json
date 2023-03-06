@@ -132,6 +132,7 @@
   "Confirm and Sign": "Confirm and Sign",
   "Confirm and send": "Confirm and send",
   "Confirm your secret recovery phrase": "Confirm your secret recovery phrase",
+  "Confirm your transaction": "Confirm your transaction",
   "Confirmations": "Confirmations",
   "Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.": "Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.",
   "Confirmed": "Confirmed",

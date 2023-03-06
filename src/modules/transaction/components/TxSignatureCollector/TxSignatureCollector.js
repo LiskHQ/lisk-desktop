@@ -3,15 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { TertiaryButton } from '@theme/buttons';
 import { useCommandSchema } from '@network/hooks';
 import Icon from '@theme/Icon';
-import Box from '@theme/box';
-import BoxContent from '@theme/box/content';
-import Illustration from '@common/components/illustration';
 import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from '@auth/components/EnterPasswordForm';
 import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 import { useHWStatus } from '@hardwareWallet/hooks/useHWStatus';
 import HWReconnect from '@hardwareWallet/components/HWReconnect/HWReconnect';
+import HWConfirm from '@hardwareWallet/components/HWConfirm/HWConfirm';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
@@ -156,19 +154,6 @@ const TxSignatureCollector = ({
     return <HWReconnect />;
   }
 
-  const hwDeviceName = `${currentAccount?.hw?.manufacturer.toLowerCase()}${currentAccount?.hw?.model.split(' ')[0]}`;
-
-  return (
-    <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
-      <BoxContent className={styles.content}>
-        <Illustration name={hwDeviceName} />
-        <h5>
-          {t('Please confirm the transaction on your {{deviceModel}}', {
-            deviceModel: currentAccount?.hw?.model,
-          })}
-        </h5>
-      </BoxContent>
-    </Box>
-  );
+  return <HWConfirm />;
 };
 export default TxSignatureCollector;

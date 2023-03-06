@@ -41,22 +41,6 @@
           font-size: 16px;
         }
       }
-
-      & .account {
-        & .name {
-          margin: 0 0 10px 0;
-          color: var(--color-zodiac-blue);
-          font-weight: bold;
-          font-size: 16px;
-          letter-spacing: 0.23px;
-        }
-
-        & .address {
-          font-size: 13px;
-          line-height: 13px;
-          letter-spacing: 0.23px;
-        }
-      }
     }
   }
 }
