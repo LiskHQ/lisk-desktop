@@ -23,6 +23,7 @@ export const ManageAccountsContent = ({
   className,
   truncate,
   title: customTitle,
+  location: { search },
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
@@ -30,8 +31,10 @@ export const ManageAccountsContent = ({
   const [showRemove, setShowRemove] = useState(false);
   const title = customTitle ?? t('Manage accounts');
   const { accounts: hwAccounts } = useHWAccounts();
-
   const { status } = useHWStatus();
+
+  const queryParams = new URLSearchParams(search);
+  const referrer = queryParams.get('referrer');
 
   const onAddAccount = useCallback(() => {
     history.push(routes.addAccountOptions.path);
@@ -44,7 +47,7 @@ export const ManageAccountsContent = ({
   }, []);
   const onSelectAccount = useCallback((account) => {
     setAccount(account);
-    history.push(routes.dashboard.path);
+    history.push(referrer || routes.dashboard.path);
   }, []);
 
   return (
@@ -65,7 +68,7 @@ export const ManageAccountsContent = ({
           ))}
         </>
       </Box>
-      {(status === DEVICE_STATUS.STAND_BY && hwAccounts.length === 0) && (
+      {status === DEVICE_STATUS.STAND_BY && hwAccounts.length === 0 && (
         <div className={styles.loaderWrapper}>
           <Spinner className={styles.spinner} />
           <span>{t('Loading hardware wallet accounts…')}</span>
