@@ -10,7 +10,7 @@ export const getHWAccounts = async ({
   const accounts = [];
   let accountIndex = 0;
   // Get all initialized and uninitialized accounts
-  while (accountIndex === 0) {
+  while (true) {
     const pubkey = await HWManager.getPublicKey(accountIndex);
     const address = extractAddressFromPublicKey(pubkey);
     const config = { params: { address } };
