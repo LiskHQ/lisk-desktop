@@ -1,15 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
 import i18next from 'i18next';
-// import {
-//   checkIfInsideLiskApp,
-//   getAddress,
-//   getPublicKey,
-//   subscribeToDeviceConnected,
-//   subscribeToDeviceDisconnected,
-//   subscribeToDevicesList,
-//   validatePin,
-//   signMessage,
-// } from '@libs/hwServer/communication';
 import hwManager from '@hardwareWallet/manager/HWManager';
 import { extractAddressFromPublicKey } from './account';
 import { getUsedHWAccounts } from './api';
