@@ -73,7 +73,7 @@ describe('HWManager', () => {
 
     expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.HW_COMMAND, {
       action: 'SIGN_TX',
-      data: { index: 1, chainID: 'TEST_CHAIN_ID', message: 'TEST_TX' },
+      data: { index: 1, message: 'TEST_TX' },
     });
   });
 
