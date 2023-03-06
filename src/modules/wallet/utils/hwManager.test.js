@@ -40,10 +40,7 @@ describe('hwManager util', () => {
       communication.getPublicKey.mockResolvedValueOnce(wallets.empty_wallet.summary.publicKey);
       accountApi.getAccounts.mockResolvedValueOnce({ data: [wallets.genesis] });
 
-      const device = { deviceId: '1234125125' };
-      const network = { name: 'Testnet', networks: {} };
-
-      const walletsOnDevice = await getAccountsFromDevice({ device, network });
+      const walletsOnDevice = await getAccountsFromDevice();
 
       expect(walletsOnDevice).toEqual([wallets.genesis]);
     });

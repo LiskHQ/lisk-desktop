@@ -329,7 +329,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
 };
 
 // eslint-disable-next-line max-statements
-const signUsingHW = async (wallet, schema, chainID, moduleCommand, transaction) => {
+const signUsingHW = async (wallet, schema, chainID, transaction) => {
   const [error, signedTransaction] = await to(
     signTransactionByHW({ wallet, chainID, transaction, schema })
   );
@@ -344,8 +344,7 @@ const signUsingHW = async (wallet, schema, chainID, moduleCommand, transaction) 
 
 export const sign = async (wallet, schema, chainID, transaction, privateKey, senderAccount) => {
   if (wallet.metadata?.isHW) {
-    const moduleCommand = joinModuleAndCommand(transaction);
-    return signUsingHW(wallet, schema, chainID, moduleCommand, transaction);
+    return signUsingHW(wallet, schema, chainID, transaction);
   }
 
   if (senderAccount.mandatoryKeys?.length + senderAccount.optionalKeys?.length > 0) {
