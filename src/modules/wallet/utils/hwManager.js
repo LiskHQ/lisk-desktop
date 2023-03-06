@@ -139,14 +139,7 @@ export const getDeviceType = (deviceModel = '') => {
 
 export {
   getNewAccountByIndex,
-  // checkIfInsideLiskApp,
   getAccountsFromDevice,
-  // getAddress,
-  // getPublicKey,
   updateTransactionSignatures,
-  // subscribeToDeviceConnected,
-  // subscribeToDeviceDisconnected,
-  // subscribeToDevicesList,
-  // validatePin,
   signMessageByHW,
 };
