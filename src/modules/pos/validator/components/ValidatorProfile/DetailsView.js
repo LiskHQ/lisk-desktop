@@ -45,7 +45,9 @@ const DetailsView = ({ data, history, isMyProfile }) => {
       icon: 'commissionsIcon',
       label: t('Commission'),
       value: `${convertCommissionToPercentage(data.commission)}%`,
-      onEdit: !isMyProfile ? undefined : () => addSearchParamsToUrl(history, { modal: 'changeCommission' }),
+      onEdit: !isMyProfile
+        ? undefined
+        : () => addSearchParamsToUrl(history, { modal: 'changeCommission' }),
     },
     {
       icon: 'calendar',
@@ -78,7 +80,7 @@ const DetailsView = ({ data, history, isMyProfile }) => {
                   </button>
                 )}
               </div>
-              <div className={styles.value}>{value}</div>
+              <div className={`${styles.value} ${styles.capitalized}`}>{value}</div>
             </div>
           </div>
         ))}
