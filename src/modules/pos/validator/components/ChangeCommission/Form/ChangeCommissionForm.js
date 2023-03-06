@@ -5,10 +5,11 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import TxComposer from '@transaction/components/TxComposer';
-import { convertCommissionToNumber } from '@pos/validator/utils';
+import { convertCommissionToNumber, checkCommissionValidity } from '@pos/validator/utils';
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
 import styles from './ChangeCommissionForm.css';
 
+// eslint-disable-next-line max-statements
 export const ChangeCommissionForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const {
@@ -34,7 +35,13 @@ export const ChangeCommissionForm = ({ nextStep }) => {
   };
 
   const newCommissionParam = convertCommissionToNumber(newCommission);
-  const isFormValid = newCommissionParam && newCommissionParam >= 0 && newCommissionParam <= 10000;
+  const newCommissionValid = checkCommissionValidity(newCommission, currentCommission);
+  const isFormValid =
+    newCommission !== currentCommission &&
+    newCommissionParam &&
+    newCommissionParam >= 0 &&
+    newCommissionParam <= 10000 &&
+    newCommissionValid;
   const formProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission,
     params: { newCommission: newCommissionParam },
