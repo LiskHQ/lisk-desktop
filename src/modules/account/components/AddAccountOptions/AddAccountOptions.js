@@ -8,6 +8,24 @@ import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import styles from './AddAccountOptions.css';
 
+const addAccountOptions = (t) => [
+  {
+    text: t('Secret recovery phrase'),
+    iconName: 'secretPassphrase',
+    pathname: routes.addAccountBySecretRecovery.path,
+  },
+  {
+    text: t('Restore from backup'),
+    iconName: 'accountUpload',
+    pathname: routes.addAccountByFile.path,
+  },
+  {
+    text: t('Use a hardware wallet'),
+    iconName: 'hwWalletIcon',
+    pathname: routes.hwWallet.path,
+  },
+];
+
 const AddAccountOptionButton = ({ iconName, text, onClick }) => (
   <button data-testid={iconName} onClick={onClick} className={styles.addAccountOptionBtnWrapper}>
     <div>
@@ -30,23 +48,14 @@ const AddAccountOptions = ({ history, location: { search } }) => {
             <h1>{t('Add your account')}</h1>
             <p>{t('Choose an option to add your account to Lisk wallet.')}</p>
             <div className={styles.selectRowWrapper}>
-              <AddAccountOptionButton
-                text={t('Secret recovery phrase')}
-                iconName="secretPassphrase"
-                onClick={() =>
-                  history.push({ pathname: routes.addAccountBySecretRecovery.path, search })
-                }
-              />
-              <AddAccountOptionButton
-                text={t('Restore from backup')}
-                iconName="accountUpload"
-                onClick={() => history.push({ pathname: routes.addAccountByFile.path, search })}
-              />
-              <AddAccountOptionButton
-                text="Use a hardware wallet"
-                iconName="hwWalletIcon"
-                onClick={() => history.push({ pathname: routes.hwWallet.path, search })}
-              />
+              {addAccountOptions(t).map(({ text, iconName, pathname }) => (
+                <AddAccountOptionButton
+                  key={text}
+                  text={text}
+                  iconName={iconName}
+                  onClick={() => history.push({ pathname, search })}
+                />
+              ))}
             </div>
             <p>
               {t('Don’t have a Lisk account yet?')}{' '}
