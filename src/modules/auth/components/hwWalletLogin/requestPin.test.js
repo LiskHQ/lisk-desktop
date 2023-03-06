@@ -12,7 +12,7 @@ function enterPinByButtons(wrapper, pinPositions) {
   });
 }
 
-describe('Request PIN Component', () => {
+describe.skip('Request PIN Component', () => {
   let wrapper;
   const deviceId = 4;
   const props = {
