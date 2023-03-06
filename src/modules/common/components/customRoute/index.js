@@ -32,10 +32,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   }
 
   if (isPrivate && !isAuthenticated) {
-    const searchString = `?referrer=${path.replace(/\/(send|stake)/, '')}${search.replace(
-      /^\?/,
-      '&'
-    )}`;
+    const searchString = `?referrer=${path}${search.replace(/^\?/, '&')}`;
     return <Redirect to={`${routes.manageAccounts.path}${searchString}`} />;
   }
 

@@ -45,10 +45,13 @@ export const ManageAccountsContent = ({
       address: account?.metadata?.address,
     });
   }, []);
-  const onSelectAccount = useCallback((account) => {
-    setAccount(account);
-    history.push(referrer || routes.dashboard.path);
-  }, []);
+  const onSelectAccount = useCallback(
+    (account) => {
+      setAccount(account);
+      history.push(referrer || routes.dashboard.path);
+    },
+    [referrer]
+  );
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
