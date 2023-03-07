@@ -17,10 +17,14 @@ export const ChangeCommissionForm = ({ nextStep }) => {
     isLoading,
     isSuccess: isCommissionSuccess,
   } = useCurrentCommissionPercentage();
-  const [newCommission, setNewCommission] = useState(currentCommission);
+  const [newCommission, setNewCommission] = useState({
+    value: currentCommission,
+    feedback: '',
+    numericValue: convertCommissionToNumber(currentCommission),
+  });
 
   useEffect(() => {
-    if (currentCommission && currentCommission !== newCommission) {
+    if (currentCommission && currentCommission !== newCommission.value) {
       setNewCommission(currentCommission);
     }
   }, [isCommissionSuccess]);
@@ -34,22 +38,48 @@ export const ChangeCommissionForm = ({ nextStep }) => {
     });
   };
 
-  const newCommissionParam = convertCommissionToNumber(newCommission);
-  const newCommissionValid = checkCommissionValidity(newCommission, currentCommission);
-  const isFormValid =
-    newCommission !== currentCommission &&
-    newCommissionParam &&
-    newCommissionParam >= 0 &&
-    newCommissionParam <= 10000 &&
-    newCommissionValid;
   const formProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission,
-    params: { newCommission: newCommissionParam },
-    fields: { newCommission },
-    isFormValid,
+    params: { newCommission: newCommission.numericValue },
+    fields: { newCommission: newCommission.value },
+    isFormValid: !newCommission.feedback,
   };
   const commandParams = {
-    newCommission: newCommissionParam,
+    newCommission: newCommission.numericValue,
+  };
+
+  // eslint-disable-next-line max-statements
+  const checkCommissionFeedback = (value) => {
+    let inputFeedback;
+    const newCommissionParam = convertCommissionToNumber(value);
+    const newCommissionValid = checkCommissionValidity(value, currentCommission);
+    const isFormValid =
+      value !== currentCommission &&
+      newCommissionParam &&
+      newCommissionParam >= 0 &&
+      newCommissionParam <= 10000 &&
+      newCommissionValid;
+    if (checkCommissionValidity(value, currentCommission)) {
+      if (isFormValid) {
+        inputFeedback = undefined;
+      } else {
+        inputFeedback = t('Commission range is invalid');
+      }
+    } else if (newCommissionParam >= 0 && newCommissionParam <= 10000) {
+      inputFeedback = t('You cannot increase commission more than 5%');
+    } else {
+      inputFeedback = t('Commission range is invalid');
+    }
+    return { feedback: inputFeedback, numericValue: newCommissionParam };
+  };
+
+  const onCommissionChange = ({ target: { value } }) => {
+    const { feedback, numericValue } = checkCommissionFeedback(value);
+    setNewCommission({
+      value,
+      feedback,
+      numericValue,
+    });
   };
 
   return (
@@ -75,13 +105,14 @@ export const ChangeCommissionForm = ({ nextStep }) => {
               <Input
                 data-name="change-commission"
                 autoComplete="off"
-                onChange={({ target: { value } }) => setNewCommission(value)}
+                onChange={onCommissionChange}
                 name="newCommission"
-                value={newCommission}
+                value={newCommission.value}
                 isLoading={isLoading}
                 placeholder="*.**"
                 className={`${styles.input} select-name-input`}
-                feedback={isFormValid ? undefined : t('Commission range is invalid')}
+                status={newCommission.feedback ? 'error' : ''}
+                feedback={newCommission.feedback}
               />
             </div>
           </BoxContent>
