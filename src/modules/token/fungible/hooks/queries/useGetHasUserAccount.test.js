@@ -5,7 +5,7 @@ import { useGetHasUserAccount } from './useGetHasUserAccount';
 jest.useRealTimers();
 
 jest.mock('@token/fungible/hooks/queries', () => ({
-    useGetHasUserAccount: jest.fn(str => str),
+    useGetHasUserAccount: jest.fn(),
 }));
 
 beforeEach(() => jest.clearAllMocks());
