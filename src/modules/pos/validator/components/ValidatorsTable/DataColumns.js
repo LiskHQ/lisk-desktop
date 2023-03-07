@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 
 import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Tooltip from 'src/theme/Tooltip';
@@ -66,9 +66,10 @@ export const ValidatorWeight = () => {
   const {
     data: { validatorWeight },
     activeTab,
+    token,
   } = useContext(ValidatorRowContext);
   const formatted = formatAmountBasedOnLocale({
-    value: fromRawLsk(validatorWeight),
+    value: convertFromBaseDenom(validatorWeight, token),
     format: '0a',
   });
 
@@ -95,6 +96,7 @@ export const ValidatorCommission = () => {
 export const ValidatorDetails = () => {
   const {
     data,
+    token,
     activeTab,
     watched = false,
     addToWatchList,
@@ -110,7 +112,7 @@ export const ValidatorDetails = () => {
     activeTab === 'watched';
   const [key, val] = getValidatorStatus(status, totalStakeReceived);
   const formattedStakeWeight = formatAmountBasedOnLocale({
-    value: fromRawLsk(validatorWeight),
+    value: convertFromBaseDenom(validatorWeight, token),
     format: '0a',
   });
 
@@ -237,6 +239,8 @@ export const GeneratingTime = () => {
     time,
   } = useContext(ValidatorRowContext);
   return (
-    <span className={getGeneratingTimeClass(activeTab)}>{state === 'missedBlock' ? '-' : time}</span>
+    <span className={getGeneratingTimeClass(activeTab)}>
+      {state === 'missedBlock' ? '-' : time}
+    </span>
   );
 };

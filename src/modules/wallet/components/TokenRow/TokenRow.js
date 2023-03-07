@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import numeral from 'numeral';
-import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
+import { convertFromBaseDenom } from 'src/modules/token/fungible/utils/lsk';
 import Converter from 'src/modules/common/components/converter';
 import styles from './TokenRow.css';
 import { Token, Balance } from './components';
@@ -18,11 +18,13 @@ const TokenRow = ({ data: token }) => {
       <div className={`transaction-event-row ${styles.container}`}>
         <Token chainName={chainName} chainLogo={logo?.svg} tokenSymbol={tokenSymbol} />
         <Balance
-          amount={numeral(fromRawLsk(+availableBalance + totalLockedBalance)).format('0,0.00')}
+          amount={numeral(
+            convertFromBaseDenom(+availableBalance + totalLockedBalance, token)
+          ).format('0,0.00')}
         />
-        <Balance amount={numeral(fromRawLsk(availableBalance)).format('0,0.00')} />
-        <Balance amount={numeral(fromRawLsk(totalLockedBalance)).format('0')} />
-        <Balance amount={<Converter value={fromRawLsk(availableBalance)} />} />
+        <Balance amount={numeral(convertFromBaseDenom(availableBalance, token)).format('0,0.00')} />
+        <Balance amount={numeral(convertFromBaseDenom(totalLockedBalance, token)).format('0')} />
+        <Balance amount={<Converter value={convertFromBaseDenom(availableBalance, token)} />} />
       </div>
     </div>
   );

@@ -6,12 +6,12 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 
 import { mockBlocks } from '@block/__fixtures__';
 import { mockValidators } from '@pos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
-import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
@@ -33,13 +33,18 @@ jest.mock('@block/hooks/queries/useLatestBlock');
 describe('Overview', () => {
   const history = { location: { search: '' } };
 
+  const mergedTokens = mockAppsTokens.data.map((token, index) => ({
+    ...mockTokensBalance.data[index],
+    ...token,
+  }));
+
   it('should display properly', async () => {
     const props = {
       history,
     };
 
     useTokensBalance.mockReturnValue({
-      data: mockTokensBalance,
+      data: { data: mergedTokens },
       isLoading: false,
       isSuccess: true,
     });
@@ -62,20 +67,30 @@ describe('Overview', () => {
     expect(screen.getByText(mockAuth.meta.name)).toBeTruthy();
     expect(screen.getByText('View all tokens')).toBeTruthy();
 
-    expect(screen.getAllByTestId('token-card')).toHaveLength(mockTokensBalance.data.length);
+    expect(screen.getAllByTestId('token-card')).toHaveLength(mergedTokens.length);
 
-    mockTokensBalance.data.forEach(({ symbol, availableBalance, lockedBalances }) => {
+    mergedTokens.forEach(({ symbol, availableBalance, lockedBalances }) => {
       const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
 
       expect(
         screen.queryByText(
-          `${numeral(fromRawLsk(lockedBalance)).format('0')} ${symbol.toUpperCase()}`
+          `${numeral(convertFromBaseDenom(lockedBalance, mockAppsTokens.data[0])).format(
+            '0'
+          )} ${symbol.toUpperCase()}`
         )
       );
-      expect(screen.queryByText(`${numeral(fromRawLsk(availableBalance)).format('0,0.00')}`));
       expect(
         screen.queryByText(
-          `${numeral(fromRawLsk(+availableBalance + lockedBalance)).format('0,0.00')}`
+          `${numeral(convertFromBaseDenom(availableBalance, mockAppsTokens.data[0])).format(
+            '0,0.00'
+          )}`
+        )
+      );
+      expect(
+        screen.queryByText(
+          `${numeral(
+            convertFromBaseDenom(+availableBalance + lockedBalance, mockAppsTokens.data[0])
+          ).format('0,0.00')}`
         )
       );
       expect(screen.getByAltText(symbol)).toBeTruthy();

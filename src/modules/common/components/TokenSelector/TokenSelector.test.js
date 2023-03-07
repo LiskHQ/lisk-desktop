@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
-import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
+import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { TokenSelector } from '.';
 
@@ -17,6 +17,7 @@ describe('TokenSelector', () => {
     value: {
       availableBalance: 1000000000,
       symbol: 'LSK',
+      ...mockAppsTokens.data[0],
     },
   };
 
@@ -26,12 +27,16 @@ describe('TokenSelector', () => {
     expect(screen.getByText('Token')).toBeTruthy();
     expect(screen.getByText('Balance:')).toBeTruthy();
     expect(
-      screen.getByText(`${fromRawLsk(props.value.availableBalance)} ${props.value.symbol}`)
+      screen.getByText(
+        `${convertFromBaseDenom(props.value.availableBalance, mockAppsTokens.data[0])} ${
+          props.value.symbol
+        }`
+      )
     ).toBeTruthy();
 
     fireEvent.click(
       screen.getByText(
-        `${fromRawLsk(mockTokensBalance.data[0].availableBalance)} ${
+        `${convertFromBaseDenom(mockTokensBalance.data[0].availableBalance, mockAppsTokens.data[0])} ${
           mockTokensBalance.data[0].symbol
         }`
       )

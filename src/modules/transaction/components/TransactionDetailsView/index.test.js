@@ -2,7 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { MemoryRouter } from 'react-router';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { truncateAddress } from 'src/modules/wallet/utils/account';
+import { truncateAddress } from '@wallet/utils/account';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import i18n from 'src/utils/i18n/i18n';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { mockEvents, mockTransactions } from '../../__fixtures__';
@@ -10,6 +12,7 @@ import TransactionDetailView from '.';
 import { useTransactionEvents, useTransactions } from '../../hooks/queries';
 
 jest.mock('../../hooks/queries');
+jest.mock('@token/fungible/hooks/queries');
 
 describe('TransactionDetailsView', () => {
   let wrapper;
@@ -36,6 +39,8 @@ describe('TransactionDetailsView', () => {
     isFetching: false,
     fetchNextPage: mockFetchTransactionsNextPage,
   });
+
+  useTokensBalance.mockReturnValue({ data: mockAppsTokens });
 
   beforeEach(() => {
     jest.clearAllMocks();

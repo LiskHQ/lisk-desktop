@@ -30,6 +30,7 @@ const getRequestTransaction = (request) => {
   return decodeTransaction(Buffer.from(payload, 'hex'), schema);
 };
 
+// @Todo: all use cases of fromRawLsk would be implemented when token has been factored into the WC transaction request
 // eslint-disable-next-line max-statements
 const RequestSummary = ({ nextStep }) => {
   const { t } = useTranslation();

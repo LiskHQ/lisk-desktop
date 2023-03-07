@@ -3,11 +3,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { kFormatter } from 'src/utils/helpers';
+import { useCurrentAccount } from '@account/hooks';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { chartStyles } from 'src/modules/common/components/charts/chartConfig';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import { getModuleCommandTitle } from 'src/modules/transaction/utils/moduleCommand';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import { getModuleCommandTitle } from '@transaction/utils/moduleCommand';
 import { useTheme } from '@theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from '@theme/box';
@@ -123,23 +125,34 @@ const Overview = () => {
   const [activeTab, setActiveTab] = useState('week');
   const colorPalette = getColorPalette(useTheme());
   // Fallback token for transaction statistics
-  // @TODO: Add selector for active token when available in service
-  const tokenID = '0400000000000000';
+  const [
+    {
+      metadata: { address },
+    },
+  ] = useCurrentAccount();
+  const { data: tokens } = useTokensBalance({
+    config: { params: { address } },
+  });
+  const token = tokens?.data?.[0] || {}
+
   const { data: txStatsData } = useTransactionStatistics({ config: { params } });
   const txStats = txStatsData?.data ?? {
     distributionByType: {},
     distributionByAmount: {},
     timeline: {},
   };
+
   const distributionByType = formatDistributionByValues(txStats.distributionByType);
-  const distributionByAmount = normalizeNumberRange(txStats.distributionByAmount?.[tokenID] ?? {});
+  const distributionByAmount = normalizeNumberRange(
+    txStats.distributionByAmount?.[token.tokenID] ?? {}
+  );
   const { txCountList, txVolumeList, txDateList } =
-    Object.keys(txStats.timeline).length > 0 && txStats.timeline[tokenID]
-      ? txStats.timeline[tokenID].reduce(
+    Object.keys(txStats.timeline).length > 0 && txStats.timeline[token.tokenID]
+      ? txStats.timeline[token.tokenID].reduce(
           (acc, item) => ({
             txCountList: [...acc.txCountList, item.transactionCount],
             txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
-            txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
+            txVolumeList: [...acc.txVolumeList, convertFromBaseDenom(item.volume, token)],
           }),
           {
             txCountList: [],
@@ -160,7 +173,7 @@ const Overview = () => {
 
   const distributionChartData = {
     labels: listOfLabels.map((item) =>
-      item.replace('Register multisignature group', 'Regsiter multisig.')
+      item?.replace('Register multisignature group', 'Regsiter multisig.')
     ),
     datasets: [
       {
@@ -199,7 +212,7 @@ const Overview = () => {
                   <GuideTooltipItem
                     key={`transaction-GuideTooltip${i}`}
                     color={colorPalette[i]}
-                    label={label.replace('Register multisignature group', 'Register multisig.')}
+                    label={label?.replace('Register multisignature group', 'Register multisig.')}
                   />
                 ))}
               </GuideTooltip>

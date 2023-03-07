@@ -1,4 +1,5 @@
 import accounts from '@tests/constants/wallets';
+import { mockAppsTokens } from 'src/modules/token/fungible/__fixtures__';
 import getMaxAmount from './getMaxAmount';
 
 const account = {
@@ -16,6 +17,7 @@ const staking = {
     username: 'genesis',
   },
 };
+const mockToken = mockAppsTokens.data[0];
 
 jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
@@ -37,6 +39,7 @@ describe('getMaxAmount', () => {
       mandatoryKeys: [],
       optionalKeys: [],
       moduleCommandSchemas: {},
+      token: mockToken,
     });
     expect(result).toBe(0.8e10);
   });
@@ -52,6 +55,7 @@ describe('getMaxAmount', () => {
       mandatoryKeys: [],
       optionalKeys: [],
       moduleCommandSchemas: {},
+      token: mockToken,
     });
     expect(result).toBe(0.7e10);
   });

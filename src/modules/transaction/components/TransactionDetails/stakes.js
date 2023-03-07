@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import withData from 'src/utils/withData';
 import { getValidators } from '@pos/validator/api';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import StakeItem from '../StakeItem';
@@ -8,6 +9,7 @@ import StakeItem from '../StakeItem';
 export const StakesPure = ({ t, stakedValidator }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
   const { stakes } = transaction.params;
+  const { token } = usePosToken();
 
   useEffect(() => {
     if (transaction.params) {
@@ -23,10 +25,11 @@ export const StakesPure = ({ t, stakedValidator }) => {
         <div className={`${styles.stakesContainer} ${styles.added} tx-added-stakes`}>
           {stakes.map((stake) => (
             <StakeItem
+              truncate
               key={`stake-${stake.address}`}
               stake={{ confirmed: stake.amount }}
               address={stake.address}
-              truncate
+              token={token}
               title={
                 stakedValidator.data[stake.address] &&
                 stakedValidator.data[stake.address].pos?.validator?.name

@@ -8,7 +8,7 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { getKeys } from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom } from '@token/fungible/utils/lsk';
 import { isEmpty } from 'src/utils/helpers';
 import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
@@ -116,7 +116,7 @@ const containsTransactionType = (txs = [], type) => txs.some((tx) => tx.moduleCo
  * @param {Object} params - Params received from withFilters HOC
  * @returns {Object} - Parameters consumable by transaction API method
  */
-const normalizeTransactionParams = (params) =>
+const normalizeTransactionParams = (params, token) =>
   // eslint-disable-next-line complexity
   Object.keys(params).reduce((acc, item) => {
     switch (item) {
@@ -142,13 +142,13 @@ const normalizeTransactionParams = (params) =>
       case 'amountFrom':
         if (params[item]) {
           if (!acc.amount) acc.amount = ':';
-          acc.amount = acc.amount.replace(/(\d+)?:/, `${toRawLsk(params[item])}:`);
+          acc.amount = acc.amount.replace(/(\d+)?:/, `${convertToBaseDenom(params[item], token)}:`);
         }
         break;
       case 'amountTo':
         if (params[item]) {
           if (!acc.amount) acc.amount = ':';
-          acc.amount = acc.amount.replace(/:(\d+)?/, `:${toRawLsk(params[item])}`);
+          acc.amount = acc.amount.replace(/:(\d+)?/, `:${convertToBaseDenom(params[item], token)}`);
         }
         break;
       default:

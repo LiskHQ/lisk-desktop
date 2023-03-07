@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
 import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { mockTokensBalance } from '@token/fungible/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
@@ -49,7 +49,7 @@ useCommandSchema.mockReturnValue({
     {}
   ),
 });
-useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+useTokensBalance.mockReturnValue({ data: mockAppsTokens, isLoading: false });
 useGetInitializationFees.mockReturnValue({ data: { data: { userAccount: 5000000 } } });
 
 describe('Reclaim balance Summary', () => {

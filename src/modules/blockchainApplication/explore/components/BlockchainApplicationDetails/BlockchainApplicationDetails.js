@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Dialog from '@theme/dialog/dialog';
 import Box from 'src/theme/box';
-import { useSelector } from 'react-redux';
-import { selectActiveToken } from 'src/redux/selectors';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
@@ -26,7 +25,6 @@ const deposit = 5e10;
 // eslint-disable-next-line max-statements
 const BlockchainApplicationDetails = ({ history, location }) => {
   const { t } = useTranslation();
-  const active = useSelector(selectActiveToken);
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
   // @todo: Loading and error states will be handled in #4539
@@ -41,6 +39,8 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   const { state, lastCertificateHeight, lastUpdated } =
     aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
+  const { data: tokens } = useTokensBalance();
+  const token = tokens?.data?.[0] || {};
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -106,7 +106,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
             direction="horizontal"
           >
             <span className={styles.value}>
-              <TokenAmount val={deposit} token={active} />
+              <TokenAmount val={deposit} token={token} />
             </span>
           </ValueAndLabel>
         </div>

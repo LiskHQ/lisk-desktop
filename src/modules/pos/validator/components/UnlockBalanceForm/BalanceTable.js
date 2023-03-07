@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import Icon from 'src/theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import UnlockingList from './UnlockingList';
@@ -11,11 +10,14 @@ const BalanceTable = ({
   unlockableAmount,
   currentBlockHeight,
   pendingUnlockableUnlocks,
+  token,
 }) => {
   const { t } = useTranslation();
   return (
     <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-      {(sentStakesAmount !== 0 || pendingUnlockableUnlocks?.length > 0 || unlockableAmount !== 0) && (
+      {(sentStakesAmount !== 0 ||
+        pendingUnlockableUnlocks?.length > 0 ||
+        unlockableAmount !== 0) && (
         <li>
           <p className={styles.columnTitle}>{t('Amount')}</p>
           <p className={styles.columnTitle}>{t('Status')}</p>
@@ -24,7 +26,7 @@ const BalanceTable = ({
       {sentStakesAmount !== 0 && (
         <li>
           <p className="locked-balance">
-            <TokenAmount val={sentStakesAmount} token={tokenMap.LSK.key} />
+            <TokenAmount val={sentStakesAmount} token={token} />
           </p>
           <p>
             <Icon name="lock" />
@@ -42,7 +44,7 @@ const BalanceTable = ({
       {unlockableAmount !== 0 && (
         <li>
           <p className="available-balance">
-            <TokenAmount val={unlockableAmount} token={tokenMap.LSK.key} />
+            <TokenAmount val={unlockableAmount} token={token} />
           </p>
           <p>
             <Icon name="unlock" />

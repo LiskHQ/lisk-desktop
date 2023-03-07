@@ -11,7 +11,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import Summary from './Summary';
-import { mockTokensBalance } from '../../__fixtures__';
+import { mockAppsTokens } from '../../__fixtures__';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@auth/hooks/queries');
@@ -65,7 +65,7 @@ describe('Summary', () => {
         fields: {
           sendingChain: mockBlockchainApplications[0],
           recipientChain: { ...blockchainApplicationsExplore[0], logo: { png: '', svg: '' } },
-          token: mockTokensBalance.data[0],
+          token: mockAppsTokens.data[0],
           recipient: {
             address: wallets.genesis.summary.address,
             title,

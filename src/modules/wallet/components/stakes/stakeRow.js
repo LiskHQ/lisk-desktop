@@ -1,6 +1,5 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import tableStyles from '@theme/table/table.css';
@@ -10,7 +9,7 @@ import Spinner from '@theme/Spinner';
 import Icon from '@theme/Icon';
 import styles from './stakes.css';
 
-const StakeRow = ({ data, onRowClick, accounts }) => {
+const StakeRow = ({ data, onRowClick, accounts, token }) => {
   const onClick = () => onRowClick(data.address);
   const account = accounts[data.address];
   const truncatedAddress = truncateAddress(data.address);
@@ -36,10 +35,7 @@ const StakeRow = ({ data, onRowClick, accounts }) => {
         {/* Validator weight */}
         <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
           <span>
-            <TokenAmount
-              val={account?.pos.validator.totalStakeReceived ?? 0}
-              token={tokenMap.LSK.key}
-            />
+            <TokenAmount val={account?.pos.validator.totalStakeReceived ?? 0} token={token} />
           </span>
         </div>
 
@@ -47,12 +43,7 @@ const StakeRow = ({ data, onRowClick, accounts }) => {
         {account ? (
           <div className={`${grid['col-sm-2']} ${styles.flexRightAlign}`} onClick={onClick}>
             <span className={styles.stakes}>
-              <TokenAmount
-                val={data.amount}
-                token={tokenMap.LSK.key}
-                showInt
-                className={styles.stakeAmount}
-              />
+              <TokenAmount showInt val={data.amount} token={token} className={styles.stakeAmount} />
             </span>
           </div>
         ) : null}

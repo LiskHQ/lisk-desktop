@@ -3,12 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { truncateAddress } from '@wallet/utils/account';
 import routes from 'src/routes/routes';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 
 import styles from './StakeItem.css';
-
-const token = tokenMap.LSK.key;
 
 /**
  * Displays address/validator username along with stake amount
@@ -20,8 +17,9 @@ const token = tokenMap.LSK.key;
  * @param {String} title text to use instead of the address e.g. validator username
  * @param {Boolean} truncate text to use instead of the address e.g. validator username
  */
-const StakeItem = ({ stake, address, title, truncate }) => {
+const StakeItem = ({ stake, address, title, truncate, token }) => {
   const accountPath = routes.explorer.path;
+
   return (
     <span className={styles.container}>
       <Link to={`${accountPath}?address=${address}`}>

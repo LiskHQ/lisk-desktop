@@ -45,22 +45,32 @@ exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
           "extraCommandFee": "1000000000",
           "fields": Object {
             "token": Object {
-              "availableBalance": 1500000000,
+              "baseDenom": "beddows",
+              "chainID": "00000001",
               "chainName": "Lisk",
               "denomUnits": Array [
                 Object {
-                  "decimals": 8,
-                  "denom": "lsk",
+                  "decimals": 0,
+                  "denom": "beddows",
                 },
-              ],
-              "lockedBalances": Array [
                 Object {
-                  "amount": "10000000000",
-                  "moduleID": "5",
+                  "aliases": Array [
+                    "Lisk",
+                  ],
+                  "decimals": 8,
+                  "denom": "lisk",
                 },
               ],
+              "description": "Base token for the Lisk ecosystem",
+              "displayDenom": "lisk",
+              "logo": Object {
+                "png": "https://lisk-qa.ams3.digitaloceanspaces.com/Artboard%201%20copy%2019.png",
+                "svg": "https://downloads.lisk.com/lisk/images/tokens/lsk.svg",
+              },
+              "networkType": "mainnet",
               "symbol": "LSK",
               "tokenID": "0000000100000000",
+              "tokenName": "Lisk",
             },
           },
           "isFormValid": true,

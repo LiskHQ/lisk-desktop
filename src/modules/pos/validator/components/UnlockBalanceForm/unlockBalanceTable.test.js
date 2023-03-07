@@ -2,21 +2,29 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { calculateSentStakesAmount, calculateUnlockableAmount } from '@wallet/utils/account';
 import { mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import BalanceTable from './BalanceTable';
+
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('unlock transaction Status', () => {
   let wrapper;
-  
+
   const pendingUnlockableUnlocks = mockUnlocks.data.pendingUnlocks;
   const stakes = mockSentStakes.data.stakes;
   const currentBlockHeight = 5000;
+  const mockToken = mockAppsTokens.data[0];
 
   const props = {
     sentStakesAmount: calculateSentStakesAmount(stakes),
     unlockableAmount: calculateUnlockableAmount(pendingUnlockableUnlocks),
     currentBlockHeight,
     pendingUnlockableUnlocks,
+    token: mockToken,
   };
+
+  usePosToken.mockReturnValue({ token: mockToken });
 
   it('renders properly', () => {
     wrapper = mount(<BalanceTable {...props} />);

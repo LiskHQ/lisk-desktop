@@ -4,19 +4,17 @@ import { useTokensBalance } from '@token/fungible/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-
-import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
+import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
 import RegisterValidatorForm from '.';
+import { usePosConstants } from '../../hooks/queries';
 
 const mockCurrentAccount = mockSavedAccounts[0];
 
-jest.mock('../../hooks/queries', () => ({
-  ...jest.requireActual(),
-  usePosConstants: jest.fn().mockReturnValue({ data: mockPosConstants }),
-}));
+jest.mock('../../hooks/queries/usePosConstants');
 jest.mock('@token/fungible/hooks/queries/useTokensBalance');
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
@@ -33,7 +31,6 @@ jest.mock('@auth/hooks/queries', () => ({
   ...jest.requireActual('@auth/hooks/queries'),
   useAuth: jest.fn().mockReturnValue({ data: mockAuth }),
 }));
-
 jest.mock('@network/hooks/useCommandsSchema', () => ({
   useCommandSchema: jest.fn().mockReturnValue({
     isLoading: false,
@@ -43,6 +40,7 @@ jest.mock('@network/hooks/useCommandsSchema', () => ({
     ),
   }),
 }));
+jest.mock('@pos/validator/hooks/usePosToken');
 
 const genKey = {
   value: keys.genKey,
@@ -76,6 +74,8 @@ describe('RegisterValidatorForm', () => {
   const setName = jest.fn();
   const setKey = jest.fn();
 
+  usePosConstants.mockReturnValue({ data: mockPosConstants });
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
   useTokensBalance.mockReturnValue({
     data: {
       ...mockTokensBalance,

@@ -19,11 +19,11 @@ const SentStakesRow = ({ data: stakes, stakeEdited, token }) => {
       <div className={`transaction-event-row ${styles.container}`}>
         <ValidatorWalletVisual name={name} address={validatorAddress} />
         <Balance colSpanXs={1} value={`#${rank}`} />
-        <Balance value={<TokenAmount val={validatorWeight} token={token.symbol} />} />
+        <Balance value={<TokenAmount val={validatorWeight} token={token} />} />
         <Balance value={`${commission / 100}%`} />
         <Balance
           className={styles.amountCell}
-          value={<TokenAmount val={amount} token={token.symbol} />}
+          value={<TokenAmount val={amount} token={token} />}
         />
         <Actions address={validatorAddress} name={name} stakeEdited={stakeEdited} />
       </div>

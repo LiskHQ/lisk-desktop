@@ -1,12 +1,17 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
-import { mockTransactions } from 'src/modules/transaction/__fixtures__';
-import { useTransactions } from 'src/modules/transaction/hooks/queries';
+import { mockTransactions } from '@transaction/__fixtures__';
+import { useTransactions } from '@transaction/hooks/queries';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useValidators } from '../../hooks/queries';
 import LatestStakes from './index';
 import { mockValidators } from '../../__fixtures__';
 
 jest.mock('src/modules/transaction/hooks/queries');
 jest.mock('../../hooks/queries');
+jest.mock('@pos/validator/hooks/usePosToken');
+jest.mock('@token/fungible/hooks/queries');
 
 describe('Latest stakes', () => {
   const mockFetchNextValidators = jest.fn();
@@ -14,6 +19,9 @@ describe('Latest stakes', () => {
   const props = {
     filters: {},
   };
+
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
+  useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
 
   it('displays initial table of stakes', () => {
     useValidators.mockReturnValue({

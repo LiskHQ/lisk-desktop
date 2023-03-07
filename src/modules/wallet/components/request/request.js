@@ -94,7 +94,11 @@ const Request = () => {
     const byteCount = sizeOfString(target.value);
     const error =
       target.name === 'amount'
-        ? validateAmountFormat({ value: target.value, locale: i18n.language }).message
+        ? validateAmountFormat({
+            value: target.value,
+            locale: i18n.language,
+            token: state.token.value,
+          }).message
         : byteCount > maxMessageLength;
     let feedback = '';
 

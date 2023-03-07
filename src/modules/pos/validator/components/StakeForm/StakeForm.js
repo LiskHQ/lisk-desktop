@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom } from '@token/fungible/utils/lsk';
 import { normalizeStakesForTx } from '@transaction/utils';
 import BoxContent from '@theme/box/content';
 import Dialog from 'src/theme/dialog/dialog';
@@ -14,6 +14,7 @@ import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';
 import header from './tableHeader';
 import styles from './stakeForm.css';
+import usePosToken from '../../hooks/usePosToken';
 
 /**
  * Determines the number of stakes that have been
@@ -66,7 +67,9 @@ const getStakeStats = (stakes, account) => {
   const numOfRemovedStakes = Object.keys(stakesStats.removed).length;
 
   const resultingNumOfStakes = numOfAddedStakes + numOfEditedStakes + numOfUntouchedStakes;
-  const availableStakes = STAKE_LIMIT - (numOfEditedStakes + numOfUntouchedStakes + numOfRemovedStakes + numOfAddedStakes);
+  const availableStakes =
+    STAKE_LIMIT -
+    (numOfEditedStakes + numOfUntouchedStakes + numOfRemovedStakes + numOfAddedStakes);
 
   return {
     ...stakesStats,
@@ -112,7 +115,7 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
       return sum;
     }, 0);
 
-  if (addedStakeAmount + toRawLsk(fee) > balance) {
+  if (addedStakeAmount + fee > balance) {
     messages.push(t(`You don't have enough ${posToken.symbol} in your account.`));
   }
 
@@ -136,11 +139,12 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     () => getStakeStats(stakes, account),
     [stakes, account]
   );
+  const { token } = usePosToken();
 
   const feedback = validateStakes(
     stakes,
     Number(posToken?.availableBalance),
-    fee,
+    convertToBaseDenom(fee, token),
     resultingNumOfStakes,
     t,
     posToken
@@ -168,8 +172,8 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
     isFormValid: !feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending,
     fields: {
-      token: posToken
-    }
+      token: posToken,
+    },
   };
   const commandParams = {
     stakes: normalizedStakes,
@@ -210,6 +214,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
                     canLoadMore={false}
                     additionalRowProps={{
                       history,
+                      token: posToken,
                     }}
                     headerClassName={styles.tableHeader}
                   />
