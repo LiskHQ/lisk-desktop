@@ -2,14 +2,23 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 
 const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Registrant'),
+  [MODULE_COMMANDS_NAME_MAP.submitMainchainCrossChainUpdate]: t('Certificate'),
+  [MODULE_COMMANDS_NAME_MAP.initializeMessageRecovery]: t('Message'),
+  [MODULE_COMMANDS_NAME_MAP.recoverMessage]: t('Message'),
+  [MODULE_COMMANDS_NAME_MAP.registerSidechain]: t('Application'),
+  [MODULE_COMMANDS_NAME_MAP.recoverState]: t('Message'),
+  [MODULE_COMMANDS_NAME_MAP.terminateSidechainForLiveness]: t('Application'),
   [MODULE_COMMANDS_NAME_MAP.reclaimLSK]: t('Sender'),
-  [MODULE_COMMANDS_NAME_MAP.registerValidator]: t('Account username'),
-  [MODULE_COMMANDS_NAME_MAP.reportMisbehavior]: t('Reporter'),
+  [MODULE_COMMANDS_NAME_MAP.registerKeys]: t('Validator'),
+  [MODULE_COMMANDS_NAME_MAP.registerValidator]: t('Validator'),
+  [MODULE_COMMANDS_NAME_MAP.reportMisbehavior]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.unlock]: t('Sender'),
+  [MODULE_COMMANDS_NAME_MAP.updateGeneratorKey]: t('Validator'),
   [MODULE_COMMANDS_NAME_MAP.stake]: t('Staker'),
-  [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Edit commission'),
-  [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim rewards'),
+  [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Validator'),
+  [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.transfer]: t('Sender'),
+  [MODULE_COMMANDS_NAME_MAP.transferCrossChain]: t('Sender'),
 });
 
 const getModuleCommandTitle = (t = str => str) => ({
