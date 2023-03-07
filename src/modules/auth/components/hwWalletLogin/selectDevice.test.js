@@ -46,4 +46,13 @@ describe('Select Device', () => {
     wrapper.update();
     expect(props.prevStep).toBeCalled();
   });
+
+  it('Should go to the next step if there is only one device', async () => {
+    const propsWithOneDevice = {
+      ...props,
+      devices: [{ deviceId: 1, model: 'Ledger Nano S', manufactor: 'Ledger' }],
+    };
+    wrapper = await mount(<SelectDevice {...propsWithOneDevice} />);
+    expect(props.nextStep).toBeCalledWith({ deviceId: 1 });
+  });
 });
