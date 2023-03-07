@@ -2,6 +2,7 @@
 
 .HWConfirm {
   text-align: center;
+  padding: 40px 24px;
 
   & .headerText {
     margin: 40px 0 0 0;
