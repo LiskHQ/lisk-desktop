@@ -12,17 +12,14 @@ import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams } from 'src/utils/searchParams';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './RemoveApplicationDetails.css';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 // import useApplicationManagement from '../../hooks/useApplicationManagement';
 
 const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
-const chainLogo = null;
 
-const RemoveApplicationDetails = ({
-  location, application, onCancel, nextStep,
-}) => {
+const RemoveApplicationDetails = ({ location, application, onCancel, nextStep }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search)?.chainId;
   // TODO: this needs to be reinstated when the set application flow is completed
@@ -30,9 +27,7 @@ const RemoveApplicationDetails = ({
 
   // const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const {
-    chainName, status, address, lastCertificateHeight, lastUpdated,
-  } = application.data;
+  const { chainName, status, address, lastCertificateHeight, lastUpdated } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -79,7 +74,7 @@ const RemoveApplicationDetails = ({
         <Box className={styles.headerContainer}>
           <p>{t('Remove application')}</p>
           <div>
-            <img src={chainLogo || liskLogo} />
+            <img src={getLogo(application.data)} />
           </div>
         </Box>
         <Box className={styles.detailsWrapper}>
@@ -108,8 +103,8 @@ const RemoveApplicationDetails = ({
             <a
               className={`${styles.appLink}`}
               target="_blank"
-                // eslint-disable-next-line
-                // TODO: this is just a place holder link pending when its part of the response payload from service
+              // eslint-disable-next-line
+              // TODO: this is just a place holder link pending when its part of the response payload from service
               href={serviceUrl}
             >
               <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
@@ -120,9 +115,7 @@ const RemoveApplicationDetails = ({
             <span>{t('Deposited:')}</span>
             {/* TODO: this is a placeholder value pending when its part of service response */}
             <span>
-              <TokenAmount val={deposit} />
-              {' '}
-              LSK
+              <TokenAmount val={deposit} /> LSK
             </span>
           </div>
           <Box className={styles.footerDetailsRow}>
@@ -130,24 +123,20 @@ const RemoveApplicationDetails = ({
               <ValueAndLabel
                 key={index}
                 className={styles.detail}
-                label={(
+                label={
                   <span className={styles.headerText}>
                     <>
                       {header.text || header}
                       {header.toolTipText && (
-                      <Tooltip position="right">
-                        <p>
-                          {header.toolTipText}
-                        </p>
-                      </Tooltip>
+                        <Tooltip position="right">
+                          <p>{header.toolTipText}</p>
+                        </Tooltip>
                       )}
                     </>
                   </span>
-                  )}
+                }
               >
-                <span className={className}>
-                  {content}
-                </span>
+                <span className={className}>{content}</span>
               </ValueAndLabel>
             ))}
           </Box>
