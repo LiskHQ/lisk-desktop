@@ -4,7 +4,6 @@ import hwManager from '@hardwareWallet/manager/HWManager';
 import routes from 'src/routes/routes';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Loading from './loading';
-import RequestPin from './requestPin';
 import SelectAccount from './selectAccount';
 import SelectDevice from './selectDevice';
 import UnlockDevice from './unlockDevice';
@@ -46,7 +45,6 @@ const HardwareWalletLogin = ({
         >
           <Loading t={t} devices={devices} network={network} />
           <SelectDevice t={t} devices={devices} />
-          <RequestPin t={t} devices={devices} goBack={goBack} />
           <UnlockDevice t={t} devices={devices} goBack={goBack} />
           <SelectAccount
             t={t}
