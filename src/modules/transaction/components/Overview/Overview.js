@@ -160,7 +160,7 @@ const Overview = () => {
 
   const distributionChartData = {
     labels: listOfLabels.map((item) =>
-      item.replace('Register multisignature group', 'Regsiter multisig.')
+      item?.replace('Register multisignature group', 'Regsiter multisig.')
     ),
     datasets: [
       {
@@ -199,7 +199,7 @@ const Overview = () => {
                   <GuideTooltipItem
                     key={`transaction-GuideTooltip${i}`}
                     color={colorPalette[i]}
-                    label={label.replace('Register multisignature group', 'Register multisig.')}
+                    label={label?.replace('Register multisignature group', 'Register multisig.')}
                   />
                 ))}
               </GuideTooltip>

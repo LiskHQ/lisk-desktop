@@ -2389,54 +2389,6 @@ export const mockCommandParametersSchemas = {
           },
         },
       },
-      {
-        moduleCommand: 'token:crossChainTransfer',
-        schema: {
-          $id: '/lisk/ccTransferParams',
-          type: 'object',
-          required: [
-            'tokenID',
-            'amount',
-            'receivingChainID',
-            'recipientAddress',
-            'data',
-            'messageFee',
-          ],
-          properties: {
-            tokenID: {
-              dataType: 'bytes',
-              fieldNumber: 1,
-              minLength: 8,
-              maxLength: 8,
-            },
-            amount: {
-              dataType: 'uint64',
-              fieldNumber: 2,
-            },
-            receivingChainID: {
-              dataType: 'bytes',
-              fieldNumber: 3,
-              minLength: 4,
-              maxLength: 4,
-            },
-            recipientAddress: {
-              dataType: 'bytes',
-              fieldNumber: 4,
-              format: 'lisk32',
-            },
-            data: {
-              dataType: 'string',
-              fieldNumber: 5,
-              minLength: 0,
-              maxLength: 64,
-            },
-            messageFee: {
-              dataType: 'uint64',
-              fieldNumber: 6,
-            },
-          },
-        },
-      },
     ],
   },
   meta: {},
