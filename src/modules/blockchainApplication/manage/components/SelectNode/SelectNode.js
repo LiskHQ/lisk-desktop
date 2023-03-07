@@ -7,7 +7,7 @@ import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
+import { getLogo } from '@token/fungible/utils/helpers';
 import { useApplicationManagement, useCurrentApplication } from '../../hooks';
 import styles from './SelectNode.css';
 
@@ -30,7 +30,6 @@ const SelectNode = ({ history, location }) => {
   const [, setApplication] = useCurrentApplication();
   const { getApplicationByChainId } = useApplicationManagement();
   const application = getApplicationByChainId(chainId);
-  const chainLogo = null;
 
   const selectAppNode = (node) => {
     setApplication(application, node);
@@ -42,7 +41,7 @@ const SelectNode = ({ history, location }) => {
       <Box className={styles.wrapper}>
         <BoxHeader className={`${styles.header} application-header`}>
           <span>
-            <img src={chainLogo || liskLogo} />
+            <img src={getLogo(application)} />
           </span>
           <span>{application.chainName}</span>
         </BoxHeader>

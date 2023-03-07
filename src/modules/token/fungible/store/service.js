@@ -12,8 +12,6 @@ const tickerReducer = (acc, key) => ({
   },
 });
 
-export const getLogo = ({ logo }) => logo.svg || logo.png;
-
 export const pricesRetrieved = () => (dispatch, getState) => {
   const { network } = getState();
   const activeToken = tokenMap.LSK.key;

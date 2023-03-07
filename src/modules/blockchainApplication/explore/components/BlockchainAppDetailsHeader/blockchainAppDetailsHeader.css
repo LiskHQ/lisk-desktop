@@ -8,7 +8,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: var(--color-ultramarine-blue);
 
   & > img.logo {
     position: absolute;
@@ -37,7 +36,15 @@
   margin-top: 51px;
 }
 
+.loadingDetailsWrapper {
+  align-items: inherit;
+}
+
 .chainNameWrapper {
+  & .skeleton:first-of-type {
+    margin: 20px auto 15px;
+  }
+
   & > span {
     font-size: 28px;
     font-weight: 700;
@@ -59,6 +66,10 @@
   & span {
     font-size: 14px;
   }
+
+  & .skeleton:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 .appLink {
@@ -72,4 +83,8 @@
     height: 16px;
     margin-right: 8px;
   }
+}
+
+.skeleton {
+  margin: 10px auto;
 }

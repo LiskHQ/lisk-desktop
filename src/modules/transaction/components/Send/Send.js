@@ -1,7 +1,7 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { getLogo } from '@token/fungible/utils/service';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './send.css';
 
 const Send = ({ formProps = {}, transactionJSON, t }) => (
@@ -19,10 +19,7 @@ const Send = ({ formProps = {}, transactionJSON, t }) => (
           <div>
             <label>{t('To Application')}</label>
             <div className={styles.chainWrapper}>
-              <img
-                className={styles.chainLogo}
-                src={getLogo(formProps.fields.recipientChain)}
-              />
+              <img className={styles.chainLogo} src={getLogo(formProps.fields.recipientChain)} />
               <span>{formProps.fields.recipientChain.chainName}</span>
             </div>
           </div>

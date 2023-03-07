@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { getLogo } from '@token/fungible/utils/service';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './RewardsClaimableRow.css';
 
 const RewardsClaimableRow = ({ data, rewardsClaimableHeader }) => {
