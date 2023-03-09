@@ -10,7 +10,7 @@ describe.skip('signTransactionByHW', () => {
   // @todo fix the temp signature
   const signature = { data: [], type: 'Buffer' };
   it('should return a transaction object with the proper signature', async () => {
-    const account = {
+    const wallet = {
       summary: {
         address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
         publicKey: 'fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122',
@@ -36,25 +36,24 @@ describe.skip('signTransactionByHW', () => {
     };
 
     // const keys = {
-    //   mandatoryKeys: [Buffer.from(account.summary.publicKey, 'hex'), Buffer.from(accounts.genesis.summary.publicKey, 'hex')],
+    //   mandatoryKeys: [Buffer.from(wallet.summary.publicKey, 'hex'), Buffer.from(wallets.genesis.summary.publicKey, 'hex')],
     //   optionalKeys: [],
     // };
 
     const networkIdentifier = Buffer.from('15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c', 'hex');
     const transactionBytes = Buffer.from('15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c', 'hex');
 
-    const signedTransaction = await signTransactionByHW(
-      account,
+    const signedTransaction = await signTransactionByHW({
+      wallet,
       networkIdentifier,
-      transactionObject,
+      transaction: transactionObject,
       transactionBytes,
-      // keys,
-    );
+    });
 
     expect(signedTransaction.signatures[0]).toEqual(signature);
     expect(communication.signTransaction).toHaveBeenCalledWith({
-      deviceId: account.hwInfo.deviceId,
-      index: account.hwInfo.derivationIndex,
+      deviceId: wallet.hwInfo.deviceId,
+      index: wallet.hwInfo.derivationIndex,
       networkIdentifier,
       transactionBytes,
     });

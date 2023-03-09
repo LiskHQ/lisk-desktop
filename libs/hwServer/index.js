@@ -62,7 +62,7 @@ export class HwServer {
     }
     this.intervalId = setInterval(() => {
       this.statusListener()
-    }, 1000);
+    }, 5000);
   }
 
   async checkStatus({path, manufacturer}) {
