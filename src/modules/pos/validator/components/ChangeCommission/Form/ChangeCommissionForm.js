@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import TxComposer from '@transaction/components/TxComposer';
 import { convertCommissionToNumber, checkCommissionValidity } from '@pos/validator/utils';
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { usePosConstants } from '../../../hooks/queries';
 import styles from './ChangeCommissionForm.css';
 
+// eslint-disable-next-line max-statements
 export const ChangeCommissionForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const {
@@ -21,6 +24,12 @@ export const ChangeCommissionForm = ({ nextStep }) => {
     feedback: '',
     numericValue: convertCommissionToNumber(currentCommission),
   });
+  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
+  const { data: tokens } = useTokensBalance({
+    config: { params: { tokenID: posConstants?.posTokenID } },
+    options: { enabled: !isGettingPosConstants },
+  });
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   useEffect(() => {
     if (currentCommission && currentCommission !== newCommission.value) {
@@ -40,7 +49,7 @@ export const ChangeCommissionForm = ({ nextStep }) => {
   const formProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission,
     params: { newCommission: newCommission.numericValue },
-    fields: { newCommission: newCommission.value },
+    fields: { newCommission: newCommission.value, token },
     isFormValid: newCommission.value !== currentCommission && !newCommission.feedback,
   };
   const commandParams = {

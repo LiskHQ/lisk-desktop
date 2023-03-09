@@ -19,7 +19,7 @@ export const ChangeCommission = ({ history }) => {
         <Form />
         <Summary />
         <TxSignatureCollector confirmText={t('Confirm and sign')} />
-        <Status />
+        <Status history={history} />
       </MultiStep>
     </Dialog>
   );
