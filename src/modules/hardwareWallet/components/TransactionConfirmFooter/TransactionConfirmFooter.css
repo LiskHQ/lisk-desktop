@@ -1,0 +1,18 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.TransactionConfirmFooter {
+  & .name {
+    color: var(--color-zodiac-blue);
+    font-weight: var(--font-weight-semi-bold);
+    font-size: 16px;
+    letter-spacing: 0.23px;
+  }
+
+  & .address {
+    margin-top: 8px;
+    color: var(--color-blue-gray);
+    font-size: 13px;
+    line-height: 13px;
+    letter-spacing: 0.23px;
+  }
+}

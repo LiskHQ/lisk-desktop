@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from 'src/routes/routes';
+import hwManager from '@hardwareWallet/manager/HWManager';
 import { PrimaryButton, TertiaryButton } from '@theme/buttons';
 import Icon from '@theme/Icon';
 import styles from './selectDevice.css';
@@ -27,7 +28,8 @@ class SelectDevice extends React.Component {
     if (!this.props.devices.length) this.props.prevStep();
   }
 
-  onSelectDevice(deviceId) {
+  async onSelectDevice(deviceId) {
+    await hwManager.selectDevice(deviceId);
     this.props.nextStep({ deviceId });
   }
 

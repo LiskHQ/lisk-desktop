@@ -11,9 +11,9 @@ describe('Unlock Device', () => {
   const props = {
     deviceId: 1,
     devices: [
-      { deviceId: 1, openApp: false, model: 'Ledger' },
-      { deviceId: 2, openApp: true, model: 'Trezor' },
-      { deviceId: 3, openApp: true, model: 'Ledger' },
+      { deviceId: 1, model: 'Ledger' },
+      { deviceId: 2, status: 'connected', model: 'Trezor' },
+      { deviceId: 3, status: 'connected', model: 'Ledger' },
     ],
     t: (v, i) => v.replace('{{deviceModel}}', i ? i.deviceModel : ''),
     nextStep: jest.fn(),

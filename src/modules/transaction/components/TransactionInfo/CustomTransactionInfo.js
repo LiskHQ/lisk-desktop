@@ -12,10 +12,10 @@ import GenericTxParams from '../GenericTxParams';
 
 export default (props) => {
   switch (props.formProps.moduleCommand) {
-    case MODULE_COMMANDS_NAME_MAP.reclaim: return <Reclaim {...props} />;
+    case MODULE_COMMANDS_NAME_MAP.reclaimLSK: return <Reclaim {...props} />;
     case MODULE_COMMANDS_NAME_MAP.registerValidator: return <RegisterValidator {...props} />;
     case MODULE_COMMANDS_NAME_MAP.transfer:
-    case MODULE_COMMANDS_NAME_MAP.crossChainTransfer: return <Send {...props} />;
+    case MODULE_COMMANDS_NAME_MAP.transferCrossChain: return <Send {...props} />;
     case MODULE_COMMANDS_NAME_MAP.stake: return <StakeValidator {...props} />;
     case MODULE_COMMANDS_NAME_MAP.changeCommission: return <ChangeCommissionInfo {...props} />;
     case MODULE_COMMANDS_NAME_MAP.claimRewards: return <ClaimRewardsSummaryContent {...props} />;
