@@ -69,11 +69,11 @@ describe('HWManager', () => {
 
   test('signTransaction', async () => {
     hwManager.once.mockImplementation(() => mockHWAccounts);
-    await hwManager.signTransaction(1, 'TEST_CHAIN_ID', 'TEST_TX');
+    await hwManager.signTransaction(1, 'TEST_TX');
 
     expect(hwManager.once).toHaveBeenCalledWith(IPC_MESSAGES.HW_COMMAND, {
       action: 'SIGN_TX',
-      data: { index: 1, chainID: 'TEST_CHAIN_ID', transactionBytes: 'TEST_TX' },
+      data: { index: 1, message: 'TEST_TX' },
     });
   });
 

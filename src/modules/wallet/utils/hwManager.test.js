@@ -2,6 +2,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import * as communication from '@libs/hwServer/communication';
 import * as accountApi from '@wallet/utils/api';
 import wallets from '@tests/constants/wallets';
+import hwManager from 'src/modules/hardwareWallet/manager/HWManager';
 import { getAccountsFromDevice, signMessageByHW, getNewAccountByIndex } from './hwManager';
 
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
@@ -21,6 +22,9 @@ jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValu
 
 describe('hwManager util', () => {
   const signature = 'abc123ABC789';
+  jest.spyOn(hwManager, 'getPublicKey').mockReturnValue(wallets.genesis.summary.publicKey);
+  jest.spyOn(hwManager, 'signMessage').mockReturnValue(signature);
+
   beforeEach(() => {
     communication.signTransaction.mockResolvedValueOnce(signature);
     communication.signMessage.mockResolvedValueOnce(signature);
@@ -36,10 +40,7 @@ describe('hwManager util', () => {
       communication.getPublicKey.mockResolvedValueOnce(wallets.empty_wallet.summary.publicKey);
       accountApi.getAccounts.mockResolvedValueOnce({ data: [wallets.genesis] });
 
-      const device = { deviceId: '1234125125' };
-      const network = { name: 'Testnet', networks: {} };
-
-      const walletsOnDevice = await getAccountsFromDevice({ device, network });
+      const walletsOnDevice = await getAccountsFromDevice();
 
       expect(walletsOnDevice).toEqual([wallets.genesis]);
     });
@@ -47,8 +48,6 @@ describe('hwManager util', () => {
 
   describe('getNewAccountByIndex', () => {
     it('should resolve one empty account using a given index', async () => {
-      communication.getPublicKey.mockResolvedValueOnce(wallets.genesis.summary.publicKey);
-
       const device = { deviceId: '1234125125' };
 
       const walletsOnDevice = await getNewAccountByIndex({ device, index: 11 });
@@ -79,11 +78,7 @@ describe('hwManager util', () => {
 
       // Assert
       expect(signedMessage).toEqual(signature);
-      expect(communication.signMessage).toHaveBeenCalledWith({
-        deviceId: wallet.hwInfo.deviceId,
-        index: wallet.hwInfo.derivationIndex,
-        message,
-      });
+      expect(hwManager.signMessage).toHaveBeenCalledWith(wallet.hwInfo.derivationIndex, message);
     });
   });
 });
