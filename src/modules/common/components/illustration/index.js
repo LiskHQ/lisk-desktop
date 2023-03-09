@@ -58,6 +58,7 @@ import hwReconnectionDark from '@setup/react/assets/images/illustrations/hardwar
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
 import validatorRegistrationSuccess from '@setup/react/assets/images/illustrations/validator-registration-success.svg';
 import validatorRegistrationError from '@setup/react/assets/images/illustrations/validator-registration-error.svg';
+import applicationDetailsError from '@setup/react/assets/images/illustrations/application-details-error.svg';
 
 export const illustrations = {
   welcomeLiskValidators,
@@ -117,6 +118,7 @@ export const illustrations = {
   addApplicationSuccess,
   validatorRegistrationSuccess,
   validatorRegistrationError,
+  applicationDetailsError,
 };
 
 const Illustration = ({ name, className, noTheme, ...props }) => {

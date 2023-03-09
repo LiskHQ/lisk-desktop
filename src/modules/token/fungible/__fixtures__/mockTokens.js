@@ -108,6 +108,48 @@ export const mockAppsTokens = {
         svg: 'https://drive.google.com/uc?id=1-TN72tUDpo8HtF1X167Tyc13r9V8gVJs',
       },
     },
+    {
+      chainID: '00000004',
+      chainName: 'DoEdu',
+      tokenID: '0000000400000000',
+      tokenName: 'DoEdu',
+      networkType: 'mainnet',
+      description: 'Base token for the DoEdu ecosystem',
+      denomUnits: [
+        {
+          denom: 'doedu',
+          decimals: 8,
+        },
+      ],
+      baseDenom: 'edus',
+      displayDenom: 'doedu',
+      symbol: 'DEU',
+      logo: {
+        png: 'https://doedu.com/wp-content/uploads/2022/09/Beeldmerk-rond.png',
+        svg: 'https://doedu.com/wp-content/uploads/2022/09/Beeldmerk-rond.svg',
+      },
+    },
+    {
+      chainID: '00000005',
+      chainName: 'Kalipo',
+      tokenID: '0000000500000000',
+      tokenName: 'Kalipo',
+      networkType: 'mainnet',
+      description: 'Base token for the Kalipo ecosystem',
+      denomUnits: [
+        {
+          denom: 'kalipo',
+          decimals: 8,
+        },
+      ],
+      baseDenom: 'kals',
+      displayDenom: 'kalipo',
+      symbol: 'KAL',
+      logo: {
+        png: 'https://drive.google.com/uc?id=1-TN72tUDpo8HtF1X167Tyc13r9V8gVJs',
+        svg: 'https://drive.google.com/uc?id=1-TN72tUDpo8HtF1X167Tyc13r9V8gVJs',
+      },
+    },
   ],
   meta: {
     count: 1,
