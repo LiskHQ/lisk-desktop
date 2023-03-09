@@ -4,7 +4,7 @@ import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
 const getTxDirectionConfig = (moduleCommand, host, recipient, styles) => {
   if (
     moduleCommand === MODULE_COMMANDS_NAME_MAP.unlock ||
-    moduleCommand === MODULE_COMMANDS_NAME_MAP.reclaim
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.reclaimLSK
   ) {
     return {
       sign: '',

@@ -2390,7 +2390,7 @@ export const mockCommandParametersSchemas = {
         },
       },
       {
-        moduleCommand: 'token:crossChainTransfer',
+        moduleCommand: 'token:transferCrossChain',
         schema: {
           $id: '/lisk/ccTransferParams',
           type: 'object',
