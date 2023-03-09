@@ -11,7 +11,7 @@ import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { mockBlocks } from '@block/__fixtures__';
 import { mockValidators } from '@pos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
-import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { mockTokensBalance, mockAppsTokens } from '@token/fungible/__fixtures__/mockTokens';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
@@ -38,8 +38,12 @@ describe('Overview', () => {
       history,
     };
 
+    const mergedTokensData = mockTokensBalance.data.map((tokenData, idx) => ({
+      ...tokenData,
+      ...mockAppsTokens.data[idx],
+    }));
     useTokensBalance.mockReturnValue({
-      data: mockTokensBalance,
+      data: { data: mergedTokensData },
       isLoading: false,
       isSuccess: true,
     });

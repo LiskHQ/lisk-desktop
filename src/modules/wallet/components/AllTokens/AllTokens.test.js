@@ -11,7 +11,7 @@ import { useFilter } from 'src/modules/common/hooks';
 import { mockBlocks } from '@block/__fixtures__';
 import { mockValidators } from '@pos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
-import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { mockTokensBalance, mockAppsTokens } from '@token/fungible/__fixtures__/mockTokens';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import AllTokens from './AllTokens';
 import tableHeaderMap from './tableHeaderMap';
@@ -32,7 +32,15 @@ jest.mock('src/modules/common/hooks');
 describe('AllTokens', () => {
   const history = { location: { search: '' } };
 
-  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
+  const mergedTokensData = mockTokensBalance.data.map((tokenData, idx) => ({
+    ...tokenData,
+    ...mockAppsTokens.data[idx],
+  }));
+  useTokensBalance.mockReturnValue({
+    data: { data: mergedTokensData },
+    isLoading: false,
+    isSuccess: true,
+  });
   useAuth.mockReturnValue({ data: mockAuth });
   useValidators.mockReturnValue({ data: mockValidators });
   useBlocks.mockReturnValue({ data: mockBlocks });

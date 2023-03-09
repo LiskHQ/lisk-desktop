@@ -26,20 +26,14 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
     return <Redirect to={`${routes.dashboard.path}`} />;
   }
 
-  if (!isAuthenticated && path === routes.manageAccounts.path && !(accounts.length > 0)) {
-    history.replace(routes.addAccountOptions.path);
+  if (!isAuthenticated && path === routes.manageAccounts.path && accounts.length === 0) {
+    history.replace({ pathname: routes.addAccountOptions.path, search });
+    return <div />;
   }
 
   if (isPrivate && !isAuthenticated) {
-    // @todo: Fix in #4537
-    return (
-      <Redirect
-        to={`${routes.manageAccounts.path}?referrer=${path.replace(
-          /\/(send|stake)/,
-          ''
-        )}&${search.replace(/^\?/, '')}`}
-      />
-    );
+    const searchString = `?referrer=${path}${search.replace(/^\?/, '&')}`;
+    return <Redirect to={`${routes.manageAccounts.path}${searchString}`} />;
   }
 
   // Redirect back to actual path when an account is not reclaimable

@@ -3,7 +3,10 @@ import { act } from 'react-dom/test-utils';
 import { fireEvent, screen } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { usePinBlockchainApplication, useApplicationManagement } from '@blockchainApplication/manage/hooks';
+import {
+  usePinBlockchainApplication,
+  useApplicationManagement,
+} from '@blockchainApplication/manage/hooks';
 import { removeSearchParamsFromUrl, parseSearchParams } from 'src/utils/searchParams';
 import RemoveApplicationFlow from '.';
 
@@ -24,8 +27,7 @@ usePinBlockchainApplication.mockReturnValue({
 useApplicationManagement.mockReturnValue({
   deleteApplicationByChainId: mockDeleteApplicationByChainId,
 });
-parseSearchParams.mockImplementation(() => (
-  { chainId: mockManagedApplications[0].chainID }));
+parseSearchParams.mockImplementation(() => ({ chainId: mockManagedApplications[0].chainID }));
 
 describe('BlockchainApplicationFlow', () => {
   const props = {
@@ -41,9 +43,8 @@ describe('BlockchainApplicationFlow', () => {
   });
 
   it('should display properly', () => {
-    const {
-      chainName, address, status, lastCertificateHeight, lastUpdated,
-    } = mockManagedApplications[0];
+    const { chainName, address, status, lastCertificateHeight, lastUpdated } =
+      mockManagedApplications[0];
 
     expect(screen.getByText(chainName)).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
@@ -68,9 +69,7 @@ describe('BlockchainApplicationFlow', () => {
   });
 
   it('should move the the success page when application is deleted', () => {
-    const {
-      chainName,
-    } = mockManagedApplications[0];
+    const { chainName } = mockManagedApplications[0];
 
     act(() => {
       fireEvent.click(screen.getByText('Remove application now'));

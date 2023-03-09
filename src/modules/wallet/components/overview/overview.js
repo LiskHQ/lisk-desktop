@@ -18,8 +18,8 @@ import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './overview.css';
-import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
 // @Todo: this should be remove as sdk would provide this data
 // 6: blocks per minute, 60: minutes, 24: hours
@@ -80,7 +80,9 @@ const Overview = ({ isWalletRoute, history }) => {
   };
 
   const renderTokenCard = useCallback(
-    ({ chainUrl = chainLogo, symbol, availableBalance, lockedBalances }) => {
+    (application) => {
+      const { symbol, availableBalance, lockedBalances } = application;
+      const chainLogo = getLogo(application);
       const totalLockedBalance = useMemo(
         () => lockedBalances?.reduce((total, { amount }) => +amount + total, 0) ?? 0,
         [lockedBalances]
@@ -92,7 +94,7 @@ const Overview = ({ isWalletRoute, history }) => {
           lockedBalance={totalLockedBalance}
           address={address}
           symbol={symbol || ''}
-          url={chainUrl}
+          url={chainLogo}
         />
       );
     },
