@@ -15,7 +15,6 @@ import FeeSummarizer from './FeeSummarizer';
 
 const TxSummarizer = ({
   title,
-  subtitle,
   children,
   confirmButton,
   cancelButton,
@@ -65,7 +64,6 @@ const TxSummarizer = ({
         </BoxHeader>
       )}
       <BoxContent className={`${styles.content} summary-content`}>
-        {subtitle && <h6>{subtitle}</h6>}
         {wallet.loginType ? (
           <Illustration
             name={wallet.loginType}

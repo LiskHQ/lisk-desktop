@@ -9,7 +9,6 @@ import { convertCommissionToNumber, checkCommissionValidity } from '@pos/validat
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
 import styles from './ChangeCommissionForm.css';
 
-// eslint-disable-next-line max-statements
 export const ChangeCommissionForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const {
@@ -42,13 +41,12 @@ export const ChangeCommissionForm = ({ nextStep }) => {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission,
     params: { newCommission: newCommission.numericValue },
     fields: { newCommission: newCommission.value },
-    isFormValid: !newCommission.feedback,
+    isFormValid: newCommission.value !== currentCommission && !newCommission.feedback,
   };
   const commandParams = {
     newCommission: newCommission.numericValue,
   };
 
-  // eslint-disable-next-line max-statements
   const checkCommissionFeedback = (value) => {
     let inputFeedback;
     const newCommissionParam = convertCommissionToNumber(value);
@@ -62,8 +60,6 @@ export const ChangeCommissionForm = ({ nextStep }) => {
     if (checkCommissionValidity(value, currentCommission)) {
       if (isFormValid) {
         inputFeedback = undefined;
-      } else {
-        inputFeedback = t('Commission range is invalid');
       }
     } else if (newCommissionParam >= 0 && newCommissionParam <= 10000) {
       inputFeedback = t('You cannot increase commission more than 5%');

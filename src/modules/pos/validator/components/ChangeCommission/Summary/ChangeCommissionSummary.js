@@ -34,7 +34,6 @@ const ChangeCommissionSummary = ({
   return (
     <TransactionSummary
       title={t('Transaction summary')}
-      subtitle={t('Please review and verify the transaction details before signing.')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       className={`${styles.box} ${styles.summaryContainer}`}

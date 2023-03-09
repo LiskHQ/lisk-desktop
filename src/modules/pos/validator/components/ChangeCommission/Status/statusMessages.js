@@ -5,8 +5,8 @@ import { txStatusTypes } from '@transaction/configuration/txStatus';
 const ChangeCommissionMessages = (t) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
-    title: t('Change Commission succeeded'),
-    message: t('View your validator profile.'),
+    title: t('Edit commission successful'),
+    message: t('Your commission rate has been successfully changed'),
   },
 });
 
