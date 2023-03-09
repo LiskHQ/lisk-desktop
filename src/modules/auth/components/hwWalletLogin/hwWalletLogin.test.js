@@ -1,19 +1,24 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as hwManager from '@wallet/utils/hwManager';
 import HwWalletLogin from './hwWalletLogin';
+
+
+const devices = [
+  { deviceId: 1, manufacturer: 'Ledger' },
+  { deviceId: 3, status: 'connected', manufacturer: 'Ledger' },
+];
 
 jest.mock('@wallet/utils/hwManager', () => ({
   subscribeToDevicesList: jest.fn().mockImplementation(fn => new Promise((resolve) => {
-    fn([
-      { deviceId: 1, openApp: false, manufacturer: 'Ledger' },
-      { deviceId: 2, manufacturer: 'Trezor' },
-      { deviceId: 3, openApp: true, manufacturer: 'Ledger' },
-    ]);
+    fn(devices);
     resolve({
       unsubscribe: jest.fn(),
     });
   })),
+}));
+
+jest.mock('src/modules/hardwareWallet/manager/HWManager', () => ({
+  getDevices: jest.fn().mockResolvedValue(devices),
 }));
 
 describe('HwWalletLogin', () => {
@@ -41,18 +46,8 @@ describe('HwWalletLogin', () => {
     t: key => key,
   };
 
-  it('should render Loading component and call hwManager.subscribeToDevicesList', async () => {
+  it('should render Loading component', async () => {
     wrapper = mount(<HwWalletLogin {...props} />);
-    expect(hwManager.subscribeToDevicesList).toBeCalled();
-    wrapper.update();
-    expect(wrapper).not.toContainMatchingElement('Loading');
-  });
-
-  it('should unsubscribe from devices on unmount ', async () => {
-    const unsubscribe = jest.fn();
-    hwManager.subscribeToDevicesList.mockReturnValue({ unsubscribe });
-    wrapper = mount(<HwWalletLogin {...props} />);
-    wrapper.unmount();
-    expect(unsubscribe).toBeCalled();
+    expect(wrapper).toContainMatchingElement('Loading');
   });
 });

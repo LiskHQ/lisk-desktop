@@ -1,61 +1,40 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-.container {
+.HWReconnect {
   padding: 40px 24px;
+  text-align: center;
 
-  & .wrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0;
+  & .header {
+    flex-direction: column;
+    height: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
 
-    & .header {
-      flex-direction: column;
-      height: auto;
-      padding-top: 15px;
-      padding-bottom: 15px;
-
-      & img {
-        margin-bottom: 20px;
-      }
-
-      & h4 {
-        @mixin headingNormalIntermediate very-bold;
-
-        font-size: 28px;
-        margin: 0;
-        color: var(--color-zodiac-blue);
-      }
+    & img {
+      margin-bottom: 20px;
     }
 
-    & .content {
-      padding: 0;
-      color: var(--color-blue-gray);
-      text-align: center;
+    & h4 {
+      @mixin headingNormalIntermediate very-bold;
 
-      & .details {
-        margin-top: 0;
-        margin-bottom: 30px;
+      font-size: 28px;
+      margin: 0;
+      color: var(--color-zodiac-blue);
+    }
+  }
 
-        & p {
-          margin: 0;
-          font-size: 16px;
-        }
-      }
+  & .content {
+    padding: 0;
+    color: var(--color-blue-gray);
+    text-align: center;
 
-      & .account {
-        & .name {
-          margin: 0 0 10px 0;
-          color: var(--color-zodiac-blue);
-          font-weight: bold;
-          font-size: 16px;
-          letter-spacing: 0.23px;
-        }
+    & .details {
+      max-width: 316px;
+      margin: 0 auto 30px;
 
-        & .address {
-          font-size: 13px;
-          line-height: 13px;
-          letter-spacing: 0.23px;
-        }
+      & p {
+        margin: 0;
+        font-size: 16px;
       }
     }
   }
