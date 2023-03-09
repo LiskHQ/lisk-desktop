@@ -12,7 +12,7 @@ import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures_
 import { useCurrentAccount } from '@account/hooks';
 import wallets from '@tests/constants/wallets';
 import Send from './index';
-import { useTokensBalance, useTokensSupported } from '../../hooks/queries';
+import { useGetInitializationFees, useGetMinimumMessageFee, useTokensBalance, useTokensSupported } from '../../hooks/queries';
 import { useTransferableTokens } from '../../hooks';
 
 const mockSetCurrentApplication = jest.fn();
@@ -50,6 +50,11 @@ useTransferableTokens.mockReturnValue({
   isSuccess: true,
   isLoading: false,
 });
+
+useGetInitializationFees.mockReturnValue({
+  data: { data: { escrowAccount: 165000, userAccount: 165000 } },
+});
+useGetMinimumMessageFee.mockReturnValue({ data: { data: { fee: 5000000 } } });
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,
