@@ -107,7 +107,7 @@ export const ChangeCommissionForm = ({ nextStep }) => {
                 isLoading={isLoading}
                 placeholder="*.**"
                 className={`${styles.input} select-name-input`}
-                status={newCommission.feedback ? 'error' : ''}
+                status={newCommission.feedback ? 'error' : 'ok'}
                 feedback={newCommission.feedback}
               />
             </div>
