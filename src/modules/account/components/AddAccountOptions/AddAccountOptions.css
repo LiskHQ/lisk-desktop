@@ -64,6 +64,7 @@
   background-color: var(--color-white);
   transition: opacity 200ms linear;
   border: none;
+  cursor: pointer;
 
   & > span {
     color: var(--color-maastricht-blue);
@@ -90,4 +91,6 @@
   flex-direction: row;
   column-gap: 20px;
   margin: 50px 0px 70px 0px;
+  justify-content: center;
+  align-items: center;
 }
