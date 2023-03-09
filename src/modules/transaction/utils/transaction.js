@@ -16,47 +16,7 @@ import { joinModuleAndCommand } from './moduleCommand';
 const { transfer, stake, reclaimLSK, registerMultisignature } = MODULE_COMMANDS_NAME_MAP;
 
 // @todo import the following 4 values from lisk-elements (#4497)
-const ED25519_PUBLIC_KEY_LENGTH = 32;
 export const MESSAGE_TAG_MULTISIG_REG = 'LSK_RMSG_';
-const multisigRegMsgSchema = {
-  $id: '/auth/command/regMultisigMsg',
-  type: 'object',
-  required: ['address', 'nonce', 'numberOfSignatures', 'mandatoryKeys', 'optionalKeys'],
-  properties: {
-    address: {
-      dataType: 'bytes',
-      fieldNumber: 1,
-      minLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
-      maxLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
-    },
-    nonce: {
-      dataType: 'uint64',
-      fieldNumber: 2,
-    },
-    numberOfSignatures: {
-      dataType: 'uint32',
-      fieldNumber: 3,
-    },
-    mandatoryKeys: {
-      type: 'array',
-      items: {
-        dataType: 'bytes',
-        minLength: ED25519_PUBLIC_KEY_LENGTH,
-        maxLength: ED25519_PUBLIC_KEY_LENGTH,
-      },
-      fieldNumber: 4,
-    },
-    optionalKeys: {
-      type: 'array',
-      items: {
-        dataType: 'bytes',
-        minLength: ED25519_PUBLIC_KEY_LENGTH,
-        maxLength: ED25519_PUBLIC_KEY_LENGTH,
-      },
-      fieldNumber: 5,
-    },
-  },
-};
 
 export const convertStringToBinary = (value) => Buffer.from(value, 'hex');
 export const convertBinaryToString = (value) => {
