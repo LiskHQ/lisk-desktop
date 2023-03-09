@@ -9,7 +9,6 @@ import { getTransactionSignatureStatus } from '@wallet/components/signMultisigVi
 import { getKeys } from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { isEmpty } from 'src/utils/helpers';
 import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
@@ -290,30 +289,13 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
 };
 
 // eslint-disable-next-line max-statements
-const signUsingHW = async (wallet, schema, chainID, moduleCommand, transaction) => {
-  const isGroupRegistration = moduleCommand === registerMultisignature;
-  const transactionBytes = transactions.getSigningBytes(transaction, schema);
+const signUsingHW = async (wallet, schema, chainID, transaction) => {
   const [error, signedTransaction] = await to(
-    signTransactionByHW(wallet, chainID, transaction, transactionBytes)
+    signTransactionByHW({ wallet, chainID, transaction, schema })
   );
+
   if (error) {
     throw error;
-  }
-
-  const members = [
-    ...transaction.asset.mandatoryKeys.sort(),
-    ...transaction.asset.optionalKeys.sort(),
-  ];
-  const senderIndex = members.indexOf(wallet.summary.publicKey);
-  const isSender = transaction.senderPublicKey === wallet.summary.publicKey;
-
-  if (isGroupRegistration && isSender && senderIndex > -1) {
-    const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
-      if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
-      if (index === senderIndex + 1) return signedTransaction.signatures[0];
-      return Buffer.from('');
-    });
-    signedTransaction.signatures = signatures;
   }
 
   const id = computeTransactionId({ transaction: signedTransaction, schema });
@@ -321,9 +303,8 @@ const signUsingHW = async (wallet, schema, chainID, moduleCommand, transaction) 
 };
 
 export const sign = async (wallet, schema, chainID, transaction, privateKey, senderAccount, options) => {
-  if (!isEmpty(wallet.hwInfo)) {
-    const moduleCommand = joinModuleAndCommand(transaction);
-    return signUsingHW(wallet, schema, chainID, moduleCommand, transaction);
+  if (wallet.metadata?.isHW) {
+    return signUsingHW(wallet, schema, chainID, transaction);
   }
 
   if (senderAccount.mandatoryKeys?.length + senderAccount.optionalKeys?.length > 0) {

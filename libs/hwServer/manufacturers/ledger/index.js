@@ -1,6 +1,5 @@
 /* istanbul ignore file */
 import { LedgerAccount, LiskApp } from '@zondax/ledger-lisk';
-import { transactions } from '@liskhq/lisk-client';
 
 import { ADD_DEVICE, DEVICE_STATUS } from '../../constants';
 import { LEDGER } from './constants';
@@ -135,13 +134,7 @@ const signTransaction = async (transporter, { device, data }) => {
     transport = await transporter.open(device.path);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const txToBeSigned = Buffer.concat([
-      Buffer.from(transactions.TAG_TRANSACTION, 'hex'),
-      Buffer.from(data.chainID, 'hex'),
-      data.transactionBytes,
-    ]);
-    // derivation path, tx message in buffer format
-    const signature = await liskLedger.sign(ledgerAccount.derivePath(), txToBeSigned);
+    const signature = await liskLedger.sign(ledgerAccount.derivePath(), Buffer.from(data.message, 'hex'));
     transport.close();
     return signature;
   } catch (error) {
@@ -157,11 +150,11 @@ const signMessage = async (transporter, { device, data }) => {
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
     // derivation path, message in buffer format
-    const signature = await liskLedger.signMessage(ledgerAccount.derivePath(), data.message);
-    transport.close();
+    const signature = await liskLedger.signMessage(ledgerAccount.derivePath(), Buffer.from(data.message, 'hex'));
+    await transport.close();
     return signature;
   } catch (error) {
-    if (transport) transport.close();
+    if (transport) await transport.close();
     throw new Error(error);
   }
 };

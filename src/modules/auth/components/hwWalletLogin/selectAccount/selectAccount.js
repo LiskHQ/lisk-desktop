@@ -21,7 +21,6 @@ const SelectAccount = ({
   devices,
   // history,
   settings,
-  network,
   settingsUpdated,
   t,
 }) => {
@@ -44,7 +43,7 @@ const SelectAccount = ({
 
   const getAccountsFromDeviceM = async () => {
     const [error, accounts] = await to(
-      getAccountsFromDevice({ device, network }),
+      getAccountsFromDevice(),
     );
     if (error) {
       toast.error(`Error retrieving accounts from device: ${error}`);
