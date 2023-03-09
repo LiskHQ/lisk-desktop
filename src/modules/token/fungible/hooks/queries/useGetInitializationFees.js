@@ -24,5 +24,6 @@ export const useGetInitializationFees = ({ options = {}, address, tokenID } = {}
     options: { ...options, enabled: shouldReturnInitializationFee },
   });
 
+
   return shouldReturnInitializationFee ? result : { data: null };
 };
