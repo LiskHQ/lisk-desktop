@@ -19,7 +19,12 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import useMessageField from '../../hooks/useMessageField';
 import Form from './SendForm';
-import { useTokensBalance, useTokensSupported } from '../../hooks/queries';
+import {
+  useGetInitializationFees,
+  useGetMinimumMessageFee,
+  useTokensBalance,
+  useTokensSupported,
+} from '../../hooks/queries';
 import { useTransferableTokens } from '../../hooks';
 
 const mockSetMessage = jest.fn();
@@ -65,6 +70,10 @@ describe('Form', () => {
     isSuccess: true,
     isLoading: false,
   });
+  useGetInitializationFees.mockReturnValue({
+    data: { data: { escrowAccount: 165000, userAccount: 165000 } },
+  });
+  useGetMinimumMessageFee.mockReturnValue({ data: { data: { fee: 5000000 } } });
 
   beforeEach(() => {
     bookmarks = {
