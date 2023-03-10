@@ -12,15 +12,17 @@ import { usePosConstants } from '../../../hooks/queries';
 import styles from './ChangeCommissionForm.css';
 
 // eslint-disable-next-line max-statements
-export const ChangeCommissionForm = ({ nextStep }) => {
+export const ChangeCommissionForm = ({ prevState, nextStep }) => {
   const { t } = useTranslation();
+  const getInitialCommission = (rawTx, initialValue) =>
+    rawTx?.fields.newCommission || initialValue || '';
   const {
     currentCommission,
     isLoading,
     isSuccess: isCommissionSuccess,
   } = useCurrentCommissionPercentage();
   const [newCommission, setNewCommission] = useState({
-    value: currentCommission,
+    value: getInitialCommission(prevState.formProps, currentCommission),
     feedback: '',
     numericValue: convertCommissionToNumber(currentCommission),
   });
