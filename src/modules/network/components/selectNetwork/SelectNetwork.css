@@ -1,0 +1,139 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.contentWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 16px;
+  max-height: 260px;
+  overflow-y: scroll;
+
+  & > div {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--color-ultramarine-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  & > h6 {
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+    margin-top: -6px;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background-color: var(--color-white);
+  border-radius: 16px;
+  max-width: 592px !important;
+}
+
+.headerWrapper {
+  text-align: center;
+
+  & > h1 {
+    @mixin headingLarge;
+
+    display: flex;
+    justify-content: center;
+    margin: 0 0 21px;
+    font-size: 28px;
+  }
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  margin-top: 24px;
+  border-radius: 10px;
+}
+
+.selectNetworkWrapper {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  margin: 0;
+  min-height: 100%;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.selectNetwork {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+}
+
+.subHeader {
+  @mixin contentLargest;
+
+  margin: 0;
+  font-size: var(--paragraph-font-size-l);
+  color: var(--color-slate-gray);
+
+  & ~ div ~ p {
+    font-size: var(--paragraph-font-size-l);
+  }
+}
+
+.networkSelectionWrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & > label {
+    @mixin contentLarge;
+
+    margin-bottom: 16px;
+  }
+
+  & .networkItem {
+    font-family: var(--heading-font) !important;
+    font-weight: var(--font-weight-bold) !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 16px !important;
+    color: var(--color-content-light) !important;
+    width: calc(100% - 32px) !important;
+    border-radius: 8px !important;
+
+    &.selected {
+      background-color: var(--color-ultramarine-blue-blurred);
+    }
+  }
+}
+
+.networksPopup {
+  & > span ~ div {
+    align-items: center;
+    row-gap: 8px;
+  }
+}
+
+.menuSelect .networkItem {
+  font-family: var(--content-font) !important;
+  background-color: unset !important;
+}

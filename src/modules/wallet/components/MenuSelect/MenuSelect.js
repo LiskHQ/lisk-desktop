@@ -4,7 +4,7 @@ import Icon from 'src/theme/Icon';
 import DropdownContext from '../../context/dropdownContext';
 import styles from './MenuSelect.css';
 
-function MenuSelect({ value, children, onChange, className, select, disabled }) {
+function MenuSelect({ value, children, onChange, className, select, disabled, popupClassName }) {
   const [selectedValue, setSelectedValue] = useState(value);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -53,7 +53,7 @@ function MenuSelect({ value, children, onChange, className, select, disabled }) 
         {!disabled ? (
           <Dropdown
             showArrow={!disabled}
-            className={styles.optionListWrapper}
+            className={`${styles.optionListWrapper} ${popupClassName}`}
             showDropdown={showDropdown}
           >
             {children}
