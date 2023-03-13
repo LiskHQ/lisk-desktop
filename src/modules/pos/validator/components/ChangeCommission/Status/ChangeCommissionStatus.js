@@ -17,7 +17,28 @@ const ChangeCommissionStatus = ({ transactions, account, history }) => {
 
   const onSuccessClick = async () => {
     removeSearchParamsFromUrl(history, ['modal']);
-    await queryClient.invalidateQueries({ queryKey: [VALIDATORS] });
+    const queries = queryClient.getQueriesData({ queryKey: [VALIDATORS] });
+    queries
+      .filter((query) => {
+        const { params } = query[0][2];
+        return params?.address === account.summary.address;
+      })
+      .forEach((query) => {
+        queryClient.setQueriesData({ queryKey: query[0] }, (oldData) => ({
+          ...oldData,
+          pages: [
+            {
+              ...oldData?.pages[0],
+              data: [
+                {
+                  ...oldData?.pages[0].data[0],
+                  commission: transactions.pending[0].params.newCommission,
+                },
+              ],
+            },
+          ],
+        }));
+      });
   };
 
   return (
