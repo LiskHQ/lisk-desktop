@@ -1,4 +1,5 @@
 import { convertCommissionToNumber } from './getValidatorCommission';
+import { MAX_COMMISSION_INCREASE_RATE } from '../consts';
 
 export const checkCommissionValidity = (newCommission, oldCommission) => {
   const newCommissionParam = convertCommissionToNumber(newCommission);
@@ -8,5 +9,5 @@ export const checkCommissionValidity = (newCommission, oldCommission) => {
     return true;
   }
   const commissionIncrease = newCommissionParam - oldCommissionParam;
-  return commissionIncrease <= 500;
+  return commissionIncrease <= MAX_COMMISSION_INCREASE_RATE;
 };
