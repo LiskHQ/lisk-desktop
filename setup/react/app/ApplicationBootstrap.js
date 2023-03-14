@@ -6,6 +6,7 @@ import {
 } from '@blockchainApplication/manage/hooks';
 import { useTransactionUpdate } from '@transaction/hooks';
 import { PrimaryButton } from 'src/theme/buttons';
+import { useLedgerDeviceListener } from '@libs/ledgerHardwareWallet/ledgerDeviceListener/useLedgerDeviceListener';
 
 const ApplicationBootstrap = ({ children }) => {
   const {
@@ -28,6 +29,8 @@ const ApplicationBootstrap = ({ children }) => {
       setIsFirstTimeLoading(false);
     }
   }, [isFetched]);
+
+  useLedgerDeviceListener();
 
   if (error) {
     // @TODO: this return should be replaced with an actual error message page
