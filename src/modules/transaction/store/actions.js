@@ -139,8 +139,10 @@ export const transactionBroadcasted =
     const { network, token } = getState();
     const activeToken = token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
+    const moduleCommand = joinModuleAndCommand(transaction);
+    const paramsSchema = moduleCommandSchemas[moduleCommand];
     let broadcastResult;
-    const dryRunResult = await dryRun({ transaction, serviceUrl, network });
+    const dryRunResult = await dryRun({ transaction, serviceUrl, paramsSchema });
 
     if (dryRunResult.data?.result === 1) {
       broadcastResult = await broadcast(
@@ -148,8 +150,6 @@ export const transactionBroadcasted =
       );
 
       if (!broadcastResult.data?.error) {
-        const moduleCommand = joinModuleAndCommand(transaction);
-        const paramsSchema = moduleCommandSchemas[moduleCommand];
         const transactionJSON = toTransactionJSON(transaction, paramsSchema);
         dispatch({
           type: actionTypes.broadcastedTransactionSuccess,

@@ -228,17 +228,17 @@ export const getTransactionFee = async ({
         ...transactionObject.params,
         ...(numberOfSignatures &&
           !transactionObject.params.signatures?.length && {
-            signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
-          }),
+          signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
+        }),
       },
     },
     paramsSchema,
     senderAccount.numberOfSignatures
       ? {
-          numberOfSignatures: senderAccount.numberOfSignatures,
-          numberOfEmptySignatures:
-            mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
-        }
+        numberOfSignatures: senderAccount.numberOfSignatures,
+        numberOfEmptySignatures:
+          mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
+      }
       : {}
   );
 
@@ -326,29 +326,13 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
    events: EventJSON [],
 }
  */
-export const dryRun = ({ transaction, serviceUrl, network, full }) => {
-  const moduleCommand = joinModuleAndCommand({
-    module: transaction.module,
-    command: transaction.command,
-  });
-  console.log({ moduleCommand });
-  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
-  if (!full) {
-    const binary = transactions.getBytes(transaction, schema);
-    const payload = binary.toString('hex');
-
-    return http({
-      method: 'POST',
-      baseUrl: serviceUrl,
-      path: httpPaths.dryRun,
-      data: { transaction: payload },
-    });
-  }
+export const dryRun = ({ transaction, serviceUrl, paramsSchema, isSkipVerify }) => {
+  const transactionBytes = transactions.getBytes(transaction, paramsSchema);
 
   return http({
     method: 'POST',
     baseUrl: serviceUrl,
     path: httpPaths.dryRun,
-    data: { transaction, isSkipVerify: true },
+    data: { transaction: transactionBytes.toString('hex'), isSkipVerify },
   });
 };

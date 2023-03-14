@@ -38,6 +38,7 @@ const ValidatorProfile = ({ history }) => {
 
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address } },
+    options: { refetchInterval: 10000 },
   });
   const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
 
