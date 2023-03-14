@@ -1,22 +1,63 @@
 /* eslint-disable max-statements */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
+import {
+  useApplicationManagement,
+  useCurrentApplication,
+} from '@blockchainApplication/manage/hooks';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import { DEFAULT_NETWORK } from 'src/const/config';
 import routes from 'src/routes/routes';
+import useSettings from '@settings/hooks/useSettings';
+import { DEFAULT_NETWORK } from 'src/const/config';
+import { useGetNetworksMainChainStatus } from '@blockchainApplication/manage/hooks/queries/useGetNetworksMainChainStatus';
+import { useGetMergedApplication } from '@blockchainApplication/manage/hooks/useGetMergedApplication';
 import styles from './SelectNetwork.css';
 import networks from '../../configuration/networks';
 
 function ManageAccounts({ history }) {
   const { t } = useTranslation();
-  const [selectedNetwork, setSelectedNetwork] = useState(networks[DEFAULT_NETWORK]);
+  const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
+
+  const { setApplications } = useApplicationManagement();
+  const [, setCurrentApplication] = useCurrentApplication();
+  const {
+    data: networksMainChainStatus,
+    isLoading: isVerifyingNetworkOptions,
+    isError: isErrorVerifyingNetworkOptions,
+    isFetched: hasVerifiedNetworkOptions,
+  } = useGetNetworksMainChainStatus();
+
+  const selectedNetwork = mainChainNetwork || networks[DEFAULT_NETWORK];
+  const selectedNetworkMainChain = networksMainChainStatus[selectedNetwork.name];
+
+  const {
+    data: mainChainApplication,
+    isLoading: isGettingMainChain,
+    isError: isErrorGettingMainChain,
+    refetch: refetchMergedApplicationData,
+  } = useGetMergedApplication({
+    params: { chainID: selectedNetworkMainChain?.data?.chainID },
+    networkName: selectedNetwork.name,
+    isEnabled: !!selectedNetworkMainChain,
+  });
 
   const goToDashboard = useCallback(() => {
+    setApplications([mainChainApplication]);
+    setCurrentApplication(mainChainApplication);
+
     history.push(routes.dashboard.path);
+  }, [mainChainApplication]);
+
+  useEffect(() => {
+    refetchMergedApplicationData();
+  }, [mainChainNetwork]);
+
+  useEffect(() => {
+    if (!selectedNetwork) setValue(networksMainChainStatus[DEFAULT_NETWORK]);
   }, []);
 
   return (
@@ -44,31 +85,50 @@ function ManageAccounts({ history }) {
             <MenuSelect
               value={selectedNetwork}
               select={(selectedValue, option) => selectedValue.label === option.label}
-              onChange={setSelectedNetwork}
+              onChange={setValue}
               popupClassName={styles.networksPopup}
               className={styles.menuSelect}
-              isValid
+              isLoading={isVerifyingNetworkOptions || isGettingMainChain}
+              isValid={
+                !isErrorVerifyingNetworkOptions &&
+                hasVerifiedNetworkOptions &&
+                !isErrorGettingMainChain
+              }
             >
-              {Object.values(networks).map((network) => (
-                <MenuItem
-                  className={`${styles.networkItem} ${
-                    selectedNetwork.label === network.label ? styles.selected : ''
-                  }`}
-                  value={network}
-                  key={network.label}
-                >
-                  <span>{network.label}</span>
-                  {selectedNetwork.label === network.label && <Icon name="okIcon" />}
-                </MenuItem>
-              ))}
+              {Object.keys(networks)
+                .filter((networkKey) => networksMainChainStatus[networkKey])
+                .map((networkKey) => {
+                  const network = networks[networkKey];
+
+                  return (
+                    <MenuItem
+                      className={`${styles.networkItem} ${
+                        selectedNetwork.label === network.label ? styles.selected : ''
+                      }`}
+                      value={network}
+                      key={network.label}
+                    >
+                      <span>{network.label}</span>
+                      {selectedNetwork.label === network.label && <Icon name="okIcon" />}
+                    </MenuItem>
+                  );
+                })}
             </MenuSelect>
           </div>
-          <div>
-            <span>Failed to connect to network! &nbsp;<span>Try Again</span></span>
-          </div>
+          {isErrorGettingMainChain && (
+            <div>
+              <span>
+                Failed to connect to network! &nbsp;
+                <span onClick={refetchMergedApplicationData}>Try Again</span>
+              </span>
+            </div>
+          )}
           <PrimaryButton
             className={`${styles.button} ${styles.continueBtn}`}
             onClick={goToDashboard}
+            disabled={
+              isVerifyingNetworkOptions || isErrorVerifyingNetworkOptions || isErrorGettingMainChain
+            }
           >
             {t('Continue to dashbord')}
           </PrimaryButton>

@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
 import { BLOCKCHAIN_APPS_META } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import defaultClient from 'src/utils/api/client';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
-import { getNetworkName } from '@network/utils/getNetwork';
+import useSettings from 'src/modules/settings/hooks/useSettings';
 
 /**
  * Creates a custom hook for blockchain applications meta queries
@@ -28,8 +27,8 @@ export const useBlockchainApplicationMeta = ({
   options,
   client = defaultClient,
 } = {}) => {
-  const selectedNetwork = useSelector((state) => state.network);
-  const network = getNetworkName(selectedNetwork);
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
+  const network = mainChainNetwork.name;
 
   const config = {
     url: `/api/${API_VERSION}/blockchain/apps/meta`,
