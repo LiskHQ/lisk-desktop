@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
-import { useGetInitializationFees, useMessageFee } from '@auth/hooks/queries';
+import { useGetInitializationFees, useGetMinimumMessageFee } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
@@ -70,8 +70,8 @@ const SendForm = (props) => {
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
-  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value });
-  const { data: messageFee } = useMessageFee({ address: recipient.value });
+  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value, tokenID: token?.tokenID });
+  const { data: messageFeeResult } = useGetMinimumMessageFee();
 
   const extraCommandFee =
     sendingChain.chainID !== recipientChain.chainID
@@ -160,7 +160,7 @@ const SendForm = (props) => {
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
-      messageFee,
+      messageFee: messageFeeResult?.data?.fee,
     };
   }
   return (
@@ -177,7 +177,7 @@ const SendForm = (props) => {
             <h2>{t('Send Tokens')}</h2>
           </BoxHeader>
           <BoxContent className={styles.formSection}>
-            <div className={`${styles.ApplilcationFieldWrapper}`}>
+            <div className={`${styles.ApplicationFieldWrapper}`}>
               <div>
                 <label className={`${styles.fieldLabel} sending-application`}>
                   <span>{t('From application')}</span>

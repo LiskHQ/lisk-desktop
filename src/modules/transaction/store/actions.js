@@ -145,9 +145,7 @@ export const transactionBroadcasted =
     const dryRunResult = await dryRun({ transaction, serviceUrl, paramsSchema });
 
     if (dryRunResult.data?.result === 1) {
-      broadcastResult = await broadcast(
-        { transaction, serviceUrl, moduleCommandSchemas },
-      );
+      broadcastResult = await broadcast({ transaction, serviceUrl, moduleCommandSchemas });
 
       if (!broadcastResult.data?.error) {
         const transactionJSON = toTransactionJSON(transaction, paramsSchema);
@@ -176,7 +174,7 @@ export const transactionBroadcasted =
     if (dryRunResult.data?.result === 0) {
       // @TODO: Prepare error message by parsing the events based on each transaction type
       // https://github.com/LiskHQ/lisk-desktop/issues/4698 should resolve all the dry run related logic along with feedback
-      const temporaryError = dryRunResult.data?.events.map(e => e.name).join(', ')
+      const temporaryError = dryRunResult.data?.events.map((e) => e.name).join(', ');
       dispatch({
         type: actionTypes.broadcastedTransactionError,
         data: {
@@ -198,41 +196,47 @@ export const transactionBroadcasted =
  * @param {object} data.sender
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
-export const multisigTransactionSigned = ({
-  formProps,
-  transactionJSON,
-  sender,
-  privateKey,
-  txInitiatorAccount,
-  moduleCommandSchemas,
-}) => async (dispatch, getState) => {
-  const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
-  const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
-
-  const [tx, error] = await signMultisigTransaction(
-    activeWallet,
-    sender,
+export const multisigTransactionSigned =
+  ({
+    formProps,
     transactionJSON,
-    txStatus,
-    moduleCommandSchemas[formProps.moduleCommand],
-    state.network.networks.LSK.chainID,
+    sender,
     privateKey,
-    txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
-  );
+    txInitiatorAccount,
+    moduleCommandSchemas,
+    messagesSchemas,
+  }) =>
+  async (dispatch, getState) => {
+    const state = getState();
+    const activeWallet = selectActiveTokenAccount(state);
+    const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
+    const options = {
+      messageSchema: messagesSchemas[formProps.moduleCommand],
+    };
+    const [tx, error] = await signMultisigTransaction(
+      activeWallet,
+      sender,
+      transactionJSON,
+      txStatus,
+      moduleCommandSchemas[formProps.moduleCommand],
+      state.network.networks.LSK.chainID,
+      privateKey,
+      txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
+      options
+    );
 
-  if (!error) {
-    dispatch({
-      type: actionTypes.transactionDoubleSigned,
-      data: tx,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
-  }
-};
+    if (!error) {
+      dispatch({
+        type: actionTypes.transactionDoubleSigned,
+        data: tx,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    }
+  };
 
 /**
  * Used when a fully signed transaction is imported, this action
