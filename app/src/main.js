@@ -7,6 +7,7 @@ import installExtension, {
   REDUX_DEVTOOLS,
 } from 'electron-devtools-installer';
 import path from 'path';
+import { initLedgerHardwareWalletIPC } from '../../libs/ledgerHardwareWallet/initLedgerHardwareWalletIPC';
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
@@ -55,6 +56,7 @@ const createWindow = () => {
       // eslint-disable-next-line no-console
       .catch((err) => console.info('An error occurred: ', err));
   }
+  initLedgerHardwareWalletIPC(win);
 };
 
 const handleProtocol = () => {
