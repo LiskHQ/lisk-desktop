@@ -15,8 +15,8 @@ function ManageAccounts({ history }) {
   const { t } = useTranslation();
   const [selectedNetwork, setSelectedNetwork] = useState(networks[DEFAULT_NETWORK]);
 
-  const onAddAccount = useCallback(() => {
-    history.push(routes.addAccountOptions.path);
+  const goToDashboard = useCallback(() => {
+    history.push(routes.dashboard.path);
   }, []);
 
   return (
@@ -47,6 +47,7 @@ function ManageAccounts({ history }) {
               onChange={setSelectedNetwork}
               popupClassName={styles.networksPopup}
               className={styles.menuSelect}
+              isValid
             >
               {Object.values(networks).map((network) => (
                 <MenuItem
@@ -57,13 +58,17 @@ function ManageAccounts({ history }) {
                   key={network.label}
                 >
                   <span>{network.label}</span>
+                  {selectedNetwork.label === network.label && <Icon name="okIcon" />}
                 </MenuItem>
               ))}
             </MenuSelect>
           </div>
+          <div>
+            <span>Failed to connect to network! &nbsp;<span>Try Again</span></span>
+          </div>
           <PrimaryButton
             className={`${styles.button} ${styles.continueBtn}`}
-            onClick={onAddAccount}
+            onClick={goToDashboard}
           >
             {t('Continue to dashbord')}
           </PrimaryButton>

@@ -1,10 +1,27 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Dropdown from 'src/theme/Dropdown/dropdown';
 import Icon from 'src/theme/Icon';
+import Spinner from 'src/theme/Spinner';
 import DropdownContext from '../../context/dropdownContext';
 import styles from './MenuSelect.css';
 
-function MenuSelect({ value, children, onChange, className, select, disabled, popupClassName }) {
+function DropdownIconState({ isLoading, isValid }) {
+  if (isLoading) return <Spinner className={styles.loading} />;
+  if (isValid) return <Icon name="okIcon" className={styles.status} />;
+  return <Icon name="dropdownFieldIcon" />;
+}
+
+function MenuSelect({
+  value,
+  children,
+  onChange,
+  className,
+  select,
+  disabled,
+  popupClassName,
+  isLoading,
+  isValid,
+}) {
   const [selectedValue, setSelectedValue] = useState(value);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -38,8 +55,7 @@ function MenuSelect({ value, children, onChange, className, select, disabled, po
   );
 
   const handleOnClick = () => {
-    if (!disabled) setShowDropdown(!showDropdown);
-    return undefined;
+    if (!disabled && !isLoading) setShowDropdown(!showDropdown);
   };
 
   return (
@@ -47,7 +63,7 @@ function MenuSelect({ value, children, onChange, className, select, disabled, po
       {showDropdown && <div onClick={() => setShowDropdown(false)} className={styles.overlay} />}
       <div onClick={handleOnClick} className={`${styles.wrapper} ${className}`}>
         <div data-testid="selected-menu-item">{children[selectedIndex]}</div>
-        {!disabled ? <Icon name="dropdownFieldIcon" /> : null}
+        {!disabled && <DropdownIconState isLoading={isLoading} isValid={isValid} />}
       </div>
       <DropdownContext.Provider value={{ onChange: handleOnChange, selectedValue }}>
         {!disabled ? (
