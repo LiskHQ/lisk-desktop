@@ -17,7 +17,7 @@ export async function getPubKey({ devicePath, accountIndex }) {
     if (errorMessage === 'No errors') {
       return account?.pubKey;
     }
-    return Promise.reject(Error(errorMessage));
+    return Promise.reject(errorMessage);
   } catch (error) {
     console.log('getAddressAndPubKey error', error);
     await transport?.close();
@@ -37,7 +37,11 @@ export async function getSignedTransaction({ devicePath, accountIndex, unsignedM
     );
     console.log('getSignedTransaction signature', signature);
     if (transport && transport.close) await transport.close();
-    return signature;
+    const errorMessage = signature?.error_message;
+    if (errorMessage === 'No errors') {
+      return signature;
+    }
+    return Promise.reject(errorMessage);
   } catch (error) {
     if (transport && transport.close) await transport.close();
     console.log('getSignedTransaction error', error);
