@@ -61,12 +61,11 @@ function ManageAccounts({ history }) {
     });
 
   const retry = async () => {
-    await invalidateBlockchainAppsQuery();
     refetchMergedApplicationData();
+    await invalidateBlockchainAppsQuery();
   };
 
   const handleChangeNetwork = async (value) => {
-    await invalidateBlockchainAppsQuery();
     setValue(value);
   };
 

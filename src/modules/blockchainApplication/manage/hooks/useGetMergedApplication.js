@@ -68,7 +68,7 @@ export const useGetMergedApplication = ({ params, networkName, isEnabled }) => {
         ws: networks[networkName].wsServiceUrl,
       });
     }
-  }, []);
+  }, [networkName]);
 
   return {
     retry,
