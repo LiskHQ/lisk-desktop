@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { showNotificationsForIncomingTransactions } from './showNotificationsForIncomingTransactions';
 
 jest.mock('react-toastify');
@@ -7,6 +8,7 @@ jest.mock('react-toastify');
 global.Notification = jest.fn().mockImplementation(() => ({
   close: jest.fn(),
 }));
+const mockToken = mockAppsTokens.data[0];
 
 const txns = [
   {
@@ -51,7 +53,7 @@ describe('showNotificationsForIncomingTransactions', () => {
     jest.clearAllMocks();
   });
   it('should display notifications for transactions related to current account', () => {
-    showNotificationsForIncomingTransactions(txns, currAcct, 'LSK');
+    showNotificationsForIncomingTransactions(txns, currAcct, mockToken);
 
     expect(toast.info).toHaveBeenCalledTimes(1);
     expect(toast.info).toHaveBeenCalledWith('Your account just received 0.000002 LSK ');
@@ -76,7 +78,7 @@ describe('showNotificationsForIncomingTransactions', () => {
         height: 9383851,
       },
     };
-    showNotificationsForIncomingTransactions(updatedTxns, currAcct, 'LSK');
+    showNotificationsForIncomingTransactions(updatedTxns, currAcct, mockToken);
 
     expect(toast.info).toHaveBeenCalledTimes(1);
     expect(toast.info).toHaveBeenCalledWith(
@@ -104,7 +106,7 @@ describe('showNotificationsForIncomingTransactions', () => {
         },
       },
     ];
-    showNotificationsForIncomingTransactions(zeroAmtTxns, currAcct, 'LSK');
+    showNotificationsForIncomingTransactions(zeroAmtTxns, currAcct, mockToken);
 
     expect(toast.info).not.toHaveBeenCalledTimes(1);
     expect(toast.info).not.toHaveBeenCalledWith(

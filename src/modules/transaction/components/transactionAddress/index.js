@@ -27,7 +27,7 @@ const TransactionAddress = ({
   address, bookmarks, moduleCommand, token,
 }) => {
   const bookmark = bookmarks[token].find(acc => acc.address === address);
-  const title = moduleCommand && getModuleCommandTitle()[moduleCommand].replace('multisignature', 'multisig.');
+  const title = moduleCommand && getModuleCommandTitle()[moduleCommand]?.replace('multisignature', 'multisig.');
 
   return (
     <div className={`${styles.wrapper} transaction-address`}>

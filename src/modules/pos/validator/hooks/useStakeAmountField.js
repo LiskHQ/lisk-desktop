@@ -1,15 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from 'src/utils/validators';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { selectLSKAddress } from 'src/redux/selectors';
 import { regex } from 'src/const/regex';
-import { tokenMap } from '@token/fungible/consts/tokens';
-import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
-import { usePosConstants } from './queries';
+import usePosToken from './usePosToken';
 
 let loaderTimeout = null;
 
@@ -22,10 +20,10 @@ let loaderTimeout = null;
  * @param {String} inputValue - The input stake amount value in Beddows
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
+const getAmountFeedbackAndError = (value, balance, minValue, inputValue, token) => {
   const { message: feedback } = validateAmountFormat({
+    token,
     value: +value,
-    token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
     checklist: [
       'NEGATIVE_STAKE',
@@ -51,14 +49,7 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
  */
 // eslint-disable-next-line max-statements
 const useStakeAmountField = (initialValue) => {
-  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-
-  // Since we know the posTokenId we need to get the token's object
-  const { data: tokens, isLoading: isGettingPosToken } = useTokensBalance({
-    config: { params: { tokenID: posConstants?.posTokenID } },
-    options: { enabled: !isGettingPosConstants },
-  });
-  const token = useMemo(() => tokens?.data?.[0], [tokens]);
+  const { token, isLoading: isGettingPosToken } = usePosToken();
 
   const { i18n } = useTranslation();
   const balance = Number(token?.availableBalance);
@@ -102,10 +93,11 @@ const useStakeAmountField = (initialValue) => {
       isLoading: true,
     });
     const feedback = getAmountFeedbackAndError(
-      value - fromRawLsk(previouslyConfirmedStake - totalUnconfirmedStake),
+      value - convertFromBaseDenom(previouslyConfirmedStake - totalUnconfirmedStake, token),
       balance,
-      -1 * fromRawLsk(previouslyConfirmedStake),
-      value
+      -1 * convertFromBaseDenom(previouslyConfirmedStake, token),
+      value,
+      token
     );
     loaderTimeout = setTimeout(() => {
       setAmountField({

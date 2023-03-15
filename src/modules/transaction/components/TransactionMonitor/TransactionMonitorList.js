@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import StickyHeader from '@theme/table/stickyHeader';
 import { QueryTable } from '@theme/QueryTable';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useSort } from 'src/modules/common/hooks';
 import useFilter from 'src/modules/common/hooks/useFilter';
 import FilterBar from 'src/modules/common/components/filterBar';
@@ -61,9 +62,11 @@ const Transactions = () => {
   const activeToken = useSelector(selectActiveToken);
   const { sort, toggleSort } = useSort();
   const { filters, applyFilters, clearFilters } = useFilter({});
+  const { data: tokens } = useTokensBalance();
+  const token = tokens?.data?.[0] || {};
 
   useEffect(() => {
-    setParams(normalizeTransactionParams({ ...filters, ...(sort && { sort }) }));
+    setParams(normalizeTransactionParams({ ...filters, ...(sort && { sort }) }, token));
   }, [filters, sort]);
 
   /* istanbul ignore next */

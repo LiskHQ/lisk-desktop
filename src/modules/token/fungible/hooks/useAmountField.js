@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
 import { regex } from 'src/const/regex';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { toRawLsk } from '@token/fungible/utils/lsk';
 import { validateAmountFormat } from 'src/utils/validators';
+import { convertToBaseDenom } from '../utils/lsk';
 
 let loaderTimeout = null;
 
@@ -16,22 +16,29 @@ const baseState = {
   feedback: '',
 };
 
-const getAmountFieldState = (initialValue, getAmountFeedbackAndError) => (initialValue
-  ? {
-    ...baseState,
-    ...getAmountFeedbackAndError(initialValue),
-    value: initialValue,
-  }
-  : {
-    ...baseState,
-    value: '',
-  });
+const getAmountFieldState = (initialValue, getAmountFeedbackAndError) =>
+  initialValue
+    ? {
+        ...baseState,
+        ...getAmountFeedbackAndError(initialValue),
+        value: initialValue,
+      }
+    : {
+        ...baseState,
+        value: '',
+      };
 
 const useAmountField = (initialValue, balance, token) => {
   const { t, i18n } = useTranslation();
 
   const getAmountFeedbackAndError = (value, maxAmount = balance) => {
-    const checklist = ['NEGATIVE_AMOUNT', 'MAX_ACCURACY', 'INSUFFICIENT_FUNDS', 'MIN_BALANCE', 'FORMAT'];
+    const checklist = [
+      'NEGATIVE_AMOUNT',
+      'MAX_ACCURACY',
+      'INSUFFICIENT_FUNDS',
+      'MIN_BALANCE',
+      'FORMAT',
+    ];
     let { message: feedback } = validateAmountFormat({
       value,
       token,
@@ -39,15 +46,19 @@ const useAmountField = (initialValue, balance, token) => {
       checklist: [...checklist, 'MIN_BALANCE'],
     });
 
-    if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {
+    if (!feedback && maxAmount < convertToBaseDenom(numeral(value).value(), token)) {
       feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };
   };
 
   const [amountField, setAmountField] = useState(
-    getAmountFieldState(initialValue, getAmountFeedbackAndError),
+    getAmountFieldState(initialValue, getAmountFeedbackAndError)
   );
+
+  useEffect(() => {
+    setAmountField(getAmountFieldState(initialValue, getAmountFeedbackAndError));
+  }, [initialValue]);
 
   const onAmountInputChange = ({ value }, maxAmount) => {
     const { leadingPoint } = regex.amount[i18n.language];

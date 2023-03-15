@@ -1,7 +1,11 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
 import routes from 'src/routes/routes';
 import accounts from '@tests/constants/wallets';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import Stakes from './stakes';
+
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('Stakes Tab Component', () => {
   let wrapper;
@@ -19,7 +23,7 @@ describe('Stakes Tab Component', () => {
       loadData: jest.fn(),
     },
     address: accounts.genesis.summary.address,
-    t: v => v,
+    t: (v) => v,
     history: { push: jest.fn() },
   };
   const stakes = {
@@ -34,12 +38,14 @@ describe('Stakes Tab Component', () => {
     })),
   };
 
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
+
   afterEach(() => {
     props.stakes.loadData.mockRestore();
     props.accounts.loadData.mockRestore();
   });
 
-  const setup = customProps => mountWithRouter(Stakes, customProps);
+  const setup = (customProps) => mountWithRouter(Stakes, customProps);
 
   it('Should render with empty state', () => {
     wrapper = setup(props);
@@ -59,16 +65,7 @@ describe('Stakes Tab Component', () => {
       accounts: { data: [], loadData },
     });
     expect(loadData).toBeCalledWith({
-      addressList: ['lsk0',
-        'lsk1',
-        'lsk2',
-        'lsk3',
-        'lsk4',
-        'lsk5',
-        'lsk6',
-        'lsk7',
-        'lsk8',
-        'lsk9'],
+      addressList: ['lsk0', 'lsk1', 'lsk2', 'lsk3', 'lsk4', 'lsk5', 'lsk6', 'lsk7', 'lsk8', 'lsk9'],
       isValidator: true,
     });
   });

@@ -1,6 +1,10 @@
 import { screen, waitFor } from '@testing-library/react';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import WalletsMonitor from './Accounts';
+
+jest.mock('@token/fungible/hooks/queries/useTokensBalance');
 
 describe('Top Accounts Monitor Page', () => {
   beforeEach(() => {
@@ -10,6 +14,8 @@ describe('Top Accounts Monitor Page', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+
+  useTokensBalance.mockReturnValue({ data: mockAppsTokens });
 
   it('renders a page with header', () => {
     expect(screen.getByText('All accounts')).toBeInTheDocument();

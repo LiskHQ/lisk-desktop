@@ -2,9 +2,12 @@ import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { mountWithContext } from '@tests/unit-test-utils/mountHelpers';
 import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import ValidatorRow from './ValidatorRow';
 
 jest.mock('src/redux/actions');
+jest.mock('@pos/validator/hooks/usePosToken');
 
 let wrapper;
 const props = {
@@ -33,6 +36,8 @@ const props = {
     indexBook: { lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp: 0 },
   },
 };
+
+usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
 
 describe('ValidatorRow', () => {
   it('adds validators to watch list when watch icon is clicked', () => {

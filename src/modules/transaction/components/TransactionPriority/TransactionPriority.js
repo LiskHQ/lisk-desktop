@@ -102,9 +102,9 @@ const TransactionPriority = ({
                     t(`
                       You can choose a high, medium, or low transaction priority, each requiring a
                       corresponding transaction fee. Or you can pay any desired fee of no less than
-                      {{minFee}} {{token}}. If you don't know what fee to pay, choose
+                      {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose
                       one of the provided transaction priorities.
-                    `, { minFee, token })
+                    `, { minFee, tokenSymbol: token.symbol })
                   }
                 </p>
               </Tooltip>
@@ -120,6 +120,7 @@ const TransactionPriority = ({
           minFee={minFee}
           fees={composedFees}
           setCustomFee={setCustomFee}
+          token={token}
         />
       </div>
     </div>

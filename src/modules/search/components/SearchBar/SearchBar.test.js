@@ -4,6 +4,8 @@ import { fireEvent, render } from '@testing-library/react';
 import { keyCodes } from 'src/utils/keyCodes';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 import routes from 'src/routes/routes';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { useSearch } from 'src/modules/search/hooks/useSearch';
 import SearchBar from './SearchBar';
 
@@ -16,6 +18,7 @@ jest.mock('src/modules/search/hooks/useSearch', () => ({
     isLoading: false,
   }),
 }));
+jest.mock('@token/fungible/hooks/queries');
 
 describe('SearchBar', () => {
   const props = {
@@ -24,6 +27,8 @@ describe('SearchBar', () => {
       location: { search: '' },
     },
   };
+
+  useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
 
   it('should render properly SearchBar', () => {
     const wrapper = mountWithQueryClient(SearchBar, props);
@@ -99,7 +104,9 @@ describe('SearchBar', () => {
 
     wrapper.find('.search-transaction-row').at(0).simulate('click');
     expect(props.history.push).toBeCalledTimes(1);
-    expect(props.history.push).toHaveBeenCalledWith(`${routes.transactionDetails.path}?transactionID=123456123234234`);
+    expect(props.history.push).toHaveBeenCalledWith(
+      `${routes.transactionDetails.path}?transactionID=123456123234234`
+    );
   });
 
   it('should uses keyboard navigation to select search result for validators', () => {

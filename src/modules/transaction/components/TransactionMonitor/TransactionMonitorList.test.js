@@ -5,6 +5,8 @@ import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { mockBlocks } from '@block/__fixtures__';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { mockTransactions } from '../../__fixtures__';
 import { useTransactions } from '../../hooks/queries';
 import TransactionMonitorList from './TransactionMonitorList';
@@ -30,6 +32,8 @@ jest.mock('src/modules/common/hooks', () => ({
 }));
 jest.mock('../../hooks/queries');
 jest.mock('@block/hooks/queries/useLatestBlock');
+
+jest.mock('@token/fungible/hooks/queries');
 
 afterEach(() => {
   useSelector.mockClear();
@@ -79,6 +83,7 @@ describe('Transactions monitor page', () => {
     addUpdate: mockAddUpdate,
   };
 
+  useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
   it('should render transactions list', () => {

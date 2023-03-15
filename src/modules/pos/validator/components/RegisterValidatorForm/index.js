@@ -1,16 +1,16 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import TxComposer from '@transaction/components/TxComposer';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
 import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
 import InputLabel from './InputLabel';
 import styles from './Form.css';
 import { usePosConstants } from '../../hooks/queries';
+import usePosToken from '../../hooks/usePosToken';
 
 const isFormValid = (name, generatorKey, blsKey, proofOfPossession) =>
   !name.error && !name.loading && !generatorKey.error && !blsKey.error && !proofOfPossession.error;
@@ -43,12 +43,8 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
     params?.proofOfPossession
   );
 
-  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-  const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: posConstants?.posTokenID } },
-    options: { enabled: !isGettingPosConstants },
-  });
-  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+  const { data: posConstants } = usePosConstants();
+  const { token } = usePosToken();
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({

@@ -41,6 +41,45 @@ export const toRawLsk = (value) => {
   return new BigNumber(amount * new BigNumber(10).pow(8)).decimalPlaces(0).toNumber();
 };
 
+const getTokenDecimals = (token) => {
+  const { decimals } = token.denomUnits?.find?.(({ denom }) => denom === token.displayDenom) || {};
+
+  return decimals;
+};
+
+/**
+ * Converts a given token amount to its token symbol denom
+ *
+ * @param {BigNumber|number} amount - Amount value to be converted
+ * @param {BigNumber|number} token - Token value merged with its equivalent metadata
+ * @returns {BigNumber} Amount value converted to the token symbol's denom
+ */
+export const convertFromBaseDenom = (amount, token = {}) => {
+  const decimals = getTokenDecimals(token);
+
+  if (!decimals) return '0';
+
+  return new BigNumber(amount || 0).dividedBy(new BigNumber(BASE).pow(decimals)).toFixed();
+};
+
+/**
+ * Converts from denom denoted by the token symobl to a smaller unit
+ *
+ * @param {BigNumber|number} amount - Amount value to be converted
+ * @param {BigNumber|number} token - Token value merged with its equivalent metadata
+ * @returns {BigNumber} Amount value converted from the token symbol's denom
+ */
+export const convertToBaseDenom = (amount, token = {}) => {
+  // eslint-disable-next-line no-restricted-globals
+  if (isNaN(amount)) return '0';
+
+  const decimals = getTokenDecimals(token);
+
+  if (!decimals) return '0';
+
+  return new BigNumber(amount || 0).multipliedBy(new BigNumber(BASE).pow(decimals)).toFixed();
+};
+
 /**
  * After a new block is created and broadcasted
  * it takes a few ms for Lisk Service

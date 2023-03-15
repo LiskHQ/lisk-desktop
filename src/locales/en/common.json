@@ -1,5 +1,5 @@
 {
-  "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{token}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ": "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{token}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ",
+  "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ": "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ",
   " is out. ": " is out. ",
   " to deposit LSK.": " to deposit LSK.",
   "\"{{username}}\" is already taken.": "\"{{username}}\" is already taken.",
@@ -770,8 +770,8 @@
   "You will be able to:": "You will be able to:",
   "You will be notified when your transaction is confirmed.": "You will be notified when your transaction is confirmed.",
   "Your LSK tokens could not be reclaimed, you can try again or report to us via email": "Your LSK tokens could not be reclaimed, you can try again or report to us via email",
-  "Your account just received {{amount}} {{token}} {{message}}": "Your account just received {{amount}} {{token}} {{message}}",
   "Your commission rate request has been successfully submitted, it will be reflected in your profile shortly.": "Your commission rate request has been successfully submitted, it will be reflected in your profile shortly.",
+  "Your account just received {{amount}} {{tokenSymbol}} {{message}}": "Your account just received {{amount}} {{tokenSymbol}} {{message}}",
   "Your hardware wallet is disconnected.": "Your hardware wallet is disconnected.",
   "Your multisignatures groups": "Your multisignatures groups",
   "Your name": "Your name",
