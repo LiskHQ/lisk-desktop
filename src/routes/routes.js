@@ -48,12 +48,6 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  hwWallet: {
-    path: '/hw-wallet-login',
-    isSigninFlow: true,
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   // login: {
   //   path: '/login',
   //   isPrivate: false,

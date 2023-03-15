@@ -19,11 +19,6 @@ const addAccountOptions = (t) => [
     iconName: 'accountUpload',
     pathname: routes.addAccountByFile.path,
   },
-  {
-    text: t('Use a hardware wallet'),
-    iconName: 'hwWalletIcon',
-    pathname: routes.hwWallet.path,
-  },
 ];
 
 const AddAccountOptionButton = ({ iconName, text, onClick }) => (

@@ -5,7 +5,6 @@ import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from 'src/modules/common/components/dashboard';
 import ValidatorsMonitor from '@pos/validator/components/ValidatorsMonitorView';
 import ValidatorPerformanceModal from '@pos/validator/components/ValidatorPerformanceModal';
-import HwWalletLogin from '@auth/components/hwWalletLogin';
 import Login from '@auth/components/Signin';
 import MonitorWallets from '@account/components/Accounts';
 import MonitorNetwork from '@network/manager/networkManager';
@@ -64,7 +63,6 @@ export default {
   addAccount: Login,
   editAccount: EditAccount,
   explorer: Explorer,
-  hwWallet: HwWalletLogin,
   register: Register,
   login: Login,
   termsOfUse: TermsOfUse,
