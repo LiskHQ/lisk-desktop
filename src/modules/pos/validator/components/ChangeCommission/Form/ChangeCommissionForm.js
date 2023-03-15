@@ -69,7 +69,7 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
     const newCommissionParam = convertCommissionToNumber(value);
     const isNewCommissionValid = checkCommissionValidity(value, currentCommission);
 
-    if (value.split('.')[1].length > 2) {
+    if (value.split('.')[1]?.length > 2) {
       inputFeedback = t('Input decimal places limited to 2');
     } else if (!(newCommissionParam >= 0 && newCommissionParam <= 10000)) {
       inputFeedback = t('Commission range is invalid');
