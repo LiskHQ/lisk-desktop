@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CheckBox from '@theme/CheckBox';
 import Icon from '@theme/Icon';
 import { selectCurrentHWDeviceId } from '@hardwareWallet/store/selectors/hwSelectors';
-import { setCurrentDevice } from '@hardwareWallet/store/actions';
+import { setCurrentHWDevice } from '@hardwareWallet/store/actions';
 import styles from './HwDeviceItem.css';
 
 function HwDeviceItem({ hwDevice }) {
@@ -11,7 +11,7 @@ function HwDeviceItem({ hwDevice }) {
   const dispatch = useDispatch();
 
   function onChange() {
-    dispatch(setCurrentDevice(hwDevice));
+    dispatch(setCurrentHWDevice(hwDevice));
   }
 
   return (

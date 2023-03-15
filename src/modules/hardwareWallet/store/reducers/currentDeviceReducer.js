@@ -4,7 +4,7 @@ export const initialState = {
   manufacturer: '',
   path: '',
   product: '',
-  status: 'disconnected',
+  status: 'standby',
 };
 
 /**
@@ -15,7 +15,7 @@ export const initialState = {
 /* istanbul ignore next */
 export const currentDevice = (state = initialState, { type, payload }) => {
   switch (type) {
-    case actionTypes.setCurrentDevice: {
+    case actionTypes.setCurrentHWDevice: {
       return payload;
     }
     case actionTypes.addHWDevice: {
