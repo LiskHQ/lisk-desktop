@@ -3,6 +3,8 @@ import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import accounts from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import Summary from './StakeSummary';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -11,6 +13,7 @@ jest.mock('@auth/hooks/queries');
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
+jest.mock('@pos/validator/hooks/usePosToken');
 
 const added = {
   lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {
@@ -127,6 +130,7 @@ beforeEach(() => {
 
 describe('StakingQueue.Summary', () => {
   useAuth.mockReturnValue({ data: mockAuth });
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
 
   it('renders properly', () => {
     const wrapper = mountWithRouter(Summary, props);

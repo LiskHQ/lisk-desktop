@@ -1,6 +1,8 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
-import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { mockBlocks } from '@block/__fixtures__';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import BlockDetails from './BlockDetailsTransactions';
@@ -11,7 +13,9 @@ const mockSetApplication = jest.fn();
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('../../hooks/queries');
 jest.mock('@block/hooks/queries/useLatestBlock');
+jest.mock('@token/fungible/hooks/queries');
 
+useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
 useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
 

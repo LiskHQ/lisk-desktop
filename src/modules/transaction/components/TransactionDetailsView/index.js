@@ -1,7 +1,9 @@
+/* eslint-disable max-statements */
 import React, { useMemo, useState } from 'react';
 import { withRouter } from 'react-router';
 import ReactJson from 'react-json-view';
 import { useTranslation } from 'react-i18next';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { isEmpty } from 'src/utils/helpers';
 import { parseSearchParams } from 'src/utils/searchParams';
 import Box from 'src/theme/box';
@@ -23,6 +25,8 @@ const TransactionDetails = ({ location }) => {
   const transactionID = parseSearchParams(location.search).transactionID;
   const { t } = useTranslation();
   const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
+  const { data: tokens } = useTokensBalance();
+  const token = tokens?.data?.[0] || {};
 
   const {
     data: transactions,
@@ -30,13 +34,8 @@ const TransactionDetails = ({ location }) => {
     isLoading,
     isFetching,
   } = useTransactions({
-    config: {
-      params: {
-        transactionID,
-      },
-    },
+    config: { params: { transactionID } },
   });
-
   const transaction = useMemo(() => transactions?.data?.[0] || {}, [transactions]);
   const transactionDetailList = useMemo(() => {
     if (error || isEmpty(transactions?.data)) return [];
@@ -57,7 +56,7 @@ const TransactionDetails = ({ location }) => {
       },
       {
         label: t('Fee'),
-        value: <TokenAmount val={fee} token="LSK" />, // @Todo: token value needs to be dynamic
+        value: <TokenAmount val={fee} token={token} />,
       },
       {
         label: t('Date'),

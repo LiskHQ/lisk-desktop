@@ -2,16 +2,12 @@
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import numeral from 'numeral';
 import { networks, ss } from '../../../constants';
-import { fromRawLsk } from '../../../../src/modules/token/fungible/utils/lsk';
 
 Given(/^showNetwork setting is true$/, function () {
   cy.mergeObjectWithLocalStorage('settings', { showNetwork: true });
 });
 
 Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
-  const castNumberToBalanceString = number => (
-    numeral(fromRawLsk(number)).format('0,0.[0000000000000]') + ' LSK'
-  );
   switch (networkName) {
     case 'mainnet':
       cy.get(ss.networkName).should('have.text', 'mainnet');

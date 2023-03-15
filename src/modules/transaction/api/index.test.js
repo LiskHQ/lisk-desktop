@@ -8,6 +8,7 @@ import accounts from '@tests/constants/wallets';
 import { fromTransactionJSON } from '@transaction/utils/encoding';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import {
   getTransactions,
   getTransactionStats,
@@ -18,6 +19,7 @@ import {
 
 const { stake } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
+const mockToken = mockAppsTokens.data[0];
 
 jest.mock('src/utils/api/http', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
@@ -220,6 +222,7 @@ describe('API: LSK Transactions', () => {
         selectedPriority,
         network,
         moduleCommandSchemas,
+        token: mockToken,
       });
       expect(Number(result.value)).toBeGreaterThan(0);
     });
@@ -243,6 +246,7 @@ describe('API: LSK Transactions', () => {
         selectedPriority,
         network,
         moduleCommandSchemas,
+        token: mockToken,
       });
       expect(Number(result.value)).toBeGreaterThan(0);
     });
@@ -264,6 +268,7 @@ describe('API: LSK Transactions', () => {
         selectedPriority,
         network,
         moduleCommandSchemas,
+        token: mockToken,
       });
       expect(Number(result.value)).toBeGreaterThan(0);
     });
@@ -281,6 +286,7 @@ describe('API: LSK Transactions', () => {
         selectedPriority,
         network,
         moduleCommandSchemas,
+        token: mockToken,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -303,6 +309,7 @@ describe('API: LSK Transactions', () => {
         numberOfSignatures: 2,
         network,
         moduleCommandSchemas,
+        token: mockToken,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -324,6 +331,7 @@ describe('API: LSK Transactions', () => {
         selectedPriority,
         numberOfSignatures: 10,
         moduleCommandSchemas,
+        token: mockToken,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -345,6 +353,7 @@ describe('API: LSK Transactions', () => {
         selectedPriority,
         numberOfSignatures: 10,
         moduleCommandSchemas,
+        token: mockToken,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -367,6 +376,7 @@ describe('API: LSK Transactions', () => {
         numberOfSignatures: 64,
         network,
         moduleCommandSchemas,
+        token: mockToken,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -383,6 +393,7 @@ describe('API: LSK Transactions', () => {
         numberOfSignatures: 4,
         network,
         moduleCommandSchemas,
+        token: mockToken,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);

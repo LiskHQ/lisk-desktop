@@ -1,7 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import {
@@ -12,7 +12,11 @@ import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManag
 import { useCurrentAccount } from '@account/hooks';
 import { mockAppTokens } from '@tests/fixtures/token';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { mockTokensBalance, mockTokensSupported } from '@token/fungible/__fixtures__/mockTokens';
+import {
+  mockAppsTokens,
+  mockTokensBalance,
+  mockTokensSupported,
+} from '@token/fungible/__fixtures__/mockTokens';
 import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore';
 import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
@@ -31,6 +35,7 @@ const mockSetMessage = jest.fn();
 const mockSetCurrentApplication = jest.fn();
 const mockSetAccount = jest.fn();
 const mockSetApplication = jest.fn();
+const mockToken = mockAppsTokens.data[0];
 const mockCurrentApplication = mockManagedApplications[0];
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
@@ -62,8 +67,9 @@ describe('Form', () => {
   useBlockchainApplicationMeta.mockReturnValue({ data: mockBlockchainAppMeta, isSuccess: true });
 
   useTransferableTokens.mockReturnValue({
-    data: mockTokensBalance.data.map((token) => ({
+    data: mockAppsTokens.data.map((token) => ({
       ...token,
+      availableBalance: '200000000',
       tokenName: token.chainName,
       logo: { svg: '', png: '' },
     })),
@@ -98,6 +104,7 @@ describe('Form', () => {
       token: tokenMap.LSK.key,
       account: {
         ...accounts.genesis,
+        summary: { balance: '200000000' },
         token: { balance: '200000000' },
       },
       bookmarks,
@@ -125,7 +132,7 @@ describe('Form', () => {
           feedback: '',
           title: '',
         },
-        amount: 1000000000,
+        amount: 20000000,
         data: 'message',
       },
     };
@@ -135,7 +142,9 @@ describe('Form', () => {
       prevState: { formProps },
     });
     expect(wrapper.find('input.recipient')).toHaveValue(address);
-    expect(wrapper.find('.amount input')).toHaveValue(fromRawLsk(formProps.params.amount));
+    expect(wrapper.find('.amount input')).toHaveValue(
+      convertFromBaseDenom(formProps.params.amount, mockToken)
+    );
     expect(wrapper.find('textarea[name="reference"]')).toHaveValue(formProps.params.data);
   });
 
@@ -312,6 +321,17 @@ describe('Form', () => {
       const evt = { target: { name: 'amount', value: '0' } };
       const amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);
+
+      wrapper.find('.add-message-button').at(0).simulate('click');
+      const referenceField = wrapper.find('.reference').at(0);
+      const dat = {
+        target: {
+          name: 'reference',
+          value: 'Lorem ipsum',
+        },
+      };
+      referenceField.find('AutoResizeTextarea').simulate('focus');
+      referenceField.find('AutoResizeTextarea').simulate('change', dat);
       act(() => {
         jest.advanceTimersByTime(300);
       });

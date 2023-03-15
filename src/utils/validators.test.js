@@ -1,11 +1,14 @@
 import i18n from 'src/utils/i18n/i18n';
 import accounts from '@tests/constants/wallets';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import {
   validateAddress,
   validateLSKPublicKey,
   validateAmountFormat,
   isNumeric,
 } from './validators';
+
+const mockToken = mockAppsTokens.data[0];
 
 describe('Validate Address', () => {
   it('Should return -1 if empty adress', () => {
@@ -32,14 +35,14 @@ describe('Validate Public Key', () => {
 
 describe('Validate Amount Format', () => {
   const errors = {
-    ZERO: i18n.t('Amount can\'t be zero.'),
+    ZERO: i18n.t("Amount can't be zero."),
     INVALID: i18n.t('Provide a correct amount of {{token}}', { token: 'LSK' }),
     FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
   };
 
   it('Should return errors.ZERO if amount is zero', () => {
     const zeroValue = 0.0;
-    expect(validateAmountFormat({ value: zeroValue })).toEqual({
+    expect(validateAmountFormat({ value: zeroValue, token: mockToken })).toEqual({
       error: true,
       message: errors.ZERO,
     });
@@ -47,7 +50,7 @@ describe('Validate Amount Format', () => {
 
   it('Should return errors.INVALID if format is invalid', () => {
     ['0,', '0,0', '0.1.2', '1..', '1a,1', '2.d2'].forEach((value) => {
-      expect(validateAmountFormat({ value })).toEqual({
+      expect(validateAmountFormat({ value, token: mockToken })).toEqual({
         error: true,
         message: errors.INVALID,
       });
@@ -55,7 +58,7 @@ describe('Validate Amount Format', () => {
   });
 
   it('Should return errors.FLOATING_POINT if has more than 8 digits after floating point', () => {
-    expect(validateAmountFormat({ value: '0.123456789' })).toEqual({
+    expect(validateAmountFormat({ value: '0.123456789', token: mockToken })).toEqual({
       error: true,
       message: errors.FLOATING_POINT,
     });
@@ -63,7 +66,7 @@ describe('Validate Amount Format', () => {
 
   it('Should return { error: false, message: "" } if valid amount is inputed', () => {
     ['123.43213', '0.00000001'].forEach((value) => {
-      expect(validateAmountFormat({ value })).toEqual({
+      expect(validateAmountFormat({ value, token: mockToken })).toEqual({
         error: false,
         message: '',
       });

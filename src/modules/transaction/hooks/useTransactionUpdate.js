@@ -1,9 +1,11 @@
+/* eslint-disable max-statements */
 /* istanbul ignore file */
 import { useEffect, useCallback, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import client from 'src/utils/api/client';
 import { MY_TRANSACTIONS, AUTH, TOKENS_BALANCE } from 'src/const/queries';
 import { useCurrentAccount } from '@account/hooks';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useTransactions } from '@transaction/hooks/queries';
 import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
 import { showNotificationsForIncomingTransactions } from '../utils';
@@ -13,6 +15,11 @@ export const useTransactionUpdate = (isLoading) => {
   const queryClient = useQueryClient();
   const [currentAccount] = useCurrentAccount();
   const [currentApplication] = useCurrentApplication();
+  const { data: tokens } = useTokensBalance({
+    config: { params: {  address: currentAccount.metadata.address } },
+  });
+
+  const token = tokens?.data?.[0] || {};
   const { chainID } = currentApplication;
   const currentApplicationData = useRef(currentApplication);
   currentApplicationData.current = chainID;
@@ -58,7 +65,7 @@ export const useTransactionUpdate = (isLoading) => {
       await queryClient.invalidateQueries({ queryKey: [TOKENS_BALANCE] });
       // @TODO: token is temporarily hardcoded pending handling of token meta data
       // like tokenID and baseDenom
-      showNotificationsForIncomingTransactions(latestTxns.data, currentAccount, 'LSK');
+      showNotificationsForIncomingTransactions(latestTxns.data, currentAccount, token);
       client.socket.off('new.transactions');
     });
   }, [chainID, isLoading]);

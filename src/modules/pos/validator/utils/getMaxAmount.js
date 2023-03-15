@@ -2,7 +2,7 @@ import { getTransactionFee } from '@transaction/api';
 import { getNumberOfSignatures } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE, STAKE_AMOUNT_STEP } from '@transaction/configuration/transactions';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom } from '@token/fungible/utils/lsk';
 import { normalizeStakesForTx, splitModuleAndCommand } from '@transaction/utils';
 
 /**
@@ -25,6 +25,7 @@ const getMaxAmount = async ({
   mandatoryKeys,
   optionalKeys,
   moduleCommandSchemas,
+  token,
 }) => {
   const totalUnconfirmedStakes = Object.values(staking)
     .filter((stake) => stake.confirmed < stake.unconfirmed)
@@ -34,7 +35,8 @@ const getMaxAmount = async ({
   const isMultisignature = !optionalKeys.length && !mandatoryKeys.length;
 
   const maxStakeAmount =
-    Math.floor((balance - (totalUnconfirmedStakes + currentStake + MIN_ACCOUNT_BALANCE)) / 1e9) * 1e9;
+    Math.floor((balance - (totalUnconfirmedStakes + currentStake + MIN_ACCOUNT_BALANCE)) / 1e9) *
+    1e9;
 
   // TODO: Refactor this logic, max amount can be calculated without constructing trx
   const { module, command } = splitModuleAndCommand(MODULE_COMMANDS_NAME_MAP.stake);
@@ -57,24 +59,23 @@ const getMaxAmount = async ({
     command,
   };
 
-  const maxAmountFee = await getTransactionFee(
-    {
-      transactionJSON: transaction,
-      /* @Todo: this needs to be refactored in the feature but for now it works */
-      selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
-      numberOfSignatures: getNumberOfSignatures(
-        { keys: { numberOfSignatures }, summary: { isMultisignature } },
-        transaction
-      ),
-      moduleCommandSchemas,
-    }
-  );
+  const maxAmountFee = await getTransactionFee({
+    transactionJSON: transaction,
+    /* @Todo: this needs to be refactored in the feature but for now it works */
+    selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
+    numberOfSignatures: getNumberOfSignatures(
+      { keys: { numberOfSignatures }, summary: { isMultisignature } },
+      transaction
+    ),
+    moduleCommandSchemas,
+    token,
+  });
 
   // If the "sum of stake amounts + fee + dust" exceeds balance
   // return 10 LSK less, since stakes must be multiplications of 10 LSK.
   if (
-    maxStakeAmount + toRawLsk(maxAmountFee.value) <=
-    balance - totalUnconfirmedStakes + currentStake - MIN_ACCOUNT_BALANCE
+    BigInt(maxStakeAmount) + BigInt(convertToBaseDenom(maxAmountFee.value, token)) <=
+    BigInt(balance - totalUnconfirmedStakes + currentStake - MIN_ACCOUNT_BALANCE)
   ) {
     return maxStakeAmount;
   }

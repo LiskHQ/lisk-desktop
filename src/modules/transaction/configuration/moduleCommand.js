@@ -17,6 +17,7 @@ const moduleCommandNameMap = {
   claimRewards: 'pos:claimRewards',
   transfer: 'token:transfer',
   transferCrossChain: 'token:transferCrossChain',
+  reportValidatorMisbehavior: 'pos:reportMisbehavior',
 };
 
 const moduleCommandMap = {

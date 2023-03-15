@@ -30,7 +30,7 @@ const Send = ({ formProps = {}, transactionJSON, t }) => (
       <div className={styles.col}>
         <label>{t('Amount')}</label>
         <span className={`${styles.valueText} amount-summary`}>
-          <TokenAmount val={transactionJSON.params.amount} token={formProps.fields.token.symbol} />
+          <TokenAmount val={transactionJSON.params.amount} token={formProps.fields.token} />
         </span>
       </div>
     </section>

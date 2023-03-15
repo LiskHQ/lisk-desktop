@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import Icon from 'src/theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import usePosToken from '../../hooks/usePosToken';
 
 const getPendingTime = (unstakeHeight, unlockHeight) => {
   const awaitingBlocks = unlockHeight - unstakeHeight;
@@ -11,10 +11,10 @@ const getPendingTime = (unstakeHeight, unlockHeight) => {
   return moment().to(momentSeconds, true);
 };
 
-const UnlockingListItem = ({ lockedPendingUnlock, t, currentBlockHeight }) => (
+const UnlockingListItem = ({ lockedPendingUnlock, t, currentBlockHeight, token }) => (
   <li className="unlocking-balance">
     <p>
-      <TokenAmount val={lockedPendingUnlock.amount} token={tokenMap.LSK.key} />
+      <TokenAmount val={lockedPendingUnlock.amount} token={token} />
     </p>
     <p>
       <Icon name="loading" />
@@ -29,16 +29,20 @@ const UnlockingListItem = ({ lockedPendingUnlock, t, currentBlockHeight }) => (
 /**
  * displays a list of stake amounts that can be unlocked sometime in the future
  */
-const UnlockingList = ({ lockedPendingUnlocks, currentBlockHeight, t }) =>
-  lockedPendingUnlocks
+const UnlockingList = ({ lockedPendingUnlocks, currentBlockHeight, t }) => {
+  const { token } = usePosToken();
+
+  return lockedPendingUnlocks
     .sort((unstakeA, unstakeB) => unstakeB.unstakeHeight - unstakeA.unstakeHeight)
     .map((lockedPendingUnlock, i) => (
       <UnlockingListItem
         key={`${i}-unlocking-balance-list`}
         lockedPendingUnlock={lockedPendingUnlock}
         currentBlockHeight={currentBlockHeight}
+        token={token}
         t={t}
       />
     ));
+};
 
 export default UnlockingList;
