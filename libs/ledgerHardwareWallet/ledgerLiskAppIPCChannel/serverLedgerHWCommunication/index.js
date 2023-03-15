@@ -12,7 +12,7 @@ export async function getPubKey({ devicePath, accountIndex }) {
     const ledgerAccount = getLedgerAccount(accountIndex);
     const account = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
     console.log('getPubKey address', account);
-    await transport.close();
+    await transport?.close();
     const errorMessage = account?.error_message;
     if (errorMessage === 'No errors') {
       return account?.pubKey;

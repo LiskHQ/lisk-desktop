@@ -1,9 +1,9 @@
 import actionTypes from '@hardwareWallet/store/actions/actionTypes';
 
 export const initialState = {
-  deviceId: '',
-  model: '',
-  brand: '',
+  manufacturer: '',
+  path: '',
+  product: '',
   status: 'disconnected',
 };
 
@@ -13,11 +13,17 @@ export const initialState = {
  * @param {Object} action
  */
 /* istanbul ignore next */
-export const currentDevice = (state = initialState, action) => {
-  const { type, device } = action;
+export const currentDevice = (state = initialState, { type, payload }) => {
   switch (type) {
     case actionTypes.setCurrentDevice: {
-      return device;
+      return payload;
+    }
+    case actionTypes.addHWDevice: {
+      return payload;
+    }
+    case actionTypes.removeHWDevice: {
+      const isCurrentAccount = payload.path === state.path;
+      return isCurrentAccount ? initialState : state;
     }
     default:
       return state;

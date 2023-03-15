@@ -2,7 +2,8 @@ import React from 'react';
 import Tooltip from '@theme/Tooltip';
 import { useTranslation } from 'react-i18next';
 import Icon from '@theme/Icon';
-import { useHWStatus } from '@hardwareWallet/hooks/useHWStatus';
+import { useSelector } from 'react-redux';
+import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
 import styles from './HardwareWalletStatus.css';
 
 const Status = ({ status }) => (
@@ -13,12 +14,16 @@ const Status = ({ status }) => (
 
 export const HardwareWalletStatus = () => {
   const { t } = useTranslation();
-  const {manufacturer, model, deviceId, status} = useHWStatus()
+  const currentHWDevice = useSelector(selectCurrentHWDevice);
+  if (!currentHWDevice?.path) {
+    return null;
+  }
+
+  const { manufacturer, product, status } = currentHWDevice;
 
   const hwStatusInfo = [
     { label: `${t('Brand')} : `, value: manufacturer },
-    { label: `${t('Model')} : `, value: model },
-    { label: `${t('ID')} : `, value: deviceId },
+    { label: `${t('Model')} : `, value: product },
     { label: `${t('Status')} : `, value: <Status status={status} /> },
   ];
 
@@ -50,4 +55,3 @@ export const HardwareWalletStatus = () => {
     </section>
   );
 };
-
