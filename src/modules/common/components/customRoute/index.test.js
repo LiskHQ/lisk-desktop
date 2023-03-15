@@ -58,7 +58,10 @@ describe('CustomRoute', () => {
 
   beforeEach(() => {
     useSelector.mockImplementation((callback) => callback(mockAppState));
-    useSettings.mockReturnValue({ mainChainNetwork: 'devnet', toggleSetting: mockToggleSetting });
+    useSettings.mockReturnValue({
+      mainChainNetwork: { name: 'devnet' },
+      toggleSetting: mockToggleSetting,
+    });
   });
 
   afterEach(() => {
