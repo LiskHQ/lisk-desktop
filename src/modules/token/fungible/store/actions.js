@@ -19,7 +19,7 @@ export const tokensTransferred =
   async (dispatch, getState) => {
     const state = getState();
     const activeTokenAccount = selectActiveTokenAccount(state);
-    const wallet = state.account?.current?.metadata?.isHW
+    const wallet = state.account?.current?.hw
       ? state.account.current
       : activeTokenAccount;
     const [error, tx] = await to(
