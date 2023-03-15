@@ -8,7 +8,7 @@ import { useBlockchainApplicationMeta } from './queries/useBlockchainApplication
 const extractAppMetaDataToChainIds = (applicationsMetaData) =>
   applicationsMetaData.map(({ chainID }) => chainID).join(',');
 
-export const useGetMergedApplication = ({ params, networkName, isEnabled }) => {
+export const useGetMergedApplication = ({ params = {}, networkName, isEnabled } = {}) => {
   const {
     data: { data: applicationsMetadata = [] } = {},
     isFetched: isFetchedAppsMetaData,
