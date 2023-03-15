@@ -160,17 +160,14 @@
     }
 
     & .value {
+      font-family: var(--heading-font);
+      font-weight: var(--font-weight-semi-bold);
+      font-size: 15px;
       margin-top: 8px;
       color: var(--color-maastricht-blue);
 
       &.capitalized {
         text-transform: capitalize;
-      }
-
-      @media (--large-viewport) {
-        & :last-child {
-          @mixin contentSmall;
-        }
       }
     }
   }

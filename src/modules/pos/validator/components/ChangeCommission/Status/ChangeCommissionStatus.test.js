@@ -1,10 +1,11 @@
 import React from 'react';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
-import { screen } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import * as transactionStatus from '@transaction/configuration/statusConfig';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
+import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import ChangeCommissionStatus from './ChangeCommissionStatus';
 import statusMessages from './statusMessages';
 
@@ -16,13 +17,19 @@ jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
 }));
 jest.mock('@transaction/components/TxBroadcaster', () =>
-  jest.fn(({ title, message }) => (
+  jest.fn(({ title, message, successButtonText, onSuccessClick }) => (
     <div>
       <div data-testid="title">{title}</div>
       <div data-testid="message">{message}</div>
+      <button data-testid="button" onClick={onSuccessClick}>
+        {successButtonText}
+      </button>
     </div>
   ))
 );
+jest.mock('src/utils/searchParams', () => ({
+  removeSearchParamsFromUrl: jest.fn(),
+}));
 jest.spyOn(transactionStatus, 'getTransactionStatus');
 
 describe('ChangeCommissionDialog', () => {
@@ -54,5 +61,7 @@ describe('ChangeCommissionDialog', () => {
     renderWithRouterAndQueryClient(ChangeCommissionStatus, { account, transactions });
     expect(screen.getByTestId('title')).toHaveTextContent(title);
     expect(screen.getByTestId('message')).toHaveTextContent(message);
+    fireEvent.click(screen.getByText('Continue to validator profile'));
+    expect(removeSearchParamsFromUrl).toHaveBeenCalledTimes(1);
   });
 });

@@ -40,39 +40,39 @@ export const pendingTransactionAdded = (data) => ({
  */
 export const transactionsRetrieved =
   ({ address, limit = DEFAULT_LIMIT, offset = 0, filters = {} }) =>
-    async (dispatch, getState) => {
-      dispatch(loadingStarted(actionTypes.transactionsRetrieved));
+  async (dispatch, getState) => {
+    dispatch(loadingStarted(actionTypes.transactionsRetrieved));
 
-      const { network } = getState();
+    const { network } = getState();
 
-      const params = {
-        address,
-        ...filters,
-        limit,
-        offset,
-      };
-
-      try {
-        const { data, meta } = await getTransactions({ network, params });
-        dispatch({
-          type: actionTypes.transactionsRetrieved,
-          data: {
-            offset,
-            address,
-            filters,
-            confirmed: data,
-            count: meta.total,
-          },
-        });
-      } catch (error) {
-        dispatch({
-          type: actionTypes.transactionLoadFailed,
-          data: { error },
-        });
-      } finally {
-        dispatch(loadingFinished(actionTypes.transactionsRetrieved));
-      }
+    const params = {
+      address,
+      ...filters,
+      limit,
+      offset,
     };
+
+    try {
+      const { data, meta } = await getTransactions({ network, params });
+      dispatch({
+        type: actionTypes.transactionsRetrieved,
+        data: {
+          offset,
+          address,
+          filters,
+          confirmed: data,
+          count: meta.total,
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.transactionLoadFailed,
+        data: { error },
+      });
+    } finally {
+      dispatch(loadingFinished(actionTypes.transactionsRetrieved));
+    }
+  };
 
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
@@ -134,60 +134,58 @@ export const transactionDoubleSigned = (moduleCommandSchemas) => async (dispatch
  */
 export const transactionBroadcasted =
   (transaction, moduleCommandSchemas) =>
-    // eslint-disable-next-line max-statements
-    async (dispatch, getState) => {
-      const { network, token } = getState();
-      const activeToken = token.active;
-      const serviceUrl = network.networks[activeToken].serviceUrl;
-      let broadcastResult;
-      const dryRunResult = await dryRun({ transaction, serviceUrl, network });
+  // eslint-disable-next-line max-statements
+  async (dispatch, getState) => {
+    const { network, token } = getState();
+    const activeToken = token.active;
+    const serviceUrl = network.networks[activeToken].serviceUrl;
+    const moduleCommand = joinModuleAndCommand(transaction);
+    const paramsSchema = moduleCommandSchemas[moduleCommand];
+    let broadcastResult;
+    const dryRunResult = await dryRun({ transaction, serviceUrl, paramsSchema });
 
-      if (dryRunResult.data?.result === 1) {
-        broadcastResult = await broadcast(
-          { transaction, serviceUrl, moduleCommandSchemas },
-        );
+    if (dryRunResult.data?.result === 1) {
+      broadcastResult = await broadcast({ transaction, serviceUrl, moduleCommandSchemas });
 
-        if (!broadcastResult.data?.error) {
-          const moduleCommand = joinModuleAndCommand(transaction);
-          const paramsSchema = moduleCommandSchemas[moduleCommand];
-          const transactionJSON = toTransactionJSON(transaction, paramsSchema);
-          dispatch({
-            type: actionTypes.broadcastedTransactionSuccess,
-            data: transaction,
-          });
-          dispatch(pendingTransactionAdded({ ...transactionJSON, isPending: true }));
-
-          return true;
-        }
-        // @todo we need to push pending transaction to the query cache
-        // https://github.com/LiskHQ/lisk-desktop/issues/4698 should handle this logic
-      }
-
-      if (dryRunResult.data?.result === -1) {
+      if (!broadcastResult.data?.error) {
+        const transactionJSON = toTransactionJSON(transaction, paramsSchema);
         dispatch({
-          type: actionTypes.broadcastedTransactionError,
-          data: {
-            error: dryRunResult.data?.errorMessage,
-            transaction,
-          },
+          type: actionTypes.broadcastedTransactionSuccess,
+          data: transaction,
         });
-      }
+        dispatch(pendingTransactionAdded({ ...transactionJSON, isPending: true }));
 
-      if (dryRunResult.data?.result === 0) {
-        // @TODO: Prepare error message by parsing the events based on each transaction type
-        // https://github.com/LiskHQ/lisk-desktop/issues/4698 should resolve all the dry run related logic along with feedback
-        const temporaryError = dryRunResult.data?.events.map(e => e.name).join(', ')
-        dispatch({
-          type: actionTypes.broadcastedTransactionError,
-          data: {
-            error: temporaryError,
-            transaction,
-          },
-        });
+        return true;
       }
+      // @todo we need to push pending transaction to the query cache
+      // https://github.com/LiskHQ/lisk-desktop/issues/4698 should handle this logic
+    }
 
-      return false;
-    };
+    if (dryRunResult.data?.result === -1) {
+      dispatch({
+        type: actionTypes.broadcastedTransactionError,
+        data: {
+          error: dryRunResult.data?.errorMessage,
+          transaction,
+        },
+      });
+    }
+
+    if (dryRunResult.data?.result === 0) {
+      // @TODO: Prepare error message by parsing the events based on each transaction type
+      // https://github.com/LiskHQ/lisk-desktop/issues/4698 should resolve all the dry run related logic along with feedback
+      const temporaryError = dryRunResult.data?.events.map((e) => e.name).join(', ');
+      dispatch({
+        type: actionTypes.broadcastedTransactionError,
+        data: {
+          error: temporaryError,
+          transaction,
+        },
+      });
+    }
+
+    return false;
+  };
 
 /**
  * Signs a given multisignature transaction using passphrase
@@ -198,45 +196,47 @@ export const transactionBroadcasted =
  * @param {object} data.sender
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
-export const multisigTransactionSigned = ({
-  formProps,
-  transactionJSON,
-  sender,
-  privateKey,
-  txInitiatorAccount,
-  moduleCommandSchemas,
-  messagesSchemas,
-}) => async (dispatch, getState) => {
-  const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
-  const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
-  const options = {
-    messageSchema: messagesSchemas[formProps.moduleCommand],
-  };
-  const [tx, error] = await signMultisigTransaction(
-    activeWallet,
-    sender,
+export const multisigTransactionSigned =
+  ({
+    formProps,
     transactionJSON,
-    txStatus,
-    moduleCommandSchemas[formProps.moduleCommand],
-    state.network.networks.LSK.chainID,
+    sender,
     privateKey,
-    txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
-    options,
-  );
+    txInitiatorAccount,
+    moduleCommandSchemas,
+    messagesSchemas,
+  }) =>
+  async (dispatch, getState) => {
+    const state = getState();
+    const activeWallet = selectActiveTokenAccount(state);
+    const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
+    const options = {
+      messageSchema: messagesSchemas[formProps.moduleCommand],
+    };
+    const [tx, error] = await signMultisigTransaction(
+      activeWallet,
+      sender,
+      transactionJSON,
+      txStatus,
+      moduleCommandSchemas[formProps.moduleCommand],
+      state.network.networks.LSK.chainID,
+      privateKey,
+      txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
+      options
+    );
 
-  if (!error) {
-    dispatch({
-      type: actionTypes.transactionDoubleSigned,
-      data: tx,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
-  }
-};
+    if (!error) {
+      dispatch({
+        type: actionTypes.transactionDoubleSigned,
+        data: tx,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    }
+  };
 
 /**
  * Used when a fully signed transaction is imported, this action
@@ -248,13 +248,13 @@ export const multisigTransactionSigned = ({
  */
 export const signatureSkipped =
   ({ formProps, transactionJSON }) =>
-    (dispatch, getState) => {
-      const { network } = getState();
-      const schema = network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand];
-      const transactionObject = fromTransactionJSON(transactionJSON, schema);
+  (dispatch, getState) => {
+    const { network } = getState();
+    const schema = network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand];
+    const transactionObject = fromTransactionJSON(transactionJSON, schema);
 
-      dispatch({
-        type: actionTypes.signatureSkipped,
-        data: transactionObject,
-      });
-    };
+    dispatch({
+      type: actionTypes.signatureSkipped,
+      data: transactionObject,
+    });
+  };

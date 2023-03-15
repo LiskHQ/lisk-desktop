@@ -18,8 +18,8 @@ export const ChangeCommission = ({ history }) => {
       <MultiStep prevPage={history.goBack} backButtonLabel={t('Back')}>
         <Form />
         <Summary />
-        <TxSignatureCollector />
-        <Status />
+        <TxSignatureCollector confirmText={t('Confirm and sign')} />
+        <Status history={history} />
       </MultiStep>
     </Dialog>
   );

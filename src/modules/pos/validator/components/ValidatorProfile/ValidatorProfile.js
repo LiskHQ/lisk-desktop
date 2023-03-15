@@ -38,6 +38,7 @@ const ValidatorProfile = ({ history }) => {
 
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address } },
+    options: { refetchInterval: 10000 },
   });
   const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
 
@@ -74,7 +75,8 @@ const ValidatorProfile = ({ history }) => {
       removeWarningMessage();
     }
   }, [address, validator, currentHeight]);
-  const isMyProfile = address === currentAddress
+
+  const isMyProfile = address === currentAddress;
   if (!validator.address && !isLoadingValidators) {
     toast.info("This user isn't a validator");
     history.goBack();
