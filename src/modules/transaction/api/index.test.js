@@ -389,7 +389,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('dryRun', async () => {
+  describe('dryRun', () => {
     const serviceUrl = 'http://localhost:4000';
     it('should return error if transaction is invalid', async () => {
       const transactionJSON = {
@@ -397,19 +397,18 @@ describe('API: LSK Transactions', () => {
         module: 'token',
         command: 'transfer',
         params: {
+          tokenID: '04000000',
           amount: 100000000,
           recipientAddress: 'lsk3ay4z7wqjczbo5ogcqxgxx23xyacxmycwxfh4d',
           data: '',
         },
       };
-      const transaction = fromTransactionJSON(
-        transactionJSON,
-        network.networks.LSK.moduleCommandSchemas['token:transfer']
-      );
+      const paramsSchema = network.networks.LSK.moduleCommandSchemas['token:transfer'];
+      const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
       await dryRun({
         transaction,
         serviceUrl,
-        network,
+        paramsSchema,
       });
 
       expect(http).toHaveBeenCalledWith({
@@ -418,7 +417,8 @@ describe('API: LSK Transactions', () => {
         path: '/api/v3/transactions/dryrun',
         data: {
           transaction:
-            '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f321d1080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+            '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f32230a04040000001080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+          isSkipVerify: false,
         },
       });
     });
