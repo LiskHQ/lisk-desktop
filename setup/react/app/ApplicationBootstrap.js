@@ -1,48 +1,61 @@
-// import React, { useEffect, useState } from 'react';
-// import {
-//   useGetDefaultApplication,
-//   useApplicationManagement,
-//   useCurrentApplication,
-// } from '@blockchainApplication/manage/hooks';
+/* eslint-disable complexity */
+/* eslint-disable max-statements */
+import React, { useEffect, useState } from 'react';
 import { useTransactionUpdate } from '@transaction/hooks';
-// import { PrimaryButton } from 'src/theme/buttons';
-// import useSettings from 'src/modules/settings/hooks/useSettings';
+import useSettings from '@settings/hooks/useSettings';
+import { useGetMergedApplication } from '@blockchainApplication/manage/hooks/useGetMergedApplication';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import { useGetNetworksMainChainStatus } from '@blockchainApplication/manage/hooks/queries/useGetNetworksMainChainStatus';
+import { PrimaryButton } from 'src/theme/buttons';
 
-// eslint-disable-next-line max-statements
 const ApplicationBootstrap = ({ children }) => {
-  // const { toggleSetting, network } = useSettings('network');
-  // const {
-  //   applications: defaultApps = [],
-  //   isFetched,
-  //   error,
-  //   isLoading,
-  //   retry,
-  // } = useGetDefaultApplication();
-  // const { setApplications } = useApplicationManagement();
-  // const [, setCurrentApplication] = useCurrentApplication();
-  // const [isFirstTimeLoading, setIsFirstTimeLoading] = useState(true);
-
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
+  const [isFirstTimeLoading, setIsFirstTimeLoading] = useState(true);
+  const [, setCurrentApplication] = useCurrentApplication();
   useTransactionUpdate();
-  // // console.log('Bootstrap:: ', {network, toggleSetting})
-  // useEffect(() => {
-  //   if (defaultApps.length && isFetched && isFirstTimeLoading) {
-  //     setCurrentApplication(defaultApps[0]);
-  //     setApplications(defaultApps);
-  //     setIsFirstTimeLoading(false);
-  //   }
-  // }, [isFetched]);
 
-  // if (error) {
-  //   // @TODO: this return should be replaced with an actual error message page
-  //   return (
-  //     <div>
-  //       error
-  //       <PrimaryButton onClick={retry}>Retry</PrimaryButton>
-  //     </div>
-  //   );
-  // }
+  const {
+    data: networksMainChainStatus,
+    isLoading: isVerifyingNetworkOptions,
+    isError: isErrorVerifyingNetworkOptions,
+  } = useGetNetworksMainChainStatus({ options: { enable: !!mainChainNetwork } });
 
-  return /* (!isLoading && isFetched) || !isFirstTimeLoading ? */ children /* : null; */
+  const selectedNetworkMainChain = networksMainChainStatus[mainChainNetwork?.name];
+
+  const {
+    data: mainChainApplication,
+    isLoading: isGettingMainChain,
+    isError: isErrorGettingMainChain,
+    refetch: refetchMergedApplicationData,
+  } = useGetMergedApplication({
+    params: { chainID: selectedNetworkMainChain?.data?.chainID },
+    networkName: mainChainNetwork?.name,
+    isEnabled: !!selectedNetworkMainChain,
+  });
+
+  const isError = (isErrorVerifyingNetworkOptions || isErrorGettingMainChain) && !!mainChainNetwork;
+  const isLoading =
+    (isVerifyingNetworkOptions && !!mainChainNetwork) ||
+    (isGettingMainChain && !!selectedNetworkMainChain);
+
+  useEffect(() => {
+    if (mainChainApplication) {
+      setCurrentApplication(mainChainApplication);
+    }
+    if (isFirstTimeLoading) setIsFirstTimeLoading(false);
+  }, [mainChainApplication, isFirstTimeLoading]);
+
+  if (isError && !isLoading && isFirstTimeLoading) {
+    // @TODO: this return should be replaced with an actual error message page
+    return (
+      <div>
+        error
+        <PrimaryButton onClick={refetchMergedApplicationData}>Retry</PrimaryButton>
+      </div>
+    );
+  }
+
+  return !isLoading || !isFirstTimeLoading ? children : null;
 };
 
 export default ApplicationBootstrap;

@@ -4,7 +4,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
 import { API_VERSION } from 'src/const/config';
 import { MAIN_CHAIN_APPLICATIONS_BY_NETWORKS } from 'src/const/queries';
 
-export const useGetNetworksMainChainStatus = () => {
+export const useGetNetworksMainChainStatus = ({ options } = {}) => {
   const commonConfig = {
     url: `/api/${API_VERSION}/network/status`,
     method: 'get',
@@ -25,6 +25,7 @@ export const useGetNetworksMainChainStatus = () => {
     keys: [MAIN_CHAIN_APPLICATIONS_BY_NETWORKS],
     config: commonConfig,
     queryFn: combinedQueryFn,
+    options,
   });
   const networkMainChainStatuses = response?.data || [];
 

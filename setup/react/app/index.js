@@ -18,7 +18,7 @@ import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
 import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
-import useHwListener from "@hardwareWallet/hooks/useHwListener";
+import useHwListener from '@hardwareWallet/hooks/useHwListener';
 import MainRouter from './MainRouter';
 import './variables.css';
 import styles from './app.css';

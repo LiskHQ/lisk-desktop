@@ -28,7 +28,7 @@ export const useBlockchainApplicationMeta = ({
   client = defaultClient,
 } = {}) => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
-  const network = mainChainNetwork.name;
+  const network = mainChainNetwork?.name;
 
   const config = {
     url: `/api/${API_VERSION}/blockchain/apps/meta`,
@@ -37,8 +37,8 @@ export const useBlockchainApplicationMeta = ({
     event: 'get.blockchain.apps.meta',
     params: {
       limit,
-      ...(customConfig?.params || {}),
       network,
+      ...(customConfig?.params || {}),
     },
   };
 
@@ -46,6 +46,9 @@ export const useBlockchainApplicationMeta = ({
     keys: [BLOCKCHAIN_APPS_META],
     config,
     client,
-    options,
+    options: {
+      ...options,
+      enable: !!network,
+    },
   });
 };

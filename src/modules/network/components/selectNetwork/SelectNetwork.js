@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
+import { useQueryClient } from '@tanstack/react-query';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import {
   useApplicationManagement,
@@ -9,6 +10,7 @@ import {
 } from '@blockchainApplication/manage/hooks';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton } from 'src/theme/buttons';
+import { BLOCKCHAIN_APPS, BLOCKCHAIN_APPS_META } from 'src/const/queries';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import useSettings from '@settings/hooks/useSettings';
@@ -20,6 +22,7 @@ import networks from '../../configuration/networks';
 
 function ManageAccounts({ history }) {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
 
   const { setApplications } = useApplicationManagement();
@@ -51,6 +54,21 @@ function ManageAccounts({ history }) {
 
     history.push(routes.dashboard.path);
   }, [mainChainApplication]);
+
+  const invalidateBlockchainAppsQuery = async () =>
+    queryClient.invalidateQueries({
+      queryKey: [BLOCKCHAIN_APPS_META, BLOCKCHAIN_APPS],
+    });
+
+  const retry = async () => {
+    await invalidateBlockchainAppsQuery();
+    refetchMergedApplicationData();
+  };
+
+  const handleChangeNetwork = async (value) => {
+    await invalidateBlockchainAppsQuery();
+    setValue(value);
+  };
 
   useEffect(() => {
     refetchMergedApplicationData();
@@ -85,7 +103,7 @@ function ManageAccounts({ history }) {
             <MenuSelect
               value={selectedNetwork}
               select={(selectedValue, option) => selectedValue.label === option.label}
-              onChange={setValue}
+              onChange={handleChangeNetwork}
               popupClassName={styles.networksPopup}
               className={styles.menuSelect}
               isLoading={isVerifyingNetworkOptions || isGettingMainChain}
@@ -115,11 +133,11 @@ function ManageAccounts({ history }) {
                 })}
             </MenuSelect>
           </div>
-          {isErrorGettingMainChain && (
+          {isErrorGettingMainChain && !isGettingMainChain && (
             <div>
               <span>
                 Failed to connect to network! &nbsp;
-                <span onClick={refetchMergedApplicationData}>Try Again</span>
+                <span onClick={retry}>Try Again</span>
               </span>
             </div>
           )}

@@ -8,6 +8,7 @@ import routes from 'src/routes/routes';
 import Login from '@auth/components/Signin';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import { useCheckLegacyAccount } from '@legacy/hooks/queries';
+import useSettings from '@settings/hooks/useSettings';
 import ErrorBoundary from './errorBoundary';
 
 // eslint-disable-next-line max-statements
@@ -19,8 +20,14 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   const { isMigrated } = useCheckLegacyAccount(currentAccount?.metadata?.pubkey);
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   Piwik.tracking(history, token);
+
+  if (!mainChainNetwork && path !== routes.selectNetwork.path) {
+    history.replace({ pathname: routes.selectNetwork.path });
+    return <div />;
+  }
 
   if (forbiddenTokens.indexOf(token.active) !== -1) {
     return <Redirect to={`${routes.dashboard.path}`} />;

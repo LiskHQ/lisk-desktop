@@ -16,7 +16,7 @@ export const useGetMergedApplication = ({ params, networkName, isEnabled }) => {
     error: errorGettingAppsMetaData,
     refetch: refetchAppsMetaData,
   } = useBlockchainApplicationMeta({
-    config: { params: { chainID: params.chainID } },
+    config: { params: { chainID: params.chainID, network: networkName } },
     client: metaDataClient,
     options: { enabled: isEnabled },
   });
@@ -41,7 +41,8 @@ export const useGetMergedApplication = ({ params, networkName, isEnabled }) => {
     options: { enabled: isBlockchainExporeEnabled },
   });
 
-  const hasError = !!errorGettingActiveApps || !!errorGettingAppsMetaData || !applicationsMetadata.length
+  const hasError =
+    !!errorGettingActiveApps || !!errorGettingAppsMetaData || !applicationsMetadata.length;
 
   const mergedApplications = useMemo(() => {
     if (!applicationsMetadata?.length || hasError) return [];
@@ -61,10 +62,12 @@ export const useGetMergedApplication = ({ params, networkName, isEnabled }) => {
   };
 
   useEffect(() => {
-    metaDataClient.create({
-      http: networks[networkName].serviceUrl,
-      ws: networks[networkName].wsServiceUrl,
-    });
+    if (networks[networkName]) {
+      metaDataClient.create({
+        http: networks[networkName].serviceUrl,
+        ws: networks[networkName].wsServiceUrl,
+      });
+    }
   }, []);
 
   return {
@@ -73,6 +76,6 @@ export const useGetMergedApplication = ({ params, networkName, isEnabled }) => {
     isLoading: (isLoadingActiveApps && isBlockchainExporeEnabled) || isLoadingAppsMetaData,
     isError: hasError,
     isFetched: isFetchedActiveApps && isFetchedAppsMetaData,
-    refetch: retry
+    refetch: retry,
   };
 };

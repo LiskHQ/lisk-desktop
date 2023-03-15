@@ -14,7 +14,7 @@ const Network = () => {
   const { mainChainNetwork, setValue } = useSettings('mainChainNetwork');
   const { t } = useTranslation();
 
-  const activeNetworkName = mainChainNetwork.name;
+  const activeNetworkName = mainChainNetwork?.name;
   const statusColor = status.online ? styles.online : styles.offline;
 
   const closeDropdown = () => setShowDropdown(false);
