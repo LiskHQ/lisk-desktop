@@ -1,3 +1,4 @@
+import { DEFAULT_NETWORK } from 'src/const/config';
 import {
   getNetworksList,
   getNetworkName,
@@ -23,7 +24,7 @@ describe('Utils: getNetwork', () => {
   describe('getNetworkName', () => {
     it('should return alphanet if network config does not have name set', () => {
       const network = {};
-      expect(getNetworkName(network)).toEqual('devnet');
+      expect(getNetworkName(network)).toEqual(DEFAULT_NETWORK);
     });
 
     it('should return customNode', () => {
