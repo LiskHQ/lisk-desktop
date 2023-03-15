@@ -1,39 +1,36 @@
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import {
   addHWDevice,
   removeHWDevice,
-  setCurrentDevice,
+  setCurrentHWDevice,
   setHardwareWalletDevices,
 } from '@hardwareWallet/store/actions';
 import { subscribeToLedgerDeviceEvents } from '@libs/ledgerHardwareWallet/ledgerDeviceListener/subscribeToLedgerDevices';
-import {
-  selectCurrentHWDevice,
-  selectHardwareDevices,
-} from '@hardwareWallet/store/selectors/hwSelectors';
+import { selectHardwareDevices } from '@hardwareWallet/store/selectors/hwSelectors';
 import { getConnectedHWDevices } from '@libs/ledgerHardwareWallet/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import { usePrevious } from 'src/utils/usePrevious';
+import DeviceToast from '@hardwareWallet/components/DeviceToast/DeviceToast';
 
 export function useLedgerDeviceListener() {
   const dispatch = useDispatch();
   const hwDevices = useSelector(selectHardwareDevices);
-  const currentDevice = useSelector(selectCurrentHWDevice);
-  console.log('DDD hwDevices currentDevice', { hwDevices, currentDevice });
+  const prevHWDevices = usePrevious(hwDevices);
   const [hasCheckedHWDevices, setHasCheckedHWDevices] = useState(false);
   const { ipc } = window;
 
   useEffect(() => {
     if (ipc && dispatch && !hasCheckedHWDevices) {
-      // Necessary for keeping HW state on electron start and during page window.reload
+      // Necessary for keeping HW state on electron start and during window reload
       (async () => {
         try {
-          console.log('useLedgerDeviceListener useEffect _1_');
           const connectedDevices = await getConnectedHWDevices();
-          console.log('111 connectedDevices', connectedDevices);
-          dispatch(setHardwareWalletDevices(connectedDevices));
-          dispatch(setCurrentDevice(connectedDevices[0]));
-          setHasCheckedHWDevices(true);
-        } catch (error) {
-          console.log('111 useLedgerDeviceListener error', error);
+          if (connectedDevices?.length > 0) {
+            dispatch(setHardwareWalletDevices(connectedDevices));
+            dispatch(setCurrentHWDevice(connectedDevices[0]));
+          }
+        } finally {
           setHasCheckedHWDevices(true);
         }
       })();
@@ -43,23 +40,37 @@ export function useLedgerDeviceListener() {
   useEffect(() => {
     if (hasCheckedHWDevices) {
       // Update Devices on NODE HID events
-      console.log('useLedgerDeviceListener useEffect _2_');
       subscribeToLedgerDeviceEvents((data) => {
         const { type, device } = data;
-        console.log('1111 useLedgerDeviceListener data: ', data);
-
         if (type === 'remove') {
-          dispatch(removeHWDevice(device)).then((res) => {
-            console.log('useLedgerDeviceListener REMOVE res', res);
-          });
+          dispatch(removeHWDevice(device));
         }
         if (type === 'add') {
-          console.log('useLedgerDeviceListener ADD');
-          dispatch(addHWDevice(device)).then((res) => {
-            console.log('useLedgerDeviceListener ADD res', res);
-          });
+          dispatch(addHWDevice(device));
         }
       });
     }
   }, [hasCheckedHWDevices]);
+
+  useEffect(() => {
+    if (hwDevices?.length || prevHWDevices?.length) {
+      const isDeviceAdded = prevHWDevices?.length < hwDevices?.length;
+
+      if (isDeviceAdded) {
+        const addedDevice = [...hwDevices].pop();
+        const label = `${addedDevice.manufacturer} ${addedDevice.product} connected.`;
+
+        toast.info(
+          <DeviceToast label={label} showSelectHardwareDeviceModalLink={hwDevices.length > 1} />
+        );
+      } else {
+        const removedDevice = [...prevHWDevices].pop();
+        const label = `${removedDevice.manufacturer} ${removedDevice.product} removed.`;
+
+        toast.info(
+          <DeviceToast label={label} showSelectHardwareDeviceModalLink={hwDevices.length > 1} />
+        );
+      }
+    }
+  }, [hwDevices.length]);
 }
