@@ -58,18 +58,20 @@ export function useLedgerDeviceListener() {
 
       if (isDeviceAdded) {
         const addedDevice = [...hwDevices].pop();
-        const label = `${addedDevice.manufacturer} ${addedDevice.product} connected.`;
+        const label = `${addedDevice.manufacturer} ${addedDevice.product} connected. `;
 
         toast.info(
-          <DeviceToast label={label} showSelectHardwareDeviceModalLink={hwDevices.length > 1} />
+          <DeviceToast
+            label={label}
+            showSelectHWAccountsLink={hwDevices.length === 1}
+            showSelectHWDeviceLink={hwDevices.length > 1}
+          />
         );
       } else {
         const removedDevice = [...prevHWDevices].pop();
         const label = `${removedDevice.manufacturer} ${removedDevice.product} removed.`;
 
-        toast.info(
-          <DeviceToast label={label} showSelectHardwareDeviceModalLink={hwDevices.length > 1} />
-        );
+        toast.info(<DeviceToast label={label} />);
       }
     }
   }, [hwDevices.length]);

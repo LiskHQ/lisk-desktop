@@ -1,5 +1,6 @@
 .DeviceToast {
   display: flex;
+  white-space: pre;
   color: var(--color-white);
 
   & .resetButtonStyles {
