@@ -21,10 +21,12 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
     isLoading,
     isSuccess: isCommissionSuccess,
   } = useCurrentCommissionPercentage();
+  const defaultCommission = getInitialCommission(prevState.formProps, currentCommission);
+  const defaultNumericValue = convertCommissionToNumber(defaultCommission);
   const [newCommission, setNewCommission] = useState({
-    value: getInitialCommission(prevState.formProps, currentCommission),
+    value: defaultCommission,
     feedback: '',
-    numericValue: convertCommissionToNumber(currentCommission),
+    numericValue: defaultNumericValue,
   });
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
   const { data: tokens } = useTokensBalance({
@@ -35,7 +37,11 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
 
   useEffect(() => {
     if (currentCommission && currentCommission !== newCommission.value) {
-      setNewCommission(currentCommission);
+      setNewCommission({
+        value: defaultCommission,
+        feedback: '',
+        numericValue: defaultNumericValue,
+      });
     }
   }, [isCommissionSuccess]);
 

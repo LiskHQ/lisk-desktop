@@ -228,17 +228,17 @@ export const getTransactionFee = async ({
         ...transactionObject.params,
         ...(numberOfSignatures &&
           !transactionObject.params.signatures?.length && {
-          signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
-        }),
+            signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
+          }),
       },
     },
     paramsSchema,
     senderAccount.numberOfSignatures
       ? {
-        numberOfSignatures: senderAccount.numberOfSignatures,
-        numberOfEmptySignatures:
-          mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
-      }
+          numberOfSignatures: senderAccount.numberOfSignatures,
+          numberOfEmptySignatures:
+            mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
+        }
       : {}
   );
 
@@ -326,7 +326,7 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
    events: EventJSON [],
 }
  */
-export const dryRun = ({ transaction, serviceUrl, paramsSchema, isSkipVerify }) => {
+export const dryRun = ({ transaction, serviceUrl, paramsSchema, isSkipVerify = false }) => {
   const transactionBytes = transactions.getBytes(transaction, paramsSchema);
 
   return http({
