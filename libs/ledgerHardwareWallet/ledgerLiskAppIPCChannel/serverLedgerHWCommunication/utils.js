@@ -14,7 +14,6 @@ export async function getDevicesFromPaths(devicePaths) {
   try {
     // eslint-disable-next-line no-restricted-syntax,no-unused-vars
     for (const devicePath of devicePaths) {
-      console.log('getDevicesFromPaths devicePath', devicePath);
       // eslint-disable-next-line no-await-in-loop
       transport = await transport.open(devicePath);
       const deviceInfo = transport.device?.getDeviceInfo();
@@ -28,7 +27,6 @@ export async function getDevicesFromPaths(devicePaths) {
     }
   } catch (error) {
     if (transport && transport.close) await transport.close();
-    console.log('getDevicesFromPaths error', error);
     return Promise.reject(error);
   }
 
