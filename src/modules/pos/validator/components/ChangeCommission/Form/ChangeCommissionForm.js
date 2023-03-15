@@ -14,8 +14,8 @@ import styles from './ChangeCommissionForm.css';
 // eslint-disable-next-line max-statements
 export const ChangeCommissionForm = ({ prevState, nextStep }) => {
   const { t } = useTranslation();
-  const getInitialCommission = (rawTx, initialValue) =>
-    rawTx?.fields.newCommission || initialValue || '';
+  const getInitialCommission = (formProps, initialValue) =>
+    formProps?.fields.newCommission || initialValue || '';
   const {
     currentCommission,
     isLoading,
@@ -67,21 +67,14 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
   const checkCommissionFeedback = (value) => {
     let inputFeedback;
     const newCommissionParam = convertCommissionToNumber(value);
-    const newCommissionValid = checkCommissionValidity(value, currentCommission);
-    const isFormValid =
-      value !== currentCommission &&
-      newCommissionParam &&
-      newCommissionParam >= 0 &&
-      newCommissionParam <= 10000 &&
-      newCommissionValid;
-    if (newCommissionValid) {
-      if (isFormValid) {
-        inputFeedback = undefined;
-      }
-    } else if (newCommissionParam >= 0 && newCommissionParam <= 10000) {
-      inputFeedback = t('You cannot increase commission more than 5%');
-    } else {
+    const isNewCommissionValid = checkCommissionValidity(value, currentCommission);
+
+    if (value.split('.')[1].length > 2) {
+      inputFeedback = t('Input decimal places limited to 2');
+    } else if (!(newCommissionParam >= 0 && newCommissionParam <= 10000)) {
       inputFeedback = t('Commission range is invalid');
+    } else if (!isNewCommissionValid) {
+      inputFeedback = t('You cannot increase commission more than 5%');
     }
     return { feedback: inputFeedback, numericValue: newCommissionParam };
   };

@@ -6,7 +6,9 @@ const ChangeCommissionMessages = (t) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Edit commission successful'),
-    message: t('Your commission rate has been successfully changed'),
+    message: t(
+      'Your commission rate request has been successfully submitted, it will be reflected in your profile shortly.'
+    ),
   },
 });
 
