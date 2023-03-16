@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from 'src/utils/validators';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { selectLSKAddress } from 'src/redux/selectors';
 import { regex } from 'src/const/regex';

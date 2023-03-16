@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
 import numeral from 'numeral';
-import { convertFromBaseDenom } from 'src/modules/token/fungible/utils/lsk';
-import Converter from 'src/modules/common/components/converter';
-import { getLogo } from '@token/fungible/utils/helpers';
+import { convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
+import Converter from '@common/components/converter';
 import styles from './TokenRow.css';
 import { Token, Balance } from './components';
 

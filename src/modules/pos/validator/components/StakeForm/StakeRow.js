@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { stakeEdited, stakeDiscarded } from 'src/redux/actions';
 import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
-import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Box from '@theme/box';

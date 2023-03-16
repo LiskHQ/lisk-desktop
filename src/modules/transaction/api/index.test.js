@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import { getTxAmount, convertBinaryToString } from '@transaction/utils/transaction';
+import { getTotalSpendingAmount, convertBinaryToString } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
 import * as validators from '@pos/validator/api';
 import http from 'src/utils/api/http';
@@ -166,15 +166,15 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('getTxAmount', () => {
+  describe('getTotalSpendingAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
         module: 'token',
         command: 'transfer',
-        params: { amount: 100000000 },
+        params: { amount: '100000000' },
       };
 
-      expect(getTxAmount(tx)).toEqual(tx.params.amount);
+      expect(getTotalSpendingAmount(tx)).toEqual(tx.params.amount);
     });
 
     it('should return amount of stakes in Beddows', () => {
@@ -196,7 +196,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual(200000000);
+      expect(getTotalSpendingAmount(tx)).toEqual('200000000');
     });
   });
 
@@ -409,7 +409,7 @@ describe('API: LSK Transactions', () => {
         command: 'transfer',
         params: {
           tokenID: '04000000',
-          amount: 100000000,
+          amount: '100000000',
           recipientAddress: 'lsk3ay4z7wqjczbo5ogcqxgxx23xyacxmycwxfh4d',
           data: '',
         },

@@ -2,7 +2,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 import { regex as reg } from 'src/const/regex';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { convertToBaseDenom } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom } from '@token/fungible/utils/helpers';
 import i18n from 'src/utils/i18n/i18n';
 
 /**
@@ -11,7 +11,7 @@ import i18n from 'src/utils/i18n/i18n';
 export const isNumeric = (value) => /^(-?[0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value);
 
 /**
- * Validates the given address
+ * Check if address is in Lisk32 format
  *
  * @param {String} address
  * @returns {Number} -> 0: valid, 1: invalid, -1: empty
@@ -48,19 +48,6 @@ export const validateLSKPublicKey = (publicKey) => {
  * - Validate structure of the value, just one . or ,
  * - Not ending with . or ,
  * - Check that has no more than 8 floating points digits
- * @param {Object.<string, string>} data
- * @param {string} data.value
- * @param {string} [data.token="LSK"] The active token
- * @param {string} [data.locale="en"] The locale for testing the format against
- * @param {string?} [data.funds] Maximum funds users are allowed to input
- * @param {Array?} [data.checklist] The list of errors to be tested. A choice of
- * ZERO, MAX_ACCURACY, FORMAT, STAKE_10X, INSUFFICIENT_FUNDS
- * @param {string} [data.minValue] The minimum value which is the previously confirmed stakes
- * @param {string} [data.inputValue] The user's input for stakes
- * @returns {Object.<string, string|boolean>}
- * data - Object containing the message and if has an error
- *  data.message - Message of the error or empty string
- *  data.error - true or false
  */
 export const validateAmountFormat = ({
   value,

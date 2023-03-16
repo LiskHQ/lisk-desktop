@@ -47,6 +47,8 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
   const { token } = usePosToken();
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
+    console.log('...onConfirm');
+
     nextStep({
       selectedPriority,
       formProps,
@@ -56,6 +58,8 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
   };
 
   const onChangeUsername = ({ target: { value } }) => {
+    console.log('...onChangeUsername');
+
     setName(value);
   };
 

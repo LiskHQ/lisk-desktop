@@ -9,10 +9,11 @@ import { useCurrentAccount } from '@account/hooks';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
-import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
+import { getTotalSpendingAmount } from '@transaction/utils/transaction';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton } from 'src/theme/buttons';
-import Feedback, { getMinRequiredBalance } from './Feedback';
+import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
 import { splitModuleAndCommand } from '../../utils';
 import { useTransactionFee } from '../../hooks/useTransactionFee/useTransactionFee';
@@ -74,8 +75,8 @@ const TxComposer = ({
       });
     }
   }, [selectedPriority, transactionJSON.params]);
-  const minRequiredBalance = getMinRequiredBalance(transactionJSON, transactionFee);
 
+  const minRequiredBalance = BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
   const { recipientChain, sendingChain } = formProps;
   const composedFees = [
     {
@@ -128,7 +129,7 @@ const TxComposer = ({
       />
       <Feedback
         feedback={formProps.feedback}
-        minRequiredBalance={minRequiredBalance}
+        minRequiredBalance={minRequiredBalance.toString()}
         token={formProps.fields?.token || {}}
       />
       <BoxFooter>
@@ -136,7 +137,7 @@ const TxComposer = ({
           className="confirm-btn"
           onClick={() => onConfirm(formProps, transactionJSON, selectedPriority, composedFees)}
           disabled={
-            !formProps.isFormValid || minRequiredBalance > formProps.fields?.token?.availableBalance
+            !formProps.isFormValid || minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0)
           }
         >
           {buttonTitle ?? t('Continue')}

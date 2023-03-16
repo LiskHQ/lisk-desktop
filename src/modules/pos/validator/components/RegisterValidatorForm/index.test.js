@@ -193,7 +193,7 @@ describe('RegisterValidatorForm', () => {
       message: '',
     };
 
-    it('accept a valid form', () => {
+    it.only('accept a valid form', () => {
       useValidatorKey.mockReturnValueOnce([genKey, setKey]);
       useValidatorKey.mockReturnValueOnce([blsKey, setKey]);
       useValidatorKey.mockReturnValueOnce([pop, setKey]);

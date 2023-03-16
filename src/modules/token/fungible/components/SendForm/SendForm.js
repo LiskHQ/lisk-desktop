@@ -5,7 +5,7 @@ import AmountField from '@common/components/amountField';
 import { useGetInitializationFees, useGetMinimumMessageFee } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
-import { convertToBaseDenom, convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom, convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import { maxMessageLength } from '@transaction/configuration/transactions';
@@ -20,17 +20,16 @@ import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
 import { useTransferableTokens } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
-import { getLogo } from '../../utils/helpers';
 import styles from './form.css';
 import MessageField from '../MessageField';
 
-const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
-const getInitialAmount = (rawTx, initialValue, token) =>
-  Number(rawTx?.params.amount)
-    ? convertFromBaseDenom(rawTx?.params.amount, token)
+const getInitialData = (formProps, initialValue) => formProps?.params.data || initialValue || '';
+const getInitialAmount = (formProps, initialValue, token) =>
+  Number(formProps?.params.amount)
+    ? convertFromBaseDenom(formProps?.params.amount, token)
     : initialValue || '';
-const getInitialRecipient = (rawTx, initialValue) =>
-  rawTx?.params.recipient.address || initialValue || '';
+const getInitialRecipient = (formProps, initialValue) =>
+  formProps?.params.recipient.address || initialValue || '';
 const getInitialRecipientChain = (
   transactionData,
   initialChainId,

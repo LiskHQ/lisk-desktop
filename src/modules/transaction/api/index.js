@@ -9,7 +9,7 @@ import {
   MODULE_COMMANDS_NAME_MAP,
 } from 'src/modules/transaction/configuration/moduleCommand';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
 import { getValidators } from '@pos/validator/api';

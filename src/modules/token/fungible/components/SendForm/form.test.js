@@ -1,7 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import {
