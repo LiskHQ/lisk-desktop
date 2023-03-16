@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import networks, { networkKeys } from 'src/modules/network/configuration/networks';
 import { mockNetworkStatus } from 'src/modules/network/__fixtures__';
