@@ -15,6 +15,7 @@ function HwDeviceItem({ hwDevice }) {
   function onChange() {
     dispatch(setCurrentHWDevice(hwDevice));
   }
+
   const usbPort = path
     ?.split('/')
     ?.find((segment) => segment.startsWith('usb'))

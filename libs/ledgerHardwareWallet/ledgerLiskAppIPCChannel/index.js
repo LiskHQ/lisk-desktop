@@ -19,28 +19,24 @@ export const ledgerLiskAppIPCChannel = () => {
 
   createIpcMainChannel(GET_SIGNED_TRANSACTION, async (data) => {
     const id = `${GET_SIGNED_TRANSACTION}-${Date.now()}`;
-    console.log('GET_CONNECTED_DEVICES ___ID___', { id, data });
     const result = await getSequentiallyQueuedData(myq, id, () => getSignedTransaction(data));
     return result;
   });
 
   createIpcMainChannel(GET_SIGNED_MESSAGE, async (data) => {
     const id = `${GET_SIGNED_MESSAGE}-${Date.now()}`;
-    console.log('GET_SIGNED_MESSAGE ___ID___', { id, data });
     const result = await getSequentiallyQueuedData(myq, id, () => getSignedMessage(data));
     return result;
   });
 
   createIpcMainChannel(GET_PUB_KEY, async (data) => {
     const id = `${GET_PUB_KEY}-${Date.now()}`;
-    console.log('GET_SIGNED_MESSAGE ___ID___', { id, data });
     const result = await getSequentiallyQueuedData(myq, id, () => getPubKey(data));
     return result;
   });
 
   createIpcMainChannel(GET_CONNECTED_DEVICES, async (data) => {
     const id = `${GET_CONNECTED_DEVICES}-${Date.now()}`;
-    console.log('GET_CONNECTED_DEVICES ___ID___', { id, data });
     const result = await getSequentiallyQueuedData(myq, id, getConnectedDevices);
     return result;
   });

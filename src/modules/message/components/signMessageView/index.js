@@ -10,7 +10,6 @@ import SignedMessage from '../signedMessage';
 import styles from './signMessageView.css';
 
 const signMessageView = ({ account, t, history, signMessage }) => {
-  console.log('AAAAA signMessageView');
   const [multiStepPosition, setMultiStepPosition] = useState(0);
   const [
     {

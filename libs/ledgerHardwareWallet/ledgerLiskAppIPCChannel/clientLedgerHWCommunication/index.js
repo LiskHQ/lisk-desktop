@@ -15,7 +15,6 @@ export const getSignedTransaction = async (devicePath, accountIndex, unsignedMes
     accountIndex,
     unsignedMessage,
   });
-  console.log('getSignedTransaction signedTransaction', signedTransaction);
 
   return signedTransaction;
 };
@@ -26,7 +25,6 @@ export const getSignedMessage = async (devicePath, accountIndex, unsignedMessage
     accountIndex,
     unsignedMessage,
   });
-  console.log('getSignedTransaction signedTransaction', signedTransaction);
 
   return signedTransaction;
 };
@@ -36,14 +34,12 @@ export const getPubKey = async (devicePath, accountIndex) => {
     devicePath,
     accountIndex,
   });
-  console.log('hwAccounts pubKey', pubKey);
 
   return pubKey;
 };
 
 export const getIsInsideLiskApp = async (devicePath, accountIndex) => {
   const pubKey = await getPubKey(devicePath, accountIndex);
-  console.log('getIsInsideLiskApp__ isInsideLiskApp pubKey', pubKey);
 
   return !!pubKey;
 };

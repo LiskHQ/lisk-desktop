@@ -1,12 +1,12 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
-import hwManager from 'src/modules/hardwareWallet/manager/HWManager';
+import { setCurrentHWDevice } from '@hardwareWallet/store/actions';
 import HwDeviceItem from './HwDeviceItem';
 
 const mockSelector = {
   hardwareWallet: {
     currentDevice: {
-      deviceId: '123',
+      path: '123',
     },
   },
 };
@@ -15,8 +15,8 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn((fn) => fn(mockSelector)),
 }));
 
-jest.mock('src/modules/hardwareWallet/manager/HWManager', () => ({
-  selectDevice: jest.fn(),
+jest.mock('@hardwareWallet/store/actions', () => ({
+  setCurrentHWDevice: jest.fn(),
 }));
 
 describe('HwDeviceItem', () => {
@@ -52,6 +52,6 @@ describe('HwDeviceItem', () => {
     render(<HwDeviceItem {...props} />);
     const checkbox = screen.getByRole('checkbox');
     fireEvent.click(checkbox);
-    expect(hwManager.selectDevice).toHaveBeenCalledWith(props.hwDevice.deviceId);
+    expect(setCurrentHWDevice).toHaveBeenCalledWith(props.hwDevice.path);
   });
 });

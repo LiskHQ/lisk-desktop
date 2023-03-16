@@ -19,10 +19,8 @@ export async function getSequentiallyQueuedData(queue, queueId, callBack) {
   try {
     result = await callBack();
   } catch (error) {
-    console.error('createIpcMainChannel NAME_SIGN error', { queueId, error });
     result = Promise.reject(error);
   } finally {
-    console.log('createIpcMainChannel NAME_SIGN result', { queueId, result });
     queue.end(queueId);
   }
   return result;

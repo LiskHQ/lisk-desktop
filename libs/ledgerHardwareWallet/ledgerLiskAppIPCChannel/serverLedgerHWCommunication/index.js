@@ -4,14 +4,12 @@ import { LiskApp } from '@zondax/ledger-lisk';
 import { getDevicesFromPaths, getLedgerAccount } from './utils';
 
 export async function getPubKey({ devicePath, accountIndex }) {
-  console.log('getPubKey devicePath, accountIndex', { devicePath, accountIndex });
   let transport = TransportNodeHid;
   try {
     transport = await transport.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
     const account = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
-    console.log('getPubKey address', account);
     await transport?.close();
     const errorMessage = account?.error_message;
     if (errorMessage === 'No errors') {
@@ -19,7 +17,6 @@ export async function getPubKey({ devicePath, accountIndex }) {
     }
     return Promise.reject(errorMessage);
   } catch (error) {
-    console.log('getAddressAndPubKey error', error);
     await transport?.close();
     return Promise.reject(error);
   }
@@ -35,7 +32,6 @@ export async function getSignedTransaction({ devicePath, accountIndex, unsignedM
       ledgerAccount.derivePath(),
       Buffer.from(unsignedMessage, 'hex')
     );
-    console.log('getSignedTransaction signature', signature);
     if (transport && transport.close) await transport.close();
     const errorMessage = signature?.error_message;
     if (errorMessage === 'No errors') {
@@ -44,7 +40,6 @@ export async function getSignedTransaction({ devicePath, accountIndex, unsignedM
     return Promise.reject(errorMessage);
   } catch (error) {
     if (transport && transport.close) await transport.close();
-    console.log('getSignedTransaction error', error);
     return Promise.reject(error);
   }
 }
@@ -76,8 +71,6 @@ export async function getConnectedDevices() {
     }
     return [];
   } catch (error) {
-    console.log('getConnectedDevices error', error?.toString());
-    // throw new Error(error);
     return Promise.reject(error);
   }
 }
