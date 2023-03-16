@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { truncateAddress } from '@wallet/utils/account';
-import { useGetInitializationFees } from '@auth/hooks/queries';
+import { useGetInitializationFees } from '@token/fungible/hooks/queries';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
@@ -16,7 +16,7 @@ jest.mock('src/utils/searchParams', () => ({
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0]]),
 }));
-jest.mock('@auth/hooks/queries/useGetInitializationFees');
+jest.mock('@token/fungible/hooks/queries/useGetInitializationFees');
 
 const mockNonMigrated = wallets.non_migrated;
 

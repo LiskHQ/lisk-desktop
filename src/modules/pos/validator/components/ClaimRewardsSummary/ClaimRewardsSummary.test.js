@@ -6,6 +6,8 @@ import wallets from '@tests/constants/wallets';
 import { mockRewardsClaimableWithToken } from '@pos/reward/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from '@auth/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import { mount } from 'enzyme';
 import ClaimRewardsSummary from './index';
 
@@ -14,6 +16,7 @@ jest.mock('@account/hooks', () => ({
 }));
 jest.mock('@auth/hooks/queries');
 jest.mock('@pos/reward/hooks/queries');
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('ClaimRewardsSummary', () => {
   const props = {
@@ -51,7 +54,7 @@ describe('ClaimRewardsSummary', () => {
     wallet: wallets.genesis,
   };
   useAuth.mockReturnValue({ data: mockAuth });
-
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
   useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimableWithToken });
 
   it('should display properly', async () => {

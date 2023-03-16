@@ -115,7 +115,7 @@ const RemoveApplicationDetails = ({ location, application, onCancel, nextStep })
             <span>{t('Deposited:')}</span>
             {/* TODO: this is a placeholder value pending when its part of service response */}
             <span>
-              <TokenAmount val={deposit} /> LSK
+              <TokenAmount isLsk val={deposit} />
             </span>
           </div>
           <Box className={styles.footerDetailsRow}>

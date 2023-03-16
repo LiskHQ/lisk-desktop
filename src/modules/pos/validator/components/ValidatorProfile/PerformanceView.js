@@ -14,6 +14,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import DialogLink from '@theme/dialog/link';
 import Icon from '@theme/Icon';
 import styles from './ValidatorProfile.css';
+import usePosToken from '../../hooks/usePosToken';
 
 export const getStatus = (data) => {
   if (data.validatorWeight >= DEFAULT_STANDBY_THRESHOLD) {
@@ -45,9 +46,7 @@ const FullItem = ({ status, title, children, theme }) => (
       {children}
     </div>
     <div className={`${styles.highlighIcon}`}>
-      {
-        status && <Icon name={`validator${capitalize(status) || 'Standby'}`} />
-      }
+      {status && <Icon name={`validator${capitalize(status) || 'Standby'}`} />}
     </div>
   </BoxContent>
 );
@@ -125,6 +124,7 @@ const PerformanceView = ({ data }) => {
   const theme = useTheme();
   const status = data.status || '';
   const ValidatorComponent = status.length ? getValidatorComponent(status) : () => null;
+  const { token } = usePosToken();
 
   return (
     <Box
@@ -173,7 +173,7 @@ const PerformanceView = ({ data }) => {
             }
           >
             <div className={styles.performanceValue}>
-              <TokenAmount val={data.earnedRewards || 0} />
+              <TokenAmount val={data.earnedRewards || 0} token={token} />
             </div>
           </Item>
           <Item title={t('Consecutive missed blocks')} icon="consecutiveMissedBlocks">

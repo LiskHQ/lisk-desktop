@@ -9,7 +9,7 @@ import {
   MODULE_COMMANDS_NAME_MAP,
 } from 'src/modules/transaction/configuration/moduleCommand';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
 import { getValidators } from '@pos/validator/api';
@@ -203,6 +203,7 @@ export const getTransactionFee = async ({
   numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
   moduleCommandSchemas,
   senderAccount = { numberOfSignatures: 0, optionalKeys: [], mandatoryKeys: [] },
+  token,
 }) => {
   const feePerByte = selectedPriority.value;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
@@ -228,17 +229,17 @@ export const getTransactionFee = async ({
         ...transactionObject.params,
         ...(numberOfSignatures &&
           !transactionObject.params.signatures?.length && {
-          signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
-        }),
+            signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
+          }),
       },
     },
     paramsSchema,
     senderAccount.numberOfSignatures
       ? {
-        numberOfSignatures: senderAccount.numberOfSignatures,
-        numberOfEmptySignatures:
-          mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
-      }
+          numberOfSignatures: senderAccount.numberOfSignatures,
+          numberOfEmptySignatures:
+            mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
+        }
       : {}
   );
 
@@ -249,8 +250,8 @@ export const getTransactionFee = async ({
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
   const cappedFee = Math.min(calculatedFee, maxCommandFee);
-  const feeInLsk = fromRawLsk(cappedFee.toString());
-  const roundedValue = Number(feeInLsk).toFixed(7).toString();
+  const fee = convertFromBaseDenom(cappedFee, token);
+  const roundedValue = Number(fee).toFixed(7).toString();
   const feedback = transactionJSON.amount === '' ? '-' : `${roundedValue ? '' : 'Invalid amount'}`;
 
   return {
@@ -326,19 +327,13 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
    events: EventJSON [],
 }
  */
-export const dryRun = ({ transaction, serviceUrl, network }) => {
-  const moduleCommand = joinModuleAndCommand({
-    module: transaction.module,
-    command: transaction.command,
-  });
-  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
-  const binary = transactions.getBytes(transaction, schema);
-  const payload = binary.toString('hex');
+export const dryRun = ({ transaction, serviceUrl, paramsSchema, isSkipVerify = false }) => {
+  const transactionBytes = transactions.getBytes(transaction, paramsSchema);
 
   return http({
     method: 'POST',
     baseUrl: serviceUrl,
     path: httpPaths.dryRun,
-    data: { transaction: payload },
+    data: { transaction: transactionBytes.toString('hex'), isSkipVerify },
   });
 };

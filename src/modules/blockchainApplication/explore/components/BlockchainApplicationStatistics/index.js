@@ -4,8 +4,8 @@ import { toRawLsk } from '@token/fungible/utils/lsk';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
-import { DoughnutChart } from '@common/components/charts';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import { DoughnutChart } from '@common/components/charts';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
@@ -79,7 +79,7 @@ const BlockchainApplicationStatistics = () => {
               </Tooltip>
             </div>
             <p className={`${styles.statsInfo} stats-info-value`}>
-              <TokenAmount Wrapper={React.Fragment} token="LSK" val={amount} />
+              <TokenAmount isLsk val={amount} />
             </p>
           </div>
           <div>

@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import React, { useMemo } from 'react';
 import { withRouter } from 'react-router';
-import { useGetInitializationFees } from '@auth/hooks/queries';
+import { useGetInitializationFees } from '@token/fungible/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee/useTransactionFee';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
@@ -11,7 +11,7 @@ import styles from './summary.css';
 
 const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
   const formProps = {
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.reclaim,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.reclaimLSK,
   };
 
   const commandParams = {

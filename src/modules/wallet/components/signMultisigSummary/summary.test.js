@@ -8,7 +8,7 @@ import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
-import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
+import { mockAppsTokens, mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import Summary from './summary';
 
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
@@ -35,7 +35,7 @@ describe('Sign Multisignature Tx Review component', () => {
         publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
       },
     },
-    activeToken: 'LSK',
+    activeToken: mockAppsTokens.data[0],
     networkIdentifier: 'sample_identifier',
     nextStep: jest.fn(),
     history: {},

@@ -1,9 +1,9 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import routes from 'src/routes/routes';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
 import LayoutSchema from './layoutSchema';
 import TransactionRowContext from '../../context/transactionRowContext';
 import styles from './schemas.css';
@@ -22,6 +22,8 @@ const TransactionRow = ({
   isWallet,
 }) => {
   const Layout = LayoutSchema[layout] || LayoutSchema.default;
+  const { data: tokens } = useTokensBalance();
+  const token = tokens?.data?.[0] || {};
 
   return (
     <Link
@@ -37,6 +39,7 @@ const TransactionRow = ({
           avatarSize,
           validators,
           address,
+          token
         }}
       >
         {Layout.components.map((Component, index) => (

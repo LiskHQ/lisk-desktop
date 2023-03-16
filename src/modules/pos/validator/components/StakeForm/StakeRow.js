@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { stakeEdited, stakeDiscarded } from 'src/redux/actions';
 import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
-import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Box from '@theme/box';
@@ -17,19 +16,21 @@ import styles from './stakeForm.css';
 import { convertCommissionToPercentage } from '../../utils';
 
 const componentState = Object.freeze({ editing: 1, notEditing: 2 });
-const token = tokenMap.LSK.key;
 
 const StakeRow = ({
   t = (s) => s,
   data: { address, commission, username, confirmed, unconfirmed },
   index,
   history,
+  token,
 }) => {
   const [state, setState] = useState(
     unconfirmed === '' ? componentState.editing : componentState.notEditing
   );
   const dispatch = useDispatch();
-  const [stakeAmount, setStakeAmount] = useStakeAmountField(fromRawLsk(unconfirmed));
+  const [stakeAmount, setStakeAmount] = useStakeAmountField(
+    convertFromBaseDenom(unconfirmed, token)
+  );
   const truncatedAddress = truncateAddress(address);
 
   const handleFormSubmission = (e) => {
@@ -38,7 +39,7 @@ const StakeRow = ({
       stakeEdited([
         {
           address,
-          amount: toRawLsk(stakeAmount.value),
+          amount: convertToBaseDenom(stakeAmount.value, token),
         },
       ])
     );
@@ -97,6 +98,7 @@ const StakeRow = ({
           onSubmit={handleFormSubmission}
         >
           <AmountField
+            token={token}
             amount={stakeAmount}
             onChange={setStakeAmount}
             displayConverter={false}

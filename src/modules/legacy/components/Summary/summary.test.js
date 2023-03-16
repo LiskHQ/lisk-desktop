@@ -2,23 +2,22 @@ import { act } from 'react-dom/test-utils';
 import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
 import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { mockTokensBalance } from '@token/fungible/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mockAuth } from '@auth/__fixtures__';
-import { useAuth, useGetInitializationFees } from '@auth/hooks/queries';
+import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useGetInitializationFees, useTokensBalance } from '@token/fungible/hooks/queries';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Summary from '.';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 
 jest.mock('@auth/hooks/queries/useAuth');
-jest.mock('@auth/hooks/queries/useGetInitializationFees');
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
@@ -49,7 +48,7 @@ useCommandSchema.mockReturnValue({
     {}
   ),
 });
-useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+useTokensBalance.mockReturnValue({ data: mockAppsTokens, isLoading: false });
 useGetInitializationFees.mockReturnValue({ data: { data: { userAccount: 5000000 } } });
 
 describe('Reclaim balance Summary', () => {

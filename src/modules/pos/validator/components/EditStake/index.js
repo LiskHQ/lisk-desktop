@@ -7,8 +7,7 @@ import {
   removeThenAppendSearchParamsToUrl,
 } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
-import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
 import { useCommandSchema } from '@network/hooks';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
@@ -28,17 +27,16 @@ import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
-import { useValidators, usePosConstants, useSentStakes } from '../../hooks/queries';
+import { useValidators, useSentStakes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
 import { convertCommissionToPercentage } from '../../utils';
 import { useStakesRetrieved } from '../../store/actions/staking';
+import usePosToken from '../../hooks/usePosToken';
 
 const getTitles = (t) => ({
   edit: {
     title: t('Edit stake'),
-    description: t(
-      'After changing your Stake amount, it will be added to the staking queue.'
-    ),
+    description: t('After changing your Stake amount, it will be added to the staking queue.'),
   },
   add: {
     title: t('Add to staking queue'),
@@ -79,13 +77,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     data: { height: currentHeight },
   } = useLatestBlock();
 
-  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-
-  const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: posConstants?.posTokenID } },
-    options: { enabled: !isGettingPosConstants },
-  });
-  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+  const { token } = usePosToken();
 
   const { data: authData } = useAuth({ config: { params: { address } } });
   const auth = useMemo(() => ({ ...authData?.data, ...authData?.meta }), [authData]);
@@ -104,7 +96,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   }, [sentStakes, address, staking]);
 
   const [stakeAmount, setStakeAmount, isGettingPosToken] = useStakeAmountField(
-    fromRawLsk(staking[address]?.unconfirmed || validatorStake?.amount || 0)
+    convertFromBaseDenom(staking[address]?.unconfirmed || validatorStake?.amount || 0, token)
   );
   const mode = validatorStake || staking[address] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
@@ -121,6 +113,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
       mandatoryKeys,
       optionalKeys,
       moduleCommandSchemas,
+      token,
     }).then(setMaxAmount);
   }, [token, auth, network, staking]);
 
@@ -132,7 +125,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     stakeEdited([
       {
         validator,
-        amount: toRawLsk(stakeAmount.value),
+        amount: convertToBaseDenom(stakeAmount.value, token),
       },
     ]);
 
@@ -145,7 +138,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     stakeEdited([
       {
         validator,
-        amount: toRawLsk(0),
+        amount: convertToBaseDenom(0),
       },
     ]);
     removeSearchParamsFromUrl(history, ['modal']);
@@ -190,11 +183,12 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <p className={styles.availableBalance}>
                   <span>{t('Available balance: ')}</span>
                   <span>
-                    <TokenAmount token={token.symbol} val={token.availableBalance} />
+                    <TokenAmount token={token} val={token.availableBalance} />
                   </span>
                 </p>
 
                 <AmountField
+                  token={token}
                   amount={stakeAmount}
                   onChange={setStakeAmount}
                   maxAmount={{ value: maxAmount }}

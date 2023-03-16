@@ -35,7 +35,7 @@ describe('helpers', () => {
       });
     });
     it('should return correct sign and styles for reclaim LSK', () => {
-      const moduleCommand = MODULE_COMMANDS_NAME_MAP.reclaim;
+      const moduleCommand = MODULE_COMMANDS_NAME_MAP.reclaimLSK;
       const recipient = null;
       expect(getTxDirectionConfig(moduleCommand, host, recipient, styles)).toEqual({
         sign: '',

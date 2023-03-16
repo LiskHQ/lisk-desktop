@@ -25,7 +25,9 @@ const Transactions = ({
   address,
   confirmedLength,
 }) => {
-  const { data: { height: currentBlockHeight } }= useLatestBlock();
+  const {
+    data: { height: currentBlockHeight },
+  } = useLatestBlock();
   useEffect(() => {
     // This will automatically load the new data too.
     clearAllFilters();

@@ -4,12 +4,12 @@
 
 .content {
   & > h1 {
-    margin: 19px 0 0 0;
+    margin: 20px 0;
     padding: 0;
   }
 
   & > p {
-    margin: 0 0 9px 0;
+    margin: 0 0 20px 0;
     padding: 0;
   }
 

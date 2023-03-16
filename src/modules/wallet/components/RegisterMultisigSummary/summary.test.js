@@ -3,11 +3,13 @@ import { cryptography } from '@liskhq/lisk-client';
 import { mount } from 'enzyme';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
-import { mockAuth } from 'src/modules/auth/__fixtures__';
-import { useAuth } from 'src/modules/auth/hooks/queries';
+import { mockAuth } from '@auth/__fixtures__';
+import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import Summary from './Summary';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -35,9 +37,12 @@ jest.mock('@transaction/api/index', () => ({
 }));
 jest.mock('@transaction/utils/hwManager');
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
+jest.mock('@token/fungible/hooks/queries');
 
 describe('Multisignature Summary component', () => {
-  const mandatoryKeys = [accounts.genesis, accounts.validator].map((item) => item.summary.publicKey);
+  const mandatoryKeys = [accounts.genesis, accounts.validator].map(
+    (item) => item.summary.publicKey
+  );
 
   let wrapper;
   const props = {
@@ -89,6 +94,7 @@ describe('Multisignature Summary component', () => {
     hwManager.signTransactionByHW.mockResolvedValue({});
   });
 
+  useTokensBalance.mockReturnValue({ data: mockAppsTokens });
   useAuth.mockReturnValue({ data: mockAuth });
   useCommandSchema.mockReturnValue({
     moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
@@ -100,11 +106,14 @@ describe('Multisignature Summary component', () => {
   it('Should call props.nextStep', async () => {
     wrapper.find('.confirm-button').at(0).simulate('click');
     const { transactionJSON, formProps } = props;
-    expect(props.nextStep).toHaveBeenCalledWith({
-      formProps,
-      transactionJSON,
-      sender: { ...mockedCurrentAccount },
-    }, 2);
+    expect(props.nextStep).toHaveBeenCalledWith(
+      {
+        formProps,
+        transactionJSON,
+        sender: { ...mockedCurrentAccount },
+      },
+      2
+    );
   });
 
   it('Should call props.prevStep', () => {

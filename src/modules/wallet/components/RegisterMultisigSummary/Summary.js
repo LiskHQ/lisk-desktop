@@ -24,7 +24,7 @@ const Summary = ({
   const { data: account } = useAuth({
     config: { params: { address: sender.metadata.address } },
   });
-  const { moduleCommandSchemas } = useCommandSchema();
+  const { moduleCommandSchemas, messagesSchemas } = useCommandSchema();
   const isSenderMember = useMemo(
     () =>
       [...transactionJSON.params.mandatoryKeys, ...transactionJSON.params.optionalKeys].includes(
@@ -46,6 +46,7 @@ const Summary = ({
             moduleCommandSchemas,
             txInitiatorAccount,
             sender: { ...account.data },
+            messagesSchemas,
           });
 
         if (!isSenderMember) {

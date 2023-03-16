@@ -5,7 +5,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import transactionActionTypes from '@transaction/store/actionTypes';
 
 export const validatorRegistered =
-  (formProps, transactionJSON, privateKey, publicKey, senderAccount, moduleCommandSchemas) =>
+  (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
     const activeWallet = selectActiveTokenAccount(state);
@@ -18,7 +18,7 @@ export const validatorRegistered =
         privateKey,
         wallet: activeWallet,
         schema: moduleCommandSchemas[formProps.moduleCommand],
-        chainID: state.network.networks.LSK.chainID,
+        chainID: state.blockChainApplications.current.chainID,
         senderAccount,
       })
     );

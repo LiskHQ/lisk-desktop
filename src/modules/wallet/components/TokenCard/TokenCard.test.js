@@ -1,9 +1,9 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
-import { mockTokensBalance } from '@token/fungible/__fixtures__';
+import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import TransactionEventsRow from './TokenCard';
 
 describe('TokenCard', () => {
@@ -15,18 +15,33 @@ describe('TokenCard', () => {
       lockedBalance: 20000,
       url: 'test-url',
       availableBalance,
-      symbol,
+      token: { ...mockAppsTokens.data[0], ...mockTokensBalance.data[0] },
     };
     wrapper = renderWithRouter(TransactionEventsRow, props);
 
-    expect(screen.queryAllByText(`${fromRawLsk(props.lockedBalance)} ${symbol.toUpperCase()}`));
-    expect(screen.queryAllByText(`${fromRawLsk(availableBalance)} ${symbol.toUpperCase()}`));
-    expect( screen.getByText(/~10\.00/g)).toBeTruthy();
+    expect(
+      screen.queryAllByText(
+        `${convertFromBaseDenom(
+          props.lockedBalance,
+          mockAppsTokens.data[0]
+        )} ${symbol.toUpperCase()}`
+      )
+    );
+    expect(
+      screen.queryAllByText(
+        `${convertFromBaseDenom(availableBalance, mockAppsTokens.data[0])} ${symbol.toUpperCase()}`
+      )
+    );
+    expect(screen.getByText(/~10\.00/g)).toBeTruthy();
     expect(screen.getByAltText(symbol)).toBeTruthy();
 
+    const newProps = {
+      ...props,
+      token: { ...mockTokensBalance.data[0], ...mockAppsTokens.data[2] },
+    };
     wrapper.rerender(
       <MemoryRouter initialEntries={['/']}>
-        <TransactionEventsRow {...props} symbol="EVT" />
+        <TransactionEventsRow {...newProps} />
       </MemoryRouter>
     );
 

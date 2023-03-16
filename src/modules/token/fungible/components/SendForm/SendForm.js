@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
-import { useGetInitializationFees, useMessageFee } from '@auth/hooks/queries';
+import { useGetInitializationFees, useGetMinimumMessageFee } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
-import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom, convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import { maxMessageLength } from '@transaction/configuration/transactions';
@@ -25,8 +25,10 @@ import styles from './form.css';
 import MessageField from '../MessageField';
 
 const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
-const getInitialAmount = (rawTx, initialValue) =>
-  Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '';
+const getInitialAmount = (rawTx, initialValue, token) =>
+  Number(rawTx?.params.amount)
+    ? convertFromBaseDenom(rawTx?.params.amount, token)
+    : initialValue || '';
 const getInitialRecipient = (rawTx, initialValue) =>
   rawTx?.params.recipient.address || initialValue || '';
 const getInitialRecipientChain = (
@@ -58,20 +60,19 @@ const SendForm = (props) => {
   const sendingChain = prevState?.transactionData?.sendingChain || currentApplication;
   const { applications } = useApplicationExploreAndMetaData();
   const { data: tokens } = useTransferableTokens(recipientChain);
-
   const [reference, setReference] = useMessageField(
     getInitialData(props.prevState?.formProps, props.initialValue?.reference)
   );
   const [amount, setAmountField] = useAmountField(
-    getInitialAmount(props.prevState?.formProps, props.initialValue?.amount),
-    account.token?.balance,
-    token?.symbol
+    getInitialAmount(props.prevState?.formProps, props.initialValue?.amount, token),
+    account.summary?.balance,
+    token
   );
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
-  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value });
-  const { data: messageFee } = useMessageFee({ address: recipient.value });
+  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value, tokenID: token?.tokenID });
+  const { data: messageFeeResult } = useGetMinimumMessageFee();
 
   const extraCommandFee =
     sendingChain.chainID !== recipientChain.chainID
@@ -134,7 +135,7 @@ const SendForm = (props) => {
     isFormValid,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
-      amount: toRawLsk(amount.value),
+      amount: convertToBaseDenom(amount.value, token),
       data: reference.value,
       recipient: {
         address: recipient.value,
@@ -152,7 +153,7 @@ const SendForm = (props) => {
   };
   let commandParams = {
     tokenID: token?.tokenID,
-    amount: toRawLsk(amount.value),
+    amount: convertToBaseDenom(amount.value, token),
     recipientAddress: recipient.value,
     data: reference.value,
   };
@@ -160,9 +161,10 @@ const SendForm = (props) => {
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
-      messageFee,
+      messageFee: messageFeeResult?.data?.fee,
     };
   }
+
   return (
     <section className={styles.wrapper}>
       <TxComposer
@@ -177,7 +179,7 @@ const SendForm = (props) => {
             <h2>{t('Send Tokens')}</h2>
           </BoxHeader>
           <BoxContent className={styles.formSection}>
-            <div className={`${styles.ApplilcationFieldWrapper}`}>
+            <div className={`${styles.ApplicationFieldWrapper}`}>
               <div>
                 <label className={`${styles.fieldLabel} sending-application`}>
                   <span>{t('From application')}</span>
@@ -187,7 +189,7 @@ const SendForm = (props) => {
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                   disabled
                 >
-                  {[sendingChain].map((application) => (
+                  {[sendingChain, ...applications].map((application) => (
                     <MenuItem
                       className={styles.chainOptionWrapper}
                       value={application}
@@ -215,7 +217,7 @@ const SendForm = (props) => {
                   onChange={(value) => setRecipientChain(value)}
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                 >
-                  {[...applications, sendingChain].map((application) => (
+                  {[sendingChain, ...applications].map((application) => (
                     <MenuItem
                       className={styles.chainOptionWrapper}
                       value={application}
@@ -239,8 +241,7 @@ const SendForm = (props) => {
               <span className={styles.balance}>
                 {!!token?.availableBalance && <span>Balance:&nbsp;&nbsp;</span>}
                 <span>
-                  <TokenAmount val={token?.availableBalance} />
-                  {token?.symbol}
+                  <TokenAmount val={token?.availableBalance} token={token} />
                 </span>
               </span>
               <MenuSelect
@@ -262,6 +263,7 @@ const SendForm = (props) => {
             </div>
             <AmountField
               amount={amount}
+              token={token}
               onChange={setAmountField}
               maxAmount={maxAmount}
               displayConverter

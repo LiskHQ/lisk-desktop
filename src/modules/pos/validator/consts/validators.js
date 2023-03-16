@@ -7,3 +7,4 @@ export const VALIDATOR_NAME_LENGTH = {
   Maximum: 20,
 };
 export const VALIDATOR_COMMISSION_DIVISOR = 100;
+export const MAX_COMMISSION_INCREASE_RATE = 500;
