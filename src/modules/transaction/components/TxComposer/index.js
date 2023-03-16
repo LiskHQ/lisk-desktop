@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import { selectActiveToken } from 'src/redux/selectors';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
@@ -39,7 +37,7 @@ const TxComposer = ({
     },
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
-  const token = useSelector(selectActiveToken);
+  const { symbol: tokenSymbol } = formProps.fields.token || {};
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority,
@@ -84,7 +82,7 @@ const TxComposer = ({
       title: 'Transaction',
       value: getFeeStatus({
         fee: Number(convertFromBaseDenom(transactionFee, formProps.fields.token)),
-        token,
+        tokenSymbol,
         customFee,
       }),
       components,
@@ -95,7 +93,7 @@ const TxComposer = ({
         fee: Number(
           convertFromBaseDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
         ),
-        token,
+        tokenSymbol,
         customFee,
       }),
       isHidden: !transactionJSON.params.messageFee,

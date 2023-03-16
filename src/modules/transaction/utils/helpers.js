@@ -26,11 +26,11 @@ const getTxDirectionConfig = (moduleCommand, host, recipient, styles) => {
   return false;
 };
 
-export const getFeeStatus = ({ fee, token, customFee }) => {
+export const getFeeStatus = ({ fee, tokenSymbol, customFee }) => {
   if (customFee) {
     return customFee;
   }
-  return !fee.error ? `${formatAmountBasedOnLocale({ value: fee })} ${token}` : fee.feedback;
+  return !fee.error ? `${formatAmountBasedOnLocale({ value: fee })} ${tokenSymbol}` : fee.feedback;
 };
 
 export const getSpaceSeparated = (str) => str.replace(/([A-Z])/g, ' $1');

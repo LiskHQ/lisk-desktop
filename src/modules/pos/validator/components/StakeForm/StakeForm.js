@@ -9,6 +9,7 @@ import BoxContent from '@theme/box/content';
 import Dialog from 'src/theme/dialog/dialog';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
+import routes from 'src/routes/routes';
 import { STAKE_LIMIT } from '../../consts';
 import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';
@@ -115,7 +116,7 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
       return sum;
     }, BigInt(0));
 
-  if (addedStakeAmount + fee > balance) {
+  if (addedStakeAmount + BigInt(fee) > BigInt(balance)) {
     messages.push(t(`You don't have enough ${posToken.symbol} in your account.`));
   }
 
@@ -149,28 +150,32 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     t,
     posToken
   );
+  const showEmptyState = !changedStakes.length || isStakingTxPending;
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
-    nextStep({
-      formProps,
-      transactionJSON,
-      added,
-      edited,
-      removed,
-      selfUnStake,
-      selectedPriority,
-      fees,
-    });
+    if (!showEmptyState) {
+      nextStep({
+        formProps,
+        transactionJSON,
+        added,
+        edited,
+        removed,
+        selfUnStake,
+        selectedPriority,
+        fees,
+      });
+    } else {
+      history.push(routes.validators.path);
+    }
   };
 
   const onComposed = (formProps) => {
     setFee(formProps.fee);
   };
 
-  const showEmptyState = !changedStakes.length || isStakingTxPending;
   const stakeFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
-    isFormValid: !feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending,
+    isFormValid: (!feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending) || showEmptyState,
     fields: {
       token: posToken,
     },
@@ -186,6 +191,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
         onConfirm={onConfirm}
         formProps={stakeFormProps}
         commandParams={commandParams}
+        buttonTitle={showEmptyState ? t("Continue staking") : t("Continue")}
       >
         <>
           {showEmptyState ? (
