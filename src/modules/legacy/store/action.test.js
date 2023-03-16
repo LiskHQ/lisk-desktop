@@ -81,11 +81,10 @@ describe('actions: legacy', () => {
         senderAccount,
         wallet: {
           ...state.wallet.info.LSK,
-          hwInfo: undefined,
           loginType: undefined,
         },
         schema: moduleCommandSchemas[transactionJSON.moduleCommand],
-        chainID: state.network.networks.LSK.chainID,
+        chainID: mockBlockchainApp.data[0].chainID,
         privateKey,
       });
       expect(dispatch).toHaveBeenCalledWith({
