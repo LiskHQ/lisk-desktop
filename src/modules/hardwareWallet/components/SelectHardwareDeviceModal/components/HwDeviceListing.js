@@ -9,7 +9,7 @@ function HwDeviceListing({ className }) {
   return (
     <div className={className}>
       {hwDevices.map((hwDevice) => (
-        <HwDeviceItem key={hwDevice.deviceId} hwDevice={hwDevice} />
+        <HwDeviceItem key={hwDevice.path} hwDevice={hwDevice} />
       ))}
     </div>
   );

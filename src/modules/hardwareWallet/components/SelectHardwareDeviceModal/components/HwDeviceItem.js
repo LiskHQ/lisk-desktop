@@ -7,23 +7,29 @@ import { setCurrentHWDevice } from '@hardwareWallet/store/actions';
 import styles from './HwDeviceItem.css';
 
 function HwDeviceItem({ hwDevice }) {
+  const { manufacturer, product, path } = hwDevice || {};
+
   const activeHardwareDeviceId = useSelector(selectCurrentHWDeviceId);
   const dispatch = useDispatch();
 
   function onChange() {
     dispatch(setCurrentHWDevice(hwDevice));
   }
+  const usbPort = path
+    ?.split('/')
+    ?.find((segment) => segment.startsWith('usb'))
+    ?.split('@')[0];
 
   return (
-    <div key={hwDevice.deviceId} className={styles.hwDevice}>
+    <div className={styles.hwDevice}>
       <Icon name="iconLedgerDevice" className={styles.hwWalletIcon} />
       <div className={styles.infoContainer}>
-        <h5 className={styles.modelInfo}>{hwDevice.model}</h5>
-        <span className={styles.deviceId}>{hwDevice.deviceId}</span>
+        <h5 className={styles.modelInfo}>{`${manufacturer} ${product}`}</h5>
+        <span className={styles.deviceId}>{usbPort}</span>
       </div>
       <CheckBox
         className={styles.checkBox}
-        checked={activeHardwareDeviceId === hwDevice.deviceId}
+        checked={activeHardwareDeviceId === path}
         onChange={onChange}
       />
     </div>

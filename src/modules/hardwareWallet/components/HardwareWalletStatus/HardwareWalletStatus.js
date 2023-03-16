@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Icon from '@theme/Icon';
 import { useSelector } from 'react-redux';
 import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
+import DialogLink from '@theme/dialog/link';
 import styles from './HardwareWalletStatus.css';
 
 const Status = ({ status }) => (
@@ -19,11 +20,13 @@ export const HardwareWalletStatus = () => {
     return null;
   }
 
-  const { manufacturer, product, status } = currentHWDevice;
+  const { manufacturer, product, status, path } = currentHWDevice;
+  const usbPort = path?.split('/')?.find((segment) => segment.startsWith('usb'))?.split('@')[0];
 
   const hwStatusInfo = [
     { label: `${t('Brand')} : `, value: manufacturer },
     { label: `${t('Model')} : `, value: product },
+    { label: `${t('USB ID')} : `, value: usbPort },
     { label: `${t('Status')} : `, value: <Status status={status} /> },
   ];
 
@@ -50,6 +53,9 @@ export const HardwareWalletStatus = () => {
               </li>
             ))}
           </ul>
+          <DialogLink className={styles.selectLinkLabel} component="selectHardwareDeviceModal">
+            {t('Switch hardware device')}
+          </DialogLink>
         </div>
       </Tooltip>
     </section>
