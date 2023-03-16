@@ -36,6 +36,7 @@ export const HardwareWalletStatus = () => {
   return (
     <section className={styles.wrapper}>
       <Tooltip
+        showTooltip
         tooltipClassName={`${styles.hwStatusTooltip}`}
         position="bottom left"
         content={
