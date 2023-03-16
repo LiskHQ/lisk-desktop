@@ -60,7 +60,13 @@ function MenuSelect({
 
   return (
     <>
-      {showDropdown && <div onClick={() => setShowDropdown(false)} className={styles.overlay} />}
+      {showDropdown && (
+        <div
+          data-testid="overlay"
+          onClick={() => setShowDropdown(false)}
+          className={styles.overlay}
+        />
+      )}
       <div onClick={handleOnClick} className={`${styles.wrapper} ${className}`}>
         <div data-testid="selected-menu-item">{children[selectedIndex]}</div>
         {!disabled && <DropdownIconState isLoading={isLoading} isValid={isValid} />}
