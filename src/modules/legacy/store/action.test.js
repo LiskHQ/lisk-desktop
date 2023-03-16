@@ -1,5 +1,6 @@
 import { signTransaction } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
+import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import actionTypes from '@transaction/store/actionTypes';
 import { balanceReclaimed } from './action';
@@ -42,6 +43,9 @@ describe('actions: legacy', () => {
             moduleCommandSchemas,
           },
         },
+      },
+      blockChainApplications: {
+        current: { chainID: mockBlockchainApp.data[0].chainID },
       },
     };
     const getState = () => state;
