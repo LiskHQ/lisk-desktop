@@ -76,7 +76,8 @@ const TxComposer = ({
     }
   }, [selectedPriority, transactionJSON.params]);
 
-  const minRequiredBalance = BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
+  const minRequiredBalance =
+    BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
   const { recipientChain, sendingChain } = formProps;
   const composedFees = [
     {
@@ -137,7 +138,8 @@ const TxComposer = ({
           className="confirm-btn"
           onClick={() => onConfirm(formProps, transactionJSON, selectedPriority, composedFees)}
           disabled={
-            !formProps.isFormValid || minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0)
+            !formProps.isFormValid ||
+            minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0)
           }
         >
           {buttonTitle ?? t('Continue')}
