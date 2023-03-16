@@ -88,7 +88,7 @@ export const multisigGroupRegistered = (
       transactionJSON,
       wallet: activeWallet,
       schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
-      chainID: state.network.networks.LSK.chainID,
+      chainID: state.blockChainApplications.current.chainID,
       privateKey,
     }),
   );

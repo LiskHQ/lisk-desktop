@@ -82,7 +82,7 @@ export const stakesSubmitted =
         transactionJSON,
         wallet: activeWallet,
         schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
-        chainID: state.network.networks.LSK.chainID,
+        chainID: state.blockChainApplications.current.chainID,
         privateKey,
         senderAccount,
       })
@@ -173,7 +173,7 @@ const signAndDispatchTransaction = async (
       transactionJSON,
       wallet: activeWallet,
       schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
-      chainID: state.network.networks.LSK.chainID,
+      chainID: state.blockChainApplications.current.chainID,
       privateKey,
       senderAccount,
     })

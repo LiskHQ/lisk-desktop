@@ -26,10 +26,10 @@ export const tokensTransferred =
       signTransaction({
         transactionJSON,
         wallet,
-        schema: moduleCommandSchemas[formProps.moduleCommand],
-        chainID: formProps.fields.sendingChain.chainID,
         privateKey,
         senderAccount,
+        schema: moduleCommandSchemas[formProps.moduleCommand],
+        chainID: state.blockChainApplications.current.chainID,
       })
     );
 

@@ -18,7 +18,7 @@ export const validatorRegistered =
         privateKey,
         wallet: activeWallet,
         schema: moduleCommandSchemas[formProps.moduleCommand],
-        chainID: state.network.networks.LSK.chainID,
+        chainID: state.blockChainApplications.current.chainID,
         senderAccount,
       })
     );

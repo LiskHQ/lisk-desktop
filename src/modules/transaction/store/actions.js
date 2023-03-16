@@ -219,7 +219,7 @@ export const multisigTransactionSigned = ({
     transactionJSON,
     txStatus,
     moduleCommandSchemas[formProps.moduleCommand],
-    state.network.networks.LSK.chainID,
+    state.blockChainApplications.current.chainID,
     privateKey,
     txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
     options,

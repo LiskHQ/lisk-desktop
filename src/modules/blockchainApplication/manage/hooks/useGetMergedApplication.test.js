@@ -24,7 +24,7 @@ jest.mock('react-redux', () => ({
 jest.mock('../../explore/hooks/queries/useBlockchainApplicationExplore');
 jest.mock('./queries/useBlockchainApplicationMeta');
 
-describe('useCurrentApplication hook', () => {
+describe('useGetMergedApplication hook', () => {
   beforeEach(() => {
     mockDispatch.mockClear();
     jest.clearAllMocks();
