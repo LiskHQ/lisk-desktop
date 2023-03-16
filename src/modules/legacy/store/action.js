@@ -10,7 +10,9 @@ export const balanceReclaimed =
     // Collect data
     //
     const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
+    const wallet = state.account?.current?.hw
+      ? state.account.current
+      : selectActiveTokenAccount(state);
 
     //
     // Create the transaction
@@ -19,7 +21,7 @@ export const balanceReclaimed =
       signTransaction({
         privateKey,
         transactionJSON,
-        wallet: activeWallet,
+        wallet,
         schema: moduleCommandSchemas[formProps.moduleCommand],
         chainID: state.network.networks.LSK.chainID,
         senderAccount: txInitiatorAccount,

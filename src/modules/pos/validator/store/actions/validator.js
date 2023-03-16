@@ -8,7 +8,9 @@ export const validatorRegistered =
   (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
+    const wallet = state.account?.current?.hw
+      ? state.account.current
+      : selectActiveTokenAccount(state);
     //
     // Create the transaction
     //
@@ -16,7 +18,7 @@ export const validatorRegistered =
       signTransaction({
         transactionJSON,
         privateKey,
-        wallet: activeWallet,
+        wallet,
         schema: moduleCommandSchemas[formProps.moduleCommand],
         chainID: state.blockChainApplications.current.chainID,
         senderAccount,

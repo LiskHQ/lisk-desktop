@@ -78,7 +78,9 @@ export const multisigGroupRegistered = (
   // Collect data
   //
   const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
+  const wallet = state.account?.current?.hw
+    ? state.account.current
+    : selectActiveTokenAccount(state);
 
   //
   // Create the transaction
@@ -86,7 +88,7 @@ export const multisigGroupRegistered = (
   const [error, tx] = await to(
     signTransaction({
       transactionJSON,
-      wallet: activeWallet,
+      wallet,
       schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
