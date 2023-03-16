@@ -64,6 +64,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
               unlockedAmount={unlockedAmount}
               currentBlockHeight={latestBlock?.height ?? 0}
               lockedPendingUnlocks={lockedPendingUnlocks}
+              token={dposToken}
             />
           </BoxContent>
         </>

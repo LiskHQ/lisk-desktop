@@ -55,7 +55,7 @@ const TransactionInfo = ({
           <div className={styles.col}>
             <label>{t('Transaction fee')}</label>
             <label className="fee">
-              <TokenAmount val={transactionJSON.fee} token={token} />
+              <TokenAmount val={transactionJSON.fee} token={formProps.fields.token} />
             </label>
           </div>
         </section>

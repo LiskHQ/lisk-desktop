@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import Icon from 'src/theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import UnlockingList from './UnlockingList';
@@ -11,6 +10,7 @@ const BalanceTable = ({
   unlockedAmount,
   currentBlockHeight,
   lockedPendingUnlocks,
+  token
 }) => {
   const { t } = useTranslation();
   return (
@@ -24,7 +24,7 @@ const BalanceTable = ({
       {sentStakesAmount !== 0 && (
         <li>
           <p className="locked-balance">
-            <TokenAmount val={sentStakesAmount} token={tokenMap.LSK.key} />
+            <TokenAmount val={sentStakesAmount} token={token} />
           </p>
           <p>
             <Icon name="lock" />
@@ -42,7 +42,7 @@ const BalanceTable = ({
       {unlockedAmount !== 0 && (
         <li>
           <p className="available-balance">
-            <TokenAmount val={unlockedAmount} token={tokenMap.LSK.key} />
+            <TokenAmount val={unlockedAmount} token={token} />
           </p>
           <p>
             <Icon name="unlock" />

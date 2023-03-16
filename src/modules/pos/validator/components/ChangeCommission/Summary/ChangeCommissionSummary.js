@@ -33,7 +33,7 @@ const ChangeCommissionSummary = ({
   };
   return (
     <TransactionSummary
-      title={t('Edit commission')}
+      title={t('Transaction summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       className={`${styles.box} ${styles.summaryContainer}`}

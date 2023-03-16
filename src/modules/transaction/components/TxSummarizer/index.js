@@ -19,7 +19,7 @@ const TxSummarizer = ({
   confirmButton,
   cancelButton,
   wallet,
-  width = "medium",
+  width = 'medium',
   t,
   secondPassphraseStored,
   className,

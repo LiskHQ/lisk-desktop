@@ -1,16 +1,18 @@
 import { screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { mockRewardsClaimable } from '@pos/reward/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import SentStakes from './SentStakes';
 import tableHeaderMap from './tableHeaderMap';
-import { useSentStakes, usePosConstants, useUnlocks, useValidators } from '../../hooks/queries';
+import { usePosConstants, useSentStakes, useUnlocks, useValidators } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -23,14 +25,15 @@ jest.mock('@token/fungible/hooks/queries');
 jest.mock('@pos/reward/hooks/queries');
 jest.mock('src/modules/common/hooks');
 jest.mock('../../hooks/queries');
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('SentStakes', () => {
   const props = {
     history: { location: { search: '' } },
   };
 
-  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimable });
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
 
   useValidators.mockImplementation(({ config }) => ({
     data: getMockValidators(config.params?.address),
@@ -54,7 +57,11 @@ describe('SentStakes', () => {
       expect(screen.getAllByText(name)[0]).toBeTruthy();
       expect(screen.getByText(truncateAddress(address))).toBeTruthy();
       expect(
-        screen.getAllByText(`${fromRawLsk(amount)} ${mockTokensBalance.data[0].symbol}`)[0]
+        screen.getAllByText(
+          `${convertFromBaseDenom(amount, mockAppsTokens.data[0])} ${
+            mockTokensBalance.data[0].symbol
+          }`
+        )[0]
       ).toBeTruthy();
       expect(screen.getAllByAltText('deleteIcon')[index]).toBeTruthy();
       expect(screen.getAllByAltText('edit')[index]).toBeTruthy();
@@ -70,7 +77,9 @@ describe('SentStakes', () => {
     mockSentStakes.data.stakes.forEach(({ address, amount, name }, index) => {
       expect(screen.queryAllByText(name)[0]).toBeFalsy();
       expect(screen.queryByText(truncateAddress(address))).toBeFalsy();
-      expect(screen.queryAllByText(`${fromRawLsk(amount)}`)[0]).toBeFalsy();
+      expect(
+        screen.queryAllByText(`${convertFromBaseDenom(amount, mockAppsTokens.data[0])}`)[0]
+      ).toBeFalsy();
       expect(screen.queryAllByAltText('deleteIcon')[index]).toBeFalsy();
       expect(screen.queryAllByAltText('edit')[index]).toBeFalsy();
     });

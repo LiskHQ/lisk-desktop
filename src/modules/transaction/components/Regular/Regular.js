@@ -39,6 +39,8 @@ const Regular = ({
   transactionBroadcasted,
   moduleCommandSchemas,
   onRetry,
+  successButtonText,
+  onSuccessClick,
 }) => {
   const queryClient = useQueryClient();
 
@@ -73,9 +75,9 @@ const Regular = ({
       {successTypes.includes(status.code) && !noBackButton && (
         <PrimaryButton
           className={`${styles.backToWallet} back-to-wallet-button`}
-          onClick={goToWallet}
+          onClick={onSuccessClick || goToWallet}
         >
-          {t('Back to wallet')}
+          {successButtonText || t('Back to wallet')}
         </PrimaryButton>
       )}
       {errorTypes.includes(status.code) ? (

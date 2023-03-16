@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { truncateAddress } from '@wallet/utils/account';
 import { TertiaryButton } from '@theme/buttons';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -19,6 +18,7 @@ const AccountCard = ({
 }) => {
   const [inputTitle, setInputTitle] = useState(account.name);
   const [accountOnEditMode, setAccountOnEditMode] = useState(false);
+  const token = account.token?.[0] || {}
 
   useEffect(() => {
     if (!accountOnEditMode) {
@@ -85,7 +85,7 @@ const AccountCard = ({
             <p>
               <TokenAmount
                 val={account?.availableBalance}
-                token={tokenMap.LSK.key}
+                token={token}
               />
             </p>
           </div>
@@ -104,7 +104,7 @@ const AccountCard = ({
                 <p className={styles.reclaimBalance}>
                   <TokenAmount
                     val={account.legacy.balance}
-                    token={tokenMap.LSK.key}
+                    token={token}
                   />
                 </p>
               </>

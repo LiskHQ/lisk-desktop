@@ -6,6 +6,7 @@ import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import { Input } from 'src/theme';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import Table from '@theme/table';
 import styles from './stakes.css';
 import StakeRow from './stakeRow';
@@ -23,6 +24,7 @@ const Stakes = ({
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
+  const { token } = usePosToken();
 
   const handleFilter = ({ target }) => {
     setFilterValue(target.value);
@@ -80,6 +82,7 @@ const Stakes = ({
           }}
           row={StakeRow}
           additionalRowProps={{
+            token,
             onRowClick,
             accounts: accounts.data,
           }}

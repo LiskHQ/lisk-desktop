@@ -4,6 +4,8 @@ import { cryptography } from '@liskhq/lisk-client';
 import accounts from '@tests/constants/wallets';
 import { mockBlocks } from '@block/__fixtures__';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import RecentTransactions, { NoTransactions, NotSignedIn } from './RecentTransactions';
@@ -114,7 +116,6 @@ const NotSignedInState = {
   bookmarks,
 };
 
-
 const mockUseContext = (mockData = {}) => {
   jest.spyOn(React, 'useContext').mockImplementation(() => ({
     ...mockData,
@@ -126,7 +127,9 @@ jest.mock('@block/hooks/queries/useLatestBlock');
 jest
   .spyOn(cryptography.address, 'getLisk32AddressFromPublicKey')
   .mockReturnValue('lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6');
+jest.mock('@token/fungible/hooks/queries');
 
+useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
 useSelector.mockReturnValue({ ...LiskState.account, ...LiskState.settings });
 useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
@@ -147,7 +150,7 @@ describe('Recent Transactions', () => {
         metadata: {
           address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
         },
-      }
+      },
     ]);
     useTransactions.mockReturnValue({
       data: LiskTransactions,
@@ -156,12 +159,7 @@ describe('Recent Transactions', () => {
       isFetching: false,
     });
 
-    const wrapper = mountWithRouterAndStore(
-      RecentTransactions,
-      { t },
-      {},
-      LiskState
-    );
+    const wrapper = mountWithRouterAndStore(RecentTransactions, { t }, {}, LiskState);
     expect(wrapper.find('TransactionRow')).toHaveLength(LiskTransactions.data.length);
   });
 
@@ -171,7 +169,7 @@ describe('Recent Transactions', () => {
         metadata: {
           address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
         },
-      }
+      },
     ]);
     useTransactions.mockReturnValue({
       data: { data: [] },
@@ -192,11 +190,7 @@ describe('Recent Transactions', () => {
       hasNextPage: false,
       isFetching: false,
     });
-    const wrapper = mountWithRouter(
-      RecentTransactions,
-      { t },
-      NotSignedInState
-    );
+    const wrapper = mountWithRouter(RecentTransactions, { t }, NotSignedInState);
     expect(wrapper).not.toContainMatchingElement('.transactions-row');
     expect(wrapper).toContainMatchingElement(NotSignedIn);
   });

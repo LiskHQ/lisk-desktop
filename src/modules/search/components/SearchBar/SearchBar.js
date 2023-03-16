@@ -6,6 +6,7 @@ import { keyCodes } from 'src/utils/keyCodes';
 import routes from 'src/routes/routes';
 import { Input } from 'src/theme';
 import Wallet from '@wallet/components/searchBarWallets';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import Validators from 'src/modules/wallet/components/searchBarWallets/validators';
 import Blocks from '@block/components/BlockResultList';
 import IconSearch from "@search/components/IconSearch/IconSearch";
@@ -18,6 +19,8 @@ const SearchBar = ({ className, history }) => {
   const [searchTextValue, setSearchTextValue] = useState('');
   const [rowItemIndex, setRowIndex] = useState(0);
   const searchBarRef = useRef();
+  const { data: tokens } = useTokensBalance();
+  const token = tokens?.data?.[0] || {};
 
   const debouncedSearchTerm = useDebounce(searchTextValue, 500);
   const { addresses, validators, transactions, blocks, isLoading } = useSearch(debouncedSearchTerm);
@@ -161,7 +164,7 @@ const SearchBar = ({ className, history }) => {
           rowItemIndex={rowItemIndex}
           updateRowItemIndex={updateRowItemIndex}
           t={t}
-          activeToken="LSK"
+          activeToken={token}
         />
       )}
       {!!blocks.length && <Blocks blocks={blocks} onSelectedRow={onSelectBlock} t={t} />}

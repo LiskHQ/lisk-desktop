@@ -9,6 +9,7 @@ import StickyHeader from 'src/theme/table/stickyHeader';
 import { useFilter, useSort } from 'src/modules/common/hooks';
 import FilterBar from 'src/modules/common/components/filterBar';
 import { normalizeTransactionParams } from '@transaction/utils';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import TransactionRow from '../TransactionRow';
 import styles from './ExplorerTransactions.css';
 import header from './ExplorerTransactionsHeaderMap';
@@ -22,8 +23,10 @@ const Transactions = ({ activeToken, address }) => {
   } = useLatestBlock();
   const { sort, toggleSort } = useSort({ defaultSort: 'timestamp:desc' });
   const { filters, clearFilters, applyFilters } = useFilter({});
+  const { data: tokens } = useTokensBalance();
+  const token = tokens?.data?.[0] || {};
 
-  const params = normalizeTransactionParams({ ...filters, ...(sort && { sort }) });
+  const params = normalizeTransactionParams({ ...filters, ...(sort && { sort }) }, token);
 
   const formatters = {
     dateFrom: (value) => `${t('From')}: ${value}`,

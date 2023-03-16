@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom, convertFromBaseDenom } from '@token/fungible/utils/lsk';
 import numeral from 'numeral';
 import { renderWithRouterAndQueryClient, renderWithRouterAndStore } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -7,9 +7,10 @@ import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { mockValidators, mockSentStakes } from '@pos/validator/__fixtures__';
-import { useLatestBlock } from 'src/modules/block/hooks/queries/useLatestBlock';
-import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
-import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { mockTokensBalance, mockAppsTokens } from '@token/fungible/__fixtures__';
+import { mockAuth } from '@auth/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import EditStake from './index';
 import { useValidators, useSentStakes, usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
@@ -36,6 +37,7 @@ jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('../../hooks/queries');
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('EditStake', () => {
   const validatorAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
@@ -72,6 +74,9 @@ describe('EditStake', () => {
     useAuth.mockReturnValue({ data: mockAuth });
     usePosConstants.mockReturnValue({ data: mockPosConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+    usePosToken.mockReturnValue({
+      token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' },
+    });
   });
 
   it('should properly render add stake form', () => {
@@ -86,12 +91,14 @@ describe('EditStake', () => {
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
     expect(screen.getByText('Available balance:')).toBeTruthy();
     expect(screen.getByText('Commission:')).toBeTruthy();
-    expect(screen.getByText(`${convertCommissionToPercentage(validator.commission)}%`)).toBeTruthy();
+    expect(
+      screen.getByText(`${convertCommissionToPercentage(validator.commission)}%`)
+    ).toBeTruthy();
     expect(
       screen.getByText(
-        `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
-          token.symbol
-        }`
+        `${numeral(convertFromBaseDenom(token.availableBalance, mockAppsTokens.data[0])).format(
+          '0,0.[0000000000000]'
+        )} ${token.symbol}`
       )
     ).toBeTruthy();
     expect(
@@ -113,7 +120,7 @@ describe('EditStake', () => {
     await waitFor(() => {
       expect(props.stakeEdited).toHaveBeenCalledWith([
         {
-          amount: toRawLsk(20),
+          amount: convertToBaseDenom(20, mockAppsTokens.data[0]),
           validator,
         },
       ]);
@@ -174,7 +181,7 @@ describe('EditStake', () => {
     await waitFor(() => {
       expect(props.stakeEdited).toHaveBeenCalledWith([
         {
-          amount: toRawLsk(20),
+          amount: convertToBaseDenom(20, mockAppsTokens.data[0]),
           validator,
         },
       ]);

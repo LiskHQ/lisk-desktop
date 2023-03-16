@@ -1,10 +1,13 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { tokenMap } from '@token/fungible/consts/tokens';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import styles from './UnlockBalance.css';
 
-const UnlockBalance = ({ account, t, formProps }) => (
+const UnlockBalance = ({ account, t, formProps }) => {
+  const { token } = usePosToken();
+  
+  return (
     <>
       <section className={styles.sender}>
         <label>{t('Sender')}</label>
@@ -19,12 +22,13 @@ const UnlockBalance = ({ account, t, formProps }) => (
           <label className="amount-label">
             <TokenAmount
               val={formProps.unlockedAmount}
-              token={tokenMap.LSK.key}
+              token={token}
             />
           </label>
         </div>
       </section>
     </>
   );
+};
 
 export default UnlockBalance;

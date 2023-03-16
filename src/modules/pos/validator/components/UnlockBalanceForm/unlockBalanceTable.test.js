@@ -6,7 +6,11 @@ import {
   getLockedPendingUnlocks,
 } from '@wallet/utils/account';
 import { mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import BalanceTable from './BalanceTable';
+
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('unlockBalanceTable', () => {
   let wrapper;
@@ -14,6 +18,7 @@ describe('unlockBalanceTable', () => {
   const pendingUnlocks = mockUnlocks.data.pendingUnlocks;
   const stakes = mockSentStakes.data.stakes;
   const currentBlockHeight = 5000;
+  const mockToken = mockAppsTokens.data[0];
 
   const lockedPendingUnlocks = getLockedPendingUnlocks(pendingUnlocks);
 
@@ -22,7 +27,10 @@ describe('unlockBalanceTable', () => {
     unlockedAmount: calculateUnlockedAmount(pendingUnlocks),
     currentBlockHeight,
     lockedPendingUnlocks,
+    token: mockToken,
   };
+
+  usePosToken.mockReturnValue({ token: mockToken });
 
   it('renders properly', () => {
     wrapper = mount(<BalanceTable {...props} />);

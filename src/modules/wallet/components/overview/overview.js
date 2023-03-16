@@ -18,7 +18,6 @@ import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
-import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './overview.css';
 
 // @Todo: this should be remove as sdk would provide this data
@@ -80,21 +79,17 @@ const Overview = ({ isWalletRoute, history }) => {
   };
 
   const renderTokenCard = useCallback(
-    (application) => {
-      const { symbol, availableBalance, lockedBalances } = application;
-      const chainLogo = getLogo(application);
+    (token) => {
       const totalLockedBalance = useMemo(
-        () => lockedBalances?.reduce((total, { amount }) => +amount + total, 0) ?? 0,
-        [lockedBalances]
+        () => token.lockedBalances?.reduce((total, { amount }) => +amount + total, 0) ?? 0,
+        [token.lockedBalances]
       );
 
       return (
         <TokenCard
-          availableBalance={availableBalance}
+          token={token}
           lockedBalance={totalLockedBalance}
           address={address}
-          symbol={symbol || ''}
-          url={chainLogo}
         />
       );
     },

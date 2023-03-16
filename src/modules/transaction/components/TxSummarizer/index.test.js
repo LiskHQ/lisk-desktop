@@ -5,7 +5,8 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import wallets from '@tests/constants/wallets';
 import { getAddressFromBase32Address } from '@wallet/utils/account';
-import { mockTokensBalance } from '@token/fungible/__fixtures__';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import { useAuth } from 'src/modules/auth/hooks/queries';
@@ -14,6 +15,7 @@ import TxSummarizer from '.';
 import { convertStringToBinary } from '../../utils';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
@@ -75,6 +77,7 @@ describe('TxSummarizer', () => {
     };
   });
   useAuth.mockReturnValue({ data: mockAuth });
+  useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
 
   it('should render title', () => {
     const wrapper = mount(<TxSummarizer {...props} />);

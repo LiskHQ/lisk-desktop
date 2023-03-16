@@ -2,6 +2,11 @@
   & > header {
     padding-left: 20px !important;
     padding-right: var(--horizontal-padding-l) !important;
+
+    & h6 {
+      font-size: 14px;
+      color: var(--color-slate-gray);
+    }
   }
 
   & > footer {
