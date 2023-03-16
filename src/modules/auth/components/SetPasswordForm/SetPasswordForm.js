@@ -14,17 +14,35 @@ import { regex } from 'src/const/regex';
 import { useEncryptAccount } from '@account/hooks';
 import styles from './SetPasswordForm.css';
 
-const setPasswordFormSchema = yup.object({
-  accountName: yup.string()
-    .matches(regex.accountName, 'Can be alpha numeric with either !,@,$,&,_,. as special characters')
-    .max(20, 'Character length can\'t be more than 20')
-    .min(3, 'Character length can\'t be lesser than 3'),
-  password: yup.string().required()
-    .matches(regex.password, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
-  cPassword: yup.string().required()
-    .oneOf([yup.ref('password'), null], 'Confirm that passwords match'),
-  hasAgreed: yup.boolean().required(),
-}).required();
+const setPasswordFormSchema = yup
+  .object({
+    accountName: yup.string().when((val) => {
+      if (!val.length) {
+        return yup.string().notRequired();
+      }
+      return yup
+        .string()
+        .matches(
+          regex.accountName,
+          'Can be alpha numeric with either !,@,$,&,_,. as special characters'
+        )
+        .max(20, "Character length can't be more than 20")
+        .min(3, "Character length can't be less than 3");
+    }),
+    password: yup
+      .string()
+      .required()
+      .matches(
+        regex.password,
+        'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+      ),
+    cPassword: yup
+      .string()
+      .required()
+      .oneOf([yup.ref('password'), null], 'Confirm that passwords match'),
+    hasAgreed: yup.boolean().required(),
+  })
+  .required();
 
 function SetPasswordForm({ onSubmit, recoveryPhrase, customDerivationPath }) {
   const { t } = useTranslation();

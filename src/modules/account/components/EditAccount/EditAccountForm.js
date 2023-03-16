@@ -30,7 +30,7 @@ const editAccountFormSchema = yup
   })
   .required();
 
-const EditAccountForm = ({ nextStep }) => {
+const EditAccountForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const {
@@ -65,9 +65,6 @@ const EditAccountForm = ({ nextStep }) => {
         updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })
       );
     }
-    nextStep({
-      accountName,
-    });
   };
 
   return (
