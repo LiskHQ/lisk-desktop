@@ -1,7 +1,7 @@
 import { transactions } from '@liskhq/lisk-client';
 import { getSignedTransaction } from '@libs/ledgerHardwareWallet/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
-const createMessage = (TAG, chainID, unsignedBytes) =>
+const createUnsignedMessage = (TAG, chainID, unsignedBytes) =>
   Buffer.concat([Buffer.from(TAG, 'utf8'), Buffer.from(chainID, 'hex'), unsignedBytes]).toString(
     'hex'
   );
@@ -12,7 +12,7 @@ const createMessage = (TAG, chainID, unsignedBytes) =>
  */
 const signTransactionByHW = async ({ wallet, schema, chainID, transaction }) => {
   const unsignedBytes = transactions.getSigningBytes(transaction, schema);
-  const unsignedMessage = createMessage(transactions.TAG_TRANSACTION, chainID, unsignedBytes);
+  const unsignedMessage = createUnsignedMessage(transactions.TAG_TRANSACTION, chainID, unsignedBytes);
 
   try {
     const signature = await getSignedTransaction(
@@ -28,4 +28,4 @@ const signTransactionByHW = async ({ wallet, schema, chainID, transaction }) => 
   }
 };
 
-export { signTransactionByHW };
+export { signTransactionByHW, createUnsignedMessage };

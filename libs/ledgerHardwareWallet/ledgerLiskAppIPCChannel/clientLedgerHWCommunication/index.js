@@ -1,7 +1,8 @@
 import { executeIPCCommand } from '@libs/ledgerHardwareWallet/ledgerLiskAppIPCChannel/clientLedgerHWCommunication/utils';
 import { LEDGER_HW_IPC_CHANNELS } from '@libs/ledgerHardwareWallet/constants';
 
-const { GET_CONNECTED_DEVICES, GET_SIGNED_TRANSACTION, GET_PUB_KEY } = LEDGER_HW_IPC_CHANNELS;
+const { GET_CONNECTED_DEVICES, GET_SIGNED_TRANSACTION, GET_PUB_KEY, GET_SIGNED_MESSAGE } =
+  LEDGER_HW_IPC_CHANNELS;
 
 // TODO: remove when server have a queuing system
 function sleep(ms) {
@@ -10,6 +11,17 @@ function sleep(ms) {
 
 export const getSignedTransaction = async (devicePath, accountIndex, unsignedMessage) => {
   const signedTransaction = await executeIPCCommand(GET_SIGNED_TRANSACTION, {
+    devicePath,
+    accountIndex,
+    unsignedMessage,
+  });
+  console.log('getSignedTransaction signedTransaction', signedTransaction);
+
+  return signedTransaction;
+};
+
+export const getSignedMessage = async (devicePath, accountIndex, unsignedMessage) => {
+  const signedTransaction = await executeIPCCommand(GET_SIGNED_MESSAGE, {
     devicePath,
     accountIndex,
     unsignedMessage,
