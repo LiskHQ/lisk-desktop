@@ -35,7 +35,7 @@ export const ledgerLiskAppIPCChannel = () => {
     return result;
   });
 
-  createIpcMainChannel(GET_CONNECTED_DEVICES, async (data) => {
+  createIpcMainChannel(GET_CONNECTED_DEVICES, async () => {
     const id = `${GET_CONNECTED_DEVICES}-${Date.now()}`;
     const result = await getSequentiallyQueuedData(myq, id, getConnectedDevices);
     return result;
