@@ -190,7 +190,7 @@ export const modals = {
     forbiddenTokens: [],
   },
   selectHardwareDeviceModal: {
-    isPrivate: true,
+    isPrivate: false,
     forbiddenTokens: [],
   },
   stakingQueue: {
@@ -226,7 +226,7 @@ export const modals = {
     forbiddenTokens: [],
   },
   switchAccount: {
-    isPrivate: true,
+    isPrivate: false,
     forbiddenTokens: [],
   },
   selectNode: {

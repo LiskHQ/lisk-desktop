@@ -7,11 +7,11 @@ import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelecto
 import DialogLink from '@theme/dialog/link';
 import styles from './HardwareWalletStatus.css';
 
-const Status = ({ status }) => (
+/* const Status = ({ status }) => (
   <div className={`${styles.statusWrapper} ${styles[status]}`}>
     <b>{status}</b>
   </div>
-);
+); */
 
 export const HardwareWalletStatus = () => {
   const { t } = useTranslation();
@@ -21,13 +21,16 @@ export const HardwareWalletStatus = () => {
   }
 
   const { manufacturer, product, status, path } = currentHWDevice;
-  const usbPort = path?.split('/')?.find((segment) => segment.startsWith('usb'))?.split('@')[0];
+  const usbPort = path
+    ?.split('/')
+    ?.find((segment) => segment.startsWith('usb'))
+    ?.split('@')[0];
 
   const hwStatusInfo = [
     { label: `${t('Brand')} : `, value: manufacturer },
     { label: `${t('Model')} : `, value: product },
     { label: `${t('USB ID')} : `, value: usbPort },
-    { label: `${t('Status')} : `, value: <Status status={status} /> },
+    /*    { label: `${t('Status')} : `, value: <Status status={status} /> }, */
   ];
 
   return (
@@ -53,6 +56,9 @@ export const HardwareWalletStatus = () => {
               </li>
             ))}
           </ul>
+          <DialogLink className={styles.selectLinkLabel} component="switchAccount">
+            {t('Switch hardware account')}
+          </DialogLink>
           <DialogLink className={styles.selectLinkLabel} component="selectHardwareDeviceModal">
             {t('Switch hardware device')}
           </DialogLink>

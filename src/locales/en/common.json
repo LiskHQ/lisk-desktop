@@ -599,6 +599,7 @@
   "Successfully edited, now you can download the encrypted secret recovery phrase to this effect.": "Successfully edited, now you can download the encrypted secret recovery phrase to this effect.",
   "Successfully paired with {{name}}": "Successfully paired with {{name}}",
   "Switch account": "Switch account",
+  "Switch hardware account": "Switch hardware account",
   "Switch hardware device": "Switch hardware device",
   "Terminate sidechain": "Terminate sidechain",
   "Terminated": "Terminated",
