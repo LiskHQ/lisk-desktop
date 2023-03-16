@@ -10,8 +10,7 @@ export const getHWAccounts = async (currentHWDevice, getName) => {
   while (true) {
     const pubkey = await getPubKey(currentHWDevice.path, accountIndex);
     const address = extractAddressFromPublicKey(pubkey);
-    const config = { params: { address } };
-    const isInitialized = await getCheckInitializedAccount({ config });
+    const isInitialized = await getCheckInitializedAccount(address, '0400000000000000');
     if (!isInitialized) {
       accounts.push({
         hw: currentHWDevice,
