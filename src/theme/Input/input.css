@@ -142,7 +142,8 @@
   display: flex;
   margin: 40px 0 12px;
 
-  &.xs {
+  &.xs,
+  &.s {
     margin: 16px 0 8px;
   }
 }

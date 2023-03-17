@@ -6,10 +6,11 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Input from 'src/theme/Input';
-import { PrimaryButton } from 'src/theme/buttons';
-import CheckBox from 'src/theme/CheckBox';
-import Tooltip from 'src/theme/Tooltip';
+import Input from '@theme/Input';
+import { PrimaryButton, TertiaryButton } from '@theme/buttons';
+import CheckBox from '@theme/CheckBox';
+import Tooltip from '@theme/Tooltip';
+import Icon from '@theme/Icon';
 import { regex } from 'src/const/regex';
 import { useEncryptAccount } from '@account/hooks';
 import styles from './SetPasswordForm.css';
@@ -44,7 +45,7 @@ const setPasswordFormSchema = yup
   })
   .required();
 
-function SetPasswordForm({ onSubmit, recoveryPhrase, customDerivationPath }) {
+function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationPath }) {
   const { t } = useTranslation();
   const { encryptAccount } = useEncryptAccount(customDerivationPath);
   const {
@@ -81,7 +82,16 @@ function SetPasswordForm({ onSubmit, recoveryPhrase, customDerivationPath }) {
   return (
     <div data-testid="setPasswordFormContainer" className={styles.container}>
       <div className={`${styles.titleHolder} ${grid['col-xs-12']}`}>
-        <h1>{t('Set up your account password')}</h1>
+        <div className={grid.row}>
+          <div className={grid['col-xs-1']}>
+            <TertiaryButton onClick={() => prevStep()}>
+              <Icon name="arrowLeftTailed" />
+            </TertiaryButton>
+          </div>
+          <div className={grid['col-xs-11']}>
+            <h1>{t('Set up your account password')}</h1>
+          </div>
+        </div>
         <p>
           {t(
             'This password will be used for decrypting your account every time you initiate any transaction from your wallet, and also during backup or removal of an account from the wallet.'
@@ -91,7 +101,7 @@ function SetPasswordForm({ onSubmit, recoveryPhrase, customDerivationPath }) {
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className={styles.fieldWrapper}>
           <Input
-            size="xs"
+            size="s"
             secureTextEntry
             feedback={errors.password?.message}
             status={errors.password ? 'error' : undefined}
@@ -112,7 +122,7 @@ function SetPasswordForm({ onSubmit, recoveryPhrase, customDerivationPath }) {
         </div>
         <div className={styles.fieldWrapper}>
           <Input
-            size="xs"
+            size="s"
             secureTextEntry
             feedback={errors.cPassword?.message}
             status={errors.cPassword ? 'error' : undefined}
@@ -122,7 +132,7 @@ function SetPasswordForm({ onSubmit, recoveryPhrase, customDerivationPath }) {
         </div>
         <div className={styles.fieldWrapper}>
           <Input
-            size="xs"
+            size="s"
             feedback={errors.accountName?.message}
             status={errors.accountName ? 'error' : undefined}
             label="Account name (Optional)"
@@ -133,7 +143,7 @@ function SetPasswordForm({ onSubmit, recoveryPhrase, customDerivationPath }) {
           <CheckBox className={`${styles.checkbox}`} {...register('hasAgreed')} />
           <span>{t('I agree to store my encrypted secret recovery phrase on this device.')}</span>
         </label>
-        <div className={[styles.fieldWrapper, styles.submitWrapper]}>
+        <div className={[styles.fieldWrapper, styles.submitWrapper].join(' ')}>
           <PrimaryButton type="submit" style={{ width: '100%' }} disabled={isButtonDisabled}>
             {t('Save Account')}
           </PrimaryButton>
