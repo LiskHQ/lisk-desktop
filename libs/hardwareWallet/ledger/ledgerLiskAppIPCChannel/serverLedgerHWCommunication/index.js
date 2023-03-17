@@ -4,9 +4,9 @@ import { LiskApp } from '@zondax/ledger-lisk';
 import { getDevicesFromPaths, getLedgerAccount } from './utils';
 
 export async function getPubKey({ devicePath, accountIndex }) {
-  let transport = TransportNodeHid;
+  let transport;
   try {
-    transport = await transport.open(devicePath);
+    transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
     const account = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
@@ -23,9 +23,9 @@ export async function getPubKey({ devicePath, accountIndex }) {
 }
 
 export async function getSignedTransaction({ devicePath, accountIndex, unsignedMessage }) {
-  let transport = TransportNodeHid;
+  let transport;
   try {
-    transport = await transport.open(devicePath);
+    transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
     const signature = await liskLedger.sign(
@@ -45,9 +45,9 @@ export async function getSignedTransaction({ devicePath, accountIndex, unsignedM
 }
 
 export async function getSignedMessage({ devicePath, accountIndex, unsignedMessage }) {
-  let transport = TransportNodeHid;
+  let transport;
   try {
-    transport = await transport.open(devicePath);
+    transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
     const signature = await liskLedger.sign(
