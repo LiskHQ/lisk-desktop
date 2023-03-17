@@ -13,10 +13,13 @@ jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn().mockImplementation(() => ({
     accounts: [{ metadata: { address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt' } }],
   })),
+  useCurrentAccount: jest.fn(() => [
+    { metadata: { address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt' } },
+  ]),
 }));
 
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 
 jest.spyOn(React, 'useContext').mockImplementation(() => ({
@@ -64,11 +67,11 @@ describe('ConnectionSummary', () => {
   const approve = jest.fn(() => ({
     status: 'SUCCESS',
     data: proposal,
-  }))
+  }));
   const reject = jest.fn(() => ({
     status: 'SUCCESS',
     data: proposal,
-  }))
+  }));
   usePairings.mockReturnValue({ setUri: jest.fn() });
   useSession.mockReturnValue({ approve, reject });
 
@@ -83,7 +86,9 @@ describe('ConnectionSummary', () => {
   it('Display the connecting app information and connection summary', () => {
     const wrapper = setup(context);
     expect(wrapper.find('.chain-name-text').text()).toEqual(proposal.params.proposer.metadata.name);
-    expect(wrapper.find('img').at(0).prop('src')).toEqual(proposal.params.proposer.metadata.icons[0]);
+    expect(wrapper.find('img').at(0).prop('src')).toEqual(
+      proposal.params.proposer.metadata.icons[0]
+    );
     expect(wrapper.find('.pairing-topic').text()).toEqual(proposal.params.pairingTopic);
     wrapper.find('.methods span').forEach((method, index) => {
       expect(method.text()).toEqual(proposal.params.requiredNamespaces.lisk.methods[index]);
@@ -108,26 +113,33 @@ describe('ConnectionSummary', () => {
       },
     };
     const newContext = {
-      events: [
-        { name: EVENTS.SESSION_PROPOSAL, meta: proposalWithNoEvents },
-      ],
+      events: [{ name: EVENTS.SESSION_PROPOSAL, meta: proposalWithNoEvents }],
     };
     const wrapper = setup(newContext);
     wrapper.find('.events span').forEach((event) => {
       expect(event.text()).toEqual('-');
     });
     act(() => {
-      wrapper.find('.select-all input').at(0).simulate('change', { target: { checked: true } });
+      wrapper
+        .find('.select-all input')
+        .at(0)
+        .simulate('change', { target: { checked: true } });
     });
     wrapper.update();
     expect(wrapper.find('button').at(1)).not.toBeDisabled();
     act(() => {
-      wrapper.find('.select-all input').at(0).simulate('change', { target: { checked: false } });
+      wrapper
+        .find('.select-all input')
+        .at(0)
+        .simulate('change', { target: { checked: false } });
     });
     wrapper.update();
     expect(wrapper.find('button').at(1)).toBeDisabled();
     act(() => {
-      wrapper.find('.select-all input').at(0).simulate('change', { target: { checked: true } });
+      wrapper
+        .find('.select-all input')
+        .at(0)
+        .simulate('change', { target: { checked: true } });
     });
     wrapper.update();
     expect(wrapper.find('button').at(1)).not.toBeDisabled();
@@ -156,16 +168,18 @@ describe('ConnectionSummary', () => {
     expect(reject).toHaveBeenCalled();
   });
 
-  it('Proceeds to the status screen if event doesn\'t meet the criteria', () => {
+  it("Proceeds to the status screen if event doesn't meet the criteria", () => {
     const wongProposal = {
       ...proposal,
-    }
+    };
     delete wongProposal.params.proposer.metadata.name;
     const newContext = {
-      events: [{
-        name: EVENTS.SESSION_PROPOSAL,
-        meta: wongProposal,
-      }],
+      events: [
+        {
+          name: EVENTS.SESSION_PROPOSAL,
+          meta: wongProposal,
+        },
+      ],
     };
     const wrapper = setup(newContext);
     wrapper.find('button').at(0).simulate('click');
