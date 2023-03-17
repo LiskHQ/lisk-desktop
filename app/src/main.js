@@ -7,7 +7,7 @@ import installExtension, {
   REDUX_DEVTOOLS,
 } from 'electron-devtools-installer';
 import path from 'path';
-import { initLedgerHardwareWalletIPC } from '../../libs/ledgerHardwareWallet/initLedgerHardwareWalletIPC';
+import { initLedgerHardwareWalletIPC } from '../../libs/hardwareWallet/ledger/initLedgerHardwareWalletIPC';
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';

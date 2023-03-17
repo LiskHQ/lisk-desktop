@@ -7,9 +7,9 @@ import {
   setCurrentHWDevice,
   setHardwareWalletDevices,
 } from '@hardwareWallet/store/actions';
-import { subscribeToLedgerDeviceEvents } from '@libs/ledgerHardwareWallet/ledgerDeviceListener/subscribeToLedgerDevices';
+import { subscribeToLedgerDeviceEvents } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/subscribeToLedgerDevices';
 import { selectHardwareDevices } from '@hardwareWallet/store/selectors/hwSelectors';
-import { getConnectedHWDevices } from '@libs/ledgerHardwareWallet/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import { getConnectedHWDevices } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 import { usePrevious } from 'src/utils/usePrevious';
 import DeviceToast from '@hardwareWallet/components/DeviceToast/DeviceToast';
 

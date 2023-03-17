@@ -1,5 +1,5 @@
 import { transactions } from '@liskhq/lisk-client';
-import { getSignedTransaction } from '@libs/ledgerHardwareWallet/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import { getSignedTransaction } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
 const createUnsignedMessage = (TAG, chainID, unsignedBytes) =>
   Buffer.concat([Buffer.from(TAG, 'utf8'), Buffer.from(chainID, 'hex'), unsignedBytes]).toString(

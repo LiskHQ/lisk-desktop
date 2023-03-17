@@ -1,5 +1,5 @@
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
-import { LEDGER_HW_HID_EVENT } from '@libs/ledgerHardwareWallet/constants';
+import { LEDGER_HW_HID_EVENT } from '@libs/hardwareWallet/ledger/constants';
 
 export const ledgerDeviceListener = (win) => {
   TransportNodeHid.listen({

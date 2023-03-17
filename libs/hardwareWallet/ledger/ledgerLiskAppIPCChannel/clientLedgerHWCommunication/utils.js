@@ -1,4 +1,4 @@
-import { REQUEST, RESPONSE } from '@libs/ledgerHardwareWallet/constants';
+import { REQUEST, RESPONSE } from '@libs/hardwareWallet/ledger/constants';
 
 const IPC = window.ipc;
 

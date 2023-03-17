@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import i18next from 'i18next';
-import { getSignedMessage } from '@libs/ledgerHardwareWallet/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import { getSignedMessage } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
 const isKeyMatch = (aPublicKey, signerPublicKey) =>
   Buffer.isBuffer(aPublicKey)

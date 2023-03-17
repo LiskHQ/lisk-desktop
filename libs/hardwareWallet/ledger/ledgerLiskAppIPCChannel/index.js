@@ -1,9 +1,9 @@
 import { Queue } from 'async-await-queue';
-import { LEDGER_HW_IPC_CHANNELS } from '@libs/ledgerHardwareWallet/constants';
+import { LEDGER_HW_IPC_CHANNELS } from '@libs/hardwareWallet/ledger/constants';
 import {
   createIpcMainChannel,
   getSequentiallyQueuedData,
-} from '@libs/ledgerHardwareWallet/ledgerLiskAppIPCChannel/utils';
+} from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/utils';
 import {
   getPubKey,
   getConnectedDevices,

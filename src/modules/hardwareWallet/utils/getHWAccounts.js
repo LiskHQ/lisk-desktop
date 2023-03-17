@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop, max-statements */
 import { extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
 import { getCheckInitializedAccount } from '@account/utils/getCheckInitializedAccount';
-import { getPubKey } from '@libs/ledgerHardwareWallet/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import { getPubKey } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
 export const getHWAccounts = async (currentHWDevice, getName) => {
   const accounts = [];

@@ -1,5 +1,5 @@
-import { executeIPCCommand } from '@libs/ledgerHardwareWallet/ledgerLiskAppIPCChannel/clientLedgerHWCommunication/utils';
-import { LEDGER_HW_IPC_CHANNELS } from '@libs/ledgerHardwareWallet/constants';
+import { executeIPCCommand } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication/utils';
+import { LEDGER_HW_IPC_CHANNELS } from '@libs/hardwareWallet/ledger/constants';
 
 const { GET_CONNECTED_DEVICES, GET_SIGNED_TRANSACTION, GET_PUB_KEY, GET_SIGNED_MESSAGE } =
   LEDGER_HW_IPC_CHANNELS;

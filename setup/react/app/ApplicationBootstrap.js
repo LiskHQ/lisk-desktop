@@ -6,7 +6,7 @@ import {
 } from '@blockchainApplication/manage/hooks';
 import { useTransactionUpdate } from '@transaction/hooks';
 import { PrimaryButton } from 'src/theme/buttons';
-import { useLedgerDeviceListener } from '@libs/ledgerHardwareWallet/ledgerDeviceListener/useLedgerDeviceListener';
+import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
 
 const ApplicationBootstrap = ({ children }) => {
   const {
