@@ -1,0 +1,67 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.networkSelectionWrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & > label {
+    @mixin contentLarge;
+
+    margin-bottom: 16px;
+  }
+
+  & .networkItem {
+    font-family: var(--heading-font) !important;
+    font-weight: var(--font-weight-bold) !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px !important;
+    color: var(--color-content-light) !important;
+    width: calc(100% - 32px) !important;
+    border-radius: 8px !important;
+
+    &.selected {
+      background-color: var(--color-network-selected-background);
+    }
+  }
+
+  & ~ div {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+
+    & > span {
+      font-size: var(--paragraph-font-size-s);
+      font-weight: var(--font-weight-normal);
+      color: var(--color-red);
+
+      & > span {
+        font-weight: var(--font-weight-bold);
+        color: var(--color-ultramarine-blue);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.networksPopup {
+  & > span ~ div {
+    align-items: center;
+    row-gap: 8px;
+  }
+}
+
+.menuSelect .networkItem {
+  font-family: var(--content-font) !important;
+  background-color: unset !important;
+
+  & img {
+    display: none;
+  }
+}
