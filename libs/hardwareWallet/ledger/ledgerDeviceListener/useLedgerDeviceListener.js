@@ -5,7 +5,7 @@ import {
   addHWDevice,
   removeHWDevice,
   setCurrentHWDevice,
-  setHardwareWalletDevices,
+  setHWDevices,
 } from '@hardwareWallet/store/actions';
 import { subscribeToLedgerDeviceEvents } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/subscribeToLedgerDevices';
 import { selectHardwareDevices } from '@hardwareWallet/store/selectors/hwSelectors';
@@ -27,7 +27,7 @@ export function useLedgerDeviceListener() {
         try {
           const connectedDevices = await getConnectedHWDevices();
           if (connectedDevices?.length > 0) {
-            dispatch(setHardwareWalletDevices(connectedDevices));
+            dispatch(setHWDevices(connectedDevices));
             dispatch(setCurrentHWDevice(connectedDevices[0]));
           }
         } finally {

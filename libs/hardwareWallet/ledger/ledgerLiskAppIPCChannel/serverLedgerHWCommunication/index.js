@@ -66,7 +66,7 @@ export async function getConnectedDevices() {
   try {
     const devicePaths = await TransportNodeHid.list();
     if (devicePaths?.length > 0) {
-      const devices = await getDevicesFromPaths(devicePaths, TransportNodeHid);
+      const devices = await getDevicesFromPaths(devicePaths);
       return devices;
     }
     return [];

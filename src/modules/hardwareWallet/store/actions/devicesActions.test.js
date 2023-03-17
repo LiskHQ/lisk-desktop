@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { setHardwareWalletDevices, setCurrentDevice } from './devicesActions';
+import { setHWDevices, setCurrentHWDevice } from './devicesActions';
 
 describe('hardwareWalletActions', () => {
   beforeEach(() => {
@@ -9,20 +9,20 @@ describe('hardwareWalletActions', () => {
   it('should create an action to update devices', () => {
     const devices = [{ deviceId: '1' }];
     const expectedAction = {
-      type: actionTypes.setDevices,
+      type: actionTypes.setHWDevices,
       devices,
     };
 
-    expect(setHardwareWalletDevices(devices)).toEqual(expectedAction);
+    expect(setHWDevices(devices)).toEqual(expectedAction);
   });
 
   it('should create an action to update device', () => {
     const device = { deviceId: '1' };
     const expectedAction = {
-      type: actionTypes.setCurrentDevice,
+      type: actionTypes.setCurrentHWDevice,
       device,
     };
 
-    expect(setCurrentDevice(device)).toEqual(expectedAction);
+    expect(setCurrentHWDevice(device)).toEqual(expectedAction);
   });
 });

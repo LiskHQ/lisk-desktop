@@ -18,7 +18,7 @@ export async function getDevicesFromPaths(devicePaths) {
       transport = await transport.open(devicePath);
       const deviceInfo = transport.device?.getDeviceInfo();
       // eslint-disable-next-line no-await-in-loop
-      await transport?.close();
+      await transport.close();
       devices.push({
         path: devicePath,
         manufacturer: deviceInfo.manufacturer,
