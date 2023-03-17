@@ -429,7 +429,7 @@ describe('API: LSK Transactions', () => {
         data: {
           transaction:
             '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f32230a04040000001080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
-          isSkipVerify: false,
+            skipVerify: false,
         },
       });
     });

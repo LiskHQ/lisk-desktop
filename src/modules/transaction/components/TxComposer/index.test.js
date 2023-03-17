@@ -44,7 +44,7 @@ describe('TxComposer', () => {
     buttonTitle: 'test-button-title',
     formProps: {
       moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-      fields: { token: { availableBalance: 10000 } },
+      fields: { token: { availableBalance: 10000, symbol: 'LSK' } },
     },
   };
 

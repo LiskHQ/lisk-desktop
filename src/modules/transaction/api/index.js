@@ -327,13 +327,13 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
    events: EventJSON [],
 }
  */
-export const dryRun = ({ transaction, serviceUrl, paramsSchema, isSkipVerify = false }) => {
+export const dryRun = ({ transaction, serviceUrl, paramsSchema, skipVerify = false }) => {
   const transactionBytes = transactions.getBytes(transaction, paramsSchema);
 
   return http({
     method: 'POST',
     baseUrl: serviceUrl,
     path: httpPaths.dryRun,
-    data: { transaction: transactionBytes.toString('hex'), isSkipVerify },
+    data: { transaction: transactionBytes.toString('hex'), skipVerify },
   });
 };
