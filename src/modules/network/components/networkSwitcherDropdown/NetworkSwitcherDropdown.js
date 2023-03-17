@@ -1,42 +1,62 @@
 /* eslint-disable max-statements */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import Icon from 'src/theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { DEFAULT_NETWORK } from 'src/const/config';
-import { useGetNetworksMainChainStatus } from '@blockchainApplication/manage/hooks/queries/useGetNetworksMainChainStatus';
-import { useGetMergedApplication } from '@blockchainApplication/manage/hooks/useGetMergedApplication';
+// import { useGetMergedApplication } from '@blockchainApplication/manage/hooks/useGetMergedApplication';
+import { Client } from 'src/utils/api/client';
 import styles from './NetworkSwitcherDropdown.css';
 import networks from '../../configuration/networks';
+import { useNetworkStatus } from '../../hooks/queries';
 
 function NetworkSwitcherDropdown({
   onSelectNetwork = () => {},
-  onChangeMainChainData = () => {},
-  onVerifyNetworkStatuses = () => {},
+  onLoadApplications = () => {},
+  onLoadNetworkStatus = () => {},
 }) {
   const { t } = useTranslation();
   const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
-  const {
-    data: networksMainChainStatus,
-    isLoading: isVerifyingNetworkOptions,
-    isError: isErrorVerifyingNetworkOptions,
-    isFetched: hasVerifiedNetworkOptions,
-  } = useGetNetworksMainChainStatus();
 
   const selectedNetwork = mainChainNetwork || networks[DEFAULT_NETWORK];
-  const selectedNetworkMainChain = networksMainChainStatus[selectedNetwork.name];
+
+  const queryClient = useRef(new Client({ http: selectedNetwork.serviceUrl }));
 
   const {
-    data: application,
+    data: selectedNetworkStatus,
+    isLoading: isGettingNetworkStatus,
+    isError: isErrorGettingNetworkStatus,
+    isFetched: hasFetchedNetworkStatus,
+  } = useNetworkStatus({ client: queryClient.current });
+
+  // const {
+  //   data: application,
+  //   isLoading: isGettingApplication,
+  //   isError: isErrorGettingApplication,
+  //   refetch: refetchApplicationData,
+  // } = useGetMergedApplication({
+  //   params: { chainID: selectedNetworkStatus?.data?.chainID },
+  //   networkName: selectedNetwork.name,
+  //   isEnabled: !!selectedNetworkStatus,
+  // });
+  const {
+    data,
     isLoading: isGettingApplication,
     isError: isErrorGettingApplication,
     refetch: refetchApplicationData,
-  } = useGetMergedApplication({
-    params: { chainID: selectedNetworkMainChain?.data?.chainID },
-    networkName: selectedNetwork.name,
-    isEnabled: !!selectedNetworkMainChain,
+  } = useBlockchainApplicationMeta({
+    config: {
+      params: {
+        isDefault: true,
+        network: selectedNetwork.name,
+      },
+    },
+    options: { enabled: !!selectedNetworkStatus, keepPreviousData: false },
+    client: new Client({ http: selectedNetwork.serviceUrl }),
   });
+  console.log('>>>>', selectedNetworkStatus?.data?.chainID, selectedNetworkStatus, data);
 
   const handleChangeNetwork = (value) => {
     setValue(value);
@@ -44,23 +64,27 @@ function NetworkSwitcherDropdown({
   };
 
   useEffect(() => {
-    onChangeMainChainData({ application, isErrorGettingApplication, isGettingApplication });
+    onLoadApplications({
+      isErrorGettingApplication,
+      isGettingApplication,
+      applications: data?.data,
+    });
   }, [isGettingApplication, isErrorGettingApplication]);
 
   useEffect(() => {
-    onVerifyNetworkStatuses({
-      networksMainChainStatus,
-      isVerifyingNetworkOptions,
-      isErrorVerifyingNetworkOptions,
+    onLoadNetworkStatus({
+      isGettingNetworkStatus,
+      isErrorGettingNetworkStatus,
+      selectedNetworkStatusData: selectedNetworkStatus?.data,
     });
-  }, [isVerifyingNetworkOptions, isErrorVerifyingNetworkOptions]);
+  }, [isGettingNetworkStatus, isErrorGettingNetworkStatus]);
 
   useEffect(() => {
     refetchApplicationData();
   }, [mainChainNetwork]);
 
   useEffect(() => {
-    if (!mainChainNetwork) setValue(networksMainChainStatus[DEFAULT_NETWORK]);
+    if (!mainChainNetwork) setValue(networks[DEFAULT_NETWORK]);
   }, []);
 
   return (
@@ -73,15 +97,13 @@ function NetworkSwitcherDropdown({
           onChange={handleChangeNetwork}
           popupClassName={styles.networksPopup}
           className={styles.menuSelect}
-          isLoading={isVerifyingNetworkOptions || isGettingApplication}
+          isLoading={isGettingNetworkStatus || isGettingApplication}
           isValid={
-            !isErrorVerifyingNetworkOptions &&
-            hasVerifiedNetworkOptions &&
-            !isErrorGettingApplication
+            !isErrorGettingNetworkStatus && hasFetchedNetworkStatus && !isErrorGettingApplication
           }
         >
           {Object.keys(networks)
-            .filter((networkKey) => networksMainChainStatus[networkKey])
+            .filter((networkKey) => networks[networkKey].isAvailable)
             .map((networkKey) => {
               const network = networks[networkKey];
 

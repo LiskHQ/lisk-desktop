@@ -20,35 +20,39 @@ function SelectNetwork({ history }) {
     isErrorGettingApplication: false,
     isGettingApplication: true,
   });
-  const [verifyNetworkStatusesState, setVerifyNetworkStatusesState] = useState({
-    isVerifyingNetworkOptions: true,
+  const [selectedNetworkState, setSelectedNetworkState] = useState({
+    isGettingNetworkStatus: true,
   });
 
-  const onChangeMainChainData = ({
-    application,
+  const onLoadApplications = ({
+    applications,
     isErrorGettingApplication,
     isGettingApplication,
   }) => {
     setApplicationState({
-      application,
+      applications,
       isErrorGettingApplication,
       isGettingApplication,
     });
   };
 
-  const onVerifyNetworkStatuses = ({ isVerifyingNetworkOptions }) => {
-    setVerifyNetworkStatusesState({ isVerifyingNetworkOptions });
+  const onLoadNetworkStatus = ({ isGettingNetworkStatus, selectedNetworkStatusData }) => {
+    setSelectedNetworkState({ isGettingNetworkStatus, selectedNetworkStatusData });
   };
 
   const goToDashboard = useCallback(() => {
-    const { application } = applicationState;
-    console.log('--->>>', applicationState);
+    const { applications } = applicationState || {};
+    const { selectedNetworkStatusData } = selectedNetworkState || {};
+    const mainChain = applications.find(
+      ({ chainID }) => chainID === selectedNetworkStatusData?.chainID
+    );
 
-    setApplications([application]);
-    setCurrentApplication(application);
-
-    history.push(routes.dashboard.path);
-  }, [applicationState.app]);
+    setApplications(applications || []);
+    if (mainChain) {
+      setCurrentApplication(mainChain);
+      history.push(routes.dashboard.path);
+    }
+  }, [applicationState.applications, selectedNetworkState]);
 
   return (
     <div className={`${styles.selectNetworkWrapper} ${grid.row}`}>
@@ -71,14 +75,14 @@ function SelectNetwork({ history }) {
             <h6>Lisk</h6>
           </div>
           <NetworkSwitcherDropdown
-            onChangeMainChainData={onChangeMainChainData}
-            onVerifyNetworkStatuses={onVerifyNetworkStatuses}
+            onLoadApplications={onLoadApplications}
+            onLoadNetworkStatus={onLoadNetworkStatus}
           />
           <PrimaryButton
             className={`${styles.button} ${styles.continueBtn}`}
             onClick={goToDashboard}
             disabled={
-              verifyNetworkStatusesState.isVerifyingNetworkOptions ||
+              selectedNetworkState.isGettingNetworkStatus ||
               applicationState.isGettingApplication ||
               applicationState.isErrorGettingApplication
             }

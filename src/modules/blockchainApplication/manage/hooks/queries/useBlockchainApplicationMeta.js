@@ -2,7 +2,7 @@ import { BLOCKCHAIN_APPS_META } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import defaultClient from 'src/utils/api/client';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
-import useSettings from 'src/modules/settings/hooks/useSettings';
+// import useSettings from 'src/modules/settings/hooks/useSettings';
 
 /**
  * Creates a custom hook for blockchain applications meta queries
@@ -27,8 +27,8 @@ export const useBlockchainApplicationMeta = ({
   options,
   client = defaultClient,
 } = {}) => {
-  const { mainChainNetwork } = useSettings('mainChainNetwork');
-  const network = mainChainNetwork?.name;
+  // const { mainChainNetwork } = useSettings('mainChainNetwork');
+  // const network = mainChainNetwork?.name;
 
   const config = {
     url: `/api/${API_VERSION}/blockchain/apps/meta`,
@@ -37,7 +37,7 @@ export const useBlockchainApplicationMeta = ({
     event: 'get.blockchain.apps.meta',
     params: {
       limit,
-      network,
+      // network,
       ...(customConfig?.params || {}),
     },
   };
@@ -46,9 +46,6 @@ export const useBlockchainApplicationMeta = ({
     keys: [BLOCKCHAIN_APPS_META],
     config,
     client,
-    options: {
-      ...options,
-      enabled: !!network,
-    },
+    options,
   });
 };
