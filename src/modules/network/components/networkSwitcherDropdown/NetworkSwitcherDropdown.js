@@ -6,7 +6,6 @@ import Icon from 'src/theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { DEFAULT_NETWORK } from 'src/const/config';
-// import { useGetMergedApplication } from '@blockchainApplication/manage/hooks/useGetMergedApplication';
 import { Client } from 'src/utils/api/client';
 import styles from './NetworkSwitcherDropdown.css';
 import networks from '../../configuration/networks';
@@ -31,16 +30,6 @@ function NetworkSwitcherDropdown({
     isFetched: hasFetchedNetworkStatus,
   } = useNetworkStatus({ client: queryClient.current });
 
-  // const {
-  //   data: application,
-  //   isLoading: isGettingApplication,
-  //   isError: isErrorGettingApplication,
-  //   refetch: refetchApplicationData,
-  // } = useGetMergedApplication({
-  //   params: { chainID: selectedNetworkStatus?.data?.chainID },
-  //   networkName: selectedNetwork.name,
-  //   isEnabled: !!selectedNetworkStatus,
-  // });
   const {
     data,
     isLoading: isGettingApplication,
@@ -56,7 +45,6 @@ function NetworkSwitcherDropdown({
     options: { enabled: !!selectedNetworkStatus, keepPreviousData: false },
     client: new Client({ http: selectedNetwork.serviceUrl }),
   });
-  console.log('>>>>', selectedNetworkStatus?.data?.chainID, selectedNetworkStatus, data);
 
   const handleChangeNetwork = (value) => {
     setValue(value);

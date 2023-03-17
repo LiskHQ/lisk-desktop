@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTransactionUpdate } from '@transaction/hooks';
 import useSettings from '@settings/hooks/useSettings';
-// import { useGetMergedApplication } from '@blockchainApplication/manage/hooks/useGetMergedApplication';
 import {
   useApplicationManagement,
   useCurrentApplication,
@@ -29,17 +28,6 @@ const ApplicationBootstrap = ({ children }) => {
     options: { enabled: !!mainChainNetwork },
     client: queryClient.current,
   });
-
-  // const {
-  //   data: mainChainApplication,
-  //   isLoading: isGettingMainChain,
-  //   isError: isErrorGettingMainChain,
-  //   refetch: refetchMergedApplicationData,
-  // } = useGetMergedApplication({
-  //   params: { chainID: selectedNetworkStatus?.data?.chainId },
-  //   networkName: mainChainNetwork?.name,
-  //   isEnabled: !!selectedNetworkStatus,
-  // });
 
   const {
     data,
