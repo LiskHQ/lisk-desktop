@@ -10,7 +10,7 @@ function AccountRow({ account, currentAccount, onSelect, onRemove, truncate }) {
   const {
     metadata: { name, address, isHW, isNew },
   } = account;
-  const isCurrentAccount = currentAccount.metadata.address === address;
+  const isCurrentAccount = currentAccount?.metadata?.address === address;
   const { t } = useTranslation();
   return (
     <div

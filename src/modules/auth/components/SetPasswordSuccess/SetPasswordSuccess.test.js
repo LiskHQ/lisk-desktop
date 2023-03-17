@@ -1,14 +1,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as txUtils from '@transaction/utils/transaction';
+import { truncateAddress } from '@wallet/utils/account';
 import SetPasswordSuccess from './index';
 
 describe('Setup password success and JSON download component', () => {
+  const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+  const name = 'test_acct';
   const props = {
     onClose: jest.fn(),
     encryptedPhrase: {
-      name: 'encrypted recovery phrase',
-      phrase: 'encrypted_phrase',
+      metadata: {
+        name,
+        address,
+      },
     },
   };
 
@@ -28,7 +33,7 @@ describe('Setup password success and JSON download component', () => {
     wrapper.find('.downloadBtn').at(0).simulate('click');
     expect(spyOnJSONDownload).toHaveBeenCalledWith(
       props.encryptedPhrase,
-      'encrypted_secret_recovery_phrase',
+      `${truncateAddress(address)}_${name}_lisk_account`
     );
   });
 

@@ -4,6 +4,7 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
 import { settingsUpdated } from 'src/redux/actions';
 import { useCurrentAccount } from '@account/hooks/useCurrentAccount';
+import { updateCurrentAccount, updateAccount } from '../../store/action';
 import EditAccountForm from './EditAccountForm';
 
 const mockDispatch = jest.fn();
@@ -30,9 +31,10 @@ beforeEach(() => {
 
 describe('Edit account', () => {
   it('should render properly', async () => {
-    useCurrentAccount.mockReturnValue([mockSavedAccounts[0], jest.fn()]);
+    const currentAccount = mockSavedAccounts[0];
+    useCurrentAccount.mockReturnValue([currentAccount, jest.fn()]);
     renderWithRouter(EditAccountForm, props);
-    const defaultAccountName = mockSavedAccounts[0].metadata.name;
+    const defaultAccountName = currentAccount.metadata.name;
     const updatedAccountName = 'updated_lisk_account';
 
     expect(screen.getByText('Account name')).toBeInTheDocument();
@@ -43,10 +45,15 @@ describe('Edit account', () => {
     await waitFor(() => {
       fireEvent.click(screen.getByText('Done'));
     });
-    await waitFor(() => {
-      expect(props.nextStep).toHaveBeenCalledTimes(1);
-      expect(props.nextStep).toHaveBeenCalledWith({ accountName: updatedAccountName });
-    });
+    expect(mockDispatch).toHaveBeenCalledTimes(2);
+    expect(mockDispatch).toHaveBeenCalledWith(updateCurrentAccount({ name: updatedAccountName }));
+    expect(mockDispatch).toHaveBeenCalledWith(
+      updateAccount({
+        encryptedAccount: currentAccount,
+        accountDetail: { name: updatedAccountName },
+      })
+    );
+    expect(props.nextStep).toHaveBeenCalledTimes(1);
   });
 
   it('should throw errors if account name is empty', async () => {
@@ -99,7 +106,9 @@ describe('Edit account', () => {
     });
     expect(mockDispatch).toHaveBeenCalledTimes(2);
     expect(mockDispatch).toHaveBeenCalledWith(
-      settingsUpdated(expect.objectContaining({ hardwareAccounts: { 'Nano S': [mockHWAccounts[0]] } }))
+      settingsUpdated(
+        expect.objectContaining({ hardwareAccounts: { 'Nano S': [mockHWAccounts[0]] } })
+      )
     );
   });
 });

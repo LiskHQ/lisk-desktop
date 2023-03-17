@@ -26,10 +26,9 @@ describe('Edit Account', () => {
     });
     expect(screen.getByText('Edit account name')).toBeInTheDocument();
     expect(
-      screen.getByText('Successfully edited, now you can download the encrypted secret recovery phrase to this effect.')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(`encrypted_secret_recovery_phrase_${updatedAccountName}.json`)
+      screen.getByText(
+        'Successfully edited, now you can download the encrypted secret recovery phrase to this effect.'
+      )
     ).toBeInTheDocument();
     expect(screen.getByText('Back to wallet')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Back to wallet'));
