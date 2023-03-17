@@ -11,7 +11,7 @@ const RemoveConfirmation = ({ history, location, account, onRemoveAccount }) => 
   const { t } = useTranslation();
   const accountName = account?.metadata?.name;
   const appendAccountName = `_${accountName}`;
-  const address = truncateAddress(account.metadata.address);
+  const address = truncateAddress(account?.metadata?.address);
   const fileName = `${address}${accountName ? appendAccountName : ''}_lisk_account`;
 
   const handleCancelDialog = useCallback(() => {
