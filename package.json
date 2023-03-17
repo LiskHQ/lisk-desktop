@@ -113,7 +113,7 @@
   "dependencies": {
     "@hookform/resolvers": "2.8.8",
     "@json-rpc-tools/utils": "1.7.6",
-    "@ledgerhq/hw-transport": "6.3.0",
+    "@ledgerhq/hw-transport": "6.28.1",
     "@ledgerhq/hw-transport-node-hid": "6.27.12",
     "@liskhq/lisk-client": "6.0.0-alpha.15",
     "@tanstack/react-query": "4.0.10",
