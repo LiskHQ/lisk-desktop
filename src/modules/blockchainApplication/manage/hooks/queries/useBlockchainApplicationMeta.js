@@ -48,7 +48,7 @@ export const useBlockchainApplicationMeta = ({
     client,
     options: {
       ...options,
-      enable: !!network,
+      enabled: !!network,
     },
   });
 };

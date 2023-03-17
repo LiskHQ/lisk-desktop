@@ -25,12 +25,11 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   Piwik.tracking(history, token);
 
   if (!mainChainNetwork && path !== routes.selectNetwork.path) {
-    history.replace({ pathname: routes.selectNetwork.path });
-    return <div />;
+    return <Redirect to={routes.selectNetwork.path} />;
   }
 
   if (forbiddenTokens.indexOf(token.active) !== -1) {
-    return <Redirect to={`${routes.dashboard.path}`} />;
+    return <Redirect to={routes.dashboard.path} />;
   }
 
   if (!isAuthenticated && path === routes.manageAccounts.path && accounts.length === 0) {

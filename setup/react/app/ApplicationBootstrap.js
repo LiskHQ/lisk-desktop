@@ -18,7 +18,7 @@ const ApplicationBootstrap = ({ children }) => {
     data: networksMainChainStatus,
     isLoading: isVerifyingNetworkOptions,
     isError: isErrorVerifyingNetworkOptions,
-  } = useGetNetworksMainChainStatus({ options: { enable: !!mainChainNetwork } });
+  } = useGetNetworksMainChainStatus({ options: { enabled: !!mainChainNetwork } });
 
   const selectedNetworkMainChain = networksMainChainStatus[mainChainNetwork?.name];
 

@@ -17,7 +17,7 @@ export const useTransactionUpdate = (isLoading) => {
   const [currentApplication] = useCurrentApplication();
   const { data: tokens } = useTokensBalance({
     config: { params: { address: currentAccount?.metadata?.address } },
-    options: { enable: currentAccount?.metadata?.address },
+    options: { enabled: currentAccount?.metadata?.address },
   });
 
   const token = tokens?.data?.[0] || {};
