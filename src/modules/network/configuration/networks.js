@@ -20,7 +20,7 @@ const networks = {
   [networkKeys.alphanet]: {
     name: networkKeys.alphanet,
     label: 'Alphanet',
-    serviceUrl: 'http://alphanet-service.liskdev.net',
+    serviceUrl: 'https://alphanet-service.liskdev.net',
     wsServiceUrl: 'ws://alphanet-service.liskdev.net',
   },
   [networkKeys.betanet]: {
