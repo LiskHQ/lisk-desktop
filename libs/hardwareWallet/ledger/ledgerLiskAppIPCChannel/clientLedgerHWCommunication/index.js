@@ -20,13 +20,13 @@ export const getSignedTransaction = async (devicePath, accountIndex, unsignedMes
 };
 
 export const getSignedMessage = async (devicePath, accountIndex, unsignedMessage) => {
-  const signedTransaction = await executeIPCCommand(GET_SIGNED_MESSAGE, {
+  const signedMessage = await executeIPCCommand(GET_SIGNED_MESSAGE, {
     devicePath,
     accountIndex,
     unsignedMessage,
   });
 
-  return signedTransaction;
+  return signedMessage;
 };
 
 export const getPubKey = async (devicePath, accountIndex) => {
