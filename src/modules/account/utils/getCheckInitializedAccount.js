@@ -11,8 +11,9 @@ export const getCheckInitializedAccount = async ({ config, client = defaultClien
     client.call(authConfig),
   ]);
 
-  const balances = tokens?.data?.reduce((sum, { availableBalance }) => sum + availableBalance, 0);
-  const balanceCheck = parseInt(balances, 10) > 0;
-  const nonceCheck = parseInt(auth?.data?.nonce ?? 0, 10) > 0;
-  return tokens?.data && auth?.data ? balanceCheck || nonceCheck : false;
+  const balances = tokens?.data?.reduce((sum, { availableBalance }) => sum + BigInt(availableBalance), BigInt(0));
+  const isBalanceGreaterThanZero = BigInt(balances || 0) > BigInt(0);
+  const isNonceGreaterThanZero = BigInt(auth?.data?.nonce || 0) > BigInt(0);
+
+  return tokens?.data && auth?.data ? isBalanceGreaterThanZero || isNonceGreaterThanZero : false;
 };

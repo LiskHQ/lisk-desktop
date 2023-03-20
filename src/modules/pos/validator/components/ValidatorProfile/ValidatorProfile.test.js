@@ -10,7 +10,7 @@ import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import ValidatorProfile from './ValidatorProfile';
 import { useValidators, useReceivedStakes, useSentStakes } from '../../hooks/queries';
 

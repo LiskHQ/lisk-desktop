@@ -1,5 +1,5 @@
 import { filterIncomingTransactions } from '@transaction/utils/helpers';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import i18n from 'src/utils/i18n/i18n';
 import { toast } from 'react-toastify';
 

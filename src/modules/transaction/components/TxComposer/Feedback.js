@@ -1,12 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'src/utils/helpers';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
-import { getTxAmount } from '@transaction/utils/transaction';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import styles from './txComposer.css';
-
-export const getMinRequiredBalance = (transaction, fee) =>
-  BigInt(fee) + BigInt(getTxAmount(transaction) || 0);
 
 const Feedback = ({ minRequiredBalance, feedback, token }) => {
   const { t } = useTranslation();

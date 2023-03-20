@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 
 import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Tooltip from 'src/theme/Tooltip';

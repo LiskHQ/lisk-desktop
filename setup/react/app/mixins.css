@@ -70,10 +70,10 @@
   line-height: 32px;
 }
 
-@define-mixin headingLarge {
+@define-mixin headingLarge $weight: bold {
   font-family: var(--heading-font);
   font-size: 30px;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-$(weight));
   letter-spacing: 0.25px;
   line-height: 40px;
 }

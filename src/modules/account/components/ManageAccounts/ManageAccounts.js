@@ -23,11 +23,11 @@ export const ManageAccountsContent = ({
   className,
   truncate,
   title: customTitle,
-  location: { search },
+  location: { search } = { search: '' },
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
-  const [, setAccount] = useCurrentAccount();
+  const [currentAccount, setAccount] = useCurrentAccount();
   const [showRemove, setShowRemove] = useState(false);
   const title = customTitle ?? t('Manage accounts');
   const { accounts: hwAccounts } = useHWAccounts();
@@ -64,6 +64,7 @@ export const ManageAccountsContent = ({
             <AccountRow
               key={account.metadata.address}
               account={account}
+              currentAccount={currentAccount}
               onSelect={onSelectAccount}
               onRemove={showRemove && removeAccount}
               truncate={truncate}

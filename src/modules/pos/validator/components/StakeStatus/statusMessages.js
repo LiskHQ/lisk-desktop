@@ -15,14 +15,14 @@ const LiskAmountFormatted = ({ val }) => (
 
 const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }) => {
   if (!locked && unlockable) {
-    const regularUnlockable = unlockable - Number(selfUnstake.confirmed || 0);
+    const regularUnlockable = BigInt(unlockable) - BigInt(selfUnstake.confirmed || 0);
     const selfUnstakeUnlockable = selfUnstake.confirmed;
 
     return (
       <>
-        {regularUnlockable > 0 ? (
+        {regularUnlockable > BigInt(0) ? (
           <>
-            <LiskAmountFormatted val={regularUnlockable} />{' '}
+            <LiskAmountFormatted val={regularUnlockable.toString()} />{' '}
             <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
           </>
         ) : null}

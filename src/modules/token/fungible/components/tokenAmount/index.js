@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React from 'react';
-import { convertFromBaseDenom, fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import DiscreetMode from 'src/modules/common/components/discreetMode';
 import FormattedNumber from 'src/modules/common/components/FormattedNumber';
 
@@ -38,7 +38,7 @@ const TokenAmount = ({
 }) => {
   if (val === undefined) return <span />;
 
-  const converted = isLsk ? fromRawLsk(val) : convertFromBaseDenom(val, token);
+  const converted = isLsk ? convertFromBaseDenom(val) : convertFromBaseDenom(val, token);
   let value = !convert ? val : converted;
 
   if (showInt) value = getInt(value);

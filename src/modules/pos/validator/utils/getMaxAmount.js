@@ -2,7 +2,7 @@ import { getTransactionFee } from '@transaction/api';
 import { getNumberOfSignatures } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE, STAKE_AMOUNT_STEP } from '@transaction/configuration/transactions';
-import { convertToBaseDenom } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { normalizeStakesForTx, splitModuleAndCommand } from '@transaction/utils';
 
 /**

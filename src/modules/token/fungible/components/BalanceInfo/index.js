@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import TokenAmount from '@token/fungible/components/tokenAmount';
