@@ -19,7 +19,6 @@ const mockAppState = {
   hardwareWallet: {
     currentDevice: {
       path: 0,
-      path: 0,
       model: '',
       brand: '',
       status: '',
@@ -133,7 +132,6 @@ describe('TxSignatureCollector', () => {
       hardwareWallet: {
         currentDevice: {
           path: 20350,
-          path: 20350,
           model: 'Nano S Plus',
           brand: 'Ledger',
           status: 'disconnected',
@@ -158,7 +156,6 @@ describe('TxSignatureCollector', () => {
       hardwareWallet: {
         currentDevice: {
           path: 20350,
-          path: 20350,
           model: 'Nano S Plus',
           brand: 'Ledger',
           status: 'connected',
@@ -168,7 +165,6 @@ describe('TxSignatureCollector', () => {
     const mockHWAcct = {
       ...mockCurrentAccount,
       hw: {
-        path: 20350,
         path: 20350,
         model: 'Nano S Plus',
         brand: 'Ledger',
@@ -191,7 +187,6 @@ describe('TxSignatureCollector', () => {
       hardwareWallet: {
         currentDevice: {
           path: 20350,
-          path: 20350,
           model: 'Nano S Plus',
           brand: 'Ledger',
           status: 'connected',
@@ -201,7 +196,6 @@ describe('TxSignatureCollector', () => {
     const mockHWAcct = {
       ...mockCurrentAccount,
       hw: {
-        path: 20350,
         path: 20350,
         model: 'Nano S Plus',
         brand: 'Ledger',
