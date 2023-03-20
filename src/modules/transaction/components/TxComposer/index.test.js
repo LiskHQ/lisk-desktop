@@ -24,28 +24,22 @@ jest.mock('@liskhq/lisk-client', () => ({
 }));
 
 describe('TxComposer', () => {
-  const transaction = {
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-    params: {
+  const props = {
+    children: null,
+    onComposed: jest.fn(),
+    onConfirm: jest.fn(),
+    className: 'test-class-name',
+    formProps: {
+      feedback: [],
+      moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+      fields: { token: { availableBalance: 10000, symbol: 'LSK' } },
+    },
+    commandParams: {
       recipient: { address: accounts.genesis.summary.address },
       amount: 100000,
       data: 'test-data',
       token: { tokenID: '00000000' },
-    },
-    isFormValid: true,
-    feedback: [],
-  };
-  const props = {
-    children: null,
-    transaction,
-    onComposed: jest.fn(),
-    onConfirm: jest.fn(),
-    className: 'test-class-name',
-    buttonTitle: 'test-button-title',
-    formProps: {
-      moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-      fields: { token: { availableBalance: 10000, symbol: 'LSK' } },
-    },
+    }
   };
 
   useCommandSchema.mockReturnValue({
@@ -55,27 +49,7 @@ describe('TxComposer', () => {
     ),
   });
 
-  it('should render TxComposer correctly for a valid tx', () => {
-    const newProps = {
-      ...props,
-      formProps: {
-        isFormValid: true,
-        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-        fields: { token: { availableBalance: 10000000000000 } },
-        sendingChain: { chainID: '1' },
-        recipientChain: { chainID: '2' },
-      },
-      commandParams: {},
-    };
-
-    const wrapper = mountWithQueryClient(TxComposer, newProps);
-    expect(wrapper.find('TransactionPriority')).toExist();
-    expect(wrapper.find('Feedback').html()).toEqual(null);
-    expect(wrapper.find('.confirm-btn')).toExist();
-    expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(false);
-  });
-
-  it('should render TxComposer correctly for an invalid tx', () => {
+  it('should provide feedback when form is invalid', () => {
     const newProps = {
       ...props,
       commandParams: {},
@@ -92,10 +66,9 @@ describe('TxComposer', () => {
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);
   });
 
-  it('should render TxComposer correctly if the balance is insufficient', () => {
+  it('should provide feedback when balance is insufficient', () => {
     const newProps = {
       ...props,
-      commandParams: {},
       formProps: {
         isFormValid: true,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
@@ -114,16 +87,11 @@ describe('TxComposer', () => {
         },
         extraCommandFee: 100000000000,
       },
-      transaction: {
-        isFormValid: true,
-        feedback: [],
-        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
-        params: {
-          name: 'test_username',
-          generatorKey: genKey,
-          blsKey,
-          proofOfPossession: pop,
-        },
+      commandParams: {
+        name: 'test_username',
+        generatorKey: genKey,
+        blsKey,
+        proofOfPossession: pop,
       },
     };
     const state = {
@@ -135,5 +103,27 @@ describe('TxComposer', () => {
       'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
     );
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);
+  });
+
+  it('should render transaction form when transaction is valid', () => {
+    const newProps = {
+      ...props,
+      buttonTitle: "Continue to stake",
+      formProps: {
+        isFormValid: true,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+        fields: { token: { availableBalance: 10000000000000 } },
+        sendingChain: { chainID: '1' },
+        recipientChain: { chainID: '2' },
+      },
+      commandParams: {},
+    };
+
+    const wrapper = mountWithQueryClient(TxComposer, newProps);
+    expect(wrapper.find('TransactionPriority')).toExist();
+    expect(wrapper.find('Feedback').html()).toEqual(null);
+    expect(wrapper.find('.confirm-btn')).toExist();
+    expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(false);
+    expect(wrapper.find('.confirm-btn').at(0).props().children).toEqual('Continue to stake');
   });
 });
