@@ -45,6 +45,7 @@ exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
           "extraCommandFee": "1000000000",
           "fields": Object {
             "token": Object {
+              "availableBalance": 10000000000,
               "baseDenom": "beddows",
               "chainID": "00000001",
               "chainName": "Lisk",

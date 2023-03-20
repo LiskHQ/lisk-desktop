@@ -20,7 +20,7 @@ jest.mock('src/utils/searchParams', () => ({
 }));
 
 jest.mock('@transaction/utils/transaction', () => ({
-  getTxAmount: () => '1000000000',
+  getTotalSpendingAmount: () => '1000000000',
 }));
 jest.mock('@transaction/hooks/useTxInitiatorAccount');
 

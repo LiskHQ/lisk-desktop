@@ -7,7 +7,7 @@ import {
   removeThenAppendSearchParamsToUrl,
 } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
-import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useCommandSchema } from '@network/hooks';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
