@@ -27,21 +27,8 @@ function NetworkSwitcherDropdown({
   const [, setCurrentApplication] = useCurrentApplication();
   const queryClient = useRef(new Client({ http: selectedNetwork.serviceUrl }));
 
-  const {
-    data: selectedNetworkStatus,
-    isLoading: isGettingNetworkStatus,
-    isError: isErrorGettingNetworkStatus,
-    isFetched: hasFetchedNetworkStatus,
-    refetch: refetchNetworkStatus,
-  } = useNetworkStatus({ client: queryClient.current });
-
-  const {
-    data,
-    isLoading: isGettingApplication,
-    isError: isErrorGettingApplication,
-    isFetched: hasFetchedApplication,
-    refetch: refetchApplicationData,
-  } = useBlockchainApplicationMeta({
+  const networkStatus = useNetworkStatus({ client: queryClient.current });
+  const blockchainApps = useBlockchainApplicationMeta({
     config: {
       params: {
         isDefault: true,
@@ -49,27 +36,26 @@ function NetworkSwitcherDropdown({
       },
     },
     options: {
-      enabled: !!selectedNetworkStatus && !isGettingNetworkStatus && !isErrorGettingNetworkStatus,
+      enabled: !!networkStatus.data && !networkStatus.isLoading && !networkStatus.isError,
     },
     client: new Client({ http: selectedNetwork.serviceUrl }),
   });
 
-  const defaultApplications = data?.data || [];
+  const defaultApplications = blockchainApps.data?.data || [];
 
   const handleChangeNetwork = (network) => {
     queryClient.current.create({
       http: network.serviceUrl,
     });
-    refetchNetworkStatus();
+    networkStatus.refetch();
     setSelectedNetwork(network);
   };
 
   useEffect(() => {
-    if (defaultApplications.length > 0 && !isGettingApplication && !isErrorGettingApplication) {
+    if (defaultApplications.length > 0 && !blockchainApps.isLoading && !blockchainApps.isError) {
       setValue(selectedNetwork);
-
       const mainChain = defaultApplications.find(
-        ({ chainID }) => chainID === selectedNetworkStatus?.chainID
+        ({ chainID }) => chainID === networkStatus.data?.data?.chainID
       );
 
       if (mainChain) setCurrentApplication(mainChain);
@@ -78,22 +64,22 @@ function NetworkSwitcherDropdown({
     }
 
     onLoadApplications({
-      isErrorGettingApplication,
-      isGettingApplication,
+      isErrorGettingApplication: blockchainApps.isError,
+      isGettingApplication: blockchainApps.isLoading,
       applications: defaultApplications,
     });
-  }, [isGettingApplication, isErrorGettingApplication, hasFetchedApplication]);
+  }, [blockchainApps.isLoading, blockchainApps.isError, blockchainApps.isFetched]);
 
   useEffect(() => {
     onLoadNetworkStatus({
-      isGettingNetworkStatus,
-      isErrorGettingNetworkStatus,
-      selectedNetworkStatusData: selectedNetworkStatus?.data,
+      isGettingNetworkStatus: networkStatus.isLoading,
+      isErrorGettingNetworkStatus: networkStatus.isError,
+      selectedNetworkStatusData: networkStatus.data?.data,
     });
-  }, [isGettingNetworkStatus, isErrorGettingNetworkStatus]);
+  }, [networkStatus.isLoading, networkStatus.isError]);
 
   useEffect(() => {
-    refetchApplicationData();
+    blockchainApps.refetch();
   }, [selectedNetwork]);
 
   return (
@@ -106,10 +92,8 @@ function NetworkSwitcherDropdown({
           onChange={handleChangeNetwork}
           popupClassName={styles.networksPopup}
           className={styles.menuSelect}
-          isLoading={isGettingNetworkStatus || isGettingApplication}
-          isValid={
-            !isErrorGettingNetworkStatus && hasFetchedNetworkStatus && !isErrorGettingApplication
-          }
+          isLoading={networkStatus.isLoading || blockchainApps.isLoading}
+          isValid={!networkStatus.isError && networkStatus.isFetched && !blockchainApps.isError}
         >
           {Object.keys(networks)
             .filter((networkKey) => networks[networkKey].isAvailable)
@@ -131,11 +115,11 @@ function NetworkSwitcherDropdown({
             })}
         </MenuSelect>
       </div>
-      {isErrorGettingApplication && !isGettingApplication && (
+      {blockchainApps.isError && !blockchainApps.isLoading && (
         <div>
           <span>
             {t('Failed to connect to network!  ')}
-            <span onClick={refetchApplicationData}>{t('Try Again')}</span>
+            <span onClick={blockchainApps.refetch}>{t('Try again')}</span>
           </span>
         </div>
       )}
