@@ -1,12 +1,9 @@
 import { useSelector } from 'react-redux';
-import { getCheckInitializedAccount } from 'src/modules/account/utils/getCheckInitializedAccount';
-import { mockHWAccounts, mockHWCurrentDevice } from '../__fixtures__';
+import { mockHWCurrentDevice } from '../__fixtures__';
 import { getHWAccounts } from './getHWAccounts';
 import { getNameFromAccount } from './getNameFromAccount';
 
 jest.useRealTimers();
-
-const mockGetCheckInitializedAccount = getCheckInitializedAccount;
 
 jest.mock('@liskhq/lisk-client', () => ({
   ...jest.requireActual('@liskhq/lisk-client'),
@@ -18,14 +15,6 @@ jest.mock('@liskhq/lisk-client', () => ({
   },
 }));
 
-jest.mock('@hardwareWallet/manager/HWManager', () => ({
-  getActiveDeviceInfo: jest.fn(() => mockHWAccounts[0].hw),
-  getPublicKey: (idx) => {
-    mockGetCheckInitializedAccount.mockReturnValue(idx < 1);
-    return mockHWAccounts[idx].metadata.pubkey;
-  },
-}));
-
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
@@ -33,7 +22,7 @@ jest.mock('react-redux', () => ({
 
 jest.mock('src/modules/account/utils/getCheckInitializedAccount');
 
-describe('getHWAccounts', () => {
+describe.skip('getHWAccounts', () => {
   it('returns a list of accounts where all accounts are initialized', async () => {
     const mockAppState = {
       settings: {

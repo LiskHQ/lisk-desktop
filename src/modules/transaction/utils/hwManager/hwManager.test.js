@@ -1,10 +1,6 @@
 // import accounts from '@tests/constants/wallets';
 import { signTransactionByHW } from '.';
 
-jest.mock('@libs/hwServer/communication', () => ({
-  signTransaction: jest.fn(),
-}));
-
 describe.skip('signTransactionByHW', () => {
   // @todo fix the temp signature
   const signature = { data: [], type: 'Buffer' };
