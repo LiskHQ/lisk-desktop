@@ -5,11 +5,13 @@ import HwDeviceListing from './HwDeviceListing';
 const devices = [
   {
     path: '13123123',
-    model: 'Ledger Nano S',
+    manufacturer: 'Ledger',
+    product: 'Nano S',
   },
   {
     path: '44523123',
-    model: 'Ledger Nano X',
+    manufacturer: 'Ledger',
+    product: 'Nano X',
   },
 ];
 
@@ -32,9 +34,7 @@ describe('HwDeviceListing', () => {
   it('Should render properly', () => {
     render(<HwDeviceListing />);
     devices.forEach((hwDevice) => {
-      expect(screen.getByText(hwDevice.model)).toBeTruthy();
-      expect(screen.getByText(hwDevice.path)).toBeTruthy();
-      expect(screen.getByText(hwDevice.model)).toBeTruthy();
+      expect(screen.getByText(`${hwDevice.manufacturer} ${hwDevice.product}`)).toBeTruthy();
     });
   });
 });

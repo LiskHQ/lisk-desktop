@@ -6,14 +6,14 @@ describe('HardwareWallet current device reducer', () => {
   it('updates current device', () => {
     const action = {
       type: actionTypes.setCurrentHWDevice,
-      device: {
+      payload: {
         path: '20231',
         model: 'Nano S',
         brand: 'Ledger',
       }
     };
     const updatedState = currentDevice(initialState, action);
-    expect(updatedState).toEqual(action.device);
+    expect(updatedState).toEqual(action.payload);
   });
 
   it('returns default state', () => {
