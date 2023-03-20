@@ -1,10 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-// import {
-//   useApplicationManagement,
-//   useCurrentApplication,
-// } from '@blockchainApplication/manage/hooks';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
