@@ -7,9 +7,10 @@ const mockState = {
     accounts: mockHWAccounts,
   },
 };
-
+const mockDispatch = jest.fn();
 jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
+  useDispatch: mockDispatch,
 }));
 
 describe('useHWAccounts', () => {

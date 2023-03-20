@@ -10,10 +10,10 @@ describe('HardwareWallet selectors', () => {
   const mockState = {
     hardwareWallet: {
       devices: [
-        { deviceId: '1', status: 'connected' },
-        { deviceId: '2', status: 'connected' },
+        { path: '1', status: 'connected' },
+        { path: '2', status: 'connected' },
       ],
-      currentDevice: { deviceId: '1', status: 'connected' },
+      currentDevice: { path: '1', status: 'connected' },
       accounts: [{ id: 1 }],
     },
   };
@@ -32,7 +32,7 @@ describe('HardwareWallet selectors', () => {
   });
   it('Should select ActiveHardware DeviceId', async () => {
     expect(selectCurrentHWDeviceId(mockState)).toEqual(
-      mockState.hardwareWallet.currentDevice.deviceId
+      mockState.hardwareWallet.currentDevice.path
     );
   });
   it('Should select HardwareDevices', async () => {

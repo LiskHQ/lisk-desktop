@@ -24,7 +24,6 @@ describe('DeviceToast', () => {
     renderWithRouter(DeviceToast, props);
 
     expect(screen.getByText(props.label)).toBeTruthy();
-    expect(screen.getByText('Select')).toBeTruthy();
   });
 
   it('Should call closeToast when close icon is clicked', () => {

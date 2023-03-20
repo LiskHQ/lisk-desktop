@@ -7,20 +7,20 @@ describe('hardwareWalletActions', () => {
   });
 
   it('should create an action to update devices', () => {
-    const devices = [{ deviceId: '1' }];
+    const devices = [{ path: '1' }];
     const expectedAction = {
       type: actionTypes.setHWDevices,
-      devices,
+      payload: devices,
     };
 
     expect(setHWDevices(devices)).toEqual(expectedAction);
   });
 
   it('should create an action to update device', () => {
-    const device = { deviceId: '1' };
+    const device = { path: '1' };
     const expectedAction = {
       type: actionTypes.setCurrentHWDevice,
-      device,
+      payload: device,
     };
 
     expect(setCurrentHWDevice(device)).toEqual(expectedAction);

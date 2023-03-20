@@ -8,7 +8,7 @@ jest.mock('@libs/hwServer/communication', () => ({
 describe.skip('signTransactionByHW', () => {
   // @todo fix the temp signature
   const signature = { data: [], type: 'Buffer' };
-  it('should return a transaction object with the proper signature', async () => {
+  it.skip('should return a transaction object with the proper signature', async () => {
     const wallet = {
       summary: {
         address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',

@@ -11,8 +11,10 @@ const mockSelector = {
   },
 };
 
+const mockDispatch = jest.fn();
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn((fn) => fn(mockSelector)),
+  useSelector: jest.fn().mockImplementation((fn) => fn(mockSelector)),
+  useDispatch: mockDispatch,
 }));
 
 jest.mock('@hardwareWallet/store/actions', () => ({

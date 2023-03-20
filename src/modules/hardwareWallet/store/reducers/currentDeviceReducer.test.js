@@ -5,9 +5,9 @@ describe('HardwareWallet current device reducer', () => {
 
   it('updates current device', () => {
     const action = {
-      type: actionTypes.setCurrentDevice,
+      type: actionTypes.setCurrentHWDevice,
       device: {
-        deviceId: '20231',
+        path: '20231',
         model: 'Nano S',
         brand: 'Ledger',
       }
