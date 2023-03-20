@@ -29,10 +29,11 @@ export const getSignedMessage = async (devicePath, accountIndex, unsignedMessage
   return signedMessage;
 };
 
-export const getPubKey = async (devicePath, accountIndex) => {
+export const getPubKey = async (devicePath, accountIndex, showOnDevice) => {
   const pubKey = await executeIPCCommand(GET_PUB_KEY, {
     devicePath,
     accountIndex,
+    showOnDevice,
   });
 
   return pubKey;

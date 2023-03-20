@@ -3,13 +3,15 @@ import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
 import { LiskApp } from '@zondax/ledger-lisk';
 import { getDevicesFromPaths, getLedgerAccount } from './utils';
 
-export async function getPubKey({ devicePath, accountIndex }) {
+export async function getPubKey({ devicePath, accountIndex, showOnDevice }) {
   let transport;
   try {
     transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
-    const account = await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
+    const account = showOnDevice
+      ? await liskLedger.showAddressAndPubKey(ledgerAccount.derivePath())
+      : await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
     await transport?.close();
     const errorMessage = account?.error_message;
     if (errorMessage === 'No errors') {
