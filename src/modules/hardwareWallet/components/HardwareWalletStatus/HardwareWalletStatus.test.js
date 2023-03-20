@@ -1,22 +1,26 @@
-import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { mockHWCurrentDevice } from '@hardwareWallet/__fixtures__';
+import { renderWithRouter } from 'src/utils/testHelpers';
 import { HardwareWalletStatus } from './HardwareWalletStatus';
 
-jest.mock('@hardwareWallet/hooks/useHWStatus', () => ({
-  useHWStatus: jest.fn(() => mockHWCurrentDevice),
+const mockSelector = {
+  hardwareWallet: {
+    currentDevice: mockHWCurrentDevice,
+  },
+};
+
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn().mockImplementation((fn) => fn(mockSelector)),
 }));
 
 describe('hardwareWallet', () => {
   beforeEach(() => {
-    render(<HardwareWalletStatus />);
+    renderWithRouter(HardwareWalletStatus);
   });
 
   it('should render hardware wallet icon', () => {
-    const {model, status, manufacturer} = mockHWCurrentDevice
-    expect(screen.getByAltText('hardwareWalletIcon')).toBeTruthy();
-    expect(screen.getByText(model)).toBeTruthy();
+    const { manufacturer, product } = mockHWCurrentDevice;
     expect(screen.getByText(manufacturer)).toBeTruthy();
-    expect(screen.getByText(status)).toBeTruthy();
+    expect(screen.getByText(product)).toBeTruthy();
   });
 });
