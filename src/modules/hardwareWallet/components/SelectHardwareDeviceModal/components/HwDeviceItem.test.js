@@ -24,18 +24,18 @@ jest.mock('@hardwareWallet/store/actions', () => ({
 describe('HwDeviceItem', () => {
   it('Should render properly', () => {
     const props = {
-      hwDevice: { deviceId: '333', model: 'Ledger Nano s' },
+      hwDevice: { path: '333', model: 'Ledger Nano s' },
     };
     render(<HwDeviceItem {...props} />);
     expect(screen.getByText(props.hwDevice.model)).toBeTruthy();
-    expect(screen.getByText(props.hwDevice.deviceId)).toBeTruthy();
+    expect(screen.getByText(props.hwDevice.path)).toBeTruthy();
     expect(screen.getByText(props.hwDevice.model)).toBeTruthy();
   });
 
-  it('Should have check checkbox if deviceId === active device', () => {
+  it('Should have check checkbox if path === active device', () => {
     const props = {
       hwDevice: {
-        deviceId: mockSelector.hardwareWallet.currentDevice.deviceId,
+        path: mockSelector.hardwareWallet.currentDevice.path,
         model: 'Ledger Nano s',
       },
     };
@@ -44,10 +44,10 @@ describe('HwDeviceItem', () => {
     expect(checkbox.checked).toEqual(true);
   });
 
-  it('Should call hwManager.selectDevice with deviceId on checkbox click', () => {
+  it('Should call hwManager.selectDevice with path on checkbox click', () => {
     const props = {
       hwDevice: {
-        deviceId: '333',
+        path: '333',
         model: 'Ledger Nano s',
       },
     };

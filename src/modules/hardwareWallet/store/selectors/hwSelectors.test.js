@@ -1,6 +1,6 @@
 import {
   selectCurrentHWDevice,
-  selectCurrentHWDeviceId,
+  selectCurrentHWDevicePath,
   selectHardwareDevices,
   selectHWStatus,
   selectHWAccounts,
@@ -31,7 +31,7 @@ describe('HardwareWallet selectors', () => {
     expect(selectCurrentHWDevice(mockState)).toEqual(mockState.hardwareWallet.currentDevice);
   });
   it('Should select ActiveHardware DeviceId', async () => {
-    expect(selectCurrentHWDeviceId(mockState)).toEqual(
+    expect(selectCurrentHWDevicePath(mockState)).toEqual(
       mockState.hardwareWallet.currentDevice.path
     );
   });

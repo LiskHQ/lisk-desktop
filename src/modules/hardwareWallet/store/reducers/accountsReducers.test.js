@@ -5,7 +5,7 @@ import { accounts } from './accountsReducers';
 describe('reducer: hardware wallet accounts', () => {
   const testHWWalletAccount = {
     hw: {
-      deviceId: '20231',
+      path: '20231',
       model: 'Nano S',
       brand: 'Ledger',
     },

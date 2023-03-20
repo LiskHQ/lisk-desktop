@@ -4,11 +4,11 @@ import HwDeviceListing from './HwDeviceListing';
 
 const devices = [
   {
-    deviceId: '13123123',
+    path: '13123123',
     model: 'Ledger Nano S',
   },
   {
-    deviceId: '44523123',
+    path: '44523123',
     model: 'Ledger Nano X',
   },
 ];
@@ -17,7 +17,7 @@ const mockSelector = {
   hardwareWallet: {
     devices,
     currentDevice: {
-      deviceId: '123',
+      path: '123',
     },
   },
 };
@@ -33,7 +33,7 @@ describe('HwDeviceListing', () => {
     render(<HwDeviceListing />);
     devices.forEach((hwDevice) => {
       expect(screen.getByText(hwDevice.model)).toBeTruthy();
-      expect(screen.getByText(hwDevice.deviceId)).toBeTruthy();
+      expect(screen.getByText(hwDevice.path)).toBeTruthy();
       expect(screen.getByText(hwDevice.model)).toBeTruthy();
     });
   });

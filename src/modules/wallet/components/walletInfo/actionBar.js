@@ -202,7 +202,7 @@ const ActionBar = ({
           className={`${styles.helperIcon} verify-address ${styles.tooltipWrapper}`}
           onClick={() =>
             getAddress({
-              deviceId: hwInfo.deviceId,
+              path: hwInfo.path,
               index: hwInfo.derivationIndex,
               showOnDevice: true,
             })}

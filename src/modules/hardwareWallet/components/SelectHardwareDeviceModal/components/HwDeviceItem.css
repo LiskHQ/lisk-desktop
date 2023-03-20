@@ -22,7 +22,7 @@
       color: var(--color-maastricht-blue);
     }
 
-    & .deviceId {
+    & .path {
       margin-top: 12px;
       font-size: var(--paragraph-font-size-s);
       color: var(--color-blue-gray);

@@ -15,7 +15,7 @@ describe.skip('signTransactionByHW', () => {
         publicKey: 'fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122',
       },
       hwInfo: {
-        deviceId: '060E803263E985C022CA2C9B',
+        path: '060E803263E985C022CA2C9B',
         derivationIndex: 0,
       },
     };

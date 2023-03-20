@@ -2,14 +2,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckBox from '@theme/CheckBox';
 import Icon from '@theme/Icon';
-import { selectCurrentHWDeviceId } from '@hardwareWallet/store/selectors/hwSelectors';
+import { selectCurrentHWDevicePath } from '@hardwareWallet/store/selectors/hwSelectors';
 import { setCurrentHWDevice } from '@hardwareWallet/store/actions';
 import styles from './HwDeviceItem.css';
 
 function HwDeviceItem({ hwDevice }) {
   const { manufacturer, product, path } = hwDevice || {};
 
-  const activeHardwareDeviceId = useSelector(selectCurrentHWDeviceId);
+  const activeHardwareDeviceId = useSelector(selectCurrentHWDevicePath);
   const dispatch = useDispatch();
 
   function onChange() {
@@ -26,7 +26,7 @@ function HwDeviceItem({ hwDevice }) {
       <Icon name="iconLedgerDevice" className={styles.hwWalletIcon} />
       <div className={styles.infoContainer}>
         <h5 className={styles.modelInfo}>{`${manufacturer} ${product}`}</h5>
-        <span className={styles.deviceId}>{usbPort}</span>
+        <span className={styles.path}>{usbPort}</span>
       </div>
       <CheckBox
         className={styles.checkBox}
