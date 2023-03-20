@@ -26,7 +26,7 @@ const RemoveConfirmation = ({ history, location, account, onRemoveAccount }) => 
     <>
       <h1>{t('Remove Account?')}</h1>
       <WalletVisual className={styles.avatar} address={account?.metadata?.address} />
-      {account?.metadata?.name && <p className={styles.accountName}>{account?.metadata?.name}</p>}
+      {accountName && <p className={styles.accountName}>{accountName}</p>}
       <p className={styles.accountAddress}>{account?.metadata?.address}</p>
       <p className={styles.subheader}>
         {t(
