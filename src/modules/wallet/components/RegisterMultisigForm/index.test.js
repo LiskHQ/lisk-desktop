@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import wallets from '@tests/constants/wallets';
 import Form, { validateState } from './index';

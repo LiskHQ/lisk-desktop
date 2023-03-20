@@ -5,7 +5,7 @@ import numeral from 'numeral';
 import { regex } from 'src/const/regex';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { validateAmountFormat } from 'src/utils/validators';
-import { convertToBaseDenom } from '../utils/lsk';
+import { convertToBaseDenom } from '../utils/helpers';
 
 let loaderTimeout = null;
 
@@ -46,7 +46,7 @@ const useAmountField = (initialValue, balance, token) => {
       checklist: [...checklist, 'MIN_BALANCE'],
     });
 
-    if (!feedback && maxAmount < convertToBaseDenom(numeral(value).value(), token)) {
+    if (!feedback && BigInt(maxAmount) < BigInt(convertToBaseDenom(numeral(value).value(), token))) {
       feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };

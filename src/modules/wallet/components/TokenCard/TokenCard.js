@@ -1,9 +1,8 @@
 import React from 'react';
 import DialogLink from 'src/theme/dialog/link';
 import Icon from 'src/theme/Icon';
-import Converter from 'src/modules/common/components/converter';
-import { getLogo } from '@token/fungible/utils/helpers';
-import { convertFromBaseDenom } from 'src/modules/token/fungible/utils/lsk';
+import Converter from '@common/components/converter';
+import { convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './TokenCard.css';
 

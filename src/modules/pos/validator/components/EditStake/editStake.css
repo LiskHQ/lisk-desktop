@@ -106,6 +106,7 @@
     @mixin contentSmall normal;
 
     position: absolute;
+    display: flex;
     right: 5px;
     top: -5px;
     color: var(--color-slate-gray);

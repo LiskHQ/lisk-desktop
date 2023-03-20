@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Tooltip from 'src/theme/Tooltip';
 import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks';
 import { useGetInitializationFees } from '@token/fungible/hooks/queries';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';

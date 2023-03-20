@@ -11,7 +11,7 @@ import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { decodeTransaction, toTransactionJSON } from '@transaction/utils/encoding';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { Link } from 'react-router-dom';
 import Icon from 'src/theme/Icon';
@@ -31,7 +31,6 @@ const getRequestTransaction = (request) => {
   return decodeTransaction(Buffer.from(payload, 'hex'), schema);
 };
 
-// @Todo: all use cases of fromRawLsk would be implemented when token has been factored into the WC transaction request
 // eslint-disable-next-line max-statements
 const RequestSummary = ({ nextStep }) => {
   const { t } = useTranslation();
@@ -54,7 +53,7 @@ const RequestSummary = ({ nextStep }) => {
       transactionJSON,
       formProps: {
         composedFees: {
-          Transaction: `${fromRawLsk(transaction.fee)} LSK`,
+          Transaction: `${convertFromBaseDenom(transaction.fee)} LSK`,
         },
         fields: {
           sendingChain: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';

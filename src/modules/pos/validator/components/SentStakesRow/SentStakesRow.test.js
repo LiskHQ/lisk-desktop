@@ -1,6 +1,6 @@
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { fireEvent, screen } from '@testing-library/react';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
 import { useValidators } from '@pos/validator/hooks/queries';
