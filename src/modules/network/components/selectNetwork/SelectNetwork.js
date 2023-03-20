@@ -61,7 +61,7 @@ function SelectNetwork({ history }) {
 
   useEffect(() => {
     refetchMergedApplicationData();
-  }, [mainChainNetwork.name]);
+  }, [mainChainNetwork?.name]);
 
   useEffect(() => {
     if (!mainChainNetwork) setValue(networks[DEFAULT_NETWORK]);
