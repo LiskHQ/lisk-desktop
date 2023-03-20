@@ -6,10 +6,11 @@ import Tooltip from '@theme/Tooltip';
 import { useTranslation } from 'react-i18next';
 import styles from './AccountRow.css';
 
-function AccountRow({ account, onSelect, onRemove, truncate }) {
+function AccountRow({ account, currentAccount, onSelect, onRemove, truncate }) {
   const {
     metadata: { name, address, isHW, isNew },
   } = account;
+  const isCurrentAccount = currentAccount?.metadata?.address === address;
   const { t } = useTranslation();
   return (
     <div
@@ -39,6 +40,11 @@ function AccountRow({ account, onSelect, onRemove, truncate }) {
         </div>
         <p className={`${styles.addressValue}`}>{truncate ? truncateAddress(address) : address}</p>
       </div>
+      {isCurrentAccount && (
+        <div>
+          <Icon name="checkboxCircleFilled" />
+        </div>
+      )}
       {onRemove && (
         <button
           data-testid={`${address}-delete`}

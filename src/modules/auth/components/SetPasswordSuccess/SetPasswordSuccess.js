@@ -2,24 +2,20 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { PrimaryButton } from 'src/theme/buttons';
-import Box from 'src/theme/box';
-import DownloadJSON from 'src/modules/common/components/DownloadJSON/DownloadJSON';
-import BoxContent from 'src/theme/box/content';
+import { PrimaryButton } from '@theme/buttons';
+import Box from '@theme/box';
+import DownloadJSON from '@common/components/DownloadJSON/DownloadJSON';
+import BoxContent from '@theme/box/content';
+import { truncateAddress } from '@wallet/utils/account';
 import styles from './SetPasswordSuccess.css';
 
-function SetPasswordSuccess({
-  onClose,
-  encryptedPhrase,
-  accountName,
-  headerText,
-  contentText,
-  buttonText,
-}) {
+function SetPasswordSuccess({ onClose, encryptedPhrase, headerText, contentText, buttonText }) {
   const { t } = useTranslation();
   const onContinue = () => onClose();
+  const accountName = encryptedPhrase.metadata.name;
   const appendAccountName = `_${accountName}`;
-  const fileName = `encrypted_secret_recovery_phrase${accountName ? appendAccountName : ''}`;
+  const address = truncateAddress(encryptedPhrase.metadata.address);
+  const fileName = `${address}${accountName ? appendAccountName : ''}_lisk_account`;
 
   return (
     <Box className={styles.container}>
