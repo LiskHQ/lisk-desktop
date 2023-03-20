@@ -26,7 +26,7 @@ const Network = () => {
             size="maxContent"
             content={<span className="network-name">{t(activeNetworkName)}</span>}
           >
-            <span>{mainChainNetwork.serviceUrl}</span>
+            <span>{mainChainNetwork?.serviceUrl}</span>
           </Tooltip>
         </div>
       </section>
