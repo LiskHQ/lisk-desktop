@@ -2,6 +2,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import Tooltip from 'src/theme/Tooltip';
 import useSettings from '@settings/hooks/useSettings';
 import styles from './network.css';
 
@@ -13,14 +14,20 @@ const Network = () => {
   const activeNetworkName = mainChainNetwork?.name;
   const statusColor = status.online ? styles.online : styles.offline;
 
-
-
   return (
     <>
       <section className={styles.wrapper}>
         <span className={`${styles.status} ${statusColor}`} />
         <div className={styles.message}>
-          <span className="network-name">{t(activeNetworkName)}</span>
+          <Tooltip
+            indent
+            tooltipClassName={styles.tooltipContainer}
+            position="bottom left"
+            size="maxContent"
+            content={<span className="network-name">{t(activeNetworkName)}</span>}
+          >
+            <span>{mainChainNetwork.serviceUrl}</span>
+          </Tooltip>
         </div>
       </section>
     </>

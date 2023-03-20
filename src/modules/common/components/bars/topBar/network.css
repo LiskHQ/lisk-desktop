@@ -68,3 +68,7 @@
 .offline {
   background-color: red;
 }
+
+.tooltipContainer {
+  transform: translateX(-24px) !important;
+}
