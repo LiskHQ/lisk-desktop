@@ -9,8 +9,8 @@ describe('HardwareWallet reducer devices', () => {
       },
     ];
     const actionData = {
-      type: actionTypes.setDevices,
-      devices: updatedDevices,
+      type: actionTypes.setHWDevices,
+      payload: updatedDevices,
     };
     expect(devices(initialState, actionData)).toEqual(updatedDevices);
   });
