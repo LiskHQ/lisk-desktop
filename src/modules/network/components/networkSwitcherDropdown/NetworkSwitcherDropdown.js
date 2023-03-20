@@ -15,11 +15,7 @@ import styles from './NetworkSwitcherDropdown.css';
 import networks from '../../configuration/networks';
 import { useNetworkStatus } from '../../hooks/queries';
 
-function NetworkSwitcherDropdown({
-  noLabel,
-  onLoadApplications = () => {},
-  onLoadNetworkStatus = () => {},
-}) {
+function NetworkSwitcherDropdown({ noLabel, onLoadApplications, onLoadNetworkStatus }) {
   const { t } = useTranslation();
   const { setValue } = useSettings('mainChainNetwork');
   const [selectedNetwork, setSelectedNetwork] = useState(networks[DEFAULT_NETWORK]);
@@ -67,7 +63,7 @@ function NetworkSwitcherDropdown({
       setApplications(defaultApplications);
     }
 
-    onLoadApplications({
+    onLoadApplications?.({
       isErrorGettingApplication: blockchainAppsMetadata.isError,
       isGettingApplication: blockchainAppsMetadata.isLoading,
       applications: defaultApplications,
@@ -79,7 +75,7 @@ function NetworkSwitcherDropdown({
   ]);
 
   useEffect(() => {
-    onLoadNetworkStatus({
+    onLoadNetworkStatus?.({
       isGettingNetworkStatus: networkStatus.isLoading,
       isErrorGettingNetworkStatus: networkStatus.isError,
       selectedNetworkStatusData: networkStatus.data?.data,
