@@ -1,10 +1,10 @@
 /* eslint-disable max-statements */
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  useApplicationManagement,
-  useCurrentApplication,
-} from '@blockchainApplication/manage/hooks';
+// import {
+//   useApplicationManagement,
+//   useCurrentApplication,
+// } from '@blockchainApplication/manage/hooks';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
@@ -14,8 +14,6 @@ import NetworkSwitcherDropdown from '../networkSwitcherDropdown';
 
 function SelectNetwork({ history }) {
   const { t } = useTranslation();
-  const { setApplications } = useApplicationManagement();
-  const [, setCurrentApplication] = useCurrentApplication();
   const [applicationState, setApplicationState] = useState({
     isErrorGettingApplication: false,
     isGettingApplication: true,
@@ -24,34 +22,19 @@ function SelectNetwork({ history }) {
     isGettingNetworkStatus: true,
   });
 
-  const onLoadApplications = ({
-    applications,
-    isErrorGettingApplication,
-    isGettingApplication,
-  }) => {
+  const onLoadApplications = ({ isErrorGettingApplication, isGettingApplication }) => {
     setApplicationState({
-      applications,
       isErrorGettingApplication,
       isGettingApplication,
     });
   };
 
-  const onLoadNetworkStatus = ({ isGettingNetworkStatus, selectedNetworkStatusData }) => {
-    setSelectedNetworkState({ isGettingNetworkStatus, selectedNetworkStatusData });
+  const onLoadNetworkStatus = ({ isGettingNetworkStatus }) => {
+    setSelectedNetworkState({ isGettingNetworkStatus });
   };
 
   const goToDashboard = useCallback(() => {
-    const { applications } = applicationState || {};
-    const { selectedNetworkStatusData } = selectedNetworkState || {};
-    const mainChain = applications.find(
-      ({ chainID }) => chainID === selectedNetworkStatusData?.chainID
-    );
-
-    setApplications(applications || []);
-    if (mainChain) {
-      setCurrentApplication(mainChain);
-      history.push(routes.dashboard.path);
-    }
+    history.push(routes.dashboard.path);
   }, [applicationState.applications, selectedNetworkState]);
 
   return (

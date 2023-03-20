@@ -1,10 +1,14 @@
 /* eslint-disable max-statements */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import Icon from 'src/theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import {
+  useApplicationManagement,
+  useCurrentApplication,
+} from '@blockchainApplication/manage/hooks';
 import { DEFAULT_NETWORK } from 'src/const/config';
 import { Client } from 'src/utils/api/client';
 import styles from './NetworkSwitcherDropdown.css';
@@ -12,15 +16,15 @@ import networks from '../../configuration/networks';
 import { useNetworkStatus } from '../../hooks/queries';
 
 function NetworkSwitcherDropdown({
-  onSelectNetwork = () => {},
+  noLabel,
   onLoadApplications = () => {},
   onLoadNetworkStatus = () => {},
 }) {
   const { t } = useTranslation();
-  const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
-
-  const selectedNetwork = mainChainNetwork || networks[DEFAULT_NETWORK];
-
+  const { setValue } = useSettings('mainChainNetwork');
+  const [selectedNetwork, setSelectedNetwork] = useState(networks[DEFAULT_NETWORK]);
+  const { setApplications } = useApplicationManagement();
+  const [, setCurrentApplication] = useCurrentApplication();
   const queryClient = useRef(new Client({ http: selectedNetwork.serviceUrl }));
 
   const {
@@ -28,12 +32,14 @@ function NetworkSwitcherDropdown({
     isLoading: isGettingNetworkStatus,
     isError: isErrorGettingNetworkStatus,
     isFetched: hasFetchedNetworkStatus,
+    refetch: refetchNetworkStatus,
   } = useNetworkStatus({ client: queryClient.current });
 
   const {
     data,
     isLoading: isGettingApplication,
     isError: isErrorGettingApplication,
+    isFetched: hasFetchedApplication,
     refetch: refetchApplicationData,
   } = useBlockchainApplicationMeta({
     config: {
@@ -42,22 +48,39 @@ function NetworkSwitcherDropdown({
         network: selectedNetwork.name,
       },
     },
-    options: { enabled: !!selectedNetworkStatus, keepPreviousData: false },
+    options: {
+      enabled: !!selectedNetworkStatus && !isGettingNetworkStatus && !isErrorGettingNetworkStatus,
+    },
     client: new Client({ http: selectedNetwork.serviceUrl }),
   });
 
-  const handleChangeNetwork = (value) => {
-    setValue(value);
-    onSelectNetwork(value);
+  const defaultApplications = data?.data || [];
+
+  const handleChangeNetwork = (network) => {
+    queryClient.current.create({
+      http: network.serviceUrl,
+    });
+    refetchNetworkStatus();
+    setSelectedNetwork(network);
   };
 
   useEffect(() => {
+    if (defaultApplications && !isGettingApplication && !isErrorGettingApplication) {
+      setValue(selectedNetwork);
+
+      const mainChain = defaultApplications.find(
+        ({ chainID }) => chainID === selectedNetworkStatus?.chainID
+      );
+      if (mainChain) setCurrentApplication(mainChain);
+      setApplications(defaultApplications);
+    }
+
     onLoadApplications({
       isErrorGettingApplication,
       isGettingApplication,
-      applications: data?.data,
+      applications: defaultApplications,
     });
-  }, [isGettingApplication, isErrorGettingApplication]);
+  }, [isGettingApplication, isErrorGettingApplication, hasFetchedApplication]);
 
   useEffect(() => {
     onLoadNetworkStatus({
@@ -69,16 +92,12 @@ function NetworkSwitcherDropdown({
 
   useEffect(() => {
     refetchApplicationData();
-  }, [mainChainNetwork]);
-
-  useEffect(() => {
-    if (!mainChainNetwork) setValue(networks[DEFAULT_NETWORK]);
-  }, []);
+  }, [selectedNetwork]);
 
   return (
     <>
       <div className={styles.networkSelectionWrapper}>
-        <label>{t('Select network')}</label>
+        {!noLabel && <label>{t('Select network')}</label>}
         <MenuSelect
           value={selectedNetwork}
           select={(selectedValue, option) => selectedValue.label === option.label}

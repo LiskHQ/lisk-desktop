@@ -37,7 +37,7 @@ const ApplicationBootstrap = ({ children }) => {
   } = useBlockchainApplicationMeta({
     config: {
       params: {
-        chainID: selectedNetworkStatus?.data?.chainID,
+        isDefault: true,
         network: mainChainNetwork?.name,
       },
     },
