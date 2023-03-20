@@ -46,9 +46,6 @@ export const useBlockchainApplicationMeta = ({
     keys: [BLOCKCHAIN_APPS_META],
     config,
     client,
-    options: {
-      ...options,
-      enabled: !!network,
-    },
+    options,
   });
 };
