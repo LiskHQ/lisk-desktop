@@ -23,7 +23,7 @@ export const ManageAccountsContent = ({
   className,
   truncate,
   title: customTitle,
-  location: { search },
+  location: { search } = { search: '' },
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
