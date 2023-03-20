@@ -21,6 +21,7 @@ const Network = () => {
         <div className={styles.message}>
           <Tooltip
             indent
+            alwaysShow
             tooltipClassName={styles.tooltipContainer}
             position="bottom left"
             size="maxContent"
