@@ -63,7 +63,7 @@ describe('AddAccountForm', () => {
     expect(props.onAddAccount).toBeCalled();
   });
 
-  it('should not trigger add account with a wrong mneumoic secrete recovery phrase', () => {
+  it('should not trigger add account with a wrong mneumoic secret recovery phrase', () => {
     const inputField = screen.getByTestId('recovery-1');
 
     const pasteEvent = createEvent.paste(inputField, {
@@ -111,19 +111,22 @@ describe('AddAccountForm', () => {
     const correctDerivationPath = "m/44'/134'/0'";
     fireEvent.change(input, { target: { value: correctDerivationPath } });
 
-    const passphrase = 'below record evolve eye youth post control consider spice swamp hidden easily';
+    const passphrase =
+      'below record evolve eye youth post control consider spice swamp hidden easily';
     const passphraseInput1 = screen.getByTestId('recovery-1');
     const pasteEvent = createEvent.paste(passphraseInput1, {
       clipboardData: {
-        getData: () =>
-          passphrase,
+        getData: () => passphrase,
       },
     });
     fireEvent(passphraseInput1, pasteEvent);
 
     fireEvent.click(screen.getByText('Continue'));
 
-    expect(props.onAddAccount).toHaveBeenCalledWith({ value: passphrase, isValid: true }, correctDerivationPath);
+    expect(props.onAddAccount).toHaveBeenCalledWith(
+      { value: passphrase, isValid: true },
+      correctDerivationPath
+    );
   });
 
   it('should render the custom derivation path field with no default value', () => {

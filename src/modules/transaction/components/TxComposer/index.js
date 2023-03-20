@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import { selectActiveToken } from 'src/redux/selectors';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
-import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
+import { getTotalSpendingAmount } from '@transaction/utils/transaction';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton } from 'src/theme/buttons';
-import Feedback, { getMinRequiredBalance } from './Feedback';
+import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
 import { splitModuleAndCommand } from '../../utils';
 import { useTransactionFee } from '../../hooks/useTransactionFee/useTransactionFee';
@@ -38,7 +37,7 @@ const TxComposer = ({
     },
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
-  const token = useSelector(selectActiveToken);
+  const { symbol: tokenSymbol } = formProps.fields.token || {};
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority,
@@ -74,15 +73,16 @@ const TxComposer = ({
       });
     }
   }, [selectedPriority, transactionJSON.params]);
-  const minRequiredBalance = getMinRequiredBalance(transactionJSON, transactionFee);
 
+  const minRequiredBalance =
+    BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
   const { recipientChain, sendingChain } = formProps;
   const composedFees = [
     {
       title: 'Transaction',
       value: getFeeStatus({
         fee: Number(convertFromBaseDenom(transactionFee, formProps.fields.token)),
-        token,
+        tokenSymbol,
         customFee,
       }),
       components,
@@ -93,7 +93,7 @@ const TxComposer = ({
         fee: Number(
           convertFromBaseDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
         ),
-        token,
+        tokenSymbol,
         customFee,
       }),
       isHidden: !transactionJSON.params.messageFee,
@@ -128,7 +128,7 @@ const TxComposer = ({
       />
       <Feedback
         feedback={formProps.feedback}
-        minRequiredBalance={minRequiredBalance}
+        minRequiredBalance={minRequiredBalance.toString()}
         token={formProps.fields?.token || {}}
       />
       <BoxFooter>
@@ -136,7 +136,8 @@ const TxComposer = ({
           className="confirm-btn"
           onClick={() => onConfirm(formProps, transactionJSON, selectedPriority, composedFees)}
           disabled={
-            !formProps.isFormValid || minRequiredBalance > formProps.fields?.token?.availableBalance
+            !formProps.isFormValid ||
+            minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0)
           }
         >
           {buttonTitle ?? t('Continue')}

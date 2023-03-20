@@ -190,11 +190,6 @@ export const transactionBroadcasted =
 /**
  * Signs a given multisignature transaction using passphrase
  * and dispatches the relevant action.
- *
- * @param {object} data
- * @param {object} data.rawTx Transaction config required by Lisk Element
- * @param {object} data.sender
- * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
 export const multisigTransactionSigned =
   ({

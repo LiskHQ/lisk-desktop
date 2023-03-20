@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom } from '@token/fungible/utils/helpers';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -30,7 +30,7 @@ const BlockchainApplicationStatistics = () => {
       {
         title: t('Total Supply'),
         description: t('Total LSK tokens in circulation'),
-        amount: toRawLsk(statistics?.data.totalSupplyLSK),
+        amount: convertToBaseDenom(statistics?.data.totalSupplyLSK),
         icon: 'totalSupplyToken',
       },
       {
@@ -38,7 +38,7 @@ const BlockchainApplicationStatistics = () => {
         description: t(
           'Amount of LSK tokens staked by validators and nominators for DPoS governance'
         ),
-        amount: toRawLsk(statistics?.data.stakedLSK),
+        amount: convertToBaseDenom(statistics?.data.stakedLSK),
         icon: 'stakedToken',
       },
     ],

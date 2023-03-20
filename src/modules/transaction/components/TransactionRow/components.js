@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getTxAmount } from '@transaction/utils/transaction';
+import { getTotalSpendingAmount } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -153,14 +153,14 @@ export const Amount = () => {
           showRounded
           recipient={data.params.recipientAddress}
           moduleCommand={data.moduleCommand}
-          amount={getTxAmount(data)}
+          amount={getTotalSpendingAmount(data)}
         />
       </span>
     );
   }
   return (
     <span className={styles.amount}>
-      <TokenAmount val={getTxAmount(data)} token={token} />
+      <TokenAmount val={getTotalSpendingAmount(data)} token={token} />
       <span className={`${styles.fee} hideOnLargeViewPort`}>
         <TokenAmount val={data.fee} token={token} />
       </span>

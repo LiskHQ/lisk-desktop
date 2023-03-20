@@ -9,7 +9,7 @@ import { genKey, blsKey, pop } from '@tests/constants/keys';
 import { mockAppTokens } from '@tests/fixtures/token';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import {
-  getTxAmount,
+  getTotalSpendingAmount,
   containsTransactionType,
   transactionToJSON,
   removeExcessSignatures,
@@ -48,7 +48,7 @@ describe.skip('API: LSK Transactions', () => {
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );
-  describe('getTxAmount', () => {
+  describe('getTotalSpendingAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
         module: 'token',
@@ -56,7 +56,7 @@ describe.skip('API: LSK Transactions', () => {
         params: { amount: 100000000 },
       };
 
-      expect(getTxAmount(tx)).toEqual(tx.params.amount);
+      expect(getTotalSpendingAmount(tx)).toEqual(tx.params.amount);
     });
 
     it('should return amount of stakes in Beddows', () => {
@@ -76,7 +76,7 @@ describe.skip('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual(200000000);
+      expect(getTotalSpendingAmount(tx)).toEqual(200000000);
     });
 
     it('should return amount of unlock in Beddows', () => {
@@ -96,7 +96,7 @@ describe.skip('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual(200000000);
+      expect(getTotalSpendingAmount(tx)).toEqual(200000000);
     });
   });
 

@@ -1,8 +1,7 @@
-import {
-  screen, fireEvent, waitFor,
-} from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { truncateAddress } from '@wallet/utils/account';
 import RemoveAccount from './RemoveAccount';
 
 const mockSetAccount = jest.fn();
@@ -14,9 +13,7 @@ jest.mock('@account/hooks', () => ({
     getAccountByAddress: jest.fn().mockReturnValue(mockSavedAccounts[0]),
     deleteAccountByAddress: mockDeleteAccount,
   })),
-  useCurrentAccount: jest.fn(() => (
-    [mockSavedAccounts[0], mockSetAccount]
-  )),
+  useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
 }));
 
 describe('Remove account', () => {
@@ -33,9 +30,15 @@ describe('Remove account', () => {
   });
 
   it('Should successfully go though the flow', async () => {
+    const { address, name } = mockSavedAccounts[0].metadata;
+    const fileName = `${truncateAddress(address)}_${name}_lisk_account`;
     expect(screen.getByText('Remove Account?')).toBeTruthy();
-    expect(screen.getByText('This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.')).toBeTruthy();
-    expect(screen.getByText('encrypted_secret_recovery_phrase.json')).toBeTruthy();
+    expect(
+      screen.getByText(
+        'This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.'
+      )
+    ).toBeTruthy();
+    expect(screen.getByText(`${fileName}.json`)).toBeTruthy();
     expect(screen.getByText('Download')).toBeTruthy();
     expect(screen.getByText('Cancel')).toBeTruthy();
     expect(screen.getByText('Remove now')).toBeTruthy();

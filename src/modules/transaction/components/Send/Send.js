@@ -10,14 +10,14 @@ const Send = ({ formProps = {}, transactionJSON, t }) => (
       <div className={styles.col}>
         <div className={styles.fromToChainWrapper}>
           <div>
-            <label>{t('From Application')}</label>
+            <label>{t('From application')}</label>
             <div className={styles.chainWrapper}>
               <img className={styles.chainLogo} src={getLogo(formProps.fields.sendingChain)} />
               <span>{formProps.fields.sendingChain.chainName}</span>
             </div>
           </div>
           <div>
-            <label>{t('To Application')}</label>
+            <label>{t('To application')}</label>
             <div className={styles.chainWrapper}>
               <img className={styles.chainLogo} src={getLogo(formProps.fields.recipientChain)} />
               <span>{formProps.fields.recipientChain.chainName}</span>
@@ -35,7 +35,7 @@ const Send = ({ formProps = {}, transactionJSON, t }) => (
       </div>
     </section>
     <section>
-      <label>{t('Recipient Address')}</label>
+      <label>{t('Recipient address')}</label>
       <label className="recipient-value">
         <WalletVisual address={transactionJSON.params.recipientAddress} size={40} />
         <div className={styles.recipientDetail}>

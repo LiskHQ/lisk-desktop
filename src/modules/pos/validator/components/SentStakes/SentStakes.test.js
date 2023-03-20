@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';

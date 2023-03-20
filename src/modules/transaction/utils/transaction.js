@@ -8,7 +8,7 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { getKeys } from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
-import { convertToBaseDenom } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
@@ -118,24 +118,24 @@ const normalizeTransactionParams = (params, token) =>
   }, {});
 
 /**
- * Gets the amount of a given transaction
- *
- * @param {Object} transaction The transaction object
- * @returns {String} Amount in Beddows/Satoshi
+ * Get the total spending amount for a given module command
  */
-const getTxAmount = ({ module, command, params = {}, moduleCommand }) => {
-  if (!moduleCommand) {
-    moduleCommand = joinModuleAndCommand({ module, command });
+const getTotalSpendingAmount = ({ module, command, params = {} }) => {
+  const moduleCommand = joinModuleAndCommand({ module, command });
+
+  if (Object.keys(params).length === 0) {
+    return '0';
   }
+
   if (moduleCommand === transfer || moduleCommand === reclaimLSK) {
     return params.amount;
   }
 
   if (moduleCommand === stake) {
-    return params.stakes.reduce((sum, stakeObject) => sum + Number(stakeObject.amount), 0);
+    return params.stakes.reduce((sum, stakeObject) => sum + BigInt(stakeObject.amount), BigInt(0)).toString();
   }
 
-  return undefined;
+  return '0';
 };
 
 /**
@@ -244,7 +244,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
     if (senderIndex > -1) {
       const { messageSchema } = options;
       const memberSignature = signMessageSignature(chainIDBuffer, transaction, privateKeyBuffer, messageSchema);
-  
+
       // @todo use correct index once SDK exposes the sort endpoint (#4497)
       const signatures = [...Array(members.length).keys()].map((index) => {
         if (index === senderIndex) return memberSignature;
@@ -443,7 +443,7 @@ const normalizeNumberRange = (distributions) => {
 };
 
 export {
-  getTxAmount,
+  getTotalSpendingAmount,
   downloadJSON,
   transactionToJSON,
   containsTransactionType,

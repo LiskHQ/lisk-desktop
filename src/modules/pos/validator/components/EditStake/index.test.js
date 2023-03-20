@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { convertToBaseDenom, convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom, convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import numeral from 'numeral';
 import { renderWithRouterAndQueryClient, renderWithRouterAndStore } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';

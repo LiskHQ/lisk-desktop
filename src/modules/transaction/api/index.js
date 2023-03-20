@@ -9,7 +9,7 @@ import {
   MODULE_COMMANDS_NAME_MAP,
 } from 'src/modules/transaction/configuration/moduleCommand';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
 import { getValidators } from '@pos/validator/api';
@@ -327,13 +327,13 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
    events: EventJSON [],
 }
  */
-export const dryRun = ({ transaction, serviceUrl, paramsSchema, isSkipVerify = false }) => {
+export const dryRun = ({ transaction, serviceUrl, paramsSchema, skipVerify = false }) => {
   const transactionBytes = transactions.getBytes(transaction, paramsSchema);
 
   return http({
     method: 'POST',
     baseUrl: serviceUrl,
     path: httpPaths.dryRun,
-    data: { transaction: transactionBytes.toString('hex'), isSkipVerify },
+    data: { transaction: transactionBytes.toString('hex'), skipVerify },
   });
 };

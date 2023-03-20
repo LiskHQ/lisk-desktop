@@ -23,23 +23,17 @@ const AccountCreationTips = () => {
       <BoxContent className={`${styles.container} coin-container`}>
         <header>
           <h5>{t('Don’t have a Lisk account yet?')}</h5>
-          <p>{t('If you are new to Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”.')}</p>
+          <p>
+            {t(
+              'If you are new to Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”.'
+            )}
+          </p>
           <div className={styles.actions}>
-            <Link
-              to={routes.register.path}
-              data-testId='link'
-            >
-              <PrimaryButton>
-                {t('Create account')}
-              </PrimaryButton>
+            <Link to={routes.register.path} data-testid="link">
+              <PrimaryButton>{t('Create account')}</PrimaryButton>
             </Link>
-            <Link
-              to={routes.addAccountOptions.path}
-              data-testId='link'
-            >
-              <SecondaryButton>
-                {t('Add account')}
-              </SecondaryButton>
+            <Link to={routes.addAccountOptions.path} data-testid="link">
+              <SecondaryButton>{t('Add account')}</SecondaryButton>
             </Link>
           </div>
         </header>
@@ -51,21 +45,33 @@ const AccountCreationTips = () => {
             <span className={styles.number}>01</span>
             <div className={styles.tip}>
               <h5>{t('Send and request tokens')}</h5>
-              <span>{t('Creating an account is your first step in benefiting from blockchain technology. With your account, you can securely send and request tokens.')}</span>
+              <span>
+                {t(
+                  'Creating an account is your first step in benefiting from blockchain technology. With your account, you can securely send and request tokens.'
+                )}
+              </span>
             </div>
           </li>
           <li>
             <span className={styles.number}>02</span>
             <div className={styles.tip}>
               <h5>{t('Participate in blockchain governance')}</h5>
-              <span>{t('Stake for your trusted validator or become a validator to secure the blockchain.')}</span>
+              <span>
+                {t(
+                  'Stake for your trusted validator or become a validator to secure the blockchain.'
+                )}
+              </span>
             </div>
           </li>
           <li>
             <span className={styles.number}>03</span>
             <div className={styles.tip}>
               <h5>{t('Monitor the Blockchain')}</h5>
-              <span>{t('You can explore the decentralized network, monitor wallet activities, blocks, transactions, and inspect validators.')}</span>
+              <span>
+                {t(
+                  'You can explore the decentralized network, monitor wallet activities, blocks, transactions, and inspect validators.'
+                )}
+              </span>
             </div>
           </li>
         </ul>

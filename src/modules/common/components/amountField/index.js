@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { Input } from 'src/theme';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';

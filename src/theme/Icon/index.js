@@ -24,6 +24,7 @@ import balanceDark from '@setup/react/assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '@setup/react/assets/images/icons/bookmarks-empty-state.svg';
 import bookmarksIconEmptyStateDark from '@setup/react/assets/images/icons/bookmarks-empty-state-dark.svg';
 import checkboxFilled from '@setup/react/assets/images/icons/checkmark-filled.svg';
+import checkboxCircleFilled from '@setup/react/assets/images/icons/checkmark-circle-filled.svg';
 import checkmark from '@setup/react/assets/images/icons/checkmark.svg';
 import copy from '@setup/react/assets/images/icons/copy.svg';
 import copyActive from '@setup/react/assets/images/icons/copy-active.svg';
@@ -257,6 +258,7 @@ export const icons = {
   calendar,
   calendarDark,
   checkboxFilled,
+  checkboxCircleFilled,
   checkmark,
   consecutiveMissedBlocks,
   consecutiveMissedBlocksDark,
