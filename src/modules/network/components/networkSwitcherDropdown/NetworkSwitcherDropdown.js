@@ -65,13 +65,15 @@ function NetworkSwitcherDropdown({
   };
 
   useEffect(() => {
-    if (defaultApplications && !isGettingApplication && !isErrorGettingApplication) {
+    if (defaultApplications.length > 0 && !isGettingApplication && !isErrorGettingApplication) {
       setValue(selectedNetwork);
 
       const mainChain = defaultApplications.find(
         ({ chainID }) => chainID === selectedNetworkStatus?.chainID
       );
+
       if (mainChain) setCurrentApplication(mainChain);
+
       setApplications(defaultApplications);
     }
 
