@@ -6,7 +6,6 @@ import {
 import { fireEvent, screen } from '@testing-library/dom';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import useSettings from '@settings/hooks/useSettings';
-import routes from 'src/routes/routes';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import SelectNetwork from './SelectNetwork';
@@ -16,7 +15,6 @@ import { useNetworkStatus } from '../../hooks/queries';
 
 const mockSetCurrentApplication = jest.fn();
 const mockSetApplication = jest.fn();
-const mockRefetchMergedApp = jest.fn();
 const mockSetSettingValue = jest.fn();
 const mockCurrentApplication = mockManagedApplications[0];
 
