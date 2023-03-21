@@ -7,11 +7,13 @@ import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelecto
 import DialogLink from '@theme/dialog/link';
 import styles from './HardwareWalletStatus.css';
 
-/* const Status = ({ status }) => (
+/* TODO: To be fixed in PDD-1482
+const Status = ({ status }) => (
   <div className={`${styles.statusWrapper} ${styles[status]}`}>
     <b>{status}</b>
   </div>
-); */
+);
+*/
 
 export const HardwareWalletStatus = () => {
   const { t } = useTranslation();
@@ -30,7 +32,7 @@ export const HardwareWalletStatus = () => {
     { label: `${t('Brand')} : `, value: manufacturer },
     { label: `${t('Model')} : `, value: product },
     { label: `${t('USB ID')} : `, value: usbPort },
-    /*    { label: `${t('Status')} : `, value: <Status status={status} /> }, */
+    /*    { label: `${t('Status')} : `, value: <Status status={status} /> }, TODO: To be fixed in PDD-1482 */
   ];
 
   return (
