@@ -1,5 +1,6 @@
 import { signTransaction } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
+import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import actionTypes from '@transaction/store/actionTypes';
 import { balanceReclaimed } from './action';
@@ -43,6 +44,9 @@ describe('actions: legacy', () => {
           },
         },
       },
+      blockChainApplications: {
+        current: { chainID: mockBlockchainApp.data[0].chainID },
+      },
     };
     const getState = () => state;
     const transactionJSON = {
@@ -77,11 +81,10 @@ describe('actions: legacy', () => {
         senderAccount,
         wallet: {
           ...state.wallet.info.LSK,
-          hwInfo: undefined,
           loginType: undefined,
         },
         schema: moduleCommandSchemas[transactionJSON.moduleCommand],
-        chainID: state.network.networks.LSK.chainID,
+        chainID: mockBlockchainApp.data[0].chainID,
         privateKey,
       });
       expect(dispatch).toHaveBeenCalledWith({

@@ -4,6 +4,7 @@ import { to } from 'await-to-js';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import actionTypes from '@transaction/store/actionTypes';
 import { signTransaction } from '@transaction/api/index';
+import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 
 /**
  * Calls transactionAPI.create for create the tx object that will broadcast
@@ -25,10 +26,10 @@ export const tokensTransferred =
       signTransaction({
         transactionJSON,
         wallet,
-        schema: moduleCommandSchemas[formProps.moduleCommand],
-        chainID: formProps.fields.sendingChain.chainID,
         privateKey,
         senderAccount,
+        schema: moduleCommandSchemas[formProps.moduleCommand],
+        chainID: selectCurrentApplicationChainID(state),
       })
     );
 

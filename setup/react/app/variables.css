@@ -197,6 +197,7 @@ or "warn/action" ineastd of "red/green"
   --color-application-manage-hover-color: var(--color-athens-white);
   --color-node-border: var(--color-athens-white);
   --color-ultramarine-blue-blurred: #4070f40d;
+  --color-network-selected-background: #4070f41f;
   --color-menu-black: #030815;
   --color-tx-pending-status-text: var(--color-ink-blue);
   --color-tx-pending-status-bg: var(--color-active-tab);

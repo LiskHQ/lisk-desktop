@@ -7,6 +7,7 @@ import sampleStakes from '@tests/constants/stakes';
 import wallets from '@tests/constants/wallets';
 import txActionTypes from '@transaction/store/actionTypes';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import * as validatorApi from '../../api';
 import actionTypes from './actionTypes';
@@ -72,6 +73,9 @@ describe('actions: staking', () => {
     token: {
       active: 'LSK',
     },
+    blockChainApplications: {
+      current: {chainID: mockBlockchainApp.data[0].chainID}
+    }
   });
 
   const privateKey = '0x0';
@@ -299,7 +303,7 @@ describe('actions: staking', () => {
       expect(transactionApi.signTransaction).toHaveBeenCalledWith({
         wallet: activeTokenWallet,
         schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
-        chainID: state.network.networks.LSK.chainID,
+        chainID: mockBlockchainApp.data[0].chainID,
         transactionJSON: transactionObject,
         privateKey,
       });

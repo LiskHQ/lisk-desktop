@@ -34,25 +34,10 @@
       text-transform: lowercase;
     }
   }
-}
 
-.dropdown {
-  width: 200px;
-  margin-right: 20px;
-}
-
-.networkItem {
-  text-transform: capitalize;
-  outline: none;
-  border: none;
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.title {
-  font-weight: var(--font-weight-very-bold);
+  & > .message .tooltipContainer {
+    transform: translateX(-24px);
+  }
 }
 
 .status {

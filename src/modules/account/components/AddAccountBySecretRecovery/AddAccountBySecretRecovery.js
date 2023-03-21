@@ -11,7 +11,7 @@ import { useCurrentAccount, useAccounts } from '@account/hooks';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
 
-const AddAccountBySecretRecovery = ({ history, location: {search} }) => {
+const AddAccountBySecretRecovery = ({ history, location: { search } }) => {
   const multiStepRef = useRef(null);
   const [recoveryPhrase, setRecoveryPhrase] = useState(null);
   const [customDerivationPath, setCustomDerivationPath] = useState();
@@ -20,7 +20,7 @@ const AddAccountBySecretRecovery = ({ history, location: {search} }) => {
 
   const queryParams = new URLSearchParams(search);
   const referrer = queryParams.get('referrer');
-  
+
   const onAddAccount = (recoveryPhraseData, derivationPath) => {
     setRecoveryPhrase(recoveryPhraseData);
     setCustomDerivationPath(derivationPath);
@@ -39,16 +39,14 @@ const AddAccountBySecretRecovery = ({ history, location: {search} }) => {
 
   return (
     <div className={`${styles.addAccount} ${grid.row}`}>
-      <MultiStep
-        navStyles={{ multiStepWrapper: styles.wrapper }}
-        ref={multiStepRef}
-      >
+      <MultiStep navStyles={{ multiStepWrapper: styles.wrapper }} ref={multiStepRef}>
         <AddAccountForm onAddAccount={onAddAccount} />
-        <SetPasswordForm recoveryPhrase={recoveryPhrase} customDerivationPath={customDerivationPath} onSubmit={onSetPassword} />
-        <SetPasswordSuccess
-          encryptedPhrase={currentAccount}
-          onClose={onPasswordSetComplete}
+        <SetPasswordForm
+          recoveryPhrase={recoveryPhrase}
+          customDerivationPath={customDerivationPath}
+          onSubmit={onSetPassword}
         />
+        <SetPasswordSuccess encryptedPhrase={currentAccount} onClose={onPasswordSetComplete} />
       </MultiStep>
     </div>
   );

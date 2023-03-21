@@ -48,13 +48,12 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  // login: {
-  //   path: '/login',
-  //   isPrivate: false,
-  //   isSigninFlow: true,
-  //   exact: true,
-  //   forbiddenTokens: [],
-  // },
+  selectNetwork: {
+    path: '/select-network',
+    isPrivate: false,
+    exact: true,
+    forbiddenTokens: [],
+  },
   backupRecoveryPhraseFlow: {
     path: '/account/backup-recovery-phrase',
     isPrivate: true,

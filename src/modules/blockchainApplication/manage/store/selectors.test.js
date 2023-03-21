@@ -4,6 +4,7 @@ import {
   selectPinnedApplications,
   selectApplications,
   selectCurrentApplication,
+  selectCurrentApplicationChainID,
 } from './selectors';
 
 describe('Application Explorer selector', () => {
@@ -19,5 +20,9 @@ describe('Application Explorer selector', () => {
   it('Should return current application if setCurrentApplication action type is triggered', async () => {
     const state = { blockChainApplications: { current: mockApplications[0] } };
     expect(selectCurrentApplication(state)).toEqual(mockApplications[0]);
+  });
+  it('Should return current application chainID', async () => {
+    const state = { blockChainApplications: { current: mockApplications[0] } };
+    expect(selectCurrentApplicationChainID(state)).toEqual(mockApplications[0].chainID);
   });
 });

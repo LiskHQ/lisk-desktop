@@ -1,8 +1,31 @@
 /* eslint-disable */
-import React from 'react';
-import SettingDialog from './SettingDialog';
 import wallets from '@tests/constants/wallets';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { useNetworkStatus } from '@network/hooks/queries';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { mountWithRouter, mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
+import SettingDialog from './SettingDialog';
+import { mockNetworkStatus } from 'src/modules/network/__fixtures__';
+import { mockBlockchainAppMeta } from 'src/modules/blockchainApplication/manage/__fixtures__';
+
+jest.mock('@network/hooks/queries/useNetworkStatus');
+jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
+
+useNetworkStatus.mockReturnValue({
+  data: {
+    ...mockNetworkStatus,
+    data: { ...mockNetworkStatus.data, chainID: mockBlockchainAppMeta.data[0].chainID },
+  },
+  isLoading: false,
+  isError: false,
+  isFetched: true,
+  refetch: jest.fn(),
+});
+useBlockchainApplicationMeta.mockReturnValue({
+  data: mockBlockchainAppMeta,
+  isLoading: false,
+  isError: false,
+  refetch: jest.fn(),
+});
 
 describe('Setting', () => {
   const settings = {
@@ -22,7 +45,7 @@ describe('Setting', () => {
     },
   };
 
-  const t = key => key;
+  const t = (key) => key;
   let wrapper;
 
   const props = {
@@ -39,7 +62,7 @@ describe('Setting', () => {
 
   describe('With no transaction in guest mode', () => {
     beforeEach(() => {
-      wrapper = mountWithRouter(SettingDialog, props);
+      wrapper = mountWithRouterAndQueryClient(SettingDialog, props);
     });
 
     it('should display Currency, Security, Advanced and Privacy settings sections with toggles', () => {
@@ -53,9 +76,11 @@ describe('Setting', () => {
       expect(wrapper.find('section.advanced')).toContainMatchingElement('Toggle');
       expect(wrapper.find('section.privacy')).toExist();
       expect(wrapper.find('section.privacy')).toContainMatchingElement('Toggle');
+      expect(wrapper.find('section.network')).toExist();
+      expect(wrapper.find('section.network')).toContainMatchingElement('NetworkSwitcherDropdown');
     });
   });
-  
+
   // @todo - Move tests to currencySelector and toggle components
   // describe('With no transaction in guest mode', () => {
   //   beforeEach(() => {
