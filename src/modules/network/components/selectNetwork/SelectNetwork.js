@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -10,28 +10,15 @@ import NetworkSwitcherDropdown from '../networkSwitcherDropdown';
 
 function SelectNetwork({ history }) {
   const { t } = useTranslation();
-  const [applicationState, setApplicationState] = useState({
-    isErrorGettingApplication: false,
-    isGettingApplication: true,
-  });
-  const [selectedNetworkState, setSelectedNetworkState] = useState({
-    isGettingNetworkStatus: true,
-  });
+  const [isNetworkSwitchSuccess, setIsNetworkSwitchSuccess] = useState(false);
 
-  const onLoadApplications = ({ isErrorGettingApplication, isGettingApplication }) => {
-    setApplicationState({
-      isErrorGettingApplication,
-      isGettingApplication,
-    });
+  const onNetworkSwitchSuccess = (isSuccess) => {
+    setIsNetworkSwitchSuccess(isSuccess);
   };
 
-  const onLoadNetworkStatus = ({ isGettingNetworkStatus }) => {
-    setSelectedNetworkState({ isGettingNetworkStatus });
-  };
-
-  const goToDashboard = useCallback(() => {
+  function goToDashboard() {
     history.push(routes.dashboard.path);
-  }, [applicationState.applications, selectedNetworkState]);
+  }
 
   return (
     <div className={`${styles.selectNetworkWrapper} ${grid.row}`}>
@@ -53,18 +40,11 @@ function SelectNetwork({ history }) {
             </div>
             <h6>Lisk</h6>
           </div>
-          <NetworkSwitcherDropdown
-            onLoadApplications={onLoadApplications}
-            onLoadNetworkStatus={onLoadNetworkStatus}
-          />
+          <NetworkSwitcherDropdown onNetworkSwitchSuccess={onNetworkSwitchSuccess} />
           <PrimaryButton
             className={`${styles.button} ${styles.continueBtn}`}
             onClick={goToDashboard}
-            disabled={
-              selectedNetworkState.isGettingNetworkStatus ||
-              applicationState.isGettingApplication ||
-              applicationState.isErrorGettingApplication
-            }
+            disabled={!isNetworkSwitchSuccess}
           >
             {t('Continue to dashbord')}
           </PrimaryButton>

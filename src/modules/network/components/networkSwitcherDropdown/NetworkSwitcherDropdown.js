@@ -15,7 +15,10 @@ import styles from './NetworkSwitcherDropdown.css';
 import networks from '../../configuration/networks';
 import { useNetworkStatus } from '../../hooks/queries';
 
-function NetworkSwitcherDropdown({ noLabel, onLoadApplications, onLoadNetworkStatus }) {
+function NetworkSwitcherDropdown({
+  noLabel,
+  onNetworkSwitchSuccess,
+}) {
   const { t } = useTranslation();
   const { setValue } = useSettings('mainChainNetwork');
   const [selectedNetwork, setSelectedNetwork] = useState(networks[DEFAULT_NETWORK]);
@@ -62,12 +65,6 @@ function NetworkSwitcherDropdown({ noLabel, onLoadApplications, onLoadNetworkSta
 
       setApplications(defaultApplications);
     }
-
-    onLoadApplications?.({
-      isErrorGettingApplication: blockchainAppsMetadata.isError,
-      isGettingApplication: blockchainAppsMetadata.isLoading,
-      applications: defaultApplications,
-    });
   }, [
     blockchainAppsMetadata.isLoading,
     blockchainAppsMetadata.isError,
@@ -75,16 +72,17 @@ function NetworkSwitcherDropdown({ noLabel, onLoadApplications, onLoadNetworkSta
   ]);
 
   useEffect(() => {
-    onLoadNetworkStatus?.({
-      isGettingNetworkStatus: networkStatus.isLoading,
-      isErrorGettingNetworkStatus: networkStatus.isError,
-      selectedNetworkStatusData: networkStatus.data?.data,
-    });
-  }, [networkStatus.isLoading, networkStatus.isError]);
-
-  useEffect(() => {
-    blockchainAppsMetadata.refetch();
-  }, [selectedNetwork]);
+    const isSuccess =
+      blockchainAppsMetadata.isSuccess &&
+      networkStatus.isSuccess &&
+      !blockchainAppsMetadata.isFetching &&
+      !networkStatus.isFetching;
+    if (isSuccess) {
+      onNetworkSwitchSuccess?.(true);
+    } else {
+      onNetworkSwitchSuccess?.(false);
+    }
+  }, [blockchainAppsMetadata.isSuccess, networkStatus.isSuccess, blockchainAppsMetadata.isFetching, networkStatus.isFetching]);
 
   return (
     <>

@@ -49,7 +49,6 @@ describe('SeletNetwork', () => {
     data: mockBlockchainAppMeta,
     isLoading: false,
     isError: false,
-    refetch: mockRefetchMergedApp,
   });
 
   it('should render details properly', () => {
@@ -77,11 +76,33 @@ describe('SeletNetwork', () => {
       });
   });
 
-  it('should trigger go to dashboard', () => {
+  it('should be possible to click Continue to dashboard button if isSuccess and !isFetching', () => {
+    useNetworkStatus.mockReturnValue({
+      data: mockNetworkStatus,
+      isFetching: false,
+      isSuccess: true,
+    });
+    useBlockchainApplicationMeta.mockReturnValue({
+      data: mockBlockchainAppMeta,
+      isFetching: false,
+      isSuccess: true,
+    });
     rerenderWithRouterAndQueryClient(SelectNetwork, props);
+    expect(screen.getByText('Continue to dashbord')).toHaveProperty('disabled', false)
+  });
 
-    fireEvent.click(screen.getByText('Continue to dashbord'));
-
-    expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
+  it('should bot be possible to click Continue to dashboard button if !isSuccess or !isFetching', () => {
+    useNetworkStatus.mockReturnValue({
+      data: mockNetworkStatus,
+      isFetching: true,
+      isSuccess: false,
+    });
+    useBlockchainApplicationMeta.mockReturnValue({
+      data: mockBlockchainAppMeta,
+      isFetching: true,
+      isSuccess: false,
+    });
+    rerenderWithRouterAndQueryClient(SelectNetwork, props);
+    expect(screen.getByText('Continue to dashbord')).toHaveProperty('disabled', true)
   });
 });
