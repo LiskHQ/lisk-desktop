@@ -76,7 +76,7 @@ describe('SeletNetwork', () => {
       });
   });
 
-  it('should be possible to click Continue to dashboard button if isSuccess and !isFetching', () => {
+  it('should be possible to click "Continue to dashboard" button if isSuccess and !isFetching', () => {
     useNetworkStatus.mockReturnValue({
       data: mockNetworkStatus,
       isFetching: false,
@@ -91,7 +91,7 @@ describe('SeletNetwork', () => {
     expect(screen.getByText('Continue to dashbord')).toHaveProperty('disabled', false)
   });
 
-  it('should bot be possible to click Continue to dashboard button if !isSuccess or !isFetching', () => {
+  it('should bot be possible to click "Continue to dashboard" button if !isSuccess or !isFetching', () => {
     useNetworkStatus.mockReturnValue({
       data: mockNetworkStatus,
       isFetching: true,
