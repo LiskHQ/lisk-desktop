@@ -83,6 +83,25 @@
 
       & .fieldLabel {
         display: inline-block;
+
+        & div > div {
+          width: 18vw !important; /* stylelint-disable-line */
+
+          & .feeInfoWrapper {
+            &:first-of-type {
+              margin-bottom: 20px;
+            }
+
+            & .feesHeader {
+              font-weight: var(--font-weight-semi-bold);
+              color: var(--color-zodiac-blue);
+            }
+
+            & .feesDetails {
+              color: var(--color-slate-gray);
+            }
+          }
+        }
       }
 
       & .value {
