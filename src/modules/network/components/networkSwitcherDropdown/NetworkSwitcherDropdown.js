@@ -77,11 +77,7 @@ function NetworkSwitcherDropdown({
       networkStatus.isSuccess &&
       !blockchainAppsMetadata.isFetching &&
       !networkStatus.isFetching;
-    if (isSuccess) {
-      onNetworkSwitchSuccess?.(true);
-    } else {
-      onNetworkSwitchSuccess?.(false);
-    }
+    onNetworkSwitchSuccess?.(isSuccess);
   }, [blockchainAppsMetadata.isSuccess, networkStatus.isSuccess, blockchainAppsMetadata.isFetching, networkStatus.isFetching]);
 
   return (
