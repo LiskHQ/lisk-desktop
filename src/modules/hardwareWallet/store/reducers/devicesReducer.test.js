@@ -5,12 +5,12 @@ describe('HardwareWallet reducer devices', () => {
   it('Should update hardwareDevices when dispatching actionTypes.setDevices', async () => {
     const updatedDevices = [
       {
-        deviceId: '3',
+        path: '3',
       },
     ];
     const actionData = {
-      type: actionTypes.setDevices,
-      devices: updatedDevices,
+      type: actionTypes.setHWDevices,
+      payload: updatedDevices,
     };
     expect(devices(initialState, actionData)).toEqual(updatedDevices);
   });

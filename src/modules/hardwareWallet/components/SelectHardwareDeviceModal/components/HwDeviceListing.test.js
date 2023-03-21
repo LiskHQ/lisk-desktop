@@ -4,12 +4,14 @@ import HwDeviceListing from './HwDeviceListing';
 
 const devices = [
   {
-    deviceId: '13123123',
-    model: 'Ledger Nano S',
+    path: '13123123',
+    manufacturer: 'Ledger',
+    product: 'Nano S',
   },
   {
-    deviceId: '44523123',
-    model: 'Ledger Nano X',
+    path: '44523123',
+    manufacturer: 'Ledger',
+    product: 'Nano X',
   },
 ];
 
@@ -17,22 +19,22 @@ const mockSelector = {
   hardwareWallet: {
     devices,
     currentDevice: {
-      deviceId: '123',
+      path: '123',
     },
   },
 };
 
+const mockDispatch = jest.fn();
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn((fn) => fn(mockSelector)),
+  useSelector: jest.fn().mockImplementation((fn) => fn(mockSelector)),
+  useDispatch: () => mockDispatch,
 }));
 
 describe('HwDeviceListing', () => {
   it('Should render properly', () => {
     render(<HwDeviceListing />);
     devices.forEach((hwDevice) => {
-      expect(screen.getByText(hwDevice.model)).toBeTruthy();
-      expect(screen.getByText(hwDevice.deviceId)).toBeTruthy();
-      expect(screen.getByText(hwDevice.model)).toBeTruthy();
+      expect(screen.getByText(`${hwDevice.manufacturer} ${hwDevice.product}`)).toBeTruthy();
     });
   });
 });

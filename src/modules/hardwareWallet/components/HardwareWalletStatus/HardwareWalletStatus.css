@@ -64,6 +64,13 @@
     }
   }
 
+  & .selectLinkLabel {
+    margin-top: 10px;
+    cursor: pointer;
+    color: var(--color-ultramarine-blue);
+    font-weight: var(--font-weight-semi-bold);
+  }
+
   & h6 ~ ul {
     padding: 0px !important;
     font-size: var(--paragraph-font-size-s) !important;

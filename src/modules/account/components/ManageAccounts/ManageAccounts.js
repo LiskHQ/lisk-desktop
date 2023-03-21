@@ -11,8 +11,6 @@ import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import useHWAccounts from '@hardwareWallet/hooks/useHWAccounts';
-import { useHWStatus } from '@hardwareWallet/hooks/useHWStatus';
-import { DEVICE_STATUS } from '@libs/hwServer/constants';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
@@ -30,8 +28,7 @@ export const ManageAccountsContent = ({
   const [currentAccount, setAccount] = useCurrentAccount();
   const [showRemove, setShowRemove] = useState(false);
   const title = customTitle ?? t('Manage accounts');
-  const { accounts: hwAccounts } = useHWAccounts();
-  const { status } = useHWStatus();
+  const { accounts: hwAccounts, isLoadingHWAccounts } = useHWAccounts();
 
   const queryParams = new URLSearchParams(search);
   const referrer = queryParams.get('referrer');
@@ -72,7 +69,7 @@ export const ManageAccountsContent = ({
           ))}
         </>
       </Box>
-      {status === DEVICE_STATUS.STAND_BY && hwAccounts.length === 0 && (
+      {isLoadingHWAccounts && (
         <div className={styles.loaderWrapper}>
           <Spinner className={styles.spinner} />
           <span>{t('Loading hardware wallet accounts…')}</span>

@@ -77,11 +77,14 @@ export const stakesSubmitted =
   (_, transactionJSON, privateKey, __, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
+    const wallet = state.account?.current?.hw
+      ? state.account.current
+      : selectActiveTokenAccount(state);
+
     const [error, tx] = await to(
       signTransaction({
         transactionJSON,
-        wallet: activeWallet,
+        wallet,
         schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
         chainID: selectCurrentApplicationChainID(state),
         privateKey,
@@ -167,12 +170,14 @@ const signAndDispatchTransaction = async (
   senderAccount
 ) => {
   const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
+  const wallet = state.account?.current?.hw
+    ? state.account.current
+    : selectActiveTokenAccount(state);
 
   const [error, tx] = await to(
     signTransaction({
       transactionJSON,
-      wallet: activeWallet,
+      wallet,
       schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
       chainID: selectCurrentApplicationChainID(state),
       privateKey,

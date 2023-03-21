@@ -1,11 +1,21 @@
 import actionTypes from '@hardwareWallet/store/actions/actionTypes';
 
-export const setHardwareWalletDevices = (devices) => ({
-  type: actionTypes.setDevices,
-  devices,
+export const setHWDevices = (devices) => ({
+  type: actionTypes.setHWDevices,
+  payload: devices,
 });
 
-export const setCurrentDevice = (device) => ({
-  type: actionTypes.setCurrentDevice,
-  device,
+export const setCurrentHWDevice = (device) => ({
+  type: actionTypes.setCurrentHWDevice,
+  payload: device,
+});
+
+export const addHWDevice = (device) => ({
+  type: actionTypes.addHWDevice,
+  payload: device,
+});
+
+export const removeHWDevice = (device) => ({
+  type: actionTypes.removeHWDevice,
+  payload: device,
 });

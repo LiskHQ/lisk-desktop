@@ -7,9 +7,7 @@ import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from '@auth/components/EnterPasswordForm';
 import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
-import { useHWStatus } from '@hardwareWallet/hooks/useHWStatus';
-import HWReconnect from '@hardwareWallet/components/HWReconnect/HWReconnect';
-import HWConfirm from '@hardwareWallet/components/HWConfirm/HWConfirm';
+import HWSigning from '@hardwareWallet/components/HWSigning/HWSigning';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
@@ -34,7 +32,6 @@ const TxSignatureCollector = ({
   const [currentAccount] = useCurrentAccount();
   const { moduleCommandSchemas } = useCommandSchema();
   const { t } = useTranslation();
-  const { status } = useHWStatus();
 
   // here, we want to get the auth account details of the user presently wanting to sign the transaction
   const { data: account, isLoading: isGettingAuthData } = useAuth({
@@ -134,26 +131,22 @@ const TxSignatureCollector = ({
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
-  if (!currentAccount?.metadata?.isHW) {
-    return (
-      <div className={styles.container}>
-        <TertiaryButton className={styles.backButton} onClick={prevStep}>
-          <Icon name="arrowLeftTailed" />
-        </TertiaryButton>
-        <EnterPasswordForm
-          title={t('Please enter your account password to sign this transaction.')}
-          confirmText={confirmText}
-          onEnterPasswordSuccess={onEnterPasswordSuccess}
-          isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
-        />
-      </div>
-    );
+  if (currentAccount?.hw) {
+    return <HWSigning />;
   }
 
-  if (status !== 'connected') {
-    return <HWReconnect />;
-  }
-
-  return <HWConfirm />;
+  return (
+    <div className={styles.container}>
+      <TertiaryButton className={styles.backButton} onClick={prevStep}>
+        <Icon name="arrowLeftTailed" />
+      </TertiaryButton>
+      <EnterPasswordForm
+        title={t('Please enter your account password to sign this transaction.')}
+        confirmText={confirmText}
+        onEnterPasswordSuccess={onEnterPasswordSuccess}
+        isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
+      />
+    </div>
+  );
 };
 export default TxSignatureCollector;

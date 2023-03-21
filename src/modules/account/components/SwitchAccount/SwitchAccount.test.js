@@ -1,7 +1,7 @@
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { OutlineButton } from 'src/theme/buttons';
 import { mountWithRouter } from 'src/utils/testHelpers';
-import { mockHWAccounts, mockHWCurrentDevice } from '@hardwareWallet/__fixtures__';
+import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
 import AccountRow from '../AccountRow';
 import SwitchAccount from './SwitchAccount';
 
@@ -11,9 +11,6 @@ jest.mock('@account/hooks/useAccounts', () => ({
 jest.mock('src/modules/hardwareWallet/hooks/useHWAccounts', () =>
   jest.fn().mockReturnValue({ accounts: mockHWAccounts })
 );
-jest.mock('@hardwareWallet/hooks/useHWStatus', () => ({
-  useHWStatus: jest.fn(() => mockHWCurrentDevice),
-}));
 
 jest.mock('react-i18next');
 jest.mock('@account/hooks', () => ({

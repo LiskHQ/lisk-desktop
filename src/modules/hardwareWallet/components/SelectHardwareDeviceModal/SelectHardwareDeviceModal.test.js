@@ -6,16 +6,16 @@ const mockStore = {
   hardwareWallet: {
     devices: [
       {
-        deviceId: '13123123',
+        path: '13123123',
         model: 'Ledger Nano S',
       },
       {
-        deviceId: '44523123',
+        path: '44523123',
         model: 'Ledger Nano X',
       },
     ],
     currentDevice: {
-      deviceId: '44523123',
+      path: '44523123',
     },
   },
 };

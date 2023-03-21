@@ -1,28 +1,22 @@
 import { transactions } from '@liskhq/lisk-client';
-// import { updateTransactionSignatures } from '@wallet/utils/hwManager';
-import hwManager from '@hardwareWallet/manager/HWManager';
+import { getSignedTransaction } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
-const createMessage = (TAG, chainID, unsignedBytes) => Buffer.concat([
-  Buffer.from(TAG, 'utf8'),
-  Buffer.from(chainID, 'hex'),
-  unsignedBytes,
-]).toString('hex');
+const createUnsignedMessage = (TAG, chainID, unsignedBytes) =>
+  Buffer.concat([Buffer.from(TAG, 'utf8'), Buffer.from(chainID, 'hex'), unsignedBytes]).toString(
+    'hex'
+  );
 
 /**
  * signTransactionByHW - Function.
  * This function is used for sign a send hardware wallet transaction.
  */
-const signTransactionByHW = async ({
-  wallet,
-  schema,
-  chainID,
-  transaction,
-}) => {
+const signTransactionByHW = async ({ wallet, schema, chainID, transaction }) => {
   const unsignedBytes = transactions.getSigningBytes(transaction, schema);
-  const unsignedMessage = createMessage(transactions.TAG_TRANSACTION, chainID, unsignedBytes)
+  const unsignedMessage = createUnsignedMessage(transactions.TAG_TRANSACTION, chainID, unsignedBytes);
 
   try {
-    const signature = await hwManager.signTransaction(
+    const signature = await getSignedTransaction(
+      wallet.metadata.path,
       wallet.metadata.accountIndex,
       unsignedMessage,
     );
@@ -34,4 +28,4 @@ const signTransactionByHW = async ({
   }
 };
 
-export { signTransactionByHW };
+export { signTransactionByHW, createUnsignedMessage };

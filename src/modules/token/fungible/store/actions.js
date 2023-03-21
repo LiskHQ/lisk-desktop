@@ -19,10 +19,9 @@ export const tokensTransferred =
   (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
-    const activeTokenAccount = selectActiveTokenAccount(state);
-    const wallet = state.account?.current?.metadata?.isHW
+    const wallet = state.account?.current?.hw
       ? state.account.current
-      : activeTokenAccount;
+      : selectActiveTokenAccount(state);
     const [error, tx] = await to(
       signTransaction({
         transactionJSON,

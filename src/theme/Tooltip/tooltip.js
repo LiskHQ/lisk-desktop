@@ -4,11 +4,11 @@ import Icon from 'src/theme/Icon';
 import styles from './tooltip.css';
 
 class Tooltip extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      showTooltip: false,
+      showTooltip: props.showTooltip,
       timeoutObj: null,
       clicked: false,
     };
@@ -133,6 +133,7 @@ Tooltip.propTypes = {
   footer: PropTypes.node,
   className: PropTypes.string,
   content: PropTypes.node,
+  showTooltip: PropTypes.bool,
   size: PropTypes.oneOf(['s', 'm', 'l', 'maxContent']),
 };
 
@@ -141,6 +142,7 @@ Tooltip.defaultProps = {
   children: <></>,
   className: '',
   size: 'l',
+  showTooltip: false,
 };
 
 export default Tooltip;

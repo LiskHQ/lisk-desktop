@@ -1,6 +1,7 @@
 /* eslint-disable complexity */
 import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
+import { LEDGER_HW_IPC_CHANNELS } from '@libs/hardwareWallet/ledger/constants';
 import { transactionToJSON, getNumberOfSignatures, joinModuleAndCommand } from '../utils';
 import { MODULE_COMMANDS_NAME_MAP } from './moduleCommand';
 
@@ -57,10 +58,14 @@ export const statusMessages = (t) => ({
 export const getTransactionStatus = (account, transactions, isMultisignature, canSenderSignTx) => {
   // Signature errors
   if (transactions.txSignatureError) {
-    if (transactions.txSignatureError.message.indexOf('hwCommand') > -1) {
+    const txSignatureErrorMsg = transactions.txSignatureError.message;
+    const isHWError = new RegExp(Object.keys(LEDGER_HW_IPC_CHANNELS).join('|')).test(
+      txSignatureErrorMsg
+    );
+    if (isHWError) {
       return {
         code: txStatusTypes.hwRejected,
-        message: transactions.txSignatureError.message,
+        message: txSignatureErrorMsg,
       };
     }
 

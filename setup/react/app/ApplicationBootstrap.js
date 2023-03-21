@@ -11,6 +11,7 @@ import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { Client } from 'src/utils/api/client';
 import { PrimaryButton } from 'src/theme/buttons';
+import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
 
 const ApplicationBootstrap = ({ children }) => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
@@ -52,6 +53,8 @@ const ApplicationBootstrap = ({ children }) => {
     }
     if (isFirstTimeLoading) setIsFirstTimeLoading(false);
   }, [mainChainApplication, isFirstTimeLoading]);
+
+  useLedgerDeviceListener();
 
   if (isError && !isLoading && isFirstTimeLoading) {
     // @TODO: this return should be replaced with an actual error message page

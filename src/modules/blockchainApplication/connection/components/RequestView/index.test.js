@@ -5,7 +5,6 @@ import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
 import SendSummary from '@token/fungible/components/SendSummary';
 import SendStatus from '@token/fungible/components/SendStatus';
-import { mockHWCurrentDevice } from '@hardwareWallet/__fixtures__';
 import RequestSummary from '../RequestSummary';
 import RequestView from './RequestView';
 
@@ -16,10 +15,6 @@ jest.mock('@libs/wcm/hooks/useSession', () => ({
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn(str => str),
 }));
-jest.mock('@hardwareWallet/hooks/useHWStatus', () => ({
-  useHWStatus: jest.fn(() => mockHWCurrentDevice),
-}));
-
 
 describe('RequestView', () => {
   it('should render properly getting data from URL', () => {

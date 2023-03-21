@@ -1,28 +1,36 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CheckBox from '@theme/CheckBox';
 import Icon from '@theme/Icon';
-import { selectActiveHardwareDeviceId } from '@hardwareWallet/store/selectors/hwSelectors';
-import HWManager from "@hardwareWallet/manager/HWManager";
+import { selectCurrentHWDevicePath } from '@hardwareWallet/store/selectors/hwSelectors';
+import { setCurrentHWDevice } from '@hardwareWallet/store/actions';
 import styles from './HwDeviceItem.css';
 
 function HwDeviceItem({ hwDevice }) {
-  const activeHardwareDeviceId = useSelector(selectActiveHardwareDeviceId);
+  const { manufacturer, product, path } = hwDevice || {};
+
+  const activeHardwareDeviceId = useSelector(selectCurrentHWDevicePath);
+  const dispatch = useDispatch();
 
   function onChange() {
-    HWManager.selectDevice(hwDevice.deviceId);
+    dispatch(setCurrentHWDevice(hwDevice));
   }
 
+  const usbPort = path
+    ?.split('/')
+    ?.find((segment) => segment.startsWith('usb'))
+    ?.split('@')[0];
+
   return (
-    <div key={hwDevice.deviceId} className={styles.hwDevice}>
+    <div className={styles.hwDevice}>
       <Icon name="iconLedgerDevice" className={styles.hwWalletIcon} />
       <div className={styles.infoContainer}>
-        <h5 className={styles.modelInfo}>{hwDevice.model}</h5>
-        <span className={styles.deviceId}>{hwDevice.deviceId}</span>
+        <h5 className={styles.modelInfo}>{`${manufacturer} ${product}`}</h5>
+        <span className={styles.path}>{usbPort}</span>
       </div>
       <CheckBox
         className={styles.checkBox}
-        checked={activeHardwareDeviceId === hwDevice.deviceId}
+        checked={activeHardwareDeviceId === path}
         onChange={onChange}
       />
     </div>
