@@ -20,44 +20,35 @@ const ApplicationBootstrap = ({ children }) => {
   const queryClient = useRef(new Client({ http: mainChainNetwork?.serviceUrl }));
   useTransactionUpdate();
 
-  const {
-    data: selectedNetworkStatus,
-    isLoading: isGettingNetworkStatus,
-    isError: isErrorGettingNetworkStatus,
-  } = useNetworkStatus({
+  const networkStatus = useNetworkStatus({
     options: { enabled: !!mainChainNetwork },
     client: queryClient.current,
   });
 
-  const {
-    data,
-    isLoading: isGettingMainChain,
-    isError: isErrorGettingMainChain,
-    refetch: refetchMergedApplicationData,
-  } = useBlockchainApplicationMeta({
+  const blockchainAppsMeta = useBlockchainApplicationMeta({
     config: {
       params: {
         isDefault: true,
         network: mainChainNetwork?.name,
       },
     },
-    options: { enabled: !!selectedNetworkStatus && !!mainChainNetwork },
+    options: { enabled: !!networkStatus.data && !!mainChainNetwork },
     client: queryClient.current,
   });
 
-  const mainChainApplication = data?.data?.find(
-    ({ chainID }) => chainID === selectedNetworkStatus?.data?.chainID
+  const mainChainApplication = blockchainAppsMeta?.data?.data?.find(
+    ({ chainID }) => chainID === networkStatus?.data?.data?.chainID
   );
 
-  const isError = (isErrorGettingNetworkStatus || isErrorGettingMainChain) && !!mainChainNetwork;
+  const isError = (networkStatus.isError || blockchainAppsMeta.isError) && !!mainChainNetwork;
   const isLoading =
-    (isGettingNetworkStatus && !!mainChainNetwork) ||
-    (isGettingMainChain && !!mainChainApplication);
+    (networkStatus.isLoading && !!mainChainNetwork) ||
+    (blockchainAppsMeta.isLoading && !!mainChainApplication);
 
   useEffect(() => {
     if (mainChainApplication) {
       setCurrentApplication(mainChainApplication);
-      setApplications(data?.data || []);
+      setApplications(blockchainAppsMeta?.data?.data || []);
     }
     if (isFirstTimeLoading) setIsFirstTimeLoading(false);
   }, [mainChainApplication, isFirstTimeLoading]);
@@ -67,7 +58,7 @@ const ApplicationBootstrap = ({ children }) => {
     return (
       <div>
         error
-        <PrimaryButton onClick={refetchMergedApplicationData}>Retry</PrimaryButton>
+        <PrimaryButton onClick={blockchainAppsMeta.refetch}>Retry</PrimaryButton>
       </div>
     );
   }
