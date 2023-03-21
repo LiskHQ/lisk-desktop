@@ -8,6 +8,7 @@ import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManag
 import useSettings from '@settings/hooks/useSettings';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import routes from 'src/routes/routes';
 import SelectNetwork from './SelectNetwork';
 import networks, { networkKeys } from '../../configuration/networks';
 import { mockNetworkStatus } from '../../__fixtures__';
@@ -74,7 +75,7 @@ describe('SeletNetwork', () => {
       });
   });
 
-  it('should be possible to click "Continue to dashboard" button if isSuccess and !isFetching', () => {
+  it('should trigger go to dashboard', () => {
     useNetworkStatus.mockReturnValue({
       data: mockNetworkStatus,
       isFetching: false,
@@ -86,7 +87,10 @@ describe('SeletNetwork', () => {
       isSuccess: true,
     });
     rerenderWithRouterAndQueryClient(SelectNetwork, props);
-    expect(screen.getByText('Continue to dashbord')).toHaveProperty('disabled', false)
+
+    fireEvent.click(screen.getByText('Continue to dashbord'));
+
+    expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
   });
 
   it('should bot be possible to click "Continue to dashboard" button if !isSuccess or !isFetching', () => {
@@ -101,6 +105,6 @@ describe('SeletNetwork', () => {
       isSuccess: false,
     });
     rerenderWithRouterAndQueryClient(SelectNetwork, props);
-    expect(screen.getByText('Continue to dashbord')).toHaveProperty('disabled', true)
+    expect(screen.getByText('Continue to dashbord')).toHaveProperty('disabled', true);
   });
 });
