@@ -47,6 +47,6 @@ export const getIsInsideLiskApp = async (devicePath, accountIndex) => {
 
 export const getConnectedHWDevices = async () => {
   await sleep(1500);
-  const signedTransaction = await executeIPCCommand(GET_CONNECTED_DEVICES);
-  return signedTransaction;
+  const connectedDevices = await executeIPCCommand(GET_CONNECTED_DEVICES);
+  return connectedDevices;
 };
