@@ -2,7 +2,7 @@ import { to } from 'await-to-js';
 import { signTransaction } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import { selectCurrentApplicationChainId } from '@blockchainApplication/manage/store/selectors';
+import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 
 export const balanceReclaimed =
   (formProps, transactionJSON, privateKey, _, txInitiatorAccount, moduleCommandSchemas) =>
@@ -22,7 +22,7 @@ export const balanceReclaimed =
         transactionJSON,
         wallet: activeWallet,
         schema: moduleCommandSchemas[formProps.moduleCommand],
-        chainID: selectCurrentApplicationChainId(state),
+        chainID: selectCurrentApplicationChainID(state),
         senderAccount: txInitiatorAccount,
       })
     );

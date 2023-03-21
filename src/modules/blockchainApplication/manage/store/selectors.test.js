@@ -4,7 +4,7 @@ import {
   selectPinnedApplications,
   selectApplications,
   selectCurrentApplication,
-  selectCurrentApplicationChainId,
+  selectCurrentApplicationChainID,
 } from './selectors';
 
 describe('Application Explorer selector', () => {
@@ -23,6 +23,6 @@ describe('Application Explorer selector', () => {
   });
   it('Should return current application chainID', async () => {
     const state = { blockChainApplications: { current: mockApplications[0] } };
-    expect(selectCurrentApplicationChainId(state)).toEqual(mockApplications[0].chainID);
+    expect(selectCurrentApplicationChainID(state)).toEqual(mockApplications[0].chainID);
   });
 });
