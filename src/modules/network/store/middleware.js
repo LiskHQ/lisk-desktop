@@ -13,7 +13,7 @@ const readStoredNetwork = ({ dispatch, getState }) => {
     network?.name && network?.address
       ? network
       : {
-          // This wouold always read the default network from the config
+          // This wuold always read the default network from the config
           name: DEFAULT_NETWORK,
           address: networks[DEFAULT_NETWORK].serviceUrl,
         };

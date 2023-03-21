@@ -18,7 +18,7 @@ import styles from './topBar.css';
 import Network from './networkName';
 
 const TopBar = ({ stakeCount, location, history }) => {
-  const disabled = location.pathname === routes.reclaim.path;
+  const disabled = [routes.reclaim.path, routes.selectNetwork.path].includes(location.pathname);
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
   const { t } = useTranslation();
@@ -61,8 +61,10 @@ const TopBar = ({ stakeCount, location, history }) => {
         <LightDarkToggle />
         <StakeQueueToggle t={t} stakeCount={stakeCount} disabled={disabled} />
         <DiscreteModeToggle />
-        <ApplicationManagementDropDown />
-        {location.pathname !== routes.register.path && <Network />}
+        {routes.selectNetwork.path !== location.pathname && <ApplicationManagementDropDown />}
+        {![routes.register.path, routes.selectNetwork.path].includes(location.pathname) && (
+          <Network />
+        )}
       </div>
     </div>
   );

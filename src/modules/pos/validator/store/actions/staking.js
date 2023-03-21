@@ -6,6 +6,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { signTransaction } from '@transaction/api';
 import txActionTypes from '@transaction/store/actionTypes';
 import { joinModuleAndCommand } from '@transaction/utils';
+import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 import { getStakes, getValidatorList } from '../../api';
 import actionTypes from './actionTypes';
 import { useSentStakes } from '../../hooks/queries';
@@ -82,7 +83,7 @@ export const stakesSubmitted =
         transactionJSON,
         wallet: activeWallet,
         schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
-        chainID: state.network.networks.LSK.chainID,
+        chainID: selectCurrentApplicationChainID(state),
         privateKey,
         senderAccount,
       })
@@ -173,7 +174,7 @@ const signAndDispatchTransaction = async (
       transactionJSON,
       wallet: activeWallet,
       schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
-      chainID: state.network.networks.LSK.chainID,
+      chainID: selectCurrentApplicationChainID(state),
       privateKey,
       senderAccount,
     })

@@ -59,4 +59,10 @@ describe('MenuSelect', () => {
     fireEvent.keyUp(window, { key: 'Escape', code: 'Escape', charCode: 27 });
     expect(screen.getByTestId('dropdown-popup').classList).not.toContain('show');
   });
+
+  it('should dismiss popup', () => {
+    fireEvent.click(screen.getByAltText('dropdownFieldIcon'));
+    fireEvent.click(screen.getByTestId('overlay'));
+    expect(screen.getByTestId('dropdown-popup').classList).not.toContain('show');
+  });
 });

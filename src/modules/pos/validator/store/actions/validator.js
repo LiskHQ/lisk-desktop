@@ -3,6 +3,7 @@ import { to } from 'await-to-js';
 import { signTransaction } from '@transaction/api';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import transactionActionTypes from '@transaction/store/actionTypes';
+import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 
 export const validatorRegistered =
   (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
@@ -18,7 +19,7 @@ export const validatorRegistered =
         privateKey,
         wallet: activeWallet,
         schema: moduleCommandSchemas[formProps.moduleCommand],
-        chainID: state.blockChainApplications.current.chainID,
+        chainID: selectCurrentApplicationChainID(state),
         senderAccount,
       })
     );
