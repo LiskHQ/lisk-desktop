@@ -22,7 +22,7 @@
     & h2 {
       font-size: var(--font-size-h5);
       font-weight: var(--font-weight-bold);
-      color: var(--color-constant-white);
+      color: var(--color-zodiac-blue);
       margin: 0;
     }
   }

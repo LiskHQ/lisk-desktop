@@ -1,7 +1,10 @@
 .DeviceToast {
   display: flex;
   white-space: pre;
-  color: var(--color-white);
+
+  & .label {
+    color: var(--color-constant-white);
+  }
 
   & .resetButtonStyles {
     background: none;

@@ -8,7 +8,7 @@ function DeviceToast({ closeToast, label, showSelectHWDeviceLink, showSelectHWAc
 
   return (
     <div className={styles.DeviceToast}>
-      <span>{t(label)}</span>
+      <span className={styles.label}>{t(label)}</span>
       {showSelectHWDeviceLink && (
         <DialogLink className={styles.selectLinkLabel} component="selectHardwareDeviceModal">
           {t('Select device')}
