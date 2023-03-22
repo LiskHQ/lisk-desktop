@@ -92,9 +92,9 @@ const getFields = (data = {}, token, t, currentHeight) => ({
     label: t('Total burnt'),
     value: <TokenAmount val={data.totalBurnt} token={token} />,
   },
-  totalFee: {
-    label: t('Net fee'),
-    value: <TokenAmount val={data.totalFee} token={token} />,
+  networkFee: {
+    label: t('Network Fee'),
+    value: <TokenAmount val={data.networkFee} token={token} />,
   },
   totalGenerated: {
     label: t('Status'),

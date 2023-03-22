@@ -27,10 +27,6 @@ const blocksFiltersMap = {
       [
         'height:asc',
         'height:desc',
-        'totalAmount:asc',
-        'totalAmount:desc',
-        'totalFee:asc',
-        'totalFee:desc',
         'timestamp:asc',
         'timestamp:desc',
       ].includes(str),

@@ -31,7 +31,7 @@ const block = (index) => ({
   previousBlockId: '15803272929327530764',
   numberOfTransactions: index % 10,
   totalAmount: index === 0 ? '0' : `${index}0000000`,
-  totalFee: index === 0 ? '0' : `${index}000000`,
+  networkFee: index === 0 ? '0' : `${index}000000`,
   reward: '300000000',
   totalGenerated: `${index + 4}0000000`,
   totalBurnt: `${index + 4}0000000`,
