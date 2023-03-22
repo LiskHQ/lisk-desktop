@@ -9,7 +9,7 @@ const mockState = {
 };
 const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 const encryptedAccount = {
-  encryptedPassphrase: {
+  crypto: {
     kdf: 'argon2id',
     kdfparams: {
       parallelism: 4,

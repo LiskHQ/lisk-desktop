@@ -6,7 +6,7 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import SetPasswordForm from './SetPasswordForm';
 
-const encryptedPassphrase = {
+const crypto = {
   kdf: 'argon2id',
   kdfparams: {
     parallelism: 4,
@@ -26,7 +26,7 @@ const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince 
 const mockSetAccount = jest.fn();
 
 jest.mock('react-i18next');
-jest.spyOn(cryptography.encrypt, 'encryptMessageWithPassword').mockResolvedValue(encryptedPassphrase);
+jest.spyOn(cryptography.encrypt, 'encryptMessageWithPassword').mockResolvedValue(crypto);
 jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(JSON.stringify({
   recoveryPhrase,
 }));

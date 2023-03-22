@@ -73,7 +73,7 @@ describe('EnterPasswordForm', () => {
 
     await waitFor(() => {
       expect(decryptAccount).toHaveBeenCalledWith(
-        mockedCurrentAccount.encryptedPassphrase,
+        mockedCurrentAccount.crypto,
         accountPassword,
       );
       expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
