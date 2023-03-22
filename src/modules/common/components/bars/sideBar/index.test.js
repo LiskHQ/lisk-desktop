@@ -56,13 +56,13 @@ describe('SideBar', () => {
     wrapper = mountWithRouter(SideBar, myProps);
   });
 
-  it('renders 8 menu items elements', () => {
-    expect(wrapper).toContainMatchingElements(8, 'a');
+  it('renders 7 menu items elements', () => {
+    expect(wrapper).toContainMatchingElements(7, 'a');
   });
 
-  describe('renders 8 menu items', () => {
+  describe('renders 7 menu items', () => {
     it('without labels if sideBarExpanded is false', () => {
-      expect(wrapper).toContainMatchingElements(8, 'a');
+      expect(wrapper).toContainMatchingElements(7, 'a');
       wrapper.find('a').forEach((link) => expect(link).not.toContain(/\w*/));
     });
 
@@ -74,7 +74,6 @@ describe('SideBar', () => {
         'Network',
         'Transactions',
         'Blocks',
-        'Accounts',
         'Validators',
       ];
 
@@ -84,10 +83,10 @@ describe('SideBar', () => {
     });
   });
 
-  it('renders 8 menu items but only Wallet is disabled when user is logged out', () => {
+  it('renders 7 menu items but only Wallet is disabled when user is logged out', () => {
     useCurrentAccount.mockReturnValue([{}]);
     wrapper = mountWithRouter(SideBar, myProps);
-    expect(wrapper).toContainMatchingElements(8, 'a');
+    expect(wrapper).toContainMatchingElements(7, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');
     expect(wrapper.find('a').at(0)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
@@ -98,7 +97,7 @@ describe('SideBar', () => {
     expect(wrapper.find('a').at(6)).not.toHaveClassName('disabled');
   });
 
-  it('renders 8 disabled menu items on Initialization screen', () => {
+  it('renders 7 disabled menu items on Initialization screen', () => {
     wrapper = mountWithRouter(SideBar, {
       ...myProps,
       isUserLogout: false,
@@ -106,7 +105,7 @@ describe('SideBar', () => {
         pathname: routes.reclaim.path,
       },
     });
-    expect(wrapper).toContainMatchingElements(8, 'a');
+    expect(wrapper).toContainMatchingElements(7, 'a');
     expect(wrapper.find('a').at(0)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(2)).toHaveClassName('disabled');

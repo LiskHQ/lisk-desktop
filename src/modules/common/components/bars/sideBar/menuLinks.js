@@ -40,12 +40,12 @@ const menuLinks = (t) => [
       label: t('Blocks'),
       path: routes.blocks.path,
     },
-    {
-      icon: 'walletsMonitor',
-      id: 'wallets',
-      label: t('Accounts'),
-      path: routes.wallets.path,
-    },
+    // {
+    //   icon: 'walletsMonitor',
+    //   id: 'wallets',
+    //   label: t('Accounts'),
+    //   path: routes.wallets.path,
+    // },
     {
       icon: 'validatorsMonitor',
       id: 'validators',
