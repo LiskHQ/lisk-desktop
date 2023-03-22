@@ -127,7 +127,7 @@ const Overview = () => {
   // Fallback token for transaction statistics
   const [
     {
-      metadata: { address },
+      metadata: { address } = {},
     },
   ] = useCurrentAccount();
   const { data: tokens } = useTokensBalance({
