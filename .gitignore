@@ -15,7 +15,6 @@ app/app.js
 blockchain_explorer.db.gz
 reports
 .history
-storybook-static
 .env
 cypress.log
 

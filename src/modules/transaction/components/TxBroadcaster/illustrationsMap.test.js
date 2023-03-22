@@ -12,7 +12,7 @@ describe('getIllustration', () => {
   it('displays illustration type for all hardware wallet status', () => {
     const txStatus = txStatusTypes.hwRejected;
     const illustration = 'stake';
-    const accountHwInfo = { path: 1, deviceModel: 'trezor' };
-    expect(getIllustration(txStatus, illustration, accountHwInfo)).toEqual('trezorHwRejection');
+    const accountHwInfo = { path: 1, deviceModel: 'ledger' };
+    expect(getIllustration(txStatus, illustration, accountHwInfo)).toEqual('ledgerNanoHwRejection');
   });
 });

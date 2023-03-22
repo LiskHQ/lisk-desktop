@@ -66,7 +66,6 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '.test.js',
-    '.stories.js',
     'app/src/ipc.js',
     'app/src/ledger.js',
     'app/src/utils.js',
