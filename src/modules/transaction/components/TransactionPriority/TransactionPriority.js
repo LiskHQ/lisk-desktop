@@ -10,7 +10,6 @@ const CUSTOM_FEE_INDEX = 3;
 const getRelevantPriorityOptions = (options) =>
   options.filter((_, index) => index !== CUSTOM_FEE_INDEX || index === CUSTOM_FEE_INDEX);
 
-// eslint-disable-next-line max-statements
 const TransactionPriority = ({
   t,
   token,
@@ -49,6 +48,9 @@ const TransactionPriority = ({
   );
 
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
+  const displayedFees = composedFees
+    .filter((fee) => !fee?.isHidden)
+    .reduce((acc, curr) => ({ ...acc, [curr.title]: true }), {});
 
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} ${className} transaction-priority`}>
@@ -98,20 +100,24 @@ const TransactionPriority = ({
           {
             <Tooltip position="right">
               <>
-                <div className={styles.feeInfoWrapper}>
-                  <span className={styles.feesHeader}>Transaction fee: </span>
-                  <span className={styles.feesDetails}>
-                    Is a sum of byte based fee, extra command fee and selected network priority
-                  </span>
-                </div>
-                <div className={styles.feeInfoWrapper}>
-                  <span className={styles.feesHeader}>Message fee: </span>
-                  <span className={styles.feesDetails}>
-                    Cross chain messages are the objects containing the cross-chain commands, in the
-                    same way in which transactions contain commands. They have a fee property also
-                    called message fee to distinguish from transaction fees.
-                  </span>
-                </div>
+                {displayedFees.Transaction && (
+                  <div className={styles.feeInfoWrapper}>
+                    <span className={styles.feesHeader}>Transaction fee: </span>
+                    <span className={styles.feesDetails}>
+                      Is a sum of byte based fee, extra command fee and selected network priority
+                    </span>
+                  </div>
+                )}
+                {displayedFees.Message && (
+                  <div className={styles.feeInfoWrapper}>
+                    <span className={styles.feesHeader}>Message fee: </span>
+                    <span className={styles.feesDetails}>
+                      Cross chain messages are the objects containing the cross-chain commands, in
+                      the same way in which transactions contain commands. They have a fee property
+                      also called message fee to distinguish from transaction fees.
+                    </span>
+                  </div>
+                )}
               </>
             </Tooltip>
           }
