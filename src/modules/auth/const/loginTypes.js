@@ -7,10 +7,6 @@ const loginTypes = {
     title: 'Ledger',
     code: 1,
   },
-  trezor: {
-    title: 'Trezor',
-    code: 2,
-  },
 };
 
 export default loginTypes;

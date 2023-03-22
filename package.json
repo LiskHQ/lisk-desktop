@@ -177,8 +177,6 @@
     "socket.io-client": "2.2.0",
     "stream-browserify": "2.0.2",
     "swiper": "8.4.2",
-    "trezor-connect": "8.1.26",
-    "trezor.js": "9.3.4",
     "usb": "1.7.0",
     "yup": "0.32.11"
   },

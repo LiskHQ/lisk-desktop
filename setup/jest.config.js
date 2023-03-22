@@ -71,7 +71,6 @@ module.exports = {
     'app/src/ledger.js',
     'app/src/utils.js',
     'app/src/hwManager.js',
-    'app/src/trezor.js',
     'app/src/modules/win.js',
     'app/src/modules/localeHandler.js',
     'app/src/modules/storage.js',

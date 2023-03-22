@@ -7,8 +7,6 @@ import getRewarded from '@setup/react/assets/images/illustrations/illustration-g
 import expandYourKnowledge from '@setup/react/assets/images/illustrations/illustration-expand-your-knowledge-dark.svg';
 import ledgerNano from '@setup/react/assets/images/illustrations/illustration-ledger-nano-light.svg';
 import ledgerNanoDark from '@setup/react/assets/images/illustrations/illustration-ledger-nano-dark.svg';
-import trezor from '@setup/react/assets/images/illustrations/illustration-trezor-confirm-light.svg';
-import trezorDark from '@setup/react/assets/images/illustrations/illustration-trezor-confirm-dark.svg';
 import transactionSuccess from '@setup/react/assets/images/illustrations/transaction-success.svg';
 import transactionSuccessDark from '@setup/react/assets/images/illustrations/transaction-success-dark.svg';
 import transactionPending from '@setup/react/assets/images/illustrations/transaction-pending.svg';
@@ -49,9 +47,7 @@ import registerMultisignatureSuccessDark from '@setup/react/assets/images/illust
 import registerMultisignatureError from '@setup/react/assets/images/illustrations/multisignature-error.svg';
 import registerMultisignatureErrorDark from '@setup/react/assets/images/illustrations/multisignature-error-dark.svg';
 import reclaimTokensIntro from '@setup/react/assets/images/illustrations/reclaim-tokens-intro.svg';
-import trezorHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-trezor.svg';
 import hwLedgerConfirm from '@setup/react/assets/images/illustrations/hw-ledger-confirm.svg';
-import trezorHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-trezor-dark.svg';
 import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
 import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
 import hwReconnection from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect.svg';
@@ -68,8 +64,6 @@ export const illustrations = {
   expandYourKnowledge,
   ledgerNano,
   ledgerNanoDark,
-  trezor,
-  trezorDark,
   transactionSuccess,
   transactionError,
   stakingSuccess,
@@ -111,8 +105,6 @@ export const illustrations = {
   multisignaturePartialSuccess,
   multisignaturePartialSuccessDark,
   hwLedgerConfirm,
-  trezorHwRejection,
-  trezorHwRejectionDark,
   ledgerNanoHwRejection,
   ledgerNanoHwRejectionDark,
   hwReconnection,
