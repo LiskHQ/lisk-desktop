@@ -101,6 +101,10 @@
               color: var(--color-slate-gray);
             }
           }
+
+          @media (--large-viewport) {
+            width: 25vw !important; /* stylelint-disable-line */
+          }
         }
       }
 
