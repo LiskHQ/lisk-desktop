@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import DialogLink from 'src/theme/dialog/link';
 import {
   calculateBalanceLockedInUnstakes,

@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import { getTxAmount, convertBinaryToString } from '@transaction/utils/transaction';
+import { getTotalSpendingAmount, convertBinaryToString } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
 import * as validators from '@pos/validator/api';
 import http from 'src/utils/api/http';
@@ -166,15 +166,15 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('getTxAmount', () => {
+  describe('getTotalSpendingAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
         module: 'token',
         command: 'transfer',
-        params: { amount: 100000000 },
+        params: { amount: '100000000' },
       };
 
-      expect(getTxAmount(tx)).toEqual(tx.params.amount);
+      expect(getTotalSpendingAmount(tx)).toEqual(tx.params.amount);
     });
 
     it('should return amount of stakes in Beddows', () => {
@@ -196,7 +196,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual(200000000);
+      expect(getTotalSpendingAmount(tx)).toEqual('200000000');
     });
   });
 
@@ -400,7 +400,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('dryRun', async () => {
+  describe('dryRun', () => {
     const serviceUrl = 'http://localhost:4000';
     it('should return error if transaction is invalid', async () => {
       const transactionJSON = {
@@ -408,19 +408,18 @@ describe('API: LSK Transactions', () => {
         module: 'token',
         command: 'transfer',
         params: {
-          amount: 100000000,
+          tokenID: '04000000',
+          amount: '100000000',
           recipientAddress: 'lsk3ay4z7wqjczbo5ogcqxgxx23xyacxmycwxfh4d',
           data: '',
         },
       };
-      const transaction = fromTransactionJSON(
-        transactionJSON,
-        network.networks.LSK.moduleCommandSchemas['token:transfer']
-      );
+      const paramsSchema = network.networks.LSK.moduleCommandSchemas['token:transfer'];
+      const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
       await dryRun({
         transaction,
         serviceUrl,
-        network,
+        paramsSchema,
       });
 
       expect(http).toHaveBeenCalledWith({
@@ -429,7 +428,8 @@ describe('API: LSK Transactions', () => {
         path: '/api/v3/transactions/dryrun',
         data: {
           transaction:
-            '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f321d1080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+            '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f32230a04040000001080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+            skipVerify: false,
         },
       });
     });

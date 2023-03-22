@@ -21,6 +21,14 @@ import defaultClient from 'src/utils/api/client';
  * @returns the query object
  */
 
+export const useTokensBalanceConfig = (config) => ({
+  url: `/api/${API_VERSION}/tokens`,
+  method: 'get',
+  event: 'get.tokens',
+  ...config,
+  params: { limit, ...(config.params || {}) },
+});
+
 export const useTokensBalance = ({
   config: customConfig = {},
   options,
@@ -38,14 +46,11 @@ export const useTokensBalance = ({
     };
   };
 
-  const config = {
-    url: `/api/${API_VERSION}/tokens`,
-    method: 'get',
-    event: 'get.tokens',
-    transformResult,
+  const config = useTokensBalanceConfig({
     ...customConfig,
-    params: { limit, address, ...(customConfig.params || {}) },
-  };
+    transformResult,
+    params: { address, ...(customConfig.params || {}) },
+  });
 
   return useCustomInfiniteQuery({
     keys: [TOKENS_BALANCE],

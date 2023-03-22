@@ -1,10 +1,9 @@
 import React from 'react';
 import DialogLink from 'src/theme/dialog/link';
-import { getLogo } from 'src/redux/actions';
 import Icon from 'src/theme/Icon';
-import Converter from 'src/modules/common/components/converter';
-import { convertFromBaseDenom } from 'src/modules/token/fungible/utils/lsk';
-import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
+import Converter from '@common/components/converter';
+import { convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './TokenCard.css';
 
 const liskSymbol = 'LSK';

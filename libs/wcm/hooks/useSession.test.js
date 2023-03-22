@@ -5,7 +5,7 @@ import wallets from '@tests/constants/wallets';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import { EVENTS } from '../constants/lifeCycle';
 import * as sessionHandlers from '../utils/sessionHandlers';
-import useSession from './useSession';
+import { useSession } from './useSession';
 
 const setSession = jest.fn();
 const setPairings = jest.fn();

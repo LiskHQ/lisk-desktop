@@ -5,39 +5,50 @@ import Dialog from '@theme/dialog/dialog';
 import Box from 'src/theme/box';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
+import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
-import { useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
+import { useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
+import { getLogo } from '@token/fungible/utils/helpers';
+import Illustration from 'src/modules/common/components/illustration';
+import Skeleton from 'src/modules/common/components/skeleton/Skeleton';
 import styles from './BlockchainApplicationDetails.css';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useBlockchainApplicationMeta';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
 
 const deposit = 5e10;
 
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line max-statements, complexity
 const BlockchainApplicationDetails = ({ history, location }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
-  // @todo: Loading and error states will be handled in #4539
-  const { data: onChainData } = useBlockchainApplicationExplore({
+
+  const {
+    data: onChainData,
+    refetch: refetchOnChainData,
+    isLoading: onChainLoading,
+    isError: isOnChainDataError,
+  } = useBlockchainApplicationExplore({
     config: { params: { chainID: chainId } },
   });
-  const { data: offChainData } = useBlockchainApplicationMeta({
+  const {
+    data: offChainData,
+    refetch: refetchOffChainData,
+    isLoading: offChainLoading,
+    isError: isOffChainDataError,
+  } = useBlockchainApplicationMeta({
     config: { params: { chainID: chainId } },
   });
   const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const { state, lastCertificateHeight, lastUpdated } =
-    aggregatedApplicationData;
+  const { status, lastCertificateHeight, lastUpdated, logo } = aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
   const { data: tokens } = useTokensBalance();
   const token = tokens?.data?.[0] || {};
@@ -55,6 +66,11 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     );
   };
 
+  const reloadAppDetails = () => {
+    refetchOnChainData();
+    refetchOffChainData();
+  };
+
   const footerDetails = [
     {
       header: {
@@ -66,8 +82,8 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     },
     {
       header: t('Status'),
-      className: `${styles.detailContentText} ${styles.statusChip} ${styles[state]} chain-status`,
-      content: t(state),
+      className: `${styles.detailContentText} ${styles.statusChip} ${styles[status]} chain-status`,
+      content: t(status),
     },
     {
       header: t('Last Update'),
@@ -84,57 +100,75 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   const app = {
     data: {
       ...aggregatedApplicationData,
-      icon: liskLogo,
+      icon: getLogo({ logo }),
       bg: defaultBackgroundImage,
     },
   };
+
+  if (isOnChainDataError || isOffChainDataError)
+    return (
+      <Dialog hasClose className={`${grid.row} ${grid['center-xs']}`}>
+        <div className={`${styles.wrapper} ${styles.errorWrapper}`}>
+          <Illustration name="applicationDetailsError" />
+          <div className={styles.errorText}>{t("Couldn't load application data")}</div>
+          <div className={styles.retryBtn}>
+            <TertiaryButton onClick={reloadAppDetails}>Try again</TertiaryButton>
+          </div>
+        </div>
+      </Dialog>
+    );
 
   return (
     <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         <BlockchainAppDetailsHeader
           application={app}
-          chainAction={(
+          chainAction={
             <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
-          )}
+          }
+          loading={onChainLoading || offChainLoading}
         />
         <div className={styles.balanceRow}>
-          <ValueAndLabel
-            label={t('Deposited:')}
-            direction="horizontal"
-          >
-            <span className={styles.value}>
-              <TokenAmount val={deposit} token={token} />
-            </span>
-          </ValueAndLabel>
-        </div>
-        <Box className={styles.footerDetailsRow}>
-          {footerDetails.map(({ header, content, className }, index) => (
-            <ValueAndLabel
-              key={index}
-              className={styles.detail}
-              label={(
-                <span className={styles.headerText}>
-                  <>
-                    {header.text || header}
-                    {header.toolTipText && (
-                      <Tooltip position="right">
-                        <p>
-                          {header.toolTipText}
-                        </p>
-                      </Tooltip>
-                    )}
-                  </>
-                </span>
-              )}
-            >
-              <span className={className}>
-                {content}
+          {onChainLoading || offChainLoading ? (
+            <Skeleton className={styles.skeleton} width="25%" />
+          ) : (
+            <ValueAndLabel label={t('Deposited:')} direction="horizontal">
+              <span className={styles.value}>
+                <TokenAmount val={deposit} token={token} />
               </span>
             </ValueAndLabel>
-          ))}
+          )}
+        </div>
+        <Box className={styles.footerDetailsRow}>
+          {onChainLoading || offChainLoading
+            ? footerDetails.map((_, idx) => (
+                <div className={styles.skeletonWrapper} key={idx}>
+                  <Skeleton className={styles.skeleton} width="50%" />
+                  <Skeleton className={styles.skeleton} width="50%" />
+                </div>
+              ))
+            : footerDetails.map(({ header, content, className }, index) => (
+                <ValueAndLabel
+                  key={index}
+                  className={styles.detail}
+                  label={
+                    <span className={styles.headerText}>
+                      <>
+                        {header.text || header}
+                        {header.toolTipText && (
+                          <Tooltip position="right">
+                            <p>{header.toolTipText}</p>
+                          </Tooltip>
+                        )}
+                      </>
+                    </span>
+                  }
+                >
+                  <span className={className}>{content}</span>
+                </ValueAndLabel>
+              ))}
         </Box>
         {mode === 'addApplication' ? (
           <Box className={styles.footerButton}>

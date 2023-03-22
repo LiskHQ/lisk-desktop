@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { withRouter } from 'react-router';
-import usePairings from '@libs/wcm/hooks/usePairings';
+import { usePairings } from '@libs/wcm/hooks/usePairings';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';

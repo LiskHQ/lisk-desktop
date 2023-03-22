@@ -50,12 +50,16 @@ import registerMultisignatureError from '@setup/react/assets/images/illustration
 import registerMultisignatureErrorDark from '@setup/react/assets/images/illustrations/multisignature-error-dark.svg';
 import reclaimTokensIntro from '@setup/react/assets/images/illustrations/reclaim-tokens-intro.svg';
 import trezorHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-trezor.svg';
+import hwLedgerConfirm from '@setup/react/assets/images/illustrations/hw-ledger-confirm.svg';
 import trezorHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-trezor-dark.svg';
 import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
 import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
+import hwReconnection from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect.svg';
+import hwReconnectionDark from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect-dark.svg';
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
 import validatorRegistrationSuccess from '@setup/react/assets/images/illustrations/validator-registration-success.svg';
 import validatorRegistrationError from '@setup/react/assets/images/illustrations/validator-registration-error.svg';
+import applicationDetailsError from '@setup/react/assets/images/illustrations/application-details-error.svg';
 
 export const illustrations = {
   welcomeLiskValidators,
@@ -106,25 +110,24 @@ export const illustrations = {
   transactionPendingDark,
   multisignaturePartialSuccess,
   multisignaturePartialSuccessDark,
+  hwLedgerConfirm,
   trezorHwRejection,
   trezorHwRejectionDark,
   ledgerNanoHwRejection,
   ledgerNanoHwRejectionDark,
+  hwReconnection,
+  hwReconnectionDark,
   addApplicationSuccess,
   validatorRegistrationSuccess,
   validatorRegistrationError,
+  applicationDetailsError,
 };
 
 const Illustration = ({ name, className, noTheme, ...props }) => {
   const theme = useTheme();
-  const themed = theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
-  return (
-    <img
-      src={illustrations[themed]}
-      className={className}
-      {...props}
-    />
-  );
+  const themed =
+    theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
+  return <img src={illustrations[themed]} className={className} {...props} />;
 };
 
 Illustration.propTypes = {

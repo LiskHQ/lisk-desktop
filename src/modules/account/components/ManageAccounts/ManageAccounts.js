@@ -1,7 +1,8 @@
+/* eslint-disable max-statements */
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-
+import Spinner from 'src/theme/Spinner';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from 'src/theme/dialog/dialog';
@@ -9,22 +10,28 @@ import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
+import useHWAccounts from '@hardwareWallet/hooks/useHWAccounts';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
 export const ManageAccountsContent = ({
   isRemoveAvailable,
-  title: customTitle,
   history,
   className,
   truncate,
+  title: customTitle,
+  location: { search } = { search: '' },
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
-  const [, setAccount] = useCurrentAccount();
+  const [currentAccount, setAccount] = useCurrentAccount();
   const [showRemove, setShowRemove] = useState(false);
   const title = customTitle ?? t('Manage accounts');
+  const { accounts: hwAccounts, isLoadingHWAccounts } = useHWAccounts();
+
+  const queryParams = new URLSearchParams(search);
+  const referrer = queryParams.get('referrer');
 
   const onAddAccount = useCallback(() => {
     history.push(routes.addAccountOptions.path);
@@ -35,10 +42,13 @@ export const ManageAccountsContent = ({
       address: account?.metadata?.address,
     });
   }, []);
-  const onSelectAccount = useCallback((account) => {
-    setAccount(account);
-    history.push(routes.dashboard.path);
-  }, []);
+  const onSelectAccount = useCallback(
+    (account) => {
+      setAccount(account);
+      history.push(referrer || routes.dashboard.path);
+    },
+    [referrer]
+  );
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
@@ -46,16 +56,25 @@ export const ManageAccountsContent = ({
         <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
       </div>
       <Box className={styles.accountListWrapper}>
-        {accounts.map((account) => (
-          <AccountRow
-            key={account.metadata.address}
-            account={account}
-            onSelect={onSelectAccount}
-            onRemove={showRemove && removeAccount}
-            truncate={truncate}
-          />
-        ))}
+        <>
+          {[...accounts, ...hwAccounts].map((account) => (
+            <AccountRow
+              key={account.metadata.address}
+              account={account}
+              currentAccount={currentAccount}
+              onSelect={onSelectAccount}
+              onRemove={showRemove && removeAccount}
+              truncate={truncate}
+            />
+          ))}
+        </>
       </Box>
+      {isLoadingHWAccounts && (
+        <div className={styles.loaderWrapper}>
+          <Spinner className={styles.spinner} />
+          <span>{t('Loading hardware wallet accounts…')}</span>
+        </div>
+      )}
       {showRemove ? (
         <OutlineButton
           className={`${styles.button} ${styles.addAccountBtn}`}
@@ -97,6 +116,7 @@ function ManageAccounts(props) {
       </Dialog>
     );
   }
+
   return (
     <div className={`${styles.manageAccounts} ${grid.row}`}>
       <div

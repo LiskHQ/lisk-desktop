@@ -188,11 +188,11 @@ describe('Unlock LSK modal', () => {
           },
         ],
         isFormValid: true,
-        unlockableAmount: 455000000000,
         moduleCommand: 'pos:unlock',
         fields: {
           token: mockTokensBalance.data[0],
         },
+        unlockedAmount: 455000000000,
       },
       fees: [
         {
@@ -235,7 +235,7 @@ describe('Unlock LSK modal', () => {
           fields: {
             token: mockTokensBalance.data[0],
           },
-          unlockableAmount: 455000000000,
+          unlockedAmount: 455000000000,
         },
         fees: [
           {

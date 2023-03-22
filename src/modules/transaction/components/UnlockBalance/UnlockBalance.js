@@ -20,7 +20,10 @@ const UnlockBalance = ({ account, t, formProps }) => {
         <div className={styles.col}>
           <label>{t('Amount to unlock')}</label>
           <label className="amount-label">
-            <TokenAmount val={formProps.unlockableAmount} token={token} />
+            <TokenAmount
+              val={formProps.unlockedAmount}
+              token={token}
+            />
           </label>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import accounts from '@tests/constants/wallets';
+import {LEDGER_HW_IPC_CHANNELS} from "@libs/hardwareWallet/ledger/constants";
 import Status from './UnlockBalanceStatus';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
@@ -68,7 +69,7 @@ describe('unlock transaction Status', () => {
       ...props,
       transactions: {
         txBroadcastError: null,
-        txSignatureError: { message: 'hwCommand' },
+        txSignatureError: { message: LEDGER_HW_IPC_CHANNELS.GET_SIGNED_TRANSACTION },
         signedTransaction: { signatures: ['123'] },
       },
     };
@@ -76,7 +77,7 @@ describe('unlock transaction Status', () => {
     wrapper = shallow(<Status {...propsWithHWError} />);
     expect(wrapper.props().children.props).toEqual({
       illustration: 'default',
-      status: { code: 'HW_REJECTED', message: 'hwCommand' },
+      status: { code: 'HW_REJECTED', message: LEDGER_HW_IPC_CHANNELS.GET_SIGNED_TRANSACTION },
       title: 'Transaction aborted on device',
       message: 'You have cancelled the transaction on your hardware wallet.',
       className: 'content',

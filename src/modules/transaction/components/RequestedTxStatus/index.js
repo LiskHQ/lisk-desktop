@@ -6,7 +6,7 @@ import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { getErrorReportMailto } from 'src/utils/helpers';
-import useSession from '@libs/wcm/hooks/useSession';
+import { useSession } from '@libs/wcm/hooks/useSession';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { encodeTransaction, toTransactionJSON } from '../../utils/encoding';

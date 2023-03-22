@@ -1,7 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import {
@@ -23,7 +23,12 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import useMessageField from '../../hooks/useMessageField';
 import Form from './SendForm';
-import { useTokensBalance, useTokensSupported } from '../../hooks/queries';
+import {
+  useGetInitializationFees,
+  useGetMinimumMessageFee,
+  useTokensBalance,
+  useTokensSupported,
+} from '../../hooks/queries';
 import { useTransferableTokens } from '../../hooks';
 
 const mockSetMessage = jest.fn();
@@ -71,6 +76,10 @@ describe('Form', () => {
     isSuccess: true,
     isLoading: false,
   });
+  useGetInitializationFees.mockReturnValue({
+    data: { data: { escrowAccount: 165000, userAccount: 165000 } },
+  });
+  useGetMinimumMessageFee.mockReturnValue({ data: { data: { fee: 5000000 } } });
 
   beforeEach(() => {
     bookmarks = {

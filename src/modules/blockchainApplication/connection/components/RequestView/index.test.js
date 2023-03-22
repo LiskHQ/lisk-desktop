@@ -21,7 +21,7 @@ describe('RequestView', () => {
     const wrapper = shallow(
       <RequestView history={{}} />
     );
-    
+
     expect(wrapper).toContainMatchingElement(Dialog);
     expect(wrapper).toContainMatchingElement(MultiStep);
     expect(wrapper).toContainMatchingElement(RequestSummary);

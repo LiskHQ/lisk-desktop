@@ -4,7 +4,7 @@ import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
 const getTxDirectionConfig = (moduleCommand, host, recipient, styles) => {
   if (
     moduleCommand === MODULE_COMMANDS_NAME_MAP.unlock ||
-    moduleCommand === MODULE_COMMANDS_NAME_MAP.reclaim
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.reclaimLSK
   ) {
     return {
       sign: '',
@@ -26,11 +26,11 @@ const getTxDirectionConfig = (moduleCommand, host, recipient, styles) => {
   return false;
 };
 
-export const getFeeStatus = ({ fee, token, customFee }) => {
+export const getFeeStatus = ({ fee, tokenSymbol, customFee }) => {
   if (customFee) {
     return customFee;
   }
-  return !fee.error ? `${formatAmountBasedOnLocale({ value: fee })} ${token}` : fee.feedback;
+  return !fee.error ? `${formatAmountBasedOnLocale({ value: fee })} ${tokenSymbol}` : fee.feedback;
 };
 
 export const getSpaceSeparated = (str) => str.replace(/([A-Z])/g, ' $1');

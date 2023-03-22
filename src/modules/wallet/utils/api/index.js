@@ -1,8 +1,10 @@
 import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import { API_VERSION } from 'src/const/config';
 import { HTTP_CODES, HTTP_PREFIX } from 'src/const/httpCodes';
 import http from 'src/utils/api/http';
 import ws from 'src/utils/api/ws';
+import client from 'src/utils/api/client';
 import { isEmpty } from 'src/utils/helpers';
 import { extractAddressFromPublicKey, extractPublicKey } from '@wallet/utils/account';
 
@@ -140,6 +142,43 @@ const getRequests = (values, isValidator) => {
       });
   }
   return false;
+};
+
+export const getUsedHWAccounts = async (publicKeyList) => {
+  const config = {
+    url: `/api/${API_VERSION}/tokens`,
+    method: 'get',
+    event: 'get.tokens',
+  };
+
+  const requests = publicKeyList.map((publicKey) => {
+    const address = extractAddressFromPublicKey(publicKey);
+    const requestConfig = {
+      ...config,
+      transformResponse: response => {
+        const res = JSON.parse(response);
+        return res.data?.length
+        ? {
+          ...res.data[0],
+          address,
+          publicKey,
+        }
+        : {
+          address,
+          publicKey,
+          availableBalance: 0,
+        };
+      },
+      params: {
+        limit: 1,
+        address,
+      },
+    };
+
+    return client.call(requestConfig);
+  });
+
+  return Promise.all(requests);
 };
 
 /**

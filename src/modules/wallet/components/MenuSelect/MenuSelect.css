@@ -42,3 +42,13 @@
   left: 0px;
   z-index: 1;
 }
+
+.loading {
+  color: var(--color-ultramarine-blue);
+  margin-right: 16px;
+
+  & > span {
+    width: 20px;
+    height: 20px;
+  }
+}

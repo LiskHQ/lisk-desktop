@@ -9,7 +9,7 @@ import { genKey, blsKey, pop } from '@tests/constants/keys';
 import { mockAppTokens } from '@tests/fixtures/token';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import {
-  getTxAmount,
+  getTotalSpendingAmount,
   containsTransactionType,
   transactionToJSON,
   removeExcessSignatures,
@@ -22,7 +22,7 @@ import { fromTransactionJSON } from './encoding';
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
-const { transfer, stakeValidator, registerMultisignature, registerValidator, reclaim, unlock } =
+const { transfer, stakeValidator, registerMultisignature, registerValidator, reclaimLSK, unlock } =
   MODULE_COMMANDS_NAME_MAP;
 
 // TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
@@ -48,7 +48,7 @@ describe.skip('API: LSK Transactions', () => {
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );
-  describe('getTxAmount', () => {
+  describe('getTotalSpendingAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
         module: 'token',
@@ -56,7 +56,7 @@ describe.skip('API: LSK Transactions', () => {
         params: { amount: 100000000 },
       };
 
-      expect(getTxAmount(tx)).toEqual(tx.params.amount);
+      expect(getTotalSpendingAmount(tx)).toEqual(tx.params.amount);
     });
 
     it('should return amount of stakes in Beddows', () => {
@@ -76,7 +76,7 @@ describe.skip('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual(200000000);
+      expect(getTotalSpendingAmount(tx)).toEqual(200000000);
     });
 
     it('should return amount of unlock in Beddows', () => {
@@ -96,7 +96,7 @@ describe.skip('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual(200000000);
+      expect(getTotalSpendingAmount(tx)).toEqual(200000000);
     });
   });
 
@@ -201,7 +201,7 @@ describe.skip('API: LSK Transactions', () => {
         },
       };
       const txObj = fromTransactionJSON(tx, moduleCommandSchemas['legacy:reclaimLSK']);
-      const [module, command] = splitModuleAndCommand(reclaim);
+      const [module, command] = splitModuleAndCommand(reclaimLSK);
       expect(txObj).toEqual({
         ...baseElementsTx,
         id: Buffer.alloc(0),

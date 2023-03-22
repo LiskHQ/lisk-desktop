@@ -6,7 +6,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 
 import { mockBlocks } from '@block/__fixtures__';
 import { mockValidators } from '@pos/validator/__fixtures__';
@@ -43,8 +43,12 @@ describe('Overview', () => {
       history,
     };
 
+    const mergedTokensData = mockTokensBalance.data.map((tokenData, idx) => ({
+      ...tokenData,
+      ...mockAppsTokens.data[idx],
+    }));
     useTokensBalance.mockReturnValue({
-      data: { data: mergedTokens },
+      data: { data: mergedTokensData },
       isLoading: false,
       isSuccess: true,
     });

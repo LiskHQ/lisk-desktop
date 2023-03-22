@@ -1,7 +1,7 @@
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
 import numeral from 'numeral';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import TokenRow from './TokenRow';
 

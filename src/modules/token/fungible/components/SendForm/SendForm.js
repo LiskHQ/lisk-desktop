@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
-import { useGetInitializationFees, useMessageFee } from '@auth/hooks/queries';
+import { useGetInitializationFees, useGetMinimumMessageFee } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
-import { convertToBaseDenom, convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom, convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import { maxMessageLength } from '@transaction/configuration/transactions';
@@ -20,17 +20,16 @@ import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
 import { useTransferableTokens } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
-import { getLogo } from '../../utils/service';
 import styles from './form.css';
 import MessageField from '../MessageField';
 
-const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
-const getInitialAmount = (rawTx, initialValue, token) =>
-  Number(rawTx?.params.amount)
-    ? convertFromBaseDenom(rawTx?.params.amount, token)
+const getInitialData = (formProps, initialValue) => formProps?.params.data || initialValue || '';
+const getInitialAmount = (formProps, initialValue, token) =>
+  Number(formProps?.params.amount)
+    ? convertFromBaseDenom(formProps?.params.amount, token)
     : initialValue || '';
-const getInitialRecipient = (rawTx, initialValue) =>
-  rawTx?.params.recipient.address || initialValue || '';
+const getInitialRecipient = (formProps, initialValue) =>
+  formProps?.params.recipient.address || initialValue || '';
 const getInitialRecipientChain = (
   transactionData,
   initialChainId,
@@ -71,8 +70,8 @@ const SendForm = (props) => {
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
-  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value });
-  const { data: messageFee } = useMessageFee({ address: recipient.value });
+  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value, tokenID: token?.tokenID });
+  const { data: messageFeeResult } = useGetMinimumMessageFee();
 
   const extraCommandFee =
     sendingChain.chainID !== recipientChain.chainID
@@ -161,7 +160,7 @@ const SendForm = (props) => {
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
-      messageFee,
+      messageFee: messageFeeResult?.data?.fee,
     };
   }
 
@@ -179,7 +178,7 @@ const SendForm = (props) => {
             <h2>{t('Send Tokens')}</h2>
           </BoxHeader>
           <BoxContent className={styles.formSection}>
-            <div className={`${styles.ApplilcationFieldWrapper}`}>
+            <div className={`${styles.ApplicationFieldWrapper}`}>
               <div>
                 <label className={`${styles.fieldLabel} sending-application`}>
                   <span>{t('From application')}</span>

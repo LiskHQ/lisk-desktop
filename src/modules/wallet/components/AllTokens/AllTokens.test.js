@@ -5,7 +5,7 @@ import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useFilter } from 'src/modules/common/hooks';
 
 import { mockBlocks } from '@block/__fixtures__';
@@ -36,8 +36,12 @@ describe('AllTokens', () => {
     ...token,
   }));
 
+  const mergedTokensData = mockTokensBalance.data.map((tokenData, idx) => ({
+    ...tokenData,
+    ...mockAppsTokens.data[idx],
+  }));
   useTokensBalance.mockReturnValue({
-    data: { data: mergedTokens },
+    data: { data: mergedTokensData },
     isLoading: false,
     isSuccess: true,
   });

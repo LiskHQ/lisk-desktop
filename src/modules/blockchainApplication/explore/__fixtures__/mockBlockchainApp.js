@@ -9,7 +9,7 @@ export const mockBlockchainApp = {
     {
       name: 'Lisk',
       chainID: '00000001',
-      state: 'active',
+      status: 'active',
       address: 'lsk123bhithjdq8szo3poyqe5dsxwrnazyqnzqhsy',
       isDefault: true,
       lastCertificateHeight: 900,
@@ -18,7 +18,7 @@ export const mockBlockchainApp = {
     {
       name: 'Colecti',
       chainID: '00000002',
-      state: 'active',
+      status: 'active',
       address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
       isDefault: false,
       lastCertificateHeight: 1000,

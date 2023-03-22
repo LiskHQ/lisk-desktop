@@ -39,6 +39,8 @@ const Regular = ({
   transactionBroadcasted,
   moduleCommandSchemas,
   onRetry,
+  successButtonText,
+  onSuccessClick,
 }) => {
   const queryClient = useQueryClient();
 
@@ -52,7 +54,7 @@ const Regular = ({
 
   const goToWallet = async () => {
     // this is buggy at the moment
-    if (joinModuleAndCommand(transactions.signedTransaction) === MODULE_COMMANDS_NAME_MAP.reclaim) {
+    if (joinModuleAndCommand(transactions.signedTransaction) === MODULE_COMMANDS_NAME_MAP.reclaimLSK) {
       await queryClient.invalidateQueries({ queryKey: [LEGACY] });
     }
     history.push(routes.wallet.path);
@@ -73,9 +75,9 @@ const Regular = ({
       {successTypes.includes(status.code) && !noBackButton && (
         <PrimaryButton
           className={`${styles.backToWallet} back-to-wallet-button`}
-          onClick={goToWallet}
+          onClick={onSuccessClick || goToWallet}
         >
-          {t('Back to wallet')}
+          {successButtonText || t('Back to wallet')}
         </PrimaryButton>
       )}
       {errorTypes.includes(status.code) ? (

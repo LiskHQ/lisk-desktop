@@ -4,6 +4,7 @@ import { signTransaction } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { networkStatusUpdated } from '@network/store/action';
+import { selectCurrentApplicationChainID } from "@blockchainApplication/manage/store/selectors";
 import transactionActionTypes from '@transaction/store/actionTypes';
 import actionTypes from './actionTypes';
 
@@ -78,7 +79,9 @@ export const multisigGroupRegistered = (
   // Collect data
   //
   const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
+  const wallet = state.account?.current?.hw
+    ? state.account.current
+    : selectActiveTokenAccount(state);
 
   //
   // Create the transaction
@@ -86,9 +89,9 @@ export const multisigGroupRegistered = (
   const [error, tx] = await to(
     signTransaction({
       transactionJSON,
-      wallet: activeWallet,
+      wallet,
       schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
-      chainID: state.network.networks.LSK.chainID,
+      chainID: selectCurrentApplicationChainID(state),
       privateKey,
     }),
   );

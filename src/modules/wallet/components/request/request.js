@@ -5,7 +5,7 @@ import { maxMessageLength } from '@transaction/configuration/transactions';
 import { useApplicationExploreAndMetaData } from '@blockchainApplication/manage/hooks';
 import { useTransferableTokens } from '@token/fungible/hooks';
 import { validateAmountFormat } from 'src/utils/validators';
-import { getLogo } from 'src/redux/actions';
+import { getLogo } from '@token/fungible/utils/helpers';
 import { sizeOfString } from 'src/utils/helpers';
 import { Input } from 'src/theme';
 import Converter from 'src/modules/common/components/converter';

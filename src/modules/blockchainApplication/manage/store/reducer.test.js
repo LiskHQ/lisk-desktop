@@ -1,9 +1,9 @@
-import mockApplicationsManage, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
+import mockApplicationsManage, {
+  applicationsMap,
+} from '@tests/fixtures/blockchainApplicationsManage';
 import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import actionTypes from './actionTypes';
-import {
-  pins, applications, current, node,
-} from './reducer';
+import { pins, applications, current } from './reducer';
 
 describe('BlockchainApplication reducer', () => {
   describe('pins', () => {
@@ -22,8 +22,7 @@ describe('BlockchainApplication reducer', () => {
         chainId: mockApplicationsExplore[0].chainID,
       };
 
-      expect(pins([mockApplicationsExplore[0].chainID], actionData)).not
-        .toContain(actionData.data);
+      expect(pins([mockApplicationsExplore[0].chainID], actionData)).not.toContain(actionData.data);
     });
   });
 
@@ -38,7 +37,7 @@ describe('BlockchainApplication reducer', () => {
       };
       const actionData = {
         type: actionTypes.addApplicationByChainId,
-        application: newApplication,
+        app: newApplication,
       };
       const changedState = applications(applicationsMap, actionData);
 
@@ -54,25 +53,40 @@ describe('BlockchainApplication reducer', () => {
 
       expect(changedState).not.toHaveProperty(actionData.chainId);
     });
+
+    it('Should return list of applications with the newly added applications', async () => {
+      const newApplication1 = {
+        name: 'New app',
+        chainID: '00002000',
+        state: 'active',
+        apis: [{ rest: 'https://service.newapp1.com', rpc: 'wss://service.newapp1.com' }],
+        lastUpdated: 78946123,
+      };
+      const newApplication2 = {
+        name: 'New app2',
+        chainID: '00004000',
+        state: 'active',
+        apis: [{ rest: 'https://service.newapp2.com', rpc: 'wss://service.newapp2.com' }],
+        lastUpdated: 78945123,
+      };
+      const actionData = {
+        type: actionTypes.setApplications,
+        apps: [newApplication1, newApplication2],
+      };
+      const changedState = applications(applicationsMap, actionData);
+
+      expect(changedState).toHaveProperty(newApplication1.chainID, newApplication1);
+      expect(changedState).toHaveProperty(newApplication2.chainID, newApplication2);
+    });
   });
 
   describe('current', () => {
     it('Should return current application if setCurrentApplication action type is triggered', async () => {
       const actionData = {
         type: actionTypes.setCurrentApplication,
-        application: mockApplicationsManage[0],
+        app: mockApplicationsManage[0],
       };
       expect(current({}, actionData)).toEqual(mockApplicationsManage[0]);
-    });
-  });
-
-  describe('node', () => {
-    it('Should return application node if setApplicationNode action type is triggered', async () => {
-      const actionData = {
-        type: actionTypes.setApplicationNode,
-        nodeInfo: mockApplicationsManage[0].serviceURLs[0],
-      };
-      expect(node({}, actionData)).toEqual(mockApplicationsManage[0].serviceURLs[0]);
     });
   });
 });

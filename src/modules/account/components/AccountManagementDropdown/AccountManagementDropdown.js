@@ -8,7 +8,7 @@ import WalletVisual from '@wallet/components/walletVisual';
 import styles from './AccountManagementDropdown.css';
 
 const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
-  const { name, address } = currentAccount.metadata;
+  const { name, address, isHW } = currentAccount.metadata;
 
   return (
     <DropdownButton
@@ -20,7 +20,10 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
         <div className={styles.accountWrapper}>
           <WalletVisual address={address} size={32} />
           <div className={styles.account}>
-            <span className={styles.name}>{name}</span>
+            <span className={styles.name}>
+              {name}
+              {isHW && <Icon className={styles.walletIcon} name="hardwareWalletIcon" />}
+            </span>
             <span className={styles.address}>{truncateAddress(address)}</span>
           </div>
           <Icon name="dropdownArrowIcon" />

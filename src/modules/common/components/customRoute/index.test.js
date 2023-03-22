@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router';
 import { render, screen } from '@testing-library/react';
+import useSettings from '@settings/hooks/useSettings';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import routes from 'src/routes/routes';
@@ -20,7 +21,9 @@ jest.mock('react-redux', () => ({
 }));
 
 const mockSetAccount = jest.fn();
+const mockToggleSetting = jest.fn();
 jest.mock('react-i18next');
+jest.mock('@settings/hooks/useSettings');
 jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
@@ -55,6 +58,10 @@ describe('CustomRoute', () => {
 
   beforeEach(() => {
     useSelector.mockImplementation((callback) => callback(mockAppState));
+    useSettings.mockReturnValue({
+      mainChainNetwork: { name: 'devnet' },
+      toggleSetting: mockToggleSetting,
+    });
   });
 
   afterEach(() => {

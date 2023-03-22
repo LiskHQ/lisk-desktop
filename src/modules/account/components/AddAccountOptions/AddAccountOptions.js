@@ -8,6 +8,19 @@ import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import styles from './AddAccountOptions.css';
 
+const addAccountOptions = (t) => [
+  {
+    text: t('Secret recovery phrase'),
+    iconName: 'secretPassphrase',
+    pathname: routes.addAccountBySecretRecovery.path,
+  },
+  {
+    text: t('Restore from backup'),
+    iconName: 'accountUpload',
+    pathname: routes.addAccountByFile.path,
+  },
+];
+
 const AddAccountOptionButton = ({ iconName, text, onClick }) => (
   <button data-testid={iconName} onClick={onClick} className={styles.addAccountOptionBtnWrapper}>
     <div>
@@ -17,7 +30,7 @@ const AddAccountOptionButton = ({ iconName, text, onClick }) => (
   </button>
 );
 
-const AddAccountOptions = ({ history }) => {
+const AddAccountOptions = ({ history, location: { search } }) => {
   const { t } = useTranslation();
 
   return (
@@ -28,24 +41,19 @@ const AddAccountOptions = ({ history }) => {
         >
           <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
             <h1>{t('Add your account')}</h1>
-            <p>
-              {t('Choose an option to add your account to Lisk wallet.')}
-            </p>
+            <p>{t('Choose an option to add your account to Lisk wallet.')}</p>
             <div className={styles.selectRowWrapper}>
-              <AddAccountOptionButton
-                text={t('Secret recovery phrase')}
-                iconName="secretPassphrase"
-                onClick={() => history.push(routes.addAccountBySecretRecovery.path)}
-              />
-              <AddAccountOptionButton
-                text={t('Restore from backup')}
-                iconName="accountUpload"
-                onClick={() => history.push(routes.addAccountByFile.path)}
-              />
+              {addAccountOptions(t).map(({ text, iconName, pathname }) => (
+                <AddAccountOptionButton
+                  key={text}
+                  text={text}
+                  iconName={iconName}
+                  onClick={() => history.push({ pathname, search })}
+                />
+              ))}
             </div>
             <p>
-              {t('Don’t have a Lisk account yet?')}
-              {' '}
+              {t('Don’t have a Lisk account yet?')}{' '}
               <Link to={routes.register.path}>Create one now</Link>
             </p>
           </div>

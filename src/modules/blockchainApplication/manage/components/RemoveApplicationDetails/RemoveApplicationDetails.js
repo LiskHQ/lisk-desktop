@@ -12,13 +12,12 @@ import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams } from 'src/utils/searchParams';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './RemoveApplicationDetails.css';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 // import useApplicationManagement from '../../hooks/useApplicationManagement';
 
 const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
-const chainLogo = null;
 
 const RemoveApplicationDetails = ({ location, application, onCancel, nextStep }) => {
   const { t } = useTranslation();
@@ -28,7 +27,7 @@ const RemoveApplicationDetails = ({ location, application, onCancel, nextStep })
 
   // const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const { chainName, state, address, lastCertificateHeight, lastUpdated } = application.data;
+  const { chainName, status, address, lastCertificateHeight, lastUpdated } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -46,8 +45,8 @@ const RemoveApplicationDetails = ({ location, application, onCancel, nextStep })
     },
     {
       header: t('Status'),
-      className: `${styles.detailContentText} ${styles.statusChip} ${styles[state]} chain-status`,
-      content: t(state),
+      className: `${styles.detailContentText} ${styles.statusChip} ${styles[status]} chain-status`,
+      content: t(status),
     },
     {
       header: t('Last Update'),
@@ -75,7 +74,7 @@ const RemoveApplicationDetails = ({ location, application, onCancel, nextStep })
         <Box className={styles.headerContainer}>
           <p>{t('Remove application')}</p>
           <div>
-            <img src={chainLogo || liskLogo} />
+            <img src={getLogo(application.data)} />
           </div>
         </Box>
         <Box className={styles.detailsWrapper}>

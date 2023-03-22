@@ -1,8 +1,8 @@
 export const networkKeys = {
-  mainNet: 'mainnet',
+  mainnet: 'mainnet',
   alphanet: 'alphanet',
   betanet: 'betanet',
-  devNet: 'devnet',
+  devnet: 'devnet',
   testnet: 'testnet',
   customNode: 'customNode',
 };
@@ -11,30 +11,46 @@ export const networkKeys = {
 export const initialSupply = 10000000000000000;
 
 const networks = {
-  [networkKeys.mainNet]: {
+  [networkKeys.mainnet]: {
+    name: networkKeys.mainnet,
     label: 'Mainnet',
     serviceUrl: 'http://165.227.246.146:9901',
+    wsServiceUrl: 'ws://mainnet-service.lisk.com',
+    isAvailable: false,
   },
   [networkKeys.alphanet]: {
+    name: networkKeys.alphanet,
     label: 'Alphanet',
-    serviceUrl: 'http://165.227.246.146:9901',
+    serviceUrl: 'https://alphanet-service.liskdev.net',
+    wsServiceUrl: 'ws://alphanet-service.liskdev.net',
+    isAvailable: true,
   },
   [networkKeys.betanet]: {
+    name: networkKeys.betanet,
     label: 'Betanet',
-    serviceUrl: 'http://165.227.246.146:9901',
+    serviceUrl: 'http://betanet-service.lisk.com',
+    wsServiceUrl: 'ws://betanet-service.lisk.com',
+    isAvailable: false,
   },
-  [networkKeys.devNet]: {
+  [networkKeys.devnet]: {
+    name: networkKeys.devnet,
     label: 'Devnet',
-    serviceUrl: 'http://165.227.246.146:9901',
+    serviceUrl: 'http://devnet-service.liskdev.net:9901',
+    wsServiceUrl: 'ws://devnet-service.liskdev.net:9901',
+    isAvailable: true,
   },
   [networkKeys.testnet]: {
+    name: networkKeys.testnet,
     label: 'Testnet',
-    // @Todo: this should be reverted when stable test service depoyment has been done
-    serviceUrl: 'http://165.227.246.146:9901', // 'https://testnet-service.lisk.com',
+    serviceUrl: 'http://testnet-service.lisk.com',
+    wsServiceUrl: 'ws://testnet-service.lisk.com',
+    isAvailable: false,
   },
   [networkKeys.customNode]: {
+    name: networkKeys.customNode,
     label: 'Custom Service Node',
     serviceUrl: 'http://localhost:9901',
+    wsServiceUrl: 'ws://localhost:9901',
   },
 };
 

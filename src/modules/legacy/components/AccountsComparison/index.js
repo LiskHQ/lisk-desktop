@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import Tooltip from 'src/theme/Tooltip';
 import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks';
-import { useGetInitializationFees } from '@auth/hooks/queries';
+import { useGetInitializationFees } from '@token/fungible/hooks/queries';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import MigrationDetails from '../MigrationDetails';
@@ -19,6 +19,7 @@ const AccountsComparison = ({ t }) => {
   const nonce = wallet.sequence?.nonce;
   const { data: initializationFees } = useGetInitializationFees({
     address: wallet.summary?.address,
+    tokenID: wallet.token?.[0]?.tokenID,
   });
   const extraCommandFee = initializationFees?.data?.userAccount;
   const hasEnoughBalance = Number(wallet.token?.[0]?.availableBalance) >= extraCommandFee;

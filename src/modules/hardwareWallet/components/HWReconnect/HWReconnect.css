@@ -1,0 +1,41 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.HWReconnect {
+  padding: 40px 24px;
+  text-align: center;
+
+  & .header {
+    flex-direction: column;
+    height: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    & img {
+      margin-bottom: 20px;
+    }
+
+    & h4 {
+      @mixin headingNormalIntermediate very-bold;
+
+      font-size: 28px;
+      margin: 0;
+      color: var(--color-zodiac-blue);
+    }
+  }
+
+  & .content {
+    padding: 0;
+    color: var(--color-blue-gray);
+    text-align: center;
+
+    & .details {
+      max-width: 316px;
+      margin: 0 auto 30px;
+
+      & p {
+        margin: 0;
+        font-size: 16px;
+      }
+    }
+  }
+}

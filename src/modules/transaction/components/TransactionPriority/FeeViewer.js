@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import Input from 'src/theme/Input/Input';
 import Icon from 'src/theme/Icon';
 import Spinner from 'src/theme/Spinner';

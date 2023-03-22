@@ -15,5 +15,16 @@ export const useCommandSchema = () => {
     );
   }, [data]);
 
-  return { moduleCommandSchemas, ...rest };
+  const messagesSchemas = useMemo(() => {
+    const { messages } = data?.data || {};
+
+    if (!messages) return {};
+
+    return messages.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    );
+  }, [data]);
+
+  return { moduleCommandSchemas, messagesSchemas, ...rest };
 };

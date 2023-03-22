@@ -1,13 +1,16 @@
 import { screen, fireEvent } from '@testing-library/react';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
-import mockBlockChainApplications, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
+import useSettings from '@settings/hooks/useSettings';
+import mockBlockChainApplications, {
+  applicationsMap,
+} from '@tests/fixtures/blockchainApplicationsManage';
 import SelectNode from './SelectNode';
 
 const mockSetCurrentApplication = jest.fn();
-const mockSetCurrentNode = jest.fn();
 const mockCurrentApplication = mockBlockChainApplications[0];
 
 const mockDispatch = jest.fn();
+const mockToggleSetting = jest.fn();
 const mockState = {
   blockChainApplications: {
     applications: applicationsMap,
@@ -19,14 +22,10 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 
-jest.mock('../../hooks/useCurrentNode', () => ({
-  useCurrentNode: () => ({
-    setCurrentNode: mockSetCurrentNode,
-  }),
-}));
 jest.mock('../../hooks/useCurrentApplication', () => ({
-  useCurrentApplication: () => ([mockCurrentApplication, mockSetCurrentApplication]),
+  useCurrentApplication: () => [mockCurrentApplication, mockSetCurrentApplication],
 }));
+jest.mock('@settings/hooks/useSettings');
 
 const props = {
   history: {
@@ -41,6 +40,11 @@ const props = {
 };
 
 describe('SelectNode', () => {
+  useSettings.mockReturnValue({
+    mainChainNetwork: { name: 'devnet' },
+    toggleSetting: mockToggleSetting,
+  });
+
   it('Should render select node component', () => {
     const selectedApplication = { ...mockBlockChainApplications[4], isPinned: false };
 
@@ -50,8 +54,9 @@ describe('SelectNode', () => {
     expect(screen.getAllByTestId('application-node-row')).toHaveLength(2);
     fireEvent.click(screen.getAllByTestId('application-node-row')[0]);
     expect(mockSetCurrentApplication).toHaveBeenCalledTimes(1);
-    expect(mockSetCurrentApplication).toHaveBeenCalledWith(selectedApplication);
-    expect(mockSetCurrentNode).toHaveBeenCalledTimes(1);
-    expect(mockSetCurrentNode).toHaveBeenCalledWith(mockBlockChainApplications[4].serviceURLs[0]);
+    expect(mockSetCurrentApplication).toHaveBeenCalledWith(
+      selectedApplication,
+      mockBlockChainApplications[4].serviceURLs[0]
+    );
   });
 });

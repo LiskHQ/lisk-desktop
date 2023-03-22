@@ -3,12 +3,13 @@
 import React, { useMemo, useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { convertToBaseDenom } from '@token/fungible/utils/lsk';
+import { convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { normalizeStakesForTx } from '@transaction/utils';
 import BoxContent from '@theme/box/content';
 import Dialog from 'src/theme/dialog/dialog';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
+import routes from 'src/routes/routes';
 import { STAKE_LIMIT } from '../../consts';
 import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';
@@ -109,17 +110,17 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
   }
 
   const addedStakeAmount = Object.values(stakes)
-    .filter((stake) => stake.unconfirmed > stake.confirmed)
+    .filter((stake) => BigInt(stake.unconfirmed) > BigInt(stake.confirmed))
     .reduce((sum, stake) => {
-      sum += stake.unconfirmed - stake.confirmed;
+      sum += BigInt(stake.unconfirmed) - BigInt(stake.confirmed);
       return sum;
-    }, 0);
+    }, BigInt(0));
 
-  if (addedStakeAmount + fee > balance) {
+  if (addedStakeAmount + BigInt(fee) > BigInt(balance)) {
     messages.push(t(`You don't have enough ${posToken.symbol} in your account.`));
   }
 
-  if (balance - addedStakeAmount < MIN_ACCOUNT_BALANCE && balance - addedStakeAmount) {
+  if (balance - addedStakeAmount < BigInt(MIN_ACCOUNT_BALANCE) && balance - BigInt(addedStakeAmount)) {
     messages.push(
       `The stake amounts are too high. You should keep 0.05 ${posToken.symbol} available in your account.`
     );
@@ -143,34 +144,38 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
 
   const feedback = validateStakes(
     stakes,
-    Number(posToken?.availableBalance),
-    convertToBaseDenom(fee, token),
+    BigInt(posToken?.availableBalance),
+    BigInt(convertToBaseDenom(fee, token)),
     resultingNumOfStakes,
     t,
     posToken
   );
+  const showEmptyState = !changedStakes.length || isStakingTxPending;
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
-    nextStep({
-      formProps,
-      transactionJSON,
-      added,
-      edited,
-      removed,
-      selfUnStake,
-      selectedPriority,
-      fees,
-    });
+    if (!showEmptyState) {
+      nextStep({
+        formProps,
+        transactionJSON,
+        added,
+        edited,
+        removed,
+        selfUnStake,
+        selectedPriority,
+        fees,
+      });
+    } else {
+      history.push(routes.validators.path);
+    }
   };
 
-  const onComposed = (rawTx) => {
-    setFee(rawTx.fee);
+  const onComposed = (formProps) => {
+    setFee(formProps.fee);
   };
 
-  const showEmptyState = !changedStakes.length || isStakingTxPending;
   const stakeFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
-    isFormValid: !feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending,
+    isFormValid: (!feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending) || showEmptyState,
     fields: {
       token: posToken,
     },
@@ -186,6 +191,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
         onConfirm={onConfirm}
         formProps={stakeFormProps}
         commandParams={commandParams}
+        buttonTitle={showEmptyState ? t("Continue staking") : t("Continue")}
       >
         <>
           {showEmptyState ? (

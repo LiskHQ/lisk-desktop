@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
-import { convertFromBaseDenom } from '@token/fungible/utils/lsk';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { TokenSelector } from '.';
 

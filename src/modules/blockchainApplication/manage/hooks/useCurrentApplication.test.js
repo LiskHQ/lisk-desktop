@@ -34,13 +34,16 @@ describe('useCurrentApplication hook', () => {
     const [, setCurrentApplication] = result.current;
     const expectedAction = {
       type: actionTypes.setCurrentApplication,
-      application: mockApplications[0],
+      app: mockApplications[0],
     };
     act(() => {
       setCurrentApplication(mockApplications[0]);
     });
-    expect(client.create).toHaveBeenCalledWith({ ws: expect.stringMatching('ws'), rest: expect.stringMatching('http') });
-    expect(mockDispatch).toHaveBeenCalledTimes(2);
+    expect(client.create).toHaveBeenCalledWith({
+      ws: expect.stringMatching('ws'),
+      rest: expect.stringMatching('http'),
+    });
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
   });
 });

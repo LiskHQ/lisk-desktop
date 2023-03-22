@@ -66,7 +66,7 @@ const TransactionInfo = ({
           </div>
           <div className={styles.col}>
             <label>{t('Nonce')}</label>
-            <label>{Number(transactionJSON.nonce)}</label>
+            <label>{BigInt(transactionJSON.nonce).toString()}</label>
           </div>
         </section>
         <Members

@@ -48,19 +48,12 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  hwWallet: {
-    path: '/hw-wallet-login',
-    isSigninFlow: true,
+  selectNetwork: {
+    path: '/select-network',
     isPrivate: false,
+    exact: true,
     forbiddenTokens: [],
   },
-  // login: {
-  //   path: '/login',
-  //   isPrivate: false,
-  //   isSigninFlow: true,
-  //   exact: true,
-  //   forbiddenTokens: [],
-  // },
   backupRecoveryPhraseFlow: {
     path: '/account/backup-recovery-phrase',
     isPrivate: true,
@@ -195,6 +188,10 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  selectHardwareDeviceModal: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   stakingQueue: {
     isPrivate: true,
     forbiddenTokens: [],
@@ -228,7 +225,7 @@ export const modals = {
     forbiddenTokens: [],
   },
   switchAccount: {
-    isPrivate: true,
+    isPrivate: false,
     forbiddenTokens: [],
   },
   selectNode: {
@@ -271,7 +268,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  RequestView: {
+  requestView: {
     isPrivate: false,
     forbiddenTokens: [],
   },

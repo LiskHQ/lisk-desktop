@@ -15,11 +15,11 @@ const Reclaim = ({ account, t, transactionJSON }) => {
       </section>
       <section className={styles.section}>
         <label>{t('Balance to reclaim')}</label>
-        <TokenAmount val={Number(account.legacy.balance)} token={token} />
+        <TokenAmount val={BigInt(account.legacy.balance).toString()} token={token} />
       </section>
       <section className={`${styles.section} tx-fee-section`}>
         <label>{t('Transaction fee')}</label>
-        <TokenAmount val={Number(transactionJSON.fee)} token={token} />
+        <TokenAmount val={BigInt(transactionJSON.fee).toString()} token={token} />
       </section>
     </>
   );

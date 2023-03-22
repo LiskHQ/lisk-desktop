@@ -1,0 +1,147 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  margin-right: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & .hwIcon {
+    width: 20px;
+    height: 100% !important;
+    background-color: transparent;
+    padding: 0px 6px !important;
+    max-width: fit-content;
+    min-width: fit-content;
+    position: relative;
+
+    &.connected::after {
+      background-color: var(--color-jade-green);
+    }
+
+    &.standby::after {
+      background-color: var(--color-warning-border);
+    }
+
+    &::after {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      content: "";
+      display: block;
+      position: absolute;
+      margin-top: -25px;
+      margin-left: 14px;
+    }
+
+    & > img {
+      margin-top: 5px;
+    }
+  }
+
+  & > button ~ div {
+    margin-right: -23px;
+    margin-top: -18px;
+    width: 229px;
+  }
+}
+
+.dropdown {
+  width: 200px;
+  padding: 24px 16px 17px 16px;
+  border-radius: var(--border-radius-box);
+
+  & h6 {
+    font-family: var(--heading-font) !important;
+    font-size: var(--font-size-h6) !important;
+    color: var(--color-content-light) !important;
+    padding: 0px !important;
+    margin: 0px;
+
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+
+  & .selectLinkLabel {
+    margin-top: 10px;
+    cursor: pointer;
+    color: var(--color-ultramarine-blue);
+    font-weight: var(--font-weight-semi-bold);
+  }
+
+  & h6 ~ ul {
+    padding: 0px !important;
+    font-size: var(--paragraph-font-size-s) !important;
+    margin: 6px 0px 0px 0px;
+
+    &:hover {
+      background-color: transparent !important;
+      color: var(--color-slate-gray);
+    }
+
+    & > li {
+      display: flex;
+      flex-direction: row;
+      margin-top: 10px;
+    }
+
+    & > li > div {
+      width: 35%;
+      color: var(--color-slate-gray);
+    }
+
+    & > li > div:nth-child(2) {
+      width: 65%;
+      color: var(--color-content-light);
+    }
+  }
+}
+
+.statusWrapper {
+  border-radius: 5px;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  font-size: var(--button-font-size-s);
+  width: fit-content;
+  padding: 0px 8px;
+  text-transform: capitalize;
+
+  &::before {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    margin-right: 8px;
+  }
+
+  &.standby {
+    border-color: var(--color-warning-border-transparent);
+    background-color: var(--color-warning-border-background-transparent);
+    color: var(--color-warning-border) !important;
+
+    &::before {
+      background-color: var(--color-warning-border);
+    }
+  }
+
+  &.connected {
+    border-color: var(--color-jade-green-border);
+    background-color: var(--color-jade-green-background);
+    color: var(--color-jade-green) !important;
+
+    &::before {
+      background-color: var(--color-jade-green);
+    }
+  }
+}
+
+.hwStatusTooltip {
+  width: fit-content;
+  padding: 0px;
+  transform: translate(30px, -6px) !important;
+  background-color: var(--color-white);
+}

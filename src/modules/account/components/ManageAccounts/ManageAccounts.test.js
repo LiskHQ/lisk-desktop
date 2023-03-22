@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
 import routes from 'src/routes/routes';
 import ManageAccounts from './ManageAccounts';
 
@@ -14,6 +15,9 @@ jest.mock('@account/hooks', () => ({
   })),
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
 }));
+jest.mock('src/modules/hardwareWallet/hooks/useHWAccounts', () =>
+  jest.fn().mockReturnValue({ accounts: mockHWAccounts })
+);
 
 const props = {
   isRemoveAvailable: true,
@@ -88,7 +92,7 @@ describe('Account Select Form', () => {
     expect(screen.getByTestId('manage-title')).toHaveTextContent('Switch account');
   });
 
-  it('Should change title based on props', async () => {
+  it('Remove an account', async () => {
     expect(screen.getByText('Remove an account')).toBeTruthy();
     wrapper.rerender(
       <Router history={history}>

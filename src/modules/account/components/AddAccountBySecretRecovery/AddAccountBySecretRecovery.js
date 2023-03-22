@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable max-lines */
 import React, { useRef, useState } from 'react';
 import { withRouter } from 'react-router';
@@ -10,12 +11,16 @@ import { useCurrentAccount, useAccounts } from '@account/hooks';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
 
-const AddAccountBySecretRecovery = ({ history }) => {
+const AddAccountBySecretRecovery = ({ history, location: { search } }) => {
   const multiStepRef = useRef(null);
   const [recoveryPhrase, setRecoveryPhrase] = useState(null);
   const [customDerivationPath, setCustomDerivationPath] = useState();
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
   const { setAccount } = useAccounts();
+
+  const queryParams = new URLSearchParams(search);
+  const referrer = queryParams.get('referrer');
+
   const onAddAccount = (recoveryPhraseData, derivationPath) => {
     setRecoveryPhrase(recoveryPhraseData);
     setCustomDerivationPath(derivationPath);
@@ -29,21 +34,19 @@ const AddAccountBySecretRecovery = ({ history }) => {
   };
 
   const onPasswordSetComplete = () => {
-    history.push(routes.dashboard.path);
+    history.push(referrer || routes.dashboard.path);
   };
 
   return (
     <div className={`${styles.addAccount} ${grid.row}`}>
-      <MultiStep
-        navStyles={{ multiStepWrapper: styles.wrapper }}
-        ref={multiStepRef}
-      >
+      <MultiStep navStyles={{ multiStepWrapper: styles.wrapper }} ref={multiStepRef}>
         <AddAccountForm onAddAccount={onAddAccount} />
-        <SetPasswordForm recoveryPhrase={recoveryPhrase} customDerivationPath={customDerivationPath} onSubmit={onSetPassword} />
-        <SetPasswordSuccess
-          encryptedPhrase={currentAccount}
-          onClose={onPasswordSetComplete}
+        <SetPasswordForm
+          recoveryPhrase={recoveryPhrase}
+          customDerivationPath={customDerivationPath}
+          onSubmit={onSetPassword}
         />
+        <SetPasswordSuccess encryptedPhrase={currentAccount} onClose={onPasswordSetComplete} />
       </MultiStep>
     </div>
   );

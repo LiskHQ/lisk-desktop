@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useContext } from 'react';
+import { useCallback, useEffect } from 'react';
 import { client } from '@libs/wcm/utils/connectionCreator';
-import ConnectionContext from '../context/connectionContext';
 import { EVENTS } from '../constants/lifeCycle';
+import { usePairings } from './usePairings';
 
-const useWalletConnectEventsManager = () => {
-  const {
-    pushEvent, disconnect, session, setSession,
-  } = useContext(ConnectionContext);
-
+export const useConnectionEventsManager = ({
+  pushEvent, session, setSession,
+}) => {
+  const { disconnect } = usePairings();
   const onSessionRequest = useCallback(async (event) => {
     const request = client.session.get(event.topic);
 
@@ -44,5 +43,3 @@ const useWalletConnectEventsManager = () => {
     client?.on,
   ]);
 };
-
-export default useWalletConnectEventsManager;

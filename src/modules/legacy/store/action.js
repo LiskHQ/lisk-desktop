@@ -2,6 +2,7 @@ import { to } from 'await-to-js';
 import { signTransaction } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
+import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 
 export const balanceReclaimed =
   (formProps, transactionJSON, privateKey, _, txInitiatorAccount, moduleCommandSchemas) =>
@@ -10,7 +11,9 @@ export const balanceReclaimed =
     // Collect data
     //
     const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
+    const wallet = state.account?.current?.hw
+      ? state.account.current
+      : selectActiveTokenAccount(state);
 
     //
     // Create the transaction
@@ -19,9 +22,9 @@ export const balanceReclaimed =
       signTransaction({
         privateKey,
         transactionJSON,
-        wallet: activeWallet,
+        wallet,
         schema: moduleCommandSchemas[formProps.moduleCommand],
-        chainID: state.network.networks.LSK.chainID,
+        chainID: selectCurrentApplicationChainID(state),
         senderAccount: txInitiatorAccount,
       })
     );

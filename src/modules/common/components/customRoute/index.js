@@ -8,42 +8,38 @@ import routes from 'src/routes/routes';
 import Login from '@auth/components/Signin';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import { useCheckLegacyAccount } from '@legacy/hooks/queries';
+import useSettings from '@settings/hooks/useSettings';
 import ErrorBoundary from './errorBoundary';
-
-const checkNetwork = (state) =>
-  !!state.network.name &&
-  !!(state.network.networks && state.network.networks.LSK && state.network.networks.LSK.serviceUrl);
 
 // eslint-disable-next-line max-statements
 const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, history }) => {
   const token = useSelector((state) => state.token);
-  const isNetworkSet = useSelector(checkNetwork);
+  const isNetworkSet = useSelector(({ network }) => !!network.name);
   const [currentAccount] = useCurrentAccount();
   const isAuthenticated = !!currentAccount?.metadata?.address;
   const { isMigrated } = useCheckLegacyAccount(currentAccount?.metadata?.pubkey);
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   Piwik.tracking(history, token);
 
-  if (forbiddenTokens.indexOf(token.active) !== -1) {
-    return <Redirect to={`${routes.dashboard.path}`} />;
+  if (!mainChainNetwork && path !== routes.selectNetwork.path) {
+    return <Redirect to={routes.selectNetwork.path} />;
   }
 
-  if (!isAuthenticated && path === routes.manageAccounts.path && !(accounts.length > 0)) {
-    history.replace(routes.addAccountOptions.path);
+  if (forbiddenTokens.indexOf(token.active) !== -1) {
+    return <Redirect to={routes.dashboard.path} />;
+  }
+
+  if (!isAuthenticated && path === routes.manageAccounts.path && accounts.length === 0) {
+    history.replace({ pathname: routes.addAccountOptions.path, search });
+    return <div />;
   }
 
   if (isPrivate && !isAuthenticated) {
-    // @todo: Fix in #4537
-    return (
-      <Redirect
-        to={`${routes.manageAccounts.path}?referrer=${path.replace(
-          /\/(send|stake)/,
-          ''
-        )}&${search.replace(/^\?/, '')}`}
-      />
-    );
+    const searchString = `?referrer=${path}${search.replace(/^\?/, '&')}`;
+    return <Redirect to={`${routes.manageAccounts.path}${searchString}`} />;
   }
 
   // Redirect back to actual path when an account is not reclaimable

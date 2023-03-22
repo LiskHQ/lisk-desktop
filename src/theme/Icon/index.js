@@ -24,6 +24,7 @@ import balanceDark from '@setup/react/assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '@setup/react/assets/images/icons/bookmarks-empty-state.svg';
 import bookmarksIconEmptyStateDark from '@setup/react/assets/images/icons/bookmarks-empty-state-dark.svg';
 import checkboxFilled from '@setup/react/assets/images/icons/checkmark-filled.svg';
+import checkboxCircleFilled from '@setup/react/assets/images/icons/checkmark-circle-filled.svg';
 import checkmark from '@setup/react/assets/images/icons/checkmark.svg';
 import copy from '@setup/react/assets/images/icons/copy.svg';
 import copyActive from '@setup/react/assets/images/icons/copy-active.svg';
@@ -234,6 +235,7 @@ import receivedTransactionIcon from '@setup/react/assets/images/icons/received_t
 import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
 import commissionsIcon from '@setup/react/assets/images/icons/commissions.svg';
 import editActiveIcon from '@setup/react/assets/images/icons/editActive.svg';
+import hardwareWalletIcon from '@setup/react/assets/images/icons/hardware-wallet-icon.svg';
 
 export const icons = {
   academy,
@@ -256,6 +258,7 @@ export const icons = {
   calendar,
   calendarDark,
   checkboxFilled,
+  checkboxCircleFilled,
   checkmark,
   consecutiveMissedBlocks,
   consecutiveMissedBlocksDark,
@@ -468,6 +471,7 @@ export const icons = {
   arrowBlueRight,
   multisigKeys,
   multisigKeysDark,
+  hardwareWalletIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

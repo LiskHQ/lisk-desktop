@@ -7,17 +7,15 @@ import styles from './unlockBalance.css';
 
 const BalanceTable = ({
   sentStakesAmount,
-  unlockableAmount,
+  unlockedAmount,
   currentBlockHeight,
-  pendingUnlockableUnlocks,
-  token,
+  lockedPendingUnlocks,
+  token
 }) => {
   const { t } = useTranslation();
   return (
     <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-      {(sentStakesAmount !== 0 ||
-        pendingUnlockableUnlocks?.length > 0 ||
-        unlockableAmount !== 0) && (
+      {(sentStakesAmount !== 0 || lockedPendingUnlocks?.length > 0 || unlockedAmount !== 0) && (
         <li>
           <p className={styles.columnTitle}>{t('Amount')}</p>
           <p className={styles.columnTitle}>{t('Status')}</p>
@@ -34,17 +32,17 @@ const BalanceTable = ({
           </p>
         </li>
       )}
-      {pendingUnlockableUnlocks?.length > 0 && (
+      {lockedPendingUnlocks?.length > 0 && (
         <UnlockingList
-          pendingUnlockableUnlocks={pendingUnlockableUnlocks}
+          lockedPendingUnlocks={lockedPendingUnlocks}
           currentBlockHeight={currentBlockHeight}
           t={t}
         />
       )}
-      {unlockableAmount !== 0 && (
+      {unlockedAmount !== 0 && (
         <li>
           <p className="available-balance">
-            <TokenAmount val={unlockableAmount} token={token} />
+            <TokenAmount val={unlockedAmount} token={token} />
           </p>
           <p>
             <Icon name="unlock" />

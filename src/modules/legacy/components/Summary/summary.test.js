@@ -8,17 +8,16 @@ import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mockAuth } from '@auth/__fixtures__';
-import { useAuth, useGetInitializationFees } from '@auth/hooks/queries';
+import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useGetInitializationFees, useTokensBalance } from '@token/fungible/hooks/queries';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Summary from '.';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 
 jest.mock('@auth/hooks/queries/useAuth');
-jest.mock('@auth/hooks/queries/useGetInitializationFees');
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));

@@ -63,14 +63,16 @@ export const useTransactions = ({
   }, []);
 
   useEffect(() => {
-    if (getUpdate) {
+    if (getUpdate && client.socket) {
       /* istanbul ignore next */
       client.socket.on('new.transactions', transactionUpdate);
       client.socket.on('delete.transactions', transactionUpdate);
     }
     return () => {
-      client.socket.off('new.transactions', transactionUpdate);
-      client.socket.off('delete.transactions', transactionUpdate);
+      if (client.socket) {
+        client.socket.off('new.transactions', transactionUpdate);
+        client.socket.off('delete.transactions', transactionUpdate);
+      }
     };
   }, [getUpdate]);
 
@@ -81,10 +83,17 @@ export const useTransactions = ({
     // @todo invalid this transaction by specific unique query with config
   }, [queryClient, setHasUpdate]);
 
+  function getIsEnabled() {
+    const isDisabled = options?.enabled === false;
+    const isGetUpdatePassed = getUpdate ? !!(client.socket || client.http) : true;
+
+    return !isDisabled && isGetUpdatePassed;
+  }
+
   const response = useCustomInfiniteQuery({
     keys,
     config,
-    options,
+    options: { ...options, enabled: getIsEnabled() },
   });
 
   return {

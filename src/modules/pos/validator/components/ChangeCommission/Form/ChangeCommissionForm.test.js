@@ -4,6 +4,18 @@ import { ChangeCommissionForm } from './ChangeCommissionForm';
 
 jest.useRealTimers();
 
+jest.mock('@token/fungible/hooks/queries/useTokensBalance', () => ({
+  useTokensBalance: jest.fn(() => ({ data: { data: [{ chainID: '04000000', symbol: 'LSK' }] } })),
+}));
+
+jest.mock('@pos/validator/hooks/useCurrentCommissionPercentage', () => ({
+  useCurrentCommissionPercentage: jest.fn(() => ({
+    currentCommission: '90.00',
+    isLoading: false,
+    isSuccess: true,
+  })),
+}));
+
 describe('ChangeCommissionForm', () => {
   const nextStep = jest.fn();
   const props = {
@@ -11,6 +23,7 @@ describe('ChangeCommissionForm', () => {
     nextStep,
   };
   const buttonText = 'Confirm';
+
   describe('Renders correctly', () => {
     it('renders properly ChangeCommissionForm component', () => {
       const { getByText } = renderWithRouterAndQueryClient(ChangeCommissionForm, props);
@@ -23,7 +36,7 @@ describe('ChangeCommissionForm', () => {
         ChangeCommissionForm,
         props
       );
-      const value = '0.10';
+      const value = '30.00';
       const button = getByText(buttonText);
       const input = getByTestId('newCommission');
       fireEvent.change(input, { target: { value } });
@@ -43,12 +56,13 @@ describe('ChangeCommissionForm', () => {
       fireEvent.change(input, { target: { value } });
       expect(button.closest('button').disabled).toBeTruthy();
     });
-    it('passing valid parameters on submit', async () => {
+
+    it('passes valid parameters on submit', async () => {
       const { getByTestId, getByText } = renderWithRouterAndQueryClient(
         ChangeCommissionForm,
         props
       );
-      const value = '0.10';
+      const value = '30.00';
       const button = getByText(buttonText);
       const input = getByTestId('newCommission');
       fireEvent.change(input, { target: { value } });
@@ -56,16 +70,16 @@ describe('ChangeCommissionForm', () => {
       expect(nextStep).toHaveBeenCalledWith(
         expect.objectContaining({
           formProps: expect.objectContaining({
-            fields: { newCommission: '0.10' },
+            fields: { newCommission: '30.00', token: { chainID: '04000000', symbol: 'LSK' } },
             isFormValid: true,
             moduleCommand: 'pos:changeCommission',
-            params: { newCommission: 10 }
+            params: { newCommission: 3000 },
           }),
           transactionJSON: expect.objectContaining({
             command: 'changeCommission',
             module: 'pos',
-            params: { newCommission: 10 },
-          })
+            params: { newCommission: 3000 },
+          }),
         })
       );
     });

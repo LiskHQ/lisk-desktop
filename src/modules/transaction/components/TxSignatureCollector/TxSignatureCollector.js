@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TertiaryButton } from 'src/theme/buttons';
+import { TertiaryButton } from '@theme/buttons';
 import { useCommandSchema } from '@network/hooks';
-import Icon from 'src/theme/Icon';
+import Icon from '@theme/Icon';
 import { isEmpty } from 'src/utils/helpers';
-import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
+import EnterPasswordForm from '@auth/components/EnterPasswordForm';
 import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
+import HWSigning from '@hardwareWallet/components/HWSigning/HWSigning';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
@@ -28,21 +29,21 @@ const TxSignatureCollector = ({
   selectedPriority,
   confirmText,
 }) => {
-  const [sender] = useCurrentAccount();
+  const [currentAccount] = useCurrentAccount();
   const { moduleCommandSchemas } = useCommandSchema();
   const { t } = useTranslation();
 
   // here, we want to get the auth account details of the user presently wanting to sign the transaction
   const { data: account, isLoading: isGettingAuthData } = useAuth({
-    config: { params: { address: sender.metadata.address } },
+    config: { params: { address: currentAccount?.metadata.address } },
   });
 
-  // here, we want to get the auth account details of the account that initated the transaction.
+  // here, we want to get the auth account details of the account that initiated the transaction.
   const { isLoading: isGettingTxInitiatorAccount, txInitiatorAccount } = useTxInitiatorAccount({
     transactionJSON,
   });
 
-  const isTransactionAuthor = transactionJSON.senderPublicKey === sender.metadata.pubkey;
+  const isTransactionAuthor = transactionJSON.senderPublicKey === currentAccount?.metadata.pubkey;
   const isAuthorAccountMultisignature =
     [...(account?.data?.mandatoryKeys || []), ...(account?.data?.optionalKeys || [])].length > 0;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
@@ -101,7 +102,7 @@ const TxSignatureCollector = ({
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) =>
-    txVerification(privateKey, sender.metadata.pubkey);
+    txVerification(privateKey, currentAccount?.metadata.pubkey);
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {
@@ -113,46 +114,39 @@ const TxSignatureCollector = ({
       //   transactionDoubleSigned(moduleCommandSchemas);
       //   return;
       // }
-      nextStep({ formProps, transactionJSON, statusInfo, sender });
+      nextStep({ formProps, transactionJSON, statusInfo, sender: currentAccount });
       return;
     }
 
     if (transactions.txSignatureError) {
-      nextStep({ formProps, transactionJSON, statusInfo, sender });
+      nextStep({ formProps, transactionJSON, statusInfo, sender: currentAccount });
+    }
+
+    if (
+      isEmpty(transactions.signedTransaction) &&
+      !transactions.txSignatureError &&
+      !currentAccount?.encryptedPassphrase
+    ) {
+      txVerification('', currentAccount?.metadata.pubkey);
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
-  // TODO: Resolve this issue during HW implementation
+  if (currentAccount?.hw) {
+    return <HWSigning />;
+  }
 
-  // if (!deviceType) {
   return (
     <div className={styles.container}>
       <TertiaryButton className={styles.backButton} onClick={prevStep}>
         <Icon name="arrowLeftTailed" />
       </TertiaryButton>
       <EnterPasswordForm
-        title={t("Please enter your account password to sign this transaction.")}
+        title={t('Please enter your account password to sign this transaction.')}
         confirmText={confirmText}
         onEnterPasswordSuccess={onEnterPasswordSuccess}
         isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
       />
     </div>
   );
-  // }
-  /**
-   * return (
-    <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
-      <BoxContent className={styles.content}>
-        <Illustration name={deviceType} />
-        <h5>
-          {t('Please confirm the transaction on your {{deviceModel}}', {
-            deviceModel: account.hwInfo.deviceModel,
-          })}
-        </h5>
-      </BoxContent>
-    </Box>
-  );
-   */
 };
-
 export default TxSignatureCollector;

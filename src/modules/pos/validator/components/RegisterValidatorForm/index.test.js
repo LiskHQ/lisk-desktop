@@ -193,6 +193,8 @@ describe('RegisterValidatorForm', () => {
       message: '',
     };
 
+    usePosToken.mockReturnValue({ token: { ...mockAppsTokens.data[0], availableBalance: 100e8 } });
+
     it('accept a valid form', () => {
       useValidatorKey.mockReturnValueOnce([genKey, setKey]);
       useValidatorKey.mockReturnValueOnce([blsKey, setKey]);

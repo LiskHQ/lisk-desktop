@@ -30,7 +30,7 @@ jest.mock('src/utils/login', () => ({
 
 jest.mock('@transaction/api');
 
-jest.mock('@token/fungible/utils/lsk');
+jest.mock('@token/fungible/utils/helpers');
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {

@@ -1,8 +1,5 @@
 import { BLOCKCHAIN_APPS } from 'src/const/queries';
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
@@ -16,14 +13,18 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @param {string} [configuration.config.params.chainID] - application chain ID
  * @param {string} [configuration.config.params.name] - application name
  * @param {string} [configuration.config.params.search] - application search string
- * @param {string} [configuration.config.params.state] - application state
+ * @param {string} [configuration.config.params.status] - application status
  * @param {string} [configuration.config.params.isDefault] - default applications filter
  * @param {string} configuration.options - the query options
  *
  * @returns the query object
  */
 
-export const useBlockchainApplicationExplore = ({ config: customConfig = {}, options } = {}) => {
+export const useBlockchainApplicationExplore = ({
+  config: customConfig = {},
+  options,
+  client,
+} = {}) => {
   const config = {
     url: `/api/${API_VERSION}/blockchain/apps`,
     method: 'get',
@@ -35,6 +36,7 @@ export const useBlockchainApplicationExplore = ({ config: customConfig = {}, opt
   return useCustomInfiniteQuery({
     config,
     options,
+    client,
     keys: [BLOCKCHAIN_APPS],
   });
 };

@@ -5,7 +5,6 @@ import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from 'src/modules/common/components/dashboard';
 import ValidatorsMonitor from '@pos/validator/components/ValidatorsMonitorView';
 import ValidatorPerformanceModal from '@pos/validator/components/ValidatorPerformanceModal';
-import HwWalletLogin from '@auth/components/hwWalletLogin';
 import Login from '@auth/components/Signin';
 import MonitorWallets from '@account/components/Accounts';
 import MonitorNetwork from '@network/manager/networkManager';
@@ -57,13 +56,14 @@ import SessionManager from '@blockchainApplication/connection/components/Session
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
 import RequestView from '@blockchainApplication/connection/components/RequestView';
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
+import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardwareDeviceModal';
+import SelectNetwork from 'src/modules/network/components/selectNetwork';
 
 export default {
   wallet: AccountDetails,
   addAccount: Login,
   editAccount: EditAccount,
   explorer: Explorer,
-  hwWallet: HwWalletLogin,
   register: Register,
   login: Login,
   termsOfUse: TermsOfUse,
@@ -90,6 +90,7 @@ export default {
   lockedBalance: UnlockBalanceView,
   claimRewardsView: ClaimRewardsView,
   editStake: editStakeManager,
+  selectHardwareDeviceModal: SelectHardwareDeviceModal,
   stakingQueue: StakingQueue,
   deviceDisconnectDialog: DeviceDisconnect,
   reclaimBalance: ReclaimBalanceModal,
@@ -118,5 +119,6 @@ export default {
   requestView: RequestView,
   connectionSummary: ConnectionSummary,
   connectionStatus: ConnectionStatus,
-  changeCommission: ChangeCommissionDialog
+  changeCommission: ChangeCommissionDialog,
+  selectNetwork: SelectNetwork
 };

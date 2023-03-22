@@ -1,24 +1,27 @@
 const moduleCommandNameMap = {
-  transfer: 'token:transfer',
-  crossChainTransfer: 'token:crossChaintransfer',
   registerMultisignature: 'auth:registerMultisignature',
-  registerValidator: 'pos:registerValidator',
-  stake: 'pos:stake',
-  unlock: 'pos:unlock',
-  claimRewards: 'pos:claimRewards',
-  reportValidatorMisbehavior: 'pos:reportMisbehavior',
-  reclaim: 'legacy:reclaimLSK',
-  changeCommission: 'pos:changeCommission',
-  registerKeys: 'legacy:registerKeys',
+  submitMainchainCrossChainUpdate: 'interoperability:submitMainchainCrossChainUpdate',
+  initializeMessageRecovery: 'interoperability:initializeMessageRecovery',
+  recoverMessage: 'interoperability:recoverMessage',
   registerSidechain: 'interoperability:registerSidechain',
+  recoverState: 'interoperability:recoverState',
+  terminateSidechainForLiveness: 'interoperability:terminateSidechainForLiveness',
+  reclaimLSK: 'legacy:reclaimLSK',
+  registerKeys: 'legacy:registerKeys',
+  registerValidator: 'pos:registerValidator',
+  reportMisbehavior: 'pos:reportMisbehavior',
+  unlock: 'pos:unlock',
+  updateGeneratorKey: 'pos:updateGeneratorKey',
+  stake: 'pos:stake',
+  changeCommission: 'pos:changeCommission',
+  claimRewards: 'pos:claimRewards',
+  transfer: 'token:transfer',
+  transferCrossChain: 'token:transferCrossChain',
+  reportValidatorMisbehavior: 'pos:reportMisbehavior',
 };
 
 const moduleCommandMap = {
   [moduleCommandNameMap.transfer]: {
-    maxFee: 1e7,
-    icon: 'txDefault',
-  },
-  [moduleCommandNameMap.crossChainTransfer]: {
     maxFee: 1e7,
     icon: 'txDefault',
   },
@@ -38,7 +41,7 @@ const moduleCommandMap = {
     maxFee: 25e8,
     icon: 'registerValidator',
   },
-  [moduleCommandNameMap.reportValidatorMisbehavior]: {
+  [moduleCommandNameMap.reportMisbehavior]: {
     maxFee: 1e7,
     icon: 'reportValidatorMisbehavior',
   },
@@ -46,7 +49,7 @@ const moduleCommandMap = {
     maxFee: 5e8,
     icon: 'multisignatureTransaction',
   },
-  [moduleCommandNameMap.reclaim]: {
+  [moduleCommandNameMap.reclaimLSK]: {
     maxFee: 1e7,
     icon: 'txDefault',
   },

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import i18next from 'i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Link } from 'react-router-dom';
 import routes from 'src/routes/routes';
 import {
   parseSearchParams,
@@ -12,7 +11,6 @@ import { getNetworksList } from '@network/utils/getNetwork';
 import Piwik from 'src/utils/piwik';
 import { PrimaryButton } from 'src/theme/buttons';
 import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
-import Icon from 'src/theme/Icon';
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
 import CustomDerivationPath from '../CustomDerivationPath';
@@ -46,7 +44,6 @@ const Login = ({
   t, settings, network, history, account,
 }) => {
   const [passphrase, setPass] = useState({ value: '', isValid: false });
-  const canHWSignIn = true;
 
   const setPassphrase = (value, error) => {
     setPass({
@@ -116,15 +113,6 @@ const Login = ({
               >
                 {t('Sign in')}
               </PrimaryButton>
-              {canHWSignIn ? (
-                <Link
-                  className={`${styles.hwLink} signin-hwWallet-button`}
-                  to={routes.hwWallet.path}
-                >
-                  <Icon name="hwWalletIcon" className={styles.hwWalletIcon} />
-                  {t('Sign in with a hardware wallet')}
-                </Link>
-              ) : null}
             </div>
           </form>
         </div>

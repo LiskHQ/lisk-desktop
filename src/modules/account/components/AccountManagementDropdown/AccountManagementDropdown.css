@@ -22,9 +22,14 @@
   margin: 0 40px 0 12px;
 
   & > .name {
+    display: flex;
     font-weight: 500;
     font-size: 16px;
     color: var(--color-constant-white);
+
+    & > .walletIcon {
+      margin-left: 4px;
+    }
   }
 
   & > .address {

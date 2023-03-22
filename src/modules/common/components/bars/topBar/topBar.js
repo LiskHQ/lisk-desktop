@@ -11,13 +11,14 @@ import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle
 import ApplicationManagementDropDown from '@blockchainApplication/manage/components/ApplicationManagementDropDown';
 import SearchBar from 'src/modules/search/manager/searchBarManager';
 import { useCurrentAccount } from '@account/hooks';
+import { HardwareWalletStatus } from '@hardwareWallet/components/HardwareWalletStatus';
 import { isEmpty } from 'src/utils/helpers';
 import NavigationButtons from '@common/components/bars/topBar/navigationButtons';
 import styles from './topBar.css';
 import Network from './networkName';
 
 const TopBar = ({ stakeCount, location, history }) => {
-  const disabled = location.pathname === routes.reclaim.path;
+  const disabled = [routes.reclaim.path, routes.selectNetwork.path].includes(location.pathname);
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
   const { t } = useTranslation();
@@ -39,6 +40,7 @@ const TopBar = ({ stakeCount, location, history }) => {
         <SearchBar className={styles.searchBarProp} />
       </div>
       <div className={styles.group}>
+        <HardwareWalletStatus />
         <Tooltip
           className={styles.tooltipWrapper}
           size="maxContent"
@@ -59,8 +61,10 @@ const TopBar = ({ stakeCount, location, history }) => {
         <LightDarkToggle />
         <StakeQueueToggle t={t} stakeCount={stakeCount} disabled={disabled} />
         <DiscreteModeToggle />
-        <ApplicationManagementDropDown />
-        {location.pathname !== routes.register.path && <Network />}
+        {routes.selectNetwork.path !== location.pathname && <ApplicationManagementDropDown />}
+        {![routes.register.path, routes.selectNetwork.path].includes(location.pathname) && (
+          <Network />
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
-import usePairings from '@libs/wcm/hooks/usePairings';
+import { usePairings } from '@libs/wcm/hooks/usePairings';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';

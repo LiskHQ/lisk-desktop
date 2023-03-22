@@ -10,7 +10,11 @@ function useSettings(settingKey) {
     dispatch(settingsUpdated({ [settingKey]: settingValue || !value }));
   };
 
-  return { toggleSetting, [settingKey]: value };
+  const setValue = (settingValue) => {
+    dispatch(settingsUpdated({ [settingKey]: settingValue }));
+  };
+
+  return { toggleSetting, setValue, [settingKey]: value };
 }
 
 export default useSettings;

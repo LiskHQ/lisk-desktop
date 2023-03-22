@@ -179,45 +179,19 @@ export const calculateBalanceLockedInUnstakes = (unlocking = []) =>
   unlocking.reduce((acc, stake) => acc + parseInt(stake.amount, 10), 0);
 
 /**
- * Checks if given unlocking item can be unlocked
- * (Checks if the current height is greater than the unlocking height)
- *
- * @param {Number} unlockHeight - The height at which given LSK can be unlocked
- * @param {Number} currentBlockHeight - Current block height
- * @returns {Boolean} - True if the height is there
- */
-export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
-  currentBlockHeight >= unlockHeight;
-
-/**
  * returns total amount that can be unlocked
  *
  * @param {Array} pendingUnlocks - pendingUnlocks array
  * @returns {Number} - Total amount that can be unlocked
  */
-export const calculateUnlockableAmount = (pendingUnlocks = []) =>
+export const calculateUnlockedAmount = (pendingUnlocks = []) =>
   pendingUnlocks.reduce(
-    (sum, pendingUnlock) => (sum + (pendingUnlock.unlockable ? parseInt(pendingUnlock.amount, 10) : 0)),
+    (sum, pendingUnlock) => (sum + (pendingUnlock.isLocked ? 0 : parseInt(pendingUnlock.amount, 10))),
     0
   );
 
-export const getPendingUnlockableUnlocks = (pendingUnlocks = []) =>
-  pendingUnlocks?.filter((pendingUnlock)=> !pendingUnlock.unlockable);
-
-/**
- * returns the balance that can not be unlocked at the current block height
- *
- * @param {Array} unlocking - unlocking values array from the account details
- * @param {Number} currentBlockHeight - Current block height
- * @returns {Number} - The LSK value that can NOT be unlocked at the current height
- */
-export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlockHeight = 0) =>
-  unlocking.reduce(
-    (sum, stake) =>
-    (!isBlockHeightReached(stake.expectedUnlockableHeight, currentBlockHeight)
-      ? sum + parseInt(stake.amount, 10) : sum),
-    0,
-  );
+export const getLockedPendingUnlocks = (pendingUnlocks = []) =>
+  pendingUnlocks?.filter((pendingUnlock) => pendingUnlock.isLocked);
 
 const isSigned = signature => signature && signature !== Buffer.alloc(64).toString('hex');
 
@@ -259,22 +233,6 @@ export const calculateRemainingAndSignedMembers = (
   return { signed, remaining };
 };
 
-/**
- * Get keys object from account info or multisig tx asset
- * @param {object} data
- * @param {object} data.senderAccount - Account info
- * @param {object} data.transaction - Transaction details
- * @param {boolean} data.isRegisterMultisignature - tx moduleAsset check
- * @returns {object} - Keys, including number and list of mandatory and optional keys
- */
-export const getKeys = ({ senderAccount, transaction, isRegisterMultisignature }) => {
-  if (isRegisterMultisignature) {
-    return transaction.params;
-  }
-
-  return senderAccount;
-};
-
 export const validate2ndPass = async (account, passphrase, error) => {
   const messages = [];
   if (error) {
@@ -290,6 +248,22 @@ export const validate2ndPass = async (account, passphrase, error) => {
     messages.push('This passphrase does not belong to your account.');
   }
   return messages;
+};
+
+/**
+ * Get keys object from account info or multisig tx asset
+ * @param {object} data
+ * @param {object} data.senderAccount - Account info
+ * @param {object} data.transaction - Transaction details
+ * @param {boolean} data.isRegisterMultisignature - tx moduleAsset check
+ * @returns {object} - Keys, including number and list of mandatory and optional keys
+ */
+export const getKeys = ({ senderAccount, transaction, isRegisterMultisignature }) => {
+  if (isRegisterMultisignature) {
+    return transaction.params;
+  }
+
+  return senderAccount;
 };
 
 /**

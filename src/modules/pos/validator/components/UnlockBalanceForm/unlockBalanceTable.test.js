@@ -1,6 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { calculateSentStakesAmount, calculateUnlockableAmount } from '@wallet/utils/account';
+import {
+  calculateSentStakesAmount,
+  calculateUnlockedAmount,
+  getLockedPendingUnlocks,
+} from '@wallet/utils/account';
 import { mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
@@ -8,19 +12,21 @@ import BalanceTable from './BalanceTable';
 
 jest.mock('@pos/validator/hooks/usePosToken');
 
-describe('unlock transaction Status', () => {
+describe('unlockBalanceTable', () => {
   let wrapper;
 
-  const pendingUnlockableUnlocks = mockUnlocks.data.pendingUnlocks;
+  const pendingUnlocks = mockUnlocks.data.pendingUnlocks;
   const stakes = mockSentStakes.data.stakes;
   const currentBlockHeight = 5000;
   const mockToken = mockAppsTokens.data[0];
 
+  const lockedPendingUnlocks = getLockedPendingUnlocks(pendingUnlocks);
+
   const props = {
     sentStakesAmount: calculateSentStakesAmount(stakes),
-    unlockableAmount: calculateUnlockableAmount(pendingUnlockableUnlocks),
+    unlockedAmount: calculateUnlockedAmount(pendingUnlocks),
     currentBlockHeight,
-    pendingUnlockableUnlocks,
+    lockedPendingUnlocks,
     token: mockToken,
   };
 
@@ -31,16 +37,16 @@ describe('unlock transaction Status', () => {
     expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
     expect(wrapper.find('.locked-balance').text()).toEqual('280 LSK');
     expect(wrapper.find('.available-balance').text()).toEqual('4,550 LSK');
-    expect(wrapper.find('.unlocking-balance')).toHaveLength(pendingUnlockableUnlocks.length);
+    expect(wrapper.find('.unlocking-balance')).toHaveLength(lockedPendingUnlocks.length);
   });
 
-  it('should not show pendingUnlockableUnlocks if undefined', () => {
-    wrapper = mount(<BalanceTable {...props} pendingUnlockableUnlocks={undefined} />);
+  it('should not show lockedPendingUnlocks if undefined', () => {
+    wrapper = mount(<BalanceTable {...props} lockedPendingUnlocks={undefined} />);
     expect(wrapper.find('.unlocking-balance')).toHaveLength(0);
   });
 
   it('should not show available-balance if 0', () => {
-    wrapper = mount(<BalanceTable {...props} unlockableAmount={0} />);
+    wrapper = mount(<BalanceTable {...props} unlockedAmount={0} />);
     expect(wrapper.find('.available-balance')).toHaveLength(0);
   });
 
