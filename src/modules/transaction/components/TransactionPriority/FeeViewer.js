@@ -36,7 +36,6 @@ const FeesViewer = ({
   const transactionFeeList = composedFeeList.find(
     ({ title }) => title === 'Transaction'
   )?.components;
-  console.log({ transactionFeeList });
 
   const onInputFocus = (e) => {
     e.preventDefault();
@@ -102,10 +101,10 @@ const FeesViewer = ({
               <Tooltip position="top left">
                 <div className={styles.feesBreakdownRow}>
                   <p>Fee breakdown</p>
-                  {transactionFeeList.map(({ type, value: feeValueInfo }) => (
+                  {transactionFeeList.map(({ type, value: feeValueInfo }, index) => (
                     <>
-                      <span>{type.replace('Fee', '')}</span>
-                      <span>
+                      <span key={`${index}-${type}`}>{type.replace('Fee', '')}</span>
+                      <span key={`${index}-${feeValueInfo}`}>
                         {convertFromBaseDenom(feeValueInfo)} {token.symbol}
                       </span>
                     </>
