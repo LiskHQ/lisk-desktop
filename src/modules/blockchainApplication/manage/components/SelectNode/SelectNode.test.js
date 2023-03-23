@@ -8,7 +8,6 @@ import SelectNode from './SelectNode';
 import { useApplicationManagement } from '../../hooks';
 
 const mockSetCurrentApplication = jest.fn();
-// const checkPinByChainId = jest.fn();
 const mockCurrentApplication = mockBlockChainApplications[0];
 
 const mockDispatch = jest.fn();
