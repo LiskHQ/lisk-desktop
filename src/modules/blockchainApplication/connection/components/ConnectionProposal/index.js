@@ -54,7 +54,7 @@ const ConnectionProposal = ({ history }) => {
               onClick={clickHandler}
               disabled={value.length === 0 || status.isPending}
             >
-              {t('Start pairing')}
+              {t('Connect')}
             </PrimaryButton>
           </div>
         </div>

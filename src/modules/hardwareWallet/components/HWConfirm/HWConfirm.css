@@ -5,6 +5,7 @@
   padding: 40px 24px;
 
   & .headerText {
+    color: var(--color-maastricht-blue);
     margin: 40px 0 0 0;
     font-weight: var(--font-weight-very-bold);
   }
