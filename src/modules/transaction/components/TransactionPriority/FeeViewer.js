@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import Input from 'src/theme/Input/Input';
@@ -102,12 +102,12 @@ const FeesViewer = ({
                 <div className={styles.feesBreakdownRow}>
                   <p>Fee breakdown</p>
                   {transactionFeeList.map(({ type, value: feeValueInfo }, index) => (
-                    <>
-                      <span key={`${index}-${type}`}>{type.replace('Fee', '')}</span>
-                      <span key={`${index}-${feeValueInfo}`}>
+                    <Fragment key={`${index}-${type}-${feeValueInfo}`}>
+                      <span>{type.replace('Fee', '')}</span>
+                      <span>
                         {convertFromBaseDenom(feeValueInfo)} {token.symbol}
                       </span>
-                    </>
+                    </Fragment>
                   ))}
                 </div>
               </Tooltip>
