@@ -105,7 +105,7 @@ const FeesViewer = ({
                     <Fragment key={`${index}-${type}-${feeValueInfo}`}>
                       <span>{type.replace('Fee', '')}</span>
                       <span>
-                        {convertFromBaseDenom(feeValueInfo)} {token.symbol}
+                        {Number(convertFromBaseDenom(feeValueInfo)).toFixed(6)} {token.symbol}
                       </span>
                     </Fragment>
                   ))}

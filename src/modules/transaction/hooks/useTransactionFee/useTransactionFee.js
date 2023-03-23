@@ -53,7 +53,10 @@ export const useTransactionFee = ({
   const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
 
   return {
-    components,
+    components:
+      extraCommandFee > 0
+        ? [...components, { type: 'Initialization', value: extraCommandFee }]
+        : components,
     isLoading: isSchemaLoading || isLoadingByteFee,
     isFetched: isSchemaFetched && isFetchedByteFee,
     transactionFee: (BigInt(minimumFee.value) + BigInt(priorityFee.value)).toString(),
