@@ -10,14 +10,15 @@ export const useApplicationExploreAndMetaData = ({ appState = 'active' } = {}) =
     error: errorGettingActiveApps,
   } = useBlockchainApplicationExplore({ config: { params: { status: appState } } });
 
-  const activeAppsList = [currentApplication, ...activeApps].map((app) => app.chainID).join();
+  const activeAppChainIds = activeApps.map((app) => app.chainID);
+  const chainIDs = [...new Set([currentApplication.chainID, ...activeAppChainIds])].join();
 
   const {
     data: { data: applications = [] } = {},
     isLoading: isLoadingAppsMetaData,
     error: errorGettingAppsMetaData,
   } = useBlockchainApplicationMeta({
-    config: { params: { chainID: activeAppsList } },
+    config: { params: { chainID: chainIDs } },
     options: { enabled: !isLoadingActiveApps && !errorGettingActiveApps },
   });
 

@@ -37,20 +37,26 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
  * @param {Object} state
  * @param {type: String, app: Object, apps: Object, chainId: String} action
  */
-export const applications = (state = initialState.applications, { type, app, apps, chainId }) => {
+export const applications = (
+  state = initialState.applications,
+  { type, app, apps, chainId, network }
+) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
-      return { ...state, [app.chainID]: app };
+      return { ...state, [network]: { ...state[network], [app.chainID]: app } };
 
     case actionTypes.setApplications: {
       return apps.reduce(
-        (result, application) => ({ ...result, [application.chainID]: application }),
+        (result, application) => ({
+          ...result,
+          [network]: { ...result[network], [application.chainID]: application },
+        }),
         { ...state }
       );
     }
 
     case actionTypes.deleteApplicationByChainId: {
-      delete state[chainId];
+      delete state[network][chainId];
       return { ...state };
     }
 

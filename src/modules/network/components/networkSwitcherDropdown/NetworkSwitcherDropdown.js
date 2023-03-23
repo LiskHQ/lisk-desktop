@@ -1,5 +1,6 @@
+/* eslint-disable complexity */
 /* eslint-disable max-statements */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import Icon from 'src/theme/Icon';
@@ -17,8 +18,10 @@ import { useNetworkStatus } from '../../hooks/queries';
 
 function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   const { t } = useTranslation();
-  const { setValue } = useSettings('mainChainNetwork');
-  const [selectedNetwork, setSelectedNetwork] = useState(networks[DEFAULT_NETWORK]);
+  const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
+  const [selectedNetwork, setSelectedNetwork] = useState(
+    mainChainNetwork || networks[DEFAULT_NETWORK]
+  );
   const { setApplications } = useApplicationManagement();
   const [, setCurrentApplication] = useCurrentApplication();
   const queryClient = useRef(new Client({ http: selectedNetwork.serviceUrl }));
@@ -39,30 +42,37 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
 
   const defaultApplications = blockchainAppsMeta.data?.data || [];
 
-  const handleChangeNetwork = (network) => {
-    queryClient.current.create({
-      http: network.serviceUrl,
-    });
-    networkStatus.refetch();
-    setSelectedNetwork(network);
-  };
+  const handleChangeNetwork = useCallback(
+    (network) => {
+      queryClient.current.create({
+        http: network.serviceUrl,
+      });
+      networkStatus.refetch();
+      setSelectedNetwork(network);
+    },
+    [networkStatus]
+  );
 
   useEffect(() => {
     if (
-      defaultApplications.length > 0 &&
       !blockchainAppsMeta.isLoading &&
-      !blockchainAppsMeta.isError
+      !blockchainAppsMeta.isError &&
+      blockchainAppsMeta.isFetched
     ) {
       setValue(selectedNetwork);
+    }
+  }, [blockchainAppsMeta.isFetching]);
+
+  useEffect(() => {
+    if (defaultApplications.length > 0 && !networkStatus.isLoading && !networkStatus.isError) {
       const mainChain = defaultApplications.find(
         ({ chainID }) => chainID === networkStatus.data?.data?.chainID
       );
 
       if (mainChain) setCurrentApplication(mainChain);
-
       setApplications(defaultApplications);
     }
-  }, [blockchainAppsMeta.isLoading, blockchainAppsMeta.isError, blockchainAppsMeta.isFetched]);
+  }, [mainChainNetwork, networkStatus.isLoading]);
 
   useEffect(() => {
     const isSuccess =
@@ -111,7 +121,7 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
             })}
         </MenuSelect>
       </div>
-      {blockchainAppsMeta.isError && !blockchainAppsMeta.isLoading && (
+      {blockchainAppsMeta.isError && !blockchainAppsMeta.isFetching && (
         <div>
           <span>
             {t('Failed to connect to network!  ')}
