@@ -5,7 +5,6 @@ import { useValidators } from '@pos/validator/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 
 function getIsLoading(queryRes) {
-  // TODO: Function to be replaced with isInitialLoading when upgrading react-query to +v4.26
   return queryRes.isLoading && queryRes.isFetching;
 }
 
