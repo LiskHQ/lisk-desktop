@@ -5,23 +5,28 @@ import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import WalletInfo from '../WalletInfo';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
+import ValueAndLabel from './valueAndLabel';
 
-const Sender = () => {
-  const { activeToken, transaction, network } = React.useContext(TransactionDetailsContext);
+const Sender = ({ t }) => {
+  const { activeToken, transaction, network } = React.useContext(
+    TransactionDetailsContext,
+  );
   const validatorName = getValidatorName(transaction, activeToken);
   const senderLabel = getModuleCommandSenderLabel()[transaction.moduleCommand];
   const address = extractAddressFromPublicKey(transaction.senderPublicKey);
 
   return (
-    <WalletInfo
-      className={`${styles.value} ${styles.sender}`}
-      name={validatorName}
-      token={activeToken}
-      network={network}
-      address={address}
-      addressClass="sender-address"
-      label={senderLabel}
-    />
+    <ValueAndLabel label={t('Sender')} className={styles.sender}>
+        <WalletInfo
+          className={styles.value}
+          name={validatorName}
+          token={activeToken}
+          network={network}
+          address={address}
+          addressClass="sender-address"
+          label={senderLabel}
+        />
+    </ValueAndLabel>
   );
 };
 

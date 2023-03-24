@@ -11,17 +11,9 @@ import { PrimaryButton } from 'src/theme/buttons';
 import { useDeprecatedAccount } from 'src/modules/account/hooks';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { transactions } from '@liskhq/lisk-client';
+import { getParamsSchema } from '@transaction/hooks/useTransactionFee/utils';
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
-
-const getParamsSchema = (transaction, schemas) => {
-  const moduleCommand = joinModuleAndCommand({
-    module: transaction.module,
-    command: transaction.command,
-  });
-
-  return schemas[moduleCommand];
-};
 
 const getTransactionObject = (transaction, moduleCommandSchemas) => {
   const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
@@ -81,7 +73,7 @@ const Form = ({ t, nextStep }) => {
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
-            {t('Provide a signature for a transaction which belongs to a multisignature account.')}
+            {t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}
           </p>
         </header>
         <BoxContent>
