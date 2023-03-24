@@ -188,7 +188,7 @@ const SendForm = (props) => {
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                   disabled
                 >
-                  {[sendingChain, ...applications].map((application) => (
+                  {applications.map((application) => (
                     <MenuItem
                       className={styles.chainOptionWrapper}
                       value={application}
@@ -216,7 +216,7 @@ const SendForm = (props) => {
                   onChange={(value) => setRecipientChain(value)}
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                 >
-                  {[sendingChain, ...applications].map((application) => (
+                  {applications.map((application) => (
                     <MenuItem
                       className={styles.chainOptionWrapper}
                       value={application}

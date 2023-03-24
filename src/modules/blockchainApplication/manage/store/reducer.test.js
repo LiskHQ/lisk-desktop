@@ -28,55 +28,41 @@ describe('BlockchainApplication reducer', () => {
 
   describe('applications', () => {
     it('Should return list of applications with newly added application', async () => {
-      const newApplication = {
-        name: 'New app',
-        chainID: 'aq02qkbb35u4jdq2szo6ytre',
-        state: 'active',
-        apis: [{ rest: 'https://service.newapp.com', rpc: 'wss://service.newapp.com' }],
-        lastUpdated: 789456123,
-      };
+      const newApplication = mockApplicationsManage[0];
       const actionData = {
         type: actionTypes.addApplicationByChainId,
         app: newApplication,
+        network: 'devnet',
       };
-      const changedState = applications(applicationsMap, actionData);
-
-      expect(changedState).toHaveProperty(newApplication.chainID, newApplication);
+      const changedState = applications({ devnet: applicationsMap }, actionData);
+      expect(changedState).toHaveProperty('devnet', applicationsMap);
     });
 
     it('Should return list of applications without the removed one', async () => {
       const actionData = {
         type: actionTypes.deleteApplicationByChainId,
         chainId: mockApplicationsManage[1].chainID,
+        network: 'devnet',
       };
-      const changedState = applications(applicationsMap, actionData);
-
+      const changedState = applications({ devnet: applicationsMap }, actionData);
       expect(changedState).not.toHaveProperty(actionData.chainId);
     });
 
     it('Should return list of applications with the newly added applications', async () => {
-      const newApplication1 = {
-        name: 'New app',
-        chainID: '00002000',
-        state: 'active',
-        apis: [{ rest: 'https://service.newapp1.com', rpc: 'wss://service.newapp1.com' }],
-        lastUpdated: 78946123,
-      };
-      const newApplication2 = {
-        name: 'New app2',
-        chainID: '00004000',
-        state: 'active',
-        apis: [{ rest: 'https://service.newapp2.com', rpc: 'wss://service.newapp2.com' }],
-        lastUpdated: 78945123,
-      };
+      const newApplication1 = mockApplicationsManage[0];
+      const newApplication2 = mockApplicationsManage[1];
       const actionData = {
         type: actionTypes.setApplications,
         apps: [newApplication1, newApplication2],
+        network: 'devnet',
       };
-      const changedState = applications(applicationsMap, actionData);
+      const changedState = applications({ devnet: applicationsMap }, actionData);
 
-      expect(changedState).toHaveProperty(newApplication1.chainID, newApplication1);
-      expect(changedState).toHaveProperty(newApplication2.chainID, newApplication2);
+      expect(changedState).toHaveProperty('devnet', {
+        ...applicationsMap,
+        [newApplication1.chainID]: newApplication1,
+        [newApplication2.chainID]: newApplication2,
+      });
     });
   });
 
