@@ -4,6 +4,7 @@ import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
+import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 import actionTypes from './actionTypes';
 import { getTransactions, broadcast, dryRun } from '../api';
 import { joinModuleAndCommand, signMultisigTransaction } from '../utils';
@@ -214,7 +215,7 @@ export const multisigTransactionSigned =
       transactionJSON,
       txStatus,
       moduleCommandSchemas[formProps.moduleCommand],
-      state.network.networks.LSK.chainID,
+      selectCurrentApplicationChainID(state),
       privateKey,
       txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
       options

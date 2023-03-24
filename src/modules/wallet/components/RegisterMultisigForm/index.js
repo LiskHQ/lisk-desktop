@@ -14,10 +14,15 @@ import MemberField from './MemberField';
 import validators from './validators';
 import styles from './styles.css';
 
+const DEFAULT_SIGNATURE_BYTE_SIZE = 64;
 const placeholderMember = {
   publicKey: undefined,
   isMandatory: true,
 };
+
+const initializeDefaultSignatures = (mandatoryKeys, optionalKeys) =>
+  (new Array(mandatoryKeys.length + optionalKeys.length))
+    .fill(Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE).toString('hex'));
 
 const getInitialMembersState = (prevState) => {
   if (prevState.transactionJSON && prevState.transactionJSON.params) {
@@ -144,7 +149,7 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
     mandatoryKeys,
     optionalKeys,
     numberOfSignatures,
-    signatures: [],
+    signatures: initializeDefaultSignatures(mandatoryKeys, optionalKeys),
   };
 
   return (
