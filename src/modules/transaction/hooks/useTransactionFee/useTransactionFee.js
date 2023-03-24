@@ -53,7 +53,6 @@ export const useTransactionFee = ({
     type: FEE_TYPES.BYTES_FEE,
   };
   const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
-  // console.log({ extraCommandFee, transactionJSON });
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   let txComponentType = '';
   if (moduleCommand === 'token:transfer' || moduleCommand === 'token:transferCrossChain') {
