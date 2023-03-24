@@ -57,7 +57,8 @@ export const applications = (
 
     case actionTypes.deleteApplicationByChainId: {
       delete state[network][chainId];
-      return { ...state };
+      const { [chainId]: chainToRemove, ...restApplications } = state[network];
+      return { ...state, [network]: { ...restApplications } };
     }
 
     default:
