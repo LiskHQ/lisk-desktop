@@ -19,10 +19,9 @@ const isCustomFeeValid = (value, maxFee, minFee, token) => {
 };
 
 const displayFeeInfo = (feeInfo) => {
-  console.log({ res: convertFromBaseDenom(10000000) });
   const fullFee = convertFromBaseDenom(feeInfo);
-  if (fullFee.slice(-1) === 0) {
-    return Number(fullFee);
+  if (fullFee.slice(-1) === '0') {
+    return Number(fullFee).toFixed(0);
   }
   return Number(fullFee).toFixed(6);
 };
