@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import Input from 'src/theme/Input/Input';
@@ -17,6 +17,15 @@ const isCustomFeeValid = (value, maxFee, minFee, token) => {
 
   return rawValue >= convertToBaseDenom(minFee, token);
 };
+
+const FeesBreakdownDetails = ({ type, feeValueInfo, token }) => (
+  <>
+    <span>{type.replace('Fee', '')}</span>
+    <span>
+      {Number(convertFromBaseDenom(feeValueInfo)).toFixed(6)} {token.symbol}
+    </span>
+  </>
+);
 
 // eslint-disable-next-line max-statements
 const FeesViewer = ({
@@ -102,12 +111,12 @@ const FeesViewer = ({
                 <div className={styles.feesBreakdownRow}>
                   <p>Fee breakdown</p>
                   {transactionFeeList.map(({ type, value: feeValueInfo }, index) => (
-                    <Fragment key={`${index}-${type}-${feeValueInfo}`}>
-                      <span>{type.replace('Fee', '')}</span>
-                      <span>
-                        {Number(convertFromBaseDenom(feeValueInfo)).toFixed(6)} {token.symbol}
-                      </span>
-                    </Fragment>
+                    <FeesBreakdownDetails
+                      key={`${index}-${type}-${feeValueInfo}`}
+                      type={type}
+                      feeValueInfo={feeValueInfo}
+                      token={token}
+                    />
                   ))}
                 </div>
               </Tooltip>
