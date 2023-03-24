@@ -101,6 +101,7 @@ describe('useSearch hook', () => {
 
   it('should return loading state', async () => {
     const resultState = (loading) => ({
+      isFetching: loading,
       isLoading: loading,
       isFetched: !loading,
     });

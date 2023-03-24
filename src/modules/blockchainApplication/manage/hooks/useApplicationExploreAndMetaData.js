@@ -1,21 +1,24 @@
 import { useBlockchainApplicationExplore } from '../../explore/hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from './queries/useBlockchainApplicationMeta';
+import { useCurrentApplication } from './useCurrentApplication';
 
 export const useApplicationExploreAndMetaData = ({ appState = 'active' } = {}) => {
+  const [currentApplication] = useCurrentApplication();
   const {
     data: { data: activeApps = [] } = {},
     isLoading: isLoadingActiveApps,
     error: errorGettingActiveApps,
   } = useBlockchainApplicationExplore({ config: { params: { status: appState } } });
 
-  const activeAppsList = activeApps.map((app) => app.chainID).join();
+  const activeAppChainIds = activeApps.map((app) => app.chainID);
+  const chainIDs = [...new Set([currentApplication.chainID, ...activeAppChainIds])].join();
 
   const {
     data: { data: applications = [] } = {},
     isLoading: isLoadingAppsMetaData,
     error: errorGettingAppsMetaData,
   } = useBlockchainApplicationMeta({
-    config: { params: { chainID: activeAppsList } },
+    config: { params: { chainID: chainIDs } },
     options: { enabled: !isLoadingActiveApps && !errorGettingActiveApps },
   });
 
