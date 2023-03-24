@@ -154,6 +154,10 @@
           font-size: 14px;
           color: var(--color-slate-gray);
           text-transform: capitalize;
+
+          &:nth-of-type(even) {
+            text-align: right;
+          }
         }
       }
     }

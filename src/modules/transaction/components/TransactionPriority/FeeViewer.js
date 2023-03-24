@@ -18,11 +18,20 @@ const isCustomFeeValid = (value, maxFee, minFee, token) => {
   return rawValue >= convertToBaseDenom(minFee, token);
 };
 
+const displayFeeInfo = (feeInfo) => {
+  console.log({ res: convertFromBaseDenom(10000000) });
+  const fullFee = convertFromBaseDenom(feeInfo);
+  if (fullFee.slice(-1) === 0) {
+    return Number(fullFee);
+  }
+  return Number(fullFee).toFixed(6);
+};
+
 const FeesBreakdownDetails = ({ type, feeValueInfo, token }) => (
   <>
     <span>{type.replace('Fee', '')}</span>
     <span>
-      {Number(convertFromBaseDenom(feeValueInfo)).toFixed(6)} {token.symbol}
+      {displayFeeInfo(feeValueInfo)} {token.symbol}
     </span>
   </>
 );
