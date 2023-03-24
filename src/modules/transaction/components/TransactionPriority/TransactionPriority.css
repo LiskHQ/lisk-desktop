@@ -85,7 +85,7 @@
         display: inline-block;
 
         & div > div {
-          width: 18vw; /* stylelint-disable-line */
+          width: 16vw; /* stylelint-disable-line */
 
           & .feeInfoWrapper {
             &:first-of-type {
@@ -103,7 +103,7 @@
           }
 
           @media (--large-viewport) {
-            width: 25vw; /* stylelint-disable-line */
+            width: 22vw; /* stylelint-disable-line */
           }
         }
       }
@@ -150,6 +150,7 @@
         }
 
         & span {
+          width: 50%;
           font-size: 14px;
           color: var(--color-slate-gray);
           text-transform: capitalize;
