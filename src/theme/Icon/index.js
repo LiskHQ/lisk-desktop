@@ -50,7 +50,6 @@ import iconEmptyRecentTransactionsDark from '@setup/react/assets/images/icons/em
 import iconFilter from '@setup/react/assets/images/icons/icon-filter.svg';
 import iconLedgerDevice from '@setup/react/assets/images/icons/icon-ledger-device.svg';
 import iconLoader from '@setup/react/assets/images/icons/icon-loader.svg';
-import iconTrezorDevice from '@setup/react/assets/images/icons/icon-trezor-device.svg';
 import iconWarning from '@setup/react/assets/images/icons/icon-warning.svg';
 import incoming from '@setup/react/assets/images/icons/incoming.svg';
 import liskChat from '@setup/react/assets/images/icons/lisk-chat.svg';
@@ -288,7 +287,6 @@ export const icons = {
   iconFilter,
   iconLedgerDevice,
   iconLoader,
-  iconTrezorDevice,
   iconWarning,
   incoming,
   liskChat,
