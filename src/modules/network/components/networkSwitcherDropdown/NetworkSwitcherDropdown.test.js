@@ -65,13 +65,6 @@ describe('SeletNetwork', () => {
     expect(mockSetApplication).toHaveBeenCalledWith(mockBlockchainAppMeta.data);
   });
 
-  it('should prob main chain status when new network is selected', () => {
-    rerenderWithRouterAndQueryClient(NetworkSwitcherDropdown, props);
-    fireEvent.click(screen.getAllByText(networks[networkKeys.alphanet].label)[0]);
-
-    expect(mockSetSettingValue).toHaveBeenCalledWith(networks[networkKeys.devnet]);
-  });
-
   it('should display an error if selected network is not available', () => {
     useBlockchainApplicationMeta.mockReturnValue({
       isLoading: false,

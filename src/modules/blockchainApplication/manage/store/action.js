@@ -15,9 +15,10 @@ export const toggleApplicationPin = (chainId) => ({
  *
  * @returns {Object} - Action object
  */
-export const addApplication = (app) => ({
+export const addApplication = (app, network) => ({
   type: actionTypes.addApplicationByChainId,
   app,
+  network,
 });
 
 /**
@@ -25,9 +26,10 @@ export const addApplication = (app) => ({
  *
  * @returns {Object} - Action object
  */
-export const setApplications = (apps) => ({
+export const setApplications = (apps, network) => ({
   type: actionTypes.setApplications,
   apps,
+  network,
 });
 
 /**
@@ -35,9 +37,10 @@ export const setApplications = (apps) => ({
  *
  * @returns {Object} - Action object
  */
-export const deleteApplication = (chainId) => ({
+export const deleteApplication = (chainId, network) => ({
   type: actionTypes.deleteApplicationByChainId,
   chainId,
+  network,
 });
 
 /**
