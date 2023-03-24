@@ -113,7 +113,7 @@ const SearchBar = ({ className, history }) => {
     ? t('A bit more. Make sure to type at least 3 characters.')
     : null;
   feedback = isEmptyResults
-    ? t('Nothing has been found. Make sure to double check the ID you typed.')
+    ? t('Nothing has been found for your search')
     : feedback;
 
   return (
