@@ -4,6 +4,7 @@ import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { getParamsSchema } from './utils';
 import usePriorityFee from '../usePriorityFee';
 import { FEE_TYPES } from '../../constants';
+import { joinModuleAndCommand } from '../../utils';
 import { useMinimumFee } from '.';
 
 /**
@@ -15,6 +16,7 @@ import { useMinimumFee } from '.';
  * @returns {object} The fee object with a total value, and a component value as an array of fees
  * that contribute in the total value
  */
+// eslint-disable-next-line max-statements
 export const useTransactionFee = ({
   isFormValid,
   transactionJSON,
@@ -51,11 +53,19 @@ export const useTransactionFee = ({
     type: FEE_TYPES.BYTES_FEE,
   };
   const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
+  // console.log({ extraCommandFee, transactionJSON });
+  const moduleCommand = joinModuleAndCommand(transactionJSON);
+  let txComponentType = '';
+  if (moduleCommand === 'token:transfer' || moduleCommand === 'token:transferCrossChain') {
+    txComponentType = 'Account Initialization';
+  } else {
+    txComponentType = 'Registration';
+  }
 
   return {
     components:
       extraCommandFee > 0
-        ? [...components, { type: 'Initialization', value: extraCommandFee }]
+        ? [...components, { type: txComponentType, value: BigInt(extraCommandFee) }]
         : components,
     isLoading: isSchemaLoading || isLoadingByteFee,
     isFetched: isSchemaFetched && isFetchedByteFee,
