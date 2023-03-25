@@ -4,6 +4,10 @@ import { useTransactions } from '@transaction/hooks/queries';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 
+function getIsLoading(queryRes) {
+  return queryRes.isLoading && queryRes.isFetching;
+}
+
 // eslint-disable-next-line complexity,max-statements
 export const useSearch = (search = '') => {
   const isAddress = validateAddress(search) === 0;
@@ -32,10 +36,16 @@ export const useSearch = (search = '') => {
   });
 
   const isLoading =
-    validators.isLoading || transactions.isLoading || addresses.isLoading || blocks.isLoading;
+    getIsLoading(validators) ||
+    getIsLoading(transactions) ||
+    getIsLoading(addresses) ||
+    getIsLoading(blocks);
 
   const isFetched =
-  (isValidator  && validators.isFetched) || (isTxId  && transactions.isFetched) || (isAddress  && addresses.isFetched) || (isBlockHeight  && blocks.isFetched);
+    (isValidator && validators.isFetched) ||
+    (isTxId && transactions.isFetched) ||
+    (isAddress && addresses.isFetched) ||
+    (isBlockHeight && blocks.isFetched);
 
   return {
     addresses: addresses.data?.data ?? [],

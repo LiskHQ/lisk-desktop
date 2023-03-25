@@ -1,6 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import mockApplications, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import useSettings from 'src/modules/settings/hooks/useSettings';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import actionTypes from '../store/actionTypes';
 import { useApplicationManagement } from './useApplicationManagement';
@@ -13,9 +14,10 @@ jest.mock('./queries/useBlockchainApplicationMeta', () => ({
 }));
 
 const mockDispatch = jest.fn();
+const mockToggleSetting = jest.fn();
 const mockState = {
   blockChainApplications: {
-    applications: applicationsMap,
+    applications: { devnet: applicationsMap },
     pins: [],
   },
 };
@@ -27,6 +29,7 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 jest.mock('./useCurrentApplication');
+jest.mock('@settings/hooks/useSettings');
 
 describe('useApplicationManagement hook', () => {
   beforeEach(() => {
@@ -34,6 +37,10 @@ describe('useApplicationManagement hook', () => {
   });
 
   useCurrentApplication.mockImplementation(() => [mockCurrentApplication, mockSetApplication]);
+  useSettings.mockReturnValue({
+    mainChainNetwork: { name: 'devnet' },
+    toggleSetting: mockToggleSetting,
+  });
 
   const { result } = renderHook(() => useApplicationManagement(), { wrapper });
 
@@ -42,6 +49,7 @@ describe('useApplicationManagement hook', () => {
     const expectedAction = {
       type: actionTypes.addApplicationByChainId,
       app: mockApplications[3],
+      network: 'devnet',
     };
     act(() => {
       setApplication(mockApplications[3]);
@@ -55,6 +63,7 @@ describe('useApplicationManagement hook', () => {
     const expectedAction = {
       type: actionTypes.setApplications,
       apps: mockApplications,
+      network: 'devnet',
     };
     act(() => {
       setApplications(mockApplications);
@@ -87,6 +96,7 @@ describe('useApplicationManagement hook', () => {
     const expectedAction = {
       type: actionTypes.deleteApplicationByChainId,
       chainId: mockApplications[4].chainID,
+      network: 'devnet',
     };
     act(() => {
       deleteApplicationByChainId(mockApplications[4].chainID);
@@ -100,6 +110,7 @@ describe('useApplicationManagement hook', () => {
     const expectedAction = {
       type: actionTypes.deleteApplicationByChainId,
       chainId: mockCurrentApplication.chainID,
+      network: 'devnet',
     };
     act(() => {
       deleteApplicationByChainId(mockCurrentApplication.chainID);

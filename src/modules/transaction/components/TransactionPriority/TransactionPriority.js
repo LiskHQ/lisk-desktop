@@ -8,11 +8,8 @@ import FeesViewer from './FeeViewer';
 const CUSTOM_FEE_INDEX = 3;
 
 const getRelevantPriorityOptions = (options) =>
-  options.filter((_, index) =>
-    index !== CUSTOM_FEE_INDEX
-  || (index === CUSTOM_FEE_INDEX));
+  options.filter((_, index) => index !== CUSTOM_FEE_INDEX || index === CUSTOM_FEE_INDEX);
 
-// eslint-disable-next-line max-statements
 const TransactionPriority = ({
   t,
   token,
@@ -45,11 +42,15 @@ const TransactionPriority = ({
     }
   };
 
-  const tokenRelevantPriorities = useMemo(() =>
-    getRelevantPriorityOptions(priorityOptions),
-  [priorityOptions, token]);
+  const tokenRelevantPriorities = useMemo(
+    () => getRelevantPriorityOptions(priorityOptions),
+    [priorityOptions, token]
+  );
 
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
+  const displayedFees = composedFees
+    .filter((fee) => !fee?.isHidden)
+    .reduce((acc, curr) => ({ ...acc, [curr.title]: true }), {});
 
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} ${className} transaction-priority`}>
@@ -58,9 +59,9 @@ const TransactionPriority = ({
           {t('Priority')}
           <Tooltip position="right">
             <p className={styles.tooltipText}>
-              {
-                t('When the network is busy, transactions with a higher priority are confirmed sooner.')
-              }
+              {t(
+                'When the network is busy, transactions with a higher priority are confirmed sooner.'
+              )}
             </p>
           </Tooltip>
         </span>
@@ -80,7 +81,9 @@ const TransactionPriority = ({
             return (
               <button
                 key={`fee-priority-${index}`}
-                className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''} option-${priority.title}`}
+                className={`${styles.priorityTitle} ${
+                  index === selectedPriority ? styles.priorityTitleSelected : ''
+                } option-${priority.title}`}
                 onClick={onClickPriority}
                 value={index}
                 disabled={disabled}
@@ -95,21 +98,44 @@ const TransactionPriority = ({
         <span className={`${styles.fieldLabel}`}>
           {t('Fees')}
           {
-            tokenRelevantPriorities.some(item => item.value !== 0) ? (
-              <Tooltip position="left">
-                <p className={styles.tooltipText}>
-                  {
-                    t(`
+            <Tooltip position="right">
+              <>
+                {displayedFees.Transaction && (
+                  <div className={styles.feeInfoWrapper}>
+                    <span className={styles.feesHeader}>Transaction fee: </span>
+                    <span className={styles.feesDetails}>
+                      Is a sum of byte based fee, extra command fee and selected network priority
+                    </span>
+                  </div>
+                )}
+                {displayedFees.Message && (
+                  <div className={styles.feeInfoWrapper}>
+                    <span className={styles.feesHeader}>Message fee: </span>
+                    <span className={styles.feesDetails}>
+                      Cross chain messages are the objects containing the cross-chain commands, in
+                      the same way in which transactions contain commands. They have a fee property
+                      also called message fee to distinguish from transaction fees.
+                    </span>
+                  </div>
+                )}
+              </>
+            </Tooltip>
+          }
+          {tokenRelevantPriorities.some((item) => item.value !== 0) ? (
+            <Tooltip position="left">
+              <p className={styles.tooltipText}>
+                {t(
+                  `
                       You can choose a high, medium, or low transaction priority, each requiring a
                       corresponding transaction fee. Or you can pay any desired fee of no less than
                       {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose
                       one of the provided transaction priorities.
-                    `, { minFee, tokenSymbol: token.symbol })
-                  }
-                </p>
-              </Tooltip>
-            ) : null
-          }
+                    `,
+                  { minFee, tokenSymbol: token.symbol }
+                )}
+              </p>
+            </Tooltip>
+          ) : null}
         </span>
         <FeesViewer
           isLoading={isLoading}
@@ -128,7 +154,7 @@ const TransactionPriority = ({
 };
 
 TransactionPriority.defaultProps = {
-  t: k => k,
+  t: (k) => k,
   priorityOptions: [],
 };
 

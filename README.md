@@ -185,21 +185,10 @@ Run e2e tests
 npm run cypress:run
 ```
 
-### React Storybook
-
-To launch storybook sandbox with components run
-```
-npm run storybook
-```
-and navigate to
-
-http://localhost:6006/
-
 ## Directory Layout
 
 ```
 ├── __mocks__/                     # Modules used to mock dependencies for testing purpose.
-├── .storybook/                    # React storybooks reside here.
 ├── app/                           # Electron based application that launces the react app.
 ├── build/                         # Build specific materials.
 ├── config/                        # Automation scripts (Webpack configurations, i18n scanner, etc)

@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useSettings from '@settings/hooks/useSettings';
 import { addApplication, deleteApplication, setApplications as setApps } from '../store/action';
 import { selectApplications } from '../store/selectors';
 import { useCurrentApplication } from './useCurrentApplication';
@@ -11,9 +12,11 @@ export function useApplicationManagement() {
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { applications: defaultApplications } = useApplicationExploreAndMetaData();
+  const { mainChainNetwork = {} } = useSettings('mainChainNetwork');
 
   const { checkPinByChainId, pins } = usePinBlockchainApplication();
-  const applicationsObject = useSelector(selectApplications);
+  const applicationsObject = useSelector(selectApplications)[mainChainNetwork.name] || {};
+
   const applications = useMemo(() => {
     const appsList = Object.values(applicationsObject);
     return appsList
@@ -26,11 +29,11 @@ export function useApplicationManagement() {
 
   const setApplication = useCallback((application) => {
     if (application.isDefault) return;
-    dispatch(addApplication(application));
+    dispatch(addApplication(application, mainChainNetwork.name));
   }, []);
 
   const setApplications = (apps) => {
-    dispatch(setApps(apps));
+    dispatch(setApps(apps, mainChainNetwork.name));
   };
 
   const getApplicationByChainId = useCallback(
@@ -41,7 +44,7 @@ export function useApplicationManagement() {
   const deleteApplicationByChainId = useCallback((chainId) => {
     if (currentApplication.isDefault) return;
 
-    dispatch(deleteApplication(chainId));
+    dispatch(deleteApplication(chainId, mainChainNetwork.name));
     if (currentApplication.chainID === chainId) {
       // Set Lisk as default if application in use is being deleted
       setCurrentApplication(defaultApplications[0]);

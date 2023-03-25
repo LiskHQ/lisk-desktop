@@ -37,7 +37,7 @@ const TxComposer = ({
     },
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
-  const { symbol: tokenSymbol } = formProps.fields.token || {};
+  const { symbol: tokenSymbol = '' } = formProps.fields.token || {};
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority,
