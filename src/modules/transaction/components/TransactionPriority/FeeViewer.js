@@ -4,6 +4,7 @@ import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/
 import Input from 'src/theme/Input/Input';
 import Icon from 'src/theme/Icon';
 import Spinner from 'src/theme/Spinner';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './TransactionPriority.css';
 
 const isCustomFeeValid = (value, maxFee, minFee, token) => {
@@ -16,6 +17,23 @@ const isCustomFeeValid = (value, maxFee, minFee, token) => {
 
   return rawValue >= convertToBaseDenom(minFee, token);
 };
+
+const displayFeeInfo = (feeInfo) => {
+  const fullFee = convertFromBaseDenom(feeInfo);
+  if (fullFee.slice(-1) === '0') {
+    return Number(fullFee).toFixed(0);
+  }
+  return Number(fullFee).toFixed(6);
+};
+
+const FeesBreakdownDetails = ({ type, feeValueInfo, token }) => (
+  <>
+    <span>{type.replace('Fee', '')}</span>
+    <span>
+      {displayFeeInfo(feeValueInfo)} {token.symbol}
+    </span>
+  </>
+);
 
 // eslint-disable-next-line max-statements
 const FeesViewer = ({
@@ -32,6 +50,9 @@ const FeesViewer = ({
   const { t } = useTranslation();
   const [showEditIcon, setShowEditIcon] = useState(false);
   const composedFeeList = fees.filter(({ isHidden }) => !isHidden);
+  const transactionFeeList = composedFeeList.find(
+    ({ title }) => title === 'Transaction'
+  )?.components;
 
   const onInputFocus = (e) => {
     e.preventDefault();
@@ -93,10 +114,26 @@ const FeesViewer = ({
           <span className={`${styles.value} fee-value-${title}`} onClick={onClickCustomEdit}>
             {value}
             {isCustom && showEditIcon && title === 'Transaction' && <Icon name="edit" />}
+            {title === 'Transaction' && (
+              <Tooltip position="top left">
+                <div className={styles.feesBreakdownRow}>
+                  <p>Fee breakdown</p>
+                  {transactionFeeList.map(({ type, value: feeValueInfo }, index) => (
+                    <FeesBreakdownDetails
+                      key={`${index}-${type}-${feeValueInfo}`}
+                      type={type}
+                      feeValueInfo={feeValueInfo}
+                      token={token}
+                    />
+                  ))}
+                </div>
+              </Tooltip>
+            )}
           </span>
         </div>
       ))}
     </div>
   );
 };
+
 export default FeesViewer;

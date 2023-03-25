@@ -12,6 +12,10 @@ exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
                 "type": "bytesFee",
                 "value": 328000n,
               },
+              Object {
+                "type": "Registration",
+                "value": 1000000000n,
+              },
             ],
             "title": "Transaction",
             "value": "10.00328 LSK",
@@ -30,6 +34,10 @@ exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
                 Object {
                   "type": "bytesFee",
                   "value": 328000n,
+                },
+                Object {
+                  "type": "Registration",
+                  "value": 1000000000n,
                 },
               ],
               "title": "Transaction",

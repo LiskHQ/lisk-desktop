@@ -83,6 +83,29 @@
 
       & .fieldLabel {
         display: inline-block;
+
+        & div > div {
+          width: 16vw; /* stylelint-disable-line */
+
+          & .feeInfoWrapper {
+            &:first-of-type {
+              margin-bottom: 20px;
+            }
+
+            & .feesHeader {
+              font-weight: var(--font-weight-semi-bold);
+              color: var(--color-zodiac-blue);
+            }
+
+            & .feesDetails {
+              color: var(--color-slate-gray);
+            }
+          }
+
+          @media (--large-viewport) {
+            width: 22vw; /* stylelint-disable-line */
+          }
+        }
       }
 
       & .value {
@@ -111,6 +134,33 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    & div > div {
+      width: 18vw; /* stylelint-disable-line */
+
+      & .feesBreakdownRow {
+        display: flex;
+        flex-flow: wrap;
+        row-gap: 8px;
+        justify-content: space-between;
+
+        & p {
+          color: var(--color-ultramarine-blue);
+          width: 100%;
+        }
+
+        & span {
+          width: 50%;
+          font-size: 14px;
+          color: var(--color-slate-gray);
+          text-transform: capitalize;
+
+          &:nth-of-type(even) {
+            text-align: right;
+          }
+        }
+      }
+    }
   }
 
   & > .feeRow span:first-child {
