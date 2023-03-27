@@ -40,9 +40,8 @@ class PaperWallet {
   }
 
   renderHeader() {
-    const { t } = this.props;
+    const { t, now } = this.props;
     const textOptions = this.textOptions;
-    const now = new Date();
     const date = [
       `0${now.getDate()}`.substr(-2),
       `0${now.getMonth() + 1}`.substr(-2),
@@ -157,6 +156,7 @@ class PaperWallet {
 const renderPaperWallet = (JSPDF, data, walletName) => {
   const pdf = new PaperWallet(JSPDF, data);
   pdf.save(walletName);
+  return pdf.doc;
 };
 
 export default renderPaperWallet;

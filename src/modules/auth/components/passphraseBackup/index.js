@@ -26,6 +26,7 @@ class PassphraseBackup extends React.Component {
         const JSPDF = module.default;
         const data = {
           ...this.props,
+          now: new Date(),
           qrcode: this.canvasRef.firstChild.toDataURL(),
         };
         renderPaperWallet(JSPDF, data, this.walletName);
