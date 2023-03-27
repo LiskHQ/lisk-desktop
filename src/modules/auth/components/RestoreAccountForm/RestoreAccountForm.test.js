@@ -28,7 +28,7 @@ describe('Restore account form component', () => {
   });
 
   it('should call onSubmit when onContinue is clicked', () => {
-    const JSONObject = { encryptedPassphrase: { ciphertext: 'text' } };
+    const JSONObject = { crypto: { ciphertext: 'text' } };
     const clipboardData = {
       getData: () => JSON.stringify(JSONObject),
     };
@@ -58,7 +58,7 @@ describe('Restore account form component', () => {
       this.readAsText = jest.fn();
     });
     const inputField = wrapper.find('UploadJSONInput').find('[role="button"]');
-    const invalidJson = '{"encryptedPassphrase": {"notCipher": "something"}}';
+    const invalidJson = '{"crypto": {"notCipher": "something"}}';
     const file = new File([invalidJson], 'file.json', { type: 'test/json' });
 
     act(() => {

@@ -23,7 +23,7 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
   };
 
   const handleJsonInputChange = (json) => {
-    if (json?.encryptedPassphrase?.ciphertext) {
+    if (json?.crypto?.ciphertext) {
       setValue(json);
       setError(undefined);
     } else {
