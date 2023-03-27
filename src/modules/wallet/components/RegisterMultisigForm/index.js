@@ -21,8 +21,9 @@ const placeholderMember = {
 };
 
 const initializeDefaultSignatures = (mandatoryKeys, optionalKeys) =>
-  (new Array(mandatoryKeys.length + optionalKeys.length))
-    .fill(Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE).toString('hex'));
+  new Array(mandatoryKeys.length + optionalKeys.length).fill(
+    Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE).toString('hex')
+  );
 
 const getInitialMembersState = (prevState) => {
   if (prevState.transactionJSON && prevState.transactionJSON.params) {

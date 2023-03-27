@@ -16,15 +16,7 @@ import { ActionBar, Feedback } from './footer';
 import styles from './styles.css';
 import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 
-const Summary = ({
-  t,
-  transactionJSON,
-  formProps,
-  account,
-  nextStep,
-  history,
-  network,
-}) => {
+const Summary = ({ t, transactionJSON, formProps, account, nextStep, history, network }) => {
   const [currentAccount] = useCurrentAccount();
   const { token } = usePosToken();
 
@@ -68,7 +60,9 @@ const Summary = ({
       <header>
         <h1>{t('Sign multisignature transaction')}</h1>
         <p>
-          {t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}
+          {t(
+            'If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.'
+          )}
         </p>
       </header>
       <BoxContent>

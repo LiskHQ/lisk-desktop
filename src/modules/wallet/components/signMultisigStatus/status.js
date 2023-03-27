@@ -50,7 +50,9 @@ const Status = ({ transactions, t, transactionJSON }) => {
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
-            {t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}
+            {t(
+              'If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.'
+            )}
           </p>
         </header>
         <BoxContent>

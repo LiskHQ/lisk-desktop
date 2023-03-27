@@ -72,7 +72,7 @@ const Multisignature = ({
   moduleCommandSchemas,
 }) => {
   const [copied, setCopied] = useState(false);
-  const moduleCommand = joinModuleAndCommand(transactions.signedTransaction)
+  const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
   const onCopy = () => {
     const schema = moduleCommandSchemas[moduleCommand];
     const jsonParams = codec.codec.toJSON(schema, transactions.signedTransaction.params);
@@ -88,9 +88,16 @@ const Multisignature = ({
 
   const onDownload = () => {
     const transaction = JSON.parse(transactionToJSON(transactions.signedTransaction));
-    const filePrefix = moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature ? 'register-multisignature-request' : 'sign-multisignature-request';
-    const fileSuffix = transaction?.id !== "" ? transaction?.id :
-      `-${cryptography.address.getLisk32AddressFromPublicKey(transactions.signedTransaction.senderPublicKey)}`;
+    const filePrefix =
+      moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
+        ? 'register-multisignature-request'
+        : 'sign-multisignature-request';
+    const fileSuffix =
+      transaction?.id !== ''
+        ? transaction?.id
+        : `-${cryptography.address.getLisk32AddressFromPublicKey(
+            transactions.signedTransaction.senderPublicKey
+          )}`;
     downloadJSON(transaction, `${filePrefix}-${fileSuffix}`);
   };
 
@@ -123,7 +130,7 @@ const Multisignature = ({
           <ErrorActions message={message} network={network} status={status} t={t} />
         ) : null}
         {status.code !== txStatusTypes.broadcastSuccess &&
-          status.code !== txStatusTypes.broadcastError ? (
+        status.code !== txStatusTypes.broadcastError ? (
           <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
             <span className={styles.buttonContent}>
               <Icon name={copied ? 'checkmark' : 'copy'} />
