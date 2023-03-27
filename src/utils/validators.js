@@ -2,7 +2,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 import { regex as reg } from 'src/const/regex';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { convertToBaseDenom } from '@token/fungible/utils/helpers';
+import { convertToBaseDenom, getTokenDecimals } from '@token/fungible/utils/helpers';
 import i18n from 'src/utils/i18n/i18n';
 
 /**
@@ -87,7 +87,7 @@ export const validateAmountFormat = ({
       },
     },
     MAX_ACCURACY: {
-      message: i18n.t('Maximum floating point is 8.'),
+      message: i18n.t(`Maximum allowed decimal point is ${getTokenDecimals(token)}.`),
       fn: () => maxFloating(token).test(value),
     },
     STAKE_10X: {
