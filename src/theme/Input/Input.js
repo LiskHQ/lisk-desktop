@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useCallback, useMemo, useState } from 'react';
 import Feedback from 'src/theme/feedback/feedback';
@@ -47,7 +48,6 @@ function PasswordTypeToggler({ onClick, isPasswordVisible, hasNotification }) {
   );
 }
 
-// eslint-disable-next-line complexity
 const Input = forwardRef(
   (
     {

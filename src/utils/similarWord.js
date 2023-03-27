@@ -60,8 +60,8 @@ const matchPartOfString = (word, begin, end) => word.startsWith(begin) || word.e
  * @param {string} invalidWord
  * @returns {string} Similar word
  */
+// eslint-disable-next-line max-statements
 export const findSimilarWord = (invalidWord) => {
-  // eslint-disable-line max-statements
   let similarWorld;
   let prevDistance = 100;
   const n = Math.floor((invalidWord.length - 1) / 2);
