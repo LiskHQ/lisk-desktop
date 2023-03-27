@@ -69,7 +69,9 @@ export const decodeTransaction = (encodedTransaction, paramsSchema) => {
 export const encodeTransaction = (transaction, paramsSchema) => {
   let encodedParams;
   if (!Buffer.isBuffer(transaction.params)) {
-    encodedParams = paramsSchema ? codec.codec.encode(paramsSchema, transaction.params) : Buffer.alloc(0);
+    encodedParams = paramsSchema
+      ? codec.codec.encode(paramsSchema, transaction.params)
+      : Buffer.alloc(0);
   } else {
     encodedParams = transaction.params;
   }

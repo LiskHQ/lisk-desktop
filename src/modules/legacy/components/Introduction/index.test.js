@@ -14,7 +14,7 @@ describe('Reclaim balance Introduction screen', () => {
     expect(window.open).toHaveBeenCalledWith(
       'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration',
       '_blank',
-      'rel=noopener noreferrer',
+      'rel=noopener noreferrer'
     );
   });
 

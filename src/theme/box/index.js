@@ -3,28 +3,27 @@ import React from 'react';
 import ProgressBar from 'src/theme/ProgressBar/progressBar';
 import styles from './box.css';
 
-const Box = ({
-  main, width, className, children, isLoading,
-}) => {
-  const hasHeader = Array.isArray(children) && children.some(child => (
-    child && (child.type === 'header' || child.type.displayName === 'BoxHeader')
-  ));
+const Box = ({ main, width, className, children, isLoading }) => {
+  const hasHeader =
+    Array.isArray(children) &&
+    children.some(
+      (child) => child && (child.type === 'header' || child.type.displayName === 'BoxHeader')
+    );
   return (
-    <div className={`
+    <div
+      className={`
       ${styles.wrapper}
       ${hasHeader ? styles.withHeader : ''}
       ${main ? styles.main : ''}
       ${styles[width]}
       ${className}`}
     >
-      {isLoading
-        ? (
-          <div className={styles.loadingOverlay}>
-            <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
-          </div>
-        )
-        : null}
-      { children }
+      {isLoading ? (
+        <div className={styles.loadingOverlay}>
+          <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
+        </div>
+      ) : null}
+      {children}
     </div>
   );
 };

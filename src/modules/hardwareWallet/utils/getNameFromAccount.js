@@ -7,5 +7,4 @@ export const getNameFromAccount = (address, settings, model) => {
   } catch (e) {
     return null;
   }
-
 };

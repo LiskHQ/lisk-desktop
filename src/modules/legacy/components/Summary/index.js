@@ -6,7 +6,7 @@ import { withTranslation } from 'react-i18next';
 import { balanceReclaimed } from '@legacy/store/action';
 import Summary from './Summary';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   wallet: selectActiveTokenAccount(state),
 });
 
@@ -14,7 +14,4 @@ const dispatchToProps = {
   balanceReclaimed,
 };
 
-export default compose(
-  connect(mapStateToProps, dispatchToProps),
-  withTranslation(),
-)(Summary);
+export default compose(connect(mapStateToProps, dispatchToProps), withTranslation())(Summary);

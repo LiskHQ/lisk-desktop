@@ -21,10 +21,7 @@ usePinBlockchainApplication.mockReturnValue({
   pins: mockedPins,
   checkPinByChainId: jest.fn().mockReturnValue(true),
 });
-useCurrentApplication.mockReturnValue([
-  mockManagedApplications[1],
-  mockSetApplication,
-]);
+useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
 
 describe('ApplicationManangementRow', () => {
   let wrapper;
@@ -69,11 +66,9 @@ describe('ApplicationManangementRow', () => {
     });
 
     wrapper.rerender(
-      <MemoryRouter
-        initialEntries={[]}
-      >
+      <MemoryRouter initialEntries={[]}>
         <ApplicationManagementRow {...props} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
   });
@@ -86,18 +81,18 @@ describe('ApplicationManangementRow', () => {
   it('should navigate to remove application flow', () => {
     props.application.isDefault = false;
     wrapper.rerender(
-      <MemoryRouter
-        initialEntries={[]}
-      >
+      <MemoryRouter initialEntries={[]}>
         <ApplicationManagementRow {...props} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     const deleteButton = screen.getByAltText('remove').closest('button');
     expect(deleteButton).not.toHaveAttribute('disabled');
 
     fireEvent.click(deleteButton);
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: `removeApplicationFlow&chainId=${props.application.chainID}` });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, {
+      modal: `removeApplicationFlow&chainId=${props.application.chainID}`,
+    });
   });
 
   it('should toggle applciation as current application for a non terminated application', () => {
@@ -112,11 +107,9 @@ describe('ApplicationManangementRow', () => {
   it('should not toggle terminated application as a current application', () => {
     props.application.state = 'terminated';
     wrapper.rerender(
-      <MemoryRouter
-        initialEntries={[]}
-      >
+      <MemoryRouter initialEntries={[]}>
         <ApplicationManagementRow {...props} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     fireEvent.click(screen.getByText(props.application.chainName));
@@ -138,14 +131,16 @@ describe('ApplicationManangementRow', () => {
     wrapper.rerender(
       <MemoryRouter initialEntries={[]}>
         <ApplicationManagementRow {...props} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     const deleteButton = screen.getByAltText('remove').closest('button');
     expect(deleteButton).not.toHaveAttribute('disabled');
 
     fireEvent.click(deleteButton);
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: `removeApplicationFlow&chainId=${props.application.chainID}` });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, {
+      modal: `removeApplicationFlow&chainId=${props.application.chainID}`,
+    });
   });
 
   it('should render the check mark for current application', () => {
@@ -153,11 +148,9 @@ describe('ApplicationManangementRow', () => {
     props.application.isDefault = false;
 
     wrapper.rerender(
-      <MemoryRouter
-        initialEntries={[]}
-      >
+      <MemoryRouter initialEntries={[]}>
         <ApplicationManagementRow {...props} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     expect(screen.getByAltText('okIcon')).toBeTruthy();
   });

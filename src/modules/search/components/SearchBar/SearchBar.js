@@ -9,7 +9,7 @@ import Wallet from '@wallet/components/searchBarWallets';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import Validators from 'src/modules/wallet/components/searchBarWallets/validators';
 import Blocks from '@block/components/BlockResultList';
-import IconSearch from "@search/components/IconSearch/IconSearch";
+import IconSearch from '@search/components/IconSearch/IconSearch';
 import Transactions from '../../../transaction/components/TransactionResultList';
 import styles from './SearchBar.css';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -112,9 +112,7 @@ const SearchBar = ({ className, history }) => {
   let feedback = isSearchTextError
     ? t('A bit more. Make sure to type at least 3 characters.')
     : null;
-  feedback = isEmptyResults
-    ? t('Nothing has been found for your search')
-    : feedback;
+  feedback = isEmptyResults ? t('Nothing has been found for your search') : feedback;
 
   return (
     <div className={className}>

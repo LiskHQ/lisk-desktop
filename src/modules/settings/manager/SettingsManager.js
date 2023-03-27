@@ -5,7 +5,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { settingsUpdated } from 'src/redux/actions';
 import SettingDialog from '../components/SettingDialog';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   settings: state.settings,
   transactions: state.transactions,
   account: selectActiveTokenAccount(state),
@@ -15,7 +15,4 @@ const mapDispatchToProps = {
   settingsUpdated,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(SettingDialog));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SettingDialog));

@@ -18,12 +18,14 @@ const ConnectionProvider = ({ children }) => {
   };
 
   const removeEvent = (event) => {
-    const newEvents = events.filter(e => e.name !== event.name);
+    const newEvents = events.filter((e) => e.name !== event.name);
     setEvents(newEvents);
   };
 
   useConnectionEventsManager({
-    pushEvent, session, setSession,
+    pushEvent,
+    session,
+    setSession,
   });
 
   const value = {
@@ -40,11 +42,7 @@ const ConnectionProvider = ({ children }) => {
     createSignClient();
   }, []);
 
-  return (
-    <ConnectionContext.Provider value={value}>
-      {children}
-    </ConnectionContext.Provider>
-  );
+  return <ConnectionContext.Provider value={value}>{children}</ConnectionContext.Provider>;
 };
 
 export default ConnectionProvider;

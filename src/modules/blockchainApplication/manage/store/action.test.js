@@ -34,14 +34,14 @@ describe('actions:  blockchainApplication', () => {
 
     expect(addApplication(sampleBlockchainApplication)).toEqual(expectedAction);
   });
-  
+
   it('should create an action to add blockchain applications', () => {
     const expectedAction = {
       type: actionTypes.setApplications,
-      apps: mockApplications.slice(0,2),
+      apps: mockApplications.slice(0, 2),
     };
 
-    expect(setApplications(mockApplications.slice(0,2))).toEqual(expectedAction);
+    expect(setApplications(mockApplications.slice(0, 2))).toEqual(expectedAction);
   });
 
   it('should create an action to delete blockchain application', () => {

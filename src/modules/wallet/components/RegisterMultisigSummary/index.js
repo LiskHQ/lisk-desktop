@@ -7,7 +7,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 
 import Summary from './Summary';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
   transactions: state.transactions,
 });
@@ -16,7 +16,4 @@ const mapDispatchToProps = {
   multisigTransactionSigned,
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withTranslation(),
-)(Summary);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withTranslation())(Summary);

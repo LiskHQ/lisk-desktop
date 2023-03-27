@@ -36,7 +36,8 @@ const getInitialMembersState = (prevState) => {
 
   return [];
 };
-const getInitialSignaturesState = (prevState) => prevState.transactionJSON?.params?.numberOfSignatures ?? 2;
+const getInitialSignaturesState = (prevState) =>
+  prevState.transactionJSON?.params?.numberOfSignatures ?? 2;
 
 export const validateState = ({ mandatoryKeys, optionalKeys, numberOfSignatures, t }) => {
   const messages = validators

@@ -13,15 +13,18 @@ const setSecondPassphrase = () => {
   const [secondPass, set2ndPass] = useState(empty2ndPass);
   const account = useSelector(selectActiveTokenAccount);
 
-  const setter = useCallback((data, error) => {
-    validate2ndPass(account, data, error).then(feedback => {
-      set2ndPass({
-        data,
-        error: data === '' ? -1 : feedback.length,
-        feedback,
+  const setter = useCallback(
+    (data, error) => {
+      validate2ndPass(account, data, error).then((feedback) => {
+        set2ndPass({
+          data,
+          error: data === '' ? -1 : feedback.length,
+          feedback,
+        });
       });
-    });
-  }, [set2ndPass]);
+    },
+    [set2ndPass]
+  );
 
   return [secondPass, setter];
 };

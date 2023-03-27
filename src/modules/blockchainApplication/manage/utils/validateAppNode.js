@@ -6,12 +6,8 @@ export const validateAppNode = async (serviceUrl) => {
     if (response) {
       return true;
     }
-    throw new Error(
-      `Failed to return response for application url: ${serviceUrl}`,
-    );
+    throw new Error(`Failed to return response for application url: ${serviceUrl}`);
   } catch (err) {
-    throw new Error(
-      `Error getting details for application url: ${serviceUrl}`,
-    );
+    throw new Error(`Error getting details for application url: ${serviceUrl}`);
   }
 };

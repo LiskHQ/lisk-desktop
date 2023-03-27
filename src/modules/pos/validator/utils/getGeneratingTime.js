@@ -1,6 +1,6 @@
 const getGeneratingTime = (time) => {
   if (!time) return '-';
-  const diff = time - Math.floor((new Date()).getTime() / 1000);
+  const diff = time - Math.floor(new Date().getTime() / 1000);
   if (Math.abs(diff) < 9) return 'now';
   const absTime = Math.abs(diff);
   const minutes = absTime / 60 >= 1 ? `${Math.floor(absTime / 60)}m ` : '';

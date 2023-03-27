@@ -1,11 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import {
-  PrimaryButton,
-  SecondaryButton,
-  TertiaryButton,
-} from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import Tooltip from 'src/theme/Tooltip';
 import { selectAccountBalance, selectLSKAddress } from 'src/redux/selectors';
@@ -14,16 +10,8 @@ import EmptyBalanceTooltipWrapper from './EmptyBalanceTooltipWrapper';
 import styles from './BalanceInfo.css';
 
 // eslint-disable-next-line complexity
-const ActionBar = ({
-  username,
-  address,
-  t,
-  isWalletRoute,
-  activeToken,
-  isBanned,
-  pomStart,
-}) => {
-  const hostBalance = useSelector(selectAccountBalance) // @todo account has multiple balance now;
+const ActionBar = ({ username, address, t, isWalletRoute, activeToken, isBanned, pomStart }) => {
+  const hostBalance = useSelector(selectAccountBalance); // @todo account has multiple balance now;
   const disableButtons = hostBalance === 0;
   const stake = useSelector((state) => state.staking[address]);
   const lskAddress = useSelector(selectLSKAddress);
@@ -48,35 +36,26 @@ const ActionBar = ({
               <Tooltip
                 position="bottom"
                 size="maxContent"
-                content={(
+                content={
                   <SecondaryButton
-                    className={`${styles.stakeButton} ${
-                      isBanned && styles.disabled
-                    } ${!isBanned && 'open-add-stake-dialog'}`}
+                    className={`${styles.stakeButton} ${isBanned && styles.disabled} ${
+                      !isBanned && 'open-add-stake-dialog'
+                    }`}
                     size="m"
                   >
                     {stakeButtonTitle}
                   </SecondaryButton>
-                )}
+                }
               >
                 <p>
-                  {isBanned
-                    ? t('You cannot stake for this validator')
-                    : t('Stake for validator')}
+                  {isBanned ? t('You cannot stake for this validator') : t('Stake for validator')}
                 </p>
               </Tooltip>
             </DialogLink>
           )}
           {!username && lskAddress === address && (
-            <DialogLink
-              className={styles.registerValidator}
-              component="registerValidator"
-            >
-              <TertiaryButton
-                className="register-validator"
-                size="m"
-                disabled={disableButtons}
-              >
+            <DialogLink className={styles.registerValidator} component="registerValidator">
+              <TertiaryButton className="register-validator" size="m" disabled={disableButtons}>
                 {t('Register validator')}
               </TertiaryButton>
             </DialogLink>

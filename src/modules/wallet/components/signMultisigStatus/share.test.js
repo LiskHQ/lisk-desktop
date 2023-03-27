@@ -31,7 +31,7 @@ describe('Sign Multisignature Tx Status component', () => {
         optionalKeys: accounts.multiSig.keys.optionalKeys,
         mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,
         numberOfSignatures: accounts.multiSig.keys.numberOfSignatures,
-        signatures: []
+        signatures: [],
       },
     },
   };
@@ -47,7 +47,7 @@ describe('Sign Multisignature Tx Status component', () => {
       optionalKeys: accounts.multiSig.keys.optionalKeys,
       mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,
       numberOfSignatures: accounts.multiSig.keys.numberOfSignatures,
-      signatures: []
+      signatures: [],
     },
   };
 

@@ -5,10 +5,10 @@ import { withTranslation } from 'react-i18next';
 import { removeDuplicateTransactions } from '@transaction/utils';
 import Dashboard from './dashboard';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   transactions: removeDuplicateTransactions(
     state.transactions.pending,
-    state.transactions.confirmed,
+    state.transactions.confirmed
   ),
   pendingTransactions: state.transactions.pending,
   loading: state.loading.length > 0,

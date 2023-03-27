@@ -96,9 +96,7 @@ export const Counterpart = () => {
 
   // Show tx icon
   if (moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && host) {
-    return (
-      <TransactionTypeFigure moduleCommand={moduleCommand} address={address} />
-    );
+    return <TransactionTypeFigure moduleCommand={moduleCommand} address={address} />;
   }
   // Show recipient
   if (data.params.recipientAddress !== host) {
@@ -208,7 +206,10 @@ export const Status = ({ t }) => {
 
 const generateStakes = (params, validators, token, t) => {
   const stakeElements = params.stakes.slice(0, 1).map((stake) => (
-    <span className={`${styles.container} stake-item-address`} key={`stake-${stake.validatorAddress}`}>
+    <span
+      className={`${styles.container} stake-item-address`}
+      key={`stake-${stake.validatorAddress}`}
+    >
       <Link to={`${routes.wallet.path}?address=${stake.validatorAddress}`}>
         <span className={styles.primaryText}>
           {validators[stake.validatorAddress]?.name ?? truncateAddress(stake.validatorAddress)}

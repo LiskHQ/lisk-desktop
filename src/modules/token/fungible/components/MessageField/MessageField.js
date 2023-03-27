@@ -74,25 +74,25 @@ function MessageField({
         />
       </span>
       <div>
-          <Feedback message={messageErrorFeedback[feedBackType]} status="error" />
-          <span
-            data-testid="feedback"
-            className={`${styles.feedback} ${styles.show} ${
-              maxMessageLength - byteCount < 10 ? styles.error : ''
-            }`}
-          >
-            {feedback}
-            {!!feedback && (
-              <Tooltip position="right" title={t('Bytes counter')}>
-                <p className={styles.tooltipText}>
-                  {t(`Lisk counts your message in bytes, so keep in mind
+        <Feedback message={messageErrorFeedback[feedBackType]} status="error" />
+        <span
+          data-testid="feedback"
+          className={`${styles.feedback} ${styles.show} ${
+            maxMessageLength - byteCount < 10 ? styles.error : ''
+          }`}
+        >
+          {feedback}
+          {!!feedback && (
+            <Tooltip position="right" title={t('Bytes counter')}>
+              <p className={styles.tooltipText}>
+                {t(`Lisk counts your message in bytes, so keep in mind
                 that the length of your message may vary in different languages.
                 Different characters may consume a varying amount of bytes.`)}
-                </p>
-              </Tooltip>
-            )}
-          </span>
-        </div>
+              </p>
+            </Tooltip>
+          )}
+        </span>
+      </div>
     </div>
   );
 }

@@ -149,9 +149,13 @@ describe('StakeForm', () => {
   });
 
   it('Shows an error if trying to stake with amounts leading to insufficient balance', async () => {
-    props.account.token.balance = `${parseInt(accounts.genesis.token.balance, 10) + MIN_ACCOUNT_BALANCE * 0.8
+    props.account.token.balance = `${
+      parseInt(accounts.genesis.token.balance, 10) + MIN_ACCOUNT_BALANCE * 0.8
     }`;
-    const wrapper = mountWithRouterAndQueryClient(StakeForm, { ...props, stakes: minimumBalanceStakes });
+    const wrapper = mountWithRouterAndQueryClient(StakeForm, {
+      ...props,
+      stakes: minimumBalanceStakes,
+    });
     await flushPromises();
     act(() => {
       wrapper.update();

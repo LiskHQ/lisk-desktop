@@ -37,9 +37,9 @@ export class BookmarksList extends React.Component {
     return bookmarks[token.active]
       .filter(
         ({ title, address }) =>
-          filter === ''
-          || title.toLowerCase().indexOf(filter.toLowerCase()) !== -1
-          || address.toLowerCase().indexOf(filter.toLowerCase()) !== -1,
+          filter === '' ||
+          title.toLowerCase().indexOf(filter.toLowerCase()) !== -1 ||
+          address.toLowerCase().indexOf(filter.toLowerCase()) !== -1
       )
       .slice(0, limit);
   }
@@ -88,8 +88,7 @@ export class BookmarksList extends React.Component {
   onTitleChange({ target }) {
     this.setState({
       editedTitle: target.value,
-      feedback:
-        target.value.length > 20 ? this.props.t('Label is too long.') : '',
+      feedback: target.value.length > 20 ? this.props.t('Label is too long.') : '',
     });
   }
 
@@ -112,9 +111,7 @@ export class BookmarksList extends React.Component {
       limit,
       onAddBookmark,
     } = this.props;
-    const {
-      filter, editedAddress, editedTitle, feedback,
-    } = this.state;
+    const { filter, editedAddress, editedTitle, feedback } = this.state;
 
     const selectedBookmarks = this.getBookmarkListBasedOnSelectedToken();
 
@@ -139,19 +136,13 @@ export class BookmarksList extends React.Component {
           <BoxHeader>
             <h2 className={styles.heading}>{t('Bookmarks')}</h2>
             {isEditable && selectedBookmarks.length ? (
-              <PrimaryButton
-                className={styles.addButton}
-                onClick={onAddBookmark}
-                size="s"
-              >
+              <PrimaryButton className={styles.addButton} onClick={onAddBookmark} size="s">
                 <Icon name="plus" className={styles.plusIcon} />
                 {t('Add new')}
               </PrimaryButton>
             ) : null}
           </BoxHeader>
-          <BoxContent
-            className={`${styles.bookmarkList} bookmark-list-container`}
-          >
+          <BoxContent className={`${styles.bookmarkList} bookmark-list-container`}>
             {selectedBookmarks.length ? (
               // eslint-disable-next-line complexity
               selectedBookmarks.map((bookmark) => (
@@ -160,16 +151,11 @@ export class BookmarksList extends React.Component {
                   key={bookmark.address}
                   className={`${styles.row} ${
                     editedAddress === bookmark.address ? styles.editing : ''
-                  } ${
-                    bookmark.disabled ? styles.disabled : ''
-                  } bookmark-list-row`}
+                  } ${bookmark.disabled ? styles.disabled : ''} bookmark-list-row`}
                   to={`${routes.explorer.path}?address=${bookmark.address}`}
                 >
                   <div className={styles.avatarAndDescriptionWrapper}>
-                    <WalletVisual
-                      className={styles.avatar}
-                      address={bookmark.address}
-                    />
+                    <WalletVisual className={styles.avatar} address={bookmark.address} />
                     {editedAddress === bookmark.address ? (
                       <Input
                         autoComplete="off"
@@ -189,9 +175,7 @@ export class BookmarksList extends React.Component {
                     ) : (
                       <span className={styles.description}>
                         <span>{bookmark.title}</span>
-                        <span>
-                          {bookmark.address}
-                        </span>
+                        <span>{bookmark.address}</span>
                       </span>
                     )}
                   </div>
@@ -224,9 +208,7 @@ export class BookmarksList extends React.Component {
                                 bookmark.isValidator ? styles.hide : ''
                               }`}
                               size="m"
-                              disabled={
-                                bookmark.isValidator || bookmark.disabled
-                              }
+                              disabled={bookmark.isValidator || bookmark.disabled}
                             >
                               <Icon name="edit" />
                             </TertiaryButton>

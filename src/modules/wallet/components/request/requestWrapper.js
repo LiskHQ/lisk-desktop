@@ -5,14 +5,7 @@ import { PrimaryButton } from '@theme/buttons';
 import Dialog from '@theme/dialog/dialog';
 import styles from './request.css';
 
-const RequestWrapper = ({
-  t,
-  children,
-  copyLabel,
-  copyValue,
-  title,
-  className,
-}) => (
+const RequestWrapper = ({ t, children, copyLabel, copyValue, title, className }) => (
   <Dialog hasClose className={styles.dialogWrapper}>
     <div className={`${styles.container}`}>
       <h5>{title}</h5>
@@ -31,9 +24,7 @@ const RequestWrapper = ({
       </section>
       <section className={`${styles.qrSection} qrcode-section`}>
         <span className={`${styles.label}`}>
-          {t(
-            'Simply scan the QR code using the Lisk Mobile app or any other QR code reader.',
-          )}
+          {t('Simply scan the QR code using the Lisk Mobile app or any other QR code reader.')}
         </span>
         <div className={`${styles.qrCodeContainer}`}>
           <QRCode value={copyValue} size={176} />

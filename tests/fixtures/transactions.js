@@ -6,7 +6,8 @@ const getState = () => ({
         summary: {
           address: 'lskwnxvy7wmgbt8y3mh7fcs4u4cwj7f48eh58kga9',
           publicKey: '205688492bc52ddabfdc10fa7728b8bcb5942ad17c68ab5c20e96153fd1ac657',
-          privateKey: 'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          privateKey:
+            'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
         },
         sequence: { nonce: 0 },
       },
@@ -22,173 +23,151 @@ const getState = () => ({
         networkIdentifier: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
         moduleCommandSchemas: {
           'token:transfer': {
-            $id: "/lisk/transferParams",
-            title: "Transfer transaction params",
-            type: "object",
-            required: [
-              "tokenID",
-              "amount",
-              "recipientAddress",
-              "data"
-            ],
+            $id: '/lisk/transferParams',
+            title: 'Transfer transaction params',
+            type: 'object',
+            required: ['tokenID', 'amount', 'recipientAddress', 'data'],
             properties: {
               tokenID: {
-                dataType: "bytes",
+                dataType: 'bytes',
                 fieldNumber: 1,
                 minLength: 8,
-                maxLength: 8
+                maxLength: 8,
               },
               amount: {
-                dataType: "uint64",
-                fieldNumber: 2
+                dataType: 'uint64',
+                fieldNumber: 2,
               },
               recipientAddress: {
-                dataType: "bytes",
+                dataType: 'bytes',
                 fieldNumber: 3,
-                format: "lisk32"
+                format: 'lisk32',
               },
               data: {
-                dataType: "string",
+                dataType: 'string',
                 fieldNumber: 4,
                 minLength: 0,
-                maxLength: 64
-              }
-            }
+                maxLength: 64,
+              },
+            },
           },
           'auth:registerMultisignature': {
-            $id: "/auth/command/regMultisig",
-            type: "object",
+            $id: '/auth/command/regMultisig',
+            type: 'object',
             properties: {
               numberOfSignatures: {
-                dataType: "uint32",
+                dataType: 'uint32',
                 fieldNumber: 1,
                 minimum: 1,
-                maximum: 64
+                maximum: 64,
               },
               mandatoryKeys: {
-                type: "array",
+                type: 'array',
                 items: {
-                  dataType: "bytes",
+                  dataType: 'bytes',
                   minLength: 32,
-                  maxLength: 32
+                  maxLength: 32,
                 },
                 fieldNumber: 2,
                 minItems: 0,
-                maxItems: 64
+                maxItems: 64,
               },
               optionalKeys: {
-                type: "array",
+                type: 'array',
                 items: {
-                  dataType: "bytes",
+                  dataType: 'bytes',
                   minLength: 32,
-                  maxLength: 32
+                  maxLength: 32,
                 },
                 fieldNumber: 3,
                 minItems: 0,
-                maxItems: 64
+                maxItems: 64,
               },
               signatures: {
-                type: "array",
+                type: 'array',
                 items: {
-                  dataType: "bytes",
+                  dataType: 'bytes',
                   minLength: 64,
-                  maxLength: 64
+                  maxLength: 64,
                 },
-                fieldNumber: 4
-              }
+                fieldNumber: 4,
+              },
             },
-            required: [
-              "numberOfSignatures",
-              "mandatoryKeys",
-              "optionalKeys",
-              "signatures"
-            ]
+            required: ['numberOfSignatures', 'mandatoryKeys', 'optionalKeys', 'signatures'],
           },
           'pos:registerValidator': {
-            $id: "/pos/command/registerValidatorParams",
-            type: "object",
-            required: [
-              "name",
-              "generatorKey",
-              "blsKey",
-              "proofOfPossession"
-            ],
+            $id: '/pos/command/registerValidatorParams',
+            type: 'object',
+            required: ['name', 'generatorKey', 'blsKey', 'proofOfPossession'],
             properties: {
               name: {
-                dataType: "string",
+                dataType: 'string',
                 fieldNumber: 1,
                 minLength: 1,
-                maxLength: 20
+                maxLength: 20,
               },
               generatorKey: {
-                dataType: "bytes",
+                dataType: 'bytes',
                 fieldNumber: 2,
                 minLength: 32,
-                maxLength: 32
+                maxLength: 32,
               },
               blsKey: {
-                dataType: "bytes",
+                dataType: 'bytes',
                 fieldNumber: 3,
                 minLength: 48,
-                maxLength: 48
+                maxLength: 48,
               },
               proofOfPossession: {
-                dataType: "bytes",
+                dataType: 'bytes',
                 fieldNumber: 4,
                 minLength: 96,
-                maxLength: 96
-              }
-            }
+                maxLength: 96,
+              },
+            },
           },
           'pos:stakeValidator': {
-            $id: "/pos/command/stakeValidatorParams",
-            type: "object",
-            required: [
-              "stakes"
-            ],
+            $id: '/pos/command/stakeValidatorParams',
+            type: 'object',
+            required: ['stakes'],
             properties: {
               stakes: {
-                type: "array",
+                type: 'array',
                 fieldNumber: 1,
                 minItems: 1,
                 maxItems: 20,
                 items: {
-                  type: "object",
-                  required: [
-                    "validatorAddress",
-                    "amount"
-                  ],
+                  type: 'object',
+                  required: ['validatorAddress', 'amount'],
                   properties: {
                     validatorAddress: {
-                      dataType: "bytes",
+                      dataType: 'bytes',
                       fieldNumber: 1,
-                      format: "lisk32"
+                      format: 'lisk32',
                     },
                     amount: {
-                      dataType: "sint64",
-                      fieldNumber: 2
-                    }
-                  }
-                }
-              }
-            }
+                      dataType: 'sint64',
+                      fieldNumber: 2,
+                    },
+                  },
+                },
+              },
+            },
           },
           'pos:unlock': {
-            $id: "lisk/pos/unlock",
+            $id: 'lisk/pos/unlock',
           },
           'legacy:reclaim': {
-            $id: "lisk/legacy/reclaim",
-            type: "object",
-            required: [
-              "amount"
-            ],
+            $id: 'lisk/legacy/reclaim',
+            type: 'object',
+            required: ['amount'],
             properties: {
               amount: {
-                dataType: "uint64",
-                fieldNumber: 1
-              }
-            }
-          }
+                dataType: 'uint64',
+                fieldNumber: 1,
+              },
+            },
+          },
         },
       },
     },

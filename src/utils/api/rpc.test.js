@@ -19,10 +19,12 @@ describe('rpc', () => {
   });
 
   it('rpc should rejected on disconnected', () => {
-    expect(rpc({
-      event: 'get.data',
-      params: {},
-    })).rejects.toThrow('socket not connected');
+    expect(
+      rpc({
+        event: 'get.data',
+        params: {},
+      })
+    ).rejects.toThrow('socket not connected');
   });
 
   it.skip('rpc call should return data', () => {
@@ -30,10 +32,12 @@ describe('rpc', () => {
     client.socket.emit.mockImplementation((evtName, params, callback) => {
       callback(res);
     });
-    expect(rpc({
-      event: 'get.data',
-      params: {},
-    })).resolves.toBe(res);
+    expect(
+      rpc({
+        event: 'get.data',
+        params: {},
+      })
+    ).resolves.toBe(res);
   });
 
   it.skip('rpc call should return error', () => {
@@ -41,9 +45,11 @@ describe('rpc', () => {
     client.socket.emit.mockImplementation((evtName, params, callback) => {
       callback(res);
     });
-    expect(rpc({
-      event: 'get.data',
-      params: {},
-    })).rejects.toBe(res);
+    expect(
+      rpc({
+        event: 'get.data',
+        params: {},
+      })
+    ).rejects.toBe(res);
   });
 });

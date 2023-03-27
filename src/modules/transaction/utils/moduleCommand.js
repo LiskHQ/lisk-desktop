@@ -1,6 +1,6 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 
-const getModuleCommandSenderLabel = (t = str => str) => ({
+const getModuleCommandSenderLabel = (t = (str) => str) => ({
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Registrant'),
   [MODULE_COMMANDS_NAME_MAP.submitMainchainCrossChainUpdate]: t('Certificate'),
   [MODULE_COMMANDS_NAME_MAP.initializeMessageRecovery]: t('Message'),
@@ -21,7 +21,7 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.transferCrossChain]: t('Sender'),
 });
 
-const getModuleCommandTitle = (t = str => str) => ({
+const getModuleCommandTitle = (t = (str) => str) => ({
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Register multisignature'),
   [MODULE_COMMANDS_NAME_MAP.submitMainchainCrossChainUpdate]: t('Cross chain update'),
   [MODULE_COMMANDS_NAME_MAP.initializeMessageRecovery]: t('Message recovery'),

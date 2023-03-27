@@ -37,7 +37,7 @@ const config = {
                 }),
                 require('postcss-functions')({
                   functions: {
-                    rem: px => `${(px / 10)}rem`,
+                    rem: (px) => `${px / 10}rem`,
                   },
                 }),
                 require('postcss-for')({}),
@@ -64,10 +64,7 @@ const config = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: [
-            ['@babel/preset-env', { modules: false }],
-            '@babel/preset-react',
-          ],
+          presets: [['@babel/preset-env', { modules: false }], '@babel/preset-react'],
           plugins: [
             'syntax-trailing-function-commas',
             'import-glob',

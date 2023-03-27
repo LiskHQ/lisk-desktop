@@ -11,7 +11,7 @@ jest.spyOn(React, 'useContext').mockImplementation(() => ({
 }));
 jest.mock('@libs/wcm/hooks/usePairings');
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 jest.mock('src/utils/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),

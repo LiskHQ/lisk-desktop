@@ -13,14 +13,12 @@ jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 
 describe('RequestView', () => {
   it('should render properly getting data from URL', () => {
-    const wrapper = shallow(
-      <RequestView history={{}} />
-    );
+    const wrapper = shallow(<RequestView history={{}} />);
 
     expect(wrapper).toContainMatchingElement(Dialog);
     expect(wrapper).toContainMatchingElement(MultiStep);

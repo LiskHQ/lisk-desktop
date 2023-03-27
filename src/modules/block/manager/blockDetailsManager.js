@@ -9,9 +9,6 @@ const mapStateToProps = (state, ownProps) => ({
   id: selectSearchParamValue(ownProps.history.location.search, 'id'),
   height: selectSearchParamValue(ownProps.history.location.search, 'height'),
 });
-const ComposedBlockDetails = compose(
-  withRouter,
-  connect(mapStateToProps),
-)(BlockDetails);
+const ComposedBlockDetails = compose(withRouter, connect(mapStateToProps))(BlockDetails);
 
 export default ComposedBlockDetails;

@@ -8,7 +8,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import useIpc from './useIpc';
 
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   createSignClient: jest.fn(() => Promise.resolve()),

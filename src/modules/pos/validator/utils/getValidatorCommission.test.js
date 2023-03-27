@@ -1,11 +1,10 @@
-import {convertCommissionToPercentage, convertCommissionToNumber} from './getValidatorCommission';
+import { convertCommissionToPercentage, convertCommissionToNumber } from './getValidatorCommission';
 
 describe('convertCommissionToPercentage', () => {
   it('Should convert empty arguments it to percentage', () => {
     expect(convertCommissionToPercentage()).toEqual('0.00');
     expect(convertCommissionToPercentage()).not.toEqual('0');
   });
-
 
   it('Should convert any number to percentage', () => {
     expect(convertCommissionToPercentage(10000)).toEqual('100.00');

@@ -1,8 +1,5 @@
 import { PEERS } from 'src/const/queries';
-import {
-  API_VERSION,
-  LIMIT as limit,
-} from 'src/const/config';
+import { API_VERSION, LIMIT as limit } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
@@ -22,7 +19,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const usePeers = ({ config: customConfig = {}, options } = { }) => {
+export const usePeers = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/peers`,
     event: 'get.peers',

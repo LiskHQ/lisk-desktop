@@ -39,7 +39,7 @@ const TransactionRow = ({
           avatarSize,
           validators,
           address,
-          token
+          token,
         }}
       >
         {Layout.components.map((Component, index) => (

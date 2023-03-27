@@ -11,9 +11,7 @@ import { wsMethods } from '@block/config';
 const blockSubscribe = (network, callback, onDisconnect, onReconnect) => {
   const node = network?.networks?.LSK?.serviceUrl;
   if (node) {
-    subscribe(
-      `${node}/blockchain`, wsMethods.blocksChange, callback, onDisconnect, onReconnect,
-    );
+    subscribe(`${node}/blockchain`, wsMethods.blocksChange, callback, onDisconnect, onReconnect);
   }
 };
 

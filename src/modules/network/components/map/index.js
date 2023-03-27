@@ -1,6 +1,4 @@
-import React, {
-  useEffect, useMemo, useRef, useState,
-} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
 import Box from '@theme/box';
@@ -32,9 +30,7 @@ const createMarkers = (peers) => {
 
   peers.forEach((peer) => {
     if (peer.location?.latitude) {
-      markers.addLayer(
-        L.marker([peer.location.latitude, peer.location.longitude], { icon }),
-      );
+      markers.addLayer(L.marker([peer.location.latitude, peer.location.longitude], { icon }));
     }
   });
 
@@ -42,9 +38,11 @@ const createMarkers = (peers) => {
 };
 
 const getAttributionLinks = () => {
-  const openStreetMap = '<span>© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</span>';
+  const openStreetMap =
+    '<span>© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</span>';
   const mapBox = '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a>';
-  const improveThisMap = '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
+  const improveThisMap =
+    '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
   const watermark = `<a href="http://mapbox.com/about/maps" target="_blank"><img src="${mapboxWatermarkImage}" class="mapboxWatermark" /></a>`;
 
   return `${openStreetMap} ${mapBox} ${improveThisMap} ${watermark}`;
@@ -57,7 +55,7 @@ const getTiles = () =>
       id: 'mapbox/streets-v11',
       tileSize: 512,
       zoomOffset: -1,
-    },
+    }
   );
 
 const FullMap = () => {
@@ -70,10 +68,7 @@ const FullMap = () => {
   useEffect(() => {
     if (peers.length) {
       if (!ref.current) {
-        const networkMap = L.map('mapContainer', mapOptions).setView(
-          [36.414203, 11.25],
-          2,
-        );
+        const networkMap = L.map('mapContainer', mapOptions).setView([36.414203, 11.25], 2);
         const tiles = getTiles();
         tiles.addTo(networkMap);
         ref.current = networkMap;

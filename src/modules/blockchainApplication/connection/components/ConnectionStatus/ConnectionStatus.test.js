@@ -1,4 +1,4 @@
-import { mountWithRouter } from 'src/utils/testHelpers'
+import { mountWithRouter } from 'src/utils/testHelpers';
 import * as searchParams from 'src/utils/searchParams';
 import ConnectionStatus from './ConnectionStatus';
 
@@ -13,8 +13,10 @@ jest.mock('react-i18next', () => ({
   useTranslation: jest.fn(() => ({
     t: (str, values = {}) => {
       if (!values) return str;
-      return Object.keys(values).reduce((acc, curr) =>
-        acc.replace(`{{${curr}}}`, values[curr]), str);
+      return Object.keys(values).reduce(
+        (acc, curr) => acc.replace(`{{${curr}}}`, values[curr]),
+        str
+      );
     },
   })),
 }));
@@ -26,14 +28,16 @@ describe('ConnectionStatus', () => {
       location: {
         pathname: 'localhost:8080/',
         search: '?modal=connection',
-      }
+      },
     },
   };
-  jest.spyOn(searchParams, 'removeSearchParamsFromUrl')
+  jest.spyOn(searchParams, 'removeSearchParamsFromUrl');
 
   it('Shows a message if events are not ready yet', () => {
     const wrapper = mountWithRouter(ConnectionStatus, props);
-    expect(wrapper.find('h6').text()).toEqual('Encountered an error while connecting to web app application.');
+    expect(wrapper.find('h6').text()).toEqual(
+      'Encountered an error while connecting to web app application.'
+    );
   });
 
   it('Should mount correctly', () => {
@@ -45,7 +49,7 @@ describe('ConnectionStatus', () => {
           search: '?modal=connection&status=SUCCESS&name=web app&action=APPROVE',
         },
       },
-    }
+    };
 
     // successfully approved
     let wrapper = mountWithRouter(ConnectionStatus, specProps);
@@ -53,19 +57,24 @@ describe('ConnectionStatus', () => {
     expect(wrapper.find('h6').text()).toBe('Successfully paired with web app');
 
     // failed to approve
-    specProps.history.location.search = '?modal=connection&status=FAILURE&name=web app&action=APPROVE';
+    specProps.history.location.search =
+      '?modal=connection&status=FAILURE&name=web app&action=APPROVE';
     wrapper = mountWithRouter(ConnectionStatus, specProps);
     expect(wrapper.find('h6').text()).toBe('Failed to pair with web app');
 
     // successfully rejected
-    specProps.history.location.search = '?modal=connection&status=SUCCESS&name=web app&action=REJECT';
+    specProps.history.location.search =
+      '?modal=connection&status=SUCCESS&name=web app&action=REJECT';
     wrapper = mountWithRouter(ConnectionStatus, specProps);
     expect(wrapper.find('h6').text()).toBe('Rejected the pairing request from web app');
 
     // failed to reject
-    specProps.history.location.search = '?modal=connection&status=FAILURE&name=web app&action=REJECT';
+    specProps.history.location.search =
+      '?modal=connection&status=FAILURE&name=web app&action=REJECT';
     wrapper = mountWithRouter(ConnectionStatus, specProps);
-    expect(wrapper.find('h6').text()).toBe('An error occurred while rejecting the pairing request from web app');
+    expect(wrapper.find('h6').text()).toBe(
+      'An error occurred while rejecting the pairing request from web app'
+    );
 
     jest.runAllTimers();
     expect(searchParams.removeSearchParamsFromUrl).toHaveBeenCalled();
@@ -80,7 +89,7 @@ describe('ConnectionStatus', () => {
           search: '?modal=connection&status=SUCCESS&name=web app&action=APPROVE',
         },
       },
-    }
+    };
     mountWithRouter(ConnectionStatus, newProps);
     jest.runAllTimers();
     expect(searchParams.removeSearchParamsFromUrl).toHaveBeenCalled();

@@ -4,7 +4,9 @@ import { wallets, ss } from '../../../constants';
 import { multiSignatureTxs } from '../../utils/mockTx';
 
 Then(/^I enter the publicKey of ([^\s]+) at input ([\w]+)$/, function (walletName, index) {
-  cy.get(ss.msignPkInput).eq(index - 1).type(wallets[walletName].summary.publicKey);
+  cy.get(ss.msignPkInput)
+    .eq(index - 1)
+    .type(wallets[walletName].summary.publicKey);
 });
 
 Then(/^I set ([\w]+) inputs as optional$/, function (numOfOptionals) {
@@ -40,7 +42,7 @@ Then(/^I confirm data of ([^\s]+)$/, function (tx) {
       template.txSenderAddress = 'lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz';
       template.txNumberOfSignatures = '2';
       template.memberTitle = [
-        'lskdxc...cw7yt(Optional)',        
+        'lskdxc...cw7yt(Optional)',
         'lskehj...o9cjy(Optional)',
         'lsks6w...ehxwz(Mandatory)',
         'lsks6w...ehxwz(Mandatory)',
@@ -72,7 +74,7 @@ Then(/^I confirm data of ([^\s]+)$/, function (tx) {
   cy.get(ss.txRemainingMembers).eq(0).should('have.text', template.txRemainingMembers);
   template.memberTitle.forEach((el, index) => {
     cy.get(ss.memberTitle).eq(index).should('have.text', el);
-  })
+  });
 });
 
 Then(/^I input second passphrase$/, function () {
@@ -92,7 +94,7 @@ Then(/^I should have the transaction ([^\s]+) in the clipboard$/, function (tx) 
 });
 
 Then(/^([^\s]+) should have been downloaded correctly$/, function (tx) {
-  cy.readFile(`cypress/downloads/tx-${JSON.parse(multiSignatureTxs[tx]).id}.json`).then(json => {
+  cy.readFile(`cypress/downloads/tx-${JSON.parse(multiSignatureTxs[tx]).id}.json`).then((json) => {
     expect(JSON.stringify(json)).to.eq(multiSignatureTxs[tx]);
   });
 });

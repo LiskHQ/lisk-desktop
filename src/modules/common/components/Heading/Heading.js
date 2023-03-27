@@ -11,9 +11,7 @@ const Heading = ({ title, onGoBack, history, noBackButton, className, children }
       </TertiaryButton>
     )}
     {title}
-    <div className={styles.rightSection}>
-      {children}
-    </div>
+    <div className={styles.rightSection}>{children}</div>
   </div>
 );
 

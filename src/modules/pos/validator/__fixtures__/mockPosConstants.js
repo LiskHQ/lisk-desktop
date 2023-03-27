@@ -16,8 +16,8 @@ export const mockPosConstants = {
     commissionIncreasePeriod: 260000,
     maxCommissionIncreaseRate: 500,
     extraCommandFees: {
-      validatorRegistrationFee: '1000000000'
-    }
+      validatorRegistrationFee: '1000000000',
+    },
   },
   meta: {},
 };

@@ -10,11 +10,11 @@ jest.mock('@libs/wcm/utils/connectionCreator', () => ({
     on: jest.fn().mockImplementation((name, listener) => {
       listeners[name] = listener;
     }),
-    session: { get: jest.fn(topic => ({ topic })) },
+    session: { get: jest.fn((topic) => ({ topic })) },
   },
 }));
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 
 const mockDisconnect = jest.fn();

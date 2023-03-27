@@ -8,10 +8,7 @@ import { cryptography } from '@liskhq/lisk-client';
  * @return {string} a signed value of the message
  */
 export const signMessageWithPrivateKey = ({ message, privateKey }) => {
-  const result = cryptography.ed.signAndPrintMessage(
-    message,
-    Buffer.from(privateKey, 'hex')
-  );
+  const result = cryptography.ed.signAndPrintMessage(message, Buffer.from(privateKey, 'hex'));
 
   return result;
 };

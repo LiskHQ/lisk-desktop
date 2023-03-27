@@ -16,7 +16,7 @@ describe('Validator Registration Status', () => {
       txBroadcastError: null,
     },
     transactionBroadcasted: jest.fn(),
-    t: key => key,
+    t: (key) => key,
   };
 
   const signedTransaction = {
@@ -40,13 +40,13 @@ describe('Validator Registration Status', () => {
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
     expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
-      className: "content",
-      illustration: "registerValidator",
-      message: "Your transaction is signed successfully.",
+      className: 'content',
+      illustration: 'registerValidator',
+      message: 'Your transaction is signed successfully.',
       status: {
-        "code": "SIGNATURE_SUCCESS",
+        code: 'SIGNATURE_SUCCESS',
       },
-      title: "Submitting the transaction",
+      title: 'Submitting the transaction',
     });
   });
 
@@ -63,14 +63,14 @@ describe('Validator Registration Status', () => {
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
-      className: "content",
-      illustration: "registerValidator",
-      message: "An error occurred while signing your transaction. Please try again.",
+      className: 'content',
+      illustration: 'registerValidator',
+      message: 'An error occurred while signing your transaction. Please try again.',
       status: {
-        "code": "SIGNATURE_ERROR",
-        "message": "{\"message\":\"error:test\"}",
+        code: 'SIGNATURE_ERROR',
+        message: '{"message":"error:test"}',
       },
-      title: "Transaction failed",
+      title: 'Transaction failed',
     });
   });
 
@@ -87,14 +87,14 @@ describe('Validator Registration Status', () => {
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
-      className: "content",
-      illustration: "registerValidator",
-      message: "An error occurred while sending your transaction to the network. Please try again.",
+      className: 'content',
+      illustration: 'registerValidator',
+      message: 'An error occurred while sending your transaction to the network. Please try again.',
       status: {
-        "code": "BROADCAST_ERROR",
-        "message": "{\"message\":\"error:test\"}",
+        code: 'BROADCAST_ERROR',
+        message: '{"message":"error:test"}',
       },
-      title: "Transaction failed",
+      title: 'Transaction failed',
     });
   });
 
@@ -111,13 +111,13 @@ describe('Validator Registration Status', () => {
     const wrapper = shallow(<Status {...propsSuccess} />);
     expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
-      className: "content",
-      illustration: "registerValidator",
-      message: "You will be notified when your transaction is confirmed.",
+      className: 'content',
+      illustration: 'registerValidator',
+      message: 'You will be notified when your transaction is confirmed.',
       status: {
-        "code": "BROADCAST_SUCCESS",
+        code: 'BROADCAST_SUCCESS',
       },
-      title: "Validator registration succeeded",
+      title: 'Validator registration succeeded',
     });
   });
 });

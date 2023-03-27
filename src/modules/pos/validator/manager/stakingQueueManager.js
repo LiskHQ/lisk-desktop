@@ -13,5 +13,5 @@ const mapDispatchToProps = {
 export default compose(
   withRouter,
   connect(null, mapDispatchToProps),
-  withTranslation(),
+  withTranslation()
 )(StakingQueue);

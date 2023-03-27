@@ -7,14 +7,14 @@ import TxBroadcasterWithStatus from '@transaction/components/TxBroadcasterWithSt
 import ClaimRewardsForm from '../ClaimRewardsForm';
 
 const ClaimRewardsView = () => (
-    <Dialog hasClose>
-      <MultiStep>
-        <ClaimRewardsForm />
-        <ClaimRewardsSummary />
-        <TxSignatureCollector />
-        <TxBroadcasterWithStatus />
-      </MultiStep>
-    </Dialog>
-  );
+  <Dialog hasClose>
+    <MultiStep>
+      <ClaimRewardsForm />
+      <ClaimRewardsSummary />
+      <TxSignatureCollector />
+      <TxBroadcasterWithStatus />
+    </MultiStep>
+  </Dialog>
+);
 
 export default ClaimRewardsView;

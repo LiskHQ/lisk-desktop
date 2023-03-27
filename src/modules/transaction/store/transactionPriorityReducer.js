@@ -5,7 +5,7 @@ const initialFee = {
   feedback: '',
 };
 
-const getInitialState = wallet => ({
+const getInitialState = (wallet) => ({
   fee: initialFee,
   minFee: initialFee,
   maxAmount: {
@@ -33,8 +33,4 @@ const reducer = (state, action) => {
   }
 };
 
-export {
-  actionTypes,
-  getInitialState,
-  reducer,
-};
+export { actionTypes, getInitialState, reducer };

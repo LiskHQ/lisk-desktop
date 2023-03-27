@@ -9,7 +9,7 @@ describe('Reclaim balance screen', () => {
   const props = {
     username: undefined,
     address: hostAddress,
-    t: t => t,
+    t: (t) => t,
     isWalletRoute: true,
     activeToken: tokenMap.LSK.key,
   };
@@ -29,7 +29,7 @@ describe('Reclaim balance screen', () => {
     wallet: {
       passphrase: 'test',
       info: {
-        LSK: { },
+        LSK: {},
       },
     },
     token: { active: tokenMap.LSK.key },
@@ -41,7 +41,7 @@ describe('Reclaim balance screen', () => {
       ActionBar,
       props,
       {},
-      { ...state, wallet: { info: { LSK: balanceAccount } } },
+      { ...state, wallet: { info: { LSK: balanceAccount } } }
     );
     const html = wrapper.html();
 
@@ -55,7 +55,7 @@ describe('Reclaim balance screen', () => {
       ActionBar,
       { ...props, activeToken: tokenMap.LSK.key, address: 'mnrutC4CgQhMos4f8HWYRy8rKQ3UisGwYJ' },
       {},
-      { ...state, wallet: { info: { LSK: balanceAccount } } },
+      { ...state, wallet: { info: { LSK: balanceAccount } } }
     );
     let html = wrapper.html();
 
@@ -76,7 +76,7 @@ describe('Reclaim balance screen', () => {
       ActionBar,
       { ...props, username: 'validator' },
       {},
-      { ...state, wallet: { info: { LSK: balanceAccount } } },
+      { ...state, wallet: { info: { LSK: balanceAccount } } }
     );
     let html = wrapper.html();
 
@@ -96,9 +96,11 @@ describe('Reclaim balance screen', () => {
         staking: {
           [balanceAccount.summary.address]: {},
         },
-      },
+      }
     );
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
     html = wrapper.html();
 
     expect(html).toContain('Edit stake');
@@ -110,7 +112,7 @@ describe('Reclaim balance screen', () => {
       ActionBar,
       props,
       {},
-      { ...state, wallet: { info: { LSK: noBalanceAccount } } },
+      { ...state, wallet: { info: { LSK: noBalanceAccount } } }
     );
     const html = wrapper.html();
 

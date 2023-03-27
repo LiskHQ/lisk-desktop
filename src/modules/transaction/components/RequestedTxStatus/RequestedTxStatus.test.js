@@ -10,9 +10,7 @@ import RequestedTxStatus from '.';
 
 jest.mock('copy-to-clipboard');
 jest.mock('@libs/wcm/hooks/useSession', () => ({
-  useSession: () => (
-    { respond: jest.fn() }
-  ),
+  useSession: () => ({ respond: jest.fn() }),
 }));
 
 describe('TransactionResult RequestedTxStatus', () => {
@@ -25,7 +23,10 @@ describe('TransactionResult RequestedTxStatus', () => {
         command: 'transfer',
         fee: BigInt('100000000'),
         nonce: BigInt('1'),
-        senderPublicKey: Buffer.from('cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535', 'hex'),
+        senderPublicKey: Buffer.from(
+          'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535',
+          'hex'
+        ),
         signatures: [],
         params: {
           amount: BigInt('1000000000000'),
@@ -38,7 +39,7 @@ describe('TransactionResult RequestedTxStatus', () => {
     },
     title: 'Test title',
     message: 'lorem ipsum',
-    t: t => t,
+    t: (t) => t,
     status: {
       code: txStatusTypes.signatureSuccess,
     },
@@ -64,12 +65,17 @@ describe('TransactionResult RequestedTxStatus', () => {
             code: txStatusTypes.multisigSignaturePartialSuccess,
           }}
         />
-      </ConnectionContext.Provider>,
+      </ConnectionContext.Provider>
     );
 
     fireEvent.click(screen.getByText('Copy and return to application'));
     expect(copyToClipboard).toHaveBeenCalledWith(
-      JSON.stringify(toTransactionJSON(props.transactions.signedTransaction, context.events[0].meta.params.request.params.schema))
+      JSON.stringify(
+        toTransactionJSON(
+          props.transactions.signedTransaction,
+          context.events[0].meta.params.request.params.schema
+        )
+      )
     );
   });
 
@@ -84,11 +90,7 @@ describe('TransactionResult RequestedTxStatus', () => {
       transactions: signatureError,
       message: 'Signature error message',
     };
-    render(
-      <RequestedTxStatus
-        {...errorProps}
-      />,
-    );
-    expect(screen.findByText('Report the error via email')).toBeTruthy();;
+    render(<RequestedTxStatus {...errorProps} />);
+    expect(screen.findByText('Report the error via email')).toBeTruthy();
   });
 });

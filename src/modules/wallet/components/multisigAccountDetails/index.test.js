@@ -17,7 +17,7 @@ describe('Multisignature account details', () => {
     mandatoryKeys: ['86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
   };
   const props = {
-    t: str => str,
+    t: (str) => str,
     history: {
       location: {
         pathname: '',
@@ -46,12 +46,7 @@ describe('Multisignature account details', () => {
     };
 
     it('should return null if the account is not multisig', () => {
-      const wrapper = mountWithRouterAndStore(
-        MultisigAccountDetails,
-        props,
-        {},
-        store,
-      );
+      const wrapper = mountWithRouterAndStore(MultisigAccountDetails, props, {}, store);
 
       expect(wrapper).toEqual({});
     });
@@ -75,7 +70,7 @@ describe('Multisignature account details', () => {
         MultisigAccountDetails,
         props,
         { pathname: routes.wallet.path },
-        store,
+        store
       );
 
       expect(wrapper.find('Member')).toHaveLength(2);

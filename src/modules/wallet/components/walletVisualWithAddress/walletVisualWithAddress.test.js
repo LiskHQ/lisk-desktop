@@ -22,7 +22,7 @@ describe('WalletVisualWithAddress component', () => {
   });
 
   it('should show account name', () => {
-    const wrapper = mountWithRouter(WalletVisualWithAddress, {...props, accountName: 'test' });
+    const wrapper = mountWithRouter(WalletVisualWithAddress, { ...props, accountName: 'test' });
     expect(wrapper.find('.accountName').at(0)).toHaveText('test');
   });
 });

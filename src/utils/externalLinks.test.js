@@ -3,7 +3,8 @@ import history from 'src/utils/history';
 import { externalLinks } from './externalLinks';
 
 jest.mock('src/utils/history', () => ({
-  push: jest.fn(), replace: jest.fn(),
+  push: jest.fn(),
+  replace: jest.fn(),
 }));
 
 describe('externalLinks', () => {
@@ -32,7 +33,9 @@ describe('externalLinks', () => {
   it('opens url', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     externalLinks.init();
@@ -43,7 +46,9 @@ describe('externalLinks', () => {
   it('opens send modal without query params', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     externalLinks.init();
@@ -54,7 +59,9 @@ describe('externalLinks', () => {
   it('opens send modal with query params', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     externalLinks.init();
@@ -65,7 +72,9 @@ describe('externalLinks', () => {
   it('opens staking queue modal', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     externalLinks.init();

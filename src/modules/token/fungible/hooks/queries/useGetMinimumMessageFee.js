@@ -1,6 +1,6 @@
 import { useInvokeQuery } from '@common/hooks';
 
-export const useGetMinimumMessageFee = ({ options = {}, } = {}) => {
+export const useGetMinimumMessageFee = ({ options = {} } = {}) => {
   const config = {
     data: {
       endpoint: 'interoperability_getMinimumMessageFee',
@@ -10,7 +10,7 @@ export const useGetMinimumMessageFee = ({ options = {}, } = {}) => {
 
   const result = useInvokeQuery({
     config,
-    options: { ...options, },
+    options: { ...options },
   });
 
   return result;

@@ -95,9 +95,7 @@ describe('Calendar Utils from datepicker', () => {
     });
 
     it('Should render placeholder based on count parameter', () => {
-      const wrapper = shallow(<div>
-        {generateDayPlaceholder(6, '11.02.19', 'test-classname')}
-      </div>);
+      const wrapper = shallow(<div>{generateDayPlaceholder(6, '11.02.19', 'test-classname')}</div>);
 
       expect(wrapper).toContainMatchingElements(6, '.test-classname');
     });

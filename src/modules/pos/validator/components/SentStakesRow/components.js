@@ -15,12 +15,10 @@ export const ValidatorWalletVisual = ({ address, name }) => (
 );
 
 export const Balance = ({ className, colSpanXs = 2, value }) => (
-  <div className={classNames(className, grid[`col-xs-${colSpanXs}`], styles.balance)}>
-    {value}
-  </div>
+  <div className={classNames(className, grid[`col-xs-${colSpanXs}`], styles.balance)}>{value}</div>
 );
 
-export const Actions = withRouter (({ history, address, name, stakeEdited }) => {
+export const Actions = withRouter(({ history, address, name, stakeEdited }) => {
   const handleRemoveStake = () => {
     stakeEdited([
       {
@@ -37,9 +35,7 @@ export const Actions = withRouter (({ history, address, name, stakeEdited }) => 
       <DialogLink component="editStake" data={{ address }}>
         <Icon name="edit" />
       </DialogLink>
-      <button
-        onClick={handleRemoveStake}
-      >
+      <button onClick={handleRemoveStake}>
         <Icon name="deleteIcon" />
       </button>
     </div>

@@ -38,15 +38,8 @@ class DateField extends React.Component {
   }
 
   render() {
-    const {
-      name,
-      setInputRefs,
-      onChange,
-      filters,
-      dateFormat,
-      fields,
-      showRightDropdown,
-    } = this.props;
+    const { name, setInputRefs, onChange, filters, dateFormat, fields, showRightDropdown } =
+      this.props;
     const { shownDropdown, everShownDropdown } = this.state;
 
     return (
@@ -73,9 +66,7 @@ class DateField extends React.Component {
           />
         </label>
         <Dropdown
-          className={`${showRightDropdown ? 'showRight' : 'showLeft'} ${
-            styles.calendarDropdown
-          }`}
+          className={`${showRightDropdown ? 'showRight' : 'showLeft'} ${styles.calendarDropdown}`}
           showDropdown={shownDropdown}
         >
           {everShownDropdown ? (

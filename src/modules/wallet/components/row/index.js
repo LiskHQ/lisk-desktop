@@ -13,9 +13,7 @@ const AccountRow = ({ data, className, token }) => (
     data-testid="accounts-row"
     to={`${routes.explorer.path}?address=${data.address}`}
   >
-    <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>
-      {data.rank}
-    </span>
+    <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>{data.rank}</span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-5']}`}>
       <WalletVisualWithAddress
         address={data.address}
@@ -33,6 +31,6 @@ const AccountRow = ({ data, className, token }) => (
 );
 
 /* istanbul ignore next */
-const areEqual = (prevProps, nextProps) => (prevProps.data.id === nextProps.data.id);
+const areEqual = (prevProps, nextProps) => prevProps.data.id === nextProps.data.id;
 
 export default React.memo(AccountRow, areEqual);

@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  fireEvent, screen, render, waitFor,
-} from '@testing-library/react';
+import { fireEvent, screen, render, waitFor } from '@testing-library/react';
 import MessageField from './MessageField';
 
 describe('MessageField', () => {
@@ -53,7 +51,8 @@ describe('MessageField', () => {
   });
 
   it('should react with an error on byte count', () => {
-    props.value = 'this is a test value that should be long enough to throw an error testing testing testing testing';
+    props.value =
+      'this is a test value that should be long enough to throw an error testing testing testing testing';
     props.error = true;
     wrapper.rerender(<MessageField {...props} />);
 

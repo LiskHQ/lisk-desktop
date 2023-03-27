@@ -35,6 +35,7 @@
     "cypress:run": "cypress run --project tests/cypress",
     "lint": "eslint --ignore-path .eslintignore -c .eslintrc .",
     "lint:fix": "eslint -c .eslintrc . --fix",
+    "format": "prettier --write '**/*'",
     "install:electron:dependencies": "cd ./app && npm ci && cd ..",
     "analyze:bundles": "webpack  --config ./setup/config/webpack.config.analyze",
     "copy:files": "cpx \"./setup/react/{index.html,assets/**/*}\" ./app/build/",

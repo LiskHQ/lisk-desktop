@@ -16,12 +16,8 @@ const Onboarding = ({
   t,
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [visibility, setVisibility] = useState(
-    !localStorage.getItem(name) ? 'visible' : 'hidden',
-  );
-  const isLoggedIn = useSelector(
-    (state) => state.wallet && state.wallet.passphrase,
-  );
+  const [visibility, setVisibility] = useState(!localStorage.getItem(name) ? 'visible' : 'hidden');
+  const isLoggedIn = useSelector((state) => state.wallet && state.wallet.passphrase);
 
   const handleClose = () => {
     localStorage.setItem(name, true);
@@ -53,10 +49,7 @@ const Onboarding = ({
   if (visibility === 'hidden' || !slides.length || !isLoggedIn) return null;
   return (
     <div className={`${styles.onboarding} ${className}`}>
-      <span
-        className={`closeOnboarding ${styles.closeBtn}`}
-        onClick={handleDiscard}
-      />
+      <span className={`closeOnboarding ${styles.closeBtn}`} onClick={handleDiscard} />
       <div className={styles.illustrations}>
         {slides.map(({ illustration }, i) => (
           <Illustration
@@ -83,9 +76,7 @@ const Onboarding = ({
           {slides.map((slide, index) => (
             <section
               key={`slides-${index}`}
-              className={`${slide.className || ''} ${
-                index === currentSlide ? styles.active : ''
-              }`}
+              className={`${slide.className || ''} ${index === currentSlide ? styles.active : ''}`}
             >
               <h1 className={styles.title}>{slide.title}</h1>
               <p>{slide.content}</p>
@@ -94,12 +85,7 @@ const Onboarding = ({
         </div>
         <div className={styles.buttonsHolder}>
           {currentSlide !== 0 ? (
-            <SecondaryButton
-              className="light"
-              size="m"
-              name="prev"
-              onClick={handleButtonClick}
-            >
+            <SecondaryButton className="light" size="m" name="prev" onClick={handleButtonClick}>
               {t('Previous')}
             </SecondaryButton>
           ) : null}
@@ -128,7 +114,7 @@ Onboarding.propTypes = {
         PropTypes.arrayOf(PropTypes.node),
       ]).isRequired,
       illustration: PropTypes.string.isRequired,
-    }),
+    })
   ),
   actionButtonLabel: PropTypes.string,
   finalCallback: PropTypes.func,

@@ -38,9 +38,7 @@ describe('BlockchainApplicationRow', () => {
   });
 
   it('should display correctly', () => {
-    const {
-      chainName, status, chainID,
-    } = mockBlockchainApplications[0];
+    const { chainName, status, chainID } = mockBlockchainApplications[0];
 
     expect(screen.getByText(chainName)).toBeTruthy();
     expect(screen.getByText(chainID)).toBeTruthy();
@@ -48,22 +46,24 @@ describe('BlockchainApplicationRow', () => {
     expect(screen.getByText('0.5 LSK')).toBeTruthy();
   });
 
-  it('should navigate to the application\'s details', () => {
-    const {
-      chainID,
-    } = mockBlockchainApplications[0];
+  it("should navigate to the application's details", () => {
+    const { chainID } = mockBlockchainApplications[0];
     fireEvent.click(screen.getByText(chainID));
 
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(expect.any(Object), { modal: 'blockChainApplicationDetails', chainId: chainID });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(expect.any(Object), {
+      modal: 'blockChainApplicationDetails',
+      chainId: chainID,
+    });
   });
 
-  it('should navigate to the application\'s details', () => {
-    const {
-      chainID,
-    } = mockBlockchainApplications[0];
+  it("should navigate to the application's details", () => {
+    const { chainID } = mockBlockchainApplications[0];
     fireEvent.click(screen.getByText(chainID));
 
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(expect.any(Object), { modal: 'blockChainApplicationDetails', chainId: chainID });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(expect.any(Object), {
+      modal: 'blockChainApplicationDetails',
+      chainId: chainID,
+    });
   });
 
   it('should invoke toggle callback', () => {
@@ -83,11 +83,11 @@ describe('BlockchainApplicationRow', () => {
       checkPinByChainId: jest.fn().mockReturnValue(false),
     });
 
-    wrapper.rerender(<MemoryRouter
-      initialEntries={[]}
-    >
-      <BlockchainApplicationRow {...props} />
-    </MemoryRouter>);
+    wrapper.rerender(
+      <MemoryRouter initialEntries={[]}>
+        <BlockchainApplicationRow {...props} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
   });

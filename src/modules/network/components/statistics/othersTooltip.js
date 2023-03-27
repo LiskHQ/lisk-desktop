@@ -13,14 +13,12 @@ const OthersTooltip = ({ data, title }) => {
           <h4 className={styles.count}>{t('Count')}</h4>
         </header>
         <article>
-          {
-            data.map(item => (
-              <div key={item.label} className={styles.row}>
-                <span>{item.label}</span>
-                <span className={styles.count}>{item.value}</span>
-              </div>
-            ))
-          }
+          {data.map((item) => (
+            <div key={item.label} className={styles.row}>
+              <span>{item.label}</span>
+              <span className={styles.count}>{item.value}</span>
+            </div>
+          ))}
         </article>
       </>
     </Tooltip>

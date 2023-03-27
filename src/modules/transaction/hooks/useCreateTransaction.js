@@ -4,7 +4,6 @@ import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 import { Transaction } from '../utils/transactions';
 
-
 export const useCreateTransaction = ({
   module = null,
   command = null,
@@ -13,14 +12,9 @@ export const useCreateTransaction = ({
   const { data: networkStatus, isLoading: isNetworkStatusLoading } = useNetworkStatus();
   const [currentAccount] = useCurrentAccount();
   const { pubkey, address } = currentAccount.metadata;
-  const {
-    data: auth,
-    isLoading: isAuthLoading,
-  } = useAuth({ config: { params: { address } } });
-  const {
-    data: commandParametersSchemas,
-    isLoading: isSchemasLoading,
-  } = useCommandParametersSchemas();
+  const { data: auth, isLoading: isAuthLoading } = useAuth({ config: { params: { address } } });
+  const { data: commandParametersSchemas, isLoading: isSchemasLoading } =
+    useCommandParametersSchemas();
   const [transaction] = useState(new Transaction());
 
   useEffect(() => {

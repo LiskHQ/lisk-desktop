@@ -9,7 +9,7 @@ import {
 describe('Utils: moduleCommand', () => {
   describe('getModuleCommandSenderLabel', () => {
     it('should return a dictionary of strings', () => {
-      const t = jest.fn(str => str);
+      const t = jest.fn((str) => str);
       Object.values(MODULE_COMMANDS_NAME_MAP).forEach((moduleCommand) => {
         const label = getModuleCommandSenderLabel(t)[moduleCommand];
 
@@ -22,7 +22,7 @@ describe('Utils: moduleCommand', () => {
 
   describe('getModuleCommandTitle', () => {
     it('should return a dictionary of strings', () => {
-      const t = jest.fn(str => str);
+      const t = jest.fn((str) => str);
       Object.values(MODULE_COMMANDS_NAME_MAP).forEach((moduleCommand) => {
         const label = getModuleCommandTitle(t)[moduleCommand];
 

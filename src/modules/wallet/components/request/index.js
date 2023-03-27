@@ -4,8 +4,8 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import Request from './request';
 
 export default connect(
-  state => ({
+  (state) => ({
     address: selectActiveTokenAccount(state).summary?.address ?? '',
   }),
-  {},
+  {}
 )(withTranslation()(Request));

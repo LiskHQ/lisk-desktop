@@ -13,9 +13,7 @@ const UpdateIndicator = ({
   closeToast,
 }) => (
   <div className={styles.container}>
-    <Icon
-      name={completed ? 'downloadUpdateFinish' : 'downloadUpdateProgress'}
-    />
+    <Icon name={completed ? 'downloadUpdateFinish' : 'downloadUpdateProgress'} />
     {completed ? (
       <>
         <p className={styles.completedContent}>
@@ -32,9 +30,7 @@ const UpdateIndicator = ({
           <p>
             <span>{t('Loading in progress')}</span>
             <span className={styles.percentage}>
-              {`${Math.floor(
-                (transferred / total) * 100,
-              )}%`}
+              {`${Math.floor((transferred / total) * 100)}%`}
             </span>
           </p>
           <div className={styles.progressBar}>
@@ -44,10 +40,7 @@ const UpdateIndicator = ({
             />
           </div>
         </div>
-        <span
-          className={`${styles.closeBtn} close-update-indicator-icon`}
-          onClick={closeToast}
-        />
+        <span className={`${styles.closeBtn} close-update-indicator-icon`} onClick={closeToast} />
       </>
     )}
   </div>

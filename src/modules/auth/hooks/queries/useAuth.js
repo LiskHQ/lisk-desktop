@@ -14,11 +14,11 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 export const useAuthConfig = (config) => ({
-    url: `/api/${API_VERSION}/auth`,
-    method: 'get',
-    event: 'get.auth',
-    ...config,
-  });
+  url: `/api/${API_VERSION}/auth`,
+  method: 'get',
+  event: 'get.auth',
+  ...config,
+});
 
 export const useAuth = ({ config: customConfig = {}, options } = {}) => {
   const config = useAuthConfig(customConfig);

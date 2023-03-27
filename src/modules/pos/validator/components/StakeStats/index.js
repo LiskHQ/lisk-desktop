@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './stakeStats.css';
 
-const StakeStats = ({
-  added, edited, removed,
-}) => {
+const StakeStats = ({ added, edited, removed }) => {
   const { t } = useTranslation();
   return (
     <div className={styles.statsContainer}>

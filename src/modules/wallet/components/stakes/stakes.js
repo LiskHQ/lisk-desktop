@@ -14,14 +14,10 @@ import header from './stakesTableHeader';
 
 const getMessages = (t) => ({
   all: t('This account doesn’t have any stakes.'),
-  filtered: t(
-    'This account doesn’t have any stakes matching the searched username.',
-  ),
+  filtered: t('This account doesn’t have any stakes matching the searched username.'),
 });
 
-const Stakes = ({
-  stakes, accounts, address, t, history,
-}) => {
+const Stakes = ({ stakes, accounts, address, t, history }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
   const { token } = usePosToken();
@@ -50,10 +46,7 @@ const Stakes = ({
   const areLoading = accounts.isLoading || stakes.isLoading;
   const filteredStakes = stakes.data.filter((stake) => {
     if (!stake.username) return false;
-    return (
-      stake.username.indexOf(filterValue) > -1
-      || stake.address.indexOf(filterValue) > -1
-    );
+    return stake.username.indexOf(filterValue) > -1 || stake.address.indexOf(filterValue) > -1;
   });
 
   return (
