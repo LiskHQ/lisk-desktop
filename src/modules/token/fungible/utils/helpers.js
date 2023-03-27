@@ -3,31 +3,26 @@ import liskLogo from '../../../../../setup/react/assets/images/LISK.png';
 
 export const getLogo = ({ logo }) => logo?.svg || logo?.png || liskLogo;
 
-
 BigNumber.config({ ERRORS: false });
 const BASE = 10;
 
 const defaultTokenMeta = {
-  displayDenom: "lsk",
+  displayDenom: 'lsk',
   denomUnits: [
     {
-      "denom": "beddows",
-      "decimals": 0,
-      "aliases": [
-        "Beddows"
-      ]
+      denom: 'beddows',
+      decimals: 0,
+      aliases: ['Beddows'],
     },
     {
-      "denom": "lsk",
-      "decimals": 8,
-      "aliases": [
-        "Lisk"
-      ]
-    }
-  ]
+      denom: 'lsk',
+      decimals: 8,
+      aliases: ['Lisk'],
+    },
+  ],
 };
 
-const getTokenDecimals = (token) => {
+export const getTokenDecimals = (token) => {
   const { decimals } = token.denomUnits?.find?.(({ denom }) => denom === token.displayDenom) || {};
 
   return decimals;

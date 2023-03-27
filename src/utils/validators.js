@@ -88,7 +88,7 @@ export const validateAmountFormat = ({
     },
     MAX_ACCURACY: {
       message: i18n.t('Maximum floating point is 8.'),
-      fn: () => maxFloating.test(value),
+      fn: () => maxFloating(token).test(value),
     },
     STAKE_10X: {
       message: i18n.t('You can only stake in multiplies of 10 LSK.'),

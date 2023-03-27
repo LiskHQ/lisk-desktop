@@ -46,7 +46,10 @@ const useAmountField = (initialValue, balance, token) => {
       checklist: [...checklist, 'MIN_BALANCE'],
     });
 
-    if (!feedback && BigInt(maxAmount) < BigInt(convertToBaseDenom(numeral(value).value(), token))) {
+    if (
+      !feedback &&
+      BigInt(maxAmount) < BigInt(convertToBaseDenom(numeral(value).value(), token))
+    ) {
       feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };
@@ -61,23 +64,36 @@ const useAmountField = (initialValue, balance, token) => {
   }, [initialValue]);
 
   const onAmountInputChange = ({ value }, maxAmount) => {
-    const { leadingPoint } = regex.amount[i18n.language];
+    const { leadingPoint, maxFloating } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
-    clearTimeout(loaderTimeout);
+    const isMaxAccuracyInValid = maxFloating(token).test(value);
 
-    setAmountField({
-      ...baseState,
-      ...amountField,
-      value,
-      isLoading: true,
-    });
-    loaderTimeout = setTimeout(() => {
+    if (!isMaxAccuracyInValid) {
+      clearTimeout(loaderTimeout);
+
       setAmountField({
         ...baseState,
+        ...amountField,
         value,
-        ...getAmountFeedbackAndError(value, maxAmount.value),
+        isLoading: true,
       });
-    }, 300);
+      loaderTimeout = setTimeout(() => {
+        setAmountField({
+          ...baseState,
+          value,
+          ...getAmountFeedbackAndError(value, maxAmount.value),
+        });
+      }, 300);
+    } else {
+      const { message: feedback } = validateAmountFormat({
+        value,
+        token,
+        funds: Number(balance) + Number(MIN_ACCOUNT_BALANCE),
+        checklist: ['MAX_ACCURACY'],
+      });
+
+      setAmountField({ ...amountField, isLoading: false, error: !!feedback, feedback });
+    }
   };
 
   return [amountField, onAmountInputChange];
