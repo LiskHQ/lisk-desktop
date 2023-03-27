@@ -27,7 +27,11 @@ describe('actions: watchList', () => {
   });
 
   it('should create an action to retrieve the watchlist', () => {
-    const retrievedWatchList = ['lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12', 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13'];
+    const retrievedWatchList = [
+      'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+      'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12',
+      'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+    ];
     const dispatch = jest.fn();
     window.localStorage.getItem = jest.fn(() => JSON.stringify(retrievedWatchList));
     const expectedAction = {

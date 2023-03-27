@@ -18,10 +18,12 @@ const ConnectionStatus = ({ history }) => {
     },
     [ACTIONS.REJECT]: {
       [STATUS.SUCCESS]: t('Rejected the pairing request from {{name}}', { name }),
-      [STATUS.FAILURE]: t('An error occurred while rejecting the pairing request from {{name}}', { name }),
+      [STATUS.FAILURE]: t('An error occurred while rejecting the pairing request from {{name}}', {
+        name,
+      }),
     },
     default: t('Encountered an error while connecting to {{name}} application.', { name }),
-  }
+  };
 
   const redirectToHome = () => {
     clearTimeout(timeout.current);

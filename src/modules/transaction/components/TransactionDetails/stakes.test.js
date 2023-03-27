@@ -1,12 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '@tests/constants/wallets';
-import { mockAppsTokens } from '@token/fungible/__fixtures__'
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 import { StakesPure } from './stakes';
 
-jest.mock('@pos/validator/hooks/usePosToken')
-
+jest.mock('@pos/validator/hooks/usePosToken');
 
 jest.spyOn(React, 'useContext').mockImplementation(() => ({
   transaction: {
@@ -23,14 +22,14 @@ jest.spyOn(React, 'useContext').mockImplementation(() => ({
 describe('Transaction stakes', () => {
   let wrapper;
   const props = {
-    t: v => v,
+    t: (v) => v,
     stakedValidator: {
       data: {},
       loadData: jest.fn(),
     },
   };
 
-  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0]})
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
 
   it('Should render with added and deleted Stakes', () => {
     wrapper = mount(<StakesPure {...props} />);

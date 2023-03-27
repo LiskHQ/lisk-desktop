@@ -3,7 +3,7 @@ import styles from './table.css';
 import Header from './header';
 
 const getUniqueKey = (data, index, key) => {
-  if (typeof key === 'string' && !(/\./.test(key))) {
+  if (typeof key === 'string' && !/\./.test(key)) {
     return `table-row-${data[key]}-${index}`;
   }
   if (typeof key === 'function') {

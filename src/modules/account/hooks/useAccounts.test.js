@@ -39,9 +39,7 @@ describe('useAccount hook', () => {
 
   it('accounts should return and convert state as an array', async () => {
     const { accounts } = result.current;
-    const expectArrayAccounts = [
-      mockSavedAccounts[0],
-    ];
+    const expectArrayAccounts = [mockSavedAccounts[0]];
     expect(accounts).toMatchObject(expectArrayAccounts);
   });
 

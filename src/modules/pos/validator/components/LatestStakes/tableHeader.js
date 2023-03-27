@@ -1,6 +1,6 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-export default t => ([
+export default (t) => [
   {
     title: t('Validator'),
     classList: grid['col-xs-4'],
@@ -17,4 +17,4 @@ export default t => ([
     title: t('Stakes'),
     classList: grid['col-xs-4'],
   },
-]);
+];

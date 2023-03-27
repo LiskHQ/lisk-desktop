@@ -54,25 +54,28 @@ function withData(apis = {}) {
       class DataProvider extends React.Component {
         constructor(props) {
           super(props);
-          this.defaultState = Object.keys(apis).reduce((acc, key) => ({
-            ...acc,
-            [key]: {
-              data: apis[key].defaultData ?? {},
-              error: '',
-              isLoading: false,
-              urlSearchParams: apis[key].defaultUrlSearchParams || {},
-              loadData: this.loadData.bind(this, key),
-              clearData: this.clearData.bind(this, key),
-            },
-          }), {});
-          this.defaultTransformResponse = response => response;
+          this.defaultState = Object.keys(apis).reduce(
+            (acc, key) => ({
+              ...acc,
+              [key]: {
+                data: apis[key].defaultData ?? {},
+                error: '',
+                isLoading: false,
+                urlSearchParams: apis[key].defaultUrlSearchParams || {},
+                loadData: this.loadData.bind(this, key),
+                clearData: this.clearData.bind(this, key),
+              },
+            }),
+            {}
+          );
+          this.defaultTransformResponse = (response) => response;
 
           this.state = this.defaultState;
         }
 
         componentDidMount() {
           this.mounted = true;
-          Object.keys(apis).forEach(key => apis[key].autoload && this.state[key].loadData());
+          Object.keys(apis).forEach((key) => apis[key].autoload && this.state[key].loadData());
         }
 
         componentWillUnmount() {
@@ -86,7 +89,7 @@ function withData(apis = {}) {
         loadData(key, urlSearchParams = this.state[key].urlSearchParams, ...args) {
           const { apiParams, network } = this.props;
           if (this.mounted) {
-            this.setState(state => ({
+            this.setState((state) => ({
               [key]: {
                 ...state[key],
                 isLoading: true,
@@ -94,37 +97,46 @@ function withData(apis = {}) {
               },
             }));
           }
-          apis[key].apiUtil(network, {
-            ...apiParams[key],
-            ...urlSearchParams,
-          }, ...args).then((data) => {
-            const transformResponse = apis[key].transformResponse || this.defaultTransformResponse;
-            if (this.mounted) {
-              this.setState({
-                [key]: {
-                  ...this.defaultState[key],
-                  data: transformResponse(data, this.state[key].data, urlSearchParams),
-                  meta: data.meta,
-                  urlSearchParams,
-                },
-              });
-            }
-          }).catch((error) => {
-            if (this.mounted) {
-              this.setState({
-                [key]: { ...this.defaultState[key], urlSearchParams, error },
-              });
-            }
-          });
+          apis[key]
+            .apiUtil(
+              network,
+              {
+                ...apiParams[key],
+                ...urlSearchParams,
+              },
+              ...args
+            )
+            .then((data) => {
+              const transformResponse =
+                apis[key].transformResponse || this.defaultTransformResponse;
+              if (this.mounted) {
+                this.setState({
+                  [key]: {
+                    ...this.defaultState[key],
+                    data: transformResponse(data, this.state[key].data, urlSearchParams),
+                    meta: data.meta,
+                    urlSearchParams,
+                  },
+                });
+              }
+            })
+            .catch((error) => {
+              if (this.mounted) {
+                this.setState({
+                  [key]: { ...this.defaultState[key], urlSearchParams, error },
+                });
+              }
+            });
         }
 
         render() {
           const { apiParams, ...restOfProps } = this.props;
           return (
-            <ChildComponent {...{
-              ...this.state,
-              ...restOfProps,
-            }}
+            <ChildComponent
+              {...{
+                ...this.state,
+                ...restOfProps,
+              }}
             />
           );
         }
@@ -151,9 +163,7 @@ function withData(apis = {}) {
 
     const HOCWithData = getHOC(WrappedComponent);
 
-    return connect(
-      mapStateToProps,
-    )(HOCWithData);
+    return connect(mapStateToProps)(HOCWithData);
   };
 }
 

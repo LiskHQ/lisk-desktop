@@ -1,7 +1,5 @@
 import { FEES } from 'src/const/queries';
-import {
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
@@ -15,7 +13,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useFees = ({ config: customConfig = {}, options } = { }) => {
+export const useFees = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/fees`,
     method: 'get',

@@ -7,20 +7,18 @@ import CalendarDemo from 'src/modules/common/components/calendar/demo';
 import IllustrationDemo from 'src/modules/common/components/illustration/demo';
 import styles from './demo.css';
 
-const getName = child => child.type.name.replace('Demo', '');
-const getId = child => `/toolbox/${getName(child)}`;
+const getName = (child) => child.type.name.replace('Demo', '');
+const getId = (child) => `/toolbox/${getName(child)}`;
 
-const WithTableOfContents = ({
-  children,
-}) => (
+const WithTableOfContents = ({ children }) => (
   <>
-    {children.map(child => (
+    {children.map((child) => (
       <div id={getId(child)} key={getName(child)} className={styles.section}>
         {child}
       </div>
     ))}
     <div className={styles.tableOfContents}>
-      {children.map(child => (
+      {children.map((child) => (
         <a href={`#${getId(child)}`} key={getName(child)}>
           {getName(child)}
         </a>

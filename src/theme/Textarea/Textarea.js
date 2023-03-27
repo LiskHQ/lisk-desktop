@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../Input/input.css';
 
-const Textarea = ({
-  setRef, className, size, ...props
-}) => <textarea ref={setRef} {...props} className={`${styles.input} ${className} ${styles[size]}`} />;
+const Textarea = ({ setRef, className, size, ...props }) => (
+  <textarea ref={setRef} {...props} className={`${styles.input} ${className} ${styles[size]}`} />
+);
 
 Textarea.propTypes = {
   size: PropTypes.oneOf(['xs', 's', 'm', 'l']),

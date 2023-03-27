@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import accounts from '@tests/constants/wallets';
-import {LEDGER_HW_IPC_CHANNELS} from "@libs/hardwareWallet/ledger/constants";
+import { LEDGER_HW_IPC_CHANNELS } from '@libs/hardwareWallet/ledger/constants';
 import Status from './UnlockBalanceStatus';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
@@ -9,7 +9,7 @@ jest.mock('@libs/wcm/hooks/useSession', () => ({
 }));
 describe('unlock transaction Status', () => {
   const props = {
-    t: key => key,
+    t: (key) => key,
     account: accounts.genesis,
     transactions: {
       txBroadcastError: null,
@@ -90,7 +90,7 @@ describe('unlock transaction Status', () => {
       transactions: {
         txBroadcastError: { message: 'error:test' },
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -110,7 +110,7 @@ describe('unlock transaction Status', () => {
       transactions: {
         txBroadcastError: null,
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 

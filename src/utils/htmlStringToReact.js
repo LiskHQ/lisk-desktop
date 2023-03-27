@@ -8,12 +8,14 @@ const htmlStringToReact = (html = '') => {
   const before = trimmedHtml.slice(0, trimmedHtml.indexOf(elements[0]));
   return (
     <>
-      {
-      elements.map((element, index) => {
+      {elements.map((element, index) => {
         const [tag, content, after] = element.match(regex.htmlElements).slice(1);
-        const props = tag === 'a' && /#\d+$/.test(content) ? {
-          href: `https://github.com/LiskHQ/lisk-desktop/issues/${content.replace(/\D/g, '')}`,
-        } : {};
+        const props =
+          tag === 'a' && /#\d+$/.test(content)
+            ? {
+                href: `https://github.com/LiskHQ/lisk-desktop/issues/${content.replace(/\D/g, '')}`,
+              }
+            : {};
         return (
           <Fragment key={`${tag}-${index}`}>
             {!!before && before}
@@ -22,8 +24,7 @@ const htmlStringToReact = (html = '') => {
             {!!after && htmlStringToReact(after)}
           </Fragment>
         );
-      })
-    }
+      })}
     </>
   );
 };

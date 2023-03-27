@@ -86,7 +86,7 @@ describe('encoding', () => {
       id: Buffer.alloc(0),
     });
   });
-  
+
   it('should create tx from json when no paramSchema is provided', () => {
     codec.codec.decode.mockReturnValue('params-decoded');
 

@@ -24,15 +24,8 @@ import styles from './blockDetails.css';
 const Generator = ({ generatorAddress, generatorUsername }) => {
   if (generatorUsername && generatorAddress) {
     return (
-      <Link
-        className={styles.generator}
-        to={`${routes.explorer.path}?address=${generatorAddress}`}
-      >
-        <WalletVisual
-          className={styles.avatar}
-          address={generatorAddress}
-          size={30}
-        />
+      <Link className={styles.generator} to={`${routes.explorer.path}?address=${generatorAddress}`}>
+        <WalletVisual className={styles.avatar} address={generatorAddress} size={30} />
         <span>{generatorUsername}</span>
       </Link>
     );
@@ -63,9 +56,7 @@ const getFields = (data = {}, token, t, currentHeight) => ({
   },
   date: {
     label: t('Date'),
-    value: (
-      <DateTimeFromTimestamp time={data.timestamp} />
-    ),
+    value: <DateTimeFromTimestamp time={data.timestamp} />,
   },
   confirmations: {
     label: t('Confirmations'),
@@ -121,16 +112,20 @@ const Rows = ({ data, t, currentHeight }) => {
   return <div className={styles.dataContainer}>{columns}</div>;
 };
 
-const BlockDetails = ({
-  height, id,
-}) => {
-  const { data: { height: currentHeight } } = useLatestBlock();
+const BlockDetails = ({ height, id }) => {
+  const {
+    data: { height: currentHeight },
+  } = useLatestBlock();
   const { t } = useTranslation();
-  const { data: blocks, error, isLoading } = useBlocks({
+  const {
+    data: blocks,
+    error,
+    isLoading,
+  } = useBlocks({
     config: {
       params: {
-        ...id && { blockID: id },
-        ...height && { height },
+        ...(id && { blockID: id }),
+        ...(height && { height }),
       },
     },
   });
@@ -161,16 +156,9 @@ const BlockDetails = ({
         </BoxHeader>
         <BoxContent>
           {error ? (
-            <Feedback
-              message={t('Failed to load block details.')}
-              status="error"
-            />
+            <Feedback message={t('Failed to load block details.')} status="error" />
           ) : (
-            <Rows
-              data={blocks?.data?.[0] || {}}
-              currentHeight={currentHeight}
-              t={t}
-            />
+            <Rows data={blocks?.data?.[0] || {}} currentHeight={currentHeight} t={t} />
           )}
         </BoxContent>
       </Box>
@@ -179,9 +167,11 @@ const BlockDetails = ({
           <BoxTabs {...tabs} />
         </BoxHeader>
         <BoxContent className={styles.content}>
-          {activeTab === 'transactions'
-            ? <Transactions blockId={id} />
-            : <TransactionEvents blockId={id} />}
+          {activeTab === 'transactions' ? (
+            <Transactions blockId={id} />
+          ) : (
+            <TransactionEvents blockId={id} />
+          )}
         </BoxContent>
       </Box>
     </div>

@@ -25,7 +25,7 @@ export const accountMenu = (authData) => [
     component: 'multiSignature',
     icon: 'multiSignatureOutline',
     label: 'Register multisignature account',
-    isHidden: authData?.data?.numberOfSignatures > 0
+    isHidden: authData?.data?.numberOfSignatures > 0,
   },
   {
     component: 'removeSelectedAccount',

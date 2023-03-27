@@ -34,9 +34,7 @@ const SessionManager = ({ history }) => {
         <PrimaryButton className="add-button" onClick={addApplication}>
           <span className={styles.buttonContent}>
             <Icon name="plus" />
-            <span>
-              {t('Connect Wallet')}
-            </span>
+            <span>{t('Connect Wallet')}</span>
           </span>
         </PrimaryButton>
       </div>
@@ -54,7 +52,7 @@ const SessionManager = ({ history }) => {
             disconnect,
           }}
           emptyState={{
-            message: t('You haven\'t paired with any applications yet.'),
+            message: t("You haven't paired with any applications yet."),
           }}
         />
       </BoxContent>

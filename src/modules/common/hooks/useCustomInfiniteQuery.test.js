@@ -19,9 +19,9 @@ describe('useCustomInfiniteQuery hook', () => {
   const keys = ['CUSTOM_INFINITE_QUERY'];
 
   it('fetch data correctly', async () => {
-    const { result, waitFor } = renderHook(
-      () => useCustomInfiniteQuery({ config, keys }), { wrapper },
-    );
+    const { result, waitFor } = renderHook(() => useCustomInfiniteQuery({ config, keys }), {
+      wrapper,
+    });
 
     expect(result.current.isLoading).toBeTruthy();
 

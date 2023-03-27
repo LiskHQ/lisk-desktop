@@ -7,9 +7,7 @@ import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 
 const Sender = () => {
-  const { activeToken, transaction, network } = React.useContext(
-    TransactionDetailsContext,
-  );
+  const { activeToken, transaction, network } = React.useContext(TransactionDetailsContext);
   const validatorName = getValidatorName(transaction, activeToken);
   const senderLabel = getModuleCommandSenderLabel()[transaction.moduleCommand];
   const address = extractAddressFromPublicKey(transaction.senderPublicKey);

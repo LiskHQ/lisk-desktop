@@ -25,7 +25,7 @@ describe('BlockDetails page', () => {
     expect(wrapper.find('h1').at(0)).toHaveText('Block details');
     expect(wrapper.find('label').at(0)).toHaveText('Block ID');
     expect(wrapper.find('span.copy-title').at(0)).toHaveText(
-      truncateAddress(mockTransactions.data[5].id),
+      truncateAddress(mockTransactions.data[5].id)
     );
     expect(wrapper.find('label').at(1)).toHaveText('Height');
     expect(wrapper.find('label').at(2)).toHaveText('Date');
@@ -47,9 +47,7 @@ describe('BlockDetails page', () => {
     wrapper = mountWithQueryClient(BlockDetails, newProps);
     expect(wrapper.find('h1').at(0)).toHaveText('Block details');
     expect(wrapper).toContainMatchingElement('Feedback');
-    expect(wrapper.find('span').at(0)).toHaveText(
-      'Failed to load block details.',
-    );
+    expect(wrapper.find('span').at(0)).toHaveText('Failed to load block details.');
   });
 
   // skipped because this test should have been covered by BlockDetailsTransactions.test.js

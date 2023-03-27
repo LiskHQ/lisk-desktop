@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './nodeList.css';
 
-export default (changeSort, t) => ([
+export default (changeSort, t) => [
   {
     title: t('IP address'),
     classList: grid['col-xs-3'],
@@ -18,13 +18,9 @@ export default (changeSort, t) => ([
       title: t('Country'),
       message: () => (
         <p>
-          <span>
-            Lisk Desktop determines the country names using
-            GeoLite2 data created by
-          </span>
+          <span>Lisk Desktop determines the country names using GeoLite2 data created by</span>
           &nbsp;
-          <a href="http://www.maxmind.com">Maxmind</a>
-          .
+          <a href="http://www.maxmind.com">Maxmind</a>.
         </p>
       ),
       position: 'bottom',
@@ -46,4 +42,4 @@ export default (changeSort, t) => ([
       key: 'height',
     },
   },
-]);
+];

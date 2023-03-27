@@ -7,8 +7,8 @@ describe('WalletDetails', () => {
 
   const props = {
     isLoading: false,
-    tokens: [{ availableBalance: '99999800000000', tokenID: "0000000000000000" }],
-    t: key => key,
+    tokens: [{ availableBalance: '99999800000000', tokenID: '0000000000000000' }],
+    t: (key) => key,
   };
 
   beforeEach(() => {

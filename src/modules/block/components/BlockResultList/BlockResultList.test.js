@@ -6,7 +6,7 @@ describe('Blocks', () => {
   let wrapper;
 
   const props = {
-    t: v => v,
+    t: (v) => v,
     blocks: [
       {
         params: {

@@ -3,7 +3,6 @@ import { screen, render } from '@testing-library/react';
 import routes from 'src/routes/routes';
 import AccountCreationTips from './index';
 
-
 describe('AccountCreationTips', () => {
   it('displays properly', () => {
     render(<AccountCreationTips />);

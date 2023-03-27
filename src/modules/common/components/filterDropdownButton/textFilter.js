@@ -1,9 +1,7 @@
 import React from 'react';
 import { Input } from 'src/theme';
 
-const TextFilter = ({
-  filters, label, name, placeholder, updateCustomFilters, valueFormatter,
-}) => {
+const TextFilter = ({ filters, label, name, placeholder, updateCustomFilters, valueFormatter }) => {
   const onChange = ({ target }) => {
     updateCustomFilters({
       [name]: {
@@ -14,20 +12,16 @@ const TextFilter = ({
     });
   };
   const inputProps = {
-    label, name, placeholder, onChange,
+    label,
+    name,
+    placeholder,
+    onChange,
   };
-  return (
-    <Input
-      {...inputProps}
-      value={filters[name]}
-      className={name}
-      size="m"
-    />
-  );
+  return <Input {...inputProps} value={filters[name]} className={name} size="m" />;
 };
 
 TextFilter.defaultProps = {
-  valueFormatter: value => value,
+  valueFormatter: (value) => value,
 };
 
 export default TextFilter;

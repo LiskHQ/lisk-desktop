@@ -7,7 +7,10 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './SessionManager.css';
 
 const SessionRow = ({ data, t, disconnect }) => (
-  <div key={data.topic} className={`connection ${styles.sessionRow} ${tableStyles.row} ${grid.row}`}>
+  <div
+    key={data.topic}
+    className={`connection ${styles.sessionRow} ${tableStyles.row} ${grid.row}`}
+  >
     <div className={grid['col-xs-3']}>
       <span>{data.peerMetadata.name}</span>
     </div>
@@ -18,7 +21,7 @@ const SessionRow = ({ data, t, disconnect }) => (
       <span>{truncateAddress(data.topic)}</span>
     </div>
     <div className={grid['col-xs-2']}>
-      <TertiaryButton onClick={() => (disconnect(data.topic))}>{t('Disconnect')}</TertiaryButton>
+      <TertiaryButton onClick={() => disconnect(data.topic)}>{t('Disconnect')}</TertiaryButton>
     </div>
   </div>
 );

@@ -36,7 +36,7 @@ jest.mock('@walletconnect/sign-client', () => ({
   init: jest.fn().mockResolvedValue(Promise.resolve({ mock: true })),
 }));
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 
 const mockInputNode = {
@@ -69,14 +69,13 @@ jest.mock('@account/hooks/useCurrentAccount.js');
 useCurrentAccount.mockImplementation(() => [mockCurrentAccount]);
 
 describe('TopBar', () => {
-
   const props = {
     t: (val) => val,
     logOut: jest.fn(),
     location: { pathname: routes.dashboard.path, search: '' },
     history: {
       location: { pathname: routes.dashboard.path, search: '' },
-      replace: () => { },
+      replace: () => {},
       push: jest.fn(),
     },
     settingsUpdated: jest.fn(),
@@ -127,12 +126,10 @@ describe('TopBar', () => {
     expect(wrapper).not.toContainMatchingElement('.account-management-dropdown');
   });
 
-
   it('renders the search component when user do click in the search icon', () => {
     const wrapper = mountWithRouterAndQueryClient(TopBar, props, {
       pathname: routes.wallet.path,
     });
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
-
 });

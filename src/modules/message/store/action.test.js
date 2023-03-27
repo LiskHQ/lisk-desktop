@@ -27,7 +27,10 @@ describe('balanceReclaimed', () => {
 
     await signMessage({ nextStep, privateKey, message })();
 
-    expect(cryptography.ed.signAndPrintMessage).toHaveBeenCalledWith(message, Buffer.from(privateKey, 'hex'));
+    expect(cryptography.ed.signAndPrintMessage).toHaveBeenCalledWith(
+      message,
+      Buffer.from(privateKey, 'hex')
+    );
     expect(nextStep).toHaveBeenCalledWith({
       signature: defaultPrintedMessage,
       message,

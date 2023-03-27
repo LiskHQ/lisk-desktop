@@ -7,7 +7,7 @@ import routes from 'src/routes/routes';
  * @param {string} path the url path
  */
 export const extractRelevantSearchParam = (path) => {
-  const relevantRoute = Object.values(routes).find(route => route.path === path);
+  const relevantRoute = Object.values(routes).find((route) => route.path === path);
   if (relevantRoute) {
     return relevantRoute.searchParam;
   }
@@ -23,7 +23,8 @@ export const getSearchedText = (history) => {
   const screenName = history.location.pathname;
   const relevantSearchParam = extractRelevantSearchParam(screenName);
   const relevantSearchParamValue = selectSearchParamValue(
-    history.location.search, relevantSearchParam,
+    history.location.search,
+    relevantSearchParam
   );
   return { relevantSearchParam, relevantSearchParamValue };
 };

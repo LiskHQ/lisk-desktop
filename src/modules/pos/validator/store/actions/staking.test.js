@@ -74,8 +74,8 @@ describe('actions: staking', () => {
       active: 'LSK',
     },
     blockChainApplications: {
-      current: {chainID: mockBlockchainApp.data[0].chainID}
-    }
+      current: { chainID: mockBlockchainApp.data[0].chainID },
+    },
   });
 
   const privateKey = '0x0';

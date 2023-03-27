@@ -28,10 +28,7 @@ const emptyKeys = {
 const MultisigAccountDetails = ({ t, wallet, history }) => {
   const [currentAccount] = useCurrentAccount();
   const network = useSelector(selectNetwork);
-  const queryAddress = selectSearchParamValue(
-    history.location.search,
-    'address',
-  );
+  const queryAddress = selectSearchParamValue(history.location.search, 'address');
   const address = queryAddress || currentAccount.metadata.address;
   const { numberOfSignatures, optionalKeys, mandatoryKeys } = wallet.data.keys || emptyKeys;
   const groupPublicKey = wallet.data.publicKey || currentAccount.metadata.pubkey;
@@ -49,9 +46,9 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
             address: extractAddressFromPublicKey(publicKey),
             publicKey,
             mandatory: true,
-          })),
+          }))
         ),
-    [numberOfSignatures, optionalKeys, mandatoryKeys],
+    [numberOfSignatures, optionalKeys, mandatoryKeys]
   );
 
   useEffect(() => {
@@ -59,17 +56,10 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
   }, [network]);
 
   return (
-    <Dialog
-      hasClose
-      className={`${grid.row} ${grid['center-xs']} ${styles.container}`}
-    >
+    <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
       <header className={styles.header}>
         <img src={defaultBackgroundImage} className={styles.bg} />
-        <WalletVisual
-          address={address}
-          size={64}
-          className={styles.avatar}
-        />
+        <WalletVisual address={address} size={64} className={styles.avatar} />
       </header>
       <Box isLoading={false} className={styles.wrapper}>
         <BoxContent className={styles.mainContent}>
@@ -98,7 +88,9 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
           <div className={styles.infoContainer}>
             <div className={styles.column}>
               <strong className={styles.sectionTitle}>{t('Multisignature details')}</strong>
-              <span className={styles.sectionValue}>{t('This account is a multisignature account.')}</span>
+              <span className={styles.sectionValue}>
+                {t('This account is a multisignature account.')}
+              </span>
             </div>
             <div className={styles.column}>
               <p>
@@ -106,7 +98,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
                 <Tooltip position="top left" indent>
                   <span>
                     {t(
-                      'To provide a required signature, use the "Sign multisignature" tool in the sidebar."',
+                      'To provide a required signature, use the "Sign multisignature" tool in the sidebar."'
                     )}
                   </span>
                 </Tooltip>

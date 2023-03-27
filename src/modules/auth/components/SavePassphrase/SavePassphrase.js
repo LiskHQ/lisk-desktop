@@ -5,17 +5,13 @@ import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import PassphraseBackup from '@auth/components/passphraseBackup';
 import registerStyles from '../Signup/register.css';
 
-const SavePassphrase = ({
-  t, passphrase, prevStep, nextStep, title,
-}) => (
+const SavePassphrase = ({ t, passphrase, prevStep, nextStep, title }) => (
   <>
     <div className={registerStyles.titleHolder}>
       <h1>{title || t('Save your secret recovery phrase')}</h1>
       <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
     </div>
-    <div
-      className={`${grid['col-sm-10']} ${registerStyles.passphraseBackupContainer}`}
-    >
+    <div className={`${grid['col-sm-10']} ${registerStyles.passphraseBackupContainer}`}>
       <PassphraseBackup
         passphrase={passphrase}
         t={t}

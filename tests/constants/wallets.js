@@ -9,7 +9,8 @@ const wallets = {
       balance: '9897000000000000',
       isMigrated: true,
       isMultisignature: false,
-      privateKey: 'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+      privateKey:
+        'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
     },
     token: { balance: '9897000000000000' },
     sequence: { nonce: '1' },
@@ -29,7 +30,7 @@ const wallets = {
       isValidator: true,
     },
     token: { balance: 1000e8 },
-    sequence: { },
+    sequence: {},
     pos: {
       validator: {
         username: 'genesis_17',
@@ -70,8 +71,8 @@ const wallets = {
       address: 'lsksckkjs2c8dnu7vhcku825cp62ed6eyxd8pbt6p',
       isValidator: false,
     },
-    token: { },
-    sequence: { },
+    token: {},
+    sequence: {},
     pos: {
       validator: { username: 'test' },
     },
@@ -99,14 +100,18 @@ const wallets = {
       balance: '9897000000000000',
       isMigrated: true,
       isMultisignature: true,
-      privateKey: 'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+      privateKey:
+        'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
     },
     token: { balance: '9897000000000000' },
     sequence: { nonce: '1' },
     keys: {
       numberOfSignatures: 2,
       mandatoryKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f'],
-      optionalKeys: ['0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', '197cf311f678406bc72a8edfdc3dffe6f59f49c4550a860e4b68fb20382211d0'],
+      optionalKeys: [
+        '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+        '197cf311f678406bc72a8edfdc3dffe6f59f49c4550a860e4b68fb20382211d0',
+      ],
     },
     pos: {
       validator: {},
@@ -120,22 +125,23 @@ const wallets = {
       serverPublicKey: 'c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
       address: 'lskkx46qy3wkwtfbh4gzbq57tx6dzfexu5yufwh5b',
     },
-    token: { },
-    sequence: { },
+    token: {},
+    sequence: {},
     pos: {
       validator: {},
       sentStakes: [],
     },
   },
   without_initialization: {
-    passphrase: 'traffic woman skull forest nerve luggage traffic wrestle ensure organ moon century',
+    passphrase:
+      'traffic woman skull forest nerve luggage traffic wrestle ensure organ moon century',
     summary: {
       publicKey: 'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494',
       address: 'lskzazqvqytehnucqos7atc5knsp872dhetz9rchn',
       balance: 0,
     },
     token: { balance: 0 },
-    sequence: { },
+    sequence: {},
     pos: {
       validator: {},
       sentStakes: [],
@@ -148,7 +154,7 @@ const wallets = {
       balance: 200000000,
     },
     token: { balance: 200000000 },
-    sequence: { },
+    sequence: {},
     pos: {
       validator: {},
       sentStakes: [],

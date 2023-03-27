@@ -1,9 +1,5 @@
 import http from 'src/utils/api/http';
-import {
-  getPeers,
-  getNetworkStatistics,
-  getNetworkStatus,
-} from './index';
+import { getPeers, getNetworkStatistics, getNetworkStatus } from './index';
 
 jest.mock('src/utils/api/http');
 
@@ -27,14 +23,18 @@ describe('API: LSK Network', () => {
 
     it('should return list of connected peers', async () => {
       const expectedResponse = {
-        data: [{
-          ip: '135.181.46.133',
-          version: '3.0.0-beta.1',
-          height: 449442,
-        }],
+        data: [
+          {
+            ip: '135.181.46.133',
+            version: '3.0.0-beta.1',
+            height: 449442,
+          },
+        ],
       };
       setApiResponseData(expectedResponse, http);
-      await expect(getPeers({ network, params: { version: '3.0' } })).resolves.toEqual(expectedResponse);
+      await expect(getPeers({ network, params: { version: '3.0' } })).resolves.toEqual(
+        expectedResponse
+      );
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
         path: '/api/v3/peers',
@@ -117,14 +117,15 @@ describe('API: LSK Network', () => {
             offset: 2160,
           },
           registeredModules: ['token', 'sequence', 'keys', 'pos', 'legacyAccount'],
-
         },
       };
       setApiResponseData(expectedResponse, http);
       await expect(getNetworkStatus({ network })).resolves.toEqual(expectedResponse);
-      expect(http).toHaveBeenCalledWith(expect.objectContaining({
-        path: '/api/v3/network/status',
-      }));
+      expect(http).toHaveBeenCalledWith(
+        expect.objectContaining({
+          path: '/api/v3/network/status',
+        })
+      );
     });
 
     it('should throw when api fails', async () => {

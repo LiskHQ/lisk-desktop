@@ -2,7 +2,7 @@
 import { statusMessages } from '@transaction/configuration/statusConfig';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 
-const reclaimBalanceMessages = t => ({
+const reclaimBalanceMessages = (t) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Reclaimed LSK tokens'),

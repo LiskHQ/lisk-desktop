@@ -13,15 +13,12 @@ export const DeviceDisconnectDialog = ({ t, history }) => {
   const model = selectSearchParamValue(history.location.search, 'model');
 
   return (
-    <Dialog
-      hasClose
-      className={`${grid.row} ${grid['center-xs']} ${styles.wrapper}`}
-    >
+    <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.wrapper}`}>
       <Dialog.Title>{t('You are disconnected')}</Dialog.Title>
       <Dialog.Description>
         {t(
           'There is no connection to the {{model}}. Please check the cables if it happened by accident.',
-          { model },
+          { model }
         )}
       </Dialog.Description>
       <Dialog.Options align="center">

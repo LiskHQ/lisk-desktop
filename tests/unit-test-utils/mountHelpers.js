@@ -6,7 +6,7 @@ import i18n from 'src/utils/i18n/i18n';
 
 export const mountWithContext = (
   component,
-  { storeState = {}, location = {}, middlewares = [] } = {},
+  { storeState = {}, location = {}, middlewares = [] } = {}
 ) => {
   const store = configureMockStore(middlewares)(storeState);
   const history = {
@@ -21,7 +21,10 @@ export const mountWithContext = (
 
   const options = {
     context: {
-      store, history, i18n, router: { route: history, history },
+      store,
+      history,
+      i18n,
+      router: { route: history, history },
     },
     childContextTypes: {
       store: PropTypes.object.isRequired,

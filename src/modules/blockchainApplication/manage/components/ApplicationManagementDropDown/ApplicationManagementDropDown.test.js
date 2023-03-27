@@ -11,10 +11,7 @@ jest.mock('src/utils/searchParams');
 const mockSetApplication = jest.fn();
 const mockCurrentApplication = mockManagedApplications[1];
 
-useCurrentApplication.mockReturnValue([
-  mockCurrentApplication,
-  mockSetApplication,
-]);
+useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetApplication]);
 
 describe('ApplicationManagementDropDown', () => {
   const props = {
@@ -35,6 +32,8 @@ describe('ApplicationManagementDropDown', () => {
 
   it('should show the manage application list popup', () => {
     fireEvent.click(screen.getByText(mockCurrentApplication.chainName));
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: 'manageApplications' });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, {
+      modal: 'manageApplications',
+    });
   });
 });

@@ -17,11 +17,7 @@ const RequestView = ({ history }) => {
 
   return (
     <Dialog hasClose className={styles.dialogWrapper}>
-      <MultiStep
-        key="RequestView"
-        finalCallback={backToWallet}
-        className={styles.wrapper}
-      >
+      <MultiStep key="RequestView" finalCallback={backToWallet} className={styles.wrapper}>
         <RequestSummary />
         <Summary />
         <TxSignatureCollector />

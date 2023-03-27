@@ -14,7 +14,7 @@ describe('useRewardsLocked hook 111', () => {
   });
 
   it('fetching data correctly', async () => {
-    const config = { params: { address:'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg' } };
+    const config = { params: { address: 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg' } };
     const { result, waitFor } = renderHook(() => useRewardsLocked({ config }), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);

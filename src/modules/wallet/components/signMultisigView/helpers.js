@@ -12,11 +12,12 @@ const getNumbersOfSignaturesRequired = ({ keys, isRegisterMultisignature }) => {
 
 const getNonEmptySignatures = (transaction, isRegisterMultisignature) => {
   if (isRegisterMultisignature) {
-    return transaction.params.signatures.filter(signature => signature !== null && signature.length);
+    return transaction.params.signatures.filter(
+      (signature) => signature !== null && signature.length
+    );
   }
-  return transaction.signatures.filter(signature => signature !== null && signature.length);
-}
-
+  return transaction.signatures.filter((signature) => signature !== null && signature.length);
+};
 
 export const findNonEmptySignatureIndices = (signatures) => {
   const indices = [];
@@ -33,37 +34,40 @@ export const findNonEmptySignatureIndices = (signatures) => {
 // eslint-disable-next-line max-statements, complexity
 export const getTransactionSignatureStatus = (senderAccount, transaction) => {
   const moduleCommand = joinModuleAndCommand(transaction);
-  const isRegisterMultisignature = moduleCommand
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const isRegisterMultisignature =
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   if (isRegisterMultisignature) {
-    const { params: { mandatoryKeys, optionalKeys } } = transaction;
+    const {
+      params: { mandatoryKeys, optionalKeys },
+    } = transaction;
     const numberOfSignatures = mandatoryKeys.length + optionalKeys.length;
     const paramsSignature = transaction.params.signatures.filter(
-      s => s.toString('hex') !== Buffer.alloc(64).toString('hex')
+      (s) => s.toString('hex') !== Buffer.alloc(64).toString('hex')
     );
 
     if (paramsSignature.length !== numberOfSignatures) {
-      return signatureCollectionStatus.partiallySigned
+      return signatureCollectionStatus.partiallySigned;
     }
     if (paramsSignature.length === numberOfSignatures && transaction.signatures.length > 0) {
-      return signatureCollectionStatus.fullySigned
+      return signatureCollectionStatus.fullySigned;
     }
   }
   const keys = getKeys({
-    senderAccount, transaction, isRegisterMultisignature,
+    senderAccount,
+    transaction,
+    isRegisterMultisignature,
   });
 
   const required = getNumbersOfSignaturesRequired({
-    keys, transaction, isRegisterMultisignature,
+    keys,
+    transaction,
+    isRegisterMultisignature,
   });
   const alreadySigned = getNonEmptySignatures(transaction, isRegisterMultisignature).length;
   const registrationExtra = 0;
   const mandatorySigs = keys.mandatoryKeys?.length + registrationExtra;
-  const nonEmptyMandatorySigs = getNonEmptySignatures(
-    transaction,
-    isRegisterMultisignature
-  ).length;
+  const nonEmptyMandatorySigs = getNonEmptySignatures(transaction, isRegisterMultisignature).length;
 
   if (required > alreadySigned) {
     return signatureCollectionStatus.partiallySigned;
@@ -79,8 +83,8 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
 
 // eslint-disable-next-line max-statements
 export const showSignButton = (senderAccount, account, transaction) => {
-  const isRegisterMultisignature = joinModuleAndCommand(transaction)
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const isRegisterMultisignature =
+    joinModuleAndCommand(transaction) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   let mandatoryKeys = [];
   let optionalKeys = [];
@@ -93,6 +97,8 @@ export const showSignButton = (senderAccount, account, transaction) => {
     optionalKeys = senderAccount.keys?.optionalKeys || [];
   }
 
-  return mandatoryKeys.includes(account.summary.publicKey)
-    || optionalKeys.includes(account.summary.publicKey);
+  return (
+    mandatoryKeys.includes(account.summary.publicKey) ||
+    optionalKeys.includes(account.summary.publicKey)
+  );
 };

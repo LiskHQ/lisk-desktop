@@ -14,7 +14,9 @@ const RemoveSuccess = ({ onComplete }) => {
         <Icon name="accountRemoved" data-testid="accountRemovedIcon" />
       </div>
       <div className={styles.buttonRow}>
-        <PrimaryButton className={styles.button} onClick={onComplete}>{t('Continue to manage accounts')}</PrimaryButton>
+        <PrimaryButton className={styles.button} onClick={onComplete}>
+          {t('Continue to manage accounts')}
+        </PrimaryButton>
       </div>
     </>
   );

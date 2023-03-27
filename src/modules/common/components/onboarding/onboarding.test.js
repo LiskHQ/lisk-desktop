@@ -6,23 +6,29 @@ import Onboarding from './onboarding';
 
 describe('Onboarding component', () => {
   const props = {
-    slides: [{
-      title: 'Title',
-      content: 'content',
-      illustration: 'test.svg',
-    }],
+    slides: [
+      {
+        title: 'Title',
+        content: 'content',
+        illustration: 'test.svg',
+      },
+    ],
     actionButtonLabel: 'cta label',
     finalCallback: jest.fn(),
     onClose: jest.fn(),
     name: 'onboaring name',
     className: '',
-    t: v => v,
+    t: (v) => v,
   };
   const store = configureStore()({ wallet: { passphrase: 'test' } });
   const mountWithProps = (extraProps = {}) => {
     // eslint-disable-next-line prefer-object-spread
     const mergedProps = Object.assign({}, props, extraProps);
-    return mount(<Provider store={store}><Onboarding {...mergedProps} /></Provider>);
+    return mount(
+      <Provider store={store}>
+        <Onboarding {...mergedProps} />
+      </Provider>
+    );
   };
 
   beforeEach(() => {
@@ -45,15 +51,18 @@ describe('Onboarding component', () => {
   });
 
   it('Should render multiple slides and navigate between them', () => {
-    const slides = [{
-      title: 'Title',
-      content: 'content',
-      illustration: 'test.svg',
-    }, {
-      title: 'Title',
-      content: 'content',
-      illustration: 'test.svg',
-    }];
+    const slides = [
+      {
+        title: 'Title',
+        content: 'content',
+        illustration: 'test.svg',
+      },
+      {
+        title: 'Title',
+        content: 'content',
+        illustration: 'test.svg',
+      },
+    ];
 
     const wrapper = mountWithProps({ slides });
     expect(wrapper.find('.slides')).toContainMatchingElements(2, 'section');

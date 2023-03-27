@@ -1,1 +1,1 @@
-export * from './HardwareWalletStatus'
+export * from './HardwareWalletStatus';

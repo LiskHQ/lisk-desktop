@@ -14,20 +14,14 @@ describe('useGetInitializationFees hook', () => {
 
   it('should not call the useInvoke query if useGetHasUserAccount is still loading', () => {
     useGetHasUserAccount.mockReturnValue({ data: { data: { exits: false } }, isLoading: true });
-    const { result } = renderHook(
-      () => useGetInitializationFees({ address }),
-      { wrapper }
-    );
+    const { result } = renderHook(() => useGetInitializationFees({ address }), { wrapper });
 
     expect(result.current.data).toBe(null);
   });
 
   it('should not call token_getInitializationFees when user account is initialized', () => {
     useGetHasUserAccount.mockReturnValue({ data: { data: { exits: true } }, isLoading: true });
-    const { result } = renderHook(
-      () => useGetInitializationFees({ address }),
-      { wrapper }
-    );
+    const { result } = renderHook(() => useGetInitializationFees({ address }), { wrapper });
 
     expect(result.current.data).toBe(null);
   });
@@ -37,10 +31,9 @@ describe('useGetInitializationFees hook', () => {
       data: { data: { exits: false } },
       isLoading: false,
     });
-    const { result, waitFor } = renderHook(
-      () => useGetInitializationFees({ address }),
-      { wrapper }
-    );
+    const { result, waitFor } = renderHook(() => useGetInitializationFees({ address }), {
+      wrapper,
+    });
 
     await waitFor(() => !result.current.isLoading);
 

@@ -7,14 +7,16 @@ const defaultPairings = [{ topic: '0x123' }, { topic: '0x124' }];
 const loaded = { loaded: true };
 
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 
 jest.mock('../utils/connectionCreator', () => ({
   client: {
-    approve: jest.fn().mockImplementation(() => Promise.resolve({
-      acknowledged: jest.fn(),
-    })),
+    approve: jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        acknowledged: jest.fn(),
+      })
+    ),
     pair: jest.fn(),
     disconnect: jest.fn(),
     pairing: {

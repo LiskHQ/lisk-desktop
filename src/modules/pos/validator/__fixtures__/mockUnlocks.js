@@ -1,6 +1,6 @@
 const generateUnlock = (index) => ({
   validatorAddress: `lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg${index}eu`,
-  amount: `${(index+1) * 1000000000}`,
+  amount: `${(index + 1) * 1000000000}`,
   tokenID: '0000000000000000',
   unstakeHeight: 30 + index,
   expectedUnlockableHeight: 300 + index,

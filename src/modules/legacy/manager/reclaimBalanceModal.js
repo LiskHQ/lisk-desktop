@@ -9,7 +9,7 @@ const ReclaimBalanceModal = () => {
   const [isStepTxSignatureCollector, setIsStepTxSignatureCollector] = useState(false);
 
   const onMultiStepChange = useCallback(({ step: { current } }) => {
-    setIsStepTxSignatureCollector([1,2].includes(current));
+    setIsStepTxSignatureCollector([1, 2].includes(current));
   }, []);
 
   return (

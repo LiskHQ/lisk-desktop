@@ -18,7 +18,7 @@ describe('withData', () => {
     const apis = {
       dataKey: {
         apiUtil: jest.fn(() => Promise.resolve(data)),
-        getApiParams: () => (params),
+        getApiParams: () => params,
         autoload: true,
       },
     };

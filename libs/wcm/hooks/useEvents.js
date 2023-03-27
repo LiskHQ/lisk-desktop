@@ -5,6 +5,8 @@ export const useEvents = () => {
   const { events, removeEvent, pushEvent } = useContext(ConnectionContext);
 
   return {
-    events, removeEvent, pushEvent,
+    events,
+    removeEvent,
+    pushEvent,
   };
 };

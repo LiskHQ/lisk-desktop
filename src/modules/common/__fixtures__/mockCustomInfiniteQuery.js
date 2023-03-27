@@ -1,6 +1,4 @@
-export const data = [...new Array(50)].map((_, index) => (
-  { id: index }
-));
+export const data = [...new Array(50)].map((_, index) => ({ id: index }));
 
 export const mockCustomInfiniteQuery = {
   data,

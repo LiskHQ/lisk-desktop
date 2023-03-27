@@ -132,7 +132,9 @@ const getTotalSpendingAmount = ({ module, command, params = {} }) => {
   }
 
   if (moduleCommand === stake) {
-    return params.stakes.reduce((sum, stakeObject) => sum + BigInt(stakeObject.amount), BigInt(0)).toString();
+    return params.stakes
+      .reduce((sum, stakeObject) => sum + BigInt(stakeObject.amount), BigInt(0))
+      .toString();
   }
 
   return '0';
@@ -243,7 +245,12 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
 
     if (senderIndex > -1) {
       const { messageSchema } = options;
-      const memberSignature = signMessageSignature(chainIDBuffer, transaction, privateKeyBuffer, messageSchema);
+      const memberSignature = signMessageSignature(
+        chainIDBuffer,
+        transaction,
+        privateKeyBuffer,
+        messageSchema
+      );
 
       // @todo use correct index once SDK exposes the sort endpoint (#4497)
       const signatures = [...Array(members.length).keys()].map((index) => {
@@ -304,7 +311,15 @@ const signUsingHW = async (wallet, schema, chainID, transaction) => {
   return { ...signedTransaction, id };
 };
 
-export const sign = async (wallet, schema, chainID, transaction, privateKey, senderAccount, options) => {
+export const sign = async (
+  wallet,
+  schema,
+  chainID,
+  transaction,
+  privateKey,
+  senderAccount,
+  options
+) => {
   if (wallet.metadata?.isHW) {
     return signUsingHW(wallet, schema, chainID, transaction);
   }
@@ -338,7 +353,7 @@ const signMultisigTransaction = async (
   chainID,
   privateKey,
   txInitiatorAccount,
-  options,
+  options
 ) => {
   /**
    * Define keys.
@@ -371,7 +386,7 @@ const signMultisigTransaction = async (
       transaction,
       privateKey,
       isRegisterMultisignature ? senderAccount : txInitiatorAccount,
-      options,
+      options
     );
     return [result];
   } catch (e) {

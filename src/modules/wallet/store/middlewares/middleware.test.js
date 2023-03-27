@@ -1,6 +1,4 @@
-import {
-  accountDataUpdated,
-} from 'src/redux/actions';
+import { accountDataUpdated } from 'src/redux/actions';
 
 import commonActionTypes from 'src/modules/common/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
@@ -109,9 +107,11 @@ const defaultState = {
   network,
   wallet,
   transactions: {
-    pending: [{
-      id: 12498250891724098,
-    }],
+    pending: [
+      {
+        id: 12498250891724098,
+      },
+    ],
     confirmed: [],
     wallet: {
       summary: {
@@ -129,7 +129,7 @@ describe('Account middleware', () => {
   const next = jest.fn();
   let store;
 
-  window.Notification = () => { };
+  window.Notification = () => {};
   beforeEach(() => {
     transactionApi.getTransactions.mockResolvedValue({
       data: transactions,

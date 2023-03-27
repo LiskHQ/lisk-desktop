@@ -7,27 +7,32 @@
  * @param {Object} obj2 - Object with new values to be merged onto obj1.
  */
 export const deepMergeObj = (obj1, obj2) =>
-  Object.keys({ ...obj2 }).reduce((obj, key) => (
-    typeof obj2[key] === 'object' && typeof obj1[key] === 'object'
-      && !Array.isArray(obj2[key]) && !Array.isArray(obj1[key])
-      ? { ...obj, [key]: deepMergeObj(obj1[key], obj2[key]) }
-      : { ...obj, [key]: obj2[key] }
-  ), obj1);
+  Object.keys({ ...obj2 }).reduce(
+    (obj, key) =>
+      typeof obj2[key] === 'object' &&
+      typeof obj1[key] === 'object' &&
+      !Array.isArray(obj2[key]) &&
+      !Array.isArray(obj1[key])
+        ? { ...obj, [key]: deepMergeObj(obj1[key], obj2[key]) }
+        : { ...obj, [key]: obj2[key] },
+    obj1
+  );
 
 /**
  * Removes undefined keys from an object.
  * @param {Object} obj - Source object
  * @returns {Object} - Simplified object
  */
-export const removeUndefinedKeys = obj => Object.keys(obj).reduce((acc, key) => {
-  const item = obj[key];
+export const removeUndefinedKeys = (obj) =>
+  Object.keys(obj).reduce((acc, key) => {
+    const item = obj[key];
 
-  if (typeof item !== 'undefined') {
-    acc[key] = item;
-  }
+    if (typeof item !== 'undefined') {
+      acc[key] = item;
+    }
 
-  return acc;
-}, {});
+    return acc;
+  }, {});
 
 /**
  * Checks if the given collection is empty.
@@ -49,9 +54,8 @@ export const isEmpty = (collection) => {
  * @param {Any} value - value to be matched against object keys
  * @returns {Array} array of matching keys
  */
-export const filterObjectPropsWithValue = (object = {}, value) => (
-  Object.keys(object).filter(key => object[key] === value)
-);
+export const filterObjectPropsWithValue = (object = {}, value) =>
+  Object.keys(object).filter((key) => object[key] === value);
 
 /**
  * Creates mailto link from an error
@@ -59,7 +63,11 @@ export const filterObjectPropsWithValue = (object = {}, value) => (
  * @returns {sting} mailto link with recipient, subject, and body
  */
 export const getErrorReportMailto = ({
-  error = 'Unknown error occurred', errorMessage, networkIdentifier, serviceUrl, liskCoreVersion,
+  error = 'Unknown error occurred',
+  errorMessage,
+  networkIdentifier,
+  serviceUrl,
+  liskCoreVersion,
 }) => {
   const recipient = 'desktopdev@lisk.com';
   const subject = `User Reported Error - Lisk - ${VERSION}`; // eslint-disable-line no-undef
@@ -80,11 +88,13 @@ export const getErrorReportMailto = ({
  * @param {Array} arr - Array to be flattened
  * @returns {Array} Flattened array
  */
-export const flattenArray = arr =>
-  arr.reduce((acc, item) =>
-    (Array.isArray(item)
-      ? [...acc, ...flattenArray(item)]
-      : [...acc, item]), []).filter(item => !!item);
+export const flattenArray = (arr) =>
+  arr
+    .reduce(
+      (acc, item) => (Array.isArray(item) ? [...acc, ...flattenArray(item)] : [...acc, item]),
+      []
+    )
+    .filter((item) => !!item);
 
 /**
  * Returns the size of a given string in bytes
@@ -121,7 +131,7 @@ export const kFormatter = (num, precision = 0) => {
   if (Number(num) > 999999) {
     return `${(Number(num) / 1000000).toFixed(precision)}M`;
   }
-  if ((Number(num)) > 999) {
+  if (Number(num) > 999) {
     return `${(Number(num) / 1000).toFixed(precision)}K`;
   }
   return num;
@@ -138,13 +148,10 @@ export const kFormatter = (num, precision = 0) => {
  * @param {String} str - The string to convert to camelCase
  * @return {String} camelCased string
  */
-export const camelize = str =>
+export const camelize = (str) =>
   str
-    .replace(
-      /(?:^\w|[A-Z]|\b\w)/g,
-      (word, index) => (index === 0
-        ? word.toLowerCase()
-        : word.toUpperCase()),
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) =>
+      index === 0 ? word.toLowerCase() : word.toUpperCase()
     )
     .replace(/\s+/g, '');
 
@@ -156,4 +163,4 @@ export const camelize = str =>
  * @param {String} str - The string to convert to capitalized
  * @return {String} capitalized string
  */
-export const capitalize = str => str.toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
+export const capitalize = (str) => str.toLowerCase().replace(/^\w/, (c) => c.toUpperCase());

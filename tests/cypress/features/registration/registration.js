@@ -2,7 +2,6 @@
 import { Given } from 'cypress-cucumber-preprocessor/steps';
 import { ss } from '../../../constants';
 
-
 Given(/^I remember my passphrase$/, function () {
   this.passphrase = [];
   cy.get(ss.copyPassphrase).each(($el) => {

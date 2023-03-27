@@ -5,11 +5,7 @@ import { getTransactionStatus, statusMessages } from '@transaction/configuration
 import styles from './unlockBalanceStatus.css';
 
 const TransactionStatus = ({ account, transactions, t }) => {
-  const status = getTransactionStatus(
-    account,
-    transactions,
-    account.summary.isMultisignature,
-  );
+  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
 
   return (

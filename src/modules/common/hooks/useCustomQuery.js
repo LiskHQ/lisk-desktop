@@ -28,7 +28,7 @@ export const useCustomQuery = ({
 
   return useQuery(
     [...keys, chainID, config],
-    async () => queryFn ? queryFn({config, client}) : client.call(config),
-    options,
+    async () => (queryFn ? queryFn({ config, client }) : client.call(config)),
+    options
   );
 };

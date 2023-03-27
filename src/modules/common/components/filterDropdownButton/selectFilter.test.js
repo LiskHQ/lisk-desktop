@@ -4,7 +4,7 @@ import SelectFilter from './selectFilter';
 
 describe('SelectFilter', () => {
   const props = {
-    t: v => v,
+    t: (v) => v,
     filters: {
       moduleCommand: '',
     },

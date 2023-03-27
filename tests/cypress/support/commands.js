@@ -29,15 +29,16 @@ import networks from '../../../src/modules/network/configuration/networks';
 
 before(() => {
   // Check if lisk core is running
-  cy.request(`${networks.customNode.serviceUrl}/api/v3/network/status`).then(resp => expect(resp.status).to.eq(200));
+  cy.request(`${networks.customNode.serviceUrl}/api/v3/network/status`).then((resp) =>
+    expect(resp.status).to.eq(200)
+  );
 });
 
 beforeEach(() => {
   const settingsWithNetworkSelectorEnabled = { ...settingConstants, showNetwork: true };
-  const lskSettings = deepMergeObj(
-    settingsWithNetworkSelectorEnabled,
-    { token: { list: { LSK: true } } },
-  );
+  const lskSettings = deepMergeObj(settingsWithNetworkSelectorEnabled, {
+    token: { list: { LSK: true } },
+  });
   window.localStorage.setItem('settings', JSON.stringify(lskSettings));
   window.localStorage.setItem('serviceUrl', networks.customNode.serviceUrl);
 });
@@ -64,18 +65,22 @@ Cypress.Commands.add('autologin', (passphrase, network) => {
   localStorage.setItem('loginKey', passphrase);
 });
 
-Cypress.Commands.add('paste', { prevSubject: true }, (subject, { pastePayload, pasteType = 'text' }) => {
-  const data = pasteType === 'application/json' ? JSON.stringify(pastePayload) : pastePayload;
-  const clipboardData = new DataTransfer();
-  clipboardData.setData(pasteType, data);
-  const pasteEvent = new ClipboardEvent('paste', {
-    bubbles: true,
-    cancelable: true,
-    dataType: pasteType,
-    data,
-    clipboardData,
-  });
-  subject[0].dispatchEvent(pasteEvent);
+Cypress.Commands.add(
+  'paste',
+  { prevSubject: true },
+  (subject, { pastePayload, pasteType = 'text' }) => {
+    const data = pasteType === 'application/json' ? JSON.stringify(pastePayload) : pastePayload;
+    const clipboardData = new DataTransfer();
+    clipboardData.setData(pasteType, data);
+    const pasteEvent = new ClipboardEvent('paste', {
+      bubbles: true,
+      cancelable: true,
+      dataType: pasteType,
+      data,
+      clipboardData,
+    });
+    subject[0].dispatchEvent(pasteEvent);
 
-  return subject;
-});
+    return subject;
+  }
+);

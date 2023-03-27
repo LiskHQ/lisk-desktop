@@ -52,13 +52,13 @@ export default class ValidityForm extends React.Component {
           ...inputs,
           [name]: {
             value:
-              valuesFromNextStep[name]
-              || parseSearchParams(props.history.location.search)[name]
-              || '',
+              valuesFromNextStep[name] ||
+              parseSearchParams(props.history.location.search)[name] ||
+              '',
             feedback: '',
           },
         }),
-        {},
+        {}
       ),
       isInputsView: false,
     };
@@ -76,22 +76,16 @@ export default class ValidityForm extends React.Component {
         if (regex.publicKey.test(value)) {
           return '';
         }
-        return t(
-          'This is not a valid public key. Please enter the correct public key.',
-        );
+        return t('This is not a valid public key. Please enter the correct public key.');
       },
       message: () =>
-        (value !== value.trim()
+        value !== value.trim()
           ? t("The message can't contain whitespace at the beginning or end.")
-          : ''),
+          : '',
     };
-    const input = [...this.inputs, this.textarea].find(
-      ({ name: n }) => name === n,
-    );
+    const input = [...this.inputs, this.textarea].find(({ name: n }) => name === n);
     const inputLabel = input && input.label.toLowerCase();
-    const emptyError = value === ''
-      ? t("The {{inputLabel}} can't be empty", { inputLabel })
-      : '';
+    const emptyError = value === '' ? t("The {{inputLabel}} can't be empty", { inputLabel }) : '';
     return validators[name] ? validators[name]() : emptyError;
   }
 
@@ -116,14 +110,9 @@ export default class ValidityForm extends React.Component {
         signature: inputs.signature.value,
       };
     }
-    const separators = [
-      'MESSAGE',
-      'PUBLIC KEY',
-      'SIGNATURE',
-      'END LISK SIGNED MESSAGE',
-    ].join('|');
+    const separators = ['MESSAGE', 'PUBLIC KEY', 'SIGNATURE', 'END LISK SIGNED MESSAGE'].join('|');
     const parsedMessage = inputs.signedMessage.value.split(
-      new RegExp(`\n?-----(${separators})-----\n?`),
+      new RegExp(`\n?-----(${separators})-----\n?`)
     );
     return {
       message: parsedMessage[2],
@@ -147,9 +136,7 @@ export default class ValidityForm extends React.Component {
 
   get canSubmit() {
     const { inputs } = this.state;
-    return this.activeViewInputs.every(
-      ({ name }) => inputs[name].value && !inputs[name].feedback,
-    );
+    return this.activeViewInputs.every(({ name }) => inputs[name].value && !inputs[name].feedback);
   }
 
   render() {
@@ -165,11 +152,7 @@ export default class ValidityForm extends React.Component {
           <BoxInfoText>
             {t('Verify the integrity of a signed message')}
             <Tooltip position="bottom">
-              <p>
-                {t(
-                  'To create a signed message use the "Sign message" tool in the sidebar.',
-                )}
-              </p>
+              <p>{t('To create a signed message use the "Sign message" tool in the sidebar.')}</p>
             </Tooltip>
           </BoxInfoText>
           <div className={styles.inputViewSwitcher}>
@@ -186,9 +169,7 @@ export default class ValidityForm extends React.Component {
               onClick={this.changeViewToInputs}
             />
           </div>
-          {this.activeViewInputs.map(({
-            name, placeholder, label, type,
-          }) => (
+          {this.activeViewInputs.map(({ name, placeholder, label, type }) => (
             <Input
               key={name}
               name={name}
@@ -206,11 +187,7 @@ export default class ValidityForm extends React.Component {
           ))}
         </BoxContent>
         <BoxFooter direction="horizontal">
-          <PrimaryButton
-            onClick={this.goNext}
-            disabled={!this.canSubmit}
-            className="continue"
-          >
+          <PrimaryButton onClick={this.goNext} disabled={!this.canSubmit} className="continue">
             {t('Continue')}
           </PrimaryButton>
         </BoxFooter>

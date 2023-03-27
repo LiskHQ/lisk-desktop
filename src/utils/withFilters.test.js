@@ -5,10 +5,13 @@ import withFilters from './withFilters';
 describe('withFilters', () => {
   const className = 'dummyFilter';
   const apiName = 'validators';
-  const validatorData = [{ username: 'test', id: 1 }, { username: 'Me', id: 2 }];
-  const DummyComponent = props => (
+  const validatorData = [
+    { username: 'test', id: 1 },
+    { username: 'Me', id: 2 },
+  ];
+  const DummyComponent = (props) => (
     <span className={className}>
-      <span className="filter" onChange={event => props.applyFilters(event.target.value)} />
+      <span className="filter" onChange={(event) => props.applyFilters(event.target.value)} />
     </span>
   );
   const initialFilters = { search: '' };

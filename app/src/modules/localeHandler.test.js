@@ -27,9 +27,9 @@ describe('localeHandler', () => {
     electron = {
       Menu: {
         setApplicationMenu: spy(),
-        buildFromTemplate: () => (electron.Menu),
+        buildFromTemplate: () => electron.Menu,
       },
-      app: { getName: () => ('some name'), getVersion: () => ('some version') },
+      app: { getName: () => 'some name', getVersion: () => 'some version' },
     };
     i18nMock = mock(i18n);
   });
@@ -42,7 +42,10 @@ describe('localeHandler', () => {
   it('Changes the locale and rebuilds the menu', () => {
     i18nMock.expects('changeLanguage').once();
     localeHandler.update({
-      electron, event, langCode: 'de', storage,
+      electron,
+      event,
+      langCode: 'de',
+      storage,
     });
     expect(options['config.lang']).to.equal('de');
     expect(electron.Menu.setApplicationMenu).to.have.been.calledWith(electron.Menu);
@@ -52,7 +55,10 @@ describe('localeHandler', () => {
   it.skip('Sends the detected language', () => {
     const sendSpy = spy(win, 'send');
     localeHandler.update({
-      electron, event, langCode, storage,
+      electron,
+      event,
+      langCode,
+      storage,
     });
     localeHandler.send({ storage });
 

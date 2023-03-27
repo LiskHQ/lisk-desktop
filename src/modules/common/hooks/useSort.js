@@ -15,15 +15,18 @@ export default function useSort({ defaultSort, data = [] } = {}) {
     });
   }, [data, sort]);
 
-  const toggleSort = useCallback((param) => {
-    const [prevSortParam, prevSortOrder] = sort?.split?.(':') || [];
+  const toggleSort = useCallback(
+    (param) => {
+      const [prevSortParam, prevSortOrder] = sort?.split?.(':') || [];
 
-    if (prevSortParam === param) {
-      setSort(`${param}:${prevSortOrder === 'desc' ? 'asc' : 'desc'}`);
-      return;
-    }
-    setSort(`${param}:desc`);
-  }, [sort]);
+      if (prevSortParam === param) {
+        setSort(`${param}:${prevSortOrder === 'desc' ? 'asc' : 'desc'}`);
+        return;
+      }
+      setSort(`${param}:desc`);
+    },
+    [sort]
+  );
 
   return { sort, toggleSort, sortedData };
 }

@@ -14,12 +14,8 @@ const InfoBanner = ({
   show,
   t,
 }) => {
-  const [visibility, setVisibility] = useState(
-    !localStorage.getItem(name) && show,
-  );
-  const isLoggedIn = useSelector(
-    (state) => state.wallet && state.wallet.passphrase,
-  );
+  const [visibility, setVisibility] = useState(!localStorage.getItem(name) && show);
+  const isLoggedIn = useSelector((state) => state.wallet && state.wallet.passphrase);
 
   const handleClose = () => {
     localStorage.setItem(name, true);
@@ -36,10 +32,7 @@ const InfoBanner = ({
 
   return (
     <div className={`${styles.infoBanner} ${className}`}>
-      <span
-        className={`closeBanner ${styles.closeBtn}`}
-        onClick={handleClose}
-      />
+      <span className={`closeBanner ${styles.closeBtn}`} onClick={handleClose} />
       <div className={styles.content}>
         <div className={styles.label}>
           <span>{infoLabel}</span>

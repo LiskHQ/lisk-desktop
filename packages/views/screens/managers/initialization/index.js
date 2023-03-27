@@ -16,15 +16,14 @@ const Initialization = ({ t }) => (
       <br />
       <br />
       <br />
-      {t('You can learn more')}
-      {' '}
+      {t('You can learn more')}{' '}
       <span
         className={styles.link}
         onClick={() => {
           window.open(
             'https://lisk.com/blog/announcement/lisk-account-initialization',
             '_blank',
-            'rel=noopener noreferrer',
+            'rel=noopener noreferrer'
           );
         }}
       >

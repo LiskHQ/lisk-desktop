@@ -85,13 +85,7 @@ const Overview = ({ isWalletRoute, history }) => {
         [token.lockedBalances]
       );
 
-      return (
-        <TokenCard
-          token={token}
-          lockedBalance={totalLockedBalance}
-          address={address}
-        />
-      );
+      return <TokenCard token={token} lockedBalance={totalLockedBalance} address={address} />;
     },
     [address]
   );

@@ -8,10 +8,7 @@ export default function (WrappedComponent) {
     const theme = useTheme();
     return (
       <div data-theme={theme}>
-        <WrappedComponent
-          {...props}
-          theme={theme}
-        />
+        <WrappedComponent {...props} theme={theme} />
       </div>
     );
   };

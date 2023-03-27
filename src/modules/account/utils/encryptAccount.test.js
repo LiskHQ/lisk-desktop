@@ -1,7 +1,8 @@
 import { cryptography, passphrase } from '@liskhq/lisk-client';
 import { encryptAccount, decryptAccount } from './encryptAccount';
 
-const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+const recoveryPhrase =
+  'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 const encryptedPassphrase = {
   kdf: 'argon2id',
   kdfparams: {
@@ -32,7 +33,8 @@ const mockAccount = {
   version: 1,
 };
 
-const privateKey = 'd92f8ffd3046fa9de33c21cef7af6f1315e289003c19f9b23ce6d499c8641d4e0792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e97184';
+const privateKey =
+  'd92f8ffd3046fa9de33c21cef7af6f1315e289003c19f9b23ce6d499c8641d4e0792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e97184';
 const publicKey = '0792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e97184';
 const address = 'lskr4npg3esse6duo56u2war7umuo8embs4cwrkaf';
 const defaultKeys = {
@@ -41,20 +43,29 @@ const defaultKeys = {
 };
 
 jest.spyOn(cryptography.legacy, 'getKeys').mockReturnValue(defaultKeys);
-jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(JSON.stringify({
-  recoveryPhrase,
-}));
-jest.spyOn(cryptography.encrypt, 'encryptMessageWithPassword').mockResolvedValue(encryptedPassphrase);
+jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(
+  JSON.stringify({
+    recoveryPhrase,
+  })
+);
+jest
+  .spyOn(cryptography.encrypt, 'encryptMessageWithPassword')
+  .mockResolvedValue(encryptedPassphrase);
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 jest.spyOn(passphrase.Mnemonic, 'validateMnemonic').mockReturnValue(true);
-jest.spyOn(cryptography.ed, 'getPrivateKeyFromPhraseAndPath').mockResolvedValue(defaultKeys.privateKey);
+jest
+  .spyOn(cryptography.ed, 'getPrivateKeyFromPhraseAndPath')
+  .mockResolvedValue(defaultKeys.privateKey);
 
 describe('encryptAccount', () => {
   const password = 'samplePassword@1';
   const name = 'test account';
   const derivationPath = "m/44'/134'/0'";
   const accountDetails = {
-    recoveryPhrase, password, name, derivationPath,
+    recoveryPhrase,
+    password,
+    name,
+    derivationPath,
   };
 
   it('encrypts account when the correct arguments are passed', async () => {

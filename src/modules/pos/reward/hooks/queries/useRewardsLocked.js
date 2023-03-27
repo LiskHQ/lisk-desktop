@@ -1,7 +1,5 @@
 import { POS_REWARDS_LOCKED } from 'src/const/queries';
-import {
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from '@common/hooks';
 
 /**
@@ -20,8 +18,9 @@ import { useCustomQuery } from '@common/hooks';
  * @returns the query object
  */
 
-export const useRewardsLocked = ({ config: customConfig = {}, options } = { }) => {
-  const hasRequiredParams = customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
+export const useRewardsLocked = ({ config: customConfig = {}, options } = {}) => {
+  const hasRequiredParams =
+    customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
 
   const config = {
     url: `/api/${API_VERSION}/pos/rewards/locked`,
@@ -33,7 +32,7 @@ export const useRewardsLocked = ({ config: customConfig = {}, options } = { }) =
   return useCustomQuery({
     keys: [POS_REWARDS_LOCKED],
     config,
-    options:   {
+    options: {
       ...options,
       enabled: !!hasRequiredParams,
     },

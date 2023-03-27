@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import wallets from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useAuth } from '@auth/hooks/queries';
-import { mockAppsTokens } from '@token/fungible/__fixtures__'
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import Summary from './UnlockBalanceSummary';
@@ -13,7 +13,7 @@ jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
 jest.mock('@auth/hooks/queries');
-jest.mock('@pos/validator/hooks/usePosToken')
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('Locked balance Summary', () => {
   const props = {
@@ -56,7 +56,7 @@ describe('Locked balance Summary', () => {
   });
 
   useAuth.mockReturnValue({ data: mockAuth });
-  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0]})
+  usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
 
   it('renders properly Summary component', () => {
     const wrapper = mount(<Summary {...props} />);

@@ -9,21 +9,20 @@ const setup = () => {
     return accumulator;
   }, {});
 
-  return i18n
-    .init({
-      fallbackLng: 'en',
-      resources,
-      lang: 'en',
-      ns: ['common'],
-      defaultNS: 'common',
-      saveMissing: true,
-      debug: false,
-      keySeparator: '>',
-      nsSeparator: '|',
-      react: {
-        defaultTransParent: 'span',
-      },
-    });
+  return i18n.init({
+    fallbackLng: 'en',
+    resources,
+    lang: 'en',
+    ns: ['common'],
+    defaultNS: 'common',
+    saveMissing: true,
+    debug: false,
+    keySeparator: '>',
+    nsSeparator: '|',
+    react: {
+      defaultTransParent: 'span',
+    },
+  });
 };
 
 export default setup;

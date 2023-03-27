@@ -1,10 +1,7 @@
 import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
 import { renderWithQueryClientAndWC } from 'src/utils/testHelpers';
-import {
-  screen,
-  fireEvent,
-} from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
@@ -29,7 +26,7 @@ jest.mock('@transaction/utils/transaction', () => ({
   convertTxJSONToBinary: jest.fn().mockReturnValue({}),
 }));
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 jest.mock('@libs/wcm/utils/requestHandlers', () => ({
   rejectLiskRequest: jest.fn(),
@@ -53,14 +50,12 @@ jest.mock('@transaction/hooks/queries/useSchemas', () => ({
 }));
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
-useCommandSchema.mockReturnValue(
-  {
-    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
-      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
-      {}
-    )
-  }
-);
+useCommandSchema.mockReturnValue({
+  moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
+    (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+    {}
+  ),
+});
 
 describe('RequestSummary', () => {
   const reject = jest.fn();

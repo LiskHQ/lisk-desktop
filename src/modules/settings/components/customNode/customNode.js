@@ -4,8 +4,12 @@ import ReadMode from './readMode';
 import EditMode from './editMode';
 
 const CustomNode = ({
-  t, settings, dropdownRef,
-  customNetworkRemoved, networkSelected, customNetworkStored,
+  t,
+  settings,
+  dropdownRef,
+  customNetworkRemoved,
+  networkSelected,
+  customNetworkStored,
 }) => {
   const [mode, setMode] = useState(settings.storedCustomNetwork ? 'read' : 'edit');
 

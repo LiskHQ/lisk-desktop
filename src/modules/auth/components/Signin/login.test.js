@@ -93,13 +93,8 @@ describe('Login', () => {
       const clipboardData = {
         getData: () => passphrase.replace(/\s[a-z]+$/, ''),
       };
-      wrapper
-        .find('passphraseInput input')
-        .first()
-        .simulate('paste', { clipboardData });
-      expect(wrapper.find('passphraseInput Feedback').last().html()).toContain(
-        expectedError,
-      );
+      wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
+      expect(wrapper.find('passphraseInput Feedback').last().html()).toContain(expectedError);
     });
   });
 
@@ -109,9 +104,7 @@ describe('Login', () => {
         history,
         account: { summary: { address: 'dummy' } },
       });
-      expect(props.history.replace).toHaveBeenCalledWith(
-        `${routes.dashboard.path}`,
-      );
+      expect(props.history.replace).toHaveBeenCalledWith(`${routes.dashboard.path}`);
     });
 
     it('calls this.props.history.replace with referrer address', () => {
@@ -129,10 +122,7 @@ describe('Login', () => {
       const clipboardData = {
         getData: () => '',
       };
-      wrapper
-        .find('passphraseInput input')
-        .first()
-        .simulate('paste', { clipboardData });
+      wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
       wrapper.update();
       wrapper.find('button.login-button').simulate('submit');
       expect(props.login).not.toHaveBeenCalled();
@@ -150,11 +140,9 @@ describe('Login', () => {
             enableCustomDerivationPath: false,
             customDerivationPath: defaultDerivationPath,
           },
-        },
+        }
       );
-      expect(
-        wrapper.find('.custom-derivation-path-input').exists(),
-      ).toBeFalsy();
+      expect(wrapper.find('.custom-derivation-path-input').exists()).toBeFalsy();
     });
   });
 });

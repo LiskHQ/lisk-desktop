@@ -1,1 +1,1 @@
-export * from './ChangeCommissionDialog'
+export * from './ChangeCommissionDialog';

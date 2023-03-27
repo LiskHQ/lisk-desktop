@@ -62,14 +62,10 @@ class MultiStep extends React.Component {
     if (typeof target === 'number') {
       return Math.max(Math.min(target, totalSteps - 1), 0);
     }
-    return moves > 0
-      ? Math.min(current + moves, totalSteps - 1)
-      : Math.max(0, current + moves);
+    return moves > 0 ? Math.min(current + moves, totalSteps - 1) : Math.max(0, current + moves);
   }
 
-  move = ({
-    moves, to, data, reset = false,
-  }) => {
+  move = ({ moves, to, data, reset = false }) => {
     const { key, current } = this.state;
     const { children } = this.props;
     const next = this.keepTargetInRange(to, moves, current, children.length);
@@ -120,7 +116,7 @@ class MultiStep extends React.Component {
     const ProgressBar = progressBar;
 
     return (
-      <Element {...normalizedStyles && normalizedStyles.multiStepWrapper} key={key}>
+      <Element {...(normalizedStyles && normalizedStyles.multiStepWrapper)} key={key}>
         {showNav ? (
           <Nav
             normalizedStyles={normalizedStyles}
@@ -140,12 +136,7 @@ class MultiStep extends React.Component {
             move={this.move}
           />
         ) : null}
-        {ProgressBar && (
-          <ProgressBar
-            current={current}
-            total={children.length}
-          />
-        )}
+        {ProgressBar && <ProgressBar current={current} total={children.length} />}
         {React.cloneElement(children[current], extraProps)}
       </Element>
     );

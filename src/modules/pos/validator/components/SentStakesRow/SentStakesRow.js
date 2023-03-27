@@ -21,10 +21,7 @@ const SentStakesRow = ({ data: stakes, stakeEdited, token }) => {
         <Balance colSpanXs={1} value={`#${rank}`} />
         <Balance value={<TokenAmount val={validatorWeight} token={token} />} />
         <Balance value={`${commission / 100}%`} />
-        <Balance
-          className={styles.amountCell}
-          value={<TokenAmount val={amount} token={token} />}
-        />
+        <Balance className={styles.amountCell} value={<TokenAmount val={amount} token={token} />} />
         <Actions address={validatorAddress} name={name} stakeEdited={stakeEdited} />
       </div>
     </div>
