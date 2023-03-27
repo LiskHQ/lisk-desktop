@@ -19,11 +19,7 @@ export default function ValidityStatus({ inputs, history, t }) {
         name={isCorrect ? 'verifyMessageSuccess' : 'verifyMessageError'}
         className={styles.illustration}
       />
-      <h1>
-        {isCorrect
-          ? t('Signature is correct')
-          : t('Signature is incorrect')}
-      </h1>
+      <h1>{isCorrect ? t('Signature is correct') : t('Signature is incorrect')}</h1>
       <BoxFooter direction="horizontal">
         <PrimaryButton onClick={closeModal} className="go-back">
           {t('Back to wallet')}

@@ -1,4 +1,4 @@
-const transaction = index => ({
+const transaction = (index) => ({
   // height: 9381199 + index,
   // blockId: `35335302495521273${index}`,
   // title: 'transfer',
@@ -19,20 +19,29 @@ const transaction = index => ({
     height: 9381199 + index,
   },
   confirmations: 98 + index,
-  signature: 'bbd659c908a609e27b491aeb429038fa8638b7eaed357043e5fbd463658caf7e9777b8b53f3d5e3ef4b6280e55d264b30162319eee24c3844c7c65974200ed00',
+  signature:
+    'bbd659c908a609e27b491aeb429038fa8638b7eaed357043e5fbd463658caf7e9777b8b53f3d5e3ef4b6280e55d264b30162319eee24c3844c7c65974200ed00',
   signatures: [],
 });
 
-const transactions = Array(30).fill(1).map((item, index) => transaction(index));
+const transactions = Array(30)
+  .fill(1)
+  .map((item, index) => transaction(index));
 
 const sampleTransaction = {
   module: 5,
   command: 1,
-  senderPublicKey: Buffer.from('205688492bc52ddabfdc10fa7728b8bcb5942ad17c68ab5c20e96153fd1ac657', 'hex'),
+  senderPublicKey: Buffer.from(
+    '205688492bc52ddabfdc10fa7728b8bcb5942ad17c68ab5c20e96153fd1ac657',
+    'hex'
+  ),
   nonce: BigInt(2),
   fee: BigInt(142000),
   signatures: [
-    Buffer.from('4bfc0ab5e1b3c3fb1ca7362acc917775ce6345f26a261d592d83c62ad156e90221269a3b423516c2b84c1ebdd285d3bf83be688f5a158c1daf7245fecea0350a', 'hex'),
+    Buffer.from(
+      '4bfc0ab5e1b3c3fb1ca7362acc917775ce6345f26a261d592d83c62ad156e90221269a3b423516c2b84c1ebdd285d3bf83be688f5a158c1daf7245fecea0350a',
+      'hex'
+    ),
   ],
   params: {
     stakes: [

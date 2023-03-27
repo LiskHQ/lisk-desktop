@@ -1,7 +1,7 @@
 import getUnlockButtonTitle from './getUnlockButtonTitle';
 
 describe('getUnlockButtonTitle', () => {
-  const t = str => str;
+  const t = (str) => str;
 
   it('Should show "Nothing available to unlock" if there is an unlockableBalance', () => {
     const unlockableBalance = 0;

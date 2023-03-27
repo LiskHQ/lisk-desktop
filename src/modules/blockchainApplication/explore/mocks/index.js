@@ -1,6 +1,9 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
-import { mockBlockchainApp, mockBlockchainAppStatistics } from '@blockchainApplication/explore/__fixtures__';
+import {
+  mockBlockchainApp,
+  mockBlockchainAppStatistics,
+} from '@blockchainApplication/explore/__fixtures__';
 
 export const blockchainApp = rest.get(
   `*/api/${API_VERSION}/blockchain/apps`,
@@ -17,10 +20,10 @@ export const blockchainApp = rest.get(
       },
     };
     return res(ctx.delay(20), ctx.json(response));
-  },
+  }
 );
 
 export const blockchainAppStatistics = rest.get(
   `*/api/${API_VERSION}/blockchain/apps/statistics`,
-  async (_, res, ctx) => res(ctx.delay(20), ctx.json(mockBlockchainAppStatistics)),
+  async (_, res, ctx) => res(ctx.delay(20), ctx.json(mockBlockchainAppStatistics))
 );

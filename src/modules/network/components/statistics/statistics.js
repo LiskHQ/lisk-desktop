@@ -10,9 +10,7 @@ import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
 import { DoughnutChart } from 'src/modules/common/components/charts';
 import Tooltip from 'src/theme/Tooltip';
-import GuideTooltip, {
-  GuideTooltipItem,
-} from 'src/modules/common/components/charts/guideTooltip';
+import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './statistics.css';
 import { useNetworkStatistics } from '../../hooks/queries';
@@ -50,27 +48,27 @@ const createChartData = (data, t) => {
 const VersionsDonutChart = ({ t, versionData, colorPalette }) => {
   const chartProps = versionData
     ? {
-      data: {
-        labels: versionData.labels,
-        datasets: [
-          {
-            data: versionData.values,
-          },
-        ],
-      },
-      options: {
-        tooltips: {
-          callbacks: {
-            title(tooltipItem, data) {
-              return data.labels[tooltipItem[0].index];
+        data: {
+          labels: versionData.labels,
+          datasets: [
+            {
+              data: versionData.values,
             },
-            label(tooltipItem, data) {
-              return data.datasets[0].data[tooltipItem.index];
+          ],
+        },
+        options: {
+          tooltips: {
+            callbacks: {
+              title(tooltipItem, data) {
+                return data.labels[tooltipItem[0].index];
+              },
+              label(tooltipItem, data) {
+                return data.datasets[0].data[tooltipItem.index];
+              },
             },
           },
         },
-      },
-    }
+      }
     : {};
 
   return (
@@ -123,27 +121,27 @@ const VersionsDonutChart = ({ t, versionData, colorPalette }) => {
 const HeightsDonutChart = ({ t, heightData, colorPalette }) => {
   const chartProps = heightData
     ? {
-      data: {
-        labels: heightData.labels,
-        datasets: [
-          {
-            data: heightData.values,
-          },
-        ],
-      },
-      options: {
-        tooltips: {
-          callbacks: {
-            title(tooltipItem, data) {
-              return data.labels[tooltipItem[0].index];
+        data: {
+          labels: heightData.labels,
+          datasets: [
+            {
+              data: heightData.values,
             },
-            label(tooltipItem, data) {
-              return data.datasets[0].data[tooltipItem.index];
+          ],
+        },
+        options: {
+          tooltips: {
+            callbacks: {
+              title(tooltipItem, data) {
+                return data.labels[tooltipItem[0].index];
+              },
+              label(tooltipItem, data) {
+                return data.datasets[0].data[tooltipItem.index];
+              },
             },
           },
         },
-      },
-    }
+      }
     : {};
 
   return (
@@ -196,31 +194,28 @@ const HeightsDonutChart = ({ t, heightData, colorPalette }) => {
 const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
   const chartProps = connectionData
     ? {
-      data: {
-        labels: [t('Connected'), t('Disconnected')],
-        datasets: [
-          {
-            label: 'validators',
-            data: [
-              connectionData.connectedPeers,
-              connectionData.disconnectedPeers,
-            ],
-          },
-        ],
-      },
-      options: {
-        tooltips: {
-          callbacks: {
-            title(tooltipItem, data) {
-              return data.labels[tooltipItem[0].index];
+        data: {
+          labels: [t('Connected'), t('Disconnected')],
+          datasets: [
+            {
+              label: 'validators',
+              data: [connectionData.connectedPeers, connectionData.disconnectedPeers],
             },
-            label(tooltipItem, data) {
-              return data.datasets[0].data[tooltipItem.index];
+          ],
+        },
+        options: {
+          tooltips: {
+            callbacks: {
+              title(tooltipItem, data) {
+                return data.labels[tooltipItem[0].index];
+              },
+              label(tooltipItem, data) {
+                return data.datasets[0].data[tooltipItem.index];
+              },
             },
           },
         },
-      },
-    }
+      }
     : {};
 
   return (
@@ -249,14 +244,8 @@ const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
             </div>
             <div className="hideOnLargeViewPort">
               <GuideTooltip>
-                <GuideTooltipItem
-                  label={t('Connected')}
-                  color={colorPalette[0]}
-                />
-                <GuideTooltipItem
-                  label={t('Disconnected')}
-                  color={colorPalette[1]}
-                />
+                <GuideTooltipItem label={t('Connected')} color={colorPalette[0]} />
+                <GuideTooltipItem label={t('Disconnected')} color={colorPalette[1]} />
               </GuideTooltip>
             </div>
           </div>
@@ -270,9 +259,7 @@ const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
   );
 };
 
-const ChartsWithData = ({
-  networkVersion, height, basic, t,
-}) => {
+const ChartsWithData = ({ networkVersion, height, basic, t }) => {
   if (!networkVersion) {
     return null; // @todo Create placeholder
   }
@@ -283,21 +270,9 @@ const ChartsWithData = ({
 
   return (
     <>
-      <VersionsDonutChart
-        t={t}
-        versionData={versionData}
-        colorPalette={colorPalette}
-      />
-      <HeightsDonutChart
-        t={t}
-        heightData={heightData}
-        colorPalette={colorPalette}
-      />
-      <ConnectivityDonutChart
-        t={t}
-        connectionData={basic}
-        colorPalette={colorPalette}
-      />
+      <VersionsDonutChart t={t} versionData={versionData} colorPalette={colorPalette} />
+      <HeightsDonutChart t={t} heightData={heightData} colorPalette={colorPalette} />
+      <ConnectivityDonutChart t={t} connectionData={basic} colorPalette={colorPalette} />
     </>
   );
 };
@@ -314,7 +289,7 @@ const Statistics = () => {
           <Tooltip position="bottom right" indent>
             <p>
               {t(
-                'The statistics shown only reflects peers connected to the current Lisk Service node.',
+                'The statistics shown only reflects peers connected to the current Lisk Service node.'
               )}
             </p>
           </Tooltip>

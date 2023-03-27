@@ -12,13 +12,17 @@ const createUnsignedMessage = (TAG, chainID, unsignedBytes) =>
  */
 const signTransactionByHW = async ({ wallet, schema, chainID, transaction }) => {
   const unsignedBytes = transactions.getSigningBytes(transaction, schema);
-  const unsignedMessage = createUnsignedMessage(transactions.TAG_TRANSACTION, chainID, unsignedBytes);
+  const unsignedMessage = createUnsignedMessage(
+    transactions.TAG_TRANSACTION,
+    chainID,
+    unsignedBytes
+  );
 
   try {
     const signature = await getSignedTransaction(
       wallet.metadata.path,
       wallet.metadata.accountIndex,
-      unsignedMessage,
+      unsignedMessage
     );
     transaction.signatures.push(signature.signature);
     return transaction;

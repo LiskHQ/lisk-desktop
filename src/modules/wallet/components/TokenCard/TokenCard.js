@@ -21,7 +21,10 @@ const TokenCard = ({ lockedBalance, address, token }) => {
       <div>
         <TokenAmount className={styles.tokenAmount} val={availableBalance} token={token} />
         {symbol === 'LSK' && (
-          <Converter className={styles.fiatBalance} value={convertFromBaseDenom(availableBalance, token)} />
+          <Converter
+            className={styles.fiatBalance}
+            value={convertFromBaseDenom(availableBalance, token)}
+          />
         )}
         {!lockedBalance ? null : (
           <DialogLink

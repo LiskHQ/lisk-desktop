@@ -1,7 +1,5 @@
 import { REWARD_INFLATION } from 'src/const/queries';
-import {
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from '@common/hooks';
 
 /**

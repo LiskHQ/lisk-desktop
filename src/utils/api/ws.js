@@ -11,39 +11,37 @@ export const subscribeConnections = {};
  * @param {String} baseUrl - Lisk Service base URL
  * @returns {Promise}
  */
-const ws = ({
-  baseUrl, requests,
-}) => new Promise((resolve, reject) => {
-  const uri = `${baseUrl.replace('http', 'ws')}/rpc-v3`;
-  const socket = io(
-    uri,
-    {
+const ws = ({ baseUrl, requests }) =>
+  new Promise((resolve, reject) => {
+    const uri = `${baseUrl.replace('http', 'ws')}/rpc-v3`;
+    const socket = io(uri, {
       transports: ['websocket'],
-    },
-  );
+    });
 
-  socket.emit('request', requests, (response) => {
-    if (response.error) reject(response.error);
+    socket.emit('request', requests, (response) => {
+      if (response.error) reject(response.error);
+      else {
+        if (!Array.isArray(response)) resolve(response.result);
+        const normRes = response.reduce(
+          (acc, res) => {
+            res.result.data.forEach((item) => acc.data.push(item));
+            acc.meta.count += res.result.meta.count;
+            acc.meta.offset = res.result.meta.offset;
+            return acc;
+          },
+          {
+            data: [],
+            meta: {
+              count: 0,
+              offset: 0,
+            },
+          }
+        );
 
-    else {
-      if (!Array.isArray(response)) resolve(response.result);
-      const normRes = response.reduce((acc, res) => {
-        res.result.data.forEach(item => acc.data.push(item));
-        acc.meta.count += res.result.meta.count;
-        acc.meta.offset = res.result.meta.offset;
-        return acc;
-      }, {
-        data: [],
-        meta: {
-          count: 0,
-          offset: 0,
-        },
-      });
-
-      resolve(normRes);
-    }
+        resolve(normRes);
+      }
+    });
   });
-});
 
 /**
  * Connect to an event and set function to be called when it fires
@@ -54,13 +52,7 @@ const ws = ({
  * @param {Function} onDisconnect - Function to be called when disconnect event fires
  * @param {Function} onReconnect - Function to be called when reconnect event fires
  */
-export const subscribe = (
-  node,
-  eventName,
-  callback,
-  onDisconnect,
-  onReconnect,
-) => {
+export const subscribe = (node, eventName, callback, onDisconnect, onReconnect) => {
   const connection = io(node, {
     forceNew: true,
     transports: ['websocket'],

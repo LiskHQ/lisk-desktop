@@ -1,7 +1,7 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './ExplorerTransactions.css';
 
-export default (t, activeToken, changeSort) => ([
+export default (t, activeToken, changeSort) => [
   {
     title: t('ID'),
     classList: `${grid['col-xs-3']} ${styles.transactionTitle}`,
@@ -30,4 +30,4 @@ export default (t, activeToken, changeSort) => ([
     title: t('Status'),
     classList: grid['col-xs-1'],
   },
-]);
+];

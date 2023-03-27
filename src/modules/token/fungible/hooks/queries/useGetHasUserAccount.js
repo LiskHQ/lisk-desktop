@@ -1,6 +1,6 @@
 import { useInvokeQuery } from '@common/hooks';
 
-export const useGetHasUserAccount = ({ options = {}, config: customConfig = {}, } = {}) => {
+export const useGetHasUserAccount = ({ options = {}, config: customConfig = {} } = {}) => {
   const config = {
     data: {
       endpoint: 'token_hasUserAccount',
@@ -12,7 +12,7 @@ export const useGetHasUserAccount = ({ options = {}, config: customConfig = {}, 
 
   const result = useInvokeQuery({
     config,
-    options: { ...options, },
+    options: { ...options },
   });
 
   return result;

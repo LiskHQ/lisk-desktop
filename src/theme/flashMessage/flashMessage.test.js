@@ -19,10 +19,12 @@ describe('FlashMessage', () => {
   });
 
   it('should not render close button if children has FlashMessage.Button', () => {
-    wrapper = shallow(<FlashMessage {...props}>
-      {content}
-      {button}
-    </FlashMessage>);
+    wrapper = shallow(
+      <FlashMessage {...props}>
+        {content}
+        {button}
+      </FlashMessage>
+    );
     expect(wrapper).not.toContainMatchingElement('.closeBtn');
     wrapper.find(FlashMessage.Button).simulate('click');
     expect(btnProps.onClick).toBeCalled();

@@ -7,12 +7,7 @@ import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics'
 import styles from './BlockchainApplications.css';
 import SessionManager from '../../../connection/components/SessionManager';
 
-const BlockchainApplications = ({
-  applications,
-  statistics,
-  applyFilters,
-  filters,
-}) => {
+const BlockchainApplications = ({ applications, statistics, applyFilters, filters }) => {
   const { t } = useTranslation();
   return (
     <div className={styles.wrapper}>
@@ -28,10 +23,7 @@ const BlockchainApplications = ({
       />
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
-          <TabsContainer
-            name="main-tabs"
-            activeTab="blockchainApplications"
-          >
+          <TabsContainer name="main-tabs" activeTab="blockchainApplications">
             <BlockchainApplicationList
               applyFilters={applyFilters}
               filters={filters}
@@ -39,10 +31,7 @@ const BlockchainApplications = ({
               name={t('All applications')}
               id="blockchainApplications"
             />
-            <SessionManager
-              name={t('Wallet connections')}
-              id="SessionManager"
-            />
+            <SessionManager name={t('Wallet connections')} id="SessionManager" />
           </TabsContainer>
         </div>
         <div className={styles.sideBar}>

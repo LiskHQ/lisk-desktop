@@ -72,7 +72,11 @@ describe.skip('Signin Header', () => {
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
     expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', true);
-    wrapper.find('Dropdown .dropdown-content').children().at(networkList[0].value).simulate('click');
+    wrapper
+      .find('Dropdown .dropdown-content')
+      .children()
+      .at(networkList[0].value)
+      .simulate('click');
     expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', false);
   });
 
@@ -81,8 +85,15 @@ describe.skip('Signin Header', () => {
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
     expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', true);
-    wrapper.find('Dropdown .dropdown-content').children().at(networkList[2].value).simulate('click');
-    wrapper.find('.custom-network').first().simulate('change', { target: { value: 'localhost:4000' } });
+    wrapper
+      .find('Dropdown .dropdown-content')
+      .children()
+      .at(networkList[2].value)
+      .simulate('click');
+    wrapper
+      .find('.custom-network')
+      .first()
+      .simulate('change', { target: { value: 'localhost:4000' } });
 
     expect(wrapper).to.have.descendants('.connect-button');
   });
@@ -92,8 +103,15 @@ describe.skip('Signin Header', () => {
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
     expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', true);
-    wrapper.find('Dropdown .dropdown-content').children().at(networkList[2].value).simulate('click');
-    wrapper.find('.custom-network').first().simulate('change', { target: { value: 'localhost:4000' } });
+    wrapper
+      .find('Dropdown .dropdown-content')
+      .children()
+      .at(networkList[2].value)
+      .simulate('click');
+    wrapper
+      .find('.custom-network')
+      .first()
+      .simulate('change', { target: { value: 'localhost:4000' } });
 
     expect(wrapper).to.have.descendants('.connect-button');
   });

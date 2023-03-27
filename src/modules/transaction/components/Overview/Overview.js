@@ -125,15 +125,11 @@ const Overview = () => {
   const [activeTab, setActiveTab] = useState('week');
   const colorPalette = getColorPalette(useTheme());
   // Fallback token for transaction statistics
-  const [
-    {
-      metadata: { address } = {},
-    },
-  ] = useCurrentAccount();
+  const [{ metadata: { address } = {} }] = useCurrentAccount();
   const { data: tokens } = useTokensBalance({
     config: { params: { address } },
   });
-  const token = tokens?.data?.[0] || {}
+  const token = tokens?.data?.[0] || {};
 
   const { data: txStatsData } = useTransactionStatistics({ config: { params } });
   const txStats = txStatsData?.data ?? {

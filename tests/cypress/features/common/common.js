@@ -6,18 +6,32 @@ const txConfirmationTimeout = 15000;
 
 Given(/^Network switcher is (enabled|disabled)$/, function (status) {
   const showNetwork = status === 'enabled';
-  window.localStorage.setItem('settings',
-    JSON.stringify({ ...settings, 'showNetwork': showNetwork }));
+  window.localStorage.setItem(
+    'settings',
+    JSON.stringify({ ...settings, showNetwork: showNetwork })
+  );
 });
 
 Given(/^Network is set to testnet$/, function () {
-  window.localStorage.setItem('settings',
-    JSON.stringify({ ...settings, 'showNetwork': true, network: { name: 'testnet', address:'https://testnet-service.lisk.com' } }));
+  window.localStorage.setItem(
+    'settings',
+    JSON.stringify({
+      ...settings,
+      showNetwork: true,
+      network: { name: 'testnet', address: 'https://testnet-service.lisk.com' },
+    })
+  );
 });
 
 Given(/^Network is set to ([^\s]+)$/, function (network) {
-  window.localStorage.setItem('settings',
-    JSON.stringify({ ...settings, 'showNetwork': true, network: { name: network, address:networks[network].serviceUrl } }));
+  window.localStorage.setItem(
+    'settings',
+    JSON.stringify({
+      ...settings,
+      showNetwork: true,
+      network: { name: network, address: networks[network].serviceUrl },
+    })
+  );
 });
 
 /** Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
@@ -51,9 +65,7 @@ Then(/^I enter the passphrase of ([^\s]+)$/, function (accountName) {
   });
 });
 
-
 When(/^I enter the passphrase of ([^\s]+) on ([^\s]+)$/, function (accountName, network) {
-
   cy.get(ss.networkDropdown).click();
   cy.get(ss.networkOptions).eq(2).click();
   cy.get(ss.addressInput).clear().type(networks[network].serviceUrl);
@@ -98,7 +110,9 @@ Then(/^I should see pending transaction$/, function () {
 });
 
 Then(/^I should not see pending transaction$/, function () {
-  cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
+  cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should(
+    'be.not.visible'
+  );
 });
 
 Then(/^I see this title: (.*?)$/, function (title) {
@@ -111,12 +125,18 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     const transactionRecipient = transactionType.split(' ').pop();
     if (transactionRecipient === 'random') {
       /* For use: 'transfer to random' */
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', this.randomAddress);
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`)
+        .eq(0)
+        .should('have.text', this.randomAddress);
     } else if (transactionRecipient === 'transfer') {
-      throw new Error('Usage: "transfer to {recipient}" where recipient could be "random" or account name');
+      throw new Error(
+        'Usage: "transfer to {recipient}" where recipient could be "random" or account name'
+      );
     } else {
       /* For uses like: 'transfer to mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' */
-      cy.get(`${ss.transactionRow} ${ss.transactionRowRecipient} span`).eq(0).contains(transactionRecipient.substring(0,10));
+      cy.get(`${ss.transactionRow} ${ss.transactionRowRecipient} span`)
+        .eq(0)
+        .contains(transactionRecipient.substring(0, 10));
     }
   }
   switch (transactionType.toLowerCase()) {
@@ -127,13 +147,17 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Validator stake');
       break;
     case 'validator registration':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Validator registration');
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`)
+        .eq(0)
+        .contains('Validator registration');
       break;
     case 'register validator':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register validator');
       break;
     case 'register multisignature group':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register multisig. group');
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`)
+        .eq(0)
+        .contains('Register multisig. group');
       break;
     case 'stake':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Stake');
@@ -141,11 +165,14 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
   }
 });
 
-Then(/^The latest transaction in monitor is sent by (.*?) and recipient is (.*?)$/, function (sender, recipient) {
-  cy.wait(1000);
-  cy.get(`${ss.transactionRowSender}`).eq(0).contains(sender);
-  cy.get(`${ss.transactionRowRecipient}`).eq(0).contains(recipient);
-});
+Then(
+  /^The latest transaction in monitor is sent by (.*?) and recipient is (.*?)$/,
+  function (sender, recipient) {
+    cy.wait(1000);
+    cy.get(`${ss.transactionRowSender}`).eq(0).contains(sender);
+    cy.get(`${ss.transactionRowRecipient}`).eq(0).contains(recipient);
+  }
+);
 
 Then(/^I should be on (.*?) page$/, function (pageName) {
   switch (pageName.toLowerCase()) {
@@ -234,7 +261,10 @@ Then(/^I fill ([^s]+) in ([^s]+) field$/, function (value, field) {
 });
 
 When(/^I paste ([\w]+) in ([\w]+) field$/, function (value, field) {
-  cy.get(ss[field]).clear().invoke('val', value.slice(0, value.length - 1)).type(value.slice(-1))
+  cy.get(ss[field])
+    .clear()
+    .invoke('val', value.slice(0, value.length - 1))
+    .type(value.slice(-1));
 });
 
 Then(/^I go to transfer confirmation$/, function () {
@@ -270,7 +300,4 @@ When(/^I sort by (\w+)$/, function (sortParam) {
 
 Given(/^I open (\w+) modal$/, function (modal) {
   cy.visit(`${urls.dashboard}?modal=${modal}`);
-
 });
-
-

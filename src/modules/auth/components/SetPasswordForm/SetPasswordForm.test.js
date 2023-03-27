@@ -1,7 +1,5 @@
 import { cryptography } from '@liskhq/lisk-client';
-import {
-  fireEvent, screen, waitFor,
-} from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import SetPasswordForm from './SetPasswordForm';
@@ -22,22 +20,25 @@ const crypto = {
   ciphertext:
     '44fdb2b132d353a5c65f04e5e3afdd531f63abc45444ffd4cdbc7dedc45f899bf5b7478947d57319ea8c620e13480def8a518cc05e46bdddc8ef7c8cfc21a3bd',
 };
-const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+const recoveryPhrase =
+  'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 const mockSetAccount = jest.fn();
 
 jest.mock('react-i18next');
-jest.spyOn(cryptography.encrypt, 'encryptMessageWithPassword').mockResolvedValue(crypto);
-jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(JSON.stringify({
-  recoveryPhrase,
-}));
+jest
+  .spyOn(cryptography.encrypt, 'encryptMessageWithPassword')
+  .mockResolvedValue(crypto);
+jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(
+  JSON.stringify({
+    recoveryPhrase,
+  })
+);
 jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
     setAccount: jest.fn(),
   })),
-  useCurrentAccount: jest.fn(() => (
-    [mockSavedAccounts[0], mockSetAccount]
-  )),
+  useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
   useEncryptAccount: jest.fn().mockReturnValue({
     encryptAccount: jest.fn().mockResolvedValue({
       recoveryPhrase,
@@ -90,7 +91,9 @@ describe('Set Password Form validation should work', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
+        screen.getByText(
+          'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+        )
       ).toBeTruthy();
     });
   });
@@ -102,7 +105,9 @@ describe('Set Password Form validation should work', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
+        screen.getByText(
+          'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+        )
       ).toBeTruthy();
     });
   });
@@ -114,7 +119,9 @@ describe('Set Password Form validation should work', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
+        screen.getByText(
+          'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+        )
       ).toBeTruthy();
     });
   });
@@ -126,7 +133,9 @@ describe('Set Password Form validation should work', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
+        screen.getByText(
+          'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+        )
       ).toBeTruthy();
     });
   });
@@ -138,9 +147,7 @@ describe('Set Password Form validation should work', () => {
     fireEvent.click(screen.getByText('Save Account'));
 
     await waitFor(() => {
-      expect(
-        screen.getByText('Confirm that passwords match'),
-      ).toBeTruthy();
+      expect(screen.getByText('Confirm that passwords match')).toBeTruthy();
     });
   });
 

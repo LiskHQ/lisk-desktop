@@ -25,10 +25,9 @@ export const NoTransactions = withTranslation()(({ t }) => {
       <Icon name="iconEmptyRecentTransactions" />
       <h1>{t('No transactions yet')}</h1>
       <p>
-        {t(
-          'A great way to start is to top up your account with some {{value}}.',
-          { value: activeToken.key },
-        )}
+        {t('A great way to start is to top up your account with some {{value}}.', {
+          value: activeToken.key,
+        })}
       </p>
     </BoxEmptyState>
   );
@@ -46,21 +45,19 @@ const RecentTransactions = ({ className, t }) => {
   const [currentAccount] = useCurrentAccount();
   const [hasTxs, setHasTxs] = useState(false);
   const currentAddress = currentAccount?.metadata?.address;
-  const token = useSelector(state => state.token);
-  const { data: { height: currentBlockHeight } } = useLatestBlock();
+  const token = useSelector((state) => state.token);
+  const {
+    data: { height: currentBlockHeight },
+  } = useLatestBlock();
 
   const onSuccess = (response) => {
     setHasTxs(response?.data?.length > 0);
   };
 
   return (
-    <Box
-      className={`${styles.box} ${className}`}
-    >
+    <Box className={`${styles.box} ${className}`}>
       <BoxHeader>
-        <h2 className={styles.title}>
-          {t('Recent transactions')}
-        </h2>
+        <h2 className={styles.title}>{t('Recent transactions')}</h2>
       </BoxHeader>
       <BoxContent className={styles.content}>
         <QueryTable
@@ -68,7 +65,7 @@ const RecentTransactions = ({ className, t }) => {
           queryConfig={{
             config: {
               params: { limit: 5, address: currentAddress },
-              options: { enabled: !!currentAddress }
+              options: { enabled: !!currentAddress },
             },
           }}
           row={TransactionRow}
@@ -84,15 +81,13 @@ const RecentTransactions = ({ className, t }) => {
           emptyState={currentAddress ? NoTransactions : NotSignedIn}
           onFetched={onSuccess}
         />
-        {
-          hasTxs && (
-            <div className={styles.viewAll}>
-              <Link to={routes.wallet.path} className="view-all">
-                {t('View all')}
-              </Link>
-            </div>
-          )
-        }
+        {hasTxs && (
+          <div className={styles.viewAll}>
+            <Link to={routes.wallet.path} className="view-all">
+              {t('View all')}
+            </Link>
+          </div>
+        )}
       </BoxContent>
     </Box>
   );

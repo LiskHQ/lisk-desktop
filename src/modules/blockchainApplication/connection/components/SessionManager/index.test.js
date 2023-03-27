@@ -52,7 +52,7 @@ jest.mock('@account/hooks', () => ({
 }));
 
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 
 jest.spyOn(React, 'useContext').mockImplementation(() => ({

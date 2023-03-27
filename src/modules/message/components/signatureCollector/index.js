@@ -7,14 +7,7 @@ import BoxContent from 'src/theme/box/content';
 import { signUsingPrivateKey, signUsingHW } from '@wallet/utils/signMessage';
 import styles from './signatureCollector.css';
 
-const SignatureCollector = ({
-  nextStep,
-  message,
-  account,
-  t,
-  isNext,
-  prevStep,
-}) => {
+const SignatureCollector = ({ nextStep, message, account, t, isNext, prevStep }) => {
   const [signature, setSignature] = useState();
   const [error, setError] = useState();
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);

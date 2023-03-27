@@ -7,7 +7,8 @@ const mockState = {
     customDerivationPath: "m/44'/134'/1'",
   },
 };
-const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+const recoveryPhrase =
+  'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 const encryptedAccount = {
   crypto: {
     kdf: 'argon2id',
@@ -49,7 +50,10 @@ describe('useEncryptAccount', () => {
 
     const { encryptAccount } = useEncryptAccount();
     const account = await encryptAccount({
-      recoveryPhrase, password, name, derivationPath,
+      recoveryPhrase,
+      password,
+      name,
+      derivationPath,
     });
 
     expect(account).toEqual(encryptedAccount);

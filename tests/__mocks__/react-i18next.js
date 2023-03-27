@@ -4,9 +4,9 @@ const reactI18next = require('react-i18next');
 module.exports = {
   // this mock makes sure any components using the translate HoC receive the t function as a prop
   // eslint-disable-next-line react/display-name
-  translate: () => Component => props => <Component t={k => k} {...props} />,
+  translate: () => (Component) => (props) => <Component t={(k) => k} {...props} />,
   Trans: ({ children }) => children,
-  I18n: ({ children }) => children(k => k, { i18n: {} }),
+  I18n: ({ children }) => children((k) => k, { i18n: {} }),
 
   // mock if needed
   Interpolate: reactI18next.Interpolate,
@@ -18,6 +18,6 @@ module.exports = {
   setI18n: reactI18next.setI18n,
   getI18n: reactI18next.getI18n,
   useTranslation: () => ({
-    t: key => key,
+    t: (key) => key,
   }),
 };

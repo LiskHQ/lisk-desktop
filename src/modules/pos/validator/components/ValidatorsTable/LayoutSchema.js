@@ -11,7 +11,14 @@ import styles from './Schemas.css';
 
 const minimal = [ValidatorDetails, ValidatorStatus];
 const hosted = [ValidatorDetails, ValidatorWeight, ValidatorCommission];
-const full = [ValidatorDetails, ValidatorWeight, ValidatorCommission, ValidatorRank, GeneratingTime, RoundState];
+const full = [
+  ValidatorDetails,
+  ValidatorWeight,
+  ValidatorCommission,
+  ValidatorRank,
+  GeneratingTime,
+  RoundState,
+];
 
 const LayoutSchema = {
   active: {

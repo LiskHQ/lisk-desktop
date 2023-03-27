@@ -1,7 +1,33 @@
+# Files
+.gitkeep
+.DS_Store
+.idea
+.gitattributes
+LICENSE
+Jenkinsfile*
+
+# Folders
 **/dist
 **/node_modules
 **/coverage
-.storybook
 **/app/build
 **/app/build-testnet
+**/app/assets
+**/build
+**/docs/assets
+**/setup/react/assets
+**/.husky
+**/logs
+
+# Ignore extensions
 *.css
+*.html
+*.feature
+.*ignore
+.*rc
+*.sh
+*.properties
+*.gz
+
+## jest snapshot
+*.snap

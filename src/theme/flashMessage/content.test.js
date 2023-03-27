@@ -14,7 +14,7 @@ describe('FlashMessage', () => {
     children: 'Dummy content',
   };
 
-  const setup = data => shallow(<Content {...data} />);
+  const setup = (data) => shallow(<Content {...data} />);
 
   it('should render with passed content', () => {
     wrapper = setup(props);

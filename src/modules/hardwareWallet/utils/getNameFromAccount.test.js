@@ -15,7 +15,7 @@ const settings = {
         name: 'masoud456',
       },
     ],
-    'nano': [],
+    nano: [],
   },
 };
 

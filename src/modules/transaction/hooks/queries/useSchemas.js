@@ -1,9 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 import actionTypes from '@network/store/actionTypes';
 
@@ -19,7 +17,7 @@ import actionTypes from '@network/store/actionTypes';
  *
  * @returns the query object
  */
- export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
+export const useSchemas = ({ config: customConfig = {}, options } = {}) => {
   const dispatch = useDispatch();
   const config = {
     url: `/api/${API_VERSION}/schemas`,

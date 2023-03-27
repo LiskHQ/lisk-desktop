@@ -1,7 +1,6 @@
+/* eslint-disable complexity */
 import PropTypes from 'prop-types';
-import React, {
-  forwardRef, useCallback, useMemo, useState,
-} from 'react';
+import React, { forwardRef, useCallback, useMemo, useState } from 'react';
 import Feedback from 'src/theme/feedback/feedback';
 import Icon from 'src/theme/Icon';
 import Spinner from '../Spinner';
@@ -12,9 +11,7 @@ const statusIconNameMap = {
   error: 'iconWarning',
 };
 
-const updateStatus = ({
-  status, isLoading, value, error, readOnly,
-}) => {
+const updateStatus = ({ status, isLoading, value, error, readOnly }) => {
   if (isLoading) {
     status = 'pending';
   }
@@ -27,9 +24,7 @@ const updateStatus = ({
   return status;
 };
 
-const getInputClass = ({
-  className, dark, icon, isMasked, status,
-}) =>
+const getInputClass = ({ className, dark, icon, isMasked, status }) =>
   [
     styles.input,
     status === 'error' && styles.error,
@@ -48,101 +43,99 @@ function PasswordTypeToggler({ onClick, isPasswordVisible, hasNotification }) {
       onClick={onClick}
       className={`${styles.toggleBtn} ${hasNotification ? styles.rightOffset : ''}`}
     >
-      <Icon
-        name={isPasswordVisible ? 'eyeActive' : 'eyeInactive'}
-        className={styles.toggleIcon}
-      />
+      <Icon name={isPasswordVisible ? 'eyeActive' : 'eyeInactive'} className={styles.toggleIcon} />
     </button>
   );
 }
 
-// eslint-disable-next-line complexity
-const Input = forwardRef(({
-  className,
-  setRef,
-  size,
-  error,
-  isLoading,
-  icon,
-  status,
-  feedback,
-  dark,
-  label,
-  type,
-  isMasked,
-  feedbackType,
-  iconClassName,
-  secureTextEntry,
-  ...props
-}, ref) => {
-  status = updateStatus({
-    status,
-    isLoading,
-    error,
-    ...props,
-  });
-  const Component = type === 'textarea' ? type : 'input';
-  const [isPassword, setIsPassword] = useState(secureTextEntry);
+const Input = forwardRef(
+  (
+    {
+      className,
+      setRef,
+      size,
+      error,
+      isLoading,
+      icon,
+      status,
+      feedback,
+      dark,
+      label,
+      type,
+      isMasked,
+      feedbackType,
+      iconClassName,
+      secureTextEntry,
+      ...props
+    },
+    ref
+  ) => {
+    status = updateStatus({
+      status,
+      isLoading,
+      error,
+      ...props,
+    });
+    const Component = type === 'textarea' ? type : 'input';
+    const [isPassword, setIsPassword] = useState(secureTextEntry);
 
-  const toggleFieldType = useCallback(() => {
-    setIsPassword(!isPassword);
-  }, [isPassword]);
+    const toggleFieldType = useCallback(() => {
+      setIsPassword(!isPassword);
+    }, [isPassword]);
 
-  const hasNotification = useMemo(() => statusIconNameMap[status] || status === 'pending', [statusIconNameMap[status], status]);
+    const hasNotification = useMemo(
+      () => statusIconNameMap[status] || status === 'pending',
+      [statusIconNameMap[status], status]
+    );
 
-  return (
-    <>
-      {label && (
-        <label className={[styles.label, styles[size]].join(' ')}>
-          {label}
-        </label>
-      )}
-      <span className={`${styles.wrapper} ${styles[size]}`}>
-        {icon
-          && (typeof icon === 'string' ? (
-            <Icon name={icon} className={`${styles.icon} ${iconClassName}`} />
-          ) : (
-            <span className={`${styles.icon} ${iconClassName}`}>{icon}</span>
-          ))}
-        {status === 'pending' && (
-          <Spinner
-            className={`${styles.loading} ${styles.status} node-connection-loading-spinner`}
+    return (
+      <>
+        {label && <label className={[styles.label, styles[size]].join(' ')}>{label}</label>}
+        <span className={`${styles.wrapper} ${styles[size]}`}>
+          {icon &&
+            (typeof icon === 'string' ? (
+              <Icon name={icon} className={`${styles.icon} ${iconClassName}`} />
+            ) : (
+              <span className={`${styles.icon} ${iconClassName}`}>{icon}</span>
+            ))}
+          {status === 'pending' && (
+            <Spinner
+              className={`${styles.loading} ${styles.status} node-connection-loading-spinner`}
+            />
+          )}
+          {statusIconNameMap[status] && (
+            <Icon
+              name={statusIconNameMap[status]}
+              className={`${styles.status} ${secureTextEntry && styles.mgr30}`}
+            />
+          )}
+
+          {!!secureTextEntry && (
+            <PasswordTypeToggler
+              isPasswordVisible={!isPassword}
+              onClick={toggleFieldType}
+              hasNotification={hasNotification}
+            />
+          )}
+          <Component
+            {...props}
+            data-testid={props.name}
+            type={isPassword ? 'password' : type}
+            ref={setRef || ref}
+            className={getInputClass({
+              className,
+              dark,
+              icon,
+              isMasked,
+              status,
+            })}
           />
-        )}
-        {statusIconNameMap[status] && (
-          <Icon
-            name={statusIconNameMap[status]}
-            className={`${styles.status} ${secureTextEntry && styles.mgr30}`}
-          />
-        )}
-
-        {
-          !!secureTextEntry && (
-          <PasswordTypeToggler
-            isPasswordVisible={!isPassword}
-            onClick={toggleFieldType}
-            hasNotification={hasNotification}
-          />
-          )
-        }
-        <Component
-          {...props}
-          data-testid={props.name}
-          type={isPassword ? 'password' : type}
-          ref={setRef || ref}
-          className={getInputClass({
-            className,
-            dark,
-            icon,
-            isMasked,
-            status,
-          })}
-        />
-        <Feedback message={feedback} size={size} status={status} />
-      </span>
-    </>
-  );
-});
+          <Feedback message={feedback} size={size} status={status} />
+        </span>
+      </>
+    );
+  }
+);
 
 Input.propTypes = {
   size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
@@ -150,10 +143,7 @@ Input.propTypes = {
   type: PropTypes.oneOf(['text', 'textarea', 'password']),
   feedback: PropTypes.string,
   dark: PropTypes.bool,
-  label: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node
-  ]),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   onChange: PropTypes.func,
   isMasked: PropTypes.bool,
 };

@@ -6,7 +6,7 @@ import RegisterValidator from './index';
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
-    isLoading: false
+    isLoading: false,
   }),
 }));
 jest.mock('lodash.debounce');
@@ -53,7 +53,7 @@ describe('RegisterValidator', () => {
     },
     validatorRegistered: jest.fn(),
     nextStep: jest.fn(),
-    t: key => key,
+    t: (key) => key,
     transactions: {
       signedTransaction: {},
     },

@@ -103,10 +103,10 @@ export default (activeTab, changeSort, t) => [
       position: 'top',
     },
   },
-    {
-      title: t('Commission (%)'),
-      classList: getValidatorCommissionClass(activeTab),
-    },
+  {
+    title: t('Commission (%)'),
+    classList: getValidatorCommissionClass(activeTab),
+  },
   {
     title: t('Rank'),
     classList: getValidatorRankClass(activeTab),

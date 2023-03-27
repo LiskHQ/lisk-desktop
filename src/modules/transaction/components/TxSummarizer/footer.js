@@ -1,10 +1,6 @@
 // istanbul ignore file
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  PrimaryButton,
-  SecondaryButton,
-  TertiaryButton,
-} from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import useSecondPassphrase from '@transaction/hooks/setSecondPassphrase';
 import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
 import BoxFooter from 'src/theme/box/footer';
@@ -12,26 +8,21 @@ import { useAuth } from 'src/modules/auth/hooks/queries';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import styles from './txSummarizer.css';
 
-const Actions = ({
-  isMultisignature,
-  cancelButton,
-  confirmButton,
-  inputStatus,
-  t,
-}) => (
+const Actions = ({ isMultisignature, cancelButton, confirmButton, inputStatus, t }) => (
   <div className={styles.primaryActions}>
     {cancelButton && (
-      <SecondaryButton className={`cancel-button ${cancelButton.className || ''}`} onClick={cancelButton.onClick}>
+      <SecondaryButton
+        className={`cancel-button ${cancelButton.className || ''}`}
+        onClick={cancelButton.onClick}
+      >
         {cancelButton.label}
       </SecondaryButton>
     )}
     <PrimaryButton
-      className={`${!cancelButton ? styles.confirmButton : ''} ${confirmButton?.className || ''} confirm-button`}
-      disabled={
-        confirmButton?.disabled
-        || inputStatus === 'visible'
-        || inputStatus === 'invalid'
-      }
+      className={`${!cancelButton ? styles.confirmButton : ''} ${
+        confirmButton?.className || ''
+      } confirm-button`}
+      disabled={confirmButton?.disabled || inputStatus === 'visible' || inputStatus === 'invalid'}
       onClick={confirmButton?.onClick}
     >
       {isMultisignature ? t('Sign') : confirmButton?.label}
@@ -39,12 +30,7 @@ const Actions = ({
   </div>
 );
 
-const SecondPassInput = ({
-  t,
-  secondPassphraseStored,
-  inputStatus,
-  setInputStatus,
-}) => {
+const SecondPassInput = ({ t, secondPassphraseStored, inputStatus, setInputStatus }) => {
   const [secondPass, set2ndPass] = useSecondPassphrase();
 
   useEffect(() => {
@@ -68,12 +54,7 @@ const SecondPassInput = ({
     </div>
   ) : (
     <div className={styles.secondPassphrase}>
-      <PassphraseInput
-        t={t}
-        onFill={set2ndPass}
-        inputsLength={12}
-        maxInputsLength={24}
-      />
+      <PassphraseInput t={t} onFill={set2ndPass} inputsLength={12} maxInputsLength={24} />
     </div>
   );
 };
@@ -90,18 +71,20 @@ const Footer = ({
     {
       metadata: { address },
     },
-  ] = useCurrentAccount(); 
+  ] = useCurrentAccount();
   const { data: authData } = useAuth({ config: { params: { address } } });
-  const {numberOfSignatures, mandatoryKeys, optionalKeys } = useMemo(() => ({ ...authData?.data, ...authData?.meta }), [authData]);
-  
-  const isMultisignature = !!numberOfSignatures;
-  const hasSecondPass = numberOfSignatures === 2
-    && mandatoryKeys.length === 2
-    && optionalKeys.length === 0
-    && !account.hwInfo;
-  const [inputStatus, setInputStatus] = useState(
-    hasSecondPass ? 'hidden' : 'notRequired',
+  const { numberOfSignatures, mandatoryKeys, optionalKeys } = useMemo(
+    () => ({ ...authData?.data, ...authData?.meta }),
+    [authData]
   );
+
+  const isMultisignature = !!numberOfSignatures;
+  const hasSecondPass =
+    numberOfSignatures === 2 &&
+    mandatoryKeys.length === 2 &&
+    optionalKeys.length === 0 &&
+    !account.hwInfo;
+  const [inputStatus, setInputStatus] = useState(hasSecondPass ? 'hidden' : 'notRequired');
 
   return (
     <BoxFooter

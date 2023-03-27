@@ -36,17 +36,21 @@ describe('application config', () => {
     setApiResponseData(expectedResponse, http);
     getApplicationConfig({ serviceUrl });
     await expect(
-      getApplicationStatus({ baseUrl: serviceUrl, network: serviceUrl }),
+      getApplicationStatus({ baseUrl: serviceUrl, network: serviceUrl })
     ).resolves.toEqual(expectedResponse);
-    expect(http).toHaveBeenCalledWith({ baseUrl: serviceUrl, network: serviceUrl, path: '/api/v3/application/status' });
+    expect(http).toHaveBeenCalledWith({
+      baseUrl: serviceUrl,
+      network: serviceUrl,
+      path: '/api/v3/application/status',
+    });
   });
 
   it('throws an error if API fails', () => {
     const expectedResponse = new Error('Application unavailable');
     setApiRejection(expectedResponse.message, http);
     getApplicationConfig({ serviceUrl });
-    expect(
-      getApplicationStatus({ baseUrl: serviceUrl, network: serviceUrl }),
-    ).rejects.toEqual(expectedResponse);
+    expect(getApplicationStatus({ baseUrl: serviceUrl, network: serviceUrl })).rejects.toEqual(
+      expectedResponse
+    );
   });
 });

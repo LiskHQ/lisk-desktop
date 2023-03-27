@@ -54,7 +54,9 @@ const Regular = ({
 
   const goToWallet = async () => {
     // this is buggy at the moment
-    if (joinModuleAndCommand(transactions.signedTransaction) === MODULE_COMMANDS_NAME_MAP.reclaimLSK) {
+    if (
+      joinModuleAndCommand(transactions.signedTransaction) === MODULE_COMMANDS_NAME_MAP.reclaimLSK
+    ) {
       await queryClient.invalidateQueries({ queryKey: [LEGACY] });
     }
     history.push(routes.wallet.path);

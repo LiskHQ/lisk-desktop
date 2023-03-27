@@ -1,6 +1,4 @@
-import {
-  createStore, combineReducers, applyMiddleware, compose,
-} from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import storage from 'redux-persist/lib/storage';
 import { persistStore } from 'redux-persist';
 import actionTypes from 'src/modules/common/store/actionTypes';
@@ -24,8 +22,4 @@ if (module.hot) {
   });
 }
 
-export {
-  storage,
-  store,
-  persistedStore,
-};
+export { storage, store, persistedStore };

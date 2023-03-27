@@ -22,13 +22,15 @@ describe('MenuSelect', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    render(<MenuSelect {...props}>
-      {mockMenuItems.map(({ value, child }) => (
-        <MenuItem value={value} key={value}>
-          {child}
-        </MenuItem>
-      ))}
-    </MenuSelect>);
+    render(
+      <MenuSelect {...props}>
+        {mockMenuItems.map(({ value, child }) => (
+          <MenuItem value={value} key={value}>
+            {child}
+          </MenuItem>
+        ))}
+      </MenuSelect>
+    );
   });
 
   it('should not display options on mount', () => {

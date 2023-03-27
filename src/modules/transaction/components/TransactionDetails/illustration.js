@@ -17,11 +17,7 @@ const Illustration = () => {
 
   return (
     <div className={styles.illustration}>
-      <TransactionTypeFigure
-        address={address}
-        moduleCommand={moduleCommand}
-        iconOnly
-      />
+      <TransactionTypeFigure address={address} moduleCommand={moduleCommand} iconOnly />
       <h2 className="tx-header">{title}</h2>
     </div>
   );

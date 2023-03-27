@@ -7,7 +7,7 @@ import Status from '.';
 describe('Sign Message: Status', () => {
   const baseProps = {
     account: accounts.genesis,
-    t: str => str,
+    t: (str) => str,
     prevStep: jest.fn(),
   };
 

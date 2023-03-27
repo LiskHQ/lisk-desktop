@@ -10,10 +10,9 @@ import SignMessageView from '../components/signMessageView';
 /**
  * Injecting store through redux store
  */
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
 });
-
 
 const dispatchToProps = {
   signMessage,
@@ -22,5 +21,5 @@ const dispatchToProps = {
 export default compose(
   withRouter,
   connect(mapStateToProps, dispatchToProps),
-  withTranslation(),
+  withTranslation()
 )(SignMessageView);

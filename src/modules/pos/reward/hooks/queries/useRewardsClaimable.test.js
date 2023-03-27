@@ -21,8 +21,6 @@ describe('useRewardsClaimable', () => {
 
   it('should call useCustomQuery with enabled false if required params are missing', async () => {
     renderHook(() => useRewardsClaimable(), { wrapper });
-    expect(useCustomQuery).toBeCalledWith(
-      expect.objectContaining({ options: { enabled: false } })
-    );
+    expect(useCustomQuery).toBeCalledWith(expect.objectContaining({ options: { enabled: false } }));
   });
 });

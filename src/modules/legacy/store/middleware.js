@@ -13,7 +13,7 @@
 }; */
 
 // @todo lagacy account migration needs to be handle in account managment
-const legacyMiddleware = () => next => async (action) => {
+const legacyMiddleware = () => (next) => async (action) => {
   next(action);
   /** switch (action.type) {
     case actionTypes.accountUpdated:

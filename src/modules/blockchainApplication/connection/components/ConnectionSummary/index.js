@@ -22,27 +22,22 @@ const ConnectionSummary = ({ history }) => {
 
   const connectHandler = async () => {
     const result = await approve(addresses);
-    addSearchParamsToUrl(
-      history,
-      {
-        modal: 'connectionStatus',
-        action: ACTIONS.APPROVE,
-        status: result.status,
-        name: result.data?.params.proposer.metadata.name ?? '',
-      },
-    );
+    addSearchParamsToUrl(history, {
+      modal: 'connectionStatus',
+      action: ACTIONS.APPROVE,
+      status: result.status,
+      name: result.data?.params.proposer.metadata.name ?? '',
+    });
   };
 
   const rejectHandler = async () => {
     const result = await reject();
-    addSearchParamsToUrl(
-      history,
-      {
-        modal: 'connectionSuccess',
-        action: ACTIONS.REJECT,
-        status: result.status,
-        name: result.data?.params?.proposer.metadata.name ?? '',
-      });
+    addSearchParamsToUrl(history, {
+      modal: 'connectionSuccess',
+      action: ACTIONS.REJECT,
+      status: result.status,
+      name: result.data?.params?.proposer.metadata.name ?? '',
+    });
   };
 
   // istanbul ignore next
@@ -62,68 +57,51 @@ const ConnectionSummary = ({ history }) => {
 
   return (
     <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
-      <BlockchainAppDetailsHeader
-        application={application}
-      />
+      <BlockchainAppDetailsHeader application={application} />
       <div className={styles.wrapper}>
         <section className={styles.section}>
           <ValueAndLabel
             className={styles.labeledValue}
             label={t('Account(s) to use on this application')}
           >
-            <AccountsSelector
-              setAddresses={setAddresses}
-              addresses={addresses}
-            />
+            <AccountsSelector setAddresses={setAddresses} addresses={addresses} />
           </ValueAndLabel>
         </section>
         <section className={styles.section}>
-          <ValueAndLabel
-            className={styles.labeledValue}
-            label={t('Connection ID')}
-          >
+          <ValueAndLabel className={styles.labeledValue} label={t('Connection ID')}>
             <span className="pairing-topic">{pairingTopic}</span>
           </ValueAndLabel>
         </section>
         <section className={`${styles.section} ${styles.permissions}`}>
           <span className={styles.label}>{t('Site permissions')}</span>
           <div className={styles.twoColumn}>
-            <ValueAndLabel
-              label={t('Methods')}
-            >
+            <ValueAndLabel label={t('Methods')}>
               <div className={`${styles.items} methods`}>
-                {
-                  requiredNamespaces.lisk.methods.map(
-                    method => (<span key={method} className={styles.label}>{method}</span>),
-                  )
-                }
+                {requiredNamespaces.lisk.methods.map((method) => (
+                  <span key={method} className={styles.label}>
+                    {method}
+                  </span>
+                ))}
               </div>
             </ValueAndLabel>
-            <ValueAndLabel
-              label={t('Events')}
-            >
+            <ValueAndLabel label={t('Events')}>
               <div className={`${styles.items} events`}>
-                {
-                  requiredNamespaces.lisk.events.length
-                    ? requiredNamespaces.lisk.events.map(
-                      event => (<span key={event} className={styles.label}>{event}</span>),
-                    )
-                    : <span className={styles.label}>-</span>
-                }
+                {requiredNamespaces.lisk.events.length ? (
+                  requiredNamespaces.lisk.events.map((event) => (
+                    <span key={event} className={styles.label}>
+                      {event}
+                    </span>
+                  ))
+                ) : (
+                  <span className={styles.label}>-</span>
+                )}
               </div>
             </ValueAndLabel>
           </div>
         </section>
         <footer className={styles.section}>
-          <SecondaryButton
-            onClick={rejectHandler}
-          >
-            {t('Cancel')}
-          </SecondaryButton>
-          <PrimaryButton
-            onClick={connectHandler}
-            disabled={addresses.length === 0}
-          >
+          <SecondaryButton onClick={rejectHandler}>{t('Cancel')}</SecondaryButton>
+          <PrimaryButton onClick={connectHandler} disabled={addresses.length === 0}>
             {t('Connect')}
           </PrimaryButton>
         </footer>

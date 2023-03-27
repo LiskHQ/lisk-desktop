@@ -1,11 +1,10 @@
 import validators from '../../../../../tests/constants/validators';
 
 const generateStakes = validators.slice(0, 7).map((validator, index) => ({
-    address: validator.address,
-    amount: `${(index+1) * 1000000000}`,
-    name: validator.name,
-  }));
-
+  address: validator.address,
+  amount: `${(index + 1) * 1000000000}`,
+  name: validator.name,
+}));
 
 const data = {
   stakes: generateStakes,

@@ -1,1 +1,1 @@
-export * from './TokenSelector'
+export * from './TokenSelector';

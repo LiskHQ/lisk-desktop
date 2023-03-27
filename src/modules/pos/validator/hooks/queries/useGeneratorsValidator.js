@@ -1,7 +1,5 @@
 import { VALIDATOR } from 'src/const/queries';
-import {
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
@@ -16,7 +14,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useGeneratorsValidator = ({ config: customConfig = {}, options } = { }) => {
+export const useGeneratorsValidator = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/validator`,
     method: 'get',

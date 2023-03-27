@@ -7,7 +7,7 @@ import { mockBlockchainApp, mockBlockchainAppStatistics } from '../../__fixtures
 import BlockchainApplications from './BlockchainApplications';
 
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   createSignClient: jest.fn(() => Promise.resolve()),

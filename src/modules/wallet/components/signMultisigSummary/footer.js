@@ -25,9 +25,7 @@ export const Feedback = ({ t, isMember, signatureStatus }) => {
   let feedback;
   const statusMessages = {
     fullySigned: t('Transaction is already fully signed.'),
-    occupiedByOptionals: t(
-      'Your signature will replace one optional signature.',
-    ),
+    occupiedByOptionals: t('Your signature will replace one optional signature.'),
   };
   if (!isMember) {
     feedback = t('Only members of the group can sign the transaction.');

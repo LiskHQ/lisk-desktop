@@ -12,7 +12,9 @@ export const parseSearchParams = (search) => {
     const values = value.split(',');
     if (values.length > 1) {
       parsedParams[key] = values;
-    } else { parsedParams[key] = value; }
+    } else {
+      parsedParams[key] = value;
+    }
   }
 
   return parsedParams;
@@ -31,7 +33,7 @@ export const selectSearchParamValue = (search, query) => {
   const isArray = Array.isArray(query);
   const parsed = parseSearchParams(search);
   const queryInArray = isArray ? query : [query];
-  const values = queryInArray.map(item => parsed[item]);
+  const values = queryInArray.map((item) => parsed[item]);
   return isArray ? values : values[0];
 };
 
@@ -78,10 +80,12 @@ export const removeSearchParams = (search, paramsToRemove, cleanParamsAfter) => 
 
   if (cleanParamsAfter) {
     const paramKeys = Object.keys(params);
-    const indexToStartRemovingFrom = paramKeys.findIndex(param => param === paramsToRemove[0]);
-    Object.keys(params).slice(indexToStartRemovingFrom).forEach((key) => {
-      delete params[key];
-    });
+    const indexToStartRemovingFrom = paramKeys.findIndex((param) => param === paramsToRemove[0]);
+    Object.keys(params)
+      .slice(indexToStartRemovingFrom)
+      .forEach((key) => {
+        delete params[key];
+      });
   } else {
     paramsToRemove.forEach((key) => {
       delete params[key];
@@ -117,16 +121,15 @@ export const removeSearchParamsFromUrl = (history, paramsToRemove, cleanParamsAf
 };
 
 export const removeThenAppendSearchParamsToUrl = (
-  history, paramsToAdd, paramsToRemove, cleanParamsAfter,
+  history,
+  paramsToAdd,
+  paramsToRemove,
+  cleanParamsAfter
 ) => {
   let newSearchString = '';
   let formattedSearchString = '';
   if (Array.isArray(paramsToRemove) && paramsToRemove.length) {
-    newSearchString = removeSearchParams(
-      history.location.search,
-      paramsToRemove,
-      cleanParamsAfter,
-    );
+    newSearchString = removeSearchParams(history.location.search, paramsToRemove, cleanParamsAfter);
   }
   if (newSearchString.length) {
     formattedSearchString = appendSearchParams(history.location.search, paramsToAdd);

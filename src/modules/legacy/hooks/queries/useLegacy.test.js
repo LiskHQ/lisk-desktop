@@ -10,7 +10,9 @@ jest.useRealTimers();
 
 describe('useLegacy hook', () => {
   it('fetches data correctly', async () => {
-    const config = { params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' } };
+    const config = {
+      params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' },
+    };
     const { result, waitFor } = renderHook(() => useLegacy({ config }), { wrapper });
 
     expect(result.current.isLoading).toBeTruthy();
@@ -24,13 +26,14 @@ describe('useLegacy hook', () => {
     const { result, waitFor } = renderHook(() => useLegacy({ config: errorConfig }), { wrapper });
     const expectedResponse = {
       error: true,
-      message: "Invalid input: The 'publicKey' field length must be greater than or equal to 64 characters long., The 'publicKey' field fails to match the required pattern.",
+      message:
+        "Invalid input: The 'publicKey' field length must be greater than or equal to 64 characters long., The 'publicKey' field fails to match the required pattern.",
     };
     server.use(
       rest.get(`*/api/${API_VERSION}/legacy`, async (_, res, ctx) => {
         const response = expectedResponse;
         return res.once(ctx.status(400), ctx.json(response));
-      }),
+      })
     );
 
     expect(result.current.isLoading).toBeTruthy();

@@ -6,11 +6,7 @@ import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { parseSearchParams, addSearchParamsToUrl } from 'src/utils/searchParams';
-import {
-  selectActiveToken,
-  selectSettings,
-  selectTransactions,
-} from 'src/redux/selectors';
+import { selectActiveToken, selectSettings, selectTransactions } from 'src/redux/selectors';
 import Transactions from '@transaction/components/Explorer';
 import Overview from '@wallet/components/overview/overviewManager';
 

@@ -18,23 +18,19 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
  * @returns the query object
  */
 
-export const useCustomInfiniteQuery = ({
-  keys,
-  config,
-  options = {},
-  client = defaultClient
-}) => {
+export const useCustomInfiniteQuery = ({ keys, config, options = {}, client = defaultClient }) => {
   const [{ chainID }] = useCurrentApplication();
 
   return useInfiniteQuery(
     [...keys, chainID, config],
-    async ({ pageParam }) => client.call({
-      ...config,
-      params: {
-        ...(config.params || {}),
-        ...pageParam,
-      },
-    }),
+    async ({ pageParam }) =>
+      client.call({
+        ...config,
+        params: {
+          ...(config.params || {}),
+          ...pageParam,
+        },
+      }),
     {
       getNextPageParam: (lastPage = {}) => {
         const lastPageCount = lastPage.meta?.count || 0;
@@ -44,14 +40,15 @@ export const useCustomInfiniteQuery = ({
         const hasMore = offset < (lastPage.meta?.total ?? Infinity);
         return !hasMore ? undefined : { offset };
       },
-      select: (data) => data.pages.reduce((prevPages, page) => {
-        const newData = page?.data || [];
-        return {
-          ...page,
-          data: prevPages.data ? [...prevPages.data, ...newData] : newData,
-        };
-      }, {}),
+      select: (data) =>
+        data.pages.reduce((prevPages, page) => {
+          const newData = page?.data || [];
+          return {
+            ...page,
+            data: prevPages.data ? [...prevPages.data, ...newData] : newData,
+          };
+        }, {}),
       ...options,
-    },
+    }
   );
 };

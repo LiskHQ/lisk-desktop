@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
@@ -70,7 +71,10 @@ const SendForm = (props) => {
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
-  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value, tokenID: token?.tokenID });
+  const { data: initializationFees } = useGetInitializationFees({
+    address: recipient.value,
+    tokenID: token?.tokenID,
+  });
   const { data: messageFeeResult } = useGetMinimumMessageFee();
 
   const extraCommandFee =
@@ -296,4 +300,5 @@ const SendForm = (props) => {
     </section>
   );
 };
+
 export default SendForm;

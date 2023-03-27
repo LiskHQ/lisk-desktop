@@ -24,16 +24,20 @@ describe('Middleware: Bookmarks', () => {
   });
 
   it('should update localStorage with current bookmarks', () => {
-    const actions = [{
-      type: actionTypes.bookmarkAdded,
-      data: { account: { ...accounts.genesis, title: 'genesis' } },
-    }, {
-      type: actionTypes.bookmarkUpdated,
-      data: { account: { ...accounts.genesis, title: 'genesis' } },
-    }, {
-      type: actionTypes.bookmarkRemoved,
-      data: { address: accounts.genesis.summary.address },
-    }];
+    const actions = [
+      {
+        type: actionTypes.bookmarkAdded,
+        data: { account: { ...accounts.genesis, title: 'genesis' } },
+      },
+      {
+        type: actionTypes.bookmarkUpdated,
+        data: { account: { ...accounts.genesis, title: 'genesis' } },
+      },
+      {
+        type: actionTypes.bookmarkRemoved,
+        data: { address: accounts.genesis.summary.address },
+      },
+    ];
 
     actions.forEach((action, index) => {
       bookmarksMiddleware(store)(next)(action);

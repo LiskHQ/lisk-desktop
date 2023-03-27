@@ -14,7 +14,7 @@ describe('Initialization', () => {
 
   beforeEach(() => {
     props = {
-      t: v => v,
+      t: (v) => v,
       history: {
         push: jest.fn(),
       },
@@ -24,13 +24,10 @@ describe('Initialization', () => {
 
   it('Opens send modal', () => {
     wrapper.find(styles.button).first().simulate('click');
-    expect(
-      addSearchParamsToUrl,
-    ).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({ }),
-      { modal: 'send', initialization: true },
-    );
+    expect(addSearchParamsToUrl).toHaveBeenNthCalledWith(1, expect.objectContaining({}), {
+      modal: 'send',
+      initialization: true,
+    });
   });
 
   it('Opens lisk blog windows', () => {
@@ -38,7 +35,7 @@ describe('Initialization', () => {
     expect(window.open).toHaveBeenCalledWith(
       'https://lisk.com/blog/announcement/lisk-account-initialization',
       '_blank',
-      'rel=noopener noreferrer',
+      'rel=noopener noreferrer'
     );
   });
 });

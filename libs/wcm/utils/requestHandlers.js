@@ -12,9 +12,7 @@ const signMessage = async (message, wallet) => {
   return { signature: signedMessage };
 };
 
-const signTransaction = async (
-  rawTx, networkIdentifier, schema, wallet,
-) => {
+const signTransaction = async (rawTx, networkIdentifier, schema, wallet) => {
   const transaction = {
     moduleID: rawTx.moduleID,
     assetID: rawTx.assetID,
@@ -31,7 +29,7 @@ const signTransaction = async (
     schema,
     transaction,
     Buffer.from(networkIdentifier),
-    this.keypair.secretKey,
+    this.keypair.secretKey
   );
 
   return { signature: res.signatures, id: res.id };
@@ -52,7 +50,7 @@ export async function approveLiskRequest(requestEvent, wallet) {
         request.params.rawTx,
         request.params.networkIdentifier,
         request.params.schema,
-        wallet,
+        wallet
       );
 
       return formatJsonRpcResult(id, signedTransaction);

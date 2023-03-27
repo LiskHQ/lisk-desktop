@@ -6,11 +6,7 @@ describe('Reducer: account(state, action)', () => {
   let state;
 
   beforeEach(() => {
-    const {
-      passphrase,
-      publicKey,
-      address,
-    } = wallets.genesis;
+    const { passphrase, publicKey, address } = wallets.genesis;
     state = {
       balance: 0,
       passphrase,

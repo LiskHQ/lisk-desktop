@@ -19,11 +19,13 @@ You can download the latest release from [Lisk.com](https://lisk.com/wallet). Th
 - Linux
 
 ## For Contributors
+
 Please see [CONTRIBUTING_GUIDE.md](/docs/CONTRIBUTING_GUIDE.md) for more information.
 
 ## Development
 
 ### Using Commercial Fonts
+
 `Basier Circle` and `Gilroy` used in the production version are commercial fonts. This repository only contains open fonts and uses `Open Sans` as a replacement for the commercial ones.
 
 If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts). If you don't have the fonts, you need to remove lines 25 - 81 of [type.css](./src/components/app/type.css). After that, the `build` and `dev` npm scripts run without any errors.
@@ -31,11 +33,12 @@ If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to
 ### Setup environment
 
 The development environment currently depends on:
+
 - [Node.js version 16 (lts/gallium)](https://nodejs.org/download/release/latest-v16.x/). The below instructions assume [nvm](https://github.com/nvm-sh/nvm) is being used to manage Node.js versions.
 - [Python version 2.7.18 is required](https://www.python.org/downloads/release/python-2718/) is being used on encrypt/decrypt by the [lisk-sdk](https://github.com/LiskHQ/lisk-sdk/tree/development/sdk#dependencies).
 
-*Note*:
-For *Windows* users, make sure to set the correct [msvs_version](https://www.npmjs.com/package/node-gyp#on-windows) config for installing and packing the Lisk Desktop application.
+_Note_:
+For _Windows_ users, make sure to set the correct [msvs_version](https://www.npmjs.com/package/node-gyp#on-windows) config for installing and packing the Lisk Desktop application.
 
 ```
 git clone https://github.com/LiskHQ/lisk-desktop.git
@@ -59,11 +62,12 @@ Add the above pair using the storage tab in your dev tools or via JavaScript com
 localStorage.setItem('loginKey', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble') // desired account passphrase
 ```
 
-
 When developing with hardware wallet, this will sign you in using the first account on the first connected hardware wallet:
+
 ```
 localStorage.setItem('hwWalletAutoLogin', true);
 ```
+
 You can use the same approach to define a desired network to which Lisk Desktop connects:
 
 ```
@@ -79,20 +83,23 @@ To build the project simply run
 ```
 npm run build
 ```
+
 Under the hood, this script runs
 
 ```
 npm run build:prod
 ```
+
 to build the React app under `src/` and
 
 ```
 npm run build:electron
 ```
+
 to build the electron app under `app/` using webpack. You can run the above scripts individually if you're looking to see the changes solely on one of the two said applications.
 
-
 ### Run Electron
+
 If you have already built the application as described above, you can launch Electron using
 
 ```
@@ -112,6 +119,7 @@ or to launch electron and receive live updates from already running `webpack-dev
 ```
 LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true npm run start
 ```
+
 This comes with Redux dev tools.
 
 ### Distribution
@@ -145,16 +153,19 @@ npm run pack
 ### Unit tests
 
 #### Single run
+
 ```
 npm run test
 ```
 
 #### Run each time a file changes
+
 ```
 npm run test:live
 ```
 
 ### E2E tests
+
 In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk-core) as well as [lisk-service](https://github.com/LiskHQ/lisk-service).
 
 #### Setup Lisk Core
@@ -165,13 +176,14 @@ Setup a lisk test node as described in Preparing Node headline under [the tests 
 
 Run Lisk Service against an already running local node as described in Preparing Node headline under [the installation section of Lisk Service README](https://github.com/liskhq/lisk-service#installation).
 
-
 #### Run
 
 Start the development version of Lisk:
+
 ```
 npm run dev
 ```
+
 Apply blockchain snapshot
 
 ```
@@ -181,6 +193,7 @@ Apply blockchain snapshot
 (replace `~/git/lisk/` with your path to lisk core)
 
 Run e2e tests
+
 ```
 npm run cypress:run
 ```
@@ -216,8 +229,8 @@ npm run cypress:run
 └──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit test that live in /src
 ```
 
-
 ## Contributors
+
 See [contributors section](https://github.com/LiskHQ/lisk-desktop/graphs/contributors).
 
 ## License

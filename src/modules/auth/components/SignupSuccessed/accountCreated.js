@@ -16,7 +16,9 @@ const AccountCreated = ({ t }) => (
     </div>
     <Illustration className={styles.illustration} name="registrationSuccess" />
     <p className={styles.subheader}>
-      {t('You can now add your account to Lisk Wallet by clicking on "Continue to dashboard", to be able to send and request tokens and much more.')}
+      {t(
+        'You can now add your account to Lisk Wallet by clicking on "Continue to dashboard", to be able to send and request tokens and much more.'
+      )}
     </p>
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <Link

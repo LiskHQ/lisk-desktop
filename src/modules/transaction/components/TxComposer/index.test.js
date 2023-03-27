@@ -39,7 +39,7 @@ describe('TxComposer', () => {
       amount: 100000,
       data: 'test-data',
       token: { tokenID: '00000000' },
-    }
+    },
   };
 
   useCommandSchema.mockReturnValue({
@@ -108,7 +108,7 @@ describe('TxComposer', () => {
   it('should render transaction form when transaction is valid', () => {
     const newProps = {
       ...props,
-      buttonTitle: "Continue to stake",
+      buttonTitle: 'Continue to stake',
       formProps: {
         isFormValid: true,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,

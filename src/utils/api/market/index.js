@@ -10,10 +10,11 @@ export const httpPaths = {
  *
  * @returns {Promise} http call
  */
-export const getPrices = ({ network }) => http({
-  path: httpPaths.prices,
-  network,
-});
+export const getPrices = ({ network }) =>
+  http({
+    path: httpPaths.prices,
+    network,
+  });
 
 /**
  * Retrieve the list of announcements by Lisk Foundation.
@@ -22,10 +23,9 @@ export const getPrices = ({ network }) => http({
  * @param {[String]} data.params.source - News sources
  * @returns {Promise} http call
  */
-export const getNews = ({
-  params = {}, network,
-}) => http({
-  path: '/api/v3/newsfeed',
-  params,
-  network,
-});
+export const getNews = ({ params = {}, network }) =>
+  http({
+    path: '/api/v3/newsfeed',
+    params,
+    network,
+  });

@@ -51,7 +51,8 @@ describe('passphraseInput', () => {
     });
 
     it('should show 24 fields when pasting a passphrase longer than 12 words', () => {
-      const passphrase = 'stomach bunker border grace wool amazing settle sugar journey sleep pole boat apple salon kick';
+      const passphrase =
+        'stomach bunker border grace wool amazing settle sugar journey sleep pole boat apple salon kick';
       const clipboardData = {
         getData: () => passphrase,
       };
@@ -111,7 +112,8 @@ describe('passphraseInput', () => {
 
     const NOT_VALID_ERROR = 'Passphrase is not valid';
     it(`should call props.onFill with error="${NOT_VALID_ERROR}" if an otherwise invalid passphrase is entered`, () => {
-      const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
+      const passphrase =
+        'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
       const clipboardData = {
         getData: () => passphrase,
       };

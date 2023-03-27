@@ -13,8 +13,8 @@ const mockState = {
     current: {},
   },
   network: {
-    name: 'testnet'
-  }
+    name: 'testnet',
+  },
 };
 
 const mockDispatch = jest.fn();

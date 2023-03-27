@@ -14,11 +14,8 @@ const apis = {
       address: selectSearchParamValue(props.history.location.search, 'address'),
       network: state.network,
     }),
-    transformResponse: response => response,
+    transformResponse: (response) => response,
   },
 };
 
-export default compose(
-  withData(apis),
-  withTranslation(),
-)(ExplorerLayout);
+export default compose(withData(apis), withTranslation())(ExplorerLayout);

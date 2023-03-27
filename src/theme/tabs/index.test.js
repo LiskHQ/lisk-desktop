@@ -4,12 +4,14 @@ import Tabs from './index';
 
 describe('Tabs', () => {
   const props = {
-    tabs: [{
-      value: 'All',
-    },
-    {
-      value: 'Staked',
-    }],
+    tabs: [
+      {
+        value: 'All',
+      },
+      {
+        value: 'Staked',
+      },
+    ],
     active: 'All',
   };
 
@@ -27,7 +29,7 @@ describe('Tabs', () => {
     const index = 1;
     const onClick = jest.fn();
     const wrapper = mount(<Tabs {...props} onClick={onClick} />);
-    (wrapper.find('li').at(index)).simulate('click');
+    wrapper.find('li').at(index).simulate('click');
     expect(onClick).toHaveBeenCalledWith(props.tabs[index]);
   });
 
@@ -35,7 +37,7 @@ describe('Tabs', () => {
     const index = 1;
     const onClick = jest.fn();
     const wrapper = mount(<Tabs {...props} />);
-    (wrapper.find('li').at(index)).simulate('click');
+    wrapper.find('li').at(index).simulate('click');
     expect(onClick).not.toHaveBeenCalledWith(props.tabs[index]);
   });
 });

@@ -20,23 +20,22 @@ const sortByVersion = (a, b, direction = 'desc') => {
 
   const split = (version) => {
     const arr = version.split(/\.|-/);
-    return Array.from(
-      { length: 5 },
-      (item, index) => {
-        if (arr[index] === 'rc') return -1;
-        if (arr[index] === 'beta') return -2;
-        return parseInt(arr[index], 10) || 0;
-      },
-    );
+    return Array.from({ length: 5 }, (item, index) => {
+      if (arr[index] === 'rc') return -1;
+      if (arr[index] === 'beta') return -2;
+      return parseInt(arr[index], 10) || 0;
+    });
   };
   const aParts = split(a.networkVersion || '');
   const bParts = split(b.networkVersion || '');
 
-  return aParts.reduce((acc, item, index) => {
-    if (acc === 0 && item > bParts[index]) acc = 1;
-    if (acc === 0 && item < bParts[index]) acc = -1;
-    return acc;
-  }, 0) * (direction === 'desc' ? -1 : 1);
+  return (
+    aParts.reduce((acc, item, index) => {
+      if (acc === 0 && item > bParts[index]) acc = 1;
+      if (acc === 0 && item < bParts[index]) acc = -1;
+      return acc;
+    }, 0) * (direction === 'desc' ? -1 : 1)
+  );
 };
 
 export default sortByVersion;

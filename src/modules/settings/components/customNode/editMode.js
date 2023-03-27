@@ -9,22 +9,16 @@ import styles from '../networkSelector/networkSelector.css';
 
 const validateNode = async (address) => {
   try {
-    const response = await getNetworkConfig(
-      {
-        name: networkKeys.customNode,
-        address,
-      },
-    );
+    const response = await getNetworkConfig({
+      name: networkKeys.customNode,
+      address,
+    });
     if (response) {
       return true;
     }
-    throw new Error(
-      `Failed to return response for custom node url: ${address}`,
-    );
+    throw new Error(`Failed to return response for custom node url: ${address}`);
   } catch (err) {
-    throw new Error(
-      `Error getting network config for address: ${address}: ${err.message}`,
-    );
+    throw new Error(`Error getting network config for address: ${address}: ${err.message}`);
   }
 };
 
@@ -84,7 +78,7 @@ const EditMode = ({
               value,
               error: 1,
               feedback: t(
-                'Unable to connect to Lisk Service, please check the address and try again',
+                'Unable to connect to Lisk Service, please check the address and try again'
               ),
             });
             setLoading(false);

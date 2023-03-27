@@ -28,7 +28,9 @@ export const statusMessages = (t) => ({
   },
   [txStatusTypes.broadcastSuccess]: {
     title: t('Transaction submitted'),
-    message: t('Your transaction is submitted to network, you can now track the status of this transaction in your wallet.'),
+    message: t(
+      'Your transaction is submitted to network, you can now track the status of this transaction in your wallet.'
+    ),
   },
   [txStatusTypes.signatureError]: {
     title: t('Transaction failed'),

@@ -2,7 +2,6 @@ import actionTypes from '../actions/actionTypes';
 import { currentDevice, initialState } from './currentDeviceReducer';
 
 describe('HardwareWallet current device reducer', () => {
-
   it('updates current device', () => {
     const action = {
       type: actionTypes.setCurrentHWDevice,
@@ -10,7 +9,7 @@ describe('HardwareWallet current device reducer', () => {
         path: '20231',
         model: 'Nano S',
         brand: 'Ledger',
-      }
+      },
     };
     const updatedState = currentDevice(initialState, action);
     expect(updatedState).toEqual(action.payload);

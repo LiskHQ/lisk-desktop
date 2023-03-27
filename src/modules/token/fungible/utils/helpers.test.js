@@ -2,39 +2,35 @@ import { expect } from 'chai';
 import { convertFromBaseDenom, convertToBaseDenom } from './helpers';
 
 const mockLiskTokenMetadata = {
-  displayDenom: "lsk",
+  displayDenom: 'lsk',
   denomUnits: [
     {
-      "denom": "beddows",
-      "decimals": 0,
-      "aliases": [
-        "Beddows"
-      ]
+      denom: 'beddows',
+      decimals: 0,
+      aliases: ['Beddows'],
     },
     {
-      "denom": "lsk",
-      "decimals": 8,
-      "aliases": [
-        "Lisk"
-      ]
-    }
-  ]
+      denom: 'lsk',
+      decimals: 8,
+      aliases: ['Lisk'],
+    },
+  ],
 };
 
 const mockEventiTokenMetadata = {
-  displayDenom: "envt",
+  displayDenom: 'envt',
   denomUnits: [
     {
-      "denom": "ventti",
-      "decimals": 0,
-      "aliases": ["Ventti"]
+      denom: 'ventti',
+      decimals: 0,
+      aliases: ['Ventti'],
     },
     {
-      "denom": "envt",
-      "decimals": 5,
-      "aliases": ["Enevti"]
-    }
-  ]
+      denom: 'envt',
+      decimals: 5,
+      aliases: ['Enevti'],
+    },
+  ],
 };
 
 describe('Token utils', () => {

@@ -6,14 +6,12 @@ import DialogLink from 'src/theme/dialog/link';
 import Icon from 'src/theme/Icon';
 import styles from 'src/modules/common/components/bars/topBar/topBar.css';
 
-const StakeQueueToggle = ({
-  t, stakeCount, disabled,
-}) => (
+const StakeQueueToggle = ({ t, stakeCount, disabled }) => (
   <Tooltip
     className={styles.tooltipWrapper}
     size="maxContent"
     position="bottom"
-    content={(
+    content={
       <DialogLink
         component="stakingQueue"
         className={`${styles.toggle} staking-queue-toggle ${
@@ -21,11 +19,9 @@ const StakeQueueToggle = ({
         }`}
       >
         <Icon name="stakingQueueInactive" />
-        {stakeCount !== 0 && (
-          <span className={styles.stakeCount}>{stakeCount}</span>
-        )}
+        {stakeCount !== 0 && <span className={styles.stakeCount}>{stakeCount}</span>}
       </DialogLink>
-    )}
+    }
   >
     <p>{t('Staking queue')}</p>
   </Tooltip>

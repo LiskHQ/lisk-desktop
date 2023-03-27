@@ -21,16 +21,10 @@ const Error = ({ t, hwInfo }) => {
   );
 };
 
-const Success = ({
-  t, signature, copied, copy, prevStep, onPrev,
-}) => (
+const Success = ({ t, signature, copied, copy, prevStep, onPrev }) => (
   <>
     <BoxContent className={styles.noPadding}>
-      <AutoResizeTextarea
-        className={`${styles.result} result`}
-        value={signature}
-        readOnly
-      />
+      <AutoResizeTextarea className={`${styles.result} result`} value={signature} readOnly />
     </BoxContent>
     <BoxFooter direction="horizontal">
       <SecondaryButton
@@ -43,10 +37,7 @@ const Success = ({
         {t('Back')}
       </SecondaryButton>
       <CopyToClipboard onCopy={copy} text={signature}>
-        <PrimaryButton
-          disabled={copied}
-          className={`${styles.button} copy-to-clipboard`}
-        >
+        <PrimaryButton disabled={copied} className={`${styles.button} copy-to-clipboard`}>
           {copied ? t('Copied!') : t('Copy to clipboard')}
         </PrimaryButton>
       </CopyToClipboard>
@@ -54,9 +45,7 @@ const Success = ({
   </>
 );
 
-const SignedMessage = ({
- prevStep, signature, error, account, onPrev,
-}) => {
+const SignedMessage = ({ prevStep, signature, error, account, onPrev }) => {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const ref = useRef();
