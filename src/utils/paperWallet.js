@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+import { extractAddressFromPassphrase } from '@wallet/utils/account';
 import logo from '@setup/react/assets/images/paperWallet/lisk-logo-blue-on-white-rgb.png';
 import usbStick from '@setup/react/assets/images/paperWallet/usb-stick.png';
 import printer from '@setup/react/assets/images/paperWallet/print.png';
@@ -17,9 +18,9 @@ class PaperWallet {
   }
 
   setupDoc() {
-    const { account } = this.props;
+    const { passphrase } = this.props;
     let line = -1;
-    this.passphrase = account.passphrase.split(/\s/).reduce((acc, word, index) => {
+    this.passphrase = passphrase.split(/\s/).reduce((acc, word, index) => {
       line += index % 6 === 0 ? 1 : 0;
       acc[line] = acc[line] ? `${acc[line]} ${word}` : word;
       return acc;
@@ -35,14 +36,11 @@ class PaperWallet {
     this.doc
       .addFileToVFS('Gilroy-Bold.ttf', fonts.GilroyBold)
       .addFont('Gilroy-Bold.ttf', 'gilroy', 'normal', 'bold');
-    this.doc
-      .addFileToVFS('gilroy-medium.ttf', fonts.GilroyMedium)
-      .addFont('Gilroy-Medium.ttf', 'gilroy', 'normal', 'normal');
-    this.doc.setTextColor('#303030').setFont('gilroy');
+    this.doc.setTextColor(48, 48, 48).setFont('gilroy');
   }
 
   renderHeader() {
-    const { t, passphraseName } = this.props;
+    const { t } = this.props;
     const textOptions = this.textOptions;
     const now = new Date();
     const date = [
@@ -56,7 +54,7 @@ class PaperWallet {
     this.doc
       .setFont('gilroy', 'normal', 'bold')
       .setFontSize(16)
-      .text(t('{{passphraseName}} paper wallet', { passphraseName }), 135, 64, {
+      .text(t('Paper wallet'), 135, 64, {
         ...textOptions,
         lineHeightFactor: 1.18,
       });
@@ -83,7 +81,7 @@ class PaperWallet {
     this.doc.addImage(printer, 'PNG', 32, 185, 36, 36);
     this.doc.addImage(usbStick, 'PNG', 32, 229, 36, 36);
 
-    this.doc.setFont('gilroy', 'normal', 'normal').setFontSize(14);
+    this.doc.setFont('gilroy', 'normal', 'bold').setFontSize(14);
     this.doc.text(t('How we recommend to store it.'), 32, 147, textOptions);
     this.doc.text(t('Print it on paper and store it in a safe place'), 76, 194, textOptions);
     this.doc.text(
@@ -96,23 +94,24 @@ class PaperWallet {
   }
 
   renderAccount() {
-    const { account, t } = this.props;
+    const { t, passphrase } = this.props;
     const textOptions = this.textOptions;
+    const address = extractAddressFromPassphrase(passphrase);
 
     this.doc
-      .setFont('gilroy', 'normal', 'normal')
+      .setFont('gilroy', 'normal', 'bold')
       .setFontSize(14)
       .text(t('Wallet address:'), 32, 300, textOptions);
     this.doc
       .setFont('gilroy', 'normal', 'bold')
       .setFontSize(18)
-      .text(account.address, 32, 340, {
+      .text(address, 32, 340, {
         ...textOptions,
         lineHeightFactor: 2.22,
       });
 
     this.doc
-      .setFont('gilroy', 'normal', 'normal')
+      .setFont('gilroy', 'normal', 'bold')
       .setFontSize(14)
       .text(t('Passphrase:'), 32, 406, textOptions);
     this.doc
@@ -135,7 +134,7 @@ class PaperWallet {
     const { qrcode, t } = this.props;
     const textOptions = this.textOptions;
     const marginTop = this.passphrase.length * 45;
-    this.doc.setFont('gilroy', 'normal', 'normal').setFontSize(14);
+    this.doc.setFont('gilroy', 'normal', 'bold').setFontSize(14);
     this.doc.text(
       t('Access your account by scanning the QR code below with the Lisk Mobile App:'),
       32,
