@@ -24,6 +24,11 @@ describe('Paper Wallet', () => {
     now: new Date('2018-04-05T10:20:30Z'),
   };
   const walletName = 'walletName';
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should call JSPDF with right params', () => {
     renderPaperWallet(JSPDF, data, walletName);
     expect(JSPDF).toHaveBeenCalledWith({
@@ -47,7 +52,7 @@ describe('Paper Wallet', () => {
       align: 'left',
       baseline: 'top',
       charSpace: 0.05,
-      lineHeightFactor: 1.18,
+      lineHeightFactor: 1.57,
     });
     expect(doc.text).toHaveBeenNthCalledWith(3, '05.04.2018', 568, 75, {
       align: 'right',
