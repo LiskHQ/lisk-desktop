@@ -7,7 +7,7 @@ import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors
 
 import Summary from './summary';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
   network: state.network,
   activeToken: selectActiveToken(state),
@@ -21,5 +21,5 @@ const dispatchToProps = {
 export default compose(
   connect(mapStateToProps, dispatchToProps),
   withRouter,
-  withTranslation(),
+  withTranslation()
 )(Summary);

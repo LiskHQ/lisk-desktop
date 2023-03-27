@@ -1,2 +1,2 @@
-export * from './accountsActions'
-export * from './devicesActions'
+export * from './accountsActions';
+export * from './devicesActions';

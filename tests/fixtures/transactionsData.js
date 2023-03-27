@@ -84,9 +84,7 @@ export default [
         '2f3dfb37326c6c42af28d04e6b6a76865430ade3d26969f1b86e3987b500bbaf',
         '520bd47952f98ba475bba6aafa926f730f8ddbcb4c362a826be1ac6618be3d3e',
       ],
-      optionalKeys: [
-        'd1e267fd2cfdba3ee1f657c75a88f3d41aae3ca98d82286a21e4be12aaa6a388',
-      ],
+      optionalKeys: ['d1e267fd2cfdba3ee1f657c75a88f3d41aae3ca98d82286a21e4be12aaa6a388'],
     },
     isPending: false,
   },
@@ -152,7 +150,8 @@ export default [
           maxHeightPrestaked: 15329809,
           seedReveal: '9df2fee500047174fe19c4454d32c0e2',
         },
-        signature: 'fcab8714c33e635e8c5827c054383488c4873472a0b73657d7d8af39f4291324850b76897082f3e477ffc01975e019431945cd1bc079274e10ed9ada5c7a2405',
+        signature:
+          'fcab8714c33e635e8c5827c054383488c4873472a0b73657d7d8af39f4291324850b76897082f3e477ffc01975e019431945cd1bc079274e10ed9ada5c7a2405',
       },
       header2: {
         version: 2,
@@ -167,7 +166,8 @@ export default [
           maxHeightPrestaked: 15329809,
           seedReveal: '9df2fee500047174fe19c4454d32c0e2',
         },
-        signature: 'b749358492ce7ef8ae351b5d3c63fb798af049569a8e410f621be113d80b190a4204e87cfbc29f5188713731f50220622674474382cf384cfe6b68d6dc14c90c',
+        signature:
+          'b749358492ce7ef8ae351b5d3c63fb798af049569a8e410f621be113d80b190a4204e87cfbc29f5188713731f50220622674474382cf384cfe6b68d6dc14c90c',
       },
     },
     isPending: false,

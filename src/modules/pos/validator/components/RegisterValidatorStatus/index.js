@@ -4,7 +4,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { transactionBroadcasted, resetTransactionResult } from 'src/redux/actions';
 import Status from './Status';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
   transactions: state.transactions,
 });
@@ -13,7 +13,4 @@ const mapDispatchToProps = {
   resetTransactionResult,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Status);
+export default connect(mapStateToProps, mapDispatchToProps)(Status);

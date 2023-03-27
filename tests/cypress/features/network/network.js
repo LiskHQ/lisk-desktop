@@ -8,7 +8,7 @@ Then(/^I should have (\d+) peers rendered in table$/, function (number) {
 
 Then(/^peers should be sorted in (\w+) order by (\w+)$/, function (sortOrder, sortParam) {
   let prevParamValue = null;
-  switch(sortParam){
+  switch (sortParam) {
     case 'height':
       prevParamValue = sortOrder === 'descending' ? Infinity : -Infinity;
 
@@ -16,7 +16,7 @@ Then(/^peers should be sorted in (\w+) order by (\w+)$/, function (sortOrder, so
         const value = +ele[0].lastElementChild.innerText;
         expect(value)[sortOrder === 'descending' ? 'lte' : 'gte'](prevParamValue);
         prevParamValue = value;
-      })
+      });
       break;
     case 'networkVersion':
       prevParamValue = sortOrder === 'descending' ? Infinity : -Infinity;
@@ -25,9 +25,7 @@ Then(/^peers should be sorted in (\w+) order by (\w+)$/, function (sortOrder, so
         const value = +ele[0].childNodes[3].innerText;
         expect(value)[sortOrder === 'descending' ? 'lte' : 'gte'](prevParamValue);
         prevParamValue = value;
-      })
+      });
       break;
   }
-
-}); 
-
+});

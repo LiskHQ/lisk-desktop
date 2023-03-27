@@ -18,7 +18,9 @@ const EditAccount = ({ history }) => {
       <SetPasswordSuccess
         encryptedPhrase={currentAccount}
         headerText={t('Edit account name')}
-        contentText={t('Successfully edited, now you can download the encrypted secret recovery phrase to this effect.')}
+        contentText={t(
+          'Successfully edited, now you can download the encrypted secret recovery phrase to this effect.'
+        )}
         buttonText={t('Back to wallet')}
         onClose={() => {
           history.push(routes.wallet.path);

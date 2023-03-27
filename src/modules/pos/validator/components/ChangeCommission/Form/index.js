@@ -1,1 +1,1 @@
-export * from './ChangeCommissionForm'
+export * from './ChangeCommissionForm';

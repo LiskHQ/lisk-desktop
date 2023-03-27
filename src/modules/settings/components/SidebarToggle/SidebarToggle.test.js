@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import useSettings from '@settings/hooks/useSettings';
 import settingConstants from '@settings/const/settingConstants';
 import SidebarToggle from './SidebarToggle';

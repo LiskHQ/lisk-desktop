@@ -13,9 +13,12 @@ describe.skip('Register Process - Choose Avatar', () => {
   const cryptoObj = window.crypto || window.msCrypto;
   const passphrases = [...Array(5)].map(() =>
     generatePassphraseFromSeed({
-      seed: [...cryptoObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
-    }));
-  const accounts = passphrases.map(pass => ({
+      seed: [...cryptoObj.getRandomValues(new Uint16Array(16))].map((x) =>
+        `00${(x % 256).toString(16)}`.slice(-2)
+      ),
+    })
+  );
+  const accounts = passphrases.map((pass) => ({
     address: extractAddressFromPassphrase(pass),
     passphrase: pass,
   }));

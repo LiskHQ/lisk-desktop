@@ -23,9 +23,7 @@ const ckdPriv = ({ key, chainCode }, index) => {
   const indexBuffer = Buffer.allocUnsafe(4);
   indexBuffer.writeUInt32BE(index, 0);
   const data = Buffer.concat([Buffer.alloc(1, 0), key, indexBuffer]);
-  const I = createHmac('sha512', chainCode)
-    .update(data)
-    .digest();
+  const I = createHmac('sha512', chainCode).update(data).digest();
   const IL = I.slice(0, 32);
   const IR = I.slice(32);
   return {
@@ -50,10 +48,11 @@ export const getCustomDerivationPublicKey = (passphrase, path = defaultDerivatio
 
   let node = getMasterKeyFromSeed(masterSeed);
 
-  const segments = path.split('/')
+  const segments = path
+    .split('/')
     .slice(1)
-    .map(el => el.replace("'", ''))
-    .map(el => parseInt(el, 10));
+    .map((el) => el.replace("'", ''))
+    .map((el) => parseInt(el, 10));
 
   segments.forEach((index) => {
     node = ckdPriv(node, index + HARDENED_OFFSET);
@@ -78,10 +77,11 @@ export const getCustomDerivationKeyPair = (passphrase, path = defaultDerivationP
 
   let node = getMasterKeyFromSeed(masterSeed);
 
-  const segments = path.split('/')
+  const segments = path
+    .split('/')
     .slice(1)
-    .map(el => el.replace("'", ''))
-    .map(el => parseInt(el, 10));
+    .map((el) => el.replace("'", ''))
+    .map((el) => parseInt(el, 10));
 
   segments.forEach((index) => {
     node = ckdPriv(node, index + HARDENED_OFFSET);

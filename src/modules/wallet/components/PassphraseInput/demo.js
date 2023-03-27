@@ -9,11 +9,7 @@ const PassphraseInputDemo = () => (
   <div>
     <h2>PassphraseInput</h2>
     <DemoRenderer>
-      <PassphraseInput
-        inputsLength={12}
-        maxInputsLength={24}
-        onFill={onFill}
-      />
+      <PassphraseInput inputsLength={12} maxInputsLength={24} onFill={onFill} />
     </DemoRenderer>
   </div>
 );

@@ -1,5 +1,5 @@
 import { LedgerAccount } from '@zondax/ledger-lisk';
-import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
+import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
 
 export const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();

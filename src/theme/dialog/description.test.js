@@ -8,18 +8,18 @@ describe('Dialo.Description component', () => {
       <div>
         <p>
           Dummy
-          <strong>
-            text
-          </strong>
+          <strong>text</strong>
         </p>
       </div>
     );
     let wrapper = shallow(<Description>{child}</Description>);
     expect(wrapper).toContainReact(child);
-    wrapper = shallow(<Description>
-      {child}
-      {child}
-    </Description>);
+    wrapper = shallow(
+      <Description>
+        {child}
+        {child}
+      </Description>
+    );
     expect(wrapper).toContainMatchingElements(2, 'p');
   });
 });

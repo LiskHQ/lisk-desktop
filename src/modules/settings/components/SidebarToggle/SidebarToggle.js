@@ -13,7 +13,9 @@ function SidebarToggle() {
   const { t } = useTranslation();
   const { toggleSetting, [sideBarExpanded]: isExpanded } = useSettings(sideBarExpanded);
 
-  const toggle = () => { toggleSetting(!isExpanded); };
+  const toggle = () => {
+    toggleSetting(!isExpanded);
+  };
 
   return (
     <Tooltip

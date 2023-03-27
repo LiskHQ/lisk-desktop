@@ -3,9 +3,12 @@ import React from 'react';
 import jsxToString from 'jsx-to-string';
 
 export const DarkWrapper = ({ children, display }) => (
-  <span style={{
-    display, background: '#0c152e', padding: 20,
-  }}
+  <span
+    style={{
+      display,
+      background: '#0c152e',
+      padding: 20,
+    }}
   >
     {children}
   </span>
@@ -21,11 +24,8 @@ DarkWrapper.defaultProps = {
 
 const DemoRenderer = ({ children, ...rest }) => (
   <div {...rest}>
-    <pre>
-      {children.map ? children.map(jsxToString).join('\n') : jsxToString(children)}
-      {' '}
-    </pre>
-    { children }
+    <pre>{children.map ? children.map(jsxToString).join('\n') : jsxToString(children)} </pre>
+    {children}
   </div>
 );
 

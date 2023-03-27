@@ -10,15 +10,15 @@ import { STATUS, ERROR_CASES } from '../constants/lifeCycle';
  * @param {array} selectedAccounts List of lisk addresses selected by the user
  * @returns {Promise} The promise that resolves when the approval is complete
  */
-export const onApprove = async (
-  proposal, selectedAccounts,
-) => {
+export const onApprove = async (proposal, selectedAccounts) => {
   const { id, params } = proposal;
   const { requiredNamespaces, relays } = params;
 
   // Normalize the information according to requirements of the bridge
   const namespaces = Object.entries(requiredNamespaces).reduce((namespace, [key, value]) => {
-    const accounts = value.chains.map((chain) => selectedAccounts.map(account => `${chain}:${account}`)).flat();
+    const accounts = value.chains
+      .map((chain) => selectedAccounts.map((account) => `${chain}:${account}`))
+      .flat();
 
     namespace[key] = {
       accounts,
@@ -28,11 +28,13 @@ export const onApprove = async (
     return namespace;
   }, {});
 
-  const [err, response] = await to(client.approve({
-    id,
-    relayProtocol: relays[0].protocol,
-    namespaces,
-  }));
+  const [err, response] = await to(
+    client.approve({
+      id,
+      relayProtocol: relays[0].protocol,
+      namespaces,
+    })
+  );
 
   if (!err) {
     const { acknowledged } = response;

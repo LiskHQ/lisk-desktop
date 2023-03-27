@@ -1,7 +1,7 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './BlockDetailsTransactionsTable.css';
 
-export default (t) => ([
+export default (t) => [
   {
     title: t('ID'),
     classList: grid['col-xs-2'],
@@ -26,4 +26,4 @@ export default (t) => ([
     title: t('Status'),
     classList: grid['col-xs-1'],
   },
-]);
+];

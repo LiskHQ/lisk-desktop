@@ -17,13 +17,11 @@ const Network = () => {
       <Box className="map-box">
         <BoxHeader>
           <div>
-            <h1 className={`${styles.contentHeader} contentHeader`}>
-              {t('Connected peers')}
-            </h1>
+            <h1 className={`${styles.contentHeader} contentHeader`}>{t('Connected peers')}</h1>
             <Tooltip position="right">
               <p>
                 {t(
-                  'The list shown only contains peers connected to the current Lisk Service node.',
+                  'The list shown only contains peers connected to the current Lisk Service node.'
                 )}
               </p>
             </Tooltip>

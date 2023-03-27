@@ -36,19 +36,17 @@ class passphraseInput extends React.Component {
     let { focus, inputsLength } = this.state;
     const index = parseInt(event.target.dataset.index, 10);
     if (
-      event.which === keyCodes.space
-      || event.which === keyCodes.arrowRight
-      || event.which === keyCodes.tab
+      event.which === keyCodes.space ||
+      event.which === keyCodes.arrowRight ||
+      event.which === keyCodes.tab
     ) {
-      inputsLength = index + 1 > inputsLength - 1
-        ? this.props.maxInputsLength
-        : inputsLength;
+      inputsLength = index + 1 > inputsLength - 1 ? this.props.maxInputsLength : inputsLength;
       focus = index + 1 > inputsLength - 1 ? index : index + 1;
       event.preventDefault();
     }
     if (
-      (event.which === keyCodes.delete && !this.state.values[focus])
-      || event.which === keyCodes.arrowLeft
+      (event.which === keyCodes.delete && !this.state.values[focus]) ||
+      event.which === keyCodes.arrowLeft
     ) {
       focus = index - 1 < 0 ? index : index - 1;
       event.preventDefault();
@@ -59,21 +57,14 @@ class passphraseInput extends React.Component {
   handlePaste({ clipboardData, target }) {
     let { values, inputsLength } = this.state;
     const index = parseInt(target.dataset.index, 10);
-    const pastedValue = clipboardData
-      .getData('Text')
-      .trim()
-      .replace(/\W+/g, ' ')
-      .split(/\s/);
+    const pastedValue = clipboardData.getData('Text').trim().replace(/\W+/g, ' ').split(/\s/);
     if (pastedValue.length <= 1) {
       values[index] = '';
     } else {
       const insertedValue = [...Array(index), ...pastedValue];
-      inputsLength = insertedValue.length > inputsLength
-        ? this.props.maxInputsLength
-        : inputsLength;
-      values = insertedValue
-        .map((value, key) => value || values[key])
-        .splice(0, inputsLength);
+      inputsLength =
+        insertedValue.length > inputsLength ? this.props.maxInputsLength : inputsLength;
+      values = insertedValue.map((value, key) => value || values[key]).splice(0, inputsLength);
     }
 
     this.validatePassphrase({ values, inputsLength });
@@ -89,11 +80,7 @@ class passphraseInput extends React.Component {
     this.validatePassphrase({ values, focus: index });
   }
 
-  validatePassphrase({
-    values,
-    inputsLength = this.state.inputsLength,
-    focus = 0,
-  }) {
+  validatePassphrase({ values, inputsLength = this.state.inputsLength, focus = 0 }) {
     let errorState = {
       validationError: '',
       partialPassphraseError: [],
@@ -103,7 +90,8 @@ class passphraseInput extends React.Component {
     const passphrase = values.join(' ').trim();
     if (!isValidPassphrase(passphrase)) {
       errorState = getPassphraseValidationErrors(values);
-      errorState.passphraseIsInvalid = errorState.validationError === this.props.t('Passphrase is not valid');
+      errorState.passphraseIsInvalid =
+        errorState.validationError === this.props.t('Passphrase is not valid');
     }
 
     if (!passphrase.length) {
@@ -153,21 +141,14 @@ class passphraseInput extends React.Component {
       validationError: isFeedbackOnError,
       values,
     } = this.state;
-    const iconName = showPassphrase
-      ? 'showPassphraseIcon'
-      : 'hidePassphraseIcon';
+    const iconName = showPassphrase ? 'showPassphraseIcon' : 'hidePassphraseIcon';
 
     return (
       <>
         <div className={styles.wrapper}>
-          <label
-            className={`${styles.showPassphrase}`}
-            onClick={this.handleToggleShowPassphrase}
-          >
+          <label className={`${styles.showPassphrase}`} onClick={this.handleToggleShowPassphrase}>
             <Icon name={iconName} />
-            <span className={`${styles.label}`}>
-              {showPassphrase ? t('Hide') : t('Show')}
-            </span>
+            <span className={`${styles.label}`}>{showPassphrase ? t('Hide') : t('Show')}</span>
           </label>
 
           <div
@@ -178,11 +159,7 @@ class passphraseInput extends React.Component {
             ].join(' ')}
           >
             {[...Array(inputsLength)].map((x, i) => (
-              <span
-                key={i}
-                className={styles.inputContainer}
-                autoComplete="off"
-              >
+              <span key={i} className={styles.inputContainer} autoComplete="off">
                 <span
                   className={[
                     styles.inputNumber,
@@ -194,15 +171,14 @@ class passphraseInput extends React.Component {
                 <Input
                   name={`recovery-${i}`}
                   setRef={(ref) =>
-                    ref !== null
-                    && this.state.focus === i
-                    && ref !== document.activeElement
-                    && ref.focus()}
+                    ref !== null &&
+                    this.state.focus === i &&
+                    ref !== document.activeElement &&
+                    ref.focus()
+                  }
                   placeholder="_________"
                   className={[
-                    partialPassphraseError[i] || passphraseIsInvalid
-                      ? 'error'
-                      : '',
+                    partialPassphraseError[i] || passphraseIsInvalid ? 'error' : '',
                     focus === i ? 'selected' : '',
                   ].join(' ')}
                   value={values[i] || ''}

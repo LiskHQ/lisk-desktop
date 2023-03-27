@@ -4,7 +4,7 @@ import { useSession } from '../hooks/useSession';
 import ConnectionProvider from './connectionProvider';
 
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 
 jest.mock('@walletconnect/sign-client', () => ({
@@ -12,8 +12,7 @@ jest.mock('@walletconnect/sign-client', () => ({
 }));
 
 it('should use custom step when incrementing', () => {
-  const wrapper = ({ children }) =>
-    (<ConnectionProvider>{children}</ConnectionProvider>);
+  const wrapper = ({ children }) => <ConnectionProvider>{children}</ConnectionProvider>;
   const { result } = renderHook(() => useSession(), { wrapper });
 
   expect(result.current.session).toEqual({

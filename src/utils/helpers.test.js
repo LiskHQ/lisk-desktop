@@ -58,12 +58,17 @@ describe('helpers', () => {
   });
   describe('filterObjectPropsWithValue', () => {
     it('works properly with arrays', () => {
-      expect(filterObjectPropsWithValue({
-        genesis_14: 'notStakedYet',
-        genesis_15: 'unstakes',
-        genesis_16: 'unstakes',
-        genesis_17: 'stakes',
-      }, 'unstakes')).toEqual(['genesis_15', 'genesis_16']);
+      expect(
+        filterObjectPropsWithValue(
+          {
+            genesis_14: 'notStakedYet',
+            genesis_15: 'unstakes',
+            genesis_16: 'unstakes',
+            genesis_17: 'stakes',
+          },
+          'unstakes'
+        )
+      ).toEqual(['genesis_15', 'genesis_16']);
     });
   });
   describe('sizeOfString', () => {
@@ -79,7 +84,7 @@ describe('helpers', () => {
     it('detects class components', () => {
       class TextComponent extends React.Component {
         render() {
-          return (<div />);
+          return <div />;
         }
       }
       expect(isReactComponent(TextComponent)).toEqual('class');

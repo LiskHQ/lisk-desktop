@@ -50,7 +50,7 @@ function SettingDialog() {
           <section className="network">
             <h2>{t('Network')}</h2>
             <div className={styles.fieldGroup}>
-              <NetworkSwitcherDropdown noLabel/>
+              <NetworkSwitcherDropdown noLabel />
             </div>
           </section>
           <section className="advanced">

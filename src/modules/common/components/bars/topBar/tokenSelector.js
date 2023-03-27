@@ -8,9 +8,7 @@ import Tooltip from 'src/theme/Tooltip';
 import { selectActiveToken } from 'src/redux/selectors';
 import styles from './topBar.css';
 
-const TokenSelector = ({
-  token, history, t, disabled,
-}) => {
+const TokenSelector = ({ token, history, t, disabled }) => {
   const dispatch = useDispatch();
   const activeToken = useSelector(selectActiveToken);
 
@@ -29,13 +27,15 @@ const TokenSelector = ({
       className={`${styles.tokenSelector} ${disabled && `${styles.disabled} disabled`}`}
       size="maxContent"
       position="bottom"
-      content={(
+      content={
         <Icon
           name={`${token.toLowerCase()}Icon`}
-          className={`${styles.toggle} ${activeToken !== token ? styles.opaqueLogo : ''} token-selector-${token}`}
+          className={`${styles.toggle} ${
+            activeToken !== token ? styles.opaqueLogo : ''
+          } token-selector-${token}`}
           onClick={activateToken}
         />
-      )}
+      }
     >
       <p>{t('Lisk wallet')}</p>
     </Tooltip>

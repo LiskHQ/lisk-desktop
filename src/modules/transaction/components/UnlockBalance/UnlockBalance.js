@@ -6,7 +6,7 @@ import styles from './UnlockBalance.css';
 
 const UnlockBalance = ({ account, t, formProps }) => {
   const { token } = usePosToken();
-  
+
   return (
     <>
       <section className={styles.sender}>
@@ -20,10 +20,7 @@ const UnlockBalance = ({ account, t, formProps }) => {
         <div className={styles.col}>
           <label>{t('Amount to unlock')}</label>
           <label className="amount-label">
-            <TokenAmount
-              val={formProps.unlockedAmount}
-              token={token}
-            />
+            <TokenAmount val={formProps.unlockedAmount} token={token} />
           </label>
         </div>
       </section>

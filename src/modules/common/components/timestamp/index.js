@@ -12,7 +12,7 @@ const DateTimeFromTimestamp = withTranslation()((props) => {
   }
 
   return (
-    <span className={`${props.className || ''}`} data-testid="date-timestamp" >
+    <span className={`${props.className || ''}`} data-testid="date-timestamp">
       {props.fulltime
         ? /* istanbul ignore next */
           dateTime.format('DD MMM YYYY, hh:mm:ss A')

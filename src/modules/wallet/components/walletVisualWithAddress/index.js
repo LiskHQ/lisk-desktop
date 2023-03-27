@@ -16,18 +16,14 @@ import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
 
-const AccountName = ({
-  isMultisig, address, name,
-}) => (
+const AccountName = ({ isMultisig, address, name }) => (
   <div className={styles.accountName}>
     <p className="accountName">{name}</p>
-    {
-      isMultisig && (
-        <DialogLink component="multisigAccountDetails" data={{ address }}>
-          <Icon name="multisigKeys" />
-        </DialogLink>
-      )
-    }
+    {isMultisig && (
+      <DialogLink component="multisigAccountDetails" data={{ address }}>
+        <Icon name="multisigKeys" />
+      </DialogLink>
+    )}
   </div>
 );
 
@@ -41,9 +37,7 @@ const AccountAddress = ({
   isMultisig,
 }) => (
   <div className={`${styles.address} accountAddress`}>
-    <span>
-      {truncate ? truncatedAddress : transformedAddress}
-    </span>
+    <span>{truncate ? truncatedAddress : transformedAddress}</span>
     {copy ? (
       <CopyToClipboard
         value={address}
@@ -52,13 +46,11 @@ const AccountAddress = ({
         className={styles.copyIcon}
       />
     ) : null}
-    {
-      isMultisig && !name && (
-        <DialogLink component="multisigAccountDetails" data={{ address }}>
-          <Icon name="multisigKeys" />
-        </DialogLink>
-      )
-    }
+    {isMultisig && !name && (
+      <DialogLink component="multisigAccountDetails" data={{ address }}>
+        <Icon name="multisigKeys" />
+      </DialogLink>
+    )}
   </div>
 );
 
@@ -94,7 +86,7 @@ const WalletVisualWithAddress = ({
     truncate === 'small' || truncate === 'medium'
       ? truncateAddress(transformedAddress, truncate)
       : truncateAddress(transformedAddress);
-  
+
   return (
     <div className={`${styles.address} ${className}`}>
       {moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && transactionSubject === 'recipient' ? (
@@ -109,11 +101,7 @@ const WalletVisualWithAddress = ({
         <>
           <WalletVisual address={address} size={size} />
           <div className={`${styles.detailsWrapper} ${detailsClassName || ''}`}>
-            <AccountName
-              name={accountName}
-              address={address}
-              isMultisig={isMultisig}
-            />
+            <AccountName name={accountName} address={address} isMultisig={isMultisig} />
             <AccountAddress
               address={address}
               truncate={truncate}

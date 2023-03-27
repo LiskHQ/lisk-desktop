@@ -33,7 +33,7 @@ const Send = ({ history }) => {
       >
         <Form initialValue={initialValue} />
         <Summary />
-        <TxSignatureCollector confirmText={t("Confirm and Sign")} />
+        <TxSignatureCollector confirmText={t('Confirm and Sign')} />
         <Status history={history} />
       </MultiStep>
     </Dialog>

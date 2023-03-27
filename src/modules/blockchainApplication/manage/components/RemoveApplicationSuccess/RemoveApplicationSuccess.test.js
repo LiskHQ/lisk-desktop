@@ -16,9 +16,7 @@ describe('BlockchainApplicationDetails', () => {
   });
 
   it('should display properly', () => {
-    const {
-      chainName,
-    } = props.sharedData.application.data;
+    const { chainName } = props.sharedData.application.data;
 
     expect(screen.getByText('Application has now been removed')).toBeTruthy();
     expect(screen.getByText(chainName)).toBeTruthy();

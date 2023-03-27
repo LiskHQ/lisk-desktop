@@ -14,10 +14,7 @@ const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
         <Icon name="successCheckMark" />
         <p>{t('Application has now been removed')}</p>
         <p>
-          {t('You can always add')}
-          {' '}
-          <a href="#">{application.data.chainName}</a>
-          {' '}
+          {t('You can always add')} <a href="#">{application.data.chainName}</a>{' '}
           {t('again to your application list.')}
         </p>
         <PrimaryButton

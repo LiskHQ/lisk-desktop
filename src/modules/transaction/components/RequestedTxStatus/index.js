@@ -14,25 +14,15 @@ import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './RequestedTxStatus.css';
 
 export const SuccessActions = ({ onClick, t, copied }) => (
-  <PrimaryButton
-    className={`${styles.button} respond-button`}
-    onClick={onClick}
-    disabled={copied}
-  >
+  <PrimaryButton className={`${styles.button} respond-button`} onClick={onClick} disabled={copied}>
     <span className={styles.buttonContent}>
       <Icon name={copied ? 'checkmark' : 'copy'} />
-      {
-        copied
-          ? t('Copied')
-          : t('Copy and return to application')
-      }
+      {copied ? t('Copied') : t('Copy and return to application')}
     </span>
   </PrimaryButton>
 );
 
-const ErrorActions = ({
-  t, status, message, network,
-}) => (
+const ErrorActions = ({ t, status, message, network }) => (
   <a
     className="report-error-link"
     href={getErrorReportMailto({
@@ -65,8 +55,8 @@ const RequestedTxStatus = ({
   const [copied, setCopied] = useState(false);
 
   const onClick = () => {
-    const event = events.find(e => e.name === EVENTS.SESSION_REQUEST);
-    const { schema } = event.meta.params.request.params
+    const event = events.find((e) => e.name === EVENTS.SESSION_REQUEST);
+    const { schema } = event.meta.params.request.params;
     // prepare to copy
     copyToClipboard(JSON.stringify(toTransactionJSON(transactions.signedTransaction, schema)));
     setCopied(true);
@@ -82,31 +72,18 @@ const RequestedTxStatus = ({
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <Illustration
-        name={getIllustration(
-          status.code,
-          'signMultisignature',
-          account.hwInfo,
-        )}
+        name={getIllustration(status.code, 'signMultisignature', account.hwInfo)}
         data-testid="illustration"
       />
       <h6 className="result-box-header">{title}</h6>
       <p className="transaction-status body-message">{message}</p>
 
       <div className={styles.primaryActions}>
-        {
-          status.code === txStatusTypes.signatureError
-          ? (
-            <ErrorActions
-              message={message}
-              network={network}
-              status={status}
-              t={t}
-            />
-          )
-          : (
-            <SuccessActions onClick={onClick} t={t} copied={copied} />
-          )
-        }
+        {status.code === txStatusTypes.signatureError ? (
+          <ErrorActions message={message} network={network} status={status} t={t} />
+        ) : (
+          <SuccessActions onClick={onClick} t={t} copied={copied} />
+        )}
       </div>
     </div>
   );

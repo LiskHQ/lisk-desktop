@@ -25,12 +25,8 @@ const ActionButton = ({ status, t }) => (
   </DialogLink>
 );
 
-const TransactionRow = ({
-  data, t, host, className,
-}) => {
-  const {
-    sender, recipient, amount, status,
-  } = data;
+const TransactionRow = ({ data, t, host, className }) => {
+  const { sender, recipient, amount, status } = data;
 
   return (
     <DialogLink
@@ -44,8 +40,7 @@ const TransactionRow = ({
         <WalletVisual address={sender.address} className={styles.avatar} />
         <div className={styles.signDetails}>
           <p className={styles.addressTitle}>
-            {sender.title
-              || sender.address.replace(regex.lskAddressTrunk, '$1...$3')}
+            {sender.title || sender.address.replace(regex.lskAddressTrunk, '$1...$3')}
           </p>
           {sender.publicKey && (
             <p className={styles.key}>

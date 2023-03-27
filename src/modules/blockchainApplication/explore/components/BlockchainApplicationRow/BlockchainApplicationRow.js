@@ -10,7 +10,7 @@ import styles from './BlockchainApplicationRow.css';
 
 const DepositAmount = ({ amount }) => (
   <span className={`deposit-amount ${styles.amount} ${grid['col-xs-3']}`}>
-    <TokenAmount isLsk val={amount}  />
+    <TokenAmount isLsk val={amount} />
   </span>
 );
 

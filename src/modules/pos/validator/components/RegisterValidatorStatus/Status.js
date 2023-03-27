@@ -7,7 +7,7 @@ import styles from './Status.css';
 const RegisterValidatorStatus = ({ transactions, account, t }) => {
   const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
-  
+
   return (
     <div className={`${styles.wrapper} status-container`}>
       <TxBroadcaster

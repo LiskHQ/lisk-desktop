@@ -8,40 +8,37 @@ import server from '../../server';
 describe('Electron Browser Window Wrapper', () => {
   const callbacks = {};
   const events = [];
-  const path = { resolve: () => ('test') };
+  const path = { resolve: () => 'test' };
   const electronLocalshortcut = {
     register: () => {},
   };
 
   const electron = {
     screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
-    BrowserWindow: ({
-      width, height, center, webPreferences,
-    }) =>
-      ({
-        width,
-        height,
-        center,
-        webPreferences,
-        loadURL: spy(),
+    BrowserWindow: ({ width, height, center, webPreferences }) => ({
+      width,
+      height,
+      center,
+      webPreferences,
+      loadURL: spy(),
+      on: (item, callback) => {
+        callbacks[item] = callback;
+      },
+      webContents: {
         on: (item, callback) => {
           callbacks[item] = callback;
         },
-        webContents: {
-          on: (item, callback) => {
-            callbacks[item] = callback;
-          },
-          send: (event, value) => {
-            events.push({ event, value });
-          },
+        send: (event, value) => {
+          events.push({ event, value });
         },
-      }),
+      },
+    }),
     Menu: {
       setApplicationMenu: spy(),
-      buildFromTemplate: () => (electron.Menu),
+      buildFromTemplate: () => electron.Menu,
       popup: spy(),
     },
-    app: { getName: () => ('Lisk'), getVersion: () => ('some version') },
+    app: { getName: () => 'Lisk', getVersion: () => 'some version' },
   };
   const url = 'http://localhost:8080/';
 
@@ -113,7 +110,10 @@ describe('Electron Browser Window Wrapper', () => {
 
     it('Sends blur and focus events', () => {
       win.create({
-        electron, path, electronLocalshortcut, storage,
+        electron,
+        path,
+        electronLocalshortcut,
+        storage,
       });
       expect(events.length).to.equal(0);
       callbacks.focus();
@@ -131,7 +131,10 @@ describe('Electron Browser Window Wrapper', () => {
       expect(menu.inputMenu).to.equal(undefined);
 
       win.create({
-        electron, path, electronLocalshortcut, storage,
+        electron,
+        path,
+        electronLocalshortcut,
+        storage,
       });
       expect(win.browser).to.not.equal(null);
 
@@ -171,7 +174,10 @@ describe('Electron Browser Window Wrapper', () => {
       expect(menu.inputMenu).to.equal(undefined);
 
       win.create({
-        electron, path, electronLocalshortcut, storage,
+        electron,
+        path,
+        electronLocalshortcut,
+        storage,
       });
       expect(win.browser).to.not.equal(null);
 

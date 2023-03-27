@@ -1,15 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  validateBookmarkAddress,
-  validateBookmarkLabel,
-  getBookmarkMode,
-} from '@bookmark/utils';
-import {
-  parseSearchParams,
-  removeSearchParamsFromUrl,
-} from 'src/utils/searchParams';
+import { validateBookmarkAddress, validateBookmarkLabel, getBookmarkMode } from '@bookmark/utils';
+import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -39,19 +32,15 @@ const AddBookmark = ({
   const timeout = useRef(null);
 
   useEffect(() => {
-    const { formAddress, label, isValidator } = parseSearchParams(
-      history.location.search,
-    );
-    const bookmark = bookmarks[active].find(
-      (item) => item.address === formAddress,
-    );
+    const { formAddress, label, isValidator } = parseSearchParams(history.location.search);
+    const bookmark = bookmarks[active].find((item) => item.address === formAddress);
     const addressFeedback = validateBookmarkAddress(
       active,
       formAddress,
       network,
       bookmarks,
       t,
-      false,
+      false
     );
     const usernameValue = bookmark?.title || label || '';
     const usernameFeedback = validateBookmarkLabel(usernameValue, t);
@@ -110,14 +99,7 @@ const AddBookmark = ({
   };
 
   const onAddressChange = ({ target: { value } }) => {
-    const feedback = validateBookmarkAddress(
-      active,
-      value,
-      network,
-      bookmarks,
-      t,
-      true,
-    );
+    const feedback = validateBookmarkAddress(active, value, network, bookmarks, t, true);
     clearTimeout(timeout.current);
 
     if (!feedback && value !== '') {
@@ -161,9 +143,7 @@ const AddBookmark = ({
     onClose();
   };
 
-  const isDisabled = fields.find(
-    (field) => field.feedback || field.value === '',
-  );
+  const isDisabled = fields.find((field) => field.feedback || field.value === '');
 
   return (
     <ModalWrapper>
@@ -174,26 +154,17 @@ const AddBookmark = ({
           </header>
           <Box className={styles.box}>
             <BoxHeader>
-              <h2>
-                {mode === 'edit' ? t('Edit bookmark') : t('New bookmark')}
-              </h2>
+              <h2>{mode === 'edit' ? t('Edit bookmark') : t('New bookmark')}</h2>
             </BoxHeader>
             <BoxContent>
-              <BookmarkForm
-                t={t}
-                status={fields}
-                handlers={[onAddressChange, onLabelChange]}
-              />
+              <BookmarkForm t={t} status={fields} handlers={[onAddressChange, onLabelChange]} />
             </BoxContent>
             <BoxFooter direction="horizontal">
               <SecondaryButton className="cancel-button" onClick={onClose}>
                 {t('Cancel')}
               </SecondaryButton>
               {mode === 'edit' && (
-                <SecondaryButton
-                  className="remove-button"
-                  onClick={handleRemoveBookmark}
-                >
+                <SecondaryButton className="remove-button" onClick={handleRemoveBookmark}>
                   <div className={styles.removeBtn}>
                     <Icon name="remove" />
                     {t('Remove')}
@@ -226,7 +197,7 @@ AddBookmark.propTypes = {
       PropTypes.shape({
         address: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-      }),
+      })
     ),
   }).isRequired,
   network: PropTypes.shape({

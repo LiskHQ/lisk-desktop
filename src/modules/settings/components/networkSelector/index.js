@@ -7,14 +7,14 @@ import NetworkSelectorComp from './networkSelector';
 
 const NetworkSelector = (props) => {
   const dispatch = useDispatch();
-  const network = useSelector(state => state.network);
+  const network = useSelector((state) => state.network);
   const settings = useSelector(selectSettings);
 
   return (
     <NetworkSelectorComp
       network={network}
       settings={settings}
-      networkSelected={params => dispatch(networkSelected(params))}
+      networkSelected={(params) => dispatch(networkSelected(params))}
       {...props}
     />
   );

@@ -120,7 +120,10 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
     messages.push(t(`You don't have enough ${posToken.symbol} in your account.`));
   }
 
-  if (balance - addedStakeAmount < BigInt(MIN_ACCOUNT_BALANCE) && balance - BigInt(addedStakeAmount)) {
+  if (
+    balance - addedStakeAmount < BigInt(MIN_ACCOUNT_BALANCE) &&
+    balance - BigInt(addedStakeAmount)
+  ) {
     messages.push(
       `The stake amounts are too high. You should keep 0.05 ${posToken.symbol} available in your account.`
     );
@@ -175,7 +178,9 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
 
   const stakeFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
-    isFormValid: (!feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending) || showEmptyState,
+    isFormValid:
+      (!feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending) ||
+      showEmptyState,
     fields: {
       token: posToken,
     },
@@ -191,7 +196,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
         onConfirm={onConfirm}
         formProps={stakeFormProps}
         commandParams={commandParams}
-        buttonTitle={showEmptyState ? t("Continue staking") : t("Continue")}
+        buttonTitle={showEmptyState ? t('Continue staking') : t('Continue')}
       >
         <>
           {showEmptyState ? (

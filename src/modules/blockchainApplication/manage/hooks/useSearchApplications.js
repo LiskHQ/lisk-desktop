@@ -21,33 +21,36 @@ export const useSearchApplications = () => {
       setSearchValue(value);
     }, 500);
   };
-  const onSearchApplications = useCallback((value) => {
-    const isURL = regex.url.test(addHttp(value));
-    setDebounceSearch(value);
-    setURL((state) => ({
-      ...state,
-      isURL,
-    }));
-    // Ensure URL check is up-to-date including while pasting input
-    // If URL, ping URL and if successful, then use the URL to get application information
-    if (isURL) {
-      // Ping URL and validate service
-      const formattedValue = removeTrailingSlash(addHttp(value));
-      validateAppNode(formattedValue)
-        .then(() => {
-          setURL({
-            URLStatus: 'ok',
-            isURL,
+  const onSearchApplications = useCallback(
+    (value) => {
+      const isURL = regex.url.test(addHttp(value));
+      setDebounceSearch(value);
+      setURL((state) => ({
+        ...state,
+        isURL,
+      }));
+      // Ensure URL check is up-to-date including while pasting input
+      // If URL, ping URL and if successful, then use the URL to get application information
+      if (isURL) {
+        // Ping URL and validate service
+        const formattedValue = removeTrailingSlash(addHttp(value));
+        validateAppNode(formattedValue)
+          .then(() => {
+            setURL({
+              URLStatus: 'ok',
+              isURL,
+            });
+          })
+          .catch(() => {
+            setURL({
+              URLStatus: 'error',
+              isURL,
+            });
           });
-        })
-        .catch(() => {
-          setURL({
-            URLStatus: 'error',
-            isURL,
-          });
-        });
-    }
-  }, [setSearchValue, setURL]);
+      }
+    },
+    [setSearchValue, setURL]
+  );
 
   if (URL.isURL) {
     // const result = useQuery()

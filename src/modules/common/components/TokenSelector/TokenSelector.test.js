@@ -36,9 +36,10 @@ describe('TokenSelector', () => {
 
     fireEvent.click(
       screen.getByText(
-        `${convertFromBaseDenom(mockTokensBalance.data[0].availableBalance, mockAppsTokens.data[0])} ${
-          mockTokensBalance.data[0].symbol
-        }`
+        `${convertFromBaseDenom(
+          mockTokensBalance.data[0].availableBalance,
+          mockAppsTokens.data[0]
+        )} ${mockTokensBalance.data[0].symbol}`
       )
     );
 

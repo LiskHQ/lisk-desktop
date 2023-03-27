@@ -45,18 +45,21 @@ export default class AutoSuggestDemo extends React.Component {
             }}
             placeholder="Start typing..."
             token="LSK"
-            items={[{
-              title: '#1',
-              address: '214986124L',
-            }, {
-              title: '#2',
-              address: '7124124L',
-            }]}
+            items={[
+              {
+                title: '#1',
+                address: '214986124L',
+              },
+              {
+                title: '#2',
+                address: '7124124L',
+              },
+            ]}
             matchProps={['address', 'title']}
             onChangeDelayed={onChange}
             onChange={this.onChange}
             onSelectItem={this.onSelectItem}
-            renderItem={item => (
+            renderItem={(item) => (
               <>
                 <span>{item.title}</span>
                 <span>{item.address}</span>

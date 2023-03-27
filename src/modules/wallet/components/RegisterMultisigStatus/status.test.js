@@ -9,7 +9,7 @@ jest.mock('@libs/wcm/hooks/useSession', () => ({
 }));
 describe('Multisignature Status component', () => {
   const props = {
-    t: v => v,
+    t: (v) => v,
     transactions: {
       confirmed: [],
       txBroadcastError: null,
@@ -54,7 +54,8 @@ describe('Multisignature Status component', () => {
       illustration: 'registerMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_SUCCESS' },
       title: 'The transaction is now fully signed',
-      message: 'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.',
+      message:
+        'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.',
       className: 'content',
     });
   });
@@ -107,7 +108,7 @@ describe('Multisignature Status component', () => {
       transactions: {
         txBroadcastError: { message: 'error:test' },
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -128,7 +129,7 @@ describe('Multisignature Status component', () => {
       transactions: {
         txBroadcastError: null,
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 

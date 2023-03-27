@@ -3,8 +3,10 @@ import { fireEvent, screen } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import RemoveConfirmationScreen from './RemoveConfirmation';
 
-const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-const message = 'This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.';
+const recoveryPhrase =
+  'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+const message =
+  'This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.';
 const goBackFn = jest.fn();
 const props = {
   history: {
@@ -42,9 +44,7 @@ describe('RemoveConfirmationScreen', () => {
 
   it('Should abort the removal when cancel', async () => {
     expect(screen.getByText('Remove Account?')).toBeTruthy();
-    expect(
-      screen.getByText(message),
-    ).toBeTruthy();
+    expect(screen.getByText(message)).toBeTruthy();
     fireEvent.click(screen.getByText('Cancel'));
   });
 
@@ -57,18 +57,14 @@ describe('RemoveConfirmationScreen', () => {
     removeScreen.rerender(<RemoveConfirmationScreen {...removeProps} />);
 
     expect(screen.getByText('Remove Account?')).toBeTruthy();
-    expect(
-      screen.getByText(message),
-    ).toBeTruthy();
+    expect(screen.getByText(message)).toBeTruthy();
     fireEvent.click(screen.getByText('Cancel'));
     expect(goBackFn).toHaveBeenCalled();
   });
 
   it('Should successfully remove an account', async () => {
     expect(removeScreen.getByText('Remove Account?')).toBeTruthy();
-    expect(
-      removeScreen.getByText(message),
-    ).toBeTruthy();
+    expect(removeScreen.getByText(message)).toBeTruthy();
     fireEvent.click(removeScreen.getByText('Remove now'));
   });
 });

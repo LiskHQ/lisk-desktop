@@ -5,11 +5,7 @@ const Flag = ({ code }) => {
   const flagStyle = code && styles[code];
   return (
     <div className={`${styles.flag} ${flagStyle ? styles.bordered : null}`}>
-      {
-        flagStyle
-          ? <span className={`${styles.sprite} ${flagStyle}`} />
-          : '-'
-      }
+      {flagStyle ? <span className={`${styles.sprite} ${flagStyle}`} /> : '-'}
     </div>
   );
 };

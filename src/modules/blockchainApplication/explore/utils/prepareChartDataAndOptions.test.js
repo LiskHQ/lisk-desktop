@@ -11,9 +11,11 @@ describe('BlockchainApplication explore utils', () => {
     };
     const colorPalette = ['green', 'blue', 'grey'];
     const t = (l) => l;
-    const {
-      doughnutChartData, doughnutChartOptions,
-    } = prepareChartDataAndOptions(statistics, colorPalette, t);
+    const { doughnutChartData, doughnutChartOptions } = prepareChartDataAndOptions(
+      statistics,
+      colorPalette,
+      t
+    );
 
     expect(doughnutChartData).toEqual({
       labels: ['Registered', 'Active', 'Terminated'],

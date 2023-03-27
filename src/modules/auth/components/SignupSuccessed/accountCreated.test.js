@@ -5,7 +5,7 @@ import AccountCreated from './accountCreated';
 describe('Register Process - Account created', () => {
   let wrapper;
   const props = {
-    t: k => k,
+    t: (k) => k,
   };
 
   beforeEach(() => {

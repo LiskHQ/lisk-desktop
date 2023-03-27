@@ -11,11 +11,13 @@ import actionTypes from './actionTypes';
  * @returns {Object} - the action object
  */
 export const networkConfigSet = async (data) => {
-  const promises = tokenKeys.map(token => getNetworkConfig(data, token));
+  const promises = tokenKeys.map((token) => getNetworkConfig(data, token));
 
   const networks = await Promise.all(promises);
-  const networksWithNames = tokenKeys.reduce((acc, token, index) =>
-    ({ ...acc, [token]: networks[index] }), {});
+  const networksWithNames = tokenKeys.reduce(
+    (acc, token, index) => ({ ...acc, [token]: networks[index] }),
+    {}
+  );
   return {
     type: actionTypes.networkConfigSet,
     data: { name: data.name, networks: networksWithNames },
@@ -27,7 +29,7 @@ export const networkConfigSet = async (data) => {
  * @param {Object} data - active network data
  * @returns {Object} the action object
  */
-export const networkStatusUpdated = data => ({
+export const networkStatusUpdated = (data) => ({
   data,
   type: actionTypes.networkStatusUpdated,
 });
@@ -40,7 +42,7 @@ export const networkStatusUpdated = data => ({
  * @param {String} data.address - the network address
  * @returns {Object} the action object
  */
-export const networkSelected = data => ({
+export const networkSelected = (data) => ({
   data,
   type: actionTypes.networkSelected,
 });
@@ -51,7 +53,7 @@ export const networkSelected = data => ({
  * @param {string} data - A valid network URL
  * @returns {object} the action object
  */
-export const customNetworkStored = data => ({
+export const customNetworkStored = (data) => ({
   data,
   type: actionTypes.customNetworkStored,
 });

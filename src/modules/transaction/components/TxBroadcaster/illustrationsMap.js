@@ -35,7 +35,7 @@ const illustrations = {
   registerValidator: {
     [txStatusTypes.broadcastSuccess]: 'validatorRegistrationSuccess',
     [txStatusTypes.broadcastError]: 'validatorRegistrationSuccess',
-  }
+  },
 };
 
 const getIllustration = (status, type, hwInfo) => {

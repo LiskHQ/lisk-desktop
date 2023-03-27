@@ -11,7 +11,8 @@ export const regex = {
   blockHeight: /^[0-9]+$/,
   truncate: {
     small: /^(.{6})(.+)?(.{5})$/,
-    medium: /\b((bc|tb)(0([ac-hj-np-z02-9]{39}|[ac-hj-np-z02-9]{59})|1[ac-hj-np-z02-9]{8,87})|([13]|[mn2])[a-km-zA-HJ-NP-Z1-9]{25,39})\b/,
+    medium:
+      /\b((bc|tb)(0([ac-hj-np-z02-9]{39}|[ac-hj-np-z02-9]{59})|1[ac-hj-np-z02-9]{8,87})|([13]|[mn2])[a-km-zA-HJ-NP-Z1-9]{25,39})\b/,
   },
   lskAddressTrunk: /^(.{6})(.+)?(.{5})$/,
   publicKeyTrunk: /^(.{6})(.+)?(.{5})$/,

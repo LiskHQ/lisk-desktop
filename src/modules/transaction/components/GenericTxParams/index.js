@@ -12,11 +12,7 @@ const PrimaryValue = ({ value }) => {
   if (!data) {
     data = '-';
   }
-  return (
-    <span className={styles.value}>
-      { data }
-    </span>
-  );
+  return <span className={styles.value}>{data}</span>;
 };
 
 /**
@@ -34,34 +30,27 @@ const ParsedParams = ({ value, itx }) => {
   if (Array.isArray(value)) {
     return (
       <div className={styles.list}>
-        {
-          value.length
-            ? value.map((item, index) => (
-              <label
-                key={`list-${itx}-${index}`}
-                className={styles.listItem}
-              >
-                <ParsedParams value={item} index={index} />
-              </label>
-            ))
-            : <PrimaryValue value="-" />
-        }
+        {value.length ? (
+          value.map((item, index) => (
+            <label key={`list-${itx}-${index}`} className={styles.listItem}>
+              <ParsedParams value={item} index={index} />
+            </label>
+          ))
+        ) : (
+          <PrimaryValue value="-" />
+        )}
       </div>
     );
   }
   if (typeof value === 'object') {
     return (
       <div className={styles.object}>
-        {
-          Object.keys(value).map((key, index) => (
-            <div key={`${key}-${itx}-${index}`} className={styles.pair}>
-              <label className={styles.label}>
-                {getSpaceSeparated(key)}
-              </label>
-              <ParsedParams value={value[key]} itx={index} />
-            </div>
-          ))
-        }
+        {Object.keys(value).map((key, index) => (
+          <div key={`${key}-${itx}-${index}`} className={styles.pair}>
+            <label className={styles.label}>{getSpaceSeparated(key)}</label>
+            <ParsedParams value={value[key]} itx={index} />
+          </div>
+        ))}
       </div>
     );
   }

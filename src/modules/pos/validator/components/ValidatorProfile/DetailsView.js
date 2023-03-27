@@ -24,7 +24,7 @@ const DetailsView = ({ data, history, isMyProfile }) => {
   const {
     data: { timestamp: latestBlockTimestamp },
   } = useLatestBlock();
-  const { token } = usePosToken()
+  const { token } = usePosToken();
 
   const displayList = [
     {

@@ -19,7 +19,9 @@ Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
       cy.get(ss.networkName).should('have.text', 'custom node');
       break;
     default:
-      throw new Error(`Network should be one of : mainnet , testnet, customNode. Was: ${networkName}`);
+      throw new Error(
+        `Network should be one of : mainnet , testnet, customNode. Was: ${networkName}`
+      );
   }
   // cy.get(ss.networkName).contains(networkName);
 });
@@ -47,7 +49,9 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
       cy.get(ss.connectButton).click();
       break;
     default:
-      throw new Error(`Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`);
+      throw new Error(
+        `Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`
+      );
   }
 });
 
@@ -78,7 +82,9 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
       cy.get(ss.connectButton).click();
       break;
     default:
-      throw new Error(`Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`);
+      throw new Error(
+        `Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`
+      );
   }
 });
 

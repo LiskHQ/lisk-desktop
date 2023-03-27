@@ -24,17 +24,15 @@ chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
 jest.useFakeTimers();
 
-ReactRouterDom.Link = jest.fn(
-  ({
-    children, to, activeClassName, ...props
-  }) => (
-    <a {...props} href={to}>{children}</a>
-  ),
-);
+ReactRouterDom.Link = jest.fn(({ children, to, activeClassName, ...props }) => (
+  <a {...props} href={to}>
+    {children}
+  </a>
+));
 
-ReactRouterDom.withRouter = jest.fn((Component => (
-  props => (
-    <Component {...{
+ReactRouterDom.withRouter = jest.fn((Component) => (props) => (
+  <Component
+    {...{
       history: {
         push: jest.fn(),
         replace: jest.fn(),
@@ -46,31 +44,30 @@ ReactRouterDom.withRouter = jest.fn((Component => (
       },
       ...props,
     }}
-    />
-  )
-)));
+  />
+));
 ReactRouterDom.NavLink = ReactRouterDom.Link;
 
-ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => ((Component) => {
+ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => (Component) => {
   function MockConnect(props) {
     return (
-      <Component {...{
-        ...(Object.keys(mapDispatchToProps).reduce((acc, key) => ({
-          ...acc,
-          [key]: jest.fn(),
-        }), {})
-        ),
-        ...(typeof mapStateToProps === 'function'
-          ? mapStateToProps(defaultState, props)
-          : {}
-        ),
-        ...props,
-      }}
+      <Component
+        {...{
+          ...Object.keys(mapDispatchToProps).reduce(
+            (acc, key) => ({
+              ...acc,
+              [key]: jest.fn(),
+            }),
+            {}
+          ),
+          ...(typeof mapStateToProps === 'function' ? mapStateToProps(defaultState, props) : {}),
+          ...props,
+        }}
       />
     );
   }
   return MockConnect;
-}));
+});
 
 ReactRedux.useSelector = jest.fn((filter) => {
   let result;
@@ -110,18 +107,17 @@ jest.mock('react-i18next', () => {
     });
   }
   return {
-    withTranslation: jest.fn(() => (Component => (
-      props => (
-        <Component {...{
+    withTranslation: jest.fn(() => (Component) => (props) => (
+      <Component
+        {...{
           ...props,
           t,
         }}
-        />
-      )
-    ))),
+      />
+    )),
     setDefaults: jest.fn(),
     useTranslation: jest.fn(() => ({
-      t: key => key,
+      t: (key) => key,
       i18n: {
         t,
         changeLanguage: jest.fn(),
@@ -140,7 +136,7 @@ const localStorageMock = (() => {
   let store = {};
 
   return {
-    getItem: key => store[key] || null,
+    getItem: (key) => store[key] || null,
     setItem: (key, value) => {
       store[key] = value.toString();
     },
@@ -159,7 +155,7 @@ Object.defineProperty(window, 'localStorage', {
 
 Object.defineProperty(window, 'crypto', {
   value: {
-    getRandomValues: arr => crypto.randomBytes(arr.length),
+    getRandomValues: (arr) => crypto.randomBytes(arr.length),
   },
 });
 
@@ -197,4 +193,5 @@ global.fetch = jest.fn(() =>
     json() {
       return Promise.resolve({ data: [], meta: { count: 0, total: 0 } });
     },
-  }));
+  })
+);

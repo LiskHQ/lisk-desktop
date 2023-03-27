@@ -1,15 +1,33 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 
 import {
-  TransactionId, Sender, Recipient, Message, Illustration,
-  Confirmations, TxDate, Amount, Fee, NumberOfSignatures, Stakes,
-  BlockId, BlockHeight, Members, SignedAndRemainingMembersList, PrettyJson,
+  TransactionId,
+  Sender,
+  Recipient,
+  Message,
+  Illustration,
+  Confirmations,
+  TxDate,
+  Amount,
+  Fee,
+  NumberOfSignatures,
+  Stakes,
+  BlockId,
+  BlockHeight,
+  Members,
+  SignedAndRemainingMembersList,
+  PrettyJson,
 } from 'src/modules/transaction/components/TransactionDetails';
 import styles from './layoutSchema.css';
 
 const {
-  transfer, stakeValidator, unlock, registerValidator, registerMultisignature,
-  reportMisbehavior, reclaimLSK,
+  transfer,
+  stakeValidator,
+  unlock,
+  registerValidator,
+  registerMultisignature,
+  reportMisbehavior,
+  reclaimLSK,
 } = MODULE_COMMANDS_NAME_MAP;
 
 const baseComponents = [Illustration, Sender];

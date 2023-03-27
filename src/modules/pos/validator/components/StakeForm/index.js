@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
   stakes: state.staking,
   isStakingTxPending: containsTransactionType(
     state.transactions.pending,
-    MODULE_COMMANDS_NAME_MAP.stake,
+    MODULE_COMMANDS_NAME_MAP.stake
   ),
 });
 

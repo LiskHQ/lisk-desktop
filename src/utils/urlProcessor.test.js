@@ -3,10 +3,12 @@ import mockAccounts from '@tests/constants/wallets';
 import setStakesByLaunchProtocol from './urlProcessor';
 
 jest.mock('@wallet/utils/api', () => ({
-  getAccount: jest.fn().mockImplementation(data => Promise.resolve({
-    summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
-    pos: { validator: { username: data.username } },
-  })),
+  getAccount: jest.fn().mockImplementation((data) =>
+    Promise.resolve({
+      summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
+      pos: { validator: { username: data.username } },
+    })
+  ),
   getAccounts: jest.fn(),
 }));
 
@@ -42,9 +44,11 @@ describe('setStakesByLaunchProtocol', () => {
       summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
       pos: { validator: { username: 'genesis_5' } },
     };
-    accounts.getAccounts.mockImplementation(() => Promise.resolve({
-      data: [account],
-    }));
+    accounts.getAccounts.mockImplementation(() =>
+      Promise.resolve({
+        data: [account],
+      })
+    );
     accounts.getAccount.mockImplementation({
       data: account,
     });
@@ -75,16 +79,20 @@ describe('setStakesByLaunchProtocol', () => {
       data: [account, account],
     });
     accounts.getAccount.mockImplementation(() => Promise.resolve({ data: [] }));
-    await setStakesByLaunchProtocol('?modal=StakingQueue&unstakes=ad,genesis_5')(dispatch, getState);
+    await setStakesByLaunchProtocol('?modal=StakingQueue&unstakes=ad,genesis_5')(
+      dispatch,
+      getState
+    );
     expect(accounts.getAccounts).not.toHaveBeenCalled();
     expect(accounts.getAccount).not.toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalled();
   });
 
   it('Should dispatch stakeEdited with an array of valid usernames in query params', async () => {
-    const validator = Object.values(mockAccounts)
-      .filter(account => account.pos?.validator.username && account.summary.address);
-    const usernameList = validator.map(account => account.pos.validator.username);
+    const validator = Object.values(mockAccounts).filter(
+      (account) => account.pos?.validator.username && account.summary.address
+    );
+    const usernameList = validator.map((account) => account.pos.validator.username);
     const url = `?modal=stakingQueue&unstakes=${usernameList.join(',')}`;
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: validator }));
 

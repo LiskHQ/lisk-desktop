@@ -4,7 +4,7 @@ import network from './reducer';
 describe('Reducer: network(state, action)', () => {
   it('should return state object with passed network name if action is networkSelected', () => {
     const state = {
-      name: 'mainnet'
+      name: 'mainnet',
     };
     const action = {
       type: actionTypes.networkSelected,

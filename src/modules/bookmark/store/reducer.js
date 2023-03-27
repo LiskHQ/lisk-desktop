@@ -24,26 +24,28 @@ const bookmarks = (state = emptyBookmarks, action) => {
         address: wallet.address,
         token,
       });
-      return (indexOfBookmark !== -1
-        ? ({
-          ...state,
-          [token]: [
-            ...tokenBookmarks.slice(0, indexOfBookmark),
-            {
-              ...tokenBookmarks[indexOfBookmark],
-              address: wallet.address,
-              title: wallet.title.trim(),
-              publicKey: wallet.publicKey,
-            },
-            ...tokenBookmarks.slice(indexOfBookmark + 1),
-          ],
-        }) : state);
+      return indexOfBookmark !== -1
+        ? {
+            ...state,
+            [token]: [
+              ...tokenBookmarks.slice(0, indexOfBookmark),
+              {
+                ...tokenBookmarks[indexOfBookmark],
+                address: wallet.address,
+                title: wallet.title.trim(),
+                publicKey: wallet.publicKey,
+              },
+              ...tokenBookmarks.slice(indexOfBookmark + 1),
+            ],
+          }
+        : state;
     }
     case actionTypes.bookmarkRemoved:
       return {
         ...state,
-        [action.data.token]:
-          state[action.data.token].filter(bookmark => bookmark.address !== action.data.address),
+        [action.data.token]: state[action.data.token].filter(
+          (bookmark) => bookmark.address !== action.data.address
+        ),
       };
     default:
       return state;

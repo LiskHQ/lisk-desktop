@@ -70,7 +70,10 @@ const SendForm = (props) => {
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
-  const { data: initializationFees } = useGetInitializationFees({ address: recipient.value, tokenID: token?.tokenID });
+  const { data: initializationFees } = useGetInitializationFees({
+    address: recipient.value,
+    tokenID: token?.tokenID,
+  });
   const { data: messageFeeResult } = useGetMinimumMessageFee();
 
   const extraCommandFee =

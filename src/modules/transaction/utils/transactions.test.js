@@ -3,23 +3,19 @@ import { mockNetworkStatus } from '@network/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__';
 import { mockCommandParametersSchemas } from '../../common/__fixtures__';
 
-import {
-  Transaction,
-} from './transactions';
-import {
-  encodeTransaction,
-  fromTransactionJSON,
-  toTransactionJSON,
-} from './encoding';
+import { Transaction } from './transactions';
+import { encodeTransaction, fromTransactionJSON, toTransactionJSON } from './encoding';
 
 describe.skip('Transaction', () => {
   let tokenTransfer = new Transaction();
-  const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+  const recoveryPhrase =
+    'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
   const { privateKey, publicKey } = cryptography.legacy.getKeys(recoveryPhrase);
   const pubkey = publicKey.toString('hex');
   const module = 'token';
   const command = 'transfer';
-  const encodedTransaction = '0a05746f6b656e12087472616e73666572180020a0fb0b2a20fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c588212232470a0800000002000000011080c2d72f1a1400b1182b317a82e4b9c4a54119ced29f19b496de22207765206861766520736f6d6520696e666f726d6174696f6e2069732068657265';
+  const encodedTransaction =
+    '0a05746f6b656e12087472616e73666572180020a0fb0b2a20fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c588212232470a0800000002000000011080c2d72f1a1400b1182b317a82e4b9c4a54119ced29f19b496de22207765206861766520736f6d6520696e666f726d6174696f6e2069732068657265';
   const tokenTransferParams = {
     tokenID: '0000000200000001',
     amount: '100000000', // amount in beddows
@@ -49,24 +45,28 @@ describe.skip('Transaction', () => {
   describe('init', () => {
     it('should throw error when schema does not exists for module or command', () => {
       // Act
-      expect(() => tokenTransfer.init({
-        pubkey,
-        networkStatus: mockNetworkStatus.data,
-        auth: mockAuth.data,
-        commandParametersSchemas: mockCommandParametersSchemas.data,
-        module: 'unknown',
-        command: 'unknown',
-      })).toThrow('');
+      expect(() =>
+        tokenTransfer.init({
+          pubkey,
+          networkStatus: mockNetworkStatus.data,
+          auth: mockAuth.data,
+          commandParametersSchemas: mockCommandParametersSchemas.data,
+          module: 'unknown',
+          command: 'unknown',
+        })
+      ).toThrow('');
     });
 
     it('should throw error when required params not given', () => {
       // Act
-      expect(() => tokenTransfer.init({
-        pubkey,
-        networkStatus: mockNetworkStatus.data,
-        auth: mockAuth.data,
-        commandParametersSchemas: mockCommandParametersSchemas.data,
-      })).toThrow('');
+      expect(() =>
+        tokenTransfer.init({
+          pubkey,
+          networkStatus: mockNetworkStatus.data,
+          auth: mockAuth.data,
+          commandParametersSchemas: mockCommandParametersSchemas.data,
+        })
+      ).toThrow('');
     });
 
     it('should initialise the transaction for given module and command', () => {
@@ -217,7 +217,9 @@ describe.skip('Transaction', () => {
       tokenTransfer.transaction.params = Buffer.alloc(0);
 
       // Act
-      expect(encodeTransaction(tokenTransfer.transaction).toString('hex')).toEqual('0a05746f6b656e12087472616e73666572180020c8d0072a200792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e971843200');
+      expect(encodeTransaction(tokenTransfer.transaction).toString('hex')).toEqual(
+        '0a05746f6b656e12087472616e73666572180020c8d0072a200792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e971843200'
+      );
     });
 
     it('should allocate params empty buffer when schema is not available', async () => {
@@ -234,7 +236,9 @@ describe.skip('Transaction', () => {
       tokenTransfer.transaction.params = Buffer.alloc(0).toString('hex');
 
       // Act
-      expect(encodeTransaction(tokenTransfer.transaction).toString('hex')).toEqual('0a05746f6b656e12087472616e73666572180020c8d0072a200792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e971843200');
+      expect(encodeTransaction(tokenTransfer.transaction).toString('hex')).toEqual(
+        '0a05746f6b656e12087472616e73666572180020c8d0072a200792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e971843200'
+      );
     });
   });
 
@@ -284,16 +288,15 @@ describe.skip('Transaction', () => {
       });
       const encodedParams = liskCodec.codec.encode(
         tokenTransfer._paramsSchema,
-        tokenTransfer.transaction.params,
+        tokenTransfer.transaction.params
       );
       tokenTransfer.transaction.params = encodedParams;
       tokenTransfer.transaction.id = Buffer.alloc(10).toString('hex');
 
       // Act
-      expect(toTransactionJSON(
-        tokenTransfer.transaction,
-        tokenTransfer._paramsSchema,
-      )).toMatchSnapshot();
+      expect(
+        toTransactionJSON(tokenTransfer.transaction, tokenTransfer._paramsSchema)
+      ).toMatchSnapshot();
     });
   });
 
@@ -310,7 +313,7 @@ describe.skip('Transaction', () => {
 
       // Act
       expect(tokenTransfer.fromJSON()).toEqual(
-        fromTransactionJSON(transactionJSON, tokenTransfer._paramsSchema),
+        fromTransactionJSON(transactionJSON, tokenTransfer._paramsSchema)
       );
     });
 
@@ -325,7 +328,7 @@ describe.skip('Transaction', () => {
       });
       const encodedParams = liskCodec.codec.encode(
         tokenTransfer._paramsSchema,
-        tokenTransfer.transaction.params,
+        tokenTransfer.transaction.params
       );
       const trxJSON = tokenTransfer.toJSON();
       trxJSON.params = encodedParams.toString('hex');

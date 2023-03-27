@@ -3,54 +3,56 @@ import { mount } from 'enzyme';
 import NewsFeed from './newsFeed';
 
 describe('NewsFeed', () => {
-  const t = key => key;
+  const t = (key) => key;
   const timestampNow = 1483228800000;
   const newsFeed = {
-    data: [{
-      source: 'test1',
-      sourceId: 'test1',
-      content: 'test',
-      createdAt: new Date(timestampNow),
-      url: 'test',
-      author: 'liskHQ',
-      title: '',
-    },
-    {
-      source: 'test2',
-      sourceId: 'test2',
-      content: 'test',
-      createdAt: new Date(),
-      url: 'test',
-      author: 'liskHQ',
-      title: '',
-    },
-    {
-      source: 'test3',
-      sourceId: 'test3',
-      content: 'test',
-      createdAt: new Date(),
-      url: 'test',
-      author: 'liskHQ',
-      title: '',
-    },
-    {
-      source: 'test4',
-      sourceId: 'test4',
-      content: 'test',
-      createdAt: new Date(),
-      url: 'test',
-      author: 'liskHQ',
-      title: '',
-    },
-    {
-      source: 'test5',
-      sourceId: 'test5',
-      content: 'test',
-      createdAt: new Date(),
-      url: 'test',
-      author: 'liskHQ',
-      title: '',
-    }],
+    data: [
+      {
+        source: 'test1',
+        sourceId: 'test1',
+        content: 'test',
+        createdAt: new Date(timestampNow),
+        url: 'test',
+        author: 'liskHQ',
+        title: '',
+      },
+      {
+        source: 'test2',
+        sourceId: 'test2',
+        content: 'test',
+        createdAt: new Date(),
+        url: 'test',
+        author: 'liskHQ',
+        title: '',
+      },
+      {
+        source: 'test3',
+        sourceId: 'test3',
+        content: 'test',
+        createdAt: new Date(),
+        url: 'test',
+        author: 'liskHQ',
+        title: '',
+      },
+      {
+        source: 'test4',
+        sourceId: 'test4',
+        content: 'test',
+        createdAt: new Date(),
+        url: 'test',
+        author: 'liskHQ',
+        title: '',
+      },
+      {
+        source: 'test5',
+        sourceId: 'test5',
+        content: 'test',
+        createdAt: new Date(),
+        url: 'test',
+        author: 'liskHQ',
+        title: '',
+      },
+    ],
     error: '',
   };
 

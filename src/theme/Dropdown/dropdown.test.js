@@ -8,7 +8,11 @@ describe('Dropdow', () => {
   const DummyChild = () => <span />;
 
   beforeEach(() => {
-    wrapper = mount(<Dropdown showDropdown={false}><DummyChild /></Dropdown>);
+    wrapper = mount(
+      <Dropdown showDropdown={false}>
+        <DummyChild />
+      </Dropdown>
+    );
   });
 
   it('Should render with dropdown closed', () => {
@@ -16,22 +20,40 @@ describe('Dropdow', () => {
   });
 
   it('should render title if passed', () => {
-    const container = render(<Dropdown title="title" ><DummyChild /></Dropdown>);
+    const container = render(
+      <Dropdown title="title">
+        <DummyChild />
+      </Dropdown>
+    );
     expect(container.getByText('title')).toBeTruthy();
-  })
+  });
 
   it('should render arrow if showArrow is true', () => {
-    const container = mount(<Dropdown showArrow ><DummyChild /></Dropdown>);
+    const container = mount(
+      <Dropdown showArrow>
+        <DummyChild />
+      </Dropdown>
+    );
     expect(container.find('.dropdown-arrow')).toBeTruthy();
-  })
+  });
 
   it('should close dropdown when user clicks outside the dropdown component', () => {
-    const closeDropdown = jest.fn()
-    const documentWrapper = ({ children }) => <div> <div>outside</div> {children}</div>
-    const container = render(<Dropdown showArrow closeDropdown={closeDropdown} ><DummyChild /></Dropdown>, { wrapper: documentWrapper });
-    fireEvent.mouseDown(container.getByText('outside'))
+    const closeDropdown = jest.fn();
+    const documentWrapper = ({ children }) => (
+      <div>
+        {' '}
+        <div>outside</div> {children}
+      </div>
+    );
+    const container = render(
+      <Dropdown showArrow closeDropdown={closeDropdown}>
+        <DummyChild />
+      </Dropdown>,
+      { wrapper: documentWrapper }
+    );
+    fireEvent.mouseDown(container.getByText('outside'));
     expect(closeDropdown).toHaveBeenCalled();
-  })
+  });
 
   it('Should open with passed children props', () => {
     const options = ['Option 1', 'Option 2', 'Option 3'];

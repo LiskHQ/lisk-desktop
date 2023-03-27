@@ -15,5 +15,5 @@ export default compose(
       autoload: false,
     },
   }),
-  withTranslation(),
+  withTranslation()
 )(MultisigAccountDetails);

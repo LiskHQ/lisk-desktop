@@ -4,14 +4,16 @@ import { onApprove, onReject } from './sessionHandlers';
 import { STATUS, ERROR_CASES } from '../constants/lifeCycle';
 
 jest.mock('@walletconnect/utils', () => ({
-  getSdkError: jest.fn(str => str),
+  getSdkError: jest.fn((str) => str),
 }));
 
 jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   client: {
-    approve: jest.fn().mockImplementation(() => Promise.resolve({
-      acknowledged: jest.fn(),
-    })),
+    approve: jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        acknowledged: jest.fn(),
+      })
+    ),
     reject: jest.fn().mockImplementation(() => Promise.resolve({})),
   },
 }));

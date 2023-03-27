@@ -1,7 +1,7 @@
 export const getValidatorName = (transaction, activeToken) =>
-  (activeToken === 'LSK' && transaction.params && transaction.params.username
+  activeToken === 'LSK' && transaction.params && transaction.params.username
     ? transaction.params.username
-    : null);
+    : null;
 
 export const getTxAsset = (tx) => {
   if (tx.params?.data && tx.params.data.length) {

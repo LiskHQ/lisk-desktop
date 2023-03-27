@@ -7,12 +7,14 @@
  * @param {Object} stakes - stakes object retrieved from the Redux store
  * @returns {Array} Array of stakes as Lisk Element expects
  */
-const normalizeStakesForTx = stakes =>
+const normalizeStakesForTx = (stakes) =>
   Object.keys(stakes)
-    .filter(address => stakes[address].confirmed !== stakes[address].unconfirmed)
-    .map(validatorAddress => ({
+    .filter((address) => stakes[address].confirmed !== stakes[address].unconfirmed)
+    .map((validatorAddress) => ({
       validatorAddress,
-      amount: (stakes[validatorAddress].unconfirmed - stakes[validatorAddress].confirmed).toString(),
+      amount: (
+        stakes[validatorAddress].unconfirmed - stakes[validatorAddress].confirmed
+      ).toString(),
     }));
 
 export default normalizeStakesForTx;

@@ -26,7 +26,9 @@ const addAboutMenuForNonMac = ({ template, electron }) => {
         const options = {
           buttons: ['OK'],
           icon: `${__dirname}/assets/images/LISK.png`,
-          message: `${i18n.t('Lisk')}\n${i18n.t('Version')} ${electron.app.getVersion()}\n${copyright}`,
+          message: `${i18n.t('Lisk')}\n${i18n.t(
+            'Version'
+          )} ${electron.app.getVersion()}\n${copyright}`,
         };
         electron.dialog.showMessageBox(focusedWindow, options, () => {});
       }
@@ -57,92 +59,98 @@ const menu = {
   onClickLink: (electron, url) => {
     electron.shell.openExternal(url);
   },
-  buildTemplate: electron =>
-    ([
-      {
-        label: i18n.t('Edit'),
-        submenu: [
-          {
-            role: 'undo',
-            label: i18n.t('Undo'),
-          },
-          {
-            role: 'redo',
-            label: i18n.t('Redo'),
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'cut',
-            label: i18n.t('Cut'),
-          },
-          {
-            role: 'copy',
-            label: i18n.t('Copy'),
-          },
-          {
-            role: 'paste',
-            label: i18n.t('Paste'),
-          },
-          {
-            role: 'selectall',
-            label: i18n.t('Select All'),
-          },
-        ],
-      },
-      {
-        label: i18n.t('View'),
-        submenu: [
-          {
-            role: 'reload',
-            label: i18n.t('Reload'),
-          },
-          {
-            role: 'togglefullscreen',
-            label: i18n.t('Toggle Full Screen'),
-          },
-        ],
-      },
-      {
-        label: i18n.t('Window'),
-        submenu: [
-          {
-            role: 'minimize',
-            label: i18n.t('Minimize'),
-          },
-        ],
-      },
-      {
-        label: i18n.t('Help'),
-        submenu: [
-          {
-            label: i18n.t('Lisk Website'),
-            click: menu.onClickLink.bind(null, electron, 'https://lisk.com'),
-          },
-          {
-            label: i18n.t('Discord'),
-            click: menu.onClickLink.bind(null, electron, 'https://discord.gg/CngsY6D'),
-          },
-          {
-            label: i18n.t('Provide Feedback'),
-            click: menu.onClickLink.bind(null, electron, 'https://lisk.com/contact/i-want-provide-feedback-about-lisk-product/form'),
-          },
-          {
-            label: i18n.t('Explorer'),
-            click: menu.onClickLink.bind(null, electron, 'https://liskscan.com'),
-          },
-          {
-            type: 'separator',
-          },
-          {
-            label: i18n.t('What\'s New...'),
-            click: menu.onClickLink.bind(null, electron, 'https://github.com/LiskHQ/lisk-desktop/releases'),
-          },
-        ],
-      },
-    ]),
-
+  buildTemplate: (electron) => [
+    {
+      label: i18n.t('Edit'),
+      submenu: [
+        {
+          role: 'undo',
+          label: i18n.t('Undo'),
+        },
+        {
+          role: 'redo',
+          label: i18n.t('Redo'),
+        },
+        {
+          type: 'separator',
+        },
+        {
+          role: 'cut',
+          label: i18n.t('Cut'),
+        },
+        {
+          role: 'copy',
+          label: i18n.t('Copy'),
+        },
+        {
+          role: 'paste',
+          label: i18n.t('Paste'),
+        },
+        {
+          role: 'selectall',
+          label: i18n.t('Select All'),
+        },
+      ],
+    },
+    {
+      label: i18n.t('View'),
+      submenu: [
+        {
+          role: 'reload',
+          label: i18n.t('Reload'),
+        },
+        {
+          role: 'togglefullscreen',
+          label: i18n.t('Toggle Full Screen'),
+        },
+      ],
+    },
+    {
+      label: i18n.t('Window'),
+      submenu: [
+        {
+          role: 'minimize',
+          label: i18n.t('Minimize'),
+        },
+      ],
+    },
+    {
+      label: i18n.t('Help'),
+      submenu: [
+        {
+          label: i18n.t('Lisk Website'),
+          click: menu.onClickLink.bind(null, electron, 'https://lisk.com'),
+        },
+        {
+          label: i18n.t('Discord'),
+          click: menu.onClickLink.bind(null, electron, 'https://discord.gg/CngsY6D'),
+        },
+        {
+          label: i18n.t('Provide Feedback'),
+          click: menu.onClickLink.bind(
+            null,
+            electron,
+            'https://lisk.com/contact/i-want-provide-feedback-about-lisk-product/form'
+          ),
+        },
+        {
+          label: i18n.t('Explorer'),
+          click: menu.onClickLink.bind(null, electron, 'https://liskscan.com'),
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: i18n.t("What's New..."),
+          click: menu.onClickLink.bind(
+            null,
+            electron,
+            'https://github.com/LiskHQ/lisk-desktop/releases'
+          ),
+        },
+      ],
+    },
+  ],
 };
 
 export default menu;

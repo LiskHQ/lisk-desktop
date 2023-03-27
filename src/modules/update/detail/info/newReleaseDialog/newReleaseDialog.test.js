@@ -23,10 +23,7 @@ describe('New release dialog component', () => {
 
   it('Should render all remindMeLater and updateNow', () => {
     const wrapper = mountWithRouterAndStore(NewReleaseDialog, props, {}, store);
-    wrapper
-      .find('button.release-dialog-remind-me-later')
-      .at(0)
-      .simulate('click');
+    wrapper.find('button.release-dialog-remind-me-later').at(0).simulate('click');
     expect(remindMeLater).toBeCalledTimes(1);
     wrapper.find('button.release-dialog-update-now').at(0).simulate('click');
     expect(updateNow).toBeCalledTimes(1);

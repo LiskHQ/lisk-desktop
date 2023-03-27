@@ -10,12 +10,8 @@ import styles from './filterBar.css';
 const FilterButton = ({ filter, clearFilter, formatters }) => {
   const label = (formatters[filter.key] || ((x) => x))(filter.value);
   return (
-    <div
-      className={`${styles.filter} filter`}
-    >
-      <p className={styles.label}>
-        {label?.toString()}
-      </p>
+    <div className={`${styles.filter} filter`}>
+      <p className={styles.label}>{label?.toString()}</p>
       <span
         data-testid={`${filter.key}-filter`}
         className={`${styles.clearBtn} clear-filter`}
@@ -25,13 +21,7 @@ const FilterButton = ({ filter, clearFilter, formatters }) => {
   );
 };
 
-const FilterBar = ({
-  clearFilter,
-  clearAllFilters,
-  filters,
-  results,
-  formatters,
-}) => {
+const FilterBar = ({ clearFilter, clearAllFilters, filters, results, formatters }) => {
   moment.locale(i18n.language);
   const { t } = useTranslation();
   const nonEmptyFilters = Object.keys(filters).reduce((acc, key) => {
@@ -43,10 +33,8 @@ const FilterBar = ({
   }, []);
 
   formatters = {
-    dateFrom: (value) =>
-      `${t('from')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
-    dateTo: (value) =>
-      `${t('to')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
+    dateFrom: (value) => `${t('from')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
+    dateTo: (value) => `${t('to')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
     amountFrom: (value) => `> ${value} ${tokenMap.LSK.key}`,
     amountTo: (value) => `< ${value} ${tokenMap.LSK.key}`,
     ...formatters,
@@ -54,9 +42,7 @@ const FilterBar = ({
 
   return nonEmptyFilters.length ? (
     <div className={`${styles.container} filterBar`}>
-      <span className={styles.label}>
-        {t('Filtered results: {{results}}', { results })}
-      </span>
+      <span className={styles.label}>{t('Filtered results: {{results}}', { results })}</span>
       <div className={`${styles.labelsHolder}`}>
         {nonEmptyFilters.map((filter) => (
           <FilterButton
@@ -66,11 +52,7 @@ const FilterBar = ({
             formatters={formatters}
           />
         ))}
-        <SecondaryButton
-          className="clear-all-filters"
-          size="xs"
-          onClick={() => clearAllFilters()}
-        >
+        <SecondaryButton className="clear-all-filters" size="xs" onClick={() => clearAllFilters()}>
           {t('Clear all filters')}
         </SecondaryButton>
       </div>

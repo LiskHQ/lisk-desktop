@@ -8,7 +8,7 @@ const mockState = {
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
-  useState: (value) => ([value, mockSetter]),
+  useState: (value) => [value, mockSetter],
 }));
 
 describe('useMessageField hook', () => {

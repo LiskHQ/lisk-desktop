@@ -1,6 +1,10 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
-import { // eslint-disable-line import/no-extraneous-dependencies
-  spy, match, useFakeTimers, mock,
+import {
+  // eslint-disable-line import/no-extraneous-dependencies
+  spy,
+  match,
+  useFakeTimers,
+  mock,
 } from 'sinon';
 import menu from './menu';
 import process from './modules/process';
@@ -15,9 +19,9 @@ describe('MenuBuilder', () => {
       shell: { openExternal: spy() },
       Menu: {
         setApplicationMenu: spy(),
-        buildFromTemplate: template => (template),
+        buildFromTemplate: (template) => template,
       },
-      app: { getName: () => ('Lisk'), getVersion: () => ('0.2.0') },
+      app: { getName: () => 'Lisk', getVersion: () => '0.2.0' },
       dialog: { showMessageBox: spy() },
     };
     clock = useFakeTimers({
@@ -72,7 +76,7 @@ describe('MenuBuilder', () => {
     expect(electron.dialog.showMessageBox).to.have.been.calledWith(
       true,
       expectedOptions,
-      match.typeOf('function'),
+      match.typeOf('function')
     );
   });
 

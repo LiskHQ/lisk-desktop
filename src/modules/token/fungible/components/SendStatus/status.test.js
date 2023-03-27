@@ -141,7 +141,8 @@ describe('unlock transaction Status', () => {
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_SUCCESS' },
-      message: 'Your transaction is submitted to network, you can now track the status of this transaction in your wallet.',
+      message:
+        'Your transaction is submitted to network, you can now track the status of this transaction in your wallet.',
       title: 'Transaction submitted',
     });
     expect(wrapper.find(DialogLink).props()).toMatchObject({

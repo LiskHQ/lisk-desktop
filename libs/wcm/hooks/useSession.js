@@ -1,5 +1,5 @@
 import { useContext, useEffect, useCallback } from 'react';
-import { formatJsonRpcResult } from '@json-rpc-tools/utils'
+import { formatJsonRpcResult } from '@json-rpc-tools/utils';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
 import { onApprove, onReject } from '../utils/sessionHandlers';
@@ -11,7 +11,7 @@ export const useSession = () => {
   const { refreshPairings } = usePairings();
 
   const approve = useCallback(async (selectedAccounts) => {
-    const proposalEvents = events.find(e => e.name === EVENTS.SESSION_PROPOSAL);
+    const proposalEvents = events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
     try {
       await setSession({
         ...session,
@@ -23,7 +23,7 @@ export const useSession = () => {
       removeEvent(proposalEvents);
       return {
         status,
-        data: proposalEvents.meta
+        data: proposalEvents.meta,
       };
     } catch (e) {
       return {
@@ -34,14 +34,14 @@ export const useSession = () => {
   }, []);
 
   const reject = useCallback(async () => {
-    const proposalEvents = events.find(e => e.name === EVENTS.SESSION_PROPOSAL);
+    const proposalEvents = events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
     try {
       setSession({ ...session, request: false });
       await onReject(proposalEvents.meta);
       removeEvent(proposalEvents);
       return {
         status: STATUS.SUCCESS,
-        data: proposalEvents.meta
+        data: proposalEvents.meta,
       };
     } catch (e) {
       return {
@@ -52,14 +52,14 @@ export const useSession = () => {
   }, []);
 
   const respond = useCallback(async ({ payload }) => {
-    const requestEvent = events.find(e => e.name === EVENTS.SESSION_REQUEST);
+    const requestEvent = events.find((e) => e.name === EVENTS.SESSION_REQUEST);
     const topic = requestEvent.meta.topic;
     const response = formatJsonRpcResult(requestEvent.meta.id, payload);
 
     try {
       const data = await client.respond({
         topic,
-        response
+        response,
       });
       return {
         status: STATUS.SUCCESS,
@@ -76,9 +76,8 @@ export const useSession = () => {
   useEffect(() => {
     if (client?.session && !session.loaded) {
       const lastKeyIndex = client.session.keys.length - 1;
-      const data = (lastKeyIndex === 0)
-        ? client.session.get(client.session.keys[lastKeyIndex])
-        : false;
+      const data =
+        lastKeyIndex === 0 ? client.session.get(client.session.keys[lastKeyIndex]) : false;
       setSession({ ...session, loaded: true, data });
     }
   }, [client, session]);

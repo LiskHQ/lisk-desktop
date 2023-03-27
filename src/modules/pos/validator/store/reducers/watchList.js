@@ -9,7 +9,7 @@ const watchList = (state = [], action) => {
       return Array.from(new Set([...state, action.data.address]));
 
     case actionTypes.removedFromWatchList:
-      return state.filter(address => address !== action.data.address);
+      return state.filter((address) => address !== action.data.address);
 
     default:
       return state;

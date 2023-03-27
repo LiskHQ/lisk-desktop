@@ -3,8 +3,7 @@ export default {
     address: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag',
     balance: '61453881719',
     username: 'kc',
-    publicKey:
-      '04bb8d1f6a76614913622ddaf3fb08ba778bb43e6475f298c13f111a82bb813f',
+    publicKey: '04bb8d1f6a76614913622ddaf3fb08ba778bb43e6475f298c13f111a82bb813f',
     isValidator: true,
     isMultisignature: true,
   },

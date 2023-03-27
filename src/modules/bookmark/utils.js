@@ -12,9 +12,11 @@ export const emptyBookmarks = tokenKeys.reduce((acc, token) => ({ ...acc, [token
  * @returns {Object} The valid or empty bookmarks dictionary
  */
 export const validateBookmarks = (data) => {
-  if (!data
-    || typeof data !== 'object'
-    || !tokenKeys.reduce((flag, token) => flag && Array.isArray(data[token]), true)) {
+  if (
+    !data ||
+    typeof data !== 'object' ||
+    !tokenKeys.reduce((flag, token) => flag && Array.isArray(data[token]), true)
+  ) {
     return emptyBookmarks;
   }
 
@@ -22,7 +24,7 @@ export const validateBookmarks = (data) => {
 };
 
 export const getIndexOfBookmark = (bookmarks, { address, token = tokenMap.LSK.key }) =>
-  bookmarks[token].findIndex(bookmark => (bookmark.address === address));
+  bookmarks[token].findIndex((bookmark) => bookmark.address === address);
 
 /**
  *  Checks the label and returns feedback
@@ -69,5 +71,5 @@ export const validateBookmarkAddress = (token, value = '', network, bookmarks, t
  */
 export const getBookmarkMode = (history, bookmarks, active) => {
   const { address } = parseSearchParams(history.location.search);
-  return bookmarks[active].some(bookmark => bookmark.address === address) ? 'edit' : 'add';
+  return bookmarks[active].some((bookmark) => bookmark.address === address) ? 'edit' : 'add';
 };

@@ -6,9 +6,7 @@ const InputLabel = ({ title, tooltip }) => (
   <label className={styles.label}>
     {title}
     <Tooltip position="right">
-      <p>
-        {tooltip}
-      </p>
+      <p>{tooltip}</p>
     </Tooltip>
   </label>
 );

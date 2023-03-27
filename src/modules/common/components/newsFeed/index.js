@@ -9,6 +9,6 @@ export default withData({
     autoload: false,
     apiUtil: (network, params) => getNews({ network, params }),
     defaultData: [],
-    transformResponse: response => response.data,
+    transformResponse: (response) => response.data,
   },
 })(withTranslation()(NewsFeed));

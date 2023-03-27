@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  render, fireEvent, screen,
-} from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import AddApplicationSearch from './AddApplicationSearch';
 
 jest.useFakeTimers();
@@ -23,7 +21,9 @@ describe('AddApplicationSearch', () => {
       onSearchApplications: mockSearchApplication,
     };
     render(<AddApplicationSearch {...props} />);
-    fireEvent.change(screen.getByPlaceholderText('Search by name or application URL'), { target: { value: 'test' } });
+    fireEvent.change(screen.getByPlaceholderText('Search by name or application URL'), {
+      target: { value: 'test' },
+    });
     jest.runAllTimers();
     expect(mockSearchApplication).toHaveBeenCalledTimes(1);
     expect(mockSearchApplication).toHaveBeenCalledWith('test');
@@ -39,7 +39,9 @@ describe('AddApplicationSearch', () => {
       onSearchApplications: mockSearchApplication,
     };
     const { rerender } = render(<AddApplicationSearch {...props} />);
-    fireEvent.change(screen.getByPlaceholderText('Search by name or application URL'), { target: { value: searchUrl } });
+    fireEvent.change(screen.getByPlaceholderText('Search by name or application URL'), {
+      target: { value: searchUrl },
+    });
     expect(mockSearchApplication).toHaveBeenCalledTimes(1);
     expect(mockSearchApplication).toHaveBeenCalledWith(searchUrl);
     const loadingProps = {

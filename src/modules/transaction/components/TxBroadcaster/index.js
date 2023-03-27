@@ -7,7 +7,7 @@ import { transactionBroadcasted, resetTransactionResult } from 'src/redux/action
 import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
 import TxBroadcaster from './TxBroadcaster';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   activeToken: selectActiveToken(state),
   transactions: state.transactions,
   account: selectActiveTokenAccount(state),
@@ -22,5 +22,5 @@ const mapDispatchToProps = {
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps),
-  withTranslation(),
+  withTranslation()
 )(TxBroadcaster);

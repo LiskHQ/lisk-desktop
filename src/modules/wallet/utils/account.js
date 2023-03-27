@@ -12,10 +12,15 @@ import i18next from 'i18next';
  * @returns {object} - Extracted publicKey for a given valid passphrase
  */
 export const extractKeyPair = async ({
-  passphrase, enableCustomDerivationPath = false, derivationPath,
+  passphrase,
+  enableCustomDerivationPath = false,
+  derivationPath,
 }) => {
   if (enableCustomDerivationPath) {
-    const privateKey = await cryptography.ed.getPrivateKeyFromPhraseAndPath(passphrase, derivationPath);
+    const privateKey = await cryptography.ed.getPrivateKeyFromPhraseAndPath(
+      passphrase,
+      derivationPath
+    );
     const publicKey = cryptography.ed.getPublicKeyFromPrivateKey(privateKey).toString('hex');
     return {
       publicKey,
@@ -44,7 +49,9 @@ export const extractKeyPair = async ({
  * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
 export const extractPublicKey = async (
-  passphrase, enableCustomDerivationPath = false, derivationPath,
+  passphrase,
+  enableCustomDerivationPath = false,
+  derivationPath
 ) => {
   const keyPair = await extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
 
@@ -64,7 +71,9 @@ export const extractPublicKey = async (
  * @returns {String?} - Extracted PrivateKey for a given valid passphrase
  */
 export const extractPrivateKey = async (
-  passphrase, enableCustomDerivationPath = false, derivationPath,
+  passphrase,
+  enableCustomDerivationPath = false,
+  derivationPath
 ) => {
   const keyPair = await extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
   if (keyPair.isValid) {
@@ -82,7 +91,9 @@ export const extractPrivateKey = async (
  */
 export const extractAddressFromPublicKey = (publicKey) => {
   if (regex.publicKey.test(publicKey)) {
-    return cryptography.address.getLisk32AddressFromPublicKey(Buffer.from(publicKey, 'hex')).toString('hex');
+    return cryptography.address
+      .getLisk32AddressFromPublicKey(Buffer.from(publicKey, 'hex'))
+      .toString('hex');
   }
   if (Buffer.isBuffer(publicKey)) {
     return cryptography.address.getLisk32AddressFromPublicKey(publicKey);
@@ -164,10 +175,10 @@ export const truncateTransactionID = (id) => {
  * @returns {Number} - Sum of stake amounts
  */
 export const calculateBalanceLockedInStakes = (stakes = {}) =>
-  Object.values(stakes).reduce((total, stake) => (total + stake.confirmed), 0);
+  Object.values(stakes).reduce((total, stake) => total + stake.confirmed, 0);
 
 export const calculateSentStakesAmount = (sentStakes = []) =>
-  sentStakes.reduce((total, stake) => (total + parseInt(stake.amount, 10)), 0);
+  sentStakes.reduce((total, stake) => total + parseInt(stake.amount, 10), 0);
 
 /**
  * calculates balance locked for the account in unstakes
@@ -186,29 +197,32 @@ export const calculateBalanceLockedInUnstakes = (unlocking = []) =>
  */
 export const calculateUnlockedAmount = (pendingUnlocks = []) =>
   pendingUnlocks.reduce(
-    (sum, pendingUnlock) => (sum + (pendingUnlock.isLocked ? 0 : parseInt(pendingUnlock.amount, 10))),
+    (sum, pendingUnlock) => sum + (pendingUnlock.isLocked ? 0 : parseInt(pendingUnlock.amount, 10)),
     0
   );
 
 export const getLockedPendingUnlocks = (pendingUnlocks = []) =>
   pendingUnlocks?.filter((pendingUnlock) => pendingUnlock.isLocked);
 
-const isSigned = signature => signature && signature !== Buffer.alloc(64).toString('hex');
+const isSigned = (signature) => signature && signature !== Buffer.alloc(64).toString('hex');
 
 export const calculateRemainingAndSignedMembers = (
   keys = { optionalKeys: [], mandatoryKeys: [] },
   transaction = {},
-  isMultisignatureRegistration = false,
+  isMultisignatureRegistration = false
 ) => {
   const signatures = isMultisignatureRegistration
-    ? transaction.params.signatures : transaction.signatures;
+    ? transaction.params.signatures
+    : transaction.signatures;
   const { mandatoryKeys, optionalKeys } = keys;
   const signed = [];
   const remaining = [];
 
   mandatoryKeys.forEach((key, index) => {
     const value = {
-      publicKey: key, mandatory: true, address: extractAddressFromPublicKey(key),
+      publicKey: key,
+      mandatory: true,
+      address: extractAddressFromPublicKey(key),
     };
 
     if (isSigned(signatures[index])) {
@@ -220,7 +234,9 @@ export const calculateRemainingAndSignedMembers = (
 
   optionalKeys.forEach((key, index) => {
     const value = {
-      publicKey: key, mandatory: false, address: extractAddressFromPublicKey(key),
+      publicKey: key,
+      mandatory: false,
+      address: extractAddressFromPublicKey(key),
     };
 
     if (isSigned(signatures[index + mandatoryKeys.length])) {
@@ -240,8 +256,9 @@ export const validate2ndPass = async (account, passphrase, error) => {
     return messages;
   }
 
-  const secondPublicKey = account.keys.mandatoryKeys
-    .filter(item => item !== account.summary.publicKey);
+  const secondPublicKey = account.keys.mandatoryKeys.filter(
+    (item) => item !== account.summary.publicKey
+  );
   const publicKey = await extractPublicKey(passphrase);
   // compare them
   if (!secondPublicKey.length || publicKey !== secondPublicKey[0]) {

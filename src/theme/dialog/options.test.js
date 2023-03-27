@@ -19,9 +19,7 @@ describe('Dialog.Options component', () => {
         <PrimaryButton>Option</PrimaryButton>
       </Options>
     );
-    const wrapper = mountWithRouter(
-      Component,
-    );
+    const wrapper = mountWithRouter(Component);
     expect(wrapper).toContainExactlyOneMatchingElement('button');
     wrapper.find('button').simulate('click');
 
@@ -37,9 +35,7 @@ describe('Dialog.Options component', () => {
       </Options>
     );
 
-    const wrapper = mountWithRouter(
-      Component,
-    );
+    const wrapper = mountWithRouter(Component);
     expect(wrapper.find('div')).toHaveClassName('center');
     expect(wrapper).toContainMatchingElements(2, 'button');
     wrapper.find('button').last().simulate('click');

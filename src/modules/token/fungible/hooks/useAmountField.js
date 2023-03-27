@@ -46,7 +46,10 @@ const useAmountField = (initialValue, balance, token) => {
       checklist: [...checklist, 'MIN_BALANCE'],
     });
 
-    if (!feedback && BigInt(maxAmount) < BigInt(convertToBaseDenom(numeral(value).value(), token))) {
+    if (
+      !feedback &&
+      BigInt(maxAmount) < BigInt(convertToBaseDenom(numeral(value).value(), token))
+    ) {
       feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };

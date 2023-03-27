@@ -25,10 +25,7 @@ export default {
     // showAnalytics - Trigger ONLY the first time when user is in Wallet page after SignIn
     // or show since the beginning after the user saw the banner for first time but
     // didn't took action
-    if (
-      showAnalytics
-      || (statisticsRequest && statisticsFollowingDay === undefined)
-    ) {
+    if (showAnalytics || (statisticsRequest && statisticsFollowingDay === undefined)) {
       this.init();
     } else {
       // Will only trigger if user decline and after some days will show up again

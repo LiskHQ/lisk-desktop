@@ -10,7 +10,7 @@ const BalanceTable = ({
   unlockedAmount,
   currentBlockHeight,
   lockedPendingUnlocks,
-  token
+  token,
 }) => {
   const { t } = useTranslation();
   return (

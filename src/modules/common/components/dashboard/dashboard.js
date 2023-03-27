@@ -17,28 +17,26 @@ const getOnboardingSlides = (t) => [
   {
     title: t('Ready to go!'),
     content: t(
-      'The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your LSK (and much, much more).',
+      'The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your LSK (and much, much more).'
     ),
     illustration: 'hubReadyToGo',
   },
   {
     title: t('Stay Informed'),
     content: t(
-      'Keep up-to-date with announcements from the Lisk Foundation. Check what network validators have been up to with dedicated profile pages.',
+      'Keep up-to-date with announcements from the Lisk Foundation. Check what network validators have been up to with dedicated profile pages.'
     ),
     illustration: 'builtAroundCommunity',
   },
   {
     title: t('Effortlessly send and receive tokens'),
-    content: t(
-      'Personalize each transaction with a custom message.',
-    ),
+    content: t('Personalize each transaction with a custom message.'),
     illustration: 'sendLSKTokens',
   },
   {
     title: t('Get Involved'),
     content: t(
-      'Community is key. Stake for validators, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.',
+      'Community is key. Stake for validators, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.'
     ),
     illustration: 'timeToContribute',
   },
@@ -64,36 +62,31 @@ const Dashboard = ({ t, history }) => {
         />
         <div className={`${styles.main}`}>
           <div className={styles.subContainer}>
-            {
-              !isEmpty(currentAccount) && (
-                <>
-                  <WalletDetails className={styles.marginFix} isWalletRoute={false} isLoading={tokens.isLoading} tokens={tokens.data?.data} />
-                  <RecentTransactions
-                    isLoggedIn
-                    className={styles.marginFix}
-                  />
-                </>
-              )
-            }
-            {
-              isEmpty(currentAccount) && accounts.length === 0 && <AccountCreationTips />
-            }
-            {
-              isEmpty(currentAccount) && accounts.length > 0
-              && (
-                <Box className={styles.wrapper}>
-                  <BoxHeader>
-                    <h1>{t('Manage accounts')}</h1>
-                  </BoxHeader>
-                  <ManageAccountsContent
-                    truncate
-                    isRemoveAvailable
-                    history={history}
-                    className={styles.manageAccounts}
-                  />
-                </Box>
-              )
-            }
+            {!isEmpty(currentAccount) && (
+              <>
+                <WalletDetails
+                  className={styles.marginFix}
+                  isWalletRoute={false}
+                  isLoading={tokens.isLoading}
+                  tokens={tokens.data?.data}
+                />
+                <RecentTransactions isLoggedIn className={styles.marginFix} />
+              </>
+            )}
+            {isEmpty(currentAccount) && accounts.length === 0 && <AccountCreationTips />}
+            {isEmpty(currentAccount) && accounts.length > 0 && (
+              <Box className={styles.wrapper}>
+                <BoxHeader>
+                  <h1>{t('Manage accounts')}</h1>
+                </BoxHeader>
+                <ManageAccountsContent
+                  truncate
+                  isRemoveAvailable
+                  history={history}
+                  className={styles.manageAccounts}
+                />
+              </Box>
+            )}
           </div>
 
           <div className={`${styles.community} community-feed`}>

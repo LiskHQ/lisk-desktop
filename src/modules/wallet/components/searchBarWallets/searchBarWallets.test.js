@@ -6,7 +6,7 @@ describe('SearchBarWallets', () => {
   let wrapper;
 
   const props = {
-    t: v => v,
+    t: (v) => v,
     wallets: [],
     onSelectedRow: jest.fn(),
     rowItemIndex: 0,

@@ -12,7 +12,10 @@ const ToggleIcon = ({ history, isNotHeader, className }) => {
   };
 
   return (
-    <span className={`${styles.toggleIcon} ${isNotHeader ? styles.notHeader : ''} ${className}`} onClick={closeModal}>
+    <span
+      className={`${styles.toggleIcon} ${isNotHeader ? styles.notHeader : ''} ${className}`}
+      onClick={closeModal}
+    >
       <Icon name="stakingQueueActive" />
     </span>
   );

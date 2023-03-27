@@ -42,18 +42,13 @@ const ConnectionProposal = ({ history }) => {
           <div>
             <Input
               type="text"
-              onChange={e => setValue(e.target.value)}
+              onChange={(e) => setValue(e.target.value)}
               value={value}
               className={styles.input}
               placeholder={t('Enter connection URI')}
             />
-            <span className={styles.feedback}>
-              {status.message ?? ''}
-            </span>
-            <PrimaryButton
-              onClick={clickHandler}
-              disabled={value.length === 0 || status.isPending}
-            >
+            <span className={styles.feedback}>{status.message ?? ''}</span>
+            <PrimaryButton onClick={clickHandler} disabled={value.length === 0 || status.isPending}>
               {t('Connect')}
             </PrimaryButton>
           </div>

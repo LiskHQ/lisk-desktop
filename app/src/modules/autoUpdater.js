@@ -3,19 +3,15 @@ import i18n from 'i18next';
 const getErrorMessage = (error) => {
   if (error.indexOf('404 Not Found') > -1 || error.indexOf('command is disabled') > -1) {
     return '';
-  } if (error.indexOf('DISCONNECTED') > -1 || error.indexOf('net:') > -1) {
+  }
+  if (error.indexOf('DISCONNECTED') > -1 || error.indexOf('net:') > -1) {
     return 'Please check your internet connection.';
   }
   return error || 'There was a problem updating the application';
 };
 
 // eslint-disable-next-line max-statements
-export default ({
-  autoUpdater,
-  dialog,
-  win,
-  electron,
-}) => {
+export default ({ autoUpdater, dialog, win, electron }) => {
   const updater = {
     menuItem: { enabled: true },
   };

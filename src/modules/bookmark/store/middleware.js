@@ -1,7 +1,7 @@
 import { setInStorage } from 'src/utils/localJSONStorage';
 import actionTypes from './actionTypes';
 
-const bookmarks = store => next => (action) => {
+const bookmarks = (store) => (next) => (action) => {
   switch (action.type) {
     case actionTypes.bookmarkUpdated:
       next(action);

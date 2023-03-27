@@ -56,7 +56,7 @@ describe('Validator stakes view', () => {
       applyFilters: mockApplyFilters,
       clearFilters: mockClearFilters,
     });
-    useReceivedStakes.mockReturnValue({ data: { data: { } } });
+    useReceivedStakes.mockReturnValue({ data: { data: {} } });
 
     render(<ValidatorStakesView {...props} />);
 

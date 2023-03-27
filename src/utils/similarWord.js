@@ -17,7 +17,7 @@ export const levenshteinDistance = (word1, word2) => {
     return Math.min(
       calculateDistance(i, j - 1) + 1,
       calculateDistance(i - 1, j) + 1,
-      calculateDistance(i - 1, j - 1) + (word1[i] !== word2[j] ? 1 : 0),
+      calculateDistance(i - 1, j - 1) + (word1[i] !== word2[j] ? 1 : 0)
     );
   };
 
@@ -28,8 +28,7 @@ export const levenshteinDistance = (word1, word2) => {
  * @param {string} word
  * @returns {bool}
  */
-export const inDictionary = word =>
-  mnemonic.Words.ENGLISH.indexOf(word) !== -1;
+export const inDictionary = (word) => mnemonic.Words.ENGLISH.indexOf(word) !== -1;
 
 export const reducedDictByWordLength = mnemonic.Words.ENGLISH.reduce((acc, el) => {
   const len = el.length;
@@ -41,29 +40,28 @@ export const reducedDictByWordLength = mnemonic.Words.ENGLISH.reduce((acc, el) =
   return acc;
 }, {});
 
-const getByKey = key =>
-  [
-    reducedDictByWordLength[key - 1],
-    reducedDictByWordLength[key],
-    reducedDictByWordLength[key + 1],
-  ];
+const getByKey = (key) => [
+  reducedDictByWordLength[key - 1],
+  reducedDictByWordLength[key],
+  reducedDictByWordLength[key + 1],
+];
 
 export const getWordsFromDictByLength = (len) => {
   const n = len > MAX_WORD_LENGTH ? MAX_WORD_LENGTH : len;
   return getByKey(n)
-    .filter(el => el)
+    .filter((el) => el)
     .reduce((acc, el) => acc.concat(el), []);
 };
 
-const matchPartOfString = (word, begin, end) =>
-  word.startsWith(begin) || word.endsWith(end);
+const matchPartOfString = (word, begin, end) => word.startsWith(begin) || word.endsWith(end);
 
 /**
  * Find the similar word based on invalid word
  * @param {string} invalidWord
  * @returns {string} Similar word
  */
-export const findSimilarWord = (invalidWord) => { // eslint-disable-line max-statements
+export const findSimilarWord = (invalidWord) => {
+  // eslint-disable-line max-statements
   let similarWorld;
   let prevDistance = 100;
   const n = Math.floor((invalidWord.length - 1) / 2);

@@ -15,7 +15,6 @@ import { ActionBar, Feedback } from './footer';
 import styles from './styles.css';
 import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 
-
 const Summary = ({
   t,
   transactionJSON,

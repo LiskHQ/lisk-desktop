@@ -9,7 +9,7 @@ describe('Add a new bookmark component', () => {
     LSK: [],
   };
   const props = {
-    t: v => v,
+    t: (v) => v,
     token: {
       active: tokenMap.LSK.key,
     },
@@ -65,18 +65,24 @@ describe('Add a new bookmark component', () => {
     tokenKeys.forEach((token) => {
       it(`Should add ${token} account`, () => {
         wrapper.setProps({ token: { active: token } });
-        wrapper.find('input[name="address"]').first().simulate('change', {
-          target: {
-            value: addresses[token],
-            name: 'address',
-          },
-        });
-        wrapper.find('input[name="label"]').at(0).simulate('change', {
-          target: {
-            value: `label-${token}`,
-            name: 'label',
-          },
-        });
+        wrapper
+          .find('input[name="address"]')
+          .first()
+          .simulate('change', {
+            target: {
+              value: addresses[token],
+              name: 'address',
+            },
+          });
+        wrapper
+          .find('input[name="label"]')
+          .at(0)
+          .simulate('change', {
+            target: {
+              value: `label-${token}`,
+              name: 'label',
+            },
+          });
         expect(wrapper).not.toContainMatchingElement('.error');
         expect(wrapper.find('button').at(0)).not.toBeDisabled();
         wrapper.find('button.save-button').simulate('click');
@@ -87,12 +93,15 @@ describe('Add a new bookmark component', () => {
     it('should not be possible to change validator label', () => {
       const accountAddress = accounts.validator.summary.address;
       const accountUsername = accounts.validator.pos.validator.username;
-      wrapper.find('input[name="address"]').first().simulate('change', {
-        target: {
-          value: accountAddress,
-          name: 'address',
-        },
-      });
+      wrapper
+        .find('input[name="address"]')
+        .first()
+        .simulate('change', {
+          target: {
+            value: accountAddress,
+            name: 'address',
+          },
+        });
       wrapper.setProps({
         account: { ...props.account, data: accounts.validator },
         history: {
@@ -121,34 +130,43 @@ describe('Add a new bookmark component', () => {
 
     tokenKeys.forEach((token) => {
       it(`should not be possible to add already bookmarked address - ${token}`, () => {
-        wrapper.find('input[name="address"]').first().simulate('change', {
-          target: {
-            value: addresses[token],
-            name: 'address',
-          },
-        });
+        wrapper
+          .find('input[name="address"]')
+          .first()
+          .simulate('change', {
+            target: {
+              value: addresses[token],
+              name: 'address',
+            },
+          });
         expect(wrapper.find('input[name="address"]')).toHaveClassName('error');
         expect(wrapper).toContainMatchingElement('.error');
       });
 
       it(`should show error on invalid address - ${token}`, () => {
-        wrapper.find('input[name="address"]').first().simulate('change', {
-          target: {
-            value: 'invalidAddress',
-            name: 'address',
-          },
-        });
+        wrapper
+          .find('input[name="address"]')
+          .first()
+          .simulate('change', {
+            target: {
+              value: 'invalidAddress',
+              name: 'address',
+            },
+          });
         expect(wrapper.find('input[name="address"]')).toHaveClassName('error');
         expect(wrapper).toContainMatchingElement('.error');
       });
 
       it(`should show error on label too long - ${token}`, () => {
-        wrapper.find('input[name="label"]').first().simulate('change', {
-          target: {
-            value: 'Really long bookmark name',
-            name: 'label',
-          },
-        });
+        wrapper
+          .find('input[name="label"]')
+          .first()
+          .simulate('change', {
+            target: {
+              value: 'Really long bookmark name',
+              name: 'label',
+            },
+          });
         expect(wrapper.find('input[name="label"]')).toHaveClassName('error');
         expect(wrapper).toContainMatchingElement('.error');
       });
