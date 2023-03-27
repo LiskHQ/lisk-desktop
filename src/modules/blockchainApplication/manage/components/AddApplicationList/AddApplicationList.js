@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
@@ -13,7 +13,9 @@ import styles from './AddApplicationList.css';
 
 const AddApplicationList = () => {
   const { t } = useTranslation();
-  const { data, ...searchResponse } = useSearchApplications();
+  const [searchParam, setSearchParam] = useState('');
+  const { data, ...searchResponse } = useSearchApplications(setSearchParam);
+  const { isURL, URLStatus } = searchResponse;
 
   return (
     <Dialog className={styles.dialog} hasClose>
@@ -25,7 +27,10 @@ const AddApplicationList = () => {
         <BoxContent className={`${styles.content} blockchain-application-add-list`}>
           <QueryTable
             queryHook={useBlockchainApplicationExplore}
-            queryConfig={{ config: { params: {} } }}
+            queryConfig={{
+              config: { params: { search: searchParam } },
+              options: { enabled: (isURL && URLStatus === 'ok') || !isURL },
+            }}
             row={AddApplicationRow}
             headerClassName={styles.tableHeader}
             header={[]}

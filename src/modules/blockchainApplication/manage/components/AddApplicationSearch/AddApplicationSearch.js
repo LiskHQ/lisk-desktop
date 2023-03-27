@@ -9,7 +9,7 @@ const AddApplicationSearch = ({
   searchValue,
   isURL,
   urlStatus,
-  isLoading,
+  isSearchLoading,
   onSearchApplications,
 }) => {
   const { t } = useTranslation();
@@ -25,8 +25,8 @@ const AddApplicationSearch = ({
           placeholder={t('Search by name or application URL')}
           onChange={({ target: { value } }) => onSearchApplications(value)}
           size="m"
-          isLoading={isLoading}
-          status={isLoading ? 'pending' : status}
+          isLoading={isSearchLoading}
+          status={isSearchLoading ? 'pending' : status}
         />
       </div>
     </div>

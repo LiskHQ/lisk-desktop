@@ -5,10 +5,11 @@ import { addHttp } from 'src/utils/login';
 import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import { validateAppNode } from '../utils';
 
-export const useSearchApplications = () => {
+export const useSearchApplications = (searchFn) => {
   const [URL, setURL] = useState({
     isURL: false,
     URLStatus: '',
+    isSearchLoading: false,
   });
   const [searchValue, setSearchValue] = useState('');
   const timeout = useRef();
@@ -18,9 +19,11 @@ export const useSearchApplications = () => {
     clearTimeout(timeout.current);
     // Validate the URL with debouncer
     timeout.current = setTimeout(() => {
-      setSearchValue(value);
+      // setSearchValue(value);
+      searchFn(value);
     }, 500);
   };
+
   const onSearchApplications = useCallback(
     (value) => {
       const isURL = regex.url.test(addHttp(value));
@@ -34,17 +37,20 @@ export const useSearchApplications = () => {
       if (isURL) {
         // Ping URL and validate service
         const formattedValue = removeTrailingSlash(addHttp(value));
+        setURL({ ...URL, isSearchLoading: true });
         validateAppNode(formattedValue)
           .then(() => {
             setURL({
               URLStatus: 'ok',
               isURL,
+              isSearchLoading: false,
             });
           })
           .catch(() => {
             setURL({
               URLStatus: 'error',
               isURL,
+              isSearchLoading: false,
             });
           });
       }
@@ -55,7 +61,6 @@ export const useSearchApplications = () => {
   if (URL.isURL) {
     // const result = useQuery()
     const result = {
-      isLoading: true,
       error: false,
       data: [mockApplicationsExplore[0]],
     };
@@ -69,10 +74,10 @@ export const useSearchApplications = () => {
 
   // const result = useQuery()
   const result = {
-    isLoading: false,
     error: false,
     data: mockApplicationsExplore,
   };
+
   return {
     ...result,
     searchValue,
