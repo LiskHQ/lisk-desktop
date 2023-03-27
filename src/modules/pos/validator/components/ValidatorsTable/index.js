@@ -25,7 +25,7 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
           ...(activeTab === 'standby' && { status: 'standby,ineligible' }),
           ...(activeTab === 'active' && { limit: ROUND_LENGTH }),
           ...(activeTab === 'sanctioned' && { status: 'punished,banned' }),
-          ...(activeTab === 'watched' && { addressList: watchList }),
+          ...(activeTab === 'watched' && { address: watchList?.toString() }),
         },
       },
       options: {
