@@ -10,11 +10,11 @@
     padding-bottom: 4px !important;
   }
 
-  & .messageLabel{
+  & .messageLabel {
     color: var(--color-maastricht-blue);
   }
 
-  & .stakedHeader{
+  & .stakedHeader {
     color: var(--color-maastricht-blue);
   }
 
