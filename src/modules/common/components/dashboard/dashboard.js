@@ -10,7 +10,6 @@ import BoxHeader from 'src/theme/box/header';
 import { isEmpty } from 'src/utils/helpers';
 import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 import Onboarding from '../onboarding/onboarding';
-import NewsFeed from '../newsFeed';
 import styles from './dashboard.css';
 
 const getOnboardingSlides = (t) => [
@@ -87,10 +86,6 @@ const Dashboard = ({ t, history }) => {
                 />
               </Box>
             )}
-          </div>
-
-          <div className={`${styles.community} community-feed`}>
-            <NewsFeed />
           </div>
         </div>
       </div>

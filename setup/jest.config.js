@@ -171,7 +171,6 @@ module.exports = {
     'src/modules/pos/validator/store/middlewares/staking.js',
     'src/modules/common/components/discreetMode/discreetMode.js',
     'src/modules/transaction/components/TransactionRow/components.js',
-    'src/modules/transaction/components/RecentTransactions/RecentTransactions.js',
     'src/theme/box/row.js',
     'src/modules/token/fungible/components/BalanceInfo/LockedBalanceLink.js',
     'src/modules/settings/components/customNode/readMode.js',
