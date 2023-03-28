@@ -1,6 +1,5 @@
 // istanbul ignore file
 import React from 'react';
-import RecentTransactions from '@transaction/components/RecentTransactions';
 import WalletDetails from '@token/fungible/manager/walletDetails';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import AccountCreationTips from '@account/components/AccountCreationTips';
@@ -69,7 +68,6 @@ const Dashboard = ({ t, history }) => {
                   isLoading={tokens.isLoading}
                   tokens={tokens.data?.data}
                 />
-                <RecentTransactions isLoggedIn className={styles.marginFix} />
               </>
             )}
             {isEmpty(currentAccount) && accounts.length === 0 && <AccountCreationTips />}
