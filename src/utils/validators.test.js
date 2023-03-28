@@ -1,13 +1,13 @@
 import i18n from 'src/utils/i18n/i18n';
 import accounts from '@tests/constants/wallets';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import { getTokenDecimals } from '@token/fungible/utils/helpers';
 import {
   validateAddress,
   validateLSKPublicKey,
   validateAmountFormat,
   isNumeric,
 } from './validators';
-import { getTokenDecimals } from 'src/modules/token/fungible/utils/helpers';
 
 const mockToken = mockAppsTokens.data[0];
 
