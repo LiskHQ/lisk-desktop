@@ -140,7 +140,6 @@ module.exports = {
     'src/modules/wallet/utils/account.js',
     'src/utils/dateTime.js',
     'src/modules/network/utils/api/index.js',
-    'src/modules/token/fungible/components/WalletDetails/WalletDetails.js',
     'src/utils/login.js',
     'src/modules/transaction/manager/transactionResult.js',
     'src/modules/search/api/index.js',
