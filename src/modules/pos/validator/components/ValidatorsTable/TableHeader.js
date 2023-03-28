@@ -22,8 +22,6 @@ export const getValidatorWeightClass = (activeTab) => {
       return `${grid['col-xs-2']} ${styles.validatorHeader}`;
     case 'sanctioned':
       return 'hidden';
-    case 'watched':
-      return `${grid['col-xs-2']} ${styles.stakeWeight}`;
     default:
       return `${grid['col-xs-3']} ${styles.stakeWeight}`;
   }
@@ -34,7 +32,7 @@ export const getValidatorRankClass = (activeTab) => {
     case 'active':
       return `${grid['col-xs-2']} ${styles.validatorHeader}`;
     case 'watched':
-      return `${grid['col-xs-1']} ${styles.rank}`;
+      return `${grid['col-xs-2']} ${styles.rank}`;
     case 'standby':
       return `${grid['col-xs-2']} ${styles.rank}`;
     default:
@@ -46,8 +44,6 @@ export const getRoundStateClass = (activeTab) => {
   switch (activeTab) {
     case 'active':
       return `${grid['col-xs-1']} ${styles.statusTitle} text-right ${styles.roundStateHeader}`;
-    case 'watched':
-      return `${grid['col-xs-1']} ${styles.statusTitle} ${styles.roundStateHeader}`;
     default:
       return 'hidden';
   }
@@ -57,8 +53,6 @@ export const getGeneratingTimeClass = (activeTab) => {
   switch (activeTab) {
     case 'active':
       return grid['col-xs-2'];
-    case 'watched':
-      return grid['col-xs-2'];
     default:
       return 'hidden';
   }
@@ -67,6 +61,8 @@ export const getGeneratingTimeClass = (activeTab) => {
 export const getValidatorCommissionClass = (activeTab) => {
   switch (activeTab) {
     case 'active':
+      return `${grid['col-xs-2']} ${styles.validatorHeader}`;
+    case 'watched':
       return `${grid['col-xs-2']} ${styles.validatorHeader}`;
     case 'standby':
       return `${grid['col-xs-2']} ${styles.validatorHeader}`;
@@ -82,7 +78,7 @@ export const getValidatorDetailsClass = (activeTab) => {
     case 'standby':
       return `${grid['col-xs-3']} ${styles.validatorHeader}`;
     case 'watched':
-      return `${grid['col-xs-4']} ${styles.validatorHeader}`;
+      return `${grid['col-xs-3']} ${styles.validatorHeader}`;
     default:
       return `${grid['col-xs-5']} ${styles.validatorHeader}`;
   }

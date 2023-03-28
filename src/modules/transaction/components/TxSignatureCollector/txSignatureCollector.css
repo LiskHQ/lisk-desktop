@@ -25,6 +25,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 
   & > div > div {
     width: 100% !important;

@@ -1,20 +1,23 @@
 import React from 'react';
-import DialogLink from 'src/theme/dialog/link';
+import { Link } from 'react-router-dom';
 import Icon from 'src/theme/Icon';
 import Converter from '@common/components/converter';
 import { convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import routes from 'src/routes/routes';
 import styles from './TokenCard.css';
 
 const liskSymbol = 'LSK';
 
-const TokenCard = ({ lockedBalance, address, token }) => {
-  const { symbol, availableBalance } = token;
+const TokenCard = ({ token }) => {
+  const { symbol, availableBalance, lockedBalances } = token;
+
+  const totalLockedBalance = lockedBalances?.reduce((accum, { amount }) => BigInt(amount) + accum, BigInt(0));
 
   return (
     <div data-testid="token-card" className={styles.wrapper}>
       <div
-        className={!lockedBalance || symbol?.toUpperCase?.() !== liskSymbol ? styles.vCenter : ''}
+        className={!totalLockedBalance || symbol?.toUpperCase?.() !== liskSymbol ? styles.vCenter : ''}
       >
         <img alt={symbol} className={styles.tokenLogo} src={getLogo(token)} />
       </div>
@@ -26,15 +29,13 @@ const TokenCard = ({ lockedBalance, address, token }) => {
             value={convertFromBaseDenom(availableBalance, token)}
           />
         )}
-        {!lockedBalance ? null : (
-          <DialogLink
-            data-testid="locked-balance"
-            component="lockedBalance"
-            data={{ address }}
+        {totalLockedBalance > BigInt(0) && (
+          <Link
             className={styles.lockedBalance}
+            to={`${routes.sentStakes.path}/?modal=lockedBalance`}
           >
-            <Icon name="lock" /> <TokenAmount val={lockedBalance} token={token} />
-          </DialogLink>
+            <Icon name="lock" /> <TokenAmount val={totalLockedBalance} token={token} />
+          </Link>
         )}
       </div>
     </div>
