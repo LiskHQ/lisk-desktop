@@ -10,9 +10,6 @@ describe('TokenCard', () => {
   let wrapper;
   const { availableBalance, symbol } = mockTokensBalance.data[0];
   const props = {
-    lockedBalance: 20000,
-    url: 'test-url',
-    availableBalance,
     token: { ...mockAppsTokens.data[0], ...mockTokensBalance.data[0] },
   };
 
@@ -52,13 +49,26 @@ describe('TokenCard', () => {
   it('should not show locked balance link if locked balance is 0 or undefined', async () => {
     const newProps = {
       ...props,
-      lockedBalance: undefined,
+      token: {
+        ...mockAppsTokens.data[0],
+        ...{
+          ...mockTokensBalance.data[0],
+          lockedBalances: [],
+        },
+      },
     };
     renderWithRouter(TransactionEventsRow, newProps);
     expect(() => screen.getByAltText('lock')).toThrow();
+
     renderWithRouter(TransactionEventsRow, {
       ...props,
-      lockedBalance: 0,
+      token: {
+        ...mockAppsTokens.data[0],
+        ...{
+          ...mockTokensBalance.data[0],
+          lockedBalances: undefined,
+        },
+      },
     });
     expect(() => screen.getByAltText('lock')).toThrow();
   });

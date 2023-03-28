@@ -78,14 +78,7 @@ const Overview = ({ isWalletRoute, history }) => {
     }
   };
 
-  const renderTokenCard = useCallback((token) => {
-    const totalLockedBalance = useMemo(
-      () => token.lockedBalances?.reduce((total, { amount }) => +amount + total, 0) ?? 0,
-      [token.lockedBalances]
-    );
-
-    return <TokenCard token={token} lockedBalance={totalLockedBalance} />;
-  }, []);
+  const renderTokenCard = useCallback((token) => <TokenCard token={token} />, []);
 
   useEffect(() => {
     const params = history?.location.search;

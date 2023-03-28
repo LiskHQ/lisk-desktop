@@ -9,13 +9,15 @@ import styles from './TokenCard.css';
 
 const liskSymbol = 'LSK';
 
-const TokenCard = ({ lockedBalance, token }) => {
-  const { symbol, availableBalance } = token;
+const TokenCard = ({ token }) => {
+  const { symbol, availableBalance, lockedBalances } = token;
+
+  const totalLockedBalance = lockedBalances?.reduce((accum, { amount }) => BigInt(amount) + accum, BigInt(0));
 
   return (
     <div data-testid="token-card" className={styles.wrapper}>
       <div
-        className={!lockedBalance || symbol?.toUpperCase?.() !== liskSymbol ? styles.vCenter : ''}
+        className={!totalLockedBalance || symbol?.toUpperCase?.() !== liskSymbol ? styles.vCenter : ''}
       >
         <img alt={symbol} className={styles.tokenLogo} src={getLogo(token)} />
       </div>
@@ -27,12 +29,12 @@ const TokenCard = ({ lockedBalance, token }) => {
             value={convertFromBaseDenom(availableBalance, token)}
           />
         )}
-        {lockedBalance > 0 && (
+        {totalLockedBalance > BigInt(0) && (
           <Link
             className={styles.lockedBalance}
             to={`${routes.sentStakes.path}/?modal=lockedBalance`}
           >
-            <Icon name="lock" /> <TokenAmount val={lockedBalance} token={token} />
+            <Icon name="lock" /> <TokenAmount val={totalLockedBalance} token={token} />
           </Link>
         )}
       </div>
