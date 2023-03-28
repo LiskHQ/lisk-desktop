@@ -1,6 +1,7 @@
 import i18n from 'src/utils/i18n/i18n';
 import accounts from '@tests/constants/wallets';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import { getTokenDecimals } from '@token/fungible/utils/helpers';
 import {
   validateAddress,
   validateLSKPublicKey,
@@ -37,7 +38,9 @@ describe('Validate Amount Format', () => {
   const errors = {
     ZERO: i18n.t("Amount can't be zero."),
     INVALID: i18n.t('Provide a correct amount of {{token}}', { token: 'LSK' }),
-    FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
+    FLOATING_POINT: i18n.t('Maximum allowed decimal point is {{decimal}}.', {
+      decimal: getTokenDecimals(mockToken),
+    }),
   };
 
   it('Should return errors.ZERO if amount is zero', () => {

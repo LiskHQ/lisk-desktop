@@ -1,3 +1,5 @@
+import { getTokenDecimals } from 'src/modules/token/fungible/utils/helpers';
+
 export const regex = {
   address: /^lsk[a-z0-9]{0,38}$/,
   legacyAddress: /^[1-9]\d{0,19}L$/,
@@ -23,13 +25,19 @@ export const regex = {
   amount: {
     en: {
       format: /[^\d.]|(.*?\.){2}|\.$/,
-      maxFloating: /\.[\d\w\s]{9}/,
       leadingPoint: /^\./,
+      maxDecimals: (token) => {
+        const decimals = getTokenDecimals(token) || 8;
+        return new RegExp(`\\.[\\d\\w\\s]{${decimals + 1}}`);
+      },
     },
     de: {
       format: /[^\d,]|(.*?[,]){2}|[,]$/,
-      maxFloating: /[,][\d\w\s]{9}/,
       leadingPoint: /^[,]/,
+      maxDecimals: (token) => {
+        const decimals = getTokenDecimals(token) || 8;
+        return new RegExp(`\\.[\\d\\w\\s]{${decimals + 1}}`);
+      },
     },
   },
   url: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/,

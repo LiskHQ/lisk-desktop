@@ -1,12 +1,17 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AutoResizeTextarea } from 'src/theme';
 import { TertiaryButton } from 'src/theme/buttons';
+import Feedback from 'src/theme/feedback/feedback';
 import Icon from 'src/theme/Icon';
 import CircularProgress from 'src/theme/ProgressCircular/circularProgress';
 import Tooltip from 'src/theme/Tooltip';
 import { sizeOfString } from 'src/utils/helpers';
 import styles from './MessageField.css';
+
+const messageErrorFeedback = {
+  maxCharSize: 'Message size has exceeded the maximum allowed size',
+};
 
 function MessageField({
   onChange,
@@ -23,11 +28,16 @@ function MessageField({
   const [isCollapsed, setCollapsed] = useState(!!value);
   const { t } = useTranslation();
   const byteCount = useMemo(() => sizeOfString(value), [value]);
+  const [feedBackType, setFeedbackType] = useState(null);
 
   const onShrinkField = useCallback(() => {
     setCollapsed(!isCollapsed);
     onRemove?.();
   }, [isCollapsed]);
+
+  useEffect(() => {
+    setFeedbackType(maxMessageLength - byteCount < 0 ? 'maxCharSize' : null);
+  }, [maxMessageLength, byteCount]);
 
   return !isCollapsed ? (
     <TertiaryButton
@@ -62,6 +72,9 @@ function MessageField({
           className={`${styles.status} ${!isLoading && value ? styles.show : ''}`}
           name={error ? 'alertIcon' : 'okIcon'}
         />
+      </span>
+      <div>
+        <Feedback message={messageErrorFeedback[feedBackType]} status="error" />
         <span
           data-testid="feedback"
           className={`${styles.feedback} ${styles.show} ${
@@ -79,7 +92,7 @@ function MessageField({
             </Tooltip>
           )}
         </span>
-      </span>
+      </div>
     </div>
   );
 }
