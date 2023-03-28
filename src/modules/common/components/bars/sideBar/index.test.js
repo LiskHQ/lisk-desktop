@@ -30,7 +30,7 @@ describe('SideBar', () => {
 
   const myProps = {
     location: {
-      pathname: routes.dashboard.path,
+      pathname: routes.wallet.path,
     },
     t: (val) => val,
   };

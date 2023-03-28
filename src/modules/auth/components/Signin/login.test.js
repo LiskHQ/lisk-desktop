@@ -104,7 +104,7 @@ describe('Login', () => {
         history,
         account: { summary: { address: 'dummy' } },
       });
-      expect(props.history.replace).toHaveBeenCalledWith(`${routes.dashboard.path}`);
+      expect(props.history.replace).toHaveBeenCalledWith(`${routes.wallet.path}`);
     });
 
     it('calls this.props.history.replace with referrer address', () => {

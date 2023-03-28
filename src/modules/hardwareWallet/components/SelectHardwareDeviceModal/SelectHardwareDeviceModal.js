@@ -22,7 +22,7 @@ function SelectHardwareDeviceModal() {
           {t('Choose a hardware wallet to perform your transactions on add to your Lisk Desktop')}
         </BoxInfoText>
         <HwDeviceListing />
-        <Link className={`${styles.backToWalletLink}`} to={routes.dashboard.path}>
+        <Link className={`${styles.backToWalletLink}`} to={routes.wallet.path}>
           {t('Back to wallet')}
         </Link>
       </Box>

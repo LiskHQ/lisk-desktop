@@ -90,7 +90,7 @@ describe('SeletNetwork', () => {
 
     fireEvent.click(screen.getByText('Continue to dashbord'));
 
-    expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
+    expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
   });
 
   it('should bot be possible to click "Continue to dashboard" button if !isSuccess or !isFetching', () => {

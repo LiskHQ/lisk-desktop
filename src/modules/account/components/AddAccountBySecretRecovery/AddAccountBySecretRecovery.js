@@ -34,7 +34,7 @@ const AddAccountBySecretRecovery = ({ history, location: { search } }) => {
   };
 
   const onPasswordSetComplete = () => {
-    history.push(referrer || routes.dashboard.path);
+    history.push(referrer || routes.wallet.path);
   };
 
   return (

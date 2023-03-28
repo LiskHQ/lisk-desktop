@@ -17,7 +17,7 @@ function SelectNetwork({ history }) {
   };
 
   function goToDashboard() {
-    history.push(routes.dashboard.path);
+    history.push(routes.wallet.path);
   }
 
   return (

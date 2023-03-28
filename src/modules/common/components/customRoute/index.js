@@ -29,7 +29,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   }
 
   if (forbiddenTokens.indexOf(token.active) !== -1) {
-    return <Redirect to={routes.dashboard.path} />;
+    return <Redirect to={routes.wallet.path} />;
   }
 
   if (!isAuthenticated && path === routes.manageAccounts.path && accounts.length === 0) {
@@ -44,7 +44,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
 
   // Redirect back to actual path when an account is not reclaimable
   if (isMigrated && path === routes.reclaim.path) {
-    return <Redirect to={`${routes.dashboard.path}`} />;
+    return <Redirect to={`${routes.wallet.path}`} />;
   }
 
   if (

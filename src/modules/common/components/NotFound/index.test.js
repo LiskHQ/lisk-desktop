@@ -25,6 +25,6 @@ describe('notFound', () => {
 
   it('should go to Dashboard on button link', () => {
     const wrapper = mount(<NotFound {...props} />);
-    expect(wrapper.find('.go-to-dashboard-button').at(0).props().to).toBe(routes.dashboard.path);
+    expect(wrapper.find('.go-to-dashboard-button').at(0).props().to).toBe(routes.wallet.path);
   });
 });

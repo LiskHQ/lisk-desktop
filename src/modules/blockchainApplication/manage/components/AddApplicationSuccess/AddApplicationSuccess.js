@@ -10,7 +10,7 @@ import styles from './AddApplicationSuccess.css';
 const AddApplicationSuccess = ({ history }) => {
   const { t } = useTranslation();
   const onAddSuccess = () => {
-    history.push(routes.dashboard.path);
+    history.push(routes.wallet.path);
   };
 
   return (

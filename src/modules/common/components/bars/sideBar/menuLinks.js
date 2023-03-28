@@ -6,7 +6,7 @@ const menuLinks = (t) => [
       icon: 'dashboardIcon',
       id: 'dashboard',
       label: t('Dashboard'),
-      path: routes.dashboard.path,
+      path: routes.wallet.path,
     },
     {
       icon: 'walletIcon',
