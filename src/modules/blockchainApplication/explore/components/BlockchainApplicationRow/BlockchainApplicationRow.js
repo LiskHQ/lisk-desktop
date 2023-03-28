@@ -2,10 +2,10 @@ import React, { useCallback, useMemo } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import DialogLink from 'src/theme/dialog/link';
-import { TertiaryButton } from 'src/theme/buttons';
-import Icon from 'src/theme/Icon';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
+import DialogLink from '@theme/dialog/link';
+import { TertiaryButton } from '@theme/buttons';
+import Icon from '@theme/Icon';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './BlockchainApplicationRow.css';
 
 const DepositAmount = ({ amount }) => (
@@ -57,7 +57,7 @@ const BlockchainApplicationRow = ({ data, className, t }) => {
       ...data,
       isPinned: checkPinByChainId(data.chainID),
     }),
-    [checkPinByChainId]
+    [data, checkPinByChainId]
   );
 
   return (
@@ -68,7 +68,7 @@ const BlockchainApplicationRow = ({ data, className, t }) => {
         data={{ chainId: application.chainID }}
       >
         <Pin isPinned={application.isPinned} onTogglePin={handleTogglePin} />
-        <ChainName title={application.chainName} logo={liskLogo} />
+        <ChainName title={application.chainName} logo={getLogo(application)} />
         <ChainId id={application.chainID} />
         <ChainStatus status={application.status} t={t} />
         <DepositAmount amount={application.depositedLsk} />

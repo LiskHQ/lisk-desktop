@@ -5,13 +5,15 @@ import { addHttp } from 'src/utils/login';
 import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import { validateAppNode } from '../utils';
 
-export const useSearchApplications = (searchFn) => {
+// eslint-disable-next-line max-statements
+export const useSearchApplications = () => {
   const [URL, setURL] = useState({
     isURL: false,
     URLStatus: '',
     isSearchLoading: false,
   });
   const [searchValue, setSearchValue] = useState('');
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState('');
   const timeout = useRef();
 
   const setDebounceSearch = (value) => {
@@ -19,8 +21,7 @@ export const useSearchApplications = (searchFn) => {
     clearTimeout(timeout.current);
     // Validate the URL with debouncer
     timeout.current = setTimeout(() => {
-      // setSearchValue(value);
-      searchFn(value);
+      setDebouncedSearchValue(value);
     }, 500);
   };
 
@@ -81,6 +82,7 @@ export const useSearchApplications = (searchFn) => {
   return {
     ...result,
     searchValue,
+    debouncedSearchValue,
     ...URL,
     onSearchApplications,
   };
