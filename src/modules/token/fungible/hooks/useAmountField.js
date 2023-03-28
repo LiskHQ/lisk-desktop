@@ -68,7 +68,7 @@ const useAmountField = (initialValue, balance, token) => {
     amount = leadingPoint.test(amount) ? `0${amount}` : amount;
     const isAmountValid = !maxDecimals(token).test(amount);
 
-    if (!isAmountValid) {
+    if (isAmountValid) {
       clearTimeout(loaderTimeout);
 
       setAmountField({
