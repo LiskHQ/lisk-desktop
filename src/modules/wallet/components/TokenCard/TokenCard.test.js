@@ -8,15 +8,15 @@ import TransactionEventsRow from './TokenCard';
 
 describe('TokenCard', () => {
   let wrapper;
+  const { availableBalance, symbol } = mockTokensBalance.data[0];
+  const props = {
+    lockedBalance: 20000,
+    url: 'test-url',
+    availableBalance,
+    token: { ...mockAppsTokens.data[0], ...mockTokensBalance.data[0] },
+  };
 
   it('should display properly ', async () => {
-    const { availableBalance, symbol } = mockTokensBalance.data[0];
-    const props = {
-      lockedBalance: 20000,
-      url: 'test-url',
-      availableBalance,
-      token: { ...mockAppsTokens.data[0], ...mockTokensBalance.data[0] },
-    };
     wrapper = renderWithRouter(TransactionEventsRow, props);
 
     expect(
@@ -46,6 +46,20 @@ describe('TokenCard', () => {
     );
 
     expect(wrapper.container.querySelector('.fiatBalance')).toBe(null);
-    expect(screen.queryByTestId('locked-balance')).toBeFalsy();
+    expect(screen.getByAltText('lock')).toBeTruthy();
+  });
+
+  it('should not show locked-balance link if locked balance is 0 or undefined', async () => {
+    const newProps = {
+      ...props,
+      lockedBalance: undefined,
+    };
+    renderWithRouter(TransactionEventsRow, newProps);
+    expect(() => screen.getByAltText('lock')).toThrow();
+    renderWithRouter(TransactionEventsRow, {
+      ...props,
+      lockedBalance: 0,
+    });
+    expect(() => screen.getByAltText('lock')).toThrow();
   });
 });

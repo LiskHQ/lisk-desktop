@@ -16,7 +16,6 @@
   background-color: var(--color-token-card-bg);
   background-repeat: round;
   column-gap: 8px;
-  cursor: pointer;
 
   & > div:first-child {
     height: 100%;

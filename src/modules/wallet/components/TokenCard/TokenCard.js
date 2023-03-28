@@ -1,14 +1,15 @@
 import React from 'react';
-import DialogLink from 'src/theme/dialog/link';
+import { Link } from 'react-router-dom';
 import Icon from 'src/theme/Icon';
 import Converter from '@common/components/converter';
 import { convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import routes from 'src/routes/routes';
 import styles from './TokenCard.css';
 
 const liskSymbol = 'LSK';
 
-const TokenCard = ({ lockedBalance, address, token }) => {
+const TokenCard = ({ lockedBalance, token }) => {
   const { symbol, availableBalance } = token;
 
   return (
@@ -26,15 +27,14 @@ const TokenCard = ({ lockedBalance, address, token }) => {
             value={convertFromBaseDenom(availableBalance, token)}
           />
         )}
-        {!lockedBalance ? null : (
-          <DialogLink
+        {lockedBalance > 0 && (
+          <Link
             data-testid="locked-balance"
-            component="lockedBalance"
-            data={{ address }}
             className={styles.lockedBalance}
+            to={`${routes.validators.path}/profile/stakes?modal=lockedBalance`}
           >
             <Icon name="lock" /> <TokenAmount val={lockedBalance} token={token} />
-          </DialogLink>
+          </Link>
         )}
       </div>
     </div>
