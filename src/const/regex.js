@@ -26,7 +26,7 @@ export const regex = {
     en: {
       format: /[^\d.]|(.*?\.){2}|\.$/,
       leadingPoint: /^\./,
-      maxFloating: (token) => {
+      maxDecimals: (token) => {
         const decimals = getTokenDecimals(token) || 8;
         return new RegExp(`\\.[\\d\\w\\s]{${decimals + 1}}`);
       },
@@ -34,7 +34,7 @@ export const regex = {
     de: {
       format: /[^\d,]|(.*?[,]){2}|[,]$/,
       leadingPoint: /^[,]/,
-      maxFloating: (token) => {
+      maxDecimals: (token) => {
         const decimals = getTokenDecimals(token) || 8;
         return new RegExp(`\\.[\\d\\w\\s]{${decimals + 1}}`);
       },

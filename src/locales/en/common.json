@@ -335,7 +335,7 @@
   "Max amount must be greater than Min amount": "Max amount must be greater than Min amount",
   "Max. 20 characters": "Max. 20 characters",
   "Max. 20 characters, a-z, 0-1, no special characters except !@$_.": "Max. 20 characters, a-z, 0-1, no special characters except !@$_.",
-  "Maximum allowed decimal point is 8.": "Maximum allowed decimal point is 8.",
+  "Maximum allowed decimal point is {{decimal}}.": "Maximum allowed decimal point is {{decimal}}.",
   "Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.": "Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.",
   "Medium": "Medium",
   "Members": "Members",

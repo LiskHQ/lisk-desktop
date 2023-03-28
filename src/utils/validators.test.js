@@ -7,6 +7,7 @@ import {
   validateAmountFormat,
   isNumeric,
 } from './validators';
+import { getTokenDecimals } from 'src/modules/token/fungible/utils/helpers';
 
 const mockToken = mockAppsTokens.data[0];
 
@@ -37,7 +38,9 @@ describe('Validate Amount Format', () => {
   const errors = {
     ZERO: i18n.t("Amount can't be zero."),
     INVALID: i18n.t('Provide a correct amount of {{token}}', { token: 'LSK' }),
-    FLOATING_POINT: i18n.t('Maximum allowed decimal point is 8.'),
+    FLOATING_POINT: i18n.t('Maximum allowed decimal point is {{decimal}}.', {
+      decimal: getTokenDecimals(mockToken),
+    }),
   };
 
   it('Should return errors.ZERO if amount is zero', () => {

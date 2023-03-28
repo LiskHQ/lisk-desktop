@@ -58,7 +58,7 @@ export const validateAmountFormat = ({
   minValue,
   inputValue,
 }) => {
-  const { maxFloating } = reg.amount[locale];
+  const { maxDecimals } = reg.amount[locale];
   const errors = {
     NEGATIVE_STAKE: {
       message: i18n.t("Stake amount can't be zero or negative."),
@@ -87,8 +87,10 @@ export const validateAmountFormat = ({
       },
     },
     MAX_ACCURACY: {
-      message: i18n.t(`Maximum allowed decimal point is ${getTokenDecimals(token)}.`),
-      fn: () => maxFloating(token).test(value),
+      message: i18n.t('Maximum allowed decimal point is {{decimal}}.', {
+        decimal: getTokenDecimals(token),
+      }),
+      fn: () => maxDecimals(token).test(value),
     },
     STAKE_10X: {
       message: i18n.t('You can only stake in multiplies of 10 LSK.'),

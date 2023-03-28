@@ -63,31 +63,31 @@ const useAmountField = (initialValue, balance, token) => {
     setAmountField(getAmountFieldState(initialValue, getAmountFeedbackAndError));
   }, [initialValue]);
 
-  const onAmountInputChange = ({ value }, maxAmount) => {
-    const { leadingPoint, maxFloating } = regex.amount[i18n.language];
-    value = leadingPoint.test(value) ? `0${value}` : value;
-    const isMaxAccuracyInValid = maxFloating(token).test(value);
+  const onAmountInputChange = ({ value: amount }, maxAmount) => {
+    const { leadingPoint, maxDecimals } = regex.amount[i18n.language];
+    amount = leadingPoint.test(amount) ? `0${amount}` : amount;
+    const isAmountValid = !maxDecimals(token).test(amount);
 
-    if (!isMaxAccuracyInValid) {
+    if (!isAmountValid) {
       clearTimeout(loaderTimeout);
 
       setAmountField({
         ...baseState,
         ...amountField,
-        value,
+        value: amount,
         isLoading: true,
       });
       loaderTimeout = setTimeout(() => {
         setAmountField({
           ...baseState,
-          value,
-          ...getAmountFeedbackAndError(value, maxAmount.value),
+          value: amount,
+          ...getAmountFeedbackAndError(amount, maxAmount.value),
         });
       }, 300);
     } else {
       const { message: feedback } = validateAmountFormat({
-        value,
         token,
+        value: amount,
         funds: Number(balance) + Number(MIN_ACCOUNT_BALANCE),
         checklist: ['MAX_ACCURACY'],
       });

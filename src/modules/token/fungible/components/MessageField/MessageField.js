@@ -10,7 +10,7 @@ import { sizeOfString } from 'src/utils/helpers';
 import styles from './MessageField.css';
 
 const messageErrorFeedback = {
-  maxCharSize: 'Message size has exceeded the maxium allowed size',
+  maxCharSize: 'Message size has exceeded the maximum allowed size',
 };
 
 function MessageField({
@@ -28,7 +28,7 @@ function MessageField({
   const [isCollapsed, setCollapsed] = useState(!!value);
   const { t } = useTranslation();
   const byteCount = useMemo(() => sizeOfString(value), [value]);
-  const [feedBackType, setFeedBackType] = useState(null);
+  const [feedBackType, setFeedbackType] = useState(null);
 
   const onShrinkField = useCallback(() => {
     setCollapsed(!isCollapsed);
@@ -36,7 +36,7 @@ function MessageField({
   }, [isCollapsed]);
 
   useEffect(() => {
-    setFeedBackType(maxMessageLength - byteCount < 0 ? 'maxCharSize' : null);
+    setFeedbackType(maxMessageLength - byteCount < 0 ? 'maxCharSize' : null);
   }, [maxMessageLength, byteCount]);
 
   return !isCollapsed ? (
