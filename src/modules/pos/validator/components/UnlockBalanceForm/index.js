@@ -56,7 +56,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
           <BoxContent className={styles.container}>
             <p>
               {t(
-                'Below are the details of your staked balances and rewards, as well as the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.'
+                'Below are the details of your staked balances, as well as the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.'
               )}
             </p>
             <BalanceTable

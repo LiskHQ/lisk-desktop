@@ -40,7 +40,7 @@ const EnterPasswordForm = ({
   const formValues = watch();
 
   const onSubmit = async ({ password }) => {
-    const { error, result } = await decryptAccount(account.encryptedPassphrase, password);
+    const { error, result } = await decryptAccount(account.crypto, password);
 
     if (error) {
       setError(API_ERROR_NAME, {

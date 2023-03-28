@@ -29,18 +29,17 @@
     color: var(--color-slate-gray);
     display: none;
     justify-content: flex-end;
-    padding: 8px 0;
+    padding: 5px 0 8px 0;
     width: fit-content;
     position: absolute;
-    bottom: -28px;
     align-items: center;
-
-    &:global(.error) {
-      color: var(--color-burnt-sienna);
-    }
 
     &.show {
       display: flex;
+    }
+
+    &.error {
+      color: var(--color-burnt-sienna);
     }
 
     &.referenceFeedback {
@@ -69,6 +68,10 @@
     display: flex;
     position: relative;
     width: 100%;
+
+    & ~ div {
+      width: 100%;
+    }
 
     & .byteCounter {
       bottom: 8px;
