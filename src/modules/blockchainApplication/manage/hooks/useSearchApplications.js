@@ -2,10 +2,8 @@ import { useState, useCallback, useRef } from 'react';
 import { removeTrailingSlash } from 'src/modules/settings/components/customNode/editMode';
 import { regex } from 'src/const/regex';
 import { addHttp } from 'src/utils/login';
-import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import { validateAppNode } from '../utils';
 
-// eslint-disable-next-line max-statements
 export const useSearchApplications = () => {
   const [URL, setURL] = useState({
     isURL: false,
@@ -59,31 +57,10 @@ export const useSearchApplications = () => {
     [setSearchValue, setURL]
   );
 
-  if (URL.isURL) {
-    // const result = useQuery()
-    const result = {
-      error: false,
-      data: [mockApplicationsExplore[0]],
-    };
-    return {
-      ...result,
-      searchValue,
-      ...URL,
-      onSearchApplications,
-    };
-  }
-
-  // const result = useQuery()
-  const result = {
-    error: false,
-    data: mockApplicationsExplore,
-  };
-
   return {
-    ...result,
     searchValue,
     debouncedSearchValue,
-    ...URL,
     onSearchApplications,
+    ...URL,
   };
 };

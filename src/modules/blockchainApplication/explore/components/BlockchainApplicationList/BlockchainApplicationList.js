@@ -5,9 +5,10 @@ import BoxHeader from '@theme/box/header';
 import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
 import { QueryTable } from '@theme/QueryTable';
-import { Input } from 'src/theme';
-import Icon from 'src/theme/Icon';
+import { Input } from '@theme';
+import Icon from '@theme/Icon';
 import { useFilter } from '@common/hooks';
+import useMergeApplicationExploreAndMetaData from '../../../manage/hooks/useMergeApplicationExploreAndMetaData';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import BlockchainApplicationRow from '../BlockchainApplicationRow';
 import header from './BlockchainApplicationListHeaderMap';
@@ -58,7 +59,8 @@ const BlockchainApplicationList = () => {
         <QueryTable
           showHeader
           queryHook={useBlockchainApplicationExplore}
-          queryConfig={{ config: { params: filters } }}
+          queryConfig={{ config: { params: { ...filters } } }}
+          transformResponse={(response) => useMergeApplicationExploreAndMetaData(response)}
           row={BlockchainApplicationRow}
           header={header(t)}
           headerClassName={styles.tableHeader}
