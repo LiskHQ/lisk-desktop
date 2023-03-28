@@ -390,7 +390,7 @@ describe('Form', () => {
       });
       wrapper.update();
       referenceField = wrapper.find('.reference');
-      expect(referenceField.find('.feedback.error')).toHaveClassName('show error');
+      expect(referenceField.find('.feedback.error').at(1)).toHaveClassName('show error');
     });
 
     it.skip('Should remove the value of the message field', () => {
