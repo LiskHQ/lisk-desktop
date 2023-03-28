@@ -29,9 +29,8 @@ const TokenCard = ({ lockedBalance, token }) => {
         )}
         {lockedBalance > 0 && (
           <Link
-            data-testid="locked-balance"
             className={styles.lockedBalance}
-            to={`${routes.validators.path}/profile/stakes?modal=lockedBalance`}
+            to={`${routes.sentStakes.path}/?modal=lockedBalance`}
           >
             <Icon name="lock" /> <TokenAmount val={lockedBalance} token={token} />
           </Link>

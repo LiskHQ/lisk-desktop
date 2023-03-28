@@ -49,7 +49,7 @@ describe('TokenCard', () => {
     expect(screen.getByAltText('lock')).toBeTruthy();
   });
 
-  it('should not show locked-balance link if locked balance is 0 or undefined', async () => {
+  it('should not show locked balance link if locked balance is 0 or undefined', async () => {
     const newProps = {
       ...props,
       lockedBalance: undefined,
