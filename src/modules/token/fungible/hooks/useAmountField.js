@@ -63,24 +63,37 @@ const useAmountField = (initialValue, balance, token) => {
     setAmountField(getAmountFieldState(initialValue, getAmountFeedbackAndError));
   }, [initialValue]);
 
-  const onAmountInputChange = ({ value }, maxAmount) => {
-    const { leadingPoint } = regex.amount[i18n.language];
-    value = leadingPoint.test(value) ? `0${value}` : value;
-    clearTimeout(loaderTimeout);
+  const onAmountInputChange = ({ value: amount }, maxAmount) => {
+    const { leadingPoint, maxDecimals } = regex.amount[i18n.language];
+    amount = leadingPoint.test(amount) ? `0${amount}` : amount;
+    const isAmountValid = !maxDecimals(token).test(amount);
 
-    setAmountField({
-      ...baseState,
-      ...amountField,
-      value,
-      isLoading: true,
-    });
-    loaderTimeout = setTimeout(() => {
+    if (isAmountValid) {
+      clearTimeout(loaderTimeout);
+
       setAmountField({
         ...baseState,
-        value,
-        ...getAmountFeedbackAndError(value, maxAmount.value),
+        ...amountField,
+        value: amount,
+        isLoading: true,
       });
-    }, 300);
+      loaderTimeout = setTimeout(() => {
+        setAmountField({
+          ...baseState,
+          value: amount,
+          ...getAmountFeedbackAndError(amount, maxAmount.value),
+        });
+      }, 300);
+    } else {
+      const { message: feedback } = validateAmountFormat({
+        token,
+        value: amount,
+        funds: Number(balance) + Number(MIN_ACCOUNT_BALANCE),
+        checklist: ['MAX_ACCURACY'],
+      });
+
+      setAmountField({ ...amountField, isLoading: false, error: !!feedback, feedback });
+    }
   };
 
   return [amountField, onAmountInputChange];

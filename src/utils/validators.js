@@ -2,7 +2,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 import { regex as reg } from 'src/const/regex';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { convertToBaseDenom } from '@token/fungible/utils/helpers';
+import { convertToBaseDenom, getTokenDecimals } from '@token/fungible/utils/helpers';
 import i18n from 'src/utils/i18n/i18n';
 
 /**
@@ -58,7 +58,7 @@ export const validateAmountFormat = ({
   minValue,
   inputValue,
 }) => {
-  const { maxFloating } = reg.amount[locale];
+  const { maxDecimals } = reg.amount[locale];
   const errors = {
     NEGATIVE_STAKE: {
       message: i18n.t("Stake amount can't be zero or negative."),
@@ -87,8 +87,10 @@ export const validateAmountFormat = ({
       },
     },
     MAX_ACCURACY: {
-      message: i18n.t('Maximum floating point is 8.'),
-      fn: () => maxFloating.test(value),
+      message: i18n.t('Maximum allowed decimal point is {{decimal}}.', {
+        decimal: getTokenDecimals(token),
+      }),
+      fn: () => maxDecimals(token).test(value),
     },
     STAKE_10X: {
       message: i18n.t('You can only stake in multiplies of 10 LSK.'),
