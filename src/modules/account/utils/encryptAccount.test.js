@@ -3,7 +3,7 @@ import { encryptAccount, decryptAccount } from './encryptAccount';
 
 const recoveryPhrase =
   'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-const encryptedPassphrase = {
+const crypto = {
   kdf: 'argon2id',
   kdfparams: {
     parallelism: 4,
@@ -21,7 +21,7 @@ const encryptedPassphrase = {
 };
 
 const mockAccount = {
-  encryptedPassphrase,
+  crypto,
   metadata: {
     name: 'test account',
     pubkey: 'c6bae83af23540096ac58d5121b00f33be6f02f05df785766725acdd5d48be9d',
@@ -50,7 +50,7 @@ jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue
 );
 jest
   .spyOn(cryptography.encrypt, 'encryptMessageWithPassword')
-  .mockResolvedValue(encryptedPassphrase);
+  .mockResolvedValue(crypto);
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 jest.spyOn(passphrase.Mnemonic, 'validateMnemonic').mockReturnValue(true);
 jest
@@ -70,7 +70,7 @@ describe('encryptAccount', () => {
 
   it('encrypts account when the correct arguments are passed', async () => {
     const updatedMockAccount = {
-      encryptedPassphrase: { ...mockAccount.encryptedPassphrase },
+      crypto: { ...mockAccount.crypto },
       metadata: {
         name,
         pubkey: '0792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e97184',
@@ -88,7 +88,7 @@ describe('encryptAccount', () => {
   it('encrypts account with custom derivation path', async () => {
     const customDerivationPath = "m/44'/134'/1'";
     const updatedMockAccount = {
-      encryptedPassphrase: { ...mockAccount.encryptedPassphrase },
+      crypto: { ...mockAccount.crypto },
       metadata: {
         name,
         pubkey: '0792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e97184',
@@ -123,7 +123,7 @@ describe('encryptAccount', () => {
 describe('decryptAccount', () => {
   it('decrypts account when the correct arguments are passed', async () => {
     const password = 'samplePassword@1';
-    const { error, result } = await decryptAccount(encryptedPassphrase, password);
+    const { error, result } = await decryptAccount(crypto, password);
     expect(result).toEqual({ recoveryPhrase });
     expect(error).toEqual(null);
   });
@@ -131,7 +131,7 @@ describe('decryptAccount', () => {
   it('should return error when fail to decrypt message with password', async () => {
     jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockRejectedValue();
     const password = 'samplePassword@1';
-    const { error, result } = await decryptAccount(encryptedPassphrase, password);
+    const { error, result } = await decryptAccount(crypto, password);
     expect(result).toEqual(undefined);
     expect(error).toBeTruthy();
   });

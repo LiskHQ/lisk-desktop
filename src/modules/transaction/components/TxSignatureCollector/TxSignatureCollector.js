@@ -125,7 +125,7 @@ const TxSignatureCollector = ({
     if (
       isEmpty(transactions.signedTransaction) &&
       !transactions.txSignatureError &&
-      !currentAccount?.encryptedPassphrase
+      !currentAccount?.crypto
     ) {
       txVerification('', currentAccount?.metadata.pubkey);
     }
