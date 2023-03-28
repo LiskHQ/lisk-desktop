@@ -399,6 +399,7 @@
   "Outside round": "Outside round",
   "Overview": "Overview",
   "Owner": "Owner",
+  "Paper wallet": "Paper wallet",
   "Parameters": "Parameters",
   "Participate in blockchain governance": "Participate in blockchain governance",
   "Passphrase": "Passphrase",
@@ -738,6 +739,7 @@
   "Written by": "Written by",
   "You are about to send your entire balance": "You are about to send your entire balance",
   "You are disconnected": "You are disconnected",
+  "You can also download, print and store safely your passphrase.": "You can also download, print and store safely your passphrase.",
   "You can always add": "You can always add",
   "You can download or copy the transaction and share it with other members.": "You can download or copy the transaction and share it with other members.",
   "You can explore the decentralized network, monitor wallet activities, blocks, transactions, and inspect validators.": "You can explore the decentralized network, monitor wallet activities, blocks, transactions, and inspect validators.",
@@ -805,7 +807,6 @@
   "{{num}} months": "{{num}} months",
   "{{num}} week": "{{num}} week",
   "{{num}} year": "{{num}} year",
-  "{{passphraseName}} paper wallet": "{{passphraseName}} paper wallet",
   "{{reclaimedAmount}} LSK will be deposited in your account": "{{reclaimedAmount}} LSK will be deposited in your account",
   "{{stake}} still available in your account": "{{stake}} still available in your account",
   "{{transactions}} transactions": "{{transactions}} transactions"
