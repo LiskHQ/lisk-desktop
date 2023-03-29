@@ -5,14 +5,7 @@ import {
 } from '../components/signMultisigView/helpers';
 
 /**
- * Get required statuses of a multi-signature transction
- *
- * @param {Object} data - The object containing, senderAccount, account, transactionJSON and currentAccount
- * @param {Object} data.senderAccount - sender's account
- * @param {Object} data.currentAccount - the currently selected encrypted account
- * @param {Object} daqta.transactionJSON - JSON formate of the transaction to be signed
- * @param {Object} daqta.account - user's account from redux
- * @returns {Object} padded string
+ * Get required statuses of a multi-signature transaction
  */
 export const getMultiSignatureStatus = ({
   senderAccount,

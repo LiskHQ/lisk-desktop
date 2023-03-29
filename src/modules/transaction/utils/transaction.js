@@ -385,7 +385,7 @@ const signMultisigTransaction = async (
       chainID,
       transaction,
       privateKey,
-      isRegisterMultisignature ? senderAccount : txInitiatorAccount,
+      isRegisterMultisignature ? txInitiatorAccount : senderAccount,
       options
     );
     return [result];

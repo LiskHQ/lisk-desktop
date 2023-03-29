@@ -16,9 +16,9 @@ const Status = ({ transactions, t, transactionJSON }) => {
 
   // This is to replace previous withData implementations.
   const { txInitiatorAccount } = useTxInitiatorAccount({
-    transactionJSON,
+    senderPublicKey: transactionJSON.senderPublicKey,
   });
-  const { mandatoryKeys, optionalKeys, numberOfSignatures, publickKey } = txInitiatorAccount;
+  const { mandatoryKeys, optionalKeys, numberOfSignatures, publicKey } = txInitiatorAccount;
   const isMultiSignature =
     transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 1;
 
@@ -31,7 +31,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
       optionalKeys,
       numberOfSignatures,
       summary: {
-        publickKey,
+        publicKey,
       },
     },
   });

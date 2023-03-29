@@ -22,7 +22,7 @@ const Summary = ({ t, transactionJSON, formProps, account, nextStep, history, ne
 
   // This is to replace previous withData implementations.
   const { txInitiatorAccount: senderAccount } = useTxInitiatorAccount({
-    transactionJSON,
+    senderPublicKey: transactionJSON.senderPublicKey,
   });
 
   const { isMember, signatureStatus, canSenderSignTx } = useMultiSignatureStatus({
