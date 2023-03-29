@@ -22,7 +22,9 @@ const AccountsComparison = ({ t }) => {
   });
   const extraCommandFee = initializationFees?.userAccount;
   const amount = convertFromBaseDenom(extraCommandFee, wallet.token?.[0]);
-  const isInitializedAndHasEnoughBalance = isAccountInitialized && BigInt(wallet.token?.[0]?.availableBalance) > BigInt(extraCommandFee || 0);
+  const isInitializedAndHasEnoughBalance =
+    isAccountInitialized &&
+    BigInt(wallet.token?.[0]?.availableBalance) > BigInt(extraCommandFee || 0);
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -49,7 +51,11 @@ const AccountsComparison = ({ t }) => {
           {t('All you need to do before your balance transfer can be complete:')}
         </h5>
         <ul className={styles.list}>
-          <li className={`${styles.step} ${isInitializedAndHasEnoughBalance ? styles.check : styles.green}`}>
+          <li
+            className={`${styles.step} ${
+              isInitializedAndHasEnoughBalance ? styles.check : styles.green
+            }`}
+          >
             <div>
               {t('Deposit at least {{amount}} LSK to your new account', { amount })}
               <Tooltip position="right" size="m">
@@ -79,13 +85,20 @@ const AccountsComparison = ({ t }) => {
               <br />
               <>
                 <span>
-                  {t('Transfer {{amount}} LSK to your account {{address}} to initiate the reclaim tokens.', { amount, address: wallet.summary?.address })}
+                  {t(
+                    'Transfer {{amount}} LSK to your account {{address}} to initiate the reclaim tokens.',
+                    { amount, address: wallet.summary?.address }
+                  )}
                 </span>
                 <br />
               </>
             </div>
           </li>
-          <li className={`${styles.step} ${isInitializedAndHasEnoughBalance ? styles.check : styles.green}`}>
+          <li
+            className={`${styles.step} ${
+              isInitializedAndHasEnoughBalance ? styles.check : styles.green
+            }`}
+          >
             <div>
               {t('Send a reclaim transaction')}
               <br />

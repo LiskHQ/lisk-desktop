@@ -14,8 +14,7 @@ export const useGetInitializationFees = ({ options = {}, address, tokenID } = {}
     config: { params: { address, tokenID } },
   };
 
-  const { data: hasUserAccountInitialized } =
-    useGetHasUserAccount(queryConfig);
+  const { data: hasUserAccountInitialized } = useGetHasUserAccount(queryConfig);
 
   const isAccountInitialized = hasUserAccountInitialized?.data?.exists;
 
@@ -27,5 +26,5 @@ export const useGetInitializationFees = ({ options = {}, address, tokenID } = {}
   return {
     isAccountInitialized,
     initializationFees: { ...result?.data?.data },
-  }
+  };
 };

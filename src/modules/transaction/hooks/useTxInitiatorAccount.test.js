@@ -17,7 +17,7 @@ describe('useTxInitiatorAccount', () => {
       data: mockAuth,
     });
 
-    const { result } = renderHook(() => useTxInitiatorAccount({ senderPublicKey  }));
+    const { result } = renderHook(() => useTxInitiatorAccount({ senderPublicKey }));
 
     expect(result.current.txInitiatorAccount).toEqual({
       ...(mockAuth.data || {}),

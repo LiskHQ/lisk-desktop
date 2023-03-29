@@ -21,8 +21,7 @@ const UnlockBalanceView = () => {
         <Status />
       </MultiStep>
     </Dialog>
-  )
+  );
 };
-
 
 export default UnlockBalanceView;

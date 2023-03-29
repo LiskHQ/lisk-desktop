@@ -1,10 +1,7 @@
 /* eslint-disable complexity */
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  selectSearchParamValue,
-  removeThenAppendSearchParamsToUrl,
-} from 'src/utils/searchParams';
+import { selectSearchParamValue, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
 import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useCommandSchema } from '@network/hooks';
@@ -181,7 +178,8 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                   </span>
                 </p>
                 <p>
-                  {t('Commission: ')}<span>{convertCommissionToPercentage(validator.commission)}%</span>
+                  {t('Commission: ')}
+                  <span>{convertCommissionToPercentage(validator.commission)}%</span>
                 </p>
               </BoxInfoText>
               <label className={styles.fieldGroup}>

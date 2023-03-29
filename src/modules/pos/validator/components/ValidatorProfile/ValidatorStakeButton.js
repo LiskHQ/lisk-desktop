@@ -11,7 +11,7 @@ function ValidatorStakeButton({ address, isBanned, currentAddress }) {
   const { t } = useTranslation();
   const staking = useSelector((state) => selectStaking(state));
   const { data: sentStakes, isLoading: sentStakesLoading } = useSentStakes({
-    config: { params: { address } },
+    config: { params: { address: currentAddress } },
   });
 
   const validatorStake = useMemo(() => {
