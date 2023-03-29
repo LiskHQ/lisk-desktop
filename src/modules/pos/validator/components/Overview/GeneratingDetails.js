@@ -44,6 +44,8 @@ const GeneratingDetails = ({ t, generatedInRound, startTime }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
   const validatorsGeneratedLabels = [t('Generated blocks'), t('Awaiting slot'), t('Missed blocks')];
+
+  // The API returns only one generator, so we need to fetch all of them
   const { data: generatorsData } = useGenerators({ config: { params: { limit: 103 } } });
   const generators = generatorsData?.data ?? [];
 
