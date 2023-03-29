@@ -60,12 +60,12 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
     tabs: [
       {
         value: 'active',
-        name: t('Inside round'),
+        name: t('Generators'),
         className: 'active',
       },
       {
         value: 'standby',
-        name: t('Outside round'),
+        name: t('Validators'),
         className: 'standby',
       },
       {

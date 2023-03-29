@@ -13,7 +13,7 @@ import styles from './ValidatorSummary.css';
 import { convertCommissionToPercentage } from '../../utils';
 
 const ValidatorSummary = ({ validator, status, weight }) => {
-  const { address, name, rank, commission, nextGeneratingTime } = validator;
+  const { address, name, rank, commission, nextAllocatedTime } = validator;
   const { t } = useTranslation();
 
   return (
@@ -55,12 +55,14 @@ const ValidatorSummary = ({ validator, status, weight }) => {
             <span>{t('Commission :')}</span>
             <span data-testid="commission">{convertCommissionToPercentage(commission)}%</span>
           </div>
-          <div>
-            <span>{t('Last generated :')}</span>
-            <span>
-              <DateTimeFromTimestamp time={nextGeneratingTime} />
-            </span>
-          </div>
+          {nextAllocatedTime && (
+            <div>
+              <span>{t('Last generated :')}</span>
+              <span>
+                <DateTimeFromTimestamp time={nextAllocatedTime} />
+              </span>
+            </div>
+          )}
         </div>
       </BoxContent>
     </Box>

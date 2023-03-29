@@ -65,7 +65,7 @@ Then(/^next generator list should have a maximum of (\d+) validators/, (generato
   cy.get(ss.generatorItem).should('have.length.at.most', generatorCount);
 });
 
-Then(/^next generators should match first members of the inside round list$/, () => {
+Then(/^next generators should match first members of the Generators list$/, () => {
   cy.get(ss.validatorRow)
     .eq(1)
     .then((ele) => {

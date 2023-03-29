@@ -21,12 +21,12 @@ Feature: validator
   #   And blocksGenerated should be incremented by at least 1
   #   And next generator list should be updated accordingly
   #   And next generator list should have a maximum of 6 validators
-  #   And next generators should match first members of the inside round list
+  #   And next generators should match first members of the Generators list
 
 
   # @advanced
   # @basic
-  # Scenario: Inside round validators should function properly
+  # Scenario: Generators validators should function properly
   #   When I click on insideRoundBtn
   #   Then I should see 103 validators in table
   #   And first validator should be generating
@@ -41,7 +41,7 @@ Feature: validator
 
   # @advanced
   # @basic
-  # Scenario: Outside round validators should function properly
+  # Scenario: Validators validators should function properly
   #   Given Network is set to customNode
   #   And I am on validators page
   #   And I wait 5 seconds

@@ -39,7 +39,7 @@
     margin-bottom: 20px;
     border-bottom: 1px solid var(--color-platinum);
     list-style: none;
-    overflow: scroll;
+    overflow-y: auto;
     max-height: 340px;
 
     & > li {
