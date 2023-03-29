@@ -14,7 +14,7 @@ import styles from './AddApplicationList.css';
 
 const AddApplicationList = () => {
   const { t } = useTranslation();
-  const { data, ...searchResponse } = useSearchApplications();
+  const { ...searchResponse } = useSearchApplications();
   const { isURL, URLStatus, debouncedSearchValue } = searchResponse;
 
   return (

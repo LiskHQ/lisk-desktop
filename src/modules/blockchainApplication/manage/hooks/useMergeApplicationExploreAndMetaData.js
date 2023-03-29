@@ -1,3 +1,4 @@
+import lodashMerge from 'lodash.merge';
 import { useBlockchainApplicationMeta } from './queries/useBlockchainApplicationMeta';
 
 const useMergeApplicationExploreAndMetaData = (appOnChainData) => {
@@ -6,7 +7,7 @@ const useMergeApplicationExploreAndMetaData = (appOnChainData) => {
     config: { params: { chainID: chainIDs } },
     options: { enabled: !!chainIDs?.length },
   });
-  return isLoading ? appOnChainData : appMetaData;
+  return isLoading ? appOnChainData : lodashMerge(appOnChainData, appMetaData);
 };
 
 export default useMergeApplicationExploreAndMetaData;
