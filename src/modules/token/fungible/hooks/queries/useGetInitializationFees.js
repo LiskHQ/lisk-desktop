@@ -14,16 +14,18 @@ export const useGetInitializationFees = ({ options = {}, address, tokenID } = {}
     config: { params: { address, tokenID } },
   };
 
-  const { data: hasUserAccountInitialized, isLoading: isHasUserAccountLoading } =
+  const { data: hasUserAccountInitialized } =
     useGetHasUserAccount(queryConfig);
 
   const isAccountInitialized = hasUserAccountInitialized?.data?.exists;
-  const shouldReturnInitializationFee = !isAccountInitialized && !isHasUserAccountLoading;
 
   const result = useInvokeQuery({
     config,
-    options: { ...options, enabled: shouldReturnInitializationFee },
+    options: { ...options },
   });
 
-  return shouldReturnInitializationFee ? result : { data: null };
+  return {
+    isAccountInitialized,
+    initializationFees: { ...result?.data?.data },
+  }
 };

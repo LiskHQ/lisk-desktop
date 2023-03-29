@@ -33,7 +33,7 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
     }),
     [wallet.legacy?.balance, module, command, wallet.sequence?.nonce, wallet.summary?.publicKey]
   );
-  const { data: initializationFees } = useGetInitializationFees({
+  const { initializationFees } = useGetInitializationFees({
     address: wallet.summary?.address,
   });
 
@@ -42,7 +42,7 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
     selectedPriority,
     isFormValid: true,
     senderAddress: wallet.summary?.address,
-    extraCommandFee: initializationFees?.data?.userAccount,
+    extraCommandFee: initializationFees?.userAccount,
   });
 
   transactionJSON.fee = transactionFee;

@@ -40,7 +40,7 @@ const TxSignatureCollector = ({
 
   // here, we want to get the auth account details of the account that initiated the transaction.
   const { isLoading: isGettingTxInitiatorAccount, txInitiatorAccount } = useTxInitiatorAccount({
-    transactionJSON,
+    senderPublicKey: transactionJSON.senderPublicKey,
   });
 
   const isTransactionAuthor = transactionJSON.senderPublicKey === currentAccount?.metadata.pubkey;

@@ -71,7 +71,7 @@ const SendForm = (props) => {
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
-  const { data: initializationFees } = useGetInitializationFees({
+  const { isAccountInitialized, initializationFees } = useGetInitializationFees({
     address: recipient.value,
     tokenID: token?.tokenID,
   });
@@ -79,8 +79,8 @@ const SendForm = (props) => {
 
   const extraCommandFee =
     sendingChain.chainID !== recipientChain.chainID
-      ? initializationFees?.data?.escrowAccount
-      : initializationFees?.data?.userAccount;
+      ? initializationFees?.escrowAccount
+      : initializationFees?.userAccount;
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
@@ -152,7 +152,7 @@ const SendForm = (props) => {
       token,
       recipient,
     },
-    extraCommandFee: extraCommandFee || 0,
+    extraCommandFee: isAccountInitialized ? 0 : extraCommandFee,
   };
   let commandParams = {
     tokenID: token?.tokenID,

@@ -9,12 +9,11 @@ import TxComposer from '@transaction/components/TxComposer';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
-import { MAX_MULTI_SIG_MEMBERS } from '../../configuration/constants';
+import { MAX_MULTI_SIG_MEMBERS, DEFAULT_SIGNATURE_BYTE_SIZE } from '../../configuration/constants';
 import MemberField from './MemberField';
 import validators from './validators';
 import styles from './styles.css';
 
-const DEFAULT_SIGNATURE_BYTE_SIZE = 64;
 const placeholderMember = {
   publicKey: undefined,
   isMandatory: true,
