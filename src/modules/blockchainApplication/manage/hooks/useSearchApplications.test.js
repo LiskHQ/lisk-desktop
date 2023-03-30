@@ -48,7 +48,7 @@ describe('useSearchApplications', () => {
       onSearchApplications(searchTerm);
     });
     await waitFor(() => {
-      expect(result.current.isURL).toEqual(false);
+      expect(result.current.isUrl).toEqual(false);
     });
   });
 });
