@@ -59,7 +59,7 @@ const Form = ({ t, nextStep }) => {
       setError(result.isValid ? 'Unknown transaction' : undefined);
     } catch (e) {
       setTransaction(undefined);
-      setError('Invalid transaction');
+      setError(`Invalid transaction: ${e.message}`);
     }
   };
 

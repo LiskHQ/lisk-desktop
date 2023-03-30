@@ -26,47 +26,6 @@ export const convertBinaryToString = (value) => {
   return value.toString('hex');
 };
 
-const isBufferArray = (arr) =>
-  arr.every((element) => {
-    if (element instanceof Uint8Array) {
-      return Buffer.isBuffer(Buffer.from(element));
-    }
-
-    return Buffer.isBuffer(element);
-  });
-
-const convertBuffersToHex = (value) => {
-  let result = value;
-  if (Array.isArray(value) && isBufferArray(value)) {
-    result = value.map(convertBinaryToString);
-  } else if (Buffer.isBuffer(value)) {
-    result = convertBinaryToString(value);
-  }
-
-  return result;
-};
-
-const convertObjectToHex = (data) => {
-  const obj = {};
-  // eslint-disable-next-line no-restricted-syntax, no-unused-vars, guard-for-in
-  for (const key in data) {
-    const value = data[key];
-    if (key === 'stakes') {
-      obj[key] = value.map((item) => convertObjectToHex(item));
-    } else if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
-      obj[key] = convertObjectToHex(value);
-    } else {
-      obj[key] = convertBuffersToHex(value);
-    }
-  }
-  return obj;
-};
-
-const transactionToJSON = (transaction) => {
-  const obj = convertObjectToHex(transaction);
-  return JSON.stringify(obj);
-};
-
 const containsTransactionType = (txs = [], type) => txs.some((tx) => tx.moduleCommand === type);
 
 /**
@@ -148,8 +107,7 @@ const getTotalSpendingAmount = ({ module, command, params = {} }) => {
 /* istanbul ignore next */
 const downloadJSON = (data, name) => {
   const anchor = document.createElement('a');
-  const json = transactionToJSON(data);
-  anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(json)}`);
+  anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(data)}`);
   anchor.setAttribute('download', `${name}.json`);
   anchor.click();
 };
@@ -460,7 +418,6 @@ const normalizeNumberRange = (distributions) => {
 export {
   getTotalSpendingAmount,
   downloadJSON,
-  transactionToJSON,
   containsTransactionType,
   normalizeTransactionParams,
   signMultisigTransaction,

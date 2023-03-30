@@ -2,7 +2,7 @@
 import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { LEDGER_HW_IPC_CHANNELS } from '@libs/hardwareWallet/ledger/constants';
-import { transactionToJSON, getNumberOfSignatures, joinModuleAndCommand } from '../utils';
+import { getNumberOfSignatures, joinModuleAndCommand } from '../utils';
 import { MODULE_COMMANDS_NAME_MAP } from './moduleCommand';
 
 export const statusMessages = (t) => ({
@@ -73,7 +73,6 @@ export const getTransactionStatus = (account, transactions, isMultisignature, ca
 
     return {
       code: txStatusTypes.signatureError,
-      message: transactionToJSON(transactions.txSignatureError),
     };
   }
 
@@ -112,7 +111,6 @@ export const getTransactionStatus = (account, transactions, isMultisignature, ca
   if (transactions.txBroadcastError) {
     return {
       code: txStatusTypes.broadcastError,
-      message: transactionToJSON(transactions.txBroadcastError),
     };
   }
 

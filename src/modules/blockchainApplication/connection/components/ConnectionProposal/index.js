@@ -47,7 +47,7 @@ const ConnectionProposal = ({ history }) => {
               className={styles.input}
               placeholder={t('Enter connection URI')}
             />
-            <span className={styles.feedback}>{status.message ?? ''}</span>
+            <span className={styles.feedback}>{status?.message}</span>
             <PrimaryButton onClick={clickHandler} disabled={value.length === 0 || status.isPending}>
               {t('Connect')}
             </PrimaryButton>

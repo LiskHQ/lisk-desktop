@@ -4,3 +4,4 @@ export * from './transaction';
 export * from './transactionDetailsHelper';
 export * from './removeDuplicateTransactions';
 export * from './showNotificationsForIncomingTransactions';
+export * from './encoding';

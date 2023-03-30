@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { codec, cryptography } from '@liskhq/lisk-client';
+import { cryptography } from '@liskhq/lisk-client';
 import Illustration from 'src/modules/common/components/illustration';
 import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { getErrorReportMailto } from 'src/utils/helpers';
 
 import copyToClipboard from 'copy-to-clipboard';
-import { transactionToJSON, downloadJSON, joinModuleAndCommand } from '@transaction/utils';
+import { toTransactionJSON, downloadJSON, joinModuleAndCommand } from '@transaction/utils';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import Icon from 'src/theme/Icon';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
@@ -43,7 +43,7 @@ const ErrorActions = ({ t, status, message, network }) => (
   <a
     className="report-error-link"
     href={getErrorReportMailto({
-      error: status.message,
+      error: status?.message,
       errorMessage: message,
       networkIdentifier: network.networkIdentifier,
       serviceUrl: network.serviceUrl,
@@ -56,6 +56,7 @@ const ErrorActions = ({ t, status, message, network }) => (
   </a>
 );
 
+// eslint-disable-next-line max-statements
 const Multisignature = ({
   transactions,
   title,
@@ -73,32 +74,24 @@ const Multisignature = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
-  const onCopy = () => {
-    const schema = moduleCommandSchemas[moduleCommand];
-    const jsonParams = codec.codec.toJSON(schema, transactions.signedTransaction.params);
+  const paramSchema = moduleCommandSchemas[moduleCommand];
+  const transactionJSON = toTransactionJSON(transactions.signedTransaction, paramSchema);
+  const senderAddress = cryptography.address.getLisk32AddressFromPublicKey(
+    transactions.signedTransaction.senderPublicKey
+  );
 
-    copyToClipboard(
-      JSON.stringify({
-        ...JSON.parse(transactionToJSON(transactions.signedTransaction)),
-        params: jsonParams,
-      })
-    );
+  const onCopy = () => {
+    copyToClipboard(JSON.stringify(transactionJSON));
     setCopied(true);
   };
 
   const onDownload = () => {
-    const transaction = JSON.parse(transactionToJSON(transactions.signedTransaction));
     const filePrefix =
       moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
         ? 'register-multisignature-request'
         : 'sign-multisignature-request';
-    const fileSuffix =
-      transaction?.id !== ''
-        ? transaction?.id
-        : `-${cryptography.address.getLisk32AddressFromPublicKey(
-            transactions.signedTransaction.senderPublicKey
-          )}`;
-    downloadJSON(transaction, `${filePrefix}-${fileSuffix}`);
+    const fileSuffix = transactionJSON?.id !== '' ? transactionJSON?.id : `-${senderAddress}`;
+    downloadJSON(transactionJSON, `${filePrefix}-${fileSuffix}`);
   };
 
   const onSend = () => {

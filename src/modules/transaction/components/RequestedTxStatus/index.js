@@ -26,7 +26,7 @@ const ErrorActions = ({ t, status, message, network }) => (
   <a
     className="report-error-link"
     href={getErrorReportMailto({
-      error: status.message,
+      error: status?.message,
       errorMessage: message,
       networkIdentifier: network.networkIdentifier,
       serviceUrl: network.serviceUrl,
