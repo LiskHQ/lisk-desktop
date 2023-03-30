@@ -5,7 +5,10 @@
   max-width: 1058px;
   margin: 84px auto 0 auto;
 
-  & h1, & h2, & h4, & p {
+  & h1,
+  & h2,
+  & h4,
+  & p {
     margin: 0;
     padding: 0;
   }
@@ -61,13 +64,12 @@
   & .welcomeFooter {
     border-top: 1px solid var(--color-very-light-gray);
     color: var(--color-black);
-
     padding: 40px 24px 0 24px;
 
     & .accountUniqueValuePropositionListing {
       margin-top: 24px;
       display: grid;
-      grid-template-columns: repeat(3,minmax(0,1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr)); /* stylelint-disable-line unit-whitelist */
       grid-gap: 40px;
     }
   }
