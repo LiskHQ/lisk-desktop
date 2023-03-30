@@ -46,7 +46,7 @@ function SelectNetwork({ history }) {
             onClick={goToDashboard}
             disabled={!isNetworkSwitchSuccess}
           >
-            {t('Continue to dashbord')}
+            {t('Continue to wallet')}
           </PrimaryButton>
         </div>
       </div>
