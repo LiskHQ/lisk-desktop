@@ -1,6 +1,7 @@
 .wrapper {
   position: relative;
   display: inline-block;
+  pointer-events: all;
 
   & .dropdown {
     min-width: 349px;

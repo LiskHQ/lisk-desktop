@@ -5,7 +5,7 @@
   flex-direction: column;
 
   & .fieldLabel {
-    @mixin contentNormal bold;
+    @mixin contentNormal;
 
     color: var(--color-maastricht-blue);
     margin: 16px 0 8px;
