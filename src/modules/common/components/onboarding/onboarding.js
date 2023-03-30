@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import {useTranslation, withTranslation} from 'react-i18next';
+import { useTranslation, withTranslation } from 'react-i18next';
 import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from './onboarding.css';
@@ -35,6 +35,7 @@ const getOnboardingSlides = (t) => [
   },
 ];
 
+// eslint-disable-next-line max-statements
 const Onboarding = ({
   onDiscard,
   name = 'dashboardOnboarding',
@@ -46,7 +47,7 @@ const Onboarding = ({
   const [visibility, setVisibility] = useState(!localStorage.getItem(name) ? 'visible' : 'hidden');
   const isLoggedIn = useSelector((state) => state.wallet && state.wallet.passphrase);
   const { t } = useTranslation();
-  const slides = getOnboardingSlides(t)
+  const slides = getOnboardingSlides(t);
 
   const handleClose = () => {
     localStorage.setItem(name, true);
