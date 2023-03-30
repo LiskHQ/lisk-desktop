@@ -135,17 +135,6 @@ const Onboarding = ({
 };
 
 Onboarding.propTypes = {
-  slides: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      content: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-        PropTypes.arrayOf(PropTypes.node),
-      ]).isRequired,
-      illustration: PropTypes.string.isRequired,
-    })
-  ),
   actionButtonLabel: PropTypes.string,
   finalCallback: PropTypes.func,
   className: PropTypes.string,
@@ -153,7 +142,6 @@ Onboarding.propTypes = {
 };
 
 Onboarding.defaultProps = {
-  slides: [],
   className: '',
   actionButtonLabel: '',
   finalCallback: null,
