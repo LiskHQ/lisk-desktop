@@ -41,15 +41,7 @@ const TransactionEvents = ({ address, isWallet, hasFilter }) => {
     height: '',
   });
 
-  const params = Object.keys(filters).reduce(
-    (acc, key) => {
-      if (filters[key] && key !== 'address') {
-        acc[key] = filters[key];
-      }
-      return acc;
-    },
-    { senderAddress: address }
-  );
+  const params = { ...filters, senderAddress: address };
 
   const {
     data: transactionEvents,
@@ -59,9 +51,7 @@ const TransactionEvents = ({ address, isWallet, hasFilter }) => {
     hasNextPage,
     fetchNextPage,
   } = useTransactionEvents({
-    config: {
-      params,
-    },
+    config: { params },
   });
 
   const formatters = {
@@ -76,8 +66,9 @@ const TransactionEvents = ({ address, isWallet, hasFilter }) => {
         <>
           <BoxHeader>
             <FilterDropdownButton
+              noDateRange
               filters={filters}
-              applyFilters={(values) => applyFilters({ ...values, address })}
+              applyFilters={applyFilters}
               fields={getFilterFields(t)}
               clearFilter={(filterKey) => clearFilters(filterKey)}
               clearAllFilters={() => clearFilters()}
