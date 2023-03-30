@@ -100,7 +100,7 @@ export default {
   },
   wallet: {
     path: '/wallet',
-    isPrivate: true,
+    isPrivate: false,
     exact: true,
     forbiddenTokens: [],
   },

@@ -33,8 +33,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   }
 
   if (!isAuthenticated && path === routes.manageAccounts.path && accounts.length === 0) {
-    history.replace({ pathname: routes.addAccountOptions.path, search });
-    return <div />;
+    return <Redirect to={{ pathname: routes.wallet.path, search }} />;
   }
 
   if (isPrivate && !isAuthenticated) {
