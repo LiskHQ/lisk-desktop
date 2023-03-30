@@ -31,8 +31,8 @@ useBlockchainApplicationMeta.mockReturnValue({
 describe('AddApplicationList', () => {
   it('displays properly', () => {
     useSearchApplications.mockReturnValue({
-      isURL: false,
-      URLStatus: '',
+      isUrl: false,
+      urlStatus: '',
       debouncedSearchValue: '',
     });
     renderWithRouterAndQueryClient(AddApplicationList);
@@ -49,8 +49,8 @@ describe('AddApplicationList', () => {
 
   it('displays results for URL search', () => {
     useSearchApplications.mockReturnValue({
-      isURL: true,
-      URLStatus: 'ok',
+      isUrl: true,
+      urlStatus: 'ok',
       debouncedSearchValue: 'https://service.colecti.com',
     });
     renderWithRouterAndQueryClient(AddApplicationList);

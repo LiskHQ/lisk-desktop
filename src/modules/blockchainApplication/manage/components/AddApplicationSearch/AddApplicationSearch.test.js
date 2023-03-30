@@ -14,8 +14,8 @@ describe('AddApplicationSearch', () => {
   it('searches application by name', () => {
     const props = {
       searchValue: '',
-      isURL: true,
-      URLStatus: 'ok',
+      isUrl: true,
+      urlStatus: 'ok',
       isSearchLoading: false,
       onSearchApplications: mockSearchApplication,
     };
@@ -31,7 +31,7 @@ describe('AddApplicationSearch', () => {
   it('displays feedback when searching by URL', async () => {
     const props = {
       searchValue: '',
-      isURL: false,
+      isUrl: false,
       urlStatus: '',
       isSearchLoading: false,
       onSearchApplications: mockSearchApplication,
@@ -44,7 +44,7 @@ describe('AddApplicationSearch', () => {
     expect(mockSearchApplication).toHaveBeenCalledWith(searchUrl);
     const loadingProps = {
       ...props,
-      isURL: true,
+      isUrl: true,
       searchValue: searchUrl,
       isSearchLoading: true,
     };

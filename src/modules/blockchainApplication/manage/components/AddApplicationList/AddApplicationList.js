@@ -15,7 +15,7 @@ import styles from './AddApplicationList.css';
 const AddApplicationList = () => {
   const { t } = useTranslation();
   const { ...searchResponse } = useSearchApplications();
-  const { isURL, URLStatus, debouncedSearchValue } = searchResponse;
+  const { isUrl, urlStatus, debouncedSearchValue } = searchResponse;
 
   return (
     <Dialog className={styles.dialog} hasClose>
@@ -31,7 +31,7 @@ const AddApplicationList = () => {
               config: {
                 params: { search: debouncedSearchValue },
               },
-              options: { enabled: (isURL && URLStatus === 'ok') || !isURL },
+              options: { enabled: (isUrl && urlStatus === 'ok') || !isUrl },
             }}
             transformResponse={(response) => useMergeApplicationExploreAndMetaData(response)}
             row={AddApplicationRow}

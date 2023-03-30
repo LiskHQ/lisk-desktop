@@ -7,13 +7,13 @@ import styles from './AddApplicationSearch.css';
 
 const AddApplicationSearch = ({
   searchValue,
-  isURL,
+  isUrl,
   urlStatus,
   isSearchLoading,
   onSearchApplications,
 }) => {
   const { t } = useTranslation();
-  const status = isURL ? urlStatus : null;
+  const status = isUrl ? urlStatus : null;
   return (
     <div className={`${grid.row} ${styles.filterWrapper}`}>
       <div className={styles.filterHolder}>

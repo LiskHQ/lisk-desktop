@@ -59,8 +59,8 @@ const BlockchainApplicationList = () => {
         <QueryTable
           showHeader
           queryHook={useBlockchainApplicationExplore}
-          queryConfig={{ config: { params: { ...filters } } }}
-          transformResponse={(response) => useMergeApplicationExploreAndMetaData(response)}
+          queryConfig={{ config: { params: filters } }}
+          transformResponse={useMergeApplicationExploreAndMetaData}
           row={BlockchainApplicationRow}
           header={header(t)}
           headerClassName={styles.tableHeader}
