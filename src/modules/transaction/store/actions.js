@@ -208,6 +208,7 @@ export const multisigTransactionSigned =
     const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
     const options = {
       messageSchema: messagesSchemas[formProps.moduleCommand],
+      txInitiatorAccount,
     };
     const [tx, error] = await signMultisigTransaction(
       activeWallet,

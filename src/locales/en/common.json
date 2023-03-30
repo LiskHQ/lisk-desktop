@@ -51,7 +51,6 @@
   "Amount can't be negative.": "Amount can't be negative.",
   "Amount can't be zero.": "Amount can't be zero.",
   "Amount of LSK tokens staked by validators and nominators for DPoS governance": "Amount of LSK tokens staked by validators and nominators for DPoS governance",
-  "Amount of transaction": "Amount of transaction",
   "Amount per transaction (LSK)": "Amount per transaction (LSK)",
   "Amount to unlock": "Amount to unlock",
   "An error occurred while rejecting the pairing request from {{name}}": "An error occurred while rejecting the pairing request from {{name}}",

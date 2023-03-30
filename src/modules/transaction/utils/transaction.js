@@ -107,7 +107,10 @@ const getTotalSpendingAmount = ({ module, command, params = {} }) => {
 /* istanbul ignore next */
 const downloadJSON = (data, name) => {
   const anchor = document.createElement('a');
-  anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(data)}`);
+  anchor.setAttribute(
+    'href',
+    `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`
+  );
   anchor.setAttribute('download', `${name}.json`);
   anchor.click();
 };
@@ -152,6 +155,8 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
     transaction,
     isRegisterMultisignature: false,
   });
+
+  console.log({ keys, senderAccount });
 
   const signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
     transaction,
@@ -282,8 +287,14 @@ export const sign = async (
     return signUsingHW(wallet, schema, chainID, transaction);
   }
 
-  if (senderAccount.mandatoryKeys?.length + senderAccount.optionalKeys?.length > 0) {
-    return signMultisigUsingPrivateKey(schema, chainID, transaction, privateKey, senderAccount);
+  if (options?.txInitiatorAccount?.numberOfSignatures > 0) {
+    return signMultisigUsingPrivateKey(
+      schema,
+      chainID,
+      transaction,
+      privateKey,
+      options?.txInitiatorAccount
+    );
   }
 
   return signUsingPrivateKey(wallet, schema, chainID, transaction, privateKey, options);

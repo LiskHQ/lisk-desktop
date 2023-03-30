@@ -76,9 +76,6 @@ const Multisignature = ({
   const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
   const paramSchema = moduleCommandSchemas[moduleCommand];
   const transactionJSON = toTransactionJSON(transactions.signedTransaction, paramSchema);
-  const senderAddress = cryptography.address.getLisk32AddressFromPublicKey(
-    transactions.signedTransaction.senderPublicKey
-  );
 
   const onCopy = () => {
     copyToClipboard(JSON.stringify(transactionJSON));
@@ -90,6 +87,10 @@ const Multisignature = ({
       moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
         ? 'register-multisignature-request'
         : 'sign-multisignature-request';
+    const senderAddress = cryptography.address.getLisk32AddressFromPublicKey(
+      transactions.signedTransaction?.senderPublicKey
+    );
+
     const fileSuffix = transactionJSON?.id !== '' ? transactionJSON?.id : `-${senderAddress}`;
     downloadJSON(transactionJSON, `${filePrefix}-${fileSuffix}`);
   };
