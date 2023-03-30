@@ -2,7 +2,7 @@
   "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ": "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ",
   " is out. ": " is out. ",
   " to deposit LSK.": " to deposit LSK.",
-  "\"Lisk\" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on \"Continue to account\".": "\"Lisk\" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on \"Continue to account\".",
+  "\"Lisk\" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on \"Continue to wallet\".": "\"Lisk\" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on \"Continue to wallet\".",
   "\"{{username}}\" is already taken.": "\"{{username}}\" is already taken.",
   "64 bytes left": "64 bytes left",
   "A bit more. Make sure to type at least 3 characters.": "A bit more. Make sure to type at least 3 characters.",
