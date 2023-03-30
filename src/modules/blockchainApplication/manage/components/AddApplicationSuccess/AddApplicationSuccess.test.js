@@ -23,6 +23,6 @@ describe('AddApplicationSuccess', () => {
     fireEvent.click(screen.getByRole('button'));
 
     expect(props.history.push).toHaveBeenCalledTimes(1);
-    expect(props.history.push).toHaveBeenCalledWith('/dashboard');
+    expect(props.history.push).toHaveBeenCalledWith('/wallet');
   });
 });

@@ -79,7 +79,7 @@ Then(/^I should be on add blockchain application success modal$/, function () {
     'have.text',
     'Perfect! Application has now been added'
   );
-  cy.get(ss.addApplicationSuccessButton).should('have.text', 'Continue to Dashboard');
+  cy.get(ss.addApplicationSuccessButton).should('have.text', 'Continue to wallet');
 });
 
 Then(/^application list should have (\w+(.*)?)$/, function (applicationName) {
