@@ -18,7 +18,7 @@ describe('AddApplicationSuccess', () => {
     ).toBeTruthy();
   });
 
-  it('should reroute to the dashboard on success', () => {
+  it('should reroute to the wallet on success', () => {
     renderWithRouter(AddApplicationSuccess, props);
     fireEvent.click(screen.getByRole('button'));
 

@@ -16,7 +16,7 @@ function SelectNetwork({ history }) {
     setIsNetworkSwitchSuccess(isSuccess);
   };
 
-  function goToDashboard() {
+  function goToWallet() {
     history.push(routes.wallet.path);
   }
 
@@ -43,7 +43,7 @@ function SelectNetwork({ history }) {
           <NetworkSwitcherDropdown onNetworkSwitchSuccess={onNetworkSwitchSuccess} />
           <PrimaryButton
             className={`${styles.button} ${styles.continueBtn}`}
-            onClick={goToDashboard}
+            onClick={goToWallet}
             disabled={!isNetworkSwitchSuccess}
           >
             {t('Continue to wallet')}

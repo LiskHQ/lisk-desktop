@@ -99,7 +99,7 @@ describe('Login', () => {
   });
 
   describe('History management', () => {
-    it("calls this.props.history.replace('/dashboard')", () => {
+    it("calls this.props.history.replace('/wallet')", () => {
       wrapper.setProps({
         history,
         account: { summary: { address: 'dummy' } },

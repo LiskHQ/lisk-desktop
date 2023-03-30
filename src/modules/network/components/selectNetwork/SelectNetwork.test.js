@@ -75,7 +75,7 @@ describe('SeletNetwork', () => {
       });
   });
 
-  it('should trigger go to dashboard', () => {
+  it('should trigger go to wallet', () => {
     useNetworkStatus.mockReturnValue({
       data: mockNetworkStatus,
       isFetching: false,

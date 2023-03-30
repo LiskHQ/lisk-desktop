@@ -23,7 +23,7 @@ describe('notFound', () => {
     expect(wrapper).toContainMatchingElement('.go-to-dashboard-button');
   });
 
-  it('should go to Dashboard on button link', () => {
+  it('should go to wallet on button link', () => {
     const wrapper = mount(<NotFound {...props} />);
     expect(wrapper.find('.go-to-dashboard-button').at(0).props().to).toBe(routes.wallet.path);
   });
