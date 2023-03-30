@@ -55,12 +55,12 @@ describe('SeletNetwork', () => {
     expect(screen.getByText('Select network')).toBeTruthy();
     expect(screen.getAllByText(networks.devnet.label)[0]).toBeTruthy();
     expect(screen.getByText('Lisk')).toBeTruthy();
-    expect(screen.getByText('Continue to dashbord')).toBeTruthy();
+    expect(screen.getByText('Continue to account')).toBeTruthy();
     expect(screen.getByText('Select network')).toBeTruthy();
     expect(screen.getByAltText('liskLogoWhiteNormalized')).toBeTruthy();
     expect(
       screen.getByText(
-        '"Lisk" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on "Continue to account".'
+        'Lisk" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on "Continue to account".'
       )
     ).toBeTruthy();
 
@@ -88,7 +88,7 @@ describe('SeletNetwork', () => {
     });
     rerenderWithRouterAndQueryClient(SelectNetwork, props);
 
-    fireEvent.click(screen.getByText('Continue to dashbord'));
+    fireEvent.click(screen.getByText('Continue to account'));
 
     expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
   });
@@ -105,6 +105,6 @@ describe('SeletNetwork', () => {
       isSuccess: false,
     });
     rerenderWithRouterAndQueryClient(SelectNetwork, props);
-    expect(screen.getByText('Continue to dashbord')).toHaveProperty('disabled', true);
+    expect(screen.getByText('Continue to account')).toHaveProperty('disabled', true);
   });
 });
