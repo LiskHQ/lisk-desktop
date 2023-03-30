@@ -20,18 +20,18 @@ class PassphraseBackup extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-    /* istanbul ignore next */
-    generatePaperWallet() {
-      import(/* webpackChunkName: "jspdf" */ 'jspdf').then((module) => {
-        const JSPDF = module.default;
-        const data = {
-          ...this.props,
-          now: new Date(),
-          qrcode: this.canvasRef.firstChild.toDataURL(),
-        };
-        renderPaperWallet(JSPDF, data, this.walletName);
-      });
-    }
+  /* istanbul ignore next */
+  generatePaperWallet() {
+    import(/* webpackChunkName: "jspdf" */ 'jspdf').then((module) => {
+      const JSPDF = module.default;
+      const data = {
+        ...this.props,
+        now: new Date(),
+        qrcode: this.canvasRef.firstChild.toDataURL(),
+      };
+      renderPaperWallet(JSPDF, data, this.walletName);
+    });
+  }
 
   setCanvasRef(node) {
     this.canvasRef = node;
@@ -76,30 +76,28 @@ class PassphraseBackup extends React.Component {
             </div>
           </div>
           <div className={styles.hrSection} />
-           <div className={`${styles.option}`}>
-             <div className={`${styles.optionContent}`}>
-               <h2>{t('Paper wallet')}</h2>
-               <p className={styles.infoFooterText}>
-                 {t(
-                   'You can also download, print and store safely your passphrase.',
-                 )}
-               </p>
-               <div style={{ display: 'none' }} ref={this.setCanvasRef}>
-                 <QRCode value={passphrase} />
-               </div>
-               <div className={styles.downloadLisk}>
-                 <Icon name="fileOutline" />
-                 <p className="option-value">{this.walletName}</p>
-               </div>
-               <SecondaryButton
-                 className={styles.downloadBtn}
-                 size="xs"
-                 onClick={this.generatePaperWallet}
-               >
-                 {t('Download')}
-               </SecondaryButton>
-             </div>
-           </div>
+          <div className={`${styles.option}`}>
+            <div className={`${styles.optionContent}`}>
+              <h2>{t('Paper wallet')}</h2>
+              <p className={styles.infoFooterText}>
+                {t('You can also download, print and store safely your passphrase.')}
+              </p>
+              <div style={{ display: 'none' }} ref={this.setCanvasRef}>
+                <QRCode value={passphrase} />
+              </div>
+              <div className={styles.downloadLisk}>
+                <Icon name="fileOutline" />
+                <p className="option-value">{this.walletName}</p>
+              </div>
+              <SecondaryButton
+                className={styles.downloadBtn}
+                size="xs"
+                onClick={this.generatePaperWallet}
+              >
+                {t('Download')}
+              </SecondaryButton>
+            </div>
+          </div>
         </div>
       </>
     );
