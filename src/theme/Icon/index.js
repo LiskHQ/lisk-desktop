@@ -28,8 +28,6 @@ import checkboxCircleFilled from '@setup/react/assets/images/icons/checkmark-cir
 import checkmark from '@setup/react/assets/images/icons/checkmark.svg';
 import copy from '@setup/react/assets/images/icons/copy.svg';
 import copyActive from '@setup/react/assets/images/icons/copy-active.svg';
-import dashboardIcon from '@setup/react/assets/images/icons/dashboard.svg';
-import dashboardIconActive from '@setup/react/assets/images/icons/dashboard-active.svg';
 import discord from '@setup/react/assets/images/icons/discord.svg';
 import discordActive from '@setup/react/assets/images/icons/discord-active.svg';
 import discreetMode from '@setup/react/assets/images/icons/discreet-mode.svg';
@@ -262,8 +260,6 @@ export const icons = {
   consecutiveMissedBlocks,
   consecutiveMissedBlocksDark,
   copy,
-  dashboardIcon,
-  dashboardIconActive,
   deleteIcon,
   discord,
   discordActive,
