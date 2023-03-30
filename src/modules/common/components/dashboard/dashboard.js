@@ -1,7 +1,6 @@
 // istanbul ignore file
 import React from 'react';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
-import AccountCreationTips from '@account/components/AccountCreationTips';
 import { ManageAccountsContent } from '@account/components/ManageAccounts';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
@@ -17,7 +16,6 @@ const Dashboard = ({ t, history }) => {
       <div className={`${styles.wrapper} dashboard-container`}>
         <div className={`${styles.main}`}>
           <div className={styles.subContainer}>
-            {isEmpty(currentAccount) && accounts.length === 0 && <AccountCreationTips />}
             {isEmpty(currentAccount) && accounts.length > 0 && (
               <Box className={styles.wrapper}>
                 <BoxHeader>
