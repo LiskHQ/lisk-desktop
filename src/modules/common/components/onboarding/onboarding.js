@@ -41,7 +41,6 @@ const Onboarding = ({
   finalCallback,
   actionButtonLabel,
   className,
-  t,
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [visibility, setVisibility] = useState(!localStorage.getItem(name) ? 'visible' : 'hidden');
