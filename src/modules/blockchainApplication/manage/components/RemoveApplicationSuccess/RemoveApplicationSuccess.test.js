@@ -23,7 +23,7 @@ describe('BlockchainApplicationDetails', () => {
   });
 
   it('should navigate to the dashboard', () => {
-    fireEvent.click(screen.getByText('Continue to dashboard'));
+    fireEvent.click(screen.getByText('Continue to account'));
     expect(props.history.push).toHaveBeenCalledWith('/dashboard');
   });
 });

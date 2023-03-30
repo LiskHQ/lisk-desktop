@@ -23,7 +23,7 @@ const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
             history.push('/dashboard');
           }}
         >
-          {t('Continue to dashboard')}
+          {t('Continue to account')}
         </PrimaryButton>
       </div>
     </Dialog>

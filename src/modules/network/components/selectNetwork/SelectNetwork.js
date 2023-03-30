@@ -32,7 +32,7 @@ function SelectNetwork({ history }) {
           <div className={styles.contentWrapper}>
             <p className={styles.subHeader}>
               {t(
-                '"Lisk" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on "Continue to dashboard".'
+                '"Lisk" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on "Continue to account".'
               )}
             </p>
             <div>

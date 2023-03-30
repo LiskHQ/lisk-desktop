@@ -60,7 +60,7 @@ describe('SeletNetwork', () => {
     expect(screen.getByAltText('liskLogoWhiteNormalized')).toBeTruthy();
     expect(
       screen.getByText(
-        '"Lisk" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on "Continue to dashboard".'
+        '"Lisk" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on "Continue to account".'
       )
     ).toBeTruthy();
 
@@ -93,7 +93,7 @@ describe('SeletNetwork', () => {
     expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
   });
 
-  it('should bot be possible to click "Continue to dashboard" button if !isSuccess or !isFetching', () => {
+  it('should bot be possible to click "Continue to account" button if !isSuccess or !isFetching', () => {
     useNetworkStatus.mockReturnValue({
       data: mockNetworkStatus,
       isFetching: true,

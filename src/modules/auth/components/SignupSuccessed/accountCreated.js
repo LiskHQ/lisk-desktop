@@ -17,7 +17,7 @@ const AccountCreated = ({ t }) => (
     <Illustration className={styles.illustration} name="registrationSuccess" />
     <p className={styles.subheader}>
       {t(
-        'You can now add your account to Lisk Wallet by clicking on "Continue to dashboard", to be able to send and request tokens and much more.'
+        'You can now add your account to Lisk Wallet by clicking on "Continue to account", to be able to send and request tokens and much more.'
       )}
     </p>
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
@@ -26,7 +26,7 @@ const AccountCreated = ({ t }) => (
         to={routes.addAccountBySecretRecovery.path}
       >
         <PrimaryButton className={registerStyles.continueBtn}>
-          {t('Continue to dashboard')}
+          {t('Continue to account')}
         </PrimaryButton>
       </Link>
     </div>
