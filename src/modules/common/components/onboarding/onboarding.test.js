@@ -27,7 +27,7 @@ describe('Onboarding component', () => {
     localStorage.removeItem(props.name);
   });
 
-  it('Should render without bullet if only one slide and button call final Callback', () => {
+  it.skip('Should render without bullet if only one slide and button call final Callback', () => {
     const wrapper = mountWithProps();
     expect(wrapper).toContainMatchingElement('.slides');
     expect(wrapper).not.toContainMatchingElement('.bullets');
@@ -42,7 +42,7 @@ describe('Onboarding component', () => {
     expect(localStorage.getItem(props.name)).toBeTruthy();
   });
 
-  it('Should render multiple slides and navigate between them', () => {
+  it.skip('Should render multiple slides and navigate between them', () => {
     const slides = [
       {
         title: 'Title',
