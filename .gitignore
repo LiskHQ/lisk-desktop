@@ -26,3 +26,6 @@ setup/react/assets/fonts/gilroy/
 tests/cypress/cypress
 tests/cypress/screenshots
 tests/cypress/videos
+/test-results/
+/playwright-report/
+/playwright/.cache/
