@@ -14,7 +14,6 @@ module.exports = {
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
     'src/components/login/*.test.js',
-    'packages/views/screens/managers/dashboard/newsFeed/index.js', // This component doesn't meet the set threshold for mocha but in jest
     'src/modules/auth/components/Signup/register.test.js',
   ],
   verbose: false,

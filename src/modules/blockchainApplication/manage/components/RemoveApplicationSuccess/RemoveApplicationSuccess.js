@@ -20,7 +20,7 @@ const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
         <PrimaryButton
           className={`${styles.button}`}
           onClick={() => {
-            history.push('/dashboard');
+            history.push('/wallet');
           }}
         >
           {t('Continue to account')}
