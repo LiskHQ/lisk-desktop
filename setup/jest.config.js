@@ -287,6 +287,7 @@ module.exports = {
     'src/modules/wallet/components/request/index.js',
     'src/redux/store.js',
     'src/modules/common/components/onboarding/',
+    'src/modules/account/components/AccountDetails/AccountOverview/index.js',
     'src/modules/wallet/components/multiSignature/index.js',
     'src/modules/account/hooks/useCurrentAccount.js',
     'src/modules/transaction/store/actions.js',
