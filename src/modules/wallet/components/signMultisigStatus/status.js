@@ -20,7 +20,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
   });
   const { mandatoryKeys, optionalKeys, numberOfSignatures, publicKey } = txInitiatorAccount;
   const isMultiSignature =
-    transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 1;
+    transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 0;
 
   const { canSenderSignTx } = useMultiSignatureStatus({
     transactionJSON,

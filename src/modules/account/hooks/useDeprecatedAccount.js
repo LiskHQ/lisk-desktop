@@ -81,7 +81,7 @@ export const useDeprecatedAccount = (accountInfo) => {
         address,
         publicKey: auth?.meta?.publicKey || pubkey,
         username: auth?.meta?.name || '',
-        isMultisignature: auth?.data?.numberOfSignatures > 1,
+        isMultisignature: auth?.data?.numberOfSignatures > 0,
       },
       sequence: {
         nonce: auth?.data?.nonce || '0',
