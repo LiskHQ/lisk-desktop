@@ -6,19 +6,11 @@ import Onboarding from './onboarding';
 
 describe('Onboarding component', () => {
   const props = {
-    slides: [
-      {
-        title: 'Title',
-        content: 'content',
-        illustration: 'test.svg',
-      },
-    ],
     actionButtonLabel: 'cta label',
     finalCallback: jest.fn(),
-    onClose: jest.fn(),
+    onDiscard: jest.fn(),
     name: 'onboaring name',
     className: '',
-    t: (v) => v,
   };
   const store = configureStore()({ wallet: { passphrase: 'test' } });
   const mountWithProps = (extraProps = {}) => {
@@ -44,7 +36,7 @@ describe('Onboarding component', () => {
     expect(props.finalCallback).toBeCalled();
   });
 
-  it('Should call onClose when clicking close button', () => {
+  it('Should call onDiscard when clicking close button', () => {
     const wrapper = mountWithProps();
     wrapper.find('.closeOnboarding').simulate('click');
     expect(localStorage.getItem(props.name)).toBeTruthy();

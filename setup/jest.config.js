@@ -167,6 +167,7 @@ module.exports = {
     'src/modules/pos/validator/store/actions/staking.js',
     'src/modules/transaction/components/transactionAddress/index.js',
     'src/modules/pos/validator/store/middlewares/staking.js',
+    'src/modules/common/components/onboarding/onboarding.test.js',
     'src/modules/common/components/discreetMode/discreetMode.js',
     'src/modules/transaction/components/TransactionRow/components.js',
     'src/theme/box/row.js',
