@@ -61,7 +61,7 @@ const AccountDetails = ({ history }) => {
         discreetMode={discreetMode}
         transactions={confirmed}
       />
-      <Box>
+      <Box className={styles.wrapper}>
         <BoxHeader>
           <BoxTabs {...tabs} />
         </BoxHeader>

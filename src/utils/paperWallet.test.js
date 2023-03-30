@@ -12,13 +12,13 @@ const JSPDF = jest.fn(() => {
   doc.rect = jest.fn(() => doc);
   doc.text = jest.fn(() => doc);
   doc.save = jest.fn(() => doc);
-  
+
   return doc;
 });
 
 describe('Paper Wallet', () => {
   const data = {
-    t: jest.fn(str => str),
+    t: jest.fn((str) => str),
     passphrase: 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready',
     qrcode: 'qrcode',
     now: new Date('2018-04-05T10:20:30Z'),
