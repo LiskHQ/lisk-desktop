@@ -129,7 +129,6 @@ describe('TransactionEvents', () => {
 
     await waitFor(() => {
       expect(mockApplyFilters).toHaveBeenCalledWith({
-        address: props.address,
         dateFrom: '',
         dateTo: '',
         ...filters,
