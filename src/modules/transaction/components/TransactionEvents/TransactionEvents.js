@@ -70,8 +70,6 @@ const TransactionEvents = ({ address, isWallet, hasFilter }) => {
               filters={filters}
               applyFilters={applyFilters}
               fields={getFilterFields(t)}
-              clearFilter={(filterKey) => clearFilters(filterKey)}
-              clearAllFilters={() => clearFilters()}
             />
           </BoxHeader>
           <FilterBar
