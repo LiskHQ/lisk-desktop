@@ -20,11 +20,11 @@ describe('notFound', () => {
     const wrapper = mount(<NotFound {...props} />);
     expect(wrapper.find('section')).toHaveLength(1);
     expect(wrapper).toContainMatchingElement('Illustration');
-    expect(wrapper).toContainMatchingElement('.go-to-dashboard-button');
+    expect(wrapper).toContainMatchingElement('.go-to-wallet-button');
   });
 
   it('should go to wallet on button link', () => {
     const wrapper = mount(<NotFound {...props} />);
-    expect(wrapper.find('.go-to-dashboard-button').at(0).props().to).toBe(routes.wallet.path);
+    expect(wrapper.find('.go-to-wallet-button').at(0).props().to).toBe(routes.wallet.path);
   });
 });
