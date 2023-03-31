@@ -107,14 +107,6 @@ const TxSignatureCollector = ({
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {
-      // @TODO: more investigation needs to be done to know if this is needed
-      // const isDoubleSigned = !transactions.signedTransaction.signatures.some(
-      //   (sig) => sig.length === 0
-      // );
-      // if (!transactions.txSignatureError && isDoubleSigned) {
-      //   transactionDoubleSigned(moduleCommandSchemas);
-      //   return;
-      // }
       nextStep({ formProps, transactionJSON, statusInfo, sender: currentAccount });
       return;
     }

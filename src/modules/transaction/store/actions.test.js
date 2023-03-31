@@ -12,7 +12,6 @@ import {
   transactionsRetrieved,
   resetTransactionResult,
   pendingTransactionAdded,
-  transactionDoubleSigned,
   transactionBroadcasted,
   multisigTransactionSigned,
   signatureSkipped,
@@ -178,81 +177,6 @@ describe.skip('actions: transactions', () => {
     });
   });
 
-  describe('transactionDoubleSigned', () => {
-    const { network, wallet, token } = getState();
-    const getStateWithTx = () => ({
-      network,
-      wallet: {
-        ...wallet,
-        secondPassphrase: accounts.genesis.passphrase,
-        info: {
-          ...wallet.info,
-          LSK: accounts.multiSig,
-        },
-      },
-      token,
-      transactions: {
-        signedTransaction: {
-          module: 2,
-          command: 0,
-          senderPublicKey: Buffer.from(accounts.genesis.summary.publicKey, 'hex'),
-          nonce: BigInt(49),
-          fee: BigInt(209000),
-          signatures: [
-            '',
-            Buffer.from(
-              'd8a75de09db6ea245c9ddba429956e941adb657024fd01ae3223620a6da2f5dada722a2fc7f8a0c795a2bde8c4a18847b1ac633b21babbf4a628df22f84c5600',
-              'hex'
-            ),
-          ],
-          params: {
-            recipientAddress: getAddressFromBase32Address(
-              'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt'
-            ),
-            amount: BigInt(100000),
-            data: '2f',
-          },
-          id: Buffer.from(
-            '7c98f8f3a042000abac0d1c38e6474f0571347d9d2a25929bcbac2a29747e31d',
-            'hex'
-          ),
-        },
-      },
-    });
-
-    it('should create an action to store double signed tx', async () => {
-      // Consume the utility
-      await transactionDoubleSigned()(dispatch, getStateWithTx);
-
-      // Prepare expectations
-      const expectedAction = {
-        type: actionTypes.transactionDoubleSigned,
-        data: expect.any(Object),
-      };
-
-      // Assert
-      expect(dispatch).toHaveBeenCalledWith(expectedAction);
-    });
-
-    it.skip('should create an action to store signature error', async () => {
-      // Prepare the store
-      const error = new Error('error signing tx');
-      jest.spyOn(transactionUtils, 'sign').mockImplementation(() => error);
-
-      // Consume the utility
-      await transactionDoubleSigned()(dispatch, getStateWithTx);
-
-      // Prepare expectations
-      const expectedAction = {
-        type: actionTypes.transactionSignError,
-        data: error,
-      };
-
-      // Assert
-      expect(dispatch).toHaveBeenCalledWith(expectedAction);
-    });
-  });
-
   describe('transactionBroadcasted', () => {
     it('should dispatch broadcastedTransactionSuccess action if there are no errors', async () => {
       // Arrange
@@ -346,7 +270,7 @@ describe.skip('actions: transactions', () => {
 
       // Prepare expectations
       const expectedAction = {
-        type: actionTypes.transactionDoubleSigned,
+        type: actionTypes.transactionSigned,
         data: expect.any(Object),
       };
 

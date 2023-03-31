@@ -44,27 +44,6 @@ const filters = {
 
 /**
  * Retrieves the list of transactions for given parameters
- *
- * @param {Object} data
- * @param {Object} data.network - Network setting from Redux store
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.params
- * @param {String} data.params.blockId The id of the block in which txs are included
- * @param {String} data.params.address Sender or recipient account
- * @param {String} data.params.dateFrom Unix timestamp, the start time of txs
- * @param {String} data.params.dateTo Unix timestamp, the end time of txs
- * @param {String} data.params.amountFrom The minimum value of txs
- * @param {String} data.params.amountTo The maximum value of txs
- * @param {String} data.params.moduleCommand The moduleCommand. 2:0, 5:1, etc
- * @param {Number} data.params.offset Used for pagination
- * @param {Number} data.params.limit Used for pagination
- * @param {String} data.params.sort an option of 'amount:asc',
- * 'amount:desc', 'timestamp:asc', 'timestamp:desc',
- * @param {Object} data.params.height The height of the block whose transaction we want.
- * If passed, all other parameter will be ignored.
- * @returns {Promise} Transactions list API call
  */
 export const getTransactions = ({ network, params, baseUrl }) => {
   const normParams = {};
@@ -146,13 +125,6 @@ export const getRegisteredValidators = async ({ network }) => {
 
 /**
  * Retrieves the overall statistics of network transactions.
- *
- * @param {Object} data
- * @param {Object} data.params
- * @param {String} data.params.period - An option of 'day' or 'month'
- * @param {Number} data.params.limit - The number of results
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Object} Network transactions statistics
  */
 export const getTransactionStats = ({ network, params: { period } }) => {
   const normParams = {
@@ -191,10 +163,6 @@ export const getTransactionBaseFees = (network) =>
 /**
  * Returns the actual tx fee based on given tx details
  * and selected processing speed
- *
- * @param {String} txData - The transaction object
- * @param {Object} selectedPriority - network configuration
- * @returns {Promise} Object containing value, error and feedback
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({

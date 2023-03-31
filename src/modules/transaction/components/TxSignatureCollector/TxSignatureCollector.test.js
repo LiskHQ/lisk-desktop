@@ -96,7 +96,6 @@ describe('TxSignatureCollector', () => {
     },
     nextStep: jest.fn(),
     statusInfo: {},
-    transactionDoubleSigned: jest.fn(),
   };
 
   useCommandSchema.mockReturnValue({
@@ -285,19 +284,5 @@ describe('TxSignatureCollector', () => {
     };
     renderWithStore(TxSignatureCollector, signedTransactionProps, mockAppState);
     expect(props.nextStep).toHaveBeenCalled();
-  });
-
-  // @TODO: should be re-instated if double tx signing is reinstated
-  it.skip('should call transactionDoubleSigned', () => {
-    const signedTransactionProps = {
-      ...props,
-      transactions: {
-        ...props.transactions,
-        txSignatureError: null,
-        signedTransaction: { id: '123', signatures: ['', 'sig2'] },
-      },
-    };
-    render(<TxSignatureCollector {...signedTransactionProps} />);
-    expect(props.nextStep).not.toHaveBeenCalled();
   });
 });

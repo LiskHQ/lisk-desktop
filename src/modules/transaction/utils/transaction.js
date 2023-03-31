@@ -300,15 +300,7 @@ export const sign = async (
 
 /**
  * Signs a given multisignature tx with a given passphrase
- *
- * @param {Object} transaction - Transaction object to be signed
- * @param {String} passphrase - Account passphrase to use for signing
- * @param {String} networkIdentifier - Current network identifier (from Redux store)
- * @param {Object} senderAccount
- * @param {Object} senderAccount.data - Details of the account who has initiated the transaction
- * @param {Boolean} isFullySigned - Is the tx object fully signed?
- *
- * @returns [Object, Object] - Signed transaction and err
+ * This function is only called when account either trying to register or sign multisignature
  */
 // eslint-disable-next-line max-statements
 const signMultisigTransaction = async (
