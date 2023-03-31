@@ -83,10 +83,8 @@ const Blocks = ({ filters, applyFilters, clearFilter, clearAllFilters, sort, cha
     <div>
       <BlocksOverview t={t} />
       <Box className="blocks-container" width="full" main>
-        <StickyHeader
-          title={t('All blocks')}
-          filters={<BlockFilterDropdown filters={filters} applyFilters={applyBlockFilters} />}
-        />
+        <StickyHeader title={t('All blocks')} className={styles.header} />
+        <BlockFilterDropdown filters={filters} applyFilters={applyBlockFilters} />
         <FilterBar
           {...{
             clearFilter: clearBlockFilter,

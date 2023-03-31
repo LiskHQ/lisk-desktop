@@ -42,3 +42,24 @@
     text-align: right;
   }
 }
+
+.header {
+  width: calc(100% - 119px);
+  height: calc(var(--header-height) + 45px);
+
+  & ~ div:nth-child(2) {
+    position: sticky;
+    top: 0;
+    background-color: var(--color-body-bg);
+    z-index: 4;
+    width: fit-content;
+    margin-top: -95px;
+    margin-left: calc(100% - 119px);
+    padding: 22px 0px;
+    padding-bottom: 20px;
+  }
+
+  & ~ div:nth-child(3) > header:first-child {
+    top: 90px;
+  }
+}
