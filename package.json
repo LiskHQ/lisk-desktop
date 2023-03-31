@@ -112,7 +112,7 @@
     "@hookform/resolvers": "2.8.8",
     "@json-rpc-tools/utils": "1.7.6",
     "@ledgerhq/hw-transport-node-hid": "6.27.12",
-    "@liskhq/lisk-client": "6.0.0-alpha.16",
+    "@liskhq/lisk-client": "6.0.0-alpha.17",
     "@tanstack/react-query": "4.0.10",
     "@tanstack/react-query-devtools": "4.2.1",
     "@walletconnect/sign-client": "2.0.0-rc.4",

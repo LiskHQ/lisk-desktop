@@ -8,7 +8,7 @@ import { getCheckInitializedAccount } from './getCheckInitializedAccount';
 jest.useRealTimers();
 
 jest.mock('@auth/hooks/queries/useAuth');
-jest.mock('@token/fungible/hooks/queries/useTokensBalance');
+jest.mock('@token/fungible/hooks/queries/useTokenBalances');
 
 describe('getCheckInitializedAccount hook', () => {
   const config = {

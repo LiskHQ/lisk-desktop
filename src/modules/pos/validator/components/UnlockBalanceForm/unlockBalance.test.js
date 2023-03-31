@@ -3,7 +3,7 @@ import networks from '@network/configuration/networks';
 import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from '@auth/__fixtures__';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mountWithQueryAndProps } from 'src/utils/testHelpers';
 import * as hwManager from '@transaction/utils/hwManager';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
@@ -55,7 +55,7 @@ describe('Unlock LSK modal', () => {
   ]);
 
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
-  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+  useTokenBalances.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
   useAuth.mockReturnValue({ data: mockAuth });
   useValidators.mockImplementation(({ config }) => ({

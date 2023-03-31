@@ -8,7 +8,7 @@ import { ManageAccountsContent } from '@account/components/ManageAccounts';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import { isEmpty } from 'src/utils/helpers';
-import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
+import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 import Onboarding from '../onboarding/onboarding';
 import NewsFeed from '../newsFeed';
 import styles from './dashboard.css';
@@ -46,7 +46,7 @@ const Dashboard = ({ t, history }) => {
   const { accounts } = useAccounts();
   const [currentAccount] = useCurrentAccount();
   const OnboardingBannerName = 'dashboardOnboarding';
-  const tokens = useTokensBalance({
+  const tokens = useTokenBalances({
     config: {
       params: { limit: 2 },
     },
