@@ -104,8 +104,8 @@ describe('TransactionEvents', () => {
 
     fireEvent.click(screen.queryByText('Filter'));
 
-    expect(screen.getByText('Date range')).toBeTruthy();
     expect(screen.getByText('Transaction ID')).toBeTruthy();
+    expect(screen.getByText('Block ID')).toBeTruthy();
     expect(screen.getByText('Block height')).toBeTruthy();
   });
 
@@ -113,26 +113,24 @@ describe('TransactionEvents', () => {
     wrapper = render(<TransactionEvents {...props} isWallet hasFilter />);
     const transactionIdField = screen.getByTestId('transactionID');
     const blockHeightField = screen.getByTestId('height');
-    const dateFrom = screen.getByTestId('dateFrom');
-    const dateTo = screen.getByTestId('dateTo');
+    const blockID = screen.getByTestId('blockID');
     const filters = {
       transactionID: '1234',
       height: '1234',
-      dateTo: '20.04.20',
-      dateFrom: '20.03.20',
+      blockID: '1234',
     };
 
     fireEvent.click(screen.queryByText('Filter'));
     fireEvent.change(transactionIdField, { target: { value: '1234' } });
     fireEvent.change(blockHeightField, { target: { value: '1234' } });
-    fireEvent.change(dateFrom, { target: { value: '20.03.20' } });
-    fireEvent.change(dateTo, { target: { value: '20.04.20' } });
+    fireEvent.change(blockID, { target: { value: '1234' } });
 
     fireEvent.click(screen.getByText('Apply filters'));
 
     await waitFor(() => {
       expect(mockApplyFilters).toHaveBeenCalledWith({
-        address: props.address,
+        dateFrom: '',
+        dateTo: '',
         ...filters,
       });
     });

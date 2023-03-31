@@ -14,14 +14,15 @@ import styles from './TransactionEvents.css';
 
 const getFilterFields = (t) => [
   {
-    label: t('Date range'),
-    name: 'date',
-    type: 'date-range',
+    label: t('Transaction ID'),
+    placeholder: t('e.g. f37305dd68de8d...'),
+    name: 'transactionID',
+    type: 'text',
   },
   {
-    label: t('Transaction ID'),
-    placeholder: t('transactionID'),
-    name: 'transactionID',
+    label: t('Block ID'),
+    placeholder: t('e.g. cc6b795a491524...'),
+    name: 'blockID',
     type: 'text',
   },
   {
@@ -32,12 +33,15 @@ const getFilterFields = (t) => [
   },
 ];
 
-const TransactionEvents = ({ blockId, address, isWallet, hasFilter }) => {
+const TransactionEvents = ({ address, isWallet, hasFilter }) => {
   const { t } = useTranslation();
   const { filters, clearFilters, applyFilters } = useFilter({
-    dateFrom: '',
-    dateTo: '',
+    transactionID: '',
+    blockID: '',
+    height: '',
   });
+
+  const params = { ...filters, senderAddress: address };
 
   const {
     data: transactionEvents,
@@ -47,20 +51,13 @@ const TransactionEvents = ({ blockId, address, isWallet, hasFilter }) => {
     hasNextPage,
     fetchNextPage,
   } = useTransactionEvents({
-    config: {
-      params: {
-        ...filters,
-        ...(blockId && { blockID: blockId }),
-        ...(address && { senderAddress: address }),
-      },
-    },
+    config: { params },
   });
 
   const formatters = {
-    dateFrom: (value) => `${t('From')}: ${value}`,
-    dateTo: (value) => `${t('To')}: ${value}`,
+    transactionID: (value) => `${t('Transaction ID')}: ${value}`,
+    blockID: (value) => `${t('Block ID')}: ${value}`,
     height: (value) => `${t('Height')}: ${value}`,
-    transactionID: (value) => `${value}`,
   };
 
   return (
@@ -69,11 +66,10 @@ const TransactionEvents = ({ blockId, address, isWallet, hasFilter }) => {
         <>
           <BoxHeader>
             <FilterDropdownButton
+              noDateRange
               filters={filters}
-              applyFilters={(values) => applyFilters({ ...values, address })}
+              applyFilters={applyFilters}
               fields={getFilterFields(t)}
-              clearFilter={(filterKey) => clearFilters(filterKey)}
-              clearAllFilters={() => clearFilters()}
             />
           </BoxHeader>
           <FilterBar

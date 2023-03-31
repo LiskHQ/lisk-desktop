@@ -77,11 +77,14 @@ class FilterDropdownButton extends React.Component {
   applyFilters(event) {
     event.preventDefault();
     const { filters } = this.state;
-    ['dateFrom', 'dateTo'].forEach((param) => {
-      const dateFormat = this.props.t('DD.MM.YY');
-      const date = moment(filters[param], dateFormat);
-      filters[param] = (date.isValid() && date.format(dateFormat)) || filters[param];
-    });
+
+    if (!this.props.noDateRange) {
+      ['dateFrom', 'dateTo'].forEach((param) => {
+        const dateFormat = this.props.t('DD.MM.YY');
+        const date = moment(filters[param], dateFormat);
+        filters[param] = (date.isValid() && date.format(dateFormat)) || filters[param];
+      });
+    }
 
     this.props.applyFilters(filters);
     this.childRef.toggleDropdown();

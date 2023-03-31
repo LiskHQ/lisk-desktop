@@ -9,7 +9,7 @@
   & > header {
     position: absolute;
     top: -82px;
-    right: -18px;
+    right: 0;
     z-index: 10;
   }
 }
