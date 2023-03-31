@@ -4,7 +4,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { keyCodes } from 'src/utils/keyCodes';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 import routes from 'src/routes/routes';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { useSearch } from 'src/modules/search/hooks/useSearch';
 import SearchBar from './SearchBar';
@@ -28,7 +28,7 @@ describe('SearchBar', () => {
     },
   };
 
-  useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
+  useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
 
   it('should render properly SearchBar', () => {
     const wrapper = mountWithQueryClient(SearchBar, props);

@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { truncateAddress } from '@wallet/utils/account';
 import wallets from '@tests/constants/wallets';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import MigrationDetails from './index';
 
 jest.mock('@token/fungible/hooks/queries');
@@ -17,7 +17,7 @@ describe('MigrationDetails component', () => {
     showBalance: true,
   };
 
-  useTokensBalance.mockReturnValue({ data: mockAppsTokens });
+  useTokenBalances.mockReturnValue({ data: mockAppsTokens });
 
   it('should render properly', () => {
     const wrapper = mount(<MigrationDetails {...props} />);

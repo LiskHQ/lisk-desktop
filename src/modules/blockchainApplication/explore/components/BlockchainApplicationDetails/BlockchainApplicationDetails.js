@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Dialog from '@theme/dialog/dialog';
 import Box from 'src/theme/box';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
@@ -50,7 +50,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const { status, lastCertificateHeight, lastUpdated, logo } = aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
-  const { data: tokens } = useTokensBalance();
+  const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 
   const isPinned = checkPinByChainId(chainId);
