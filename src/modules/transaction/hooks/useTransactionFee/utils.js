@@ -13,9 +13,22 @@ export const computeTransactionMinFee = (
   numberOfSignatures,
   extraCommandFee
 ) => {
+  // Transaction originating from multisignature account must pass non empty signature count
+  // So that transactions.computeMinFee can take into account future signatures bytes
+  // Once the originator creates the transaction, none of the properties will be able to modify
+  // If modified the integrity will be gone, hence accounting for future signatures bytes
+  const getNumberOfEmptySignatures = () => {
+    if (numberOfSignatures === 0) {
+      return 0;
+    }
+
+    const nonEmptySignature = transactionJSON.signatures.filter((s) => s.length > 0);
+    return numberOfSignatures - nonEmptySignature.length;
+  };
+
   const options = {
     numberOfSignatures,
-    numberOfEmptySignatures: 0,
+    numberOfEmptySignatures: getNumberOfEmptySignatures(),
     additionalFee: BigInt(extraCommandFee),
   };
 

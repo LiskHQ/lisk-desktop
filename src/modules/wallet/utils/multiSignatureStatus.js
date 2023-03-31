@@ -5,7 +5,7 @@ import {
 } from '../components/signMultisigView/helpers';
 
 /**
- * Get required statuses of a multi-signature transaction
+ * Get required statuses for a given multi-signature transaction
  */
 export const getMultiSignatureStatus = ({
   senderAccount,

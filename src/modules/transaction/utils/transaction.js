@@ -156,8 +156,6 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
     isRegisterMultisignature: false,
   });
 
-  console.log({ keys, senderAccount });
-
   const signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
     transaction,
     Buffer.from(chainID, 'hex'),
