@@ -13,7 +13,7 @@ const NotFound = ({ t }) => (
       <h2 className="empty-message">{t('Whoops, that page is gone.')}</h2>
       <p>
         {t(
-          'Sorry, we couldn’t find the page you were looking for. We suggest that you return to your account.'
+          'Sorry, we couldn’t find the page you were looking for. We suggest that you return to your wallet.'
         )}
       </p>
       <Link className="go-to-dashboard-button" to={routes.wallet.path}>
