@@ -14,10 +14,9 @@ describe('AddApplicationSearch', () => {
   it('searches application by name', () => {
     const props = {
       searchValue: '',
-      error: 'error',
-      isURL: true,
+      isUrl: true,
       urlStatus: 'ok',
-      isLoading: false,
+      isSearchLoading: false,
       onSearchApplications: mockSearchApplication,
     };
     render(<AddApplicationSearch {...props} />);
@@ -32,10 +31,9 @@ describe('AddApplicationSearch', () => {
   it('displays feedback when searching by URL', async () => {
     const props = {
       searchValue: '',
-      error: '',
-      isURL: false,
+      isUrl: false,
       urlStatus: '',
-      isLoading: false,
+      isSearchLoading: false,
       onSearchApplications: mockSearchApplication,
     };
     const { rerender } = render(<AddApplicationSearch {...props} />);
@@ -46,15 +44,15 @@ describe('AddApplicationSearch', () => {
     expect(mockSearchApplication).toHaveBeenCalledWith(searchUrl);
     const loadingProps = {
       ...props,
-      isURL: true,
+      isUrl: true,
       searchValue: searchUrl,
-      isLoading: true,
+      isSearchLoading: true,
     };
     rerender(<AddApplicationSearch {...loadingProps} />);
     expect(screen.getByTestId('spinner')).toBeTruthy();
     const postLoadingProps = {
       ...loadingProps,
-      isLoading: false,
+      isSearchLoading: false,
       urlStatus: 'ok',
     };
     rerender(<AddApplicationSearch {...postLoadingProps} />);
