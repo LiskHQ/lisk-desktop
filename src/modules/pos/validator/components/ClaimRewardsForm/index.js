@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import BoxHeader from '@theme/box/header';
 import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import TxComposer from '@transaction/components/TxComposer';
 import { useCurrentAccount } from '@account/hooks';
 import { QueryTable } from '@theme/QueryTable';
@@ -22,7 +22,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
   ] = useCurrentAccount();
   const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-  const { data: tokens } = useTokensBalance({
+  const { data: tokens } = useTokenBalances({
     config: { params: { tokenID: posConstants?.data?.posTokenID, address } },
     options: { enabled: !isGettingPosConstants },
   });

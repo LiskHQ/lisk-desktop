@@ -7,7 +7,7 @@ import { Input } from 'src/theme';
 import TxComposer from '@transaction/components/TxComposer';
 import { convertCommissionToNumber, checkCommissionValidity } from '@pos/validator/utils';
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { usePosConstants } from '../../../hooks/queries';
 import styles from './ChangeCommissionForm.css';
 
@@ -29,7 +29,7 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
     numericValue: defaultNumericValue,
   });
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-  const { data: tokens } = useTokensBalance({
+  const { data: tokens } = useTokenBalances({
     config: { params: { tokenID: posConstants?.posTokenID } },
     options: { enabled: !isGettingPosConstants },
   });

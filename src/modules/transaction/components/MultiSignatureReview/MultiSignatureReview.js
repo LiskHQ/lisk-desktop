@@ -1,7 +1,7 @@
 import React from 'react';
 import { truncateAddress } from '@wallet/utils/account';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './MultiSignatureReview.css';
 
@@ -60,7 +60,7 @@ const InfoColumn = ({ title, children, className }) => (
 );
 
 const MultiSignatureReview = ({ t, members, fee, numberOfSignatures }) => {
-  const { data: tokens } = useTokensBalance();
+  const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 
   return (

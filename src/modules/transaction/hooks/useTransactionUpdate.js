@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import client from 'src/utils/api/client';
 import { MY_TRANSACTIONS, AUTH, TOKENS_BALANCE } from 'src/const/queries';
 import { useCurrentAccount } from '@account/hooks';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { useTransactions } from '@transaction/hooks/queries';
 import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
 import { showNotificationsForIncomingTransactions } from '../utils';
@@ -15,7 +15,7 @@ export const useTransactionUpdate = (isLoading) => {
   const queryClient = useQueryClient();
   const [currentAccount] = useCurrentAccount();
   const [currentApplication] = useCurrentApplication();
-  const { data: tokens } = useTokensBalance({
+  const { data: tokens } = useTokenBalances({
     config: { params: { address: currentAccount?.metadata?.address } },
     options: { enabled: !!currentAccount?.metadata?.address },
   });
