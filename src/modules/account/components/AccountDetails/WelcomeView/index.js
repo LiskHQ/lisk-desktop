@@ -14,7 +14,7 @@ function AccountUniqueValueProposition({ className, valueProposition, bulletPoin
 
   return (
     <div className={classNames(className, styles.AccountUniqueValueProposition)}>
-      <div className={styles.bulletPointNr}>{bulletPointNr}</div>
+      <div className={styles.bulletPointNr}>0{bulletPointNr}</div>
       <h4 className={styles.title}>{t(title)}</h4>
       <p className={styles.description}>{t(description)}</p>
     </div>
@@ -29,8 +29,7 @@ const accountUniqueValuePropositions = [
   },
   {
     title: 'Participate in blockchain governance',
-    description:
-      'Stake for your trusted validator or become a validator to secure the blockchain.',
+    description: 'Stake for your trusted validator or become a validator to secure the blockchain.',
   },
   {
     title: 'Manage blockchain application assets',
@@ -73,12 +72,12 @@ export default function WelcomeView() {
         <h2>{t('Why do I need an account?')}</h2>
         <div className={styles.accountUniqueValuePropositionListing}>
           {accountUniqueValuePropositions.map((valueProposition, index) => (
-              <AccountUniqueValueProposition
-                key={index}
-                valueProposition={valueProposition}
-                bulletPointNr={index}
-              />
-            ))}
+            <AccountUniqueValueProposition
+              key={index}
+              valueProposition={valueProposition}
+              bulletPointNr={index + 1}
+            />
+          ))}
         </div>
       </footer>
     </section>
