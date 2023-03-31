@@ -55,7 +55,7 @@ export default function WelcomeView() {
         </p>
         <div className={styles.actionButtons}>
           <Link
-            className={classNames(stylesPrimaryButton.button, styles.createAccountButton)}
+            className={classNames(stylesPrimaryButton.button, styles.createAccountBtn)}
             to={routes.register.path}
           >
             {t('Create account')}
