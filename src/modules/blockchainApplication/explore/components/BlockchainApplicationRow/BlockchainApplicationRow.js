@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
@@ -52,13 +52,10 @@ const BlockchainApplicationRow = ({ data, className, t }) => {
     [togglePin]
   );
 
-  const application = useMemo(
-    () => ({
-      ...data,
-      isPinned: checkPinByChainId(data.chainID),
-    }),
-    [data, checkPinByChainId]
-  );
+  const application = {
+    ...data,
+    isPinned: checkPinByChainId(data.chainID),
+  };
 
   return (
     <div data-testid="applications-row" className={`application-row ${styles.container}`}>
