@@ -6,7 +6,7 @@ import moment from 'moment';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { kFormatter } from 'src/utils/helpers';
 import { useCurrentAccount } from '@account/hooks';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { chartStyles } from 'src/modules/common/components/charts/chartConfig';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { getModuleCommandTitle } from '@transaction/utils/moduleCommand';
@@ -126,7 +126,7 @@ const Overview = () => {
   const colorPalette = getColorPalette(useTheme());
   // Fallback token for transaction statistics
   const [{ metadata: { address } = {} }] = useCurrentAccount();
-  const { data: tokens } = useTokensBalance({
+  const { data: tokens } = useTokenBalances({
     config: { params: { address } },
   });
   const token = tokens?.data?.[0] || {};

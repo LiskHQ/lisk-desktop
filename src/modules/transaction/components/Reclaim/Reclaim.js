@@ -1,11 +1,11 @@
 import React from 'react';
 import MigrationDetails from '@legacy/components/MigrationDetails';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './Reclaim.css';
 
 const Reclaim = ({ account, t, transactionJSON }) => {
-  const { data: tokens } = useTokensBalance();
+  const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0];
 
   return (

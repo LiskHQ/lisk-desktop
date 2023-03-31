@@ -5,7 +5,7 @@ import accounts from '@tests/constants/wallets';
 import { mockBlocks } from '@block/__fixtures__';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import RecentTransactions, { NoTransactions, NotSignedIn } from './RecentTransactions';
@@ -129,7 +129,7 @@ jest
   .mockReturnValue('lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6');
 jest.mock('@token/fungible/hooks/queries');
 
-useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
+useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
 useSelector.mockReturnValue({ ...LiskState.account, ...LiskState.settings });
 useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 

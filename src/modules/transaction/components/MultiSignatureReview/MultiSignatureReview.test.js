@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import Review from './index';
 
@@ -32,7 +32,7 @@ describe('Multisignature Review component', () => {
     wrapper = mount(<Review {...props} />);
   });
 
-  useTokensBalance.mockReturnValue({ data: mockAppsTokens });
+  useTokenBalances.mockReturnValue({ data: mockAppsTokens });
 
   it('Should render properly', () => {
     expect(wrapper).toContainMatchingElements(props.members.length, '.member-info');
