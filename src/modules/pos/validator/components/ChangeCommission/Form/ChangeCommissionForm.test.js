@@ -4,8 +4,8 @@ import { ChangeCommissionForm } from './ChangeCommissionForm';
 
 jest.useRealTimers();
 
-jest.mock('@token/fungible/hooks/queries/useTokensBalance', () => ({
-  useTokensBalance: jest.fn(() => ({ data: { data: [{ chainID: '04000000', symbol: 'LSK' }] } })),
+jest.mock('@token/fungible/hooks/queries/useTokenBalances', () => ({
+  useTokenBalances: jest.fn(() => ({ data: { data: [{ chainID: '04000000', symbol: 'LSK' }] } })),
 }));
 
 jest.mock('@pos/validator/hooks/useCurrentCommissionPercentage', () => ({

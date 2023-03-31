@@ -4,7 +4,7 @@ import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import WalletsMonitor from './Accounts';
 
-jest.mock('@token/fungible/hooks/queries/useTokensBalance');
+jest.mock('@token/fungible/hooks/queries/useTokenBalances');
 
 describe('Top Accounts Monitor Page', () => {
   beforeEach(() => {

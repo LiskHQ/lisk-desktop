@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { mockLegacy } from '@legacy/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useTokenBalances } from './useTokensBalance';
+import { useTokenBalances } from './useTokenBalances';
 
 jest.useRealTimers();
 
-describe('useTokensBalance hook', () => {
+describe('useTokenBalances hook', () => {
   const limit = 5;
   const config = {
     params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' },
