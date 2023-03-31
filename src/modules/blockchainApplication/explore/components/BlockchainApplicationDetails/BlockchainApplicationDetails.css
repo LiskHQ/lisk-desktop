@@ -88,15 +88,7 @@
   }
 
   & .detail {
-    width: 20%;
-
-    &:first-of-type {
-      width: 35%;
-    }
-
-    &:last-of-type {
-      width: 25%;
-    }
+    width: 25%;
   }
 }
 

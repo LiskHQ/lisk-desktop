@@ -88,7 +88,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     {
       header: t('Last Update'),
       className: `${styles.detailContentText} last-update`,
-      content: moment(lastUpdated).format('DD MMM YYYY'),
+      content: moment(lastUpdated * 1000).format('DD MMM YYYY'),
     },
     {
       header: t('Last Certificate Height'),
@@ -119,7 +119,12 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     );
 
   return (
-    <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
+    <Dialog
+      hasClose
+      hasBack
+      className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}
+      customBackBtn="arrowLeftTailedDark"
+    >
       <div className={styles.wrapper}>
         <BlockchainAppDetailsHeader
           application={app}

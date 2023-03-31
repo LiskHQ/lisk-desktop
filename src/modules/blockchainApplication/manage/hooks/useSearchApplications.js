@@ -36,7 +36,7 @@ export const useSearchApplications = () => {
       if (isUrl) {
         // Ping URL and validate service
         const formattedValue = removeTrailingSlash(addHttp(value));
-        setUrl({ ...URL, isSearchLoading: true });
+        setUrl({ ...url, isSearchLoading: true });
         validateAppNode(formattedValue)
           .then(() => {
             setUrl({

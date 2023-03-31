@@ -14,15 +14,15 @@ import styles from './AddApplicationList.css';
 
 const AddApplicationList = () => {
   const { t } = useTranslation();
-  const { ...searchResponse } = useSearchApplications();
-  const { isUrl, urlStatus, debouncedSearchValue } = searchResponse;
+  const { ...searchApplicationData } = useSearchApplications();
+  const { isUrl, urlStatus, debouncedSearchValue } = searchApplicationData;
 
   return (
     <Dialog className={styles.dialog} hasClose>
       <Box className={styles.wrapper}>
         <BoxHeader className={`${styles.header} add-application-header`}>
           <div>Add Application</div>
-          <AddApplicationSearch {...searchResponse} />
+          <AddApplicationSearch {...searchApplicationData} />
         </BoxHeader>
         <BoxContent className={`${styles.content} blockchain-application-add-list`}>
           <QueryTable
