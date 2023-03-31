@@ -58,11 +58,6 @@ import liskLogoWhiteNormalized from '@setup/react/assets/images/lisk-logo-white-
 import logout from '@setup/react/assets/images/icons/logout.svg';
 import logoutActive from '@setup/react/assets/images/icons/logout-active.svg';
 import lskIcon from '@setup/react/assets/images/icons/icon-lsk.svg';
-import newsFeedTwitter from '@setup/react/assets/images/icons/news-feed-twitter.svg';
-import newsFeedTwitterDark from '@setup/react/assets/images/icons/news-feed-twitter-dark.svg';
-import newsFeedBlog from '@setup/react/assets/images/icons/news-feed-blog.svg';
-import newsFeedBlogDark from '@setup/react/assets/images/icons/news-feed-blog-dark.svg';
-import noTweetsIcon from '@setup/react/assets/images/icons/no-tweets.svg';
 import okIcon from '@setup/react/assets/images/icons/icon-checkmark.svg';
 import outgoing from '@setup/react/assets/images/icons/outgoing.svg';
 import pending from '@setup/react/assets/images/icons/pending.svg';
@@ -292,8 +287,6 @@ export const icons = {
   logout,
   logoutActive,
   lskIcon,
-  newsFeedTwitter,
-  noTweetsIcon,
   okIcon,
   outgoing,
   pending,
@@ -336,7 +329,6 @@ export const icons = {
   verifyWalletAddressActive,
   liskLogoDark,
   balanceDark,
-  newsFeedTwitterDark,
   fileOutlineDark,
   signMessage,
   signMessageActive,
@@ -348,8 +340,6 @@ export const icons = {
   registerMultisignature,
   missedBlocks,
   missedBlocksDark,
-  newsFeedBlog,
-  newsFeedBlogDark,
   bookmark,
   bookmarkActive,
   toggleSidebar,
