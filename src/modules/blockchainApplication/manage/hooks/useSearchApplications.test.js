@@ -21,8 +21,8 @@ describe('useSearchApplications', () => {
       onSearchApplications(searchTerm);
     });
     await waitFor(() => {
-      expect(result.current.isURL).toEqual(true);
-      expect(result.current.URLStatus).toEqual('ok');
+      expect(result.current.isUrl).toEqual(true);
+      expect(result.current.urlStatus).toEqual('ok');
     });
   });
 
@@ -35,8 +35,8 @@ describe('useSearchApplications', () => {
       onSearchApplications(searchTerm);
     });
     await waitFor(() => {
-      expect(result.current.isURL).toEqual(true);
-      expect(result.current.URLStatus).toEqual('error');
+      expect(result.current.isUrl).toEqual(true);
+      expect(result.current.urlStatus).toEqual('error');
     });
   });
 
@@ -48,7 +48,7 @@ describe('useSearchApplications', () => {
       onSearchApplications(searchTerm);
     });
     await waitFor(() => {
-      expect(result.current.isURL).toEqual(false);
+      expect(result.current.isUrl).toEqual(false);
     });
   });
 });
