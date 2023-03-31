@@ -27,7 +27,7 @@ const AddApplicationSuccess = ({ history }) => {
         </Box>
         <Box className={styles.footer}>
           <PrimaryButton onClick={onAddSuccess} className="add-application-success-button">
-            {t('Continue to account')}
+            {t('Continue to wallet')}
           </PrimaryButton>
         </Box>
       </Box>

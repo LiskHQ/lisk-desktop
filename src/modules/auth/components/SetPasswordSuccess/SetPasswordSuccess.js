@@ -29,7 +29,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, headerText, contentText,
         </p>
         <DownloadJSON fileName={fileName} encryptedPhrase={encryptedPhrase} />
         <PrimaryButton className={styles.continueButton} onClick={onContinue}>
-          {buttonText || t('Continue to account')}
+          {buttonText || t('Continue to wallet')}
         </PrimaryButton>
       </BoxContent>
     </Box>
