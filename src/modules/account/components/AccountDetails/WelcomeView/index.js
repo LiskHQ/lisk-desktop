@@ -69,7 +69,7 @@ export default function WelcomeView() {
         </div>
       </header>
       <footer className={styles.welcomeFooter}>
-        <h2>{t('Why do I need an account?')}</h2>
+        <h2 className={styles.welcomeFooterTitle}>{t('Why do I need an account?')}</h2>
         <div className={styles.accountUniqueValuePropositionListing}>
           {accountUniqueValuePropositions.map((valueProposition, index) => (
             <AccountUniqueValueProposition

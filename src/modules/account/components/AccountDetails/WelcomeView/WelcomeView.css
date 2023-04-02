@@ -35,11 +35,14 @@
     }
 
     & .title {
+      font-size: 30px;
       margin-top: 24px;
     }
 
     & .description {
       margin-top: 24px;
+      color: var(--color-slate-gray);
+      font-size: var(--subtitle-font-size-s);
     }
 
     & .actionButtons {
@@ -51,6 +54,7 @@
         display: flex;
         height: 48px;
         padding: 0 28px;
+        border-radius: 26px;
 
         &:hover {
           text-decoration: initial;
@@ -67,6 +71,11 @@
     border-top: 1px solid var(--color-very-light-gray);
     color: var(--color-black);
     padding: 40px 24px 0 24px;
+
+    & .welcomeFooterTitle {
+      font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-bold);
+    }
 
     & .accountUniqueValuePropositionListing {
       margin-top: 24px;
@@ -101,5 +110,6 @@
     margin-top: 8px;
     color: var(--color-blue-gray);
     font-size: var(--subtitle-font-size-s);
+    line-height: 20px;
   }
 }
