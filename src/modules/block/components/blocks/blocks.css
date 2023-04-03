@@ -5,8 +5,8 @@
   z-index: 3;
   border-bottom: 1px solid var(--color-mystic);
 
-  & > div:last-child {
-    justify-content: flex-end;
+  & .status {
+    justify-content: flex-end !important;
   }
 }
 
@@ -46,6 +46,10 @@
 .header {
   width: 100%;
   height: calc(var(--header-height) + 45px);
+
+  & > h1 {
+    margin-bottom: 12px;
+  }
 
   & ~ div:nth-child(2) {
     position: sticky;

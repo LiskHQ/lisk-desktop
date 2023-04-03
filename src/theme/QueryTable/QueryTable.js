@@ -36,11 +36,11 @@ export const QueryTable = ({
     addUpdate();
   };
 
-  const subHeader = hasUpdate ? (
+  const subHeader = !!hasUpdate && (
     <LoadNewButton buttonClassName={`${button.className || ''}`} handleClick={handleClick}>
       {button.label}
     </LoadNewButton>
-  ) : null;
+  );
 
   useEffect(() => {
     if (isFetched && typeof onFetched === 'function') {
