@@ -165,7 +165,10 @@ const SendForm = (props) => {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
       messageFee: messageFeeResult?.data?.fee,
+      // TODO: Message fees are always paid in LSK, so we need to fetch the tokenID based on Mainchain for a given selected network
+      messageFeeTokenID: '0400000000000000',
     };
+    sendFormProps.moduleCommand = MODULE_COMMANDS_NAME_MAP.transferCrossChain;
   }
 
   return (

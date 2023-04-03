@@ -5,7 +5,6 @@ import { getState } from '@tests/fixtures/transactions';
 import { sampleTransaction } from '@tests/constants/transactions';
 import accounts from '@tests/constants/wallets';
 import commonActionTypes from 'src/modules/common/store/actionTypes';
-import { getAddressFromBase32Address } from '@wallet/utils/account';
 import actionTypes from './actionTypes';
 import {
   emptyTransactionsData,

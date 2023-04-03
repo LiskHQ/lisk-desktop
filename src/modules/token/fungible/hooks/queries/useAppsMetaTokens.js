@@ -27,6 +27,7 @@ export const useAppsMetaTokensConfig = () => {
     method: 'get',
     event: 'get.blockchain.apps.meta.tokens',
     ...customConfig,
+    // TODO: Remove hardcoded network
     params: { limit, network: 'devnet' || network, chainID, ...(customConfig?.params || {}) },
   });
 };
