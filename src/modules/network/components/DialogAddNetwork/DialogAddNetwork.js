@@ -14,7 +14,7 @@ import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
   const { setValue, customNetworks } = useSettings('customNetworks');
-  const [successText, setSuccessText] = useState('Network added');
+  const [successText, setSuccessText] = useState('');
 
   const { t } = useTranslation();
   const {
