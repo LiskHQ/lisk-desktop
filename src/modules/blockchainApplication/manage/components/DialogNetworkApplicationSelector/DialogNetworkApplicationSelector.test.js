@@ -7,7 +7,7 @@ import {
 } from '@blockchainApplication/manage/hooks';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import ApplicationManagementList from './ApplicationManagementList';
+import DialogNetworkApplicationSelector from './ModalNetworkApplicationSelector';
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
@@ -30,7 +30,7 @@ useApplicationManagement.mockReturnValue({
   applications: mockManagedApplications,
 });
 
-describe('ApplicationManagementList', () => {
+describe('ModalNetworkApplicationSelector', () => {
   const props = {
     history: {
       push: jest.fn(),
@@ -39,7 +39,7 @@ describe('ApplicationManagementList', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    renderWithRouter(ApplicationManagementList, props);
+    renderWithRouter(DialogNetworkApplicationSelector, props);
   });
 
   it('should display properly', () => {

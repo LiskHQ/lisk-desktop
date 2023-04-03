@@ -24,6 +24,7 @@ export const initialState = {
   sideBarExpanded: true,
   enableCustomDerivationPath: false,
   currency: 'USD',
+  customNetworks: []
 };
 
 /**

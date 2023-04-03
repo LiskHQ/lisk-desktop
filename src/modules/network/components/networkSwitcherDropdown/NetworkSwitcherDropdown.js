@@ -12,13 +12,19 @@ import {
 } from '@blockchainApplication/manage/hooks';
 import { DEFAULT_NETWORK } from 'src/const/config';
 import { Client } from 'src/utils/api/client';
-import styles from './NetworkSwitcherDropdown.css';
+import DialogLink from '@theme/dialog/link';
+import stylesSecondaryButton from '@theme/buttons/css/secondaryButton.css';
+import classNames from 'classnames';
 import networks from '../../configuration/networks';
 import { useNetworkStatus } from '../../hooks/queries';
+import styles from './NetworkSwitcherDropdown.css';
 
 function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   const { t } = useTranslation();
   const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
+  const { customNetworks } = useSettings('customNetworks');
+  const networksWithCustomNetworks = [...Object.values(networks), ...customNetworks];
+
   const [selectedNetwork, setSelectedNetwork] = useState(
     mainChainNetwork || networks[DEFAULT_NETWORK]
   );
@@ -26,7 +32,13 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   const [, setCurrentApplication] = useCurrentApplication();
   const queryClient = useRef(new Client({ http: selectedNetwork.serviceUrl }));
 
-  const networkStatus = useNetworkStatus({ client: queryClient.current });
+  const networkStatus = useNetworkStatus({
+    options: {
+      retry: false,
+    },
+    client: queryClient.current,
+  });
+
   const blockchainAppsMeta = useBlockchainApplicationMeta({
     config: {
       params: {
@@ -36,6 +48,7 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
     },
     options: {
       enabled: !!networkStatus.data && !networkStatus.isLoading && !networkStatus.isError,
+      retry: false,
     },
     client: new Client({ http: selectedNetwork.serviceUrl }),
   });
@@ -89,9 +102,9 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   ]);
 
   return (
-    <>
+    <div className={styles.NetworkSwitcherDropdown}>
       <div className={styles.networkSelectionWrapper}>
-        {!noLabel && <label>{t('Select network')}</label>}
+        {!noLabel && <label className={styles.label}>{t('Select network')}</label>}
         <MenuSelect
           value={selectedNetwork}
           select={(selectedValue, option) => selectedValue.label === option.label}
@@ -101,10 +114,10 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
           isLoading={networkStatus.isLoading || blockchainAppsMeta.isLoading}
           isValid={!networkStatus.isError && networkStatus.isFetched && !blockchainAppsMeta.isError}
         >
-          {Object.keys(networks)
-            .filter((networkKey) => networks[networkKey].isAvailable)
+          {Object.keys(networksWithCustomNetworks)
+            .filter((networkKey) => networksWithCustomNetworks[networkKey].isAvailable)
             .map((networkKey) => {
-              const network = networks[networkKey];
+              const network = networksWithCustomNetworks[networkKey];
 
               return (
                 <MenuItem
@@ -122,14 +135,21 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
         </MenuSelect>
       </div>
       {blockchainAppsMeta.isError && !blockchainAppsMeta.isFetching && (
-        <div>
+        <div className={styles.connectionFailedBlock}>
           <span>
             {t('Failed to connect to network!  ')}
             <span onClick={blockchainAppsMeta.refetch}>{t('Try again')}</span>
           </span>
         </div>
       )}
-    </>
+      <DialogLink
+        className={classNames(styles.addNetworkBtn, stylesSecondaryButton.button)}
+        component="dialogAddNetwork"
+      >
+        <Icon name="plusBlueIcon" />
+        <span>{t('Add network')}</span>
+      </DialogLink>
+    </div>
   );
 }
 

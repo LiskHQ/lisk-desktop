@@ -1,16 +1,15 @@
 import React, { useCallback } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
-import BoxContent from 'src/theme/box/content';
-import { OutlineButton } from 'src/theme/buttons';
-import Icon from 'src/theme/Icon';
+import { useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import styles from './ApplicationManagementList.css';
-import { useApplicationManagement } from '../../hooks';
-import ApplicationManagementRow from '../ApplicationManagementRow';
+import ApplicationManagementRow from '@blockchainApplication/manage/components/ApplicationManagementRow';
+import { OutlineButton } from '@theme/buttons';
+import Icon from '@theme/Icon';
+import classNames from 'classnames';
+import styles from './UserApplicationSelector.css';
 
-const ApplicationManagementList = ({ history }) => {
+const UserApplicationSelector = ({ className, history }) => {
   const { t } = useTranslation();
   const { applications } = useApplicationManagement();
 
@@ -19,11 +18,9 @@ const ApplicationManagementList = ({ history }) => {
   }, []);
 
   return (
-    <Box className={styles.wrapper}>
-      <BoxHeader>
-        <h1>{t('Applications')}</h1>
-      </BoxHeader>
-      <BoxContent className={styles.applicationListContainer}>
+    <div className={classNames(styles.UserApplicationSelector, className)}>
+      <label className={styles.label}>{t('Select application')}</label>
+      <div className={styles.applicationListContainer}>
         <div className={styles.listWrapper}>
           {applications.map((application) => (
             <ApplicationManagementRow
@@ -32,7 +29,7 @@ const ApplicationManagementList = ({ history }) => {
             />
           ))}
         </div>
-      </BoxContent>
+      </div>
       <OutlineButton
         className={`add-application-link ${styles.addApplicationBtn}`}
         onClick={handleAddApplication}
@@ -40,8 +37,8 @@ const ApplicationManagementList = ({ history }) => {
         <Icon name="plusBlueIcon" />
         <span>{t('Add application')}</span>
       </OutlineButton>
-    </Box>
+    </div>
   );
 };
 
-export default ApplicationManagementList;
+export default withRouter(UserApplicationSelector);

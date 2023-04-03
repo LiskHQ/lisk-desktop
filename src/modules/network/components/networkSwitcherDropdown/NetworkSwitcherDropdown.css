@@ -1,37 +1,40 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-.networkSelectionWrapper {
-  position: relative;
-  width: 100%;
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  & > label {
-    @mixin contentLarge;
-
-    margin-bottom: 16px;
-  }
-
-  & .networkItem {
-    font-family: var(--heading-font) !important;
-    font-weight: var(--font-weight-bold) !important;
+.NetworkSwitcherDropdown {
+  & .networkSelectionWrapper {
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px !important;
-    color: var(--color-content-light) !important;
-    width: calc(100% - 32px) !important;
-    border-radius: 8px !important;
+    flex-direction: column;
+    align-items: flex-start;
 
-    &.selected {
-      background-color: var(--color-network-selected-background);
+    & .label {
+      font-size: var(--font-size-h6);
+      font-family: var(--heading-font);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: 16px;
+    }
+
+    & .networkItem {
+      font-family: var(--heading-font) !important;
+      font-weight: var(--font-weight-bold) !important;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px !important;
+      color: var(--color-content-light) !important;
+      width: calc(100% - 32px) !important;
+      border-radius: 8px !important;
+
+      &.selected {
+        background-color: var(--color-network-selected-background);
+      }
     }
   }
 
-  & ~ div {
+  & .connectionFailedBlock {
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -48,6 +51,23 @@
       }
     }
   }
+
+  & .addNetworkBtn {
+    margin-top: 16px;
+    display: flex;
+    height: 48px;
+    padding: 0 28px;
+    color: var(--color-ultramarine-blue);
+
+    &:hover {
+      text-decoration: initial;
+    }
+
+    & > img {
+      width: 16px;
+      margin-right: 8px;
+    }
+  }
 }
 
 .networksPopup {
@@ -60,8 +80,15 @@
 .menuSelect .networkItem {
   font-family: var(--content-font) !important;
   background-color: unset !important;
+  font-weight: var(--font-weight-normal);
 
   & img {
     display: none;
+  }
+}
+
+.menuSelect {
+  & > div:first-child ~ img {
+    width: 16px;
   }
 }

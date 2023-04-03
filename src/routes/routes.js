@@ -200,6 +200,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  dialogAddNetwork: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   reclaimBalance: {
     isPrivate: true,
     forbiddenTokens: [],

@@ -1,0 +1,50 @@
+.UserApplicationSelector {
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & .label {
+    font-size: var(--font-size-h6);
+    font-family: var(--heading-font);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 16px;
+  }
+
+  & .applicationListContainer {
+    --content-font: 'gilroy';
+
+    max-height: 160px;
+    overflow: auto;
+    width: 100%;
+  }
+
+  & .applicationListContainer::-webkit-scrollbar {
+    width: 4px !important;
+  }
+
+  & .applicationListContainer::-webkit-scrollbar-thumb {
+    background-color: var(--color-platinum);
+  }
+
+  & .listWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    padding-bottom: 30px;
+  }
+
+  & .addApplicationBtn {
+    width: 100%;
+    color: var(--color-ultramarine-blue);
+    border-radius: 10px;
+    margin-top: 16px;
+    display: flex;
+    opacity: 1;
+
+    & > img {
+      width: 16px;
+      margin-right: 8px;
+    }
+  }
+}
