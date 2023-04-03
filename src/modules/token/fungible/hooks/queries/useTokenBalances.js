@@ -41,7 +41,7 @@ export const useTokenBalances = ({
   return useCustomInfiniteQuery({
     keys: [TOKENS_BALANCE],
     config,
-    options,
+    options: { ...options, enabled: !!address },
     client,
   });
 };
