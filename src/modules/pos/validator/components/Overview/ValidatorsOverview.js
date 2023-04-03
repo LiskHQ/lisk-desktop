@@ -52,7 +52,7 @@ const Overview = ({ registrations, totalBlocks, t }) => {
           {typeof validatorsCount === 'number' ? (
             <>
               <div className={styles.chartBox}>
-                <h2 className={styles.title}>{t('Total')}</h2>
+                <h2 className={styles.title}>{t('Total validators')}</h2>
                 <div
                   className={`${styles.chart} ${styles.showOnLargeViewPort} showOnLargeViewPort`}
                 >
@@ -92,7 +92,7 @@ const Overview = ({ registrations, totalBlocks, t }) => {
         <div className={styles.column}>
           <div className={styles.centered}>
             <h2 className={styles.title}>
-              <span>{t('Generating totals')}</span>
+              <span>{t('Network stats')}</span>
             </h2>
             <div className={styles.list}>
               <NumericInfo title="Total blocks" value={totalBlocks} icon="totalBlocks" />
