@@ -51,7 +51,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
   // const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const { chainName, status, address, lastCertificateHeight, lastUpdated, projectPage } =
-    application || {};
+    application;
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
