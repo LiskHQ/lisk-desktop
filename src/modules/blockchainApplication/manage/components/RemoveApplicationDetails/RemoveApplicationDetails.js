@@ -17,8 +17,8 @@ import Illustration from 'src/modules/common/components/illustration';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 import { useBlockchainApplicationExplore } from '../../../explore/hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '../../hooks/queries/useBlockchainApplicationMeta';
+import { useApplicationManagement } from '../../hooks/useApplicationManagement';
 import styles from './RemoveApplicationDetails.css';
-// import useApplicationManagement from '../../hooks/useApplicationManagement';
 
 const deposit = 5e10;
 
@@ -48,7 +48,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
   // TODO: this needs to be reinstated when the set application flow is completed
   // because presently, there is no way to set current application on runtime
 
-  // const { deleteApplicationByChainId } = useApplicationManagement();
+  const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const { chainName, status, address, lastCertificateHeight, lastUpdated, projectPage } =
     application;
@@ -93,7 +93,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
     // TODO: this needs to be reinstated when the set application flow is completed
     // because presently, there is no way to set current application on runtime
 
-    // deleteApplicationByChainId(chainID);
+    deleteApplicationByChainId(chainId);
     nextStep({ application });
   };
 
