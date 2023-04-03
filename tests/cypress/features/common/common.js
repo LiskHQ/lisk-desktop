@@ -185,8 +185,8 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
     case 'managed application list':
       cy.contains('Add application').eq(0).should('be.visible');
       break;
-    case 'dashboard':
-      cy.url().should('include', 'dashboard');
+    case 'wallet':
+      cy.url().should('include', 'wallet');
       break;
     case 'request token modal':
       cy.hash().should('eq', '#/wallet?tab=Transactions&modal=request');
@@ -299,5 +299,5 @@ When(/^I sort by (\w+)$/, function (sortParam) {
 });
 
 Given(/^I open (\w+) modal$/, function (modal) {
-  cy.visit(`${urls.dashboard}?modal=${modal}`);
+  cy.visit(`${urls.wallet}?modal=${modal}`);
 });

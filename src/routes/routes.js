@@ -24,12 +24,6 @@ export default {
     exact: true,
     forbiddenTokens: [],
   },
-  dashboard: {
-    path: '/dashboard',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
-  },
   validators: {
     path: '/validators',
     exact: true,
@@ -106,7 +100,7 @@ export default {
   },
   wallet: {
     path: '/wallet',
-    isPrivate: true,
+    isPrivate: false,
     exact: true,
     forbiddenTokens: [],
   },

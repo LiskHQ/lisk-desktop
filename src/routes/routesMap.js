@@ -2,7 +2,6 @@ import AddBookmark from '@bookmark/manager/AddBookmarkManager';
 import BlockDetails from '@block/manager/blockDetailsManager';
 import Blocks from '@block/components/blocks';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
-import Dashboard from 'src/modules/common/components/dashboard';
 import ValidatorsMonitor from '@pos/validator/components/ValidatorsMonitorView';
 import ValidatorPerformanceModal from '@pos/validator/components/ValidatorPerformanceModal';
 import Login from '@auth/components/Signin';
@@ -77,7 +76,6 @@ export default {
   validatorProfile: ValidatorProfile,
   validatorPerformance: ValidatorPerformanceModal,
   reclaim: ReclaimBalance,
-  dashboard: Dashboard,
   addBookmark: AddBookmark,
   bookmarks: Bookmarks,
   send: Send,
