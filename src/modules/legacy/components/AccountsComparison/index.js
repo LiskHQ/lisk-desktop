@@ -20,11 +20,12 @@ const AccountsComparison = ({ t }) => {
     address: wallet.summary?.address,
     tokenID: wallet.token?.[0]?.tokenID,
   });
-  const extraCommandFee = initializationFees?.userAccount;
+  const additionalByteFee = BigInt(1000000);
+  const extraCommandFee = BigInt(initializationFees?.userAccount || 0) + additionalByteFee;
   const amount = convertFromBaseDenom(extraCommandFee, wallet.token?.[0]);
   const isInitializedAndHasEnoughBalance =
     isAccountInitialized &&
-    BigInt(wallet.token?.[0]?.availableBalance) > BigInt(extraCommandFee || 0);
+    BigInt(wallet.token?.[0]?.availableBalance) >= BigInt(extraCommandFee || 0);
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
