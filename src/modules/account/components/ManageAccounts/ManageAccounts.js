@@ -45,7 +45,7 @@ export const ManageAccountsContent = ({
   const onSelectAccount = useCallback(
     (account) => {
       setAccount(account);
-      history.push(referrer || routes.dashboard.path);
+      history.push(referrer || routes.wallet.path);
     },
     [referrer]
   );
