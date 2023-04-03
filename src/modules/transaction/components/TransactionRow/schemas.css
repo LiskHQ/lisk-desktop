@@ -1,11 +1,14 @@
 .container {
+  color: transparent;
+  margin-left: 0px;
+
   & .stakes {
     grid-area: stakes;
   }
 
   &::before {
     content: '';
-    min-width: 100%;
+    min-width: calc(100% - 30px);
     position: absolute;
     height: 1px;
     top: 0px;
@@ -25,6 +28,7 @@
       padding: 16px 8px;
       box-sizing: border-box;
       color: var(--color-content-light);
+      font-weight: var(--font-weight-normal);
     }
 
     & > *:nth-child(1) {
@@ -46,6 +50,7 @@
     & > *:nth-child(5) {
       flex-basis: 16.66666667%;
       max-width: 16.66666667%;
+      font-size: var(--paragraph-font-size-s);
     }
 
     & > *:nth-child(6) {
@@ -55,7 +60,7 @@
     }
 
     & > *:last-child {
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     @media (--medium-viewport) {

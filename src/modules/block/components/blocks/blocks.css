@@ -44,7 +44,7 @@
 }
 
 .header {
-  width: calc(100% - 119px);
+  width: 100%;
   height: calc(var(--header-height) + 45px);
 
   & ~ div:nth-child(2) {
@@ -61,5 +61,6 @@
 
   & ~ div:nth-child(3) > header:first-child {
     top: 90px;
+    border-bottom: 0px;
   }
 }
