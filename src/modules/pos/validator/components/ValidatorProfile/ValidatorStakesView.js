@@ -8,6 +8,7 @@ import BoxHeader from '@theme/box/header';
 import { Input } from 'src/theme';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useFilter } from 'src/modules/common/hooks';
+import Skeleton from 'src/modules/common/components/skeleton';
 import StakerRow from './StakerRow';
 import tableHeader from './StakersTableHeader';
 import styles from './ValidatorProfile.css';
@@ -47,9 +48,11 @@ const ValidatorStakesView = ({ address }) => {
         <BoxHeader>
           <h1>
             <span>{t('Stakers')}</span>
-            <span className={styles.totalStakes}>{`(${stakerData?.meta?.total})`}</span>
+            {!!stakerData?.meta?.total && (
+              <span className={styles.totalStakes}>{`(${stakerData?.meta?.total})`}</span>
+            )}
           </h1>
-          {stakers.length > 0 && (
+          {(stakers.length > 0 || !!searchInput) && (
             <span>
               <Input
                 onChange={handleFilter}
@@ -74,6 +77,7 @@ const ValidatorStakesView = ({ address }) => {
               t,
             }}
             header={tableHeader(t)}
+            customLoader={<Skeleton width="100%" />}
           />
         </BoxContent>
       </Box>

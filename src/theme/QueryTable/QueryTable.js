@@ -47,7 +47,7 @@ export const QueryTable = ({
       onFetched(response);
     }
   }, [isFetched]);
-
+  
   return (
     <Table
       data={transformResponse?.(response?.data) || response?.data || []}
