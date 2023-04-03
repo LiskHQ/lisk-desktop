@@ -75,7 +75,7 @@ describe('Add account by secret recovery phrase flow', () => {
       ).toBeTruthy();
       expect(screen.getByText('Download')).toBeTruthy();
 
-      fireEvent.click(screen.getByText('Continue to dashboard'));
+      fireEvent.click(screen.getByText('Continue to wallet'));
 
       expect(props.history.push).toBeCalled();
     });

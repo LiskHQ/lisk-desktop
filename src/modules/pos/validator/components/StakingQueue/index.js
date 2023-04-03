@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
-import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
+import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import StakeForm from '../StakeForm';
@@ -21,7 +21,7 @@ const StakingQueue = ({ history, processLaunchProtocol }) => {
 
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
-  const { data: tokens } = useTokensBalance({
+  const { data: tokens } = useTokenBalances({
     config: { params: { tokenID: posConstants?.posTokenID } },
     options: { enabled: !isGettingPosConstants },
   });

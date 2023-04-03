@@ -7,7 +7,7 @@ import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import StakeRow from './StakeRow';
@@ -98,7 +98,7 @@ describe('StakeForm', () => {
     props.account.token.balance = accounts.genesis.token.balance;
   });
 
-  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+  useTokenBalances.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
   useCommandSchema.mockReturnValue({
     moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(

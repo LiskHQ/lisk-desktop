@@ -57,6 +57,7 @@
   & > .stakesAvailableCounter {
     @mixin contentLarge;
 
+    color: var(--color-maastricht-blue);
     line-height: 15px;
     padding: 20px;
   }

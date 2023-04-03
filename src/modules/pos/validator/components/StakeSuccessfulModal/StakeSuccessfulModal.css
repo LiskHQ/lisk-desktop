@@ -10,6 +10,14 @@
     padding-bottom: 4px !important;
   }
 
+  & .messageLabel {
+    color: var(--color-maastricht-blue);
+  }
+
+  & .stakedHeader {
+    color: var(--color-maastricht-blue);
+  }
+
   & .footer {
     margin-top: 48px;
   }

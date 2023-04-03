@@ -16,8 +16,8 @@ function SelectNetwork({ history }) {
     setIsNetworkSwitchSuccess(isSuccess);
   };
 
-  function goToDashboard() {
-    history.push(routes.dashboard.path);
+  function goToWallet() {
+    history.push(routes.wallet.path);
   }
 
   return (
@@ -32,7 +32,7 @@ function SelectNetwork({ history }) {
           <div className={styles.contentWrapper}>
             <p className={styles.subHeader}>
               {t(
-                '"Lisk" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on "Continue to dashboard".'
+                '"Lisk" will be the default mainchain application, please select your preferred network for accessing the wallet. Once selected please click on "Continue to wallet".'
               )}
             </p>
             <div>
@@ -43,10 +43,10 @@ function SelectNetwork({ history }) {
           <NetworkSwitcherDropdown onNetworkSwitchSuccess={onNetworkSwitchSuccess} />
           <PrimaryButton
             className={`${styles.button} ${styles.continueBtn}`}
-            onClick={goToDashboard}
+            onClick={goToWallet}
             disabled={!isNetworkSwitchSuccess}
           >
-            {t('Continue to dashbord')}
+            {t('Continue to wallet')}
           </PrimaryButton>
         </div>
       </div>

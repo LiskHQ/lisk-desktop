@@ -14,7 +14,6 @@ module.exports = {
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
     'src/components/login/*.test.js',
-    'packages/views/screens/managers/dashboard/newsFeed/index.js', // This component doesn't meet the set threshold for mocha but in jest
     'src/modules/auth/components/Signup/register.test.js',
   ],
   verbose: false,
@@ -140,7 +139,6 @@ module.exports = {
     'src/modules/wallet/utils/account.js',
     'src/utils/dateTime.js',
     'src/modules/network/utils/api/index.js',
-    'src/modules/token/fungible/components/WalletDetails/WalletDetails.js',
     'src/utils/login.js',
     'src/modules/transaction/manager/transactionResult.js',
     'src/modules/search/api/index.js',
@@ -171,7 +169,6 @@ module.exports = {
     'src/modules/pos/validator/store/middlewares/staking.js',
     'src/modules/common/components/discreetMode/discreetMode.js',
     'src/modules/transaction/components/TransactionRow/components.js',
-    'src/modules/transaction/components/RecentTransactions/RecentTransactions.js',
     'src/theme/box/row.js',
     'src/modules/token/fungible/components/BalanceInfo/LockedBalanceLink.js',
     'src/modules/settings/components/customNode/readMode.js',
@@ -289,7 +286,8 @@ module.exports = {
     'src/modules/wallet/components/request/request.js',
     'src/modules/wallet/components/request/index.js',
     'src/redux/store.js',
-    'src/modules/common/components/onboarding/demo.js',
+    'src/modules/common/components/onboarding/',
+    'src/modules/account/components/AccountDetails/AccountOverview/index.js',
     'src/modules/wallet/components/multiSignature/index.js',
     'src/modules/account/hooks/useCurrentAccount.js',
     'src/modules/transaction/store/actions.js',

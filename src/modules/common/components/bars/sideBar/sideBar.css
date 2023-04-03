@@ -78,7 +78,7 @@
   margin: 4px 5px 0 5px;
 
   &:first-child {
-    margin: 0 5px 0 5px;
+    margin: 8px 5px 0 5px;
   }
 
   & .holder {

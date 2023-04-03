@@ -34,7 +34,7 @@ const LayoutSchema = {
     className: styles.sanctionedLayout,
   },
   watched: {
-    components: [...full, ValidatorStatus],
+    components: [...hosted, ValidatorRank, ValidatorStatus],
     className: styles.watchedLayout,
   },
   default: {

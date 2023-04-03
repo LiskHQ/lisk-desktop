@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Heading from 'src/modules/common/components/Heading';
 import { useFilter } from 'src/modules/common/hooks';
-import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
+import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 
 import { Input } from 'src/theme';
 import DialogLink from 'src/theme/dialog/link';
@@ -70,7 +70,7 @@ const AllTokens = ({ history }) => {
       <BoxContent>
         <QueryTable
           showHeader
-          queryHook={useTokensBalance}
+          queryHook={useTokenBalances}
           queryConfig={{ config: { params } }}
           row={TokenRow}
           header={header(t)}

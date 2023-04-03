@@ -203,7 +203,7 @@ describe('Validators monitor page', () => {
 
   it.skip('renders a page with header', () => {
     wrapper = setup(props);
-    expect(wrapper.find('BoxHeader.validators-table')).toIncludeText('Inside round');
+    expect(wrapper.find('BoxHeader.validators-table')).toIncludeText('Generators');
   });
 
   it.skip('allows to switch to standby validators', () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import DialogLink from 'src/theme/dialog/link';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './AddApplicationRow.css';
 
 const ChainName = ({ title, logo }) => (
@@ -25,7 +25,7 @@ const AddApplicationRow = ({ data, className }) => (
       component="blockChainApplicationDetails"
       data={{ chainId: data.chainID, mode: 'addApplication' }}
     >
-      <ChainName title={data.name} logo={liskLogo} />
+      <ChainName title={data.chainName} logo={getLogo(data)} />
       <DepositAmount amount={data.depositedLsk} />
     </DialogLink>
   </div>

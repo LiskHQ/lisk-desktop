@@ -3,12 +3,6 @@ import routes from 'src/routes/routes';
 const menuLinks = (t) => [
   [
     {
-      icon: 'dashboardIcon',
-      id: 'dashboard',
-      label: t('Dashboard'),
-      path: routes.dashboard.path,
-    },
-    {
       icon: 'walletIcon',
       id: 'wallet',
       label: t('Wallet'),

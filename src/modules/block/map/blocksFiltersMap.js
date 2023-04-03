@@ -19,13 +19,7 @@ const blocksFiltersMap = {
   offset: { key: 'offset', test: (num) => typeof num === 'number' && num > 0 },
   sort: {
     key: 'sort',
-    test: (str) =>
-      [
-        'height:asc',
-        'height:desc',
-        'timestamp:asc',
-        'timestamp:desc',
-      ].includes(str),
+    test: (str) => ['height:asc', 'height:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
   },
 };
 

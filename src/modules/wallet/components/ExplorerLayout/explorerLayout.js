@@ -8,7 +8,8 @@ import BoxContent from 'src/theme/box/content';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import Transactions from '@transaction/components/Explorer';
 import TransactionEvents from '@transaction/components/TransactionEvents';
-import Overview from './overview/overviewManager';
+import Overview from '../overview/overviewManager';
+import styles from './explorerLayout.css';
 
 const ExplorerLayout = ({ history }) => {
   const { t } = useTranslation();
@@ -39,7 +40,7 @@ const ExplorerLayout = ({ history }) => {
         <BoxHeader>
           <BoxTabs {...tabs} />
         </BoxHeader>
-        <BoxContent>
+        <BoxContent className={styles.containerContent}>
           {activeTab === 'transactions' ? (
             <Transactions pending={[]} address={address} />
           ) : (

@@ -67,10 +67,7 @@ describe('EnterPasswordForm', () => {
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
-      expect(decryptAccount).toHaveBeenCalledWith(
-        mockedCurrentAccount.crypto,
-        accountPassword
-      );
+      expect(decryptAccount).toHaveBeenCalledWith(mockedCurrentAccount.crypto, accountPassword);
       expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
         recoveryPhrase,
         privateKey,
