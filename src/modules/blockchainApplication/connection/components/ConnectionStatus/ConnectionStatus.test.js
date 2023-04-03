@@ -80,7 +80,7 @@ describe('ConnectionStatus', () => {
     expect(searchParams.removeSearchParamsFromUrl).toHaveBeenCalled();
   });
 
-  it('Should redirect to dashboard', () => {
+  it('Should redirect to wallet', () => {
     const newProps = {
       history: {
         ...props.history,

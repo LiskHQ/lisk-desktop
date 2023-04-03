@@ -16,7 +16,7 @@ const Register = ({ account, token, history }) => {
 
   useEffect(() => {
     if (account?.info?.[token.active].address) {
-      history.push(routes.dashboard.path);
+      history.push(routes.wallet.path);
     }
   }, [account, history, token]);
 

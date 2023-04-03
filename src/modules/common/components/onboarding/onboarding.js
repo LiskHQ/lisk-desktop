@@ -1,23 +1,53 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { useTranslation, withTranslation } from 'react-i18next';
 import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from './onboarding.css';
 
+const getOnboardingSlides = (t) => [
+  {
+    title: t('Ready to go!'),
+    content: t(
+      'The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your LSK (and much, much more).'
+    ),
+    illustration: 'hubReadyToGo',
+  },
+  {
+    title: t('Stay Informed'),
+    content: t(
+      'Keep up-to-date with announcements from the Lisk Foundation. Check what network validators have been up to with dedicated profile pages.'
+    ),
+    illustration: 'builtAroundCommunity',
+  },
+  {
+    title: t('Effortlessly send and receive tokens'),
+    content: t('Personalize each transaction with a custom message.'),
+    illustration: 'sendLSKTokens',
+  },
+  {
+    title: t('Get Involved'),
+    content: t(
+      'Community is key. Stake for validators, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.'
+    ),
+    illustration: 'timeToContribute',
+  },
+];
+
+// eslint-disable-next-line max-statements
 const Onboarding = ({
   onDiscard,
-  name,
+  name = 'dashboardOnboarding',
   finalCallback,
-  slides,
   actionButtonLabel,
   className,
-  t,
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [visibility, setVisibility] = useState(!localStorage.getItem(name) ? 'visible' : 'hidden');
   const isLoggedIn = useSelector((state) => state.wallet && state.wallet.passphrase);
+  const { t } = useTranslation();
+  const slides = getOnboardingSlides(t);
 
   const handleClose = () => {
     localStorage.setItem(name, true);
@@ -105,17 +135,6 @@ const Onboarding = ({
 };
 
 Onboarding.propTypes = {
-  slides: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      content: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-        PropTypes.arrayOf(PropTypes.node),
-      ]).isRequired,
-      illustration: PropTypes.string.isRequired,
-    })
-  ),
   actionButtonLabel: PropTypes.string,
   finalCallback: PropTypes.func,
   className: PropTypes.string,
@@ -123,7 +142,6 @@ Onboarding.propTypes = {
 };
 
 Onboarding.defaultProps = {
-  slides: [],
   className: '',
   actionButtonLabel: '',
   finalCallback: null,

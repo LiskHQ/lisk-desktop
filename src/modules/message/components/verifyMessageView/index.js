@@ -10,7 +10,7 @@ import styles from './verifyMessageView.css';
 
 export default function VerifyMessage({ t, history }) {
   function finalCallback() {
-    history.push(routes.dashboard.path);
+    history.push(routes.wallet.path);
   }
 
   return (

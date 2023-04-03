@@ -99,12 +99,12 @@ describe('Login', () => {
   });
 
   describe('History management', () => {
-    it("calls this.props.history.replace('/dashboard')", () => {
+    it("calls this.props.history.replace('/wallet')", () => {
       wrapper.setProps({
         history,
         account: { summary: { address: 'dummy' } },
       });
-      expect(props.history.replace).toHaveBeenCalledWith(`${routes.dashboard.path}`);
+      expect(props.history.replace).toHaveBeenCalledWith(`${routes.wallet.path}`);
     });
 
     it('calls this.props.history.replace with referrer address', () => {

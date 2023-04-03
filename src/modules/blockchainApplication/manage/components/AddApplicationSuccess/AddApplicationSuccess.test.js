@@ -18,11 +18,11 @@ describe('AddApplicationSuccess', () => {
     ).toBeTruthy();
   });
 
-  it('should reroute to the dashboard on success', () => {
+  it('should reroute to the wallet on success', () => {
     renderWithRouter(AddApplicationSuccess, props);
     fireEvent.click(screen.getByRole('button'));
 
     expect(props.history.push).toHaveBeenCalledTimes(1);
-    expect(props.history.push).toHaveBeenCalledWith('/dashboard');
+    expect(props.history.push).toHaveBeenCalledWith('/wallet');
   });
 });
