@@ -6,10 +6,6 @@ import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import Icon from 'src/theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
-import {
-  useApplicationManagement,
-  useCurrentApplication,
-} from '@blockchainApplication/manage/hooks';
 import { DEFAULT_NETWORK } from 'src/const/config';
 import { Client } from 'src/utils/api/client';
 import DialogLink from '@theme/dialog/link';
@@ -28,8 +24,6 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   const [selectedNetwork, setSelectedNetwork] = useState(
     mainChainNetwork || networks[DEFAULT_NETWORK]
   );
-  const { setApplications } = useApplicationManagement();
-  const [, setCurrentApplication] = useCurrentApplication();
   const queryClient = useRef(new Client({ http: selectedNetwork.serviceUrl }));
 
   const networkStatus = useNetworkStatus({
@@ -53,8 +47,6 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
     client: new Client({ http: selectedNetwork.serviceUrl }),
   });
 
-  const defaultApplications = blockchainAppsMeta.data?.data || [];
-
   const handleChangeNetwork = useCallback(
     (network) => {
       queryClient.current.create({
@@ -75,17 +67,6 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
       setValue(selectedNetwork);
     }
   }, [blockchainAppsMeta.isFetching]);
-
-  useEffect(() => {
-    if (defaultApplications.length > 0 && !networkStatus.isLoading && !networkStatus.isError) {
-      const mainChain = defaultApplications.find(
-        ({ chainID }) => chainID === networkStatus.data?.data?.chainID
-      );
-
-      if (mainChain) setCurrentApplication(mainChain);
-      setApplications(defaultApplications);
-    }
-  }, [mainChainNetwork, networkStatus.isLoading]);
 
   useEffect(() => {
     const isSuccess =
