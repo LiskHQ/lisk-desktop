@@ -1,5 +1,5 @@
 .container {
-  color: transparent;
+  text-decoration: none !important;
   margin-left: 0px;
 
   & .stakes {
@@ -48,7 +48,7 @@
     }
 
     & > *:nth-child(4) {
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semi-bold);
     }
 
     & > *:nth-child(5) {

@@ -60,7 +60,7 @@ const ValidatorStakesView = ({ address }) => {
                 name="addressFilter"
                 className="filter-by-address"
                 size="m"
-                placeholder={t('Filter by address...')}
+                placeholder={t('Filter by name or address...')}
               />
             </span>
           )}
