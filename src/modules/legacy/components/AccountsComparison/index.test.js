@@ -16,6 +16,7 @@ jest.mock('src/utils/searchParams', () => ({
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0]]),
 }));
+jest.mock('@token/fungible/hooks/queries/useGetHasUserAccount');
 jest.mock('@token/fungible/hooks/queries/useGetInitializationFees');
 
 const mockNonMigrated = wallets.non_migrated;
@@ -38,7 +39,11 @@ window.open = jest.fn();
 describe('Reclaim balance screen', () => {
   let props;
 
-  useGetInitializationFees.mockReturnValue({ data: { data: { userAccount: 5000000 } } });
+  useGetInitializationFees.mockReturnValue({
+    isAccountInitialized: true,
+    initializationFees: { userAccount: 5000000 },
+  });
+
   beforeEach(() => {
     props = {
       t: (v) => v,

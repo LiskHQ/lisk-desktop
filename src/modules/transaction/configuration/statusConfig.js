@@ -64,7 +64,9 @@ const getErrorMessage = (data, paramSchema) => {
  */
 // eslint-disable-next-line max-statements
 export const getTransactionStatus = (account, transactions, options = {}) => {
-  const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
+  const moduleCommand = joinModuleAndCommand(
+    transactions.signedTransaction || transactions.txSignatureError || transactions.txBroadcastError
+  );
   const paramSchema = options?.moduleCommandSchemas[moduleCommand];
 
   // Signature errors
@@ -83,6 +85,14 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
     return {
       code: txStatusTypes.signatureError,
       message: JSON.stringify(getErrorMessage(transactions.txSignatureError, paramSchema)),
+    };
+  }
+
+  // broadcast error
+  if (transactions.txBroadcastError) {
+    return {
+      code: txStatusTypes.broadcastError,
+      message: JSON.stringify(getErrorMessage(transactions.txBroadcastError, paramSchema)),
     };
   }
 
@@ -119,14 +129,6 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
     }
 
     return { code: txStatusTypes.signatureSuccess };
-  }
-
-  // broadcast error
-  if (transactions.txBroadcastError) {
-    return {
-      code: txStatusTypes.broadcastError,
-      message: JSON.stringify(getErrorMessage(transactions.txBroadcastError, paramSchema)),
-    };
   }
 
   // broadcast success

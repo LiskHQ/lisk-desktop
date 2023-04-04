@@ -1,3 +1,4 @@
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { getTransactionStatus } from './statusConfig';
 import { txStatusTypes } from './txStatus';
 
@@ -53,6 +54,10 @@ describe('Transaction signature status', () => {
     ],
     id: '1e2a1f670f5bf3a2d23c363e4dcbc3ab66588be601f63af74b5ac7facfb08ea5',
   };
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.commands.reduce(
+    (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+    {}
+  );
 
   it('should return transaction status for partially signed transaction', () => {
     const account = {};
@@ -61,7 +66,10 @@ describe('Transaction signature status', () => {
       signedTransaction: partiallySignedTransaction,
     };
     const isMultisignature = false;
-    const status = getTransactionStatus(account, transactions, { isMultisignature });
+    const status = getTransactionStatus(account, transactions, {
+      isMultisignature,
+      moduleCommandSchemas,
+    });
     expect(status).toEqual({ code: txStatusTypes.multisigSignaturePartialSuccess });
   });
 
@@ -75,6 +83,7 @@ describe('Transaction signature status', () => {
     const status = getTransactionStatus(account, transactions, {
       isMultisignature,
       canSenderSignTx: true,
+      moduleCommandSchemas,
     });
     expect(status).toEqual({ code: txStatusTypes.multisigSignatureSuccess });
   });
@@ -89,6 +98,7 @@ describe('Transaction signature status', () => {
     const status = getTransactionStatus(account, transactions, {
       isMultisignature,
       canSenderSignTx: true,
+      moduleCommandSchemas,
     });
     expect(status).toEqual({ code: txStatusTypes.signatureSuccess });
   });

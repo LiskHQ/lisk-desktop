@@ -25,7 +25,7 @@ const AccountsComparison = ({ t }) => {
   const amount = convertFromBaseDenom(extraCommandFee, wallet.token?.[0]);
   const isInitializedAndHasEnoughBalance =
     isAccountInitialized &&
-    BigInt(wallet.token?.[0]?.availableBalance) >= BigInt(extraCommandFee || 0);
+    BigInt(wallet.token?.[0]?.availableBalance || 0) >= BigInt(extraCommandFee || 0);
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>

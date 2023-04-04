@@ -1,7 +1,7 @@
 import { useInvokeQuery } from '@common/hooks';
 import { useGetHasUserAccount } from './useGetHasUserAccount';
 
-export const useGetInitializationFees = ({ options = {}, address, tokenID } = {}) => {
+export const useGetInitializationFees = ({ options = {}, address, tokenID }) => {
   const config = {
     data: {
       endpoint: 'token_getInitializationFees',
