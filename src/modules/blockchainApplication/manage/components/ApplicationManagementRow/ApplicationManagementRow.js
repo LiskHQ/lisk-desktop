@@ -69,7 +69,7 @@ const RightRowComponent = ({
   );
 };
 
-const ApplicationManagementRow = ({ application, history, location }) => {
+const ApplicationManagementRow = ({ className, application, history, location }) => {
   const { togglePin, checkPinByChainId } = usePinBlockchainApplication();
   const [currentApplication, setApplication] = useCurrentApplication();
 
@@ -109,7 +109,7 @@ const ApplicationManagementRow = ({ application, history, location }) => {
 
   return (
     <div
-      className={`managed-application-row ${styles.appItemWrapper} ${
+      className={`managed-application-row ${styles.appItemWrapper} ${className} ${
         isCurrentApplication ? styles.activeAppBg : ''
       } ${isTerminated ? styles.terminated : ''}`}
       onClick={handleSetCurrentApplication}

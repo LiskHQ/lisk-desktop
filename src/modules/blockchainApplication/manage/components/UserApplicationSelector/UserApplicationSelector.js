@@ -24,6 +24,7 @@ const UserApplicationSelector = ({ className, history }) => {
         <div className={styles.listWrapper}>
           {applications.map((application) => (
             <ApplicationManagementRow
+              className={styles.applicationManagementRowProp}
               key={`application-list-${application.chainID}`}
               application={application}
             />

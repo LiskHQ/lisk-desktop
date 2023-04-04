@@ -32,6 +32,10 @@
     flex-direction: column;
     row-gap: 6px;
     padding-bottom: 30px;
+
+    & .applicationManagementRowProp {
+      cursor: pointer;
+    }
   }
 
   & .addApplicationBtn {
