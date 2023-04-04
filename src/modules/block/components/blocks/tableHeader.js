@@ -1,4 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import styles from './blocks.css'
 
 export default (changeSort, t) => [
   {
@@ -23,6 +24,6 @@ export default (changeSort, t) => [
   },
   {
     title: t('Status'),
-    classList: `${grid['col-xs-3']}`,
+    classList: `${grid['col-xs-3']} ${styles.status}`,
   },
 ];

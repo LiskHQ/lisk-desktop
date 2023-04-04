@@ -111,6 +111,7 @@ const Transactions = () => {
   return (
     <Box main className="transactions-box">
       <StickyHeader
+        className={styles.header}
         title={t('All transactions')}
         filters={
           <FilterDropdownButton

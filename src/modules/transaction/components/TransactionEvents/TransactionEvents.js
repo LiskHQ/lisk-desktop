@@ -33,11 +33,11 @@ const getFilterFields = (t) => [
   },
 ];
 
-const TransactionEvents = ({ address, isWallet, hasFilter }) => {
+const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet, hasFilter }) => {
   const { t } = useTranslation();
   const { filters, clearFilters, applyFilters } = useFilter({
-    transactionID: '',
-    blockID: '',
+    transactionID,
+    blockID,
     height: '',
   });
 
