@@ -1,11 +1,10 @@
 /* eslint-disable complexity */
 /* eslint-disable max-statements */
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import Icon from 'src/theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
-import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { Client } from 'src/utils/api/client';
 import DialogLink from '@theme/dialog/link';
 import stylesSecondaryButton from '@theme/buttons/css/secondaryButton.css';
@@ -16,8 +15,8 @@ import styles from './NetworkSwitcherDropdown.css';
 
 function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   const { t } = useTranslation();
-  const { setValue: setSelectedNetwork, mainChainNetwork: selectedNetwork } =
-    useSettings('mainChainNetwork');
+  const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
+  const [selectedNetwork, setSelectedNetwork] = useState(mainChainNetwork);
   const { customNetworks } = useSettings('customNetworks');
   const networksWithCustomNetworks = [...Object.values(networks), ...customNetworks];
 
@@ -30,44 +29,25 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
     client: queryClient.current,
   });
 
-  const blockchainAppsMeta = useBlockchainApplicationMeta({
-    config: {
-      params: {
-        isDefault: true,
-        network: selectedNetwork.name,
-      },
-    },
-    options: {
-      enabled: !!networkStatus.data && !networkStatus.isLoading && !networkStatus.isError,
-      retry: false,
-    },
-    client: new Client({ http: selectedNetwork.serviceUrl }),
-  });
-
   const handleChangeNetwork = useCallback(
     (network) => {
       queryClient.current.create({
         http: network.serviceUrl,
       });
-      networkStatus.refetch();
-      setSelectedNetwork(network);
+      networkStatus.refetch().then((res) => {
+        if (!res.error) {
+          setValue(network);
+        }
+        setSelectedNetwork(network);
+      });
     },
     [networkStatus]
   );
 
   useEffect(() => {
-    const isSuccess =
-      blockchainAppsMeta.isSuccess &&
-      networkStatus.isSuccess &&
-      !blockchainAppsMeta.isFetching &&
-      !networkStatus.isFetching;
+    const isSuccess = networkStatus.isSuccess && !networkStatus.isFetching;
     onNetworkSwitchSuccess?.(isSuccess);
-  }, [
-    blockchainAppsMeta.isSuccess,
-    networkStatus.isSuccess,
-    blockchainAppsMeta.isFetching,
-    networkStatus.isFetching,
-  ]);
+  }, [networkStatus.isSuccess, networkStatus.isFetching]);
 
   return (
     <div className={styles.NetworkSwitcherDropdown}>
@@ -79,8 +59,8 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
           onChange={handleChangeNetwork}
           popupClassName={styles.networksPopup}
           className={styles.menuSelect}
-          isLoading={networkStatus.isLoading || blockchainAppsMeta.isLoading}
-          isValid={!networkStatus.isError && networkStatus.isFetched && !blockchainAppsMeta.isError}
+          isLoading={networkStatus.isLoading}
+          isValid={!networkStatus.isError && networkStatus.isFetched}
         >
           {Object.keys(networksWithCustomNetworks)
             .filter((networkKey) => networksWithCustomNetworks[networkKey].isAvailable)
@@ -102,11 +82,11 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
             })}
         </MenuSelect>
       </div>
-      {blockchainAppsMeta.isError && !blockchainAppsMeta.isFetching && (
+      {networkStatus.isError && networkStatus.isFetched && (
         <div className={styles.connectionFailedBlock}>
           <span>
             {t('Failed to connect to network!  ')}
-            <span onClick={blockchainAppsMeta.refetch}>{t('Try again')}</span>
+            <span onClick={networkStatus.refetch}>{t('Try again')}</span>
           </span>
         </div>
       )}
