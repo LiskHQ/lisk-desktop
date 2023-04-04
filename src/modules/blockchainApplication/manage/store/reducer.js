@@ -83,8 +83,7 @@ export const current = (state = initialState.current, { type, app }) => {
 const persistConfig = {
   storage,
   key: 'blockChainApplications',
-  whitelist: ['pins', 'applications'],
-  blacklist: ['current'],
+  whitelist: ['pins', 'applications', 'current'],
 };
 
 const blockChainApplicationsReducer = combineReducers({
