@@ -42,7 +42,8 @@ export function useApplicationManagement() {
   );
 
   const deleteApplicationByChainId = useCallback((chainId) => {
-    if (currentApplication.isDefault) return;
+    const userApplication = getApplicationByChainId(chainId);
+    if (userApplication.isDefault) return;
 
     dispatch(deleteApplication(chainId, mainChainNetwork.name));
     if (currentApplication.chainID === chainId) {

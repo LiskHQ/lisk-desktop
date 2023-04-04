@@ -22,6 +22,7 @@ const initialState = {
 export const pins = (state = initialState.pins, { type, chainId }) => {
   switch (type) {
     case actionTypes.toggleApplicationPin:
+    case actionTypes.deleteApplicationByChainId:
       if (state.includes(chainId) && chainId) {
         return state.filter((pinnedChainId) => pinnedChainId !== chainId);
       }

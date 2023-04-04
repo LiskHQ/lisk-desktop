@@ -20,8 +20,6 @@ import { useBlockchainApplicationMeta } from '../../hooks/queries/useBlockchainA
 import { useApplicationManagement } from '../../hooks/useApplicationManagement';
 import styles from './RemoveApplicationDetails.css';
 
-const deposit = 5e10;
-
 // eslint-disable-next-line max-statements, complexity
 const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
   const { t } = useTranslation();
@@ -45,13 +43,18 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
     options: { enabled: !!chainId },
   });
   const application = { ...onChainData?.data[0], ...offChainData?.data[0] };
-  // TODO: this needs to be reinstated when the set application flow is completed
-  // because presently, there is no way to set current application on runtime
 
   const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const { chainName, status, address, lastCertificateHeight, lastUpdated, projectPage } =
-    application;
+  const {
+    chainName,
+    status,
+    address,
+    lastCertificateHeight,
+    lastUpdated,
+    projectPage,
+    depositedLsk = 0,
+  } = application;
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -90,9 +93,6 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
   ];
 
   const handleRemoveApplication = () => {
-    // TODO: this needs to be reinstated when the set application flow is completed
-    // because presently, there is no way to set current application on runtime
-
     deleteApplicationByChainId(chainId);
     nextStep({ application });
   };
@@ -168,9 +168,8 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
           ) : (
             <div className={styles.balanceRow}>
               <span>{t('Deposited:')}</span>
-              {/* TODO: this is a placeholder value pending when its part of service response */}
               <span>
-                <TokenAmount isLsk val={deposit} />
+                <TokenAmount isLsk val={depositedLsk} />
               </span>
             </div>
           )}
