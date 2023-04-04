@@ -73,15 +73,8 @@ describe('Reclaim balance screen', () => {
 
     const wrapper = mountWithRouterAndQueryClient(Reclaim, props, {});
     wrapper.find('.link').at(0).simulate('click');
-    wrapper.find('.link').at(1).simulate('click');
     expect(window.open).toHaveBeenNthCalledWith(
       1,
-      'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
-      '_blank',
-      'rel=noopener noreferrer'
-    );
-    expect(window.open).toHaveBeenNthCalledWith(
-      2,
       'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
       '_blank',
       'rel=noopener noreferrer'

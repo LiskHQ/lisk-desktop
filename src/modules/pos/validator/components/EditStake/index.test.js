@@ -106,7 +106,7 @@ describe('EditStake', () => {
         'Input your Stake amount. This value shows how much trust you have in this validator.'
       )
     ).toBeTruthy();
-    expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
+    expect(screen.getByText('Stake amount')).toBeTruthy();
   });
 
   it('should add stake to the stakes queue', async () => {
@@ -171,7 +171,7 @@ describe('EditStake', () => {
     expect(
       screen.getByText('After changing your stake amount, it will be added to the staking queue.')
     ).toBeTruthy();
-    expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
+    expect(screen.getByText('Stake amount')).toBeTruthy();
 
     const stakingField = screen.getByTestId('stake');
 
