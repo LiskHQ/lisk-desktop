@@ -72,9 +72,9 @@ describe('TopBar', () => {
   const props = {
     t: (val) => val,
     logOut: jest.fn(),
-    location: { pathname: routes.dashboard.path, search: '' },
+    location: { pathname: routes.wallet.path, search: '' },
     history: {
-      location: { pathname: routes.dashboard.path, search: '' },
+      location: { pathname: routes.wallet.path, search: '' },
       replace: () => {},
       push: jest.fn(),
     },

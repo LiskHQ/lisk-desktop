@@ -13,7 +13,7 @@ import styles from './blocksOverview.css';
 
 const BlocksOverview = () => {
   const [activeTab, setActiveTab] = useState(10);
-  const [config, setConfig] = useState({ params: {} });
+  const [config, setConfig] = useState({ params: { limit: 10 } });
   const { data: blocks } = useBlocks({ config });
   const { t } = useTranslation();
 

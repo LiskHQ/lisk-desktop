@@ -5,7 +5,7 @@ import { renderWithRouterAndQueryClient, renderWithRouterAndStore } from 'src/ut
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockValidators, mockSentStakes } from '@pos/validator/__fixtures__';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockTokensBalance, mockAppsTokens } from '@token/fungible/__fixtures__';
@@ -73,7 +73,7 @@ describe('EditStake', () => {
     useSentStakes.mockReturnValue({ data: mockSentStakes, isSuccess: true });
     useAuth.mockReturnValue({ data: mockAuth });
     usePosConstants.mockReturnValue({ data: mockPosConstants });
-    useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+    useTokenBalances.mockReturnValue({ data: mockTokensBalance, isLoading: false });
     usePosToken.mockReturnValue({
       token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' },
     });

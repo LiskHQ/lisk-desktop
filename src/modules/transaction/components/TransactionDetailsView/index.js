@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { withRouter } from 'react-router';
 import ReactJson from 'react-json-view';
 import { useTranslation } from 'react-i18next';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { isEmpty } from 'src/utils/helpers';
 import { parseSearchParams } from 'src/utils/searchParams';
 import Box from 'src/theme/box';
@@ -25,7 +25,7 @@ const TransactionDetails = ({ location }) => {
   const transactionID = parseSearchParams(location.search).transactionID;
   const { t } = useTranslation();
   const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
-  const { data: tokens } = useTokensBalance();
+  const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 
   const {

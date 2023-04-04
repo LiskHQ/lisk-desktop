@@ -4,12 +4,12 @@ import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Icon from 'src/theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import styles from './migrationDetails.css';
 
 const MigrationDetails = ({ wallet, showBalance }) => {
   const { t } = useTranslation();
-  const { data: tokens } = useTokensBalance();
+  const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 
   return (

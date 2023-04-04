@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import BoxTabs from 'src/theme/tabs';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import Box from 'src/theme/box';
@@ -94,7 +94,7 @@ const getFields = (data = {}, token, t, currentHeight) => ({
 });
 
 const Rows = ({ data, t, currentHeight }) => {
-  const { data: tokens } = useTokensBalance();
+  const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 
   const fields = getFields(data, token, t, currentHeight);

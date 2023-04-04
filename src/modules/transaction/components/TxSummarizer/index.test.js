@@ -5,7 +5,7 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import wallets from '@tests/constants/wallets';
 import { getAddressFromBase32Address } from '@wallet/utils/account';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
@@ -77,7 +77,7 @@ describe('TxSummarizer', () => {
     };
   });
   useAuth.mockReturnValue({ data: mockAuth });
-  useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
+  useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
 
   it('should render title', () => {
     const wrapper = mount(<TxSummarizer {...props} />);

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Dialog from '@theme/dialog/dialog';
 import Box from 'src/theme/box';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
@@ -50,7 +50,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const { status, lastCertificateHeight, lastUpdated, logo } = aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
-  const { data: tokens } = useTokensBalance();
+  const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 
   const isPinned = checkPinByChainId(chainId);
@@ -88,7 +88,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     {
       header: t('Last Update'),
       className: `${styles.detailContentText} last-update`,
-      content: moment(lastUpdated).format('DD MMM YYYY'),
+      content: moment(lastUpdated * 1000).format('DD MMM YYYY'),
     },
     {
       header: t('Last Certificate Height'),
@@ -119,7 +119,12 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     );
 
   return (
-    <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
+    <Dialog
+      hasClose
+      hasBack
+      className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}
+      customBackBtn="arrowLeftTailedDark"
+    >
       <div className={styles.wrapper}>
         <BlockchainAppDetailsHeader
           application={app}

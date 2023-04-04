@@ -1,0 +1,5 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.containerContent {
+  padding-top: 5px;
+}

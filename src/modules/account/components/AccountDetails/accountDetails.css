@@ -1,4 +1,12 @@
-.content {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+.manageAccountBoxProp {
+  flex-shrink: 0;
+  width: 100%;
+  margin: 0px;
+  overflow: hidden;
+
+  & .manageAccountsContentProp {
+    & h1 {
+      display: none;
+    }
+  }
 }

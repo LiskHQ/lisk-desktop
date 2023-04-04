@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
@@ -47,7 +47,7 @@ describe('Overview', () => {
       ...tokenData,
       ...mockAppsTokens.data[idx],
     }));
-    useTokensBalance.mockReturnValue({
+    useTokenBalances.mockReturnValue({
       data: { data: mergedTokensData },
       isLoading: false,
       isSuccess: true,

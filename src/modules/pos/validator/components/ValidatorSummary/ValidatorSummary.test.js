@@ -16,7 +16,7 @@ jest.mock('react-i18next', () => ({
 describe('ValidatorSummary', () => {
   let wrapper;
   const props = {
-    validator: { ...mockValidators.data[0], nextGeneratingTime: 1661165000 },
+    validator: { ...mockValidators.data[0], nextAllocatedTime: 1661165000 },
     status: { className: 'active', value: 'Active' },
     weight: '10k',
     lastGeneratedTime: 23293993234,

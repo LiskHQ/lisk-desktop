@@ -14,7 +14,7 @@ describe('DiscreetMode Component', () => {
     },
     isDiscreetMode: true,
     location: {
-      pathname: '/dashboard',
+      pathname: '/wallet',
     },
     addresses: [],
   };

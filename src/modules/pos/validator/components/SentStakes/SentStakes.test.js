@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
@@ -70,7 +70,7 @@ describe('SentStakes', () => {
 
   it('should not display staking and token', async () => {
     useSentStakes.mockReturnValue({});
-    useTokensBalance.mockReturnValue({});
+    useTokenBalances.mockReturnValue({});
 
     renderWithRouter(SentStakes, props);
 

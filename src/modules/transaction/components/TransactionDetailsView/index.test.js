@@ -3,7 +3,7 @@ import moment from 'moment';
 import { MemoryRouter } from 'react-router';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { truncateAddress } from '@wallet/utils/account';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import i18n from 'src/utils/i18n/i18n';
 import { renderWithRouter } from 'src/utils/testHelpers';
@@ -40,7 +40,7 @@ describe('TransactionDetailsView', () => {
     fetchNextPage: mockFetchTransactionsNextPage,
   });
 
-  useTokensBalance.mockReturnValue({ data: mockAppsTokens });
+  useTokenBalances.mockReturnValue({ data: mockAppsTokens });
 
   beforeEach(() => {
     jest.clearAllMocks();
