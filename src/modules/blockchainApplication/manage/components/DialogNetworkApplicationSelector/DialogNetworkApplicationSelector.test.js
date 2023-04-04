@@ -7,7 +7,7 @@ import {
 } from '@blockchainApplication/manage/hooks';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import DialogNetworkApplicationSelector from './ModalNetworkApplicationSelector';
+import DialogNetworkApplicationSelector from './DialogNetworkApplicationSelector';
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');

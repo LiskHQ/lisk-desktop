@@ -2,7 +2,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import ApplicationManagementDropDown from './ApplicationManagementDropDown';
+import NetworkApplicationDropDownButton from './NetworkApplicationDropDownButton';
 import { useCurrentApplication } from '../../hooks/useCurrentApplication';
 
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
@@ -13,7 +13,7 @@ const mockCurrentApplication = mockManagedApplications[1];
 
 useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetApplication]);
 
-describe('ApplicationManagementDropDown', () => {
+describe('NetworkApplicationDropDownButton', () => {
   const props = {
     history: {
       push: jest.fn(),
@@ -22,7 +22,7 @@ describe('ApplicationManagementDropDown', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    renderWithRouter(ApplicationManagementDropDown, props);
+    renderWithRouter(NetworkApplicationDropDownButton, props);
   });
 
   it('should display properly', () => {
