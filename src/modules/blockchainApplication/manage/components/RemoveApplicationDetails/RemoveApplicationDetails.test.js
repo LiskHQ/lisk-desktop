@@ -1,11 +1,14 @@
 import moment from 'moment';
 import { fireEvent, screen } from '@testing-library/react';
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import {
   usePinBlockchainApplication,
   useApplicationManagement,
 } from '@blockchainApplication/manage/hooks';
+import { useBlockchainApplicationExplore } from '../../../explore/hooks/queries/useBlockchainApplicationExplore';
+import { useBlockchainApplicationMeta } from '../../hooks/queries/useBlockchainApplicationMeta';
+import { mockBlockchainApp } from '../../../explore/__fixtures__';
+import { mockBlockchainAppMeta } from '../../__fixtures__';
 import RemoveApplicationDetails from '.';
 
 const mockedPins = ['1111'];
@@ -14,6 +17,18 @@ const mockDeleteApplicationByChainId = jest.fn();
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
+jest.mock('../../../explore/hooks/queries/useBlockchainApplicationExplore');
+useBlockchainApplicationExplore.mockReturnValue({
+  data: { data: mockBlockchainApp.data },
+  isLoading: false,
+  isError: undefined,
+});
+jest.mock('../../../manage/hooks/queries/useBlockchainApplicationMeta');
+useBlockchainApplicationMeta.mockReturnValue({
+  data: { data: mockBlockchainAppMeta.data },
+  isLoading: false,
+  isError: undefined,
+});
 
 usePinBlockchainApplication.mockReturnValue({
   togglePin: mockTogglePin,
@@ -24,17 +39,15 @@ usePinBlockchainApplication.mockReturnValue({
 useApplicationManagement.mockReturnValue({
   deleteApplicationByChainId: mockDeleteApplicationByChainId,
 });
+const aggregatedApplicationData = {
+  ...mockBlockchainApp.data[0],
+  ...mockBlockchainAppMeta.data[0],
+};
 
 describe('BlockchainApplicationDetails', () => {
   const props = {
     location: {
       search: 'chainId=00000001',
-    },
-    application: {
-      data: mockBlockchainApplications[0],
-      isLoading: true,
-      loadData: jest.fn(),
-      error: false,
     },
     nextStep: jest.fn(),
     onCancel: jest.fn(),
@@ -42,18 +55,17 @@ describe('BlockchainApplicationDetails', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    renderWithRouter(RemoveApplicationDetails, props);
+    renderWithRouterAndQueryClient(RemoveApplicationDetails, props);
   });
 
   it('should display properly', () => {
-    const { chainName, address, status, lastCertificateHeight, lastUpdated } =
-      mockBlockchainApplications[0];
+    const { name, address, status, lastCertificateHeight, lastUpdated } = mockBlockchainApp.data[0];
 
-    expect(screen.getByText(chainName)).toBeTruthy();
+    expect(screen.getByText(name)).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
     expect(screen.getByText(status)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();
-    expect(screen.getByText(moment(lastUpdated).format('DD MMM YYYY'))).toBeTruthy();
+    expect(screen.getByText(moment(lastUpdated * 1000).format('DD MMM YYYY'))).toBeTruthy();
 
     expect(screen.getByText('Chain ID')).toBeTruthy();
     expect(screen.getByText('Remove application')).toBeTruthy();
@@ -79,7 +91,7 @@ describe('BlockchainApplicationDetails', () => {
       checkPinByChainId: jest.fn().mockReturnValue(false),
     });
 
-    renderWithRouter(RemoveApplicationDetails, props);
+    renderWithRouterAndQueryClient(RemoveApplicationDetails, props);
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
   });
 
@@ -91,7 +103,7 @@ describe('BlockchainApplicationDetails', () => {
   it('should remove blockchain application', () => {
     fireEvent.click(screen.getByText('Remove application now'));
     expect(props.nextStep).toHaveBeenCalledWith(
-      expect.objectContaining({ application: props.application })
+      expect.objectContaining({ application: aggregatedApplicationData })
     );
   });
 });
