@@ -12,6 +12,7 @@
 
 .content {
   padding: 0 !important;
+  margin-bottom: 31px !important;
 }
 
 .showM {
@@ -46,6 +47,8 @@
 .header {
   width: 100%;
   height: calc(var(--header-height) + 45px);
+  background-color: var(--color-body-bg);
+  z-index: 3;
 
   & > h1 {
     margin-bottom: 12px;

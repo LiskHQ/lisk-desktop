@@ -9,7 +9,7 @@ export default (changeSort, t) => [
   },
   {
     title: t('Sender'),
-    classList: grid['col-xs-3'],
+    classList: grid['col-xs-2'],
     placeholder: 'walletWithAddress',
   },
   {
@@ -22,7 +22,7 @@ export default (changeSort, t) => [
   },
   {
     title: t('Type'),
-    classList: `${grid['col-xs-2']} ${grid['col-md-2']}`,
+    classList: `${grid['col-xs-3']} ${grid['col-md-3']}`,
   },
   {
     title: t('Date'),
