@@ -29,9 +29,9 @@ const ApplicationBootstrap = ({ children }) => {
   const blockchainAppsMeta = useBlockchainApplicationMeta({
     config: {
       params: {
-        chainID: [
-          ...new Set([networkStatus?.data?.data?.chainID, currentApplication.chainID]),
-        ]?.filter(item => item).join(','),
+        chainID: [...new Set([networkStatus.data?.data?.chainID, currentApplication.chainID])]
+          .filter((item) => item)
+          .join(','),
         network: mainChainNetwork?.name,
       },
     },
