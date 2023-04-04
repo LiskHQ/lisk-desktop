@@ -36,7 +36,7 @@ export const QueryTable = ({
     addUpdate();
   };
 
-  const subHeader = !!hasUpdate && (
+  const subHeader = hasUpdate && (
     <LoadNewButton buttonClassName={`${button.className || ''}`} handleClick={handleClick}>
       {button.label}
     </LoadNewButton>
@@ -47,7 +47,7 @@ export const QueryTable = ({
       onFetched(response);
     }
   }, [isFetched]);
-  
+
   return (
     <Table
       data={transformResponse?.(response?.data) || response?.data || []}

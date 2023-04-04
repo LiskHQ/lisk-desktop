@@ -246,6 +246,8 @@ or "warn/action" ineastd of "red/green"
         Z-Indexes
   *************************/
   --normal-index: 1;
+  --sticky-index: 3;
+  --table-filter-index: 4;
   --overlay-index: 20;
   --dialog-index: 50;
 
