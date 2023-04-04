@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Box from '@theme/box';
@@ -44,6 +44,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
   });
   const application = { ...onChainData?.data[0], ...offChainData?.data[0] };
 
+  // const offChainLoading = true;
   const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
@@ -114,7 +115,9 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
     <Dialog className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         {onChainLoading || offChainLoading ? (
-          <Skeleton className={styles.skeleton} width="25%" />
+          <Box className={`${styles.headerContainer} ${styles.skeletonRowWrapper}`}>
+            <Skeleton className={styles.skeleton} width="25%" />
+          </Box>
         ) : (
           <Box className={styles.headerContainer}>
             <p>{t('Remove application')}</p>
@@ -125,7 +128,9 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
         )}
         <Box className={styles.detailsWrapper}>
           {onChainLoading || offChainLoading ? (
-            <Skeleton className={styles.skeleton} width="25%" />
+            <div className={styles.chainNameWrapper}>
+              <Skeleton className={styles.skeleton} width="25%" />
+            </div>
           ) : (
             <div className={styles.chainNameWrapper}>
               <span className="chain-name-text">{chainName}</span>
@@ -135,7 +140,9 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
             </div>
           )}
           {onChainLoading || offChainLoading ? (
-            <Skeleton className={styles.skeleton} width="25%" />
+            <Box className={styles.addressRow}>
+              <Skeleton className={styles.skeleton} width="25%" />
+            </Box>
           ) : (
             <Box className={styles.addressRow}>
               <ValueAndLabel className={styles.transactionId}>
@@ -154,7 +161,9 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
             </Box>
           )}
           {onChainLoading || offChainLoading ? (
-            <Skeleton className={styles.skeleton} width="25%" />
+            <div className={`${styles.addressRow} ${styles.skeletonRowWrapper}`}>
+              <Skeleton className={styles.skeleton} width="200px" />
+            </div>
           ) : (
             <div className={styles.addressRow}>
               <a className={`${styles.appLink}`} target="_blank" href={projectPage}>
@@ -164,7 +173,9 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
             </div>
           )}
           {onChainLoading || offChainLoading ? (
-            <Skeleton className={styles.skeleton} width="25%" />
+            <div className={`${styles.balanceRow} ${styles.skeletonRowWrapper}`}>
+              <Skeleton className={styles.skeleton} width="200px" />
+            </div>
           ) : (
             <div className={styles.balanceRow}>
               <span>{t('Deposited:')}</span>
@@ -174,7 +185,16 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
             </div>
           )}
           {onChainLoading || offChainLoading ? (
-            <Skeleton className={styles.skeleton} width="25%" />
+            <Box className={styles.footerDetailsRow}>
+              {footerDetails.map((_, idx) => (
+                <Fragment key={idx}>
+                  <Skeleton
+                    className={`${styles.skeleton} ${styles.skeletonRowWrapper}`}
+                    width="25%"
+                  />
+                </Fragment>
+              ))}
+            </Box>
           ) : (
             <Box className={styles.footerDetailsRow}>
               {footerDetails.map(({ header, content, className }, index) => (

@@ -204,6 +204,11 @@
   width: 25%;
 }
 
+.skeletonRowWrapper {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .errorWrapper {
   padding: 40px 24px;
 

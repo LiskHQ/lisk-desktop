@@ -14,21 +14,13 @@ import RemoveApplicationDetails from '.';
 const mockedPins = ['1111'];
 const mockTogglePin = jest.fn();
 const mockDeleteApplicationByChainId = jest.fn();
+const mockRefetchOnChainData = jest.fn();
+const mockRefetchOffChainData = jest.fn();
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('../../../explore/hooks/queries/useBlockchainApplicationExplore');
-useBlockchainApplicationExplore.mockReturnValue({
-  data: { data: mockBlockchainApp.data },
-  isLoading: false,
-  isError: undefined,
-});
 jest.mock('../../../manage/hooks/queries/useBlockchainApplicationMeta');
-useBlockchainApplicationMeta.mockReturnValue({
-  data: { data: mockBlockchainAppMeta.data },
-  isLoading: false,
-  isError: undefined,
-});
 
 usePinBlockchainApplication.mockReturnValue({
   togglePin: mockTogglePin,
@@ -55,6 +47,16 @@ describe('BlockchainApplicationDetails', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    useBlockchainApplicationExplore.mockReturnValue({
+      data: { data: mockBlockchainApp.data },
+      isLoading: false,
+      isError: undefined,
+    });
+    useBlockchainApplicationMeta.mockReturnValue({
+      data: { data: mockBlockchainAppMeta.data },
+      isLoading: false,
+      isError: undefined,
+    });
     renderWithRouterAndQueryClient(RemoveApplicationDetails, props);
   });
 
@@ -73,6 +75,27 @@ describe('BlockchainApplicationDetails', () => {
     expect(screen.getByText('Last Update')).toBeTruthy();
     expect(screen.getByText('Last Certificate Height')).toBeTruthy();
     expect(screen.getByText('Deposited:')).toBeTruthy();
+  });
+
+  it('should display error screen if there are API errors', () => {
+    useBlockchainApplicationExplore.mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isError: true,
+      refetch: mockRefetchOnChainData,
+    });
+    useBlockchainApplicationMeta.mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isError: true,
+      refetch: mockRefetchOffChainData,
+    });
+    renderWithRouterAndQueryClient(RemoveApplicationDetails, props);
+    expect(screen.getByText("Couldn't load application data")).toBeInTheDocument();
+    expect(screen.getByText('Try again')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Try again'));
+    expect(mockRefetchOnChainData).toHaveBeenCalledTimes(1);
+    expect(mockRefetchOffChainData).toHaveBeenCalledTimes(1);
   });
 
   it('should show application as pinned', () => {
