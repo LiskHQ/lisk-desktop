@@ -97,7 +97,6 @@ const ApplicationManagementRow = ({ className, application, history, location })
 
   const handleSetCurrentApplication = useCallback(() => {
     // Check apis here
-    console.log('isTerminated', isTerminated, application);
     if (!isTerminated) {
       if (application.serviceURLs.length > 1) {
         // redirect to select node
