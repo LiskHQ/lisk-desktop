@@ -44,7 +44,6 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
     senderAddress: wallet.summary?.address,
     extraCommandFee: initializationFees?.userAccount,
   });
-  console.log('--->>', initializationFees)
   transactionJSON.fee = transactionFee;
 
   const onSubmit = () => {
