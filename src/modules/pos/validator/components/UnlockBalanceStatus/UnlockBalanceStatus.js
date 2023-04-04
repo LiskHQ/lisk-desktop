@@ -1,10 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import { PrimaryButton } from 'src/theme/buttons';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
+import { selectModuleCommandSchemas } from 'src/redux/selectors';
 
 const TransactionStatus = ({ account, transactions, t }) => {
-  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
+  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
+  const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
 
   return (

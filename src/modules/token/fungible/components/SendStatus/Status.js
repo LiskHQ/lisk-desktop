@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
-import { isEmpty } from 'src/utils/helpers';
+import { useSelector } from 'react-redux';
+
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { PrimaryButton } from 'src/theme/buttons';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
-import DialogLink from 'src/theme/dialog/link';
+import { PrimaryButton } from '@theme/buttons';
+import DialogLink from '@theme/dialog/link';
+import { selectModuleCommandSchemas } from 'src/redux/selectors';
+import { isEmpty } from 'src/utils/helpers';
+
 import styles from './status.css';
 
 const shouldShowBookmark = (bookmarks, account, transactionJSON, token) => {
@@ -50,8 +54,10 @@ const TransactionStatus = ({
     }
   }, []);
 
+  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
+
   const showBookmark = shouldShowBookmark(bookmarks, account, transactionJSON, token);
-  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
+  const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = getMessagesDetails(transactions, status, t, false);
 
   return (

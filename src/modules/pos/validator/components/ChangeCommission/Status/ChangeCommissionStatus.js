@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { useSelector } from 'react-redux';
+import { selectModuleCommandSchemas } from 'src/redux/selectors';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
@@ -9,7 +10,8 @@ import styles from './ChangeCommissionStatus.css';
 
 const ChangeCommissionStatus = ({ transactions, account, history }) => {
   const { t } = useTranslation();
-  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
+  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
+  const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
 
   const onSuccessClick = async () => {

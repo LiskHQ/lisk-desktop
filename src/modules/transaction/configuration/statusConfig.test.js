@@ -61,7 +61,7 @@ describe('Transaction signature status', () => {
       signedTransaction: partiallySignedTransaction,
     };
     const isMultisignature = false;
-    const status = getTransactionStatus(account, transactions, isMultisignature);
+    const status = getTransactionStatus(account, transactions, { isMultisignature });
     expect(status).toEqual({ code: txStatusTypes.multisigSignaturePartialSuccess });
   });
 
@@ -72,7 +72,10 @@ describe('Transaction signature status', () => {
       signedTransaction,
     };
     const isMultisignature = true;
-    const status = getTransactionStatus(account, transactions, isMultisignature, true);
+    const status = getTransactionStatus(account, transactions, {
+      isMultisignature,
+      canSenderSignTx: true,
+    });
     expect(status).toEqual({ code: txStatusTypes.multisigSignatureSuccess });
   });
 
@@ -83,7 +86,10 @@ describe('Transaction signature status', () => {
       signedTransaction,
     };
     const isMultisignature = false;
-    const status = getTransactionStatus(account, transactions, isMultisignature, true);
+    const status = getTransactionStatus(account, transactions, {
+      isMultisignature,
+      canSenderSignTx: true,
+    });
     expect(status).toEqual({ code: txStatusTypes.signatureSuccess });
   });
 });

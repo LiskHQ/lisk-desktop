@@ -1,10 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { useCurrentAccount } from '@account/hooks';
 import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
 import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
+import { selectModuleCommandSchemas } from 'src/redux/selectors';
 
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
@@ -13,6 +15,7 @@ import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 // eslint-disable-next-line max-statements
 const Status = ({ transactions, t, transactionJSON }) => {
   const [currentAccount] = useCurrentAccount();
+  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
 
   // This is to replace previous withData implementations.
   const { txInitiatorAccount } = useTxInitiatorAccount({
@@ -36,12 +39,11 @@ const Status = ({ transactions, t, transactionJSON }) => {
     },
   });
 
-  const status = getTransactionStatus(
-    txInitiatorAccount,
-    transactions,
+  const status = getTransactionStatus(txInitiatorAccount, transactions, {
+    moduleCommandSchemas,
     isMultiSignature,
-    canSenderSignTx
-  );
+    canSenderSignTx,
+  });
 
   const template = statusMessages(t)[status.code];
   return (
