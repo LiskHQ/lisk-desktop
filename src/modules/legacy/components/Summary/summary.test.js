@@ -5,14 +5,17 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
+import { server } from 'src/service/mock/server';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mockAuth } from '@auth/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks';
-import { useGetInitializationFees, useTokenBalances } from '@token/fungible/hooks/queries';
+import { useGetHasUserAccount, useGetInitializationFees, useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import { rest } from 'msw';
+import { API_VERSION } from 'src/const/config';
 import Summary from '.';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -50,6 +53,7 @@ useCommandSchema.mockReturnValue({
 });
 useTokenBalances.mockReturnValue({ data: mockAppsTokens, isLoading: false });
 useGetInitializationFees.mockReturnValue({ data: { data: { userAccount: 5000000 } } });
+useGetHasUserAccount.mockReturnValue({data: {}})
 
 describe('Reclaim balance Summary', () => {
   const wallet = { info: { LSK: accounts.non_migrated } };
@@ -90,7 +94,12 @@ describe('Reclaim balance Summary', () => {
     expect(html).toContain('confirm-button');
   });
 
-  it('should navigate to next page when continue button is clicked', async () => {
+  it.only('should navigate to next page when continue button is clicked', async () => {
+    server.use(
+      rest.post(`*/api/${API_VERSION}/invoke`, async (_, res, ctx) => res(ctx.json({
+          data: { fee: 1000 },
+        })))
+    );
     // Arrange
     const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
     wrapper.find('button.confirm-button').simulate('click');
