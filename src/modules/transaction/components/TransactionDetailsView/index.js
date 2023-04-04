@@ -80,7 +80,7 @@ const TransactionDetails = ({ location }) => {
         label: t('Block ID'),
         value: block.id,
         canCopy: true,
-        redirectLink: `/block/?=id${block.id}`,
+        redirectLink: `/block?id=${block.id}`,
       },
       {
         label: t('Block status'),
@@ -134,7 +134,7 @@ const TransactionDetails = ({ location }) => {
             <h1>{t('Events')}</h1>
           </BoxHeader>
           <BoxContent>
-            <TransactionEvents blockId={transaction.block?.id} />
+            <TransactionEvents transactionID={transactionID} />
           </BoxContent>
         </Box>
       </div>
