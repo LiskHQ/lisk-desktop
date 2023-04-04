@@ -1,12 +1,11 @@
 /* eslint-disable complexity */
 /* eslint-disable max-statements */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import Icon from 'src/theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
-import { DEFAULT_NETWORK } from 'src/const/config';
 import { Client } from 'src/utils/api/client';
 import DialogLink from '@theme/dialog/link';
 import stylesSecondaryButton from '@theme/buttons/css/secondaryButton.css';
@@ -17,13 +16,11 @@ import styles from './NetworkSwitcherDropdown.css';
 
 function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   const { t } = useTranslation();
-  const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
+  const { setValue: setSelectedNetwork, mainChainNetwork: selectedNetwork } =
+    useSettings('mainChainNetwork');
   const { customNetworks } = useSettings('customNetworks');
   const networksWithCustomNetworks = [...Object.values(networks), ...customNetworks];
 
-  const [selectedNetwork, setSelectedNetwork] = useState(
-    mainChainNetwork || networks[DEFAULT_NETWORK]
-  );
   const queryClient = useRef(new Client({ http: selectedNetwork.serviceUrl }));
 
   const networkStatus = useNetworkStatus({
@@ -57,16 +54,6 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
     },
     [networkStatus]
   );
-
-  useEffect(() => {
-    if (
-      !blockchainAppsMeta.isLoading &&
-      !blockchainAppsMeta.isError &&
-      blockchainAppsMeta.isFetched
-    ) {
-      setValue(selectedNetwork);
-    }
-  }, [blockchainAppsMeta.isFetching]);
 
   useEffect(() => {
     const isSuccess =
