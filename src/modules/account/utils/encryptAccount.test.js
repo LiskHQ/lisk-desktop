@@ -48,9 +48,7 @@ jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue
     recoveryPhrase,
   })
 );
-jest
-  .spyOn(cryptography.encrypt, 'encryptMessageWithPassword')
-  .mockResolvedValue(crypto);
+jest.spyOn(cryptography.encrypt, 'encryptMessageWithPassword').mockResolvedValue(crypto);
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 jest.spyOn(passphrase.Mnemonic, 'validateMnemonic').mockReturnValue(true);
 jest

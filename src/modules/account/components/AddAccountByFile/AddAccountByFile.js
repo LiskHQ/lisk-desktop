@@ -28,7 +28,7 @@ const AddAccountByPassFile = ({ history, location: { search } }) => {
       <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />
       <SetPasswordSuccess
         encryptedPhrase={currentAccount}
-        onClose={() => history.push(referrer || routes.dashboard.path)}
+        onClose={() => history.push(referrer || routes.wallet.path)}
       />
     </MultiStep>
   );

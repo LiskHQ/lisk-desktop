@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import StickyHeader from '@theme/table/stickyHeader';
 import { QueryTable } from '@theme/QueryTable';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { useSort } from 'src/modules/common/hooks';
 import useFilter from 'src/modules/common/hooks/useFilter';
 import FilterBar from 'src/modules/common/components/filterBar';
@@ -25,13 +25,13 @@ const getFields = (t) => [
     type: 'date-range',
   },
   {
-    label: t('Sender'),
-    placeholder: t('Address or public key'),
+    label: t('Sender address'),
+    placeholder: t('e.g. lskzmeyea4ead534jnq9dho5vsust6h9x552zqtor'),
     name: 'senderAddress',
     type: 'address',
   },
   {
-    label: t('Type'),
+    label: t('Transaction type'),
     placeholder: t('All types'),
     name: 'moduleCommand',
     type: 'select',
@@ -62,7 +62,7 @@ const Transactions = () => {
   const activeToken = useSelector(selectActiveToken);
   const { sort, toggleSort } = useSort();
   const { filters, applyFilters, clearFilters } = useFilter({});
-  const { data: tokens } = useTokensBalance();
+  const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 
   useEffect(() => {
@@ -111,6 +111,7 @@ const Transactions = () => {
   return (
     <Box main className="transactions-box">
       <StickyHeader
+        className={styles.header}
         title={t('All transactions')}
         filters={
           <FilterDropdownButton

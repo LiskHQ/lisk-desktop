@@ -10,7 +10,7 @@ import styles from './AddApplicationSuccess.css';
 const AddApplicationSuccess = ({ history }) => {
   const { t } = useTranslation();
   const onAddSuccess = () => {
-    history.push(routes.dashboard.path);
+    history.push(routes.wallet.path);
   };
 
   return (
@@ -27,7 +27,7 @@ const AddApplicationSuccess = ({ history }) => {
         </Box>
         <Box className={styles.footer}>
           <PrimaryButton onClick={onAddSuccess} className="add-application-success-button">
-            {t('Continue to dashboard')}
+            {t('Continue to wallet')}
           </PrimaryButton>
         </Box>
       </Box>

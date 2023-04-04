@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
@@ -40,7 +40,7 @@ describe('AllTokens', () => {
     ...tokenData,
     ...mockAppsTokens.data[idx],
   }));
-  useTokensBalance.mockReturnValue({
+  useTokenBalances.mockReturnValue({
     data: { data: mergedTokensData },
     isLoading: false,
     isSuccess: true,

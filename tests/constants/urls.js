@@ -1,5 +1,4 @@
 const urls = {
-  dashboard: '/dashboard',
   wallet: '/wallet?tab=Transactions',
   wallets: '/wallets',
   send: '/wallet?modal=send',
@@ -21,7 +20,7 @@ const urls = {
   blocks: '/blocks',
   explorer: '/explorer',
   applications: '/applications',
-  mangedApplications: '/dashboard?modal=manageApplications',
+  mangedApplications: '/wallet?modal=manageApplications',
 };
 
 export default urls;

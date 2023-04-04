@@ -1,5 +1,9 @@
 .content {
   padding: 0 !important;
+
+  & > header ~ a:first-of-type::before {
+    border-top: none;
+  }
 }
 
 .dataContainer {

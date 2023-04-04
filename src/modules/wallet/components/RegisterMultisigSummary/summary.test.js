@@ -8,7 +8,7 @@ import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import Summary from './Summary';
 
@@ -94,7 +94,7 @@ describe('Multisignature Summary component', () => {
     hwManager.signTransactionByHW.mockResolvedValue({});
   });
 
-  useTokensBalance.mockReturnValue({ data: mockAppsTokens });
+  useTokenBalances.mockReturnValue({ data: mockAppsTokens });
   useAuth.mockReturnValue({ data: mockAuth });
   useCommandSchema.mockReturnValue({
     moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(

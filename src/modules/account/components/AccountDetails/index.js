@@ -1,51 +1,24 @@
 /* eslint-disable max-statements */
 /* istanbul ignore file */
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { compose } from 'redux';
-import { parseSearchParams, addSearchParamsToUrl } from 'src/utils/searchParams';
-import { selectActiveToken, selectSettings, selectTransactions } from 'src/redux/selectors';
-import Transactions from '@transaction/components/Explorer';
-import Overview from '@wallet/components/overview/overviewManager';
+import { addSearchParamsToUrl, parseSearchParams } from 'src/utils/searchParams';
 
 import Box from 'src/theme/box';
-import BoxTabs from 'src/theme/tabs';
 import BoxHeader from 'src/theme/box/header';
-import BoxContent from 'src/theme/box/content';
-import TransactionEvents from '@transaction/components/TransactionEvents';
-import { useCurrentAccount } from '../../hooks';
+import { isEmpty } from 'src/utils/helpers';
+import WelcomeView from '@account/components/AccountDetails/WelcomeView';
+import { ManageAccountsContent } from '@account/components/ManageAccounts';
+import AccountOverview from '@account/components/AccountDetails/AccountOverview';
+import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './accountDetails.css';
 
 const AccountDetails = ({ history }) => {
+  const [currentAccount] = useCurrentAccount();
+  const { accounts } = useAccounts();
   const { t } = useTranslation();
-  const [
-    {
-      metadata: { address: currentAddress },
-    },
-  ] = useCurrentAccount();
-  const activeToken = useSelector(selectActiveToken);
-  const { discreetMode } = useSelector(selectSettings);
-  const { confirmed } = useSelector(selectTransactions);
-  const [activeTab, setActiveTab] = useState('transactions');
-
-  const tabs = {
-    tabs: [
-      {
-        value: 'transactions',
-        name: t('Transactions'),
-        className: 'transactions',
-      },
-      {
-        value: 'events',
-        name: t('Events'),
-        className: 'events',
-      },
-    ],
-    active: activeTab,
-    onClick: ({ value }) => setActiveTab(value),
-  };
 
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
@@ -53,28 +26,35 @@ const AccountDetails = ({ history }) => {
       addSearchParamsToUrl(history, { modal: 'send' });
     }
   }, []);
-  return (
-    <section>
-      <Overview
-        isWalletRoute
-        activeToken={activeToken}
-        discreetMode={discreetMode}
-        transactions={confirmed}
-      />
-      <Box>
-        <BoxHeader>
-          <BoxTabs {...tabs} />
-        </BoxHeader>
-        <BoxContent className={styles.content}>
-          {activeTab === 'transactions' ? (
-            <Transactions address={currentAddress} />
-          ) : (
-            <TransactionEvents isWallet hasFilter address={currentAddress} />
-          )}
-        </BoxContent>
-      </Box>
-    </section>
-  );
+
+  function renderComponent() {
+    const isFistAccount = isEmpty(currentAccount) && accounts.length === 0;
+    const hasAccount = isEmpty(currentAccount) && accounts.length > 0;
+
+    if (isFistAccount) {
+      return <WelcomeView />;
+    }
+    if (hasAccount) {
+      return (
+        <section>
+          <Box className={styles.manageAccountBoxProp}>
+            <BoxHeader>
+              <h1>{t('Manage accounts')}</h1>
+            </BoxHeader>
+            <ManageAccountsContent
+              truncate
+              isRemoveAvailable
+              history={history}
+              className={styles.manageAccountsContentProp}
+            />
+          </Box>
+        </section>
+      );
+    }
+    return <AccountOverview />;
+  }
+
+  return renderComponent();
 };
 
 export default compose(withRouter)(AccountDetails);

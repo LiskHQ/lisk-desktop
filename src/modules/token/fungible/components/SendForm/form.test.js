@@ -26,7 +26,7 @@ import Form from './SendForm';
 import {
   useGetInitializationFees,
   useGetMinimumMessageFee,
-  useTokensBalance,
+  useTokenBalances,
   useTokensSupported,
 } from '../../hooks/queries';
 import { useTransferableTokens } from '../../hooks';
@@ -49,7 +49,7 @@ describe('Form', () => {
   let props;
   let bookmarks;
 
-  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
+  useTokenBalances.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
   useTokensSupported.mockReturnValue({
     data: mockTokensSupported,
     isLoading: false,

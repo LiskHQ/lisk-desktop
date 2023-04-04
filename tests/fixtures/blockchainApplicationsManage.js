@@ -12,10 +12,11 @@ const blockchainApplicationsManage = [
     lastUpdated: 123456789,
     lastCertificateHeight: 9000,
     isDefault: true,
+    networkType: 'devnet',
   },
   {
     chainName: 'Colecti',
-    chainID: 'mi34vyyd12g2lkf0rza1irws',
+    chainID: '00000002',
     status: 'active',
     serviceURLs: [{ rest: 'https://service.colecti.com', ws: 'wss://service.colecti.com' }],
     address: 'lsk2423d5u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
@@ -26,10 +27,11 @@ const blockchainApplicationsManage = [
     lastUpdated: 123789456,
     lastCertificateHeight: 1111,
     isDefault: true,
+    networkType: 'devnet',
   },
   {
     chainName: 'Enevti',
-    chainID: 'aq86llsb35u4syc8aet7xenf',
+    chainID: '00000003',
     status: 'active',
     serviceURLs: [{ rest: 'https://service.enevti.com', ws: 'wss://service.enevti.com' }],
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazvftqg5eu',
@@ -40,10 +42,11 @@ const blockchainApplicationsManage = [
     lastCertificateHeight: 700,
     lastUpdated: 456123789,
     isDefault: true,
+    networkType: 'devnet',
   },
   {
     chainName: 'DoEdu',
-    chainID: 'aq96eeqk77r4syc8aet9fcey',
+    chainID: '00000004',
     status: 'terminated',
     serviceURLs: [{ rest: 'https://service.doedu.com', ws: 'wss://service.doedu.com' }],
     address: 'lsk24cd35u4jdq8szo3pnsqe5dmdfrnazyqqqg5eu',
@@ -54,10 +57,11 @@ const blockchainApplicationsManage = [
     lastUpdated: 789123456,
     lastCertificateHeight: 100,
     isDefault: false,
+    networkType: 'devnet',
   },
   {
     chainName: 'Kalipo',
-    chainID: 'aq25derd17a4syc8aet3pryt',
+    chainID: '00000005',
     status: 'active',
     serviceURLs: [
       { rest: 'https://service.kalipo.com', ws: 'wss://service.kalipo.com' },
@@ -71,10 +75,11 @@ const blockchainApplicationsManage = [
     lastCertificateHeight: 10000,
     lastUpdated: 789456123,
     isDefault: false,
+    networkType: 'devnet',
   },
   {
     chainName: 'Lisk DEX',
-    chainID: 'dz38fkbb35u4jdq8szo3pnsq',
+    chainID: '00000006',
     status: 'active',
     serviceURLs: [{ rest: 'https://service.liskdex.com', ws: 'wss://service.liskdex.com' }],
     address: 'lsk24cd35u4fwq8szo3pnsqe5dsxwrnazyqqqg5eu',
@@ -85,6 +90,7 @@ const blockchainApplicationsManage = [
     lastCertificateHeight: 900,
     lastUpdated: 123456789,
     isDefault: true,
+    networkType: 'devnet',
   },
 ];
 

@@ -3,7 +3,7 @@ import { mockTransactions } from '@transaction/__fixtures__';
 import { useTransactions } from '@transaction/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { useValidators } from '../../hooks/queries';
 import LatestStakes from './index';
 import { mockValidators } from '../../__fixtures__';
@@ -21,7 +21,7 @@ describe('Latest stakes', () => {
   };
 
   usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
-  useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
+  useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
 
   it('displays initial table of stakes', () => {
     useValidators.mockReturnValue({
