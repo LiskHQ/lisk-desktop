@@ -78,7 +78,7 @@ const ApplicationManagementRow = ({ className, application, history, location })
     () => currentApplication?.chainID === application.chainID,
     [currentApplication, application]
   );
-  const isTerminated = useMemo(() => application.state === 'terminated', [application.state]);
+  const isTerminated = useMemo(() => application.status === 'terminated', [application.status]);
 
   const handleTogglePin = useCallback((event) => {
     event.stopPropagation();
@@ -97,6 +97,7 @@ const ApplicationManagementRow = ({ className, application, history, location })
 
   const handleSetCurrentApplication = useCallback(() => {
     // Check apis here
+    console.log('isTerminated', isTerminated, application);
     if (!isTerminated) {
       if (application.serviceURLs.length > 1) {
         // redirect to select node
