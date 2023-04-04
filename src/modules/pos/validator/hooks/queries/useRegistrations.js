@@ -12,7 +12,7 @@ const registrationsConfig = {
   url: `/api/${API_VERSION}/transactions`,
   method: 'get',
   event: 'get.transactions',
-  params: { limit: 100 /* moduleCommand: 'pos:registerValidator' */ },
+  params: { limit: 100, moduleCommand: 'pos:registerValidator' },
 };
 const monthDuration = 2674800;
 
@@ -29,13 +29,18 @@ const getDate = (timestamp) => {
  */
 // eslint-disable-next-line max-statements
 export const useRegistrations = () => {
-  const { data: validators = { meta: { total: 0 } }, isLoading: isValidatorsLoading } = useCustomQuery({
+  const {
+    data: validators = { meta: { total: 0 } },
+    isLoading: isValidatorsLoading,
+    isFetched: isValidatorsFetched,
+  } = useCustomQuery({
     keys: [GENERATOR],
     config: totalValidatorsConfig,
   });
   const {
     data: registrations = { data: [], meta: { total: 0 } },
     isLoading: isRegistrationsLoading,
+    isFetched: isRegistrationsFetched,
   } = useCustomQuery({
     keys: [REGISTRATIONS],
     config: registrationsConfig,
@@ -64,6 +69,7 @@ export const useRegistrations = () => {
   const labels = getAmountOfValidatorsLabels(chartData);
   const values = getAmountOfValidatorsInTime(chartData);
   const isLoading = isValidatorsLoading || isRegistrationsLoading;
+  const isFetched = isValidatorsFetched && isRegistrationsFetched;
 
   return {
     data: {
@@ -71,5 +77,6 @@ export const useRegistrations = () => {
       values,
     },
     isLoading,
+    isFetched,
   };
 };
