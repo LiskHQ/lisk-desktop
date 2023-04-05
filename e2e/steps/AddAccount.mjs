@@ -1,16 +1,13 @@
 /* eslint-disable new-cap */
 import { Given, When } from '@cucumber/cucumber';
-import { chromium } from 'playwright';
 import { expect } from '@playwright/test';
+import routes from '../fixtures/routes.mjs';
 
-Given('I navigate to page {string}', async (props) => {
-  const browser = await chromium.launch({ headless: false });
-  const context = await browser.newContext();
+Given('I navigate to page {string}', async function (pageName) {
+  await this.openUrl(`http://localhost:8080/#${routes[pageName]}`);
 
-  const page = await context.newPage();
-  await page.goto('http://localhost:8080/#/');
-
-  expect(page.getByText('lisk')).toContain('lisk');
+  this.page.getByText('oqijewiqjwiejfaqwdofnaowejf ').click()
+  // expect(this.page.getByText('Choose an option to add your account to Lisk wallet.')).toHaveText('Add your account');
 });
 
 When(/^I go to page: (\w+)$/, () => {
