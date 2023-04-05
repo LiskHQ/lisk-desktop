@@ -1,3 +1,5 @@
+![Logo](./docs/assets/banner_desktop.png)
+
 # Lisk Desktop
 
 [![Build Status](https://jenkins.lisk.com/buildStatus/icon?job=lisk-desktop/development)](https://jenkins.lisk.com/job/lisk-desktop/job/development)
@@ -5,8 +7,6 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/LiskHQ/lisk-desktop)
 [![DeepScan grade](https://deepscan.io/api/teams/6759/projects/8871/branches/113511/badge/grade.svg)](https://deepscan.io/wallet#view=project&tid=6759&pid=8871&bid=113511)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
-![Discord](https://img.shields.io/discord/405002561775599619)
 [![GitHub issues](https://img.shields.io/github/issues/LiskHQ/lisk-desktop)](https://github.com/LiskHQ/lisk-desktop/issues)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/liskhq/lisk-desktop)
 
@@ -208,7 +208,7 @@ npm run cypress:run
 ├── coverage/                      # Results of Jest test coverage.
 ├── dist/                          # Platform specific built outputs.
 ├── docs/                          # Project documentations such as contribution guides and development guidelines.
-├── i18n/                          # Localization files inluding setup scripts and translation json files.
+├── i18n/                          # Localization files including setup scripts and translation json files.
 ├── libs/                          # Modules which can be consumed individually in other projects.
 ├── node_modules/                  # 3rd-party libraries and utilities.
 ├── src/                           # Application source code.
