@@ -184,7 +184,7 @@ const signAndDispatchTransaction = async (
       senderAccount,
     })
   );
-  
+
   if (!error) {
     dispatch({
       type: txActionTypes.transactionCreatedSuccess,
