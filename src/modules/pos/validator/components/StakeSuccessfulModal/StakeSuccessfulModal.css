@@ -19,7 +19,14 @@
   }
 
   & .footer {
-    margin-top: 48px;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > button.actionButton {
+      width: 80%;
+    }
   }
 
   & > div:nth-child(2) {
