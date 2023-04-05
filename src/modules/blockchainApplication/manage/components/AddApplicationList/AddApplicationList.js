@@ -48,7 +48,7 @@ const AddApplicationList = () => {
             transformResponse={(response) => useMergeApplicationExploreAndMetaData(response)}
             row={AddApplicationRow}
             headerClassName={styles.tableHeader}
-            header={header(t)}
+            header={header}
             additionalRowProps={{ t }}
             emptyState={{
               message: t('There are no blockchain applications.'),
