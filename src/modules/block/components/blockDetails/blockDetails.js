@@ -149,14 +149,18 @@ const BlockDetails = ({ height, id }) => {
   };
 
   return (
-    <div>
+    <div className={styles.blockDetailsWrapper}>
       <Box isLoading={isLoading} width="full">
         <BoxHeader>
           <h1>{t('Block details')}</h1>
         </BoxHeader>
-        <BoxContent>
+        <BoxContent className={error ? styles.errorFeedbackWrapper : ''}>
           {error ? (
-            <Feedback message={t('Failed to load block details.')} status="error" />
+            <Feedback
+              className={styles.feedback}
+              message={t('Failed to load block details.')}
+              status="error"
+            />
           ) : (
             <Rows data={blocks?.data?.[0] || {}} currentHeight={currentHeight} t={t} />
           )}
@@ -170,7 +174,7 @@ const BlockDetails = ({ height, id }) => {
           {activeTab === 'transactions' ? (
             <Transactions blockId={id} />
           ) : (
-            <TransactionEvents blockId={id} />
+            <TransactionEvents blockID={id} />
           )}
         </BoxContent>
       </Box>
