@@ -10,6 +10,7 @@ import Input from '@theme/Input';
 import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
 import { imPush } from 'src/utils/immutableUtils';
+import { regex } from 'src/const/regex';
 import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
@@ -62,6 +63,7 @@ const DialogAddNetwork = () => {
               status={errors.serviceUrl?.message ? 'error' : undefined}
               {...register('serviceUrl', {
                 required: 'Service URL is required',
+                pattern: { value: regex.url, message: t('Invalid URL') },
               })}
             />
             <PrimaryButton type="submit" className={`${styles.button}`}>
