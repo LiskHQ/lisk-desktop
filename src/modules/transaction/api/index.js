@@ -12,7 +12,6 @@ import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleComman
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
-import { getValidators } from '@pos/validator/api';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';
@@ -63,64 +62,6 @@ export const getTransactions = ({ network, params, baseUrl }) => {
     params: normParams,
     baseUrl,
   });
-};
-
-/**
- * Fetches and generates an array of monthly number of validator
- * registrations on Lisk blockchain.
- *
- * @param {Object} Network - Network setting from Redux store
- * @returns {Promise} Registered validators list API call
- */
-export const getRegisteredValidators = async ({ network }) => {
-  const validators = await getValidators({
-    network,
-    params: { limit: 1 },
-  });
-  const txs = await getTransactions({
-    network,
-    params: { moduleCommand: 'pos:registerValidator', limit: 100 },
-  });
-
-  if (validators.error || txs.error) {
-    return Error('Error fetching data.');
-  }
-
-  const getDate = (timestamp) => {
-    const d = new Date(timestamp * 1000);
-    return `${new Date(d).getFullYear()}-${new Date(d).getMonth() + 1}`;
-  };
-
-  // create monthly number of registration as a dictionary
-  const monthStats = txs.data
-    .map((tx) => tx.block.timestamp)
-    .reduce((acc, timestamp) => {
-      const date = getDate(timestamp);
-      acc[date] = typeof acc[date] === 'number' ? acc[date] + 1 : 1;
-      return acc;
-    }, {});
-
-  // Create a sorted array of monthly accumulated number of registrations
-  const res = Object.keys(monthStats)
-    .sort((a, b) => -1 * (b - 1))
-    .reduce(
-      (acc, month) => {
-        if (acc[0][0] === month) {
-          acc.unshift([null, acc[0][1] - monthStats[month]]);
-        } else if (acc[0][0] === null) {
-          acc[0][0] = month;
-          acc.unshift([null, acc[0][1] - monthStats[month]]);
-        }
-
-        return acc;
-      },
-      [[getDate(txs.data[0].block.timestamp), validators.meta.total]]
-    );
-
-  // Add the date of one month before the last tx
-  res[0][0] = getDate(txs.data[txs.data.length - 1].block.timestamp - 2670000);
-
-  return res;
 };
 
 /**
