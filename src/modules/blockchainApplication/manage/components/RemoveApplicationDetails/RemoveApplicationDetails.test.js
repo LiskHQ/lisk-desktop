@@ -91,7 +91,7 @@ describe('BlockchainApplicationDetails', () => {
       refetch: mockRefetchOffChainData,
     });
     renderWithRouterAndQueryClient(RemoveApplicationDetails, props);
-    expect(screen.getByText("Couldn't load application data")).toBeInTheDocument();
+    expect(screen.getByText('Error loading application data')).toBeInTheDocument();
     expect(screen.getByText('Try again')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Try again'));
     expect(mockRefetchOnChainData).toHaveBeenCalledTimes(1);

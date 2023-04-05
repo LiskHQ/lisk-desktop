@@ -110,7 +110,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
       <Dialog hasClose className={`${grid.row} ${grid['center-xs']}`}>
         <div className={`${styles.wrapper} ${styles.errorWrapper}`}>
           <Illustration name="applicationDetailsError" />
-          <div className={styles.errorText}>{t("Couldn't load application data")}</div>
+          <div className={styles.errorText}>{t('Error loading application data')}</div>
           <div className={styles.retryBtn}>
             <TertiaryButton onClick={reloadAppDetails}>Try again</TertiaryButton>
           </div>
