@@ -8,7 +8,7 @@ export default (t) => [
   },
   {
     title: t('Sender'),
-    classList: grid['col-xs-3'],
+    classList: grid['col-xs-2'],
   },
   {
     title: t('Height'),
@@ -16,7 +16,7 @@ export default (t) => [
   },
   {
     title: t('Type'),
-    classList: `${grid['col-xs-3']} ${grid['col-md-2']}`,
+    classList: `${grid['col-xs-4']} ${grid['col-md-3']}`,
   },
   {
     title: t('Date'),
