@@ -2,7 +2,6 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { getTotalSpendingAmount, convertBinaryToString } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
-import * as validators from '@pos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
 import { fromTransactionJSON } from '@transaction/utils/encoding';
@@ -13,7 +12,6 @@ import {
   getTransactions,
   getTransactionStats,
   getTransactionFee,
-  getRegisteredValidators,
   dryRun,
 } from './index';
 
@@ -28,10 +26,6 @@ jest.mock('src/utils/api/http', () =>
 jest.mock('src/utils/api/ws', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
 );
-
-jest.mock('@pos/validator/api', () => ({
-  getValidators: jest.fn(),
-}));
 
 describe('API: LSK Transactions', () => {
   const sampleId = 'sample_id';
@@ -107,47 +101,6 @@ describe('API: LSK Transactions', () => {
         baseUrl: undefined,
         params: {},
       });
-    });
-  });
-
-  describe('getRegisteredValidators', () => {
-    beforeEach(() => {
-      http.mockReset();
-    });
-
-    it('should throw if any of the API endpoints throw', async () => {
-      // Mock promise failure
-      http.mockRejectedValue(Error('Error fetching data.'));
-
-      // call and anticipate failure
-      await expect(getRegisteredValidators({ network })).rejects.toThrow('Error fetching data.');
-    });
-
-    it('should return correct stats of registered validators', async () => {
-      // create sample validator registration transactions
-      const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4].map((d) => ({
-        block: { timestamp: new Date(`2020-${d}-1`).getTime() / 1000 },
-      }));
-
-      // mock internals
-      validators.getValidators.mockResolvedValue({
-        data: {},
-        meta: { total: 100 },
-      });
-      http.mockResolvedValue({
-        data: txs,
-        meta: { total: 10 },
-      });
-
-      // Call and expect right values
-      const response = await getRegisteredValidators({ network });
-      expect(response).toEqual([
-        ['2020-3', 90],
-        ['2020-4', 93],
-        ['2020-5', 96],
-        ['2020-6', 99],
-        ['2020-7', 100],
-      ]);
     });
   });
 

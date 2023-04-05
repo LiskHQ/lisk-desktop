@@ -25,7 +25,7 @@ import { useValidators } from '../../hooks/queries';
 import styles from './Validators.css';
 
 // eslint-disable-next-line max-statements
-const ValidatorsMonitor = ({ watchList, registrations }) => {
+const ValidatorsMonitor = ({ watchList }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const { filters, setFilter } = useFilter({});
@@ -150,7 +150,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
         </div>
       </BoxHeader>
       {activeDetailTab === 'overview' ? (
-        <ValidatorsOverview registrations={registrations} t={t} totalBlocks={total} />
+        <ValidatorsOverview t={t} totalBlocks={total} />
       ) : (
         <GeneratingDetails
           t={t}
