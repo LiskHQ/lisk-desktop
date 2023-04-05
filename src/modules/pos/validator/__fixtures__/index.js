@@ -4,3 +4,4 @@ export * from './mockReceivedStakes';
 export * from './mockUnlocks';
 export * from './mockGenerators';
 export * from './mockGenerator';
+export * from './mockRegistrations';

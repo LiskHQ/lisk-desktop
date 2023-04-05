@@ -60,10 +60,6 @@
     padding: 8px;
     border-radius: 3px;
     white-space: nowrap;
-
-    & a {
-      text-decoration: none;
-    }
   }
 
   & .primaryText {

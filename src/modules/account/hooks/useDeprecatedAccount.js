@@ -4,7 +4,7 @@ import { useValidators, useSentStakes, useUnlocks } from '@pos/validator/hooks/q
 import { useAuth } from '@auth/hooks/queries';
 import { useLegacy } from '@legacy/hooks/queries';
 import { useDispatch } from 'react-redux';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import authActionTypes from '@auth/store/actionTypes';
 import { useCurrentAccount } from './useCurrentAccount';
 
@@ -171,7 +171,7 @@ export const useDeprecatedAccount = (accountInfo) => {
     data: token,
     isLoading: isTokenLoading,
     isSuccess: isTokenSuccess,
-  } = useTokensBalance({ config: { params: { address } } });
+  } = useTokenBalances({ config: { params: { address } } });
   useEffect(() => {
     if (!isTokenSuccess) {
       return;

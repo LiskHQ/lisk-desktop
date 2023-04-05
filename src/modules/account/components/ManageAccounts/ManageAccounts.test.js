@@ -53,7 +53,7 @@ describe('Account Select Form', () => {
 
   it('Should trigger the onSelectAccount callback', async () => {
     fireEvent.click(screen.getByTestId(firstItemAddress));
-    expect(history.location.pathname).toEqual(routes.dashboard.path);
+    expect(history.location.pathname).toEqual(routes.wallet.path);
   });
 
   it('should show and hide remove button', async () => {

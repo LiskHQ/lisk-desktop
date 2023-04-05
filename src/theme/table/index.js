@@ -80,6 +80,7 @@ const Table = ({
   additionalRowProps,
   showHeader,
   isFetching,
+  customLoader,
 }) => (
   <>
     <List
@@ -109,7 +110,12 @@ const Table = ({
       canLoadMore={canLoadMore}
       error={error}
     />
-    <TableLoadingState header={header} isFetching={isFetching} count={data.length === 0 ? 5 : 1} />
+    {isFetching && customLoader}
+    <TableLoadingState
+      header={header}
+      isFetching={isFetching && !customLoader}
+      count={data.length === 0 ? 5 : 1}
+    />
   </>
 );
 

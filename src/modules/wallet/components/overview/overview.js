@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import TokenCard from '@wallet/components/TokenCard';
 import TokenCarousel from '@wallet/components/TokenCarousel/TokenCarousel';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
@@ -54,7 +54,7 @@ const Overview = ({ isWalletRoute, history }) => {
 
   const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
-  const { data: tokens, isLoading, error } = useTokensBalance({ config: { params: { address } } });
+  const { data: tokens, isLoading, error } = useTokenBalances({ config: { params: { address } } });
   const host = wallet.summary?.address ?? '';
 
   const showWarning = () => {

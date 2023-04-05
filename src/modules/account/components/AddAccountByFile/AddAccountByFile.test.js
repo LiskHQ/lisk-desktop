@@ -64,7 +64,7 @@ describe('Add account by file flow', () => {
     fireEvent.click(screen.getByText('Continue'));
     await waitFor(() => {
       expect(screen.getByText("Perfect! You're all set")).toBeTruthy();
-      fireEvent.click(screen.getByText('Continue to dashboard'));
+      fireEvent.click(screen.getByText('Continue to wallet'));
       expect(props.history.push).toBeCalled();
     });
   });

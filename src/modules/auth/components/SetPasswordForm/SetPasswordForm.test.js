@@ -25,9 +25,7 @@ const recoveryPhrase =
 const mockSetAccount = jest.fn();
 
 jest.mock('react-i18next');
-jest
-  .spyOn(cryptography.encrypt, 'encryptMessageWithPassword')
-  .mockResolvedValue(crypto);
+jest.spyOn(cryptography.encrypt, 'encryptMessageWithPassword').mockResolvedValue(crypto);
 jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(
   JSON.stringify({
     recoveryPhrase,

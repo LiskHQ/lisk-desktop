@@ -15,7 +15,7 @@ import Send from './index';
 import {
   useGetInitializationFees,
   useGetMinimumMessageFee,
-  useTokensBalance,
+  useTokenBalances,
   useTokensSupported,
 } from '../../hooks/queries';
 import { useTransferableTokens } from '../../hooks';
@@ -43,7 +43,7 @@ useApplicationManagement.mockReturnValue({
 
 useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
 useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
-useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
+useTokenBalances.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
 useTokensSupported.mockReturnValue({
   data: mockTokensSupported,
   isLoading: false,

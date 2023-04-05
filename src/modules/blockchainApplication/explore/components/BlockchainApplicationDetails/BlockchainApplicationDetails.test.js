@@ -66,7 +66,7 @@ describe('BlockchainApplicationDetails', () => {
     expect(screen.getByText(name)).toBeTruthy();
     expect(screen.getByText(status)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();
-    expect(screen.getByText(moment(lastUpdated).format('DD MMM YYYY'))).toBeTruthy();
+    expect(screen.getByText(moment(lastUpdated * 1000).format('DD MMM YYYY'))).toBeTruthy();
 
     expect(screen.getByText('Chain ID')).toBeTruthy();
     expect(screen.getByText('Status')).toBeTruthy();

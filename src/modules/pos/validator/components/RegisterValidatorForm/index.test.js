@@ -1,6 +1,6 @@
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 import * as keys from '@tests/constants/keys';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
@@ -15,7 +15,7 @@ import { usePosConstants } from '../../hooks/queries';
 const mockCurrentAccount = mockSavedAccounts[0];
 
 jest.mock('../../hooks/queries/usePosConstants');
-jest.mock('@token/fungible/hooks/queries/useTokensBalance');
+jest.mock('@token/fungible/hooks/queries/useTokenBalances');
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
 }));
@@ -76,7 +76,7 @@ describe('RegisterValidatorForm', () => {
 
   usePosConstants.mockReturnValue({ data: mockPosConstants });
   usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
-  useTokensBalance.mockReturnValue({
+  useTokenBalances.mockReturnValue({
     data: {
       ...mockTokensBalance,
       data: mockTokensBalance.data.map((token) => ({

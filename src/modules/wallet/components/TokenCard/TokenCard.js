@@ -12,12 +12,17 @@ const liskSymbol = 'LSK';
 const TokenCard = ({ token }) => {
   const { symbol, availableBalance, lockedBalances } = token;
 
-  const totalLockedBalance = lockedBalances?.reduce((accum, { amount }) => BigInt(amount) + accum, BigInt(0));
+  const totalLockedBalance = lockedBalances?.reduce(
+    (accum, { amount }) => BigInt(amount) + accum,
+    BigInt(0)
+  );
 
   return (
     <div data-testid="token-card" className={styles.wrapper}>
       <div
-        className={!totalLockedBalance || symbol?.toUpperCase?.() !== liskSymbol ? styles.vCenter : ''}
+        className={
+          !totalLockedBalance || symbol?.toUpperCase?.() !== liskSymbol ? styles.vCenter : ''
+        }
       >
         <img alt={symbol} className={styles.tokenLogo} src={getLogo(token)} />
       </div>

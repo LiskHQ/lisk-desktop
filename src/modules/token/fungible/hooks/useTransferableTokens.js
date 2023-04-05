@@ -1,5 +1,5 @@
 import { useMemo, useRef } from 'react';
-import { useTokensBalance, useTokensSupported } from '@token/fungible/hooks/queries';
+import { useTokenBalances, useTokensSupported } from '@token/fungible/hooks/queries';
 import { Client } from 'src/utils/api/client';
 
 export const useTransferableTokens = (application) => {
@@ -10,7 +10,7 @@ export const useTransferableTokens = (application) => {
     data: { data: myTokens = [] } = {},
     isSuccess: isTokensSuccess,
     isLoading: isTokenLoading,
-  } = useTokensBalance();
+  } = useTokenBalances();
   const {
     data: { data: { supportedTokens } = {} } = {},
     isSuccess: isSupportedSuccess,

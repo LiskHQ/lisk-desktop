@@ -2,7 +2,7 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import moment from 'moment';
 import accounts from '@tests/constants/wallets';
 import { truncateAddress } from '@wallet/utils/account';
-import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import Row from '.';
 import { mockTransactions } from '../../__fixtures__';
@@ -54,7 +54,7 @@ const transfer = {
 };
 
 jest.mock('@token/fungible/hooks/queries');
-useTokensBalance.mockReturnValue({ data: mockAppsTokens.data[0] });
+useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
 
 describe('Transaction Row', () => {
   const t = (str) => str;

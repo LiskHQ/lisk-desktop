@@ -19,10 +19,10 @@ export const useTokensSupported = ({
   client = defaultClient,
 } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/tokens/summary`,
+    url: `/api/${API_VERSION}/token/summary`,
     method: 'get',
     ...customConfig,
-    event: 'get.tokens.supported',
+    event: 'get.token.summary',
     params: { ...(customConfig?.params || {}) },
   };
 

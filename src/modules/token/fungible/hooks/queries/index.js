@@ -1,4 +1,4 @@
-export * from './useTokensBalance';
+export * from './useTokenBalances';
 export * from './useTokensSupported';
 export * from './useTokensTopLskBalance';
 export * from './useTokenAccountExists';

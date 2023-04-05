@@ -12,33 +12,39 @@
 .form {
   display: flex;
   flex-direction: row;
-}
 
-.container {
-  display: flex;
-  flex-direction: column;
-  padding: 0 20px;
-  margin: -10px 0;
-  min-width: 300px;
-}
+  & .container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    margin: -10px 0;
+    min-width: 300px;
 
-.extendedContainer {
-  padding-bottom: 20px;
-}
+    &.extendedContainer {
+      padding-bottom: 20px;
+    }
 
-.submitButton {
-  margin: 20px 0;
-  width: 100%;
-  border-radius: 3px;
-}
+    & label {
+      font-weight: var(--font-weight-normal);
+      margin-top: 12px;
+    }
+  }
 
-.actionable {
-  color: var(--color-primary-standard);
-  cursor: pointer;
-  font-weight: var(--font-weight-bold);
-  text-align: right;
-  position: relative;
-  top: 10px;
-  font-size: 12px;
-  margin: 3px 0;
+  & .submitButton {
+    margin: 40px 0 20px !important;
+    height: 46px !important;
+    width: 100%;
+    border-radius: var(--border-radius-standard);
+  }
+
+  & .actionable {
+    color: var(--color-primary-standard);
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+    text-align: right;
+    position: relative;
+    top: 10px;
+    font-size: 12px;
+    margin: 3px 0;
+  }
 }

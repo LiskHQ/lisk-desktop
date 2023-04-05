@@ -7,29 +7,15 @@ import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMe
 import { addTokensMetaData } from '@token/fungible/utils/addTokensMetaData';
 import defaultClient from 'src/utils/api/client';
 
-/**
- * Creates a custom hook for Token balance list queries
- *
- * @param {object} configuration - the custom query configuration object
- * @param {object} configuration.config - the query config
- * @param {object} configuration.config.params - the query config params
- * @param {string} configuration.config.params.address - get balance information by address
- * @param {number} [configuration.config.params.limit] - the query limit
- * @param {number} [configuration.config.params.offset] - the query offset
- * @param {string} [configuration.config.params.tokenID] - get balance information by tokenID
- *
- * @returns the query object
- */
-
-export const useTokensBalanceConfig = (config) => ({
-  url: `/api/${API_VERSION}/tokens`,
+export const useTokenBalancesConfig = (config) => ({
+  url: `/api/${API_VERSION}/token/balances`,
   method: 'get',
-  event: 'get.tokens',
+  event: 'get.token.balances',
   ...config,
   params: { limit, ...(config.params || {}) },
 });
 
-export const useTokensBalance = ({
+export const useTokenBalances = ({
   config: customConfig = {},
   options,
   client = defaultClient,
@@ -46,7 +32,7 @@ export const useTokensBalance = ({
     };
   };
 
-  const config = useTokensBalanceConfig({
+  const config = useTokenBalancesConfig({
     ...customConfig,
     transformResult,
     params: { address, ...(customConfig.params || {}) },

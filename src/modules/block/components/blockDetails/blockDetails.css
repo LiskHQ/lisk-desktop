@@ -50,5 +50,21 @@ h1 {
   & .content {
     padding-left: 0;
     padding-right: 0;
+    padding-top: 0;
+  }
+}
+
+.feedback {
+  position: relative;
+}
+
+.blockDetailsWrapper {
+  & .errorFeedbackWrapper {
+    display: flex;
+    align-items: center;
+
+    & > div:first-child {
+      width: fit-content;
+    }
   }
 }

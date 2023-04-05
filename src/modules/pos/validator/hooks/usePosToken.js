@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useCurrentAccount } from 'src/modules/account/hooks';
-import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
+import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 import { usePosConstants } from './queries';
 
 const usePosToken = (props) => {
@@ -8,7 +8,7 @@ const usePosToken = (props) => {
   const { address } = props || currentAccount.metadata || {};
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
-  const { data: tokens, isLoading: isLoadingTokenBalance } = useTokensBalance({
+  const { data: tokens, isLoading: isLoadingTokenBalance } = useTokenBalances({
     config: { params: { tokenID: posConstants?.data?.posTokenID, address } },
     options: { enabled: !isGettingPosConstants },
   });

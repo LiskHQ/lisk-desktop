@@ -1,4 +1,6 @@
 .dialog {
+  min-height: 558px;
+
   & > span {
     top: 24px;
   }

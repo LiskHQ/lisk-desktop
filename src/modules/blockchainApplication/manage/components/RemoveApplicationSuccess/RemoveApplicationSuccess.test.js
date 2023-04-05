@@ -22,8 +22,8 @@ describe('BlockchainApplicationDetails', () => {
     expect(screen.getByText(chainName)).toBeTruthy();
   });
 
-  it('should navigate to the dashboard', () => {
-    fireEvent.click(screen.getByText('Continue to dashboard'));
-    expect(props.history.push).toHaveBeenCalledWith('/dashboard');
+  it('should navigate to the wallet', () => {
+    fireEvent.click(screen.getByText('Continue to wallet'));
+    expect(props.history.push).toHaveBeenCalledWith('/wallet');
   });
 });
