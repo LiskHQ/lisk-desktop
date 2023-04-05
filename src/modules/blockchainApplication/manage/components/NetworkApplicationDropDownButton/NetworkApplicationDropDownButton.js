@@ -8,7 +8,7 @@ import Network from '@common/components/bars/topBar/networkName';
 import { useCurrentApplication } from '../../hooks/useCurrentApplication';
 import styles from './NetworkApplicationDropDownButton.css';
 
-const ApplicationManagementList = ({ history, location }) => {
+const NetworkApplicationDropDownButton = ({ history, location }) => {
   const [currentApplication] = useCurrentApplication();
 
   const handleShowApplications = useCallback(() => {
@@ -44,4 +44,4 @@ const ApplicationManagementList = ({ history, location }) => {
     </div>
   );
 };
-export default ApplicationManagementList;
+export default NetworkApplicationDropDownButton;

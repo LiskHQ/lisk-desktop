@@ -44,7 +44,7 @@ import BlockchainApplications from '@blockchainApplication/explore/components/Bl
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
-import ApplicationManagementList from '@blockchainApplication/manage/components/DialogNetworkApplicationSelector';
+import NetworkApplicationDropDownButton from '@blockchainApplication/manage/components/DialogNetworkApplicationSelector';
 import DialogAddNetwork from '@network/components/DialogAddNetwork';
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
@@ -109,7 +109,7 @@ export default {
   blockChainApplicationDetails: BlockchainApplicationDetails,
   addApplicationList: AddApplicationList,
   addApplicationSuccess: AddApplicationSuccess,
-  manageApplications: ApplicationManagementList,
+  manageApplications: NetworkApplicationDropDownButton,
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
   sentStakes: SentStakes,
