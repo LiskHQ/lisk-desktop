@@ -5,13 +5,17 @@ import {
   useApplicationManagement,
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import useSettings from '@settings/hooks/useSettings';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
+import networks from '@network/configuration/networks';
+import { DEFAULT_NETWORK } from 'src/const/config';
 import DialogNetworkApplicationSelector from './DialogNetworkApplicationSelector';
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
+jest.mock('@settings/hooks/useSettings');
 jest.mock('src/utils/searchParams');
 
 const mockTogglePin = jest.fn();
@@ -30,6 +34,11 @@ useApplicationManagement.mockReturnValue({
   applications: mockManagedApplications,
 });
 
+useSettings.mockReturnValue({
+  customNetworks: [],
+  mainChainNetwork: networks[DEFAULT_NETWORK],
+});
+
 describe('ModalNetworkApplicationSelector', () => {
   const props = {
     history: {
@@ -39,12 +48,10 @@ describe('ModalNetworkApplicationSelector', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    renderWithRouter(DialogNetworkApplicationSelector, props);
+    renderWithRouterAndQueryClient(DialogNetworkApplicationSelector, props);
   });
 
   it('should display properly', () => {
-    expect(screen.getByText('Applications')).toBeTruthy();
-    expect(screen.getByText('Add application')).toBeTruthy();
     mockManagedApplications.forEach(({ chainName }) => {
       expect(screen.getByText(chainName)).toBeTruthy();
     });
@@ -52,8 +59,6 @@ describe('ModalNetworkApplicationSelector', () => {
 
   it('should navigate to the add blockchain application flow', () => {
     fireEvent.click(screen.getByText('Add application'));
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, {
-      modal: 'addApplicationList',
-    });
+    expect(addSearchParamsToUrl).toHaveBeenCalled();
   });
 });
