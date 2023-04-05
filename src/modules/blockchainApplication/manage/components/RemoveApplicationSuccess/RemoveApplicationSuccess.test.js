@@ -7,9 +7,11 @@ describe('BlockchainApplicationDetails', () => {
   const props = {
     history: {
       push: jest.fn(),
+      location: { pathname: '', search: '' },
     },
     sharedData: { application: mockBlockchainAppMeta.data[0] },
   };
+
   beforeEach(() => {
     jest.clearAllMocks();
     renderWithRouter(RemoveApplicationSuccess, props);
@@ -20,6 +22,15 @@ describe('BlockchainApplicationDetails', () => {
 
     expect(screen.getByText('Application has now been removed')).toBeTruthy();
     expect(screen.getByText(chainName)).toBeTruthy();
+  });
+
+  it('should navigate to add application list is chain name is clicked', () => {
+    const { chainName } = props.sharedData.application;
+
+    expect(chainName).toBeTruthy();
+    fireEvent.click(screen.getByText(chainName));
+    expect(props.history.push).toHaveBeenCalledTimes(1);
+    expect(props.history.push).toHaveBeenCalledWith('?modal=addApplicationList');
   });
 
   it('should navigate to the wallet', () => {
