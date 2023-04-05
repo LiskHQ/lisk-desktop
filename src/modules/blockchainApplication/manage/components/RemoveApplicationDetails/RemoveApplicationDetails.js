@@ -14,7 +14,6 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import { getLogo } from '@token/fungible/utils/helpers';
 import Skeleton from '@common/components/skeleton/Skeleton';
 import Illustration from 'src/modules/common/components/illustration';
-import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 import { useBlockchainApplicationExplore } from '../../../explore/hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '../../hooks/queries/useBlockchainApplicationMeta';
 import { useApplicationManagement } from '../../hooks/useApplicationManagement';
@@ -44,9 +43,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
   });
   const application = { ...onChainData?.data[0], ...offChainData?.data[0] };
 
-  // const offChainLoading = true;
   const { deleteApplicationByChainId } = useApplicationManagement();
-  const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
     chainName,
     status,
@@ -56,11 +53,6 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
     projectPage,
     depositedLsk = 0,
   } = application;
-
-  const isPinned = checkPinByChainId(chainId);
-  const toggleApplicationPin = () => {
-    togglePin(chainId);
-  };
 
   const reloadAppDetails = () => {
     refetchOnChainData();
@@ -134,9 +126,6 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
           ) : (
             <div className={styles.chainNameWrapper}>
               <span className="chain-name-text">{chainName}</span>
-              <TertiaryButton onClick={toggleApplicationPin}>
-                <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
-              </TertiaryButton>
             </div>
           )}
           {onChainLoading || offChainLoading ? (

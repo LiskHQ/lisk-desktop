@@ -4,6 +4,7 @@ import { TertiaryButton } from 'src/theme/buttons';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './ApplicationManagementRow.css';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 import { useCurrentApplication } from '../../hooks/useCurrentApplication';
@@ -122,7 +123,7 @@ const ApplicationManagementRow = ({ application, history, location }) => {
             </TertiaryButton>
           </div>
         )}
-        <img className={styles.chainLogo} src={application.logo.png} />
+        <img className={styles.chainLogo} src={getLogo(application)} />
         <span>{application.chainName}</span>
       </div>
       <div className={styles.rightWrapper} align="right">
