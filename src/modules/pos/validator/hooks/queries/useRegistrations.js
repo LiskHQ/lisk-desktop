@@ -64,7 +64,8 @@ export const useRegistrations = () => {
       const last = acc[acc.length - 1];
       acc.push([date, (last[1] + count)]);
       return acc;
-    }, [[getDate(registrations.data[0]?.block.timestamp - monthDuration), offset]]);
+    }, [[getDate(registrations.data[0]?.block.timestamp - monthDuration), offset]])
+    .filter(([date]) => date !== 'NaN-NaN');
 
   const labels = getAmountOfValidatorsLabels(chartData);
   const values = getAmountOfValidatorsInTime(chartData);
