@@ -8,7 +8,6 @@ import { mockBlockchainApp } from '../../../explore/__fixtures__';
 import { mockBlockchainAppMeta } from '../../__fixtures__';
 import RemoveApplicationDetails from '.';
 
-const mockTogglePin = jest.fn();
 const mockDeleteApplicationByChainId = jest.fn();
 const mockRefetchOnChainData = jest.fn();
 const mockRefetchOffChainData = jest.fn();
