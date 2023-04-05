@@ -14,7 +14,7 @@ export const statusMessages = (t) => ({
   [txStatusTypes.multisigSignatureSuccess]: {
     title: t('The transaction is now fully signed'),
     message: t(
-      'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.'
+      'Now you can send it to the network. You may also copy or download it, if you wish to send the transaction using another device later.'
     ),
   },
   [txStatusTypes.signatureSuccess]: {

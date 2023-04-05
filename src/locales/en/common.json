@@ -367,7 +367,7 @@
   "Nothing available to unlock": "Nothing available to unlock",
   "Nothing has been found for your search": "Nothing has been found for your search",
   "Now that you have enough tokens on your new account, please continue to send the reclaim transaction.": "Now that you have enough tokens on your new account, please continue to send the reclaim transaction.",
-  "Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.": "Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.",
+  "Now you can send it to the network. You may also copy or download it, if you wish to send the transaction using another device later.": "Now you can send it to the network. You may also copy or download it, if you wish to send the transaction using another device later.",
   "Number": "Number",
   "Number of signatures must be above {{num}}.": "Number of signatures must be above {{num}}.",
   "Number of signatures must be equal to the number of members.": "Number of signatures must be equal to the number of members.",

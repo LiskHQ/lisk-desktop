@@ -22,7 +22,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
     senderPublicKey: transactionJSON.senderPublicKey,
   });
   const { mandatoryKeys, optionalKeys, numberOfSignatures, publicKey } = txInitiatorAccount;
-  const isMultiSignature =
+  const isMultisignature =
     transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 0;
 
   const { canSenderSignTx } = useMultiSignatureStatus({
@@ -41,7 +41,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
 
   const status = getTransactionStatus(txInitiatorAccount, transactions, {
     moduleCommandSchemas,
-    isMultiSignature,
+    isMultisignature,
     canSenderSignTx,
   });
 
