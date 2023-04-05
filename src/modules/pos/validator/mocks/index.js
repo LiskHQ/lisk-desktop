@@ -7,6 +7,7 @@ import {
   mockUnlocks,
   mockGenerators,
   mockGenerator,
+  mockRegistrations,
 } from '@pos/validator/__fixtures__';
 import composeMockList from 'src/modules/common/utils/composeMockList';
 import { mockPosConstants } from '../__fixtures__/mockPosConstants';
@@ -93,3 +94,20 @@ export const generators = rest.get(`*/api/${API_VERSION}/generators`, async (req
 export const posConstants = rest.get(`*/api/${API_VERSION}/pos/constants`, async (_, res, ctx) =>
   res(ctx.delay(20), ctx.json(mockPosConstants))
 );
+
+export const registrations = rest.get(`*/api/${API_VERSION}/transaction`, async (req, res, ctx) => {
+  const limit = Number(req.url.searchParams.get('limit') || LIMIT);
+  const offset = Number(req.url.searchParams.get('offset') || 0);
+  const response = {
+    data: {
+      ...mockRegistrations.data,
+      registrations: mockRegistrations.data.registrations.slice(offset, offset + limit),
+    },
+    meta: {
+      ...mockRegistrations.meta,
+      count: limit,
+      offset,
+    },
+  };
+  return res(ctx.delay(20), ctx.json(response));
+});
