@@ -8,6 +8,8 @@ import { QueryTable } from '@theme/QueryTable';
 import { Input } from '@theme';
 import Icon from '@theme/Icon';
 import { useFilter } from '@common/hooks';
+import useSettings from '@settings/hooks/useSettings';
+import { Client } from 'src/utils/api/client';
 import useMergeApplicationExploreAndMetaData from '../../../manage/hooks/useMergeApplicationExploreAndMetaData';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import BlockchainApplicationRow from '../BlockchainApplicationRow';
@@ -19,6 +21,7 @@ const BlockchainApplicationList = () => {
   const { filters, applyFilters } = useFilter();
   const debounceTimeout = useRef(null);
   const { t } = useTranslation();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   const onSearchApplication = useCallback(
     ({ target }) => {
@@ -59,7 +62,10 @@ const BlockchainApplicationList = () => {
         <QueryTable
           showHeader
           queryHook={useBlockchainApplicationExplore}
-          queryConfig={{ config: { params: filters } }}
+          queryConfig={{
+            config: { params: filters },
+            client: new Client({ http: mainChainNetwork?.serviceUrl }),
+          }}
           transformResponse={useMergeApplicationExploreAndMetaData}
           row={BlockchainApplicationRow}
           header={header(t)}
