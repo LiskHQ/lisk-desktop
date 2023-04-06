@@ -79,7 +79,7 @@
   width: fit-content;
   padding: 5px !important;
   margin: 0px;
-  height: 34px !important;
+  height: 22px !important;
   box-sizing: border-box;
   margin-right: -6px;
 }
@@ -94,7 +94,7 @@
   align-items: center;
   justify-content: flex-start;
   position: relative;
-  padding-left: 30px;
+  padding-left: 36px;
   box-sizing: border-box;
 }
 
@@ -104,7 +104,6 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 2px;
 
   & > div {
     display: flex;
@@ -115,8 +114,8 @@
 }
 
 .chainLogo {
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
 }
 
@@ -144,7 +143,7 @@
   }
 
   & img {
-    width: 20px;
+    width: 16px;
   }
 
   & button {
