@@ -68,6 +68,8 @@
 
 .deleteBtnTooltip {
   display: none;
+  position: absolute;
+  z-index: 5;
 }
 
 .deleteBtn,

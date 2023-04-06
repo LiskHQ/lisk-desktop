@@ -1,4 +1,4 @@
-import { BLOCKCHAIN_APPS_STATICS } from 'src/const/queries';
+import { BLOCKCHAIN_APPS_STATISTICS } from 'src/const/queries';
 import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 
@@ -13,7 +13,11 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useBlockchainApplicationStatistics = ({ config: customConfig = {}, options } = {}) => {
+export const useBlockchainApplicationStatistics = ({
+  config: customConfig = {},
+  options,
+  client,
+} = {}) => {
   const config = {
     url: `/api/${API_VERSION}/blockchain/apps/statistics`,
     method: 'get',
@@ -21,8 +25,9 @@ export const useBlockchainApplicationStatistics = ({ config: customConfig = {}, 
     ...customConfig,
   };
   return useCustomQuery({
-    keys: [BLOCKCHAIN_APPS_STATICS],
+    keys: [BLOCKCHAIN_APPS_STATISTICS],
     config,
     options,
+    client,
   });
 };
