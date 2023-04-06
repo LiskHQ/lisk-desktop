@@ -3,9 +3,9 @@ import NetworkApplicationSelector from '@network/components/NetworkApplicationSe
 import styles from './DialogNetworkApplicationSelector.css';
 
 const DialogNetworkApplicationSelector = () => (
-    <div className={styles.DialogNetworkApplicationSelector}>
-      <NetworkApplicationSelector />
-    </div>
-  );
+  <div className={styles.DialogNetworkApplicationSelector}>
+    <NetworkApplicationSelector />
+  </div>
+);
 
 export default DialogNetworkApplicationSelector;

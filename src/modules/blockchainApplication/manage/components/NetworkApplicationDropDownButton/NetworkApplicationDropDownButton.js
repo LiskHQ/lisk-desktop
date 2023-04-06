@@ -37,7 +37,7 @@ const NetworkApplicationDropDownButton = ({ history, location }) => {
           </div>
         )}
         {(isNotOnSelectNetworkPath || isNotOnRegisterPath) && (
-          <Network className={styles.networkProp}/>
+          <Network className={styles.networkProp} />
         )}
         <Icon name="dropdownArrowIcon" />
       </TertiaryButton>
