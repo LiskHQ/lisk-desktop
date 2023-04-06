@@ -22,8 +22,6 @@ import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useB
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
 
-const deposit = 5e10;
-
 // eslint-disable-next-line max-statements, complexity
 const BlockchainApplicationDetails = ({ history, location }) => {
   const { t } = useTranslation();
@@ -48,7 +46,13 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   });
   const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const { status, lastCertificateHeight, lastUpdated, logo } = aggregatedApplicationData;
+  const {
+    status,
+    lastCertificateHeight,
+    lastUpdated,
+    logo,
+    depositedLsk = 0,
+  } = aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
   const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
@@ -141,7 +145,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
           ) : (
             <ValueAndLabel label={t('Deposited:')} direction="horizontal">
               <span className={styles.value}>
-                <TokenAmount val={deposit} token={token} />
+                <TokenAmount val={depositedLsk} token={token} />
               </span>
             </ValueAndLabel>
           )}
@@ -183,7 +187,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
               data-testid="add-application-button"
               onClick={addNewApplication}
             >
-              {t('Add application to my list')}
+              {t('Add application')}
             </PrimaryButton>
           </Box>
         ) : null}
