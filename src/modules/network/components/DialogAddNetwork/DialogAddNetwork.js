@@ -53,7 +53,10 @@ const DialogAddNetwork = () => {
               placeholder={t('network name')}
               feedback={errors.name?.message}
               status={errors.name?.message ? 'error' : undefined}
-              {...register('name', { required: 'Name is required' })}
+              {...register('name', {
+                required: 'Name is required',
+                pattern: { value: regex.name, message: t('Invalid Network Name') },
+              })}
             />
             <Input
               size="l"

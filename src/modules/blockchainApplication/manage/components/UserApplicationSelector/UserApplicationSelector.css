@@ -8,6 +8,7 @@
     font-size: var(--font-size-h6);
     font-family: var(--heading-font);
     font-weight: var(--font-weight-bold);
+    color: var(--color-zodiac-blue);
     margin-bottom: 16px;
   }
 

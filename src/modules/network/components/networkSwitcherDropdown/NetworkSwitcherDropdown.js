@@ -1,6 +1,5 @@
-/* eslint-disable complexity */
-/* eslint-disable max-statements */
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+/* eslint-disable complexity, max-statements */
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import Icon from 'src/theme/Icon';
@@ -84,10 +83,8 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
       </div>
       {networkStatus.isError && networkStatus.isFetched && (
         <div className={styles.connectionFailedBlock}>
-          <span>
-            {t('Failed to connect to network!  ')}
-            <span onClick={networkStatus.refetch}>{t('Try again')}</span>
-          </span>
+          <span>{t('Failed to connect to network!')}</span>
+          <span onClick={networkStatus.refetch}>{t('Try again')}</span>
         </div>
       )}
       <DialogLink

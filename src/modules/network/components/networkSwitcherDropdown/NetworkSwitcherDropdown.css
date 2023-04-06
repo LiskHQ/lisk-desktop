@@ -13,12 +13,13 @@
       font-size: var(--font-size-h6);
       font-family: var(--heading-font);
       font-weight: var(--font-weight-bold);
+      color: var(--color-zodiac-blue);
       margin-bottom: 16px;
     }
 
     & .networkItem {
-      font-family: var(--heading-font) !important;
-      font-weight: var(--font-weight-bold) !important;
+      font-weight: var(--font-weight-normal) !important;
+      font-size: var(--font-size-h6);
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -37,18 +38,17 @@
   & .connectionFailedBlock {
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
 
-    & > span {
+    & > span:first-of-type {
       font-size: var(--paragraph-font-size-s);
-      font-weight: var(--font-weight-normal);
       color: var(--color-red);
+    }
 
-      & > span {
-        font-weight: var(--font-weight-bold);
-        color: var(--color-ultramarine-blue);
-        cursor: pointer;
-      }
+    & > span:last-of-type {
+      font-size: var(--paragraph-font-size-s);
+      color: var(--color-ultramarine-blue);
+      cursor: pointer;
     }
   }
 
