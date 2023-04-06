@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { getCheckInitializedAccount } from '../../utils/getCheckInitializedAccount';
+import { getCheckInitializedAccount } from '../../utils/getTokenBalances';
 import useCheckInitializedAccount from './useCheckInitializedAccount';
 
 jest.useRealTimers();

@@ -1,6 +1,6 @@
 import { useCustomQuery } from '@common/hooks';
 import { INITIALIZED_ACCOUNTS } from 'src/const/queries';
-import { getCheckInitializedAccount } from '../../utils/getCheckInitializedAccount';
+import { getCheckInitializedAccount } from '../../utils/getTokenBalances';
 
 const useCheckInitializedAccount = ({ config, options } = {}) =>
   useCustomQuery({

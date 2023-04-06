@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop, max-statements */
 import { extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
-import { getCheckInitializedAccount } from '@account/utils/getCheckInitializedAccount';
+import { getTokenBalances } from 'src/modules/account/utils/getTokenBalances';
 import { getPubKey } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
 export const getHWAccounts = async (currentHWDevice, getName) => {
@@ -10,7 +10,9 @@ export const getHWAccounts = async (currentHWDevice, getName) => {
   while (true) {
     const pubkey = await getPubKey(currentHWDevice.path, accountIndex);
     const address = extractAddressFromPublicKey(pubkey);
-    const isInitialized = await getCheckInitializedAccount(address, '0400000000000000');
+    const tokenBalances = await getTokenBalances(address);
+    const isInitialized =
+      tokenBalances.length > 0 && BigInt(tokenBalances[0].availableBalance || 0) > BigInt(0);
     if (!isInitialized) {
       accounts.push({
         hw: currentHWDevice,
