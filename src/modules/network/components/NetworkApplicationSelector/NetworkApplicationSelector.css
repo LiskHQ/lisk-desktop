@@ -1,0 +1,7 @@
+.NetworkApplicationSelector {
+  width: 100%;
+
+  & .userApplicationSelectorProp {
+    margin-top: 16px;
+  }
+}

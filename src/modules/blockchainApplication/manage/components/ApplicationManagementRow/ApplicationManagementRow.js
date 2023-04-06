@@ -70,7 +70,7 @@ const RightRowComponent = ({
   );
 };
 
-const ApplicationManagementRow = ({ application, history, location }) => {
+const ApplicationManagementRow = ({ className, application, history, location }) => {
   const { togglePin, checkPinByChainId } = usePinBlockchainApplication();
   const [currentApplication, setApplication] = useCurrentApplication();
 
@@ -79,7 +79,7 @@ const ApplicationManagementRow = ({ application, history, location }) => {
     () => currentApplication?.chainID === application.chainID,
     [currentApplication, application]
   );
-  const isTerminated = useMemo(() => application.state === 'terminated', [application.state]);
+  const isTerminated = useMemo(() => application.status === 'terminated', [application.status]);
 
   const handleTogglePin = useCallback((event) => {
     event.stopPropagation();
@@ -110,7 +110,7 @@ const ApplicationManagementRow = ({ application, history, location }) => {
 
   return (
     <div
-      className={`managed-application-row ${styles.appItemWrapper} ${
+      className={`managed-application-row ${styles.appItemWrapper} ${className} ${
         isCurrentApplication ? styles.activeAppBg : ''
       } ${isTerminated ? styles.terminated : ''}`}
       onClick={handleSetCurrentApplication}

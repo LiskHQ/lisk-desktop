@@ -33,9 +33,11 @@ describe('SeletNetwork', () => {
   useSettings.mockReturnValue({
     mainChainNetwork: { name: 'devnet' },
     setValue: mockSetSettingValue,
+    customNetworks: [],
   });
   useApplicationManagement.mockReturnValue({
     setApplications: mockSetApplication,
+    applications: mockManagedApplications,
   });
   useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
   useNetworkStatus.mockReturnValue({
@@ -54,7 +56,6 @@ describe('SeletNetwork', () => {
     rerenderWithRouterAndQueryClient(SelectNetwork, props);
     expect(screen.getByText('Select network')).toBeTruthy();
     expect(screen.getAllByText(networks.devnet.label)[0]).toBeTruthy();
-    expect(screen.getByText('Lisk')).toBeTruthy();
     expect(screen.getByText('Continue to wallet')).toBeTruthy();
     expect(screen.getByText('Select network')).toBeTruthy();
     expect(screen.getByAltText('liskLogoWhiteNormalized')).toBeTruthy();

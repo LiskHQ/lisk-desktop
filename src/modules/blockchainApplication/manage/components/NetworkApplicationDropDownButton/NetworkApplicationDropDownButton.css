@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  padding: 5px 15px;
+  color: white;
+  align-items: center;
+  text-decoration: none;
+  opacity: 1;
+
+  & .chainContainer {
+    display: flex;
+    align-items: center;
+
+    & .chainLogo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: var(--color-ultramarine-blue);
+
+      & > img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+
+    & .chainLabel {
+      margin-left: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+
+  & .networkProp {
+    margin-left: 16px;
+    padding-right: 8px;
+  }
+}
+
+.wrapper:focus,
+.wrapper:hover {
+  text-decoration: none;
+}
+
+.wrapper:hover {
+  opacity: 0.9;
+  transition: all 300ms linear;
+}

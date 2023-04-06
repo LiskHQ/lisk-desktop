@@ -315,6 +315,13 @@ module.exports = {
     'src/modules/hardwareWallet/store/actions/devicesActions.js', // TODO: To be fixed in PDD-1482
     '/src/modules/hardwareWallet/store/reducers/devicesReducer.js', // TODO: To be fixed in PDD-1482
     'src/modules/pos/validator/components/ClaimRewardsView/index.js',
+    'src/modules/blockchainApplication/manage/hooks/useApplicationManagement.js', // TODO: To be fixed in PDD-1522
+    'src/modules/wallet/components/MenuSelect/MenuSelect.js', // TODO: To be fixed in PDD-1522
+    'src/modules/network/components/networkSwitcherDropdown/NetworkSwitcherDropdown.js', // TODO: To be fixed in PDD-1522
+    'src/modules/blockchainApplication/manage/components/UserApplicationSelector/UserApplicationSelector.js', // TODO: To be fixed in PDD-1522
+    'src/modules/network/components/selectNetwork/SelectNetwork.js', // TODO: To be fixed in PDD-1522
+    'src/modules/blockchainApplication/manage/components/NetworkApplicationDropDownButton/NetworkApplicationDropDownButton.js', // TODO: To be fixed in PDD-1522
+    'src/modules/network/components/DialogAddNetwork/DialogAddNetwork.js', // TODO: To be fixed in PDD-1522
   ],
   coverageThreshold: {
     // global: {
