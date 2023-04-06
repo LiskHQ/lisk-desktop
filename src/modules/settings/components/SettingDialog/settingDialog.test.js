@@ -29,7 +29,6 @@ useBlockchainApplicationMeta.mockReturnValue({
 
 describe('Setting', () => {
   const settings = {
-    showNetwork: false,
     currency: undefined,
     statistics: false,
     discreetMode: false,
