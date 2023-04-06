@@ -161,10 +161,12 @@ const SendForm = (props) => {
     data: reference.value,
   };
   if (sendingChain.chainID !== recipientChain.chainID) {
+    // TODO: Hardcoded 200 bytes length for cross chain message
+    const messageFee = BigInt(messageFeeResult?.data?.fee || 0) * BigInt(200);
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
-      messageFee: messageFeeResult?.data?.fee,
+      messageFee: messageFee.toString(),
       // TODO: Message fees are always paid in LSK, so we need to fetch the tokenID based on Mainchain for a given selected network
       messageFeeTokenID: '0400000000000000',
     };

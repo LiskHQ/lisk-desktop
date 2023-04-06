@@ -26,20 +26,20 @@ export const computeTransactionMinFee = (
     return numberOfSignatures - nonEmptySignature.length;
   };
 
+  let transactionObject = {};
+  try {
+    transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
+  } catch (exp) {
+    transactionObject = {};
+  }
+
   const options = {
     numberOfSignatures,
     numberOfEmptySignatures: getNumberOfEmptySignatures(),
     additionalFee: BigInt(extraCommandFee),
   };
 
-  let convertedTx = {};
-  try {
-    convertedTx = fromTransactionJSON(transactionJSON, paramsSchema);
-  } catch (exp) {
-    convertedTx = {};
-  }
-
-  return transactions.computeMinFee(convertedTx, paramsSchema, options);
+  return transactions.computeMinFee(transactionObject, paramsSchema, options);
 };
 
 export const getParamsSchema = (transaction, schemas) => {
