@@ -19,12 +19,18 @@ export function useApplicationManagement() {
 
   const applications = useMemo(() => {
     const appsList = Object.values(applicationsObject);
+    // Sort apps list by pinned apps and terminated apps such that
+    // pinned apps are at the beginning while terminated apps are at the end of the array
     return appsList
       .map((app) => ({
         ...app,
         isPinned: checkPinByChainId(app.chainID),
       }))
-      .sort((a) => (a.isPinned ? -1 : 1));
+      .sort(
+        (a, b) =>
+          b.isPinned - a.isPinned ||
+          Number(a.status === 'terminated') - Number(b.status === 'terminated')
+      );
   }, [applicationsObject, pins]);
 
   const setApplication = useCallback((application) => {
@@ -42,7 +48,8 @@ export function useApplicationManagement() {
   );
 
   const deleteApplicationByChainId = useCallback((chainId) => {
-    if (currentApplication.isDefault) return;
+    const userApplication = getApplicationByChainId(chainId);
+    if (userApplication.isDefault) return;
 
     dispatch(deleteApplication(chainId, mainChainNetwork.name));
     if (currentApplication.chainID === chainId) {

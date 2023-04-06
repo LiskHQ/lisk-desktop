@@ -201,13 +201,28 @@
 }
 
 .detail {
-  width: 20%;
-}
-
-.detail:first-of-type {
-  width: 35%;
-}
-
-.detail:last-of-type {
   width: 25%;
+}
+
+.skeletonRowWrapper {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.errorWrapper {
+  padding: 40px 24px;
+
+  & img {
+    margin: 40px;
+  }
+
+  & .errorText {
+    @mixin contentLarge;
+
+    color: var(--color-slate-gray);
+  }
+
+  & .retryBtn {
+    margin-bottom: 20px;
+  }
 }
