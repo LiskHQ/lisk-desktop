@@ -49,17 +49,6 @@ function SettingDialog() {
           <section className="advanced">
             <h2>{t('Advanced')}</h2>
             <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-              <Toggle isCheckbox setting={settingsConst.keys.showNetwork} />
-              <div>
-                <span className={styles.labelName}>{t('Network switcher')}</span>
-                <p>
-                  {t(
-                    'Enable network switcher to connect to different networks or service nodes when signing in.'
-                  )}
-                </p>
-              </div>
-            </label>
-            <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
               <Toggle isCheckbox setting={settingsConst.keys.enableCustomDerivationPath} />
               <div>
                 <span className={styles.labelName}>{t('Enable custom derivation path')}</span>
