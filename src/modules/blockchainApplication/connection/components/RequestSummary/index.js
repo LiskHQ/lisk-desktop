@@ -46,17 +46,18 @@ const RequestSummary = ({ nextStep }) => {
   useDeprecatedAccount(senderAccount);
   useSchemas();
 
-  const sendingChainID = request.chainId.replace('lisk:', '');
-  const { recipientChainID } = request?.request?.params ?? {};
-
-  const sendingChain = metaData.data.data.find((item) => item.chainID === sendingChainID);
-  sendingChain.chainID = sendingChainID;
-  const recipientChain = metaData.data.data.find((item) => item.chainID === recipientChainID);
-  recipientChain.chainID = recipientChainID;
 
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
     const transactionJSON = toTransactionJSON(transaction, moduleCommandSchemas[moduleCommand]);
+
+    const sendingChainID = request?.chainId.replace('lisk:', '');
+    const { recipientChainID } = request?.request?.params ?? {};
+    
+    const sendingChain = metaData.data.data.find((item) => item.chainID === sendingChainID);
+    sendingChain.chainID = sendingChainID;
+    const recipientChain = metaData.data.data.find((item) => item.chainID === recipientChainID);
+    recipientChain.chainID = recipientChainID;
 
     nextStep({
       transactionJSON,

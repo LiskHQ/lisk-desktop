@@ -5,6 +5,8 @@ import { screen, fireEvent } from '@testing-library/react';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import mockApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
 import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
@@ -13,7 +15,9 @@ import RequestSummary from './index';
 
 const nextStep = jest.fn();
 const address = mockSavedAccounts[0].metadata.address;
+const [appManage1, appManage2] = mockApplicationsManage;
 
+jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.mock('@libs/wcm/hooks/useSession');
 jest.mock('@account/hooks/useAccounts', () => ({
   useAccounts: jest.fn().mockImplementation(() => ({
@@ -32,7 +36,20 @@ jest.mock('@libs/wcm/utils/requestHandlers', () => ({
   rejectLiskRequest: jest.fn(),
 }));
 jest.spyOn(React, 'useContext').mockImplementation(() => ({
-  events: [{ name: EVENTS.SESSION_PROPOSAL, meta: { id: '1' } }],
+  events: [{
+    name: EVENTS.SESSION_PROPOSAL,
+    meta: {
+      id: '1',
+      params: {
+        chainId: 'lisk:00000001',
+        request: {
+          params: {
+            recipientChainID: '00000001',
+          }
+        },
+      },
+    },
+  }],
 }));
 jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   createSignClient: jest.fn(() => Promise.resolve()),
@@ -59,6 +76,15 @@ useCommandSchema.mockReturnValue({
 
 describe('RequestSummary', () => {
   const reject = jest.fn();
+  beforeEach(() => {
+    useBlockchainApplicationMeta.mockReturnValue({
+      data: {
+        data: [appManage1, appManage2],
+      },
+      isLoading: false,
+      isFetching: false,
+    });
+  });
   useSession.mockReturnValue({ reject, session: defaultContext.session });
 
   it('Display the requesting app information', () => {
