@@ -11,6 +11,7 @@ import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { decodeTransaction, toTransactionJSON } from '@transaction/utils/encoding';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { Link } from 'react-router-dom';
@@ -41,31 +42,37 @@ const RequestSummary = ({ nextStep }) => {
   const [senderAccount, setSenderAccount] = useState(null);
   const { session } = useSession();
   const { moduleCommandSchemas } = useCommandSchema();
+  const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
   useSchemas();
+
+  const sendingChainID = request.chainId.replace('lisk:', '');
+  const { recipientChainID } = request?.request?.params ?? {};
+
+  const sendingChain = metaData.data.data.find((item) => item.chainID === sendingChainID);
+  sendingChain.chainID = sendingChainID;
+  const recipientChain = metaData.data.data.find((item) => item.chainID === recipientChainID);
+  recipientChain.chainID = recipientChainID;
 
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
     const transactionJSON = toTransactionJSON(transaction, moduleCommandSchemas[moduleCommand]);
-    // @todo remove the hardcoded normalized
-    // values according to #4824
+
     nextStep({
       transactionJSON,
       formProps: {
-        composedFees: {
-          Transaction: `${convertFromBaseDenom(transaction.fee)} LSK`,
-        },
+        composedFees: [
+          {
+            title: 'Transaction',
+            value: `${convertFromBaseDenom(transaction.fee)} LSK`,
+            components: [],
+          }
+        ],
         fields: {
-          sendingChain: {
-            chainID: request.chainId.replace('lisk:', ''),
-            logo: { svg: '', png: '' },
-          },
-          recipientChain: { chainID: request.recipientChainID, logo: { svg: '', png: '' } },
+          sendingChain,
+          recipientChain,
           token: {
             symbol: 'LSK',
-          },
-          recipient: {
-            title: 'Recipient',
           },
         },
         moduleCommand,
