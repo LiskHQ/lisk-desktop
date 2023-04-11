@@ -10,6 +10,7 @@ import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 import { decodeTransaction, toTransactionJSON } from '@transaction/utils/encoding';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
@@ -32,6 +33,8 @@ const getRequestTransaction = (request) => {
   return decodeTransaction(Buffer.from(payload, 'hex'), schema);
 };
 
+const defaultToken = { symbol: 'LSK' };
+
 // eslint-disable-next-line max-statements
 const RequestSummary = ({ nextStep }) => {
   const { t } = useTranslation();
@@ -46,18 +49,18 @@ const RequestSummary = ({ nextStep }) => {
   useDeprecatedAccount(senderAccount);
   useSchemas();
 
-
+  const sendingChainID = request?.chainId.replace('lisk:', '');
+  const tokenData = useAppsMetaTokens({ config: { params: { chainID: sendingChainID } } });
+  
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
     const transactionJSON = toTransactionJSON(transaction, moduleCommandSchemas[moduleCommand]);
-
-    const sendingChainID = request?.chainId.replace('lisk:', '');
     const { recipientChainID } = request?.request?.params ?? {};
-    
     const sendingChain = metaData.data.data.find((item) => item.chainID === sendingChainID);
     sendingChain.chainID = sendingChainID;
     const recipientChain = metaData.data.data.find((item) => item.chainID === recipientChainID);
     recipientChain.chainID = recipientChainID;
+    const token = tokenData.data.data.length > 0 ? tokenData.data.data[0] : defaultToken;
 
     nextStep({
       transactionJSON,
@@ -65,16 +68,14 @@ const RequestSummary = ({ nextStep }) => {
         composedFees: [
           {
             title: 'Transaction',
-            value: `${convertFromBaseDenom(transaction.fee)} LSK`,
+            value: `${convertFromBaseDenom(transaction.fee)} ${token.symbol}`,
             components: [],
           }
         ],
         fields: {
           sendingChain,
           recipientChain,
-          token: {
-            symbol: 'LSK',
-          },
+          token,
         },
         moduleCommand,
       },
