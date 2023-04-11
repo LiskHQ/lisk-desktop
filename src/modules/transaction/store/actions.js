@@ -156,14 +156,16 @@ export const multisigTransactionSigned =
   }) =>
   async (dispatch, getState) => {
     const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
+    const wallet = state.account?.current?.hw
+    ? state.account.current
+    : selectActiveTokenAccount(state);
     const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
     const options = {
       messageSchema: messagesSchemas[formProps.moduleCommand],
       txInitiatorAccount,
     };
     const [tx, error] = await signMultisigTransaction(
-      activeWallet,
+      wallet,
       sender,
       transactionJSON,
       txStatus,

@@ -162,7 +162,7 @@ const SendForm = (props) => {
   };
   if (sendingChain.chainID !== recipientChain.chainID) {
     // TODO: Hardcoded 200 bytes length for cross chain message
-    const messageFee = BigInt(messageFeeResult?.data?.fee || 0) * BigInt(200);
+    const messageFee = BigInt(messageFeeResult?.data?.fee || 0) * BigInt(100000);
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
