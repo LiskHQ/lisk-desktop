@@ -6,7 +6,9 @@ import { useSession } from '@libs/wcm/hooks/useSession';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 import mockApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
+import { mockAppTokens } from '@tests/fixtures/token';
 import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
@@ -18,6 +20,7 @@ const address = mockSavedAccounts[0].metadata.address;
 const [appManage1, appManage2] = mockApplicationsManage;
 
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
+jest.mock('@token/fungible/hooks/queries/useAppsMetaTokens');
 jest.mock('@libs/wcm/hooks/useSession');
 jest.mock('@account/hooks/useAccounts', () => ({
   useAccounts: jest.fn().mockImplementation(() => ({
@@ -80,6 +83,13 @@ describe('RequestSummary', () => {
     useBlockchainApplicationMeta.mockReturnValue({
       data: {
         data: [appManage1, appManage2],
+      },
+      isLoading: false,
+      isFetching: false,
+    });
+    useAppsMetaTokens.mockReturnValue({
+      data: {
+        data: mockAppTokens,
       },
       isLoading: false,
       isFetching: false,

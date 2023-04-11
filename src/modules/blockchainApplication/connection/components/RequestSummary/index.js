@@ -51,7 +51,7 @@ const RequestSummary = ({ nextStep }) => {
 
   const sendingChainID = request?.chainId.replace('lisk:', '');
   const tokenData = useAppsMetaTokens({ config: { params: { chainID: sendingChainID } } });
-  
+
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
     const transactionJSON = toTransactionJSON(transaction, moduleCommandSchemas[moduleCommand]);
