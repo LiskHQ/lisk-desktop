@@ -7,7 +7,10 @@ import styles from './Overview.css';
 
 const Registrations = () => {
   const { t } = useTranslation();
-  const { data: { labels, values }, isLoading } = useRegistrations();
+  const {
+    data: { labels, values },
+    isLoading,
+  } = useRegistrations();
 
   if (isLoading || !values.length) {
     return (

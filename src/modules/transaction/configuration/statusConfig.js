@@ -1,8 +1,9 @@
 /* eslint-disable complexity */
+import { transactions as LiskTransaction } from '@liskhq/lisk-client';
 import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { LEDGER_HW_IPC_CHANNELS } from '@libs/hardwareWallet/ledger/constants';
-import { transactionToJSON, getNumberOfSignatures, joinModuleAndCommand } from '../utils';
+import { getNumberOfSignatures, joinModuleAndCommand, toTransactionJSON } from '../utils';
 import { MODULE_COMMANDS_NAME_MAP } from './moduleCommand';
 
 export const statusMessages = (t) => ({
@@ -13,7 +14,7 @@ export const statusMessages = (t) => ({
   [txStatusTypes.multisigSignatureSuccess]: {
     title: t('The transaction is now fully signed'),
     message: t(
-      'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.'
+      'Now you can send it to the network. You may also copy or download it, if you wish to send the transaction using another device later.'
     ),
   },
   [txStatusTypes.signatureSuccess]: {
@@ -48,16 +49,26 @@ export const statusMessages = (t) => ({
   },
 });
 
+const getErrorMessage = (data, paramSchema) => {
+  try {
+    LiskTransaction.validateTransaction(data, paramSchema);
+
+    return toTransactionJSON(data, paramSchema);
+  } catch (error) {
+    return data;
+  }
+};
+
 /**
  * Defines the Status of the broadcasted tx.
- *
- * @param {Object} account - active account info
- * @param {Object} transactions - Transactions Status from the redux store
- * @param {boolean?} isMultisignature - Is the sender account multisig
- * @returns {Object} The Status code and message
  */
 // eslint-disable-next-line max-statements
-export const getTransactionStatus = (account, transactions, isMultisignature, canSenderSignTx) => {
+export const getTransactionStatus = (account, transactions, options = {}) => {
+  const moduleCommand = joinModuleAndCommand(
+    transactions.signedTransaction || transactions.txSignatureError || transactions.txBroadcastError
+  );
+  const paramSchema = options?.moduleCommandSchemas[moduleCommand];
+
   // Signature errors
   if (transactions.txSignatureError) {
     const txSignatureErrorMsg = transactions.txSignatureError.message;
@@ -73,7 +84,15 @@ export const getTransactionStatus = (account, transactions, isMultisignature, ca
 
     return {
       code: txStatusTypes.signatureError,
-      message: transactionToJSON(transactions.txSignatureError),
+      message: JSON.stringify(getErrorMessage(transactions.txSignatureError, paramSchema)),
+    };
+  }
+
+  // broadcast error
+  if (transactions.txBroadcastError) {
+    return {
+      code: txStatusTypes.broadcastError,
+      message: JSON.stringify(getErrorMessage(transactions.txBroadcastError, paramSchema)),
     };
   }
 
@@ -83,7 +102,6 @@ export const getTransactionStatus = (account, transactions, isMultisignature, ca
     let nonEmptySignatures = transactions.signedTransaction.signatures.filter(
       (sig) => sig.length > 0
     ).length;
-    const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
 
     if (moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
       nonEmptySignatures = transactions.signedTransaction.params.signatures.filter(
@@ -91,29 +109,26 @@ export const getTransactionStatus = (account, transactions, isMultisignature, ca
       ).length;
     }
 
+    const isMultisignature = account?.summary?.isMultisignature || options.isMultisignature;
+
     if (
       nonEmptySignatures < numberOfSignatures ||
       (isMultisignature &&
         nonEmptySignatures === numberOfSignatures &&
-        !canSenderSignTx &&
+        !options.canSenderSignTx &&
         moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature)
     ) {
       return { code: txStatusTypes.multisigSignaturePartialSuccess };
     }
 
-    if (isMultisignature && (nonEmptySignatures === numberOfSignatures || canSenderSignTx)) {
+    if (
+      isMultisignature &&
+      (nonEmptySignatures === numberOfSignatures || options.canSenderSignTx)
+    ) {
       return { code: txStatusTypes.multisigSignatureSuccess };
     }
 
     return { code: txStatusTypes.signatureSuccess };
-  }
-
-  // broadcast error
-  if (transactions.txBroadcastError) {
-    return {
-      code: txStatusTypes.broadcastError,
-      message: transactionToJSON(transactions.txBroadcastError),
-    };
   }
 
   // broadcast success

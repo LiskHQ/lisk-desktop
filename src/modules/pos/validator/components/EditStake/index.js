@@ -1,11 +1,7 @@
 /* eslint-disable complexity */
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  selectSearchParamValue,
-  removeSearchParamsFromUrl,
-  removeThenAppendSearchParamsToUrl,
-} from 'src/utils/searchParams';
+import { selectSearchParamValue, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
 import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useCommandSchema } from '@network/hooks';
@@ -141,7 +137,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
         amount: convertToBaseDenom(0),
       },
     ]);
-    removeSearchParamsFromUrl(history, ['modal']);
+    setIsForm(false);
   };
 
   const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
@@ -175,25 +171,25 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <WalletVisual size={40} address={address} />
                 <p>{validator.name}</p>
                 <p>{validator.address}</p>
-                <p>
-                  Commission: <span>{convertCommissionToPercentage(validator.commission)}%</span>
-                </p>
-              </BoxInfoText>
-              <label className={styles.fieldGroup}>
                 <p className={styles.availableBalance}>
                   <span>{t('Available balance: ')}</span>
                   <span>
                     <TokenAmount token={token} val={token.availableBalance} />
                   </span>
                 </p>
-
+                <p>
+                  {t('Commission: ')}
+                  <span>{convertCommissionToPercentage(validator.commission)}%</span>
+                </p>
+              </BoxInfoText>
+              <label className={styles.fieldGroup}>
                 <AmountField
                   token={token}
                   amount={stakeAmount}
                   onChange={setStakeAmount}
                   maxAmount={{ value: maxAmount }}
                   displayConverter
-                  label={t('Stake amount ({{symbol}})', { symbol: token.symbol })}
+                  label={t('Stake amount')}
                   labelClassname={`${styles.fieldLabel}`}
                   placeholder={t('Insert stake amount')}
                   name="stake"

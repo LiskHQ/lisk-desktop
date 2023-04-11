@@ -30,7 +30,7 @@ const TxSignatureCollector = ({
   confirmText,
 }) => {
   const [currentAccount] = useCurrentAccount();
-  const { moduleCommandSchemas } = useCommandSchema();
+  const { moduleCommandSchemas, messagesSchemas } = useCommandSchema();
   const { t } = useTranslation();
 
   // here, we want to get the auth account details of the user presently wanting to sign the transaction
@@ -40,7 +40,7 @@ const TxSignatureCollector = ({
 
   // here, we want to get the auth account details of the account that initiated the transaction.
   const { isLoading: isGettingTxInitiatorAccount, txInitiatorAccount } = useTxInitiatorAccount({
-    transactionJSON,
+    senderPublicKey: transactionJSON.senderPublicKey,
   });
 
   const isTransactionAuthor = transactionJSON.senderPublicKey === currentAccount?.metadata.pubkey;
@@ -97,6 +97,7 @@ const TxSignatureCollector = ({
       privateKey,
       txInitiatorAccount,
       moduleCommandSchemas,
+      messagesSchemas,
       sender: { ...account.data }, // this is the account of the present user wanting to sign the transaction
     });
   };
@@ -106,14 +107,6 @@ const TxSignatureCollector = ({
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {
-      // @TODO: more investigation needs to be done to know if this is needed
-      // const isDoubleSigned = !transactions.signedTransaction.signatures.some(
-      //   (sig) => sig.length === 0
-      // );
-      // if (!transactions.txSignatureError && isDoubleSigned) {
-      //   transactionDoubleSigned(moduleCommandSchemas);
-      //   return;
-      // }
       nextStep({ formProps, transactionJSON, statusInfo, sender: currentAccount });
       return;
     }

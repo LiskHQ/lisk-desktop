@@ -27,7 +27,7 @@ export const useAppsMetaTokensConfig = () => {
     method: 'get',
     event: 'get.blockchain.apps.meta.tokens',
     ...customConfig,
-    params: { limit, network: 'devnet' || network, chainID, ...(customConfig?.params || {}) },
+    params: { limit, network, chainID, ...(customConfig?.params || {}) },
   });
 };
 

@@ -314,6 +314,7 @@ module.exports = {
     'src/modules/blockchainApplication/connection/components/RequestView/RequestView.js', // TODO: To be fixed in PDD-1482
     'src/modules/hardwareWallet/store/actions/devicesActions.js', // TODO: To be fixed in PDD-1482
     '/src/modules/hardwareWallet/store/reducers/devicesReducer.js', // TODO: To be fixed in PDD-1482
+    'src/modules/pos/validator/components/ClaimRewardsView/index.js',
     'src/modules/blockchainApplication/manage/hooks/useApplicationManagement.js', // TODO: To be fixed in PDD-1522
     'src/modules/wallet/components/MenuSelect/MenuSelect.js', // TODO: To be fixed in PDD-1522
     'src/modules/network/components/networkSwitcherDropdown/NetworkSwitcherDropdown.js', // TODO: To be fixed in PDD-1522

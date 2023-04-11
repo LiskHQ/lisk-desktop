@@ -36,6 +36,7 @@ describe('tokenTransformResult', () => {
       params: {
         limit: tokens.length,
         tokenID: '1',
+        chainID: null,
       },
     });
     await expect(defaultClient.call).toHaveBeenCalledWith(config);

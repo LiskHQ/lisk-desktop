@@ -26,8 +26,10 @@ function StakeSuccessfulModal({ history, statusMessage }) {
         <h4 className={styles.stakedHeader}>{t('Tokens are now staked')}</h4>
         <p className={styles.messageLabel}>{statusMessage.message}</p>
       </BoxContent>
-      <BoxFooter>
-        <PrimaryButton onClick={handleBackToValidator}>{t('Back to validators')}</PrimaryButton>
+      <BoxFooter className={styles.footer}>
+        <PrimaryButton className={styles.actionButton} onClick={handleBackToValidator}>
+          {t('Back to validators')}
+        </PrimaryButton>
       </BoxFooter>
     </Box>
   );

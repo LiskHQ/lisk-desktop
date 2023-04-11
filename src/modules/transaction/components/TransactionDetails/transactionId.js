@@ -10,6 +10,10 @@ const TransactionId = ({ t }) => {
     transaction: { id },
   } = React.useContext(TransactionDetailsContext);
 
+  if (!id) {
+    return null;
+  }
+
   return (
     <ValueAndLabel label={t('Transaction ID')} className={styles.transactionId}>
       <span className="transaction-id">

@@ -20,7 +20,7 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
 }));
 
-jest.mock('src/modules/account/utils/getCheckInitializedAccount');
+jest.mock('src/modules/account/utils/getTokenBalances');
 
 describe.skip('getHWAccounts', () => {
   it('returns a list of accounts where all accounts are initialized', async () => {

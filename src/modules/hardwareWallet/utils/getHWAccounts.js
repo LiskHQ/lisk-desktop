@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop, max-statements */
-import { extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
-import { getCheckInitializedAccount } from '@account/utils/getCheckInitializedAccount';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
+import { getTokenBalances } from '@account/utils/getTokenBalances';
 import { getPubKey } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
 export const getHWAccounts = async (currentHWDevice, getName) => {
@@ -10,34 +10,41 @@ export const getHWAccounts = async (currentHWDevice, getName) => {
   while (true) {
     const pubkey = await getPubKey(currentHWDevice.path, accountIndex);
     const address = extractAddressFromPublicKey(pubkey);
-    const isInitialized = await getCheckInitializedAccount(address, '0400000000000000');
-    if (!isInitialized) {
-      accounts.push({
-        hw: currentHWDevice,
-        metadata: {
-          address,
-          pubkey,
-          accountIndex,
-          name: 'New account',
-          path: '',
-          isHW: true,
-          isNew: true,
-        },
-      });
-      break;
-    }
-    accounts.push({
+    const tokenBalances = await getTokenBalances(address);
+    const isInitialized =
+      tokenBalances.length > 0 && BigInt(tokenBalances[0].availableBalance || 0) > BigInt(0);
+    const account = {
       hw: currentHWDevice,
       metadata: {
         address,
         pubkey,
         accountIndex,
-        name: getName(address, 'Ledger'),
         path: '',
         isHW: true,
+      },
+    };
+
+    if (!isInitialized) {
+      accounts.push({
+        ...account,
+        metadata: {
+          ...account.metadata,
+          name: 'New account',
+          isNew: true,
+        },
+      });
+      break;
+    }
+
+    accounts.push({
+      ...account,
+      metadata: {
+        ...account.metadata,
+        name: getName(address, 'Ledger'),
         creationTime: new Date().toISOString(),
       },
     });
+
     ++accountIndex;
   }
   return accounts;

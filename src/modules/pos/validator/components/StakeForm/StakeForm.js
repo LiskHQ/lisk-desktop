@@ -6,7 +6,6 @@ import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { normalizeStakesForTx } from '@transaction/utils';
 import BoxContent from '@theme/box/content';
-import Dialog from 'src/theme/dialog/dialog';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
 import routes from 'src/routes/routes';
@@ -190,7 +189,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
   };
 
   return (
-    <Dialog hasClose className={`${styles.wrapper}`}>
+    <div className={styles.wrapper}>
       <TxComposer
         onComposed={onComposed}
         onConfirm={onConfirm}
@@ -240,7 +239,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
           )}
         </>
       </TxComposer>
-    </Dialog>
+    </div>
   );
 };
 

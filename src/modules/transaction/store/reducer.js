@@ -62,7 +62,7 @@ const transactions = (state = initialState, action) => {
     // Stored the signed transaction to be used for broadcasting or downloading
     case actionTypes.transactionCreatedSuccess:
     case actionTypes.signatureSkipped:
-    case actionTypes.transactionDoubleSigned:
+    case actionTypes.transactionSigned:
       return {
         ...state,
         signedTransaction: action.data,
