@@ -8,12 +8,7 @@ import { fromTransactionJSON } from '@transaction/utils/encoding';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
-import {
-  getTransactions,
-  getTransactionStats,
-  getTransactionFee,
-  dryRun,
-} from './index';
+import { getTransactions, getTransactionStats, getTransactionFee, dryRun } from './index';
 
 const { stake } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();

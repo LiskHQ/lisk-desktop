@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
 import { selectActiveToken } from 'src/redux/selectors';
-import { resetTransactionResult, transactionDoubleSigned } from 'src/redux/actions';
+import { resetTransactionResult } from 'src/redux/actions';
 import { tokensTransferred } from '../../store/actions';
 import Summary from './Summary';
 
@@ -14,7 +14,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   resetTransactionResult,
-  transactionDoubleSigned,
   tokensTransferred,
 };
 

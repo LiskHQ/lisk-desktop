@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { useAuth } from '@auth/hooks/queries';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
-const useTxInitiatorAccount = ({ transactionJSON }) => {
-  const txInitiatorAddress = extractAddressFromPublicKey(transactionJSON.senderPublicKey);
+const useTxInitiatorAccount = ({ senderPublicKey }) => {
+  const txInitiatorAddress = extractAddressFromPublicKey(senderPublicKey);
 
   const { data, isLoading } = useAuth({
     config: { params: { address: txInitiatorAddress } },

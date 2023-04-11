@@ -1,9 +1,8 @@
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
-import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
+import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 import actionTypes from './actionTypes';
 import { getTransactions, broadcast, dryRun } from '../api';
 import { joinModuleAndCommand, signMultisigTransaction } from '../utils';
@@ -77,52 +76,6 @@ export const transactionsRetrieved =
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
 });
-
-/**
- * Signs the transaction using a given second passphrase
- *
- * @param {object} data
- * @param {string} data.secondPass
- */
-// eslint-disable-next-line max-statements
-export const transactionDoubleSigned = (moduleCommandSchemas) => async (dispatch, getState) => {
-  const state = getState();
-  const { transactions, network } = state;
-  const keyPair = await extractKeyPair({
-    passphrase: state.wallet.secondPassphrase,
-    enableCustomDerivationPath: false,
-  });
-  const activeWallet = selectActiveTokenAccount(state);
-  const transaction = toTransactionJSON(
-    transactions.signedTransaction,
-    moduleCommandSchemas[transactions.moduleCommand]
-  );
-  const [signedTx, err] = await signMultisigTransaction(
-    activeWallet,
-    // SenderAccount is the same of the double-signer
-    {
-      ...activeWallet.keys,
-      ...activeWallet.keys,
-    },
-    transaction,
-    signatureCollectionStatus.partiallySigned,
-    moduleCommandSchemas[transactions.moduleCommand],
-    network.networks.LSK.chainID,
-    keyPair.privateKey
-  );
-
-  if (!err) {
-    dispatch({
-      type: actionTypes.transactionDoubleSigned,
-      data: signedTx,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: err,
-    });
-  }
-};
 
 /**
  * Calls transactionAPI.broadcast function for put the tx object (signed) into the network
@@ -203,18 +156,21 @@ export const multisigTransactionSigned =
   }) =>
   async (dispatch, getState) => {
     const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
+    const wallet = state.account?.current?.hw
+    ? state.account.current
+    : selectActiveTokenAccount(state);
     const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
     const options = {
       messageSchema: messagesSchemas[formProps.moduleCommand],
+      txInitiatorAccount,
     };
     const [tx, error] = await signMultisigTransaction(
-      activeWallet,
+      wallet,
       sender,
       transactionJSON,
       txStatus,
       moduleCommandSchemas[formProps.moduleCommand],
-      state.network.networks.LSK.chainID,
+      selectCurrentApplicationChainID(state),
       privateKey,
       txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
       options
@@ -222,7 +178,7 @@ export const multisigTransactionSigned =
 
     if (!error) {
       dispatch({
-        type: actionTypes.transactionDoubleSigned,
+        type: actionTypes.transactionSigned,
         data: tx,
       });
     } else {

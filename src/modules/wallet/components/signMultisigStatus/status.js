@@ -1,10 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { useCurrentAccount } from '@account/hooks';
 import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
 import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
+import { selectModuleCommandSchemas } from 'src/redux/selectors';
 
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
@@ -13,14 +15,15 @@ import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 // eslint-disable-next-line max-statements
 const Status = ({ transactions, t, transactionJSON }) => {
   const [currentAccount] = useCurrentAccount();
+  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
 
   // This is to replace previous withData implementations.
   const { txInitiatorAccount } = useTxInitiatorAccount({
-    transactionJSON,
+    senderPublicKey: transactionJSON.senderPublicKey,
   });
-  const { mandatoryKeys, optionalKeys, numberOfSignatures, publickKey } = txInitiatorAccount;
-  const isMultiSignature =
-    transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 1;
+  const { mandatoryKeys, optionalKeys, numberOfSignatures, publicKey } = txInitiatorAccount;
+  const isMultisignature =
+    transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 0;
 
   const { canSenderSignTx } = useMultiSignatureStatus({
     transactionJSON,
@@ -31,17 +34,16 @@ const Status = ({ transactions, t, transactionJSON }) => {
       optionalKeys,
       numberOfSignatures,
       summary: {
-        publickKey,
+        publicKey,
       },
     },
   });
 
-  const status = getTransactionStatus(
-    txInitiatorAccount,
-    transactions,
-    isMultiSignature,
-    canSenderSignTx
-  );
+  const status = getTransactionStatus(txInitiatorAccount, transactions, {
+    moduleCommandSchemas,
+    isMultisignature,
+    canSenderSignTx,
+  });
 
   const template = statusMessages(t)[status.code];
   return (
@@ -50,7 +52,9 @@ const Status = ({ transactions, t, transactionJSON }) => {
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
-            {t('Provide a signature for a transaction which belongs to a multisignature account.')}
+            {t(
+              'If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.'
+            )}
           </p>
         </header>
         <BoxContent>

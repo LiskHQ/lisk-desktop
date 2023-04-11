@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
@@ -14,10 +14,19 @@ const RegisterMultisigView = ({ history }) => {
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
   };
+  const [isStepTxSignatureCollector, setIsStepTxSignatureCollector] = useState(false);
+  const onMultiStepChange = useCallback(({ step: { current } }) => {
+    setIsStepTxSignatureCollector(current === 2);
+  }, []);
 
   return (
-    <Dialog hasClose>
-      <MultiStep key="multisignature" finalCallback={closeModal} className={styles.modal}>
+    <Dialog hasClose size={isStepTxSignatureCollector && 'sm'}>
+      <MultiStep
+        key="multisignature"
+        finalCallback={closeModal}
+        className={styles.modal}
+        onChange={onMultiStepChange}
+      >
         <Form />
         <Summary />
         <TxSignatureCollector />

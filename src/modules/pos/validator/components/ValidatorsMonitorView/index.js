@@ -8,9 +8,6 @@ const mapStateToProps = (state) => ({
   watchList: state.watchList,
 });
 
-const ComposedValidators = compose(
-  withRouter,
-  connect(mapStateToProps),
-)(Validators);
+const ComposedValidators = compose(withRouter, connect(mapStateToProps))(Validators);
 
 export default ComposedValidators;

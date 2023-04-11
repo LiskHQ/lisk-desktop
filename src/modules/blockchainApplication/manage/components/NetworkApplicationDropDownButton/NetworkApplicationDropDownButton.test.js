@@ -2,7 +2,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import useSettings from "@settings/hooks/useSettings";
+import useSettings from '@settings/hooks/useSettings';
 import NetworkApplicationDropDownButton from './NetworkApplicationDropDownButton';
 import { useCurrentApplication } from '../../hooks/useCurrentApplication';
 

@@ -27,6 +27,7 @@ const selectNetworkIdentifier = (state) => state.network.networks?.LSK?.networkI
 const selectNetworkName = (state) => state.network.name;
 const selectActiveTokenNetwork = (state) => state.network.networks[state.token.active];
 const selectStaking = (state) => state.staking;
+const selectModuleCommandSchemas = (state) => state.network.networks?.LSK?.moduleCommandSchemas;
 
 export {
   selectStaking,
@@ -46,4 +47,5 @@ export {
   selectNetworkIdentifier,
   selectNetworkName,
   selectActiveTokenNetwork,
+  selectModuleCommandSchemas,
 };

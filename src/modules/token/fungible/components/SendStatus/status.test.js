@@ -11,7 +11,8 @@ import Status from './Status';
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
-describe('unlock transaction Status', () => {
+
+describe('Sent token Status', () => {
   const props = {
     t: (key) => key,
     account: accounts.genesis,
@@ -43,11 +44,15 @@ describe('unlock transaction Status', () => {
   };
 
   const signedTransaction = {
-    id: 'token:transfer',
-    sender: { publicKey: accounts.genesis.summary.publicKey },
-    signatures: [accounts.genesis.summary.publicKey],
-    nonce: '19n',
-    fee: '207000n',
+    module: 'pos',
+    command: 'claimRewards',
+    nonce: '7339636738092037709',
+    fee: '9886722176580209175',
+    senderPublicKey: 'bfbef2a36e17ca75b66fd56adea8dd04ed234cd4188aca42fc8a7299d8eaadd8',
+    params: {},
+    signatures: [
+      'fc64c70fae22047b49d88fb88097dfa3c3c3180d4bf264aa1ef0cc33bfe9a8c0caa1ef5213befd39520cad1de7c6f6d45915b7dccb39f92695db3aed34df0ba7',
+    ],
   };
 
   it('passes correct props to TxBroadcaster when signed transaction and display add bookmark link', () => {
@@ -83,7 +88,7 @@ describe('unlock transaction Status', () => {
       transactions: {
         txBroadcastError: null,
         txSignatureError: { message: 'error:test' },
-        signedTransaction: { signatures: ['123'] },
+        signedTransaction,
       },
     };
 
@@ -109,7 +114,7 @@ describe('unlock transaction Status', () => {
         },
       },
       transactions: {
-        txBroadcastError: { message: 'error:test' },
+        txBroadcastError: signedTransaction,
         txSignatureError: null,
         signedTransaction: {},
       },
@@ -120,7 +125,7 @@ describe('unlock transaction Status', () => {
       illustration: 'default',
       status: {
         code: 'BROADCAST_ERROR',
-        message: JSON.stringify({ message: 'error:test' }),
+        message: JSON.stringify(signedTransaction),
       },
       title: 'Transaction failed',
       message: 'An error occurred while sending your transaction to the network. Please try again.',

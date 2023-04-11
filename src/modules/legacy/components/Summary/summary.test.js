@@ -49,7 +49,7 @@ useCommandSchema.mockReturnValue({
   ),
 });
 useTokenBalances.mockReturnValue({ data: mockAppsTokens, isLoading: false });
-useGetInitializationFees.mockReturnValue({ data: { data: { userAccount: 5000000 } } });
+useGetInitializationFees.mockReturnValue({ initializationFees: { userAccount: 5000000 } });
 
 describe('Reclaim balance Summary', () => {
   const wallet = { info: { LSK: accounts.non_migrated } };
@@ -113,7 +113,7 @@ describe('Reclaim balance Summary', () => {
           amount: accounts.non_migrated.legacy.balance,
         },
         senderPublicKey: accounts.non_migrated.summary.publicKey,
-        fee: '5145764',
+        fee: '5147764',
         id: '',
         nonce: accounts.non_migrated.sequence.nonce,
         signatures: [],

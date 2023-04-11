@@ -6,14 +6,14 @@ import styles from './styles.css';
 
 const Fee = ({ t }) => {
   const {
-    activeToken,
+    token,
     transaction: { fee },
   } = React.useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
       <span className="tx-fee">
-        <TokenAmount val={fee} token={activeToken} />
+        <TokenAmount val={fee} token={token} />
       </span>
     </ValueAndLabel>
   );

@@ -7,11 +7,11 @@ import { selectStaking } from 'src/redux/selectors';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useSentStakes } from '../../hooks/queries';
 
-function ValidatorStakeButton({ address, isBanned, currentAddress }) {
+function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled }) {
   const { t } = useTranslation();
   const staking = useSelector((state) => selectStaking(state));
   const { data: sentStakes, isLoading: sentStakesLoading } = useSentStakes({
-    config: { params: { address } },
+    config: { params: { address: currentAddress } },
   });
 
   const validatorStake = useMemo(() => {
@@ -26,11 +26,11 @@ function ValidatorStakeButton({ address, isBanned, currentAddress }) {
   return (
     <DialogLink component="editStake">
       {isEdit ? (
-        <SecondaryButton disabled={sentStakesLoading || isBanned || !currentAddress}>
+        <SecondaryButton disabled={sentStakesLoading || isBanned || !currentAddress || isDisabled}>
           {t('Edit stake')}
         </SecondaryButton>
       ) : (
-        <PrimaryButton>{t('Stake validator')}</PrimaryButton>
+        <PrimaryButton disabled={isDisabled}>{t('Stake validator')}</PrimaryButton>
       )}
     </DialogLink>
   );

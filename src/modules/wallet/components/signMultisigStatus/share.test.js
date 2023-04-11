@@ -162,7 +162,7 @@ describe('Sign Multisignature Tx Status component', () => {
       status: { code: 'MULTISIG_SIGNATURE_SUCCESS' },
       title: 'The transaction is now fully signed',
       message:
-        'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.',
+        'Now you can send it to the network. You may also copy or download it, if you wish to send the transaction using another device later.',
       className: 'content',
     });
   });

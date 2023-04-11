@@ -55,16 +55,21 @@ export const useRegistrations = () => {
       return acc;
     }, {});
 
-  const offset = Math.floor(validators.meta.total - Object.values(monthStats).reduce((acc, val) => acc + val, 0));
+  const offset = Math.floor(
+    validators.meta.total - Object.values(monthStats).reduce((acc, val) => acc + val, 0)
+  );
 
   // Create a sorted array of monthly accumulated number of registrations
   const chartData = Object.entries(monthStats)
     .sort(([d1], [d2]) => d1 > d2)
-    .reduce((acc, [date, count]) => {
-      const last = acc[acc.length - 1];
-      acc.push([date, (last[1] + count)]);
-      return acc;
-    }, [[getDate(registrations.data[0]?.block.timestamp - monthDuration), offset]])
+    .reduce(
+      (acc, [date, count]) => {
+        const last = acc[acc.length - 1];
+        acc.push([date, last[1] + count]);
+        return acc;
+      },
+      [[getDate(registrations.data[0]?.block.timestamp - monthDuration), offset]]
+    )
     .filter(([date]) => date !== 'NaN-NaN');
 
   const labels = getAmountOfValidatorsLabels(chartData);

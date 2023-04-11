@@ -3,6 +3,7 @@ import { mountWithQueryClient } from 'src/utils/testHelpers';
 
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import wallets from '@tests/constants/wallets';
 import Form, { validateState } from './index';
@@ -13,6 +14,12 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
     isSuccess: true,
     isLoading: false,
   }),
+}));
+
+const mockCurrentAccount = mockSavedAccounts[0];
+
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
 }));
 
 const transactionBaseFees = {
@@ -159,13 +166,18 @@ describe('Multisignature editor component', () => {
 });
 
 describe('validateState', () => {
+  const commonParam = {
+    t: (str) => str,
+    currentAccount: mockCurrentAccount,
+  };
+
   it('should return error if signature are less than mandatory members', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {
+      ...commonParam,
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [],
       numberOfSignatures: 2,
-      t: (str) => str,
     };
     const error = 'Number of signatures must be equal to the number of members.';
     expect(validateState(params).messages).toContain(error);
@@ -174,10 +186,10 @@ describe('validateState', () => {
   it('should return error if signatures are more than all members', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {
+      ...commonParam,
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [],
       numberOfSignatures: 5,
-      t: (str) => str,
     };
     const error = 'Number of signatures must be equal to the number of members.';
     expect(validateState(params).messages).toContain(error);
@@ -186,10 +198,10 @@ describe('validateState', () => {
   it('should return error if optional members are practically mandatory', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {
+      ...commonParam,
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk],
       numberOfSignatures: 4,
-      t: (str) => str,
     };
     const error = 'Either change the optional member to mandatory or define more optional members.';
     expect(validateState(params).messages).toContain(error);
@@ -198,10 +210,10 @@ describe('validateState', () => {
   it('should return error if optional members never get to sign', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {
+      ...commonParam,
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk],
       numberOfSignatures: 3,
-      t: (str) => str,
     };
     const error = 'Either change the optional member to mandatory or define more optional members.';
     expect(validateState(params).messages).toContain(error);
@@ -210,10 +222,10 @@ describe('validateState', () => {
   it('should return error if there are only optional members', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {
+      ...commonParam,
       mandatoryKeys: [],
       optionalKeys: [pbk, pbk, pbk],
       numberOfSignatures: 3,
-      t: (str) => str,
     };
     const error = 'All members can not be optional. Consider changing them to mandatory.';
     expect(validateState(params).messages).toContain(error);
@@ -222,10 +234,10 @@ describe('validateState', () => {
   it('should return error if the number of signature is equal to optional and mandatory members', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {
+      ...commonParam,
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk, pbk, pbk],
       numberOfSignatures: 6,
-      t: (str) => str,
     };
     const error =
       'Either change the optional member to mandatory or reduce the number of signatures.';
@@ -235,10 +247,10 @@ describe('validateState', () => {
   it('should return error if there are more than 64 members', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {
+      ...commonParam,
       mandatoryKeys: new Array(65).fill(pbk),
       optionalKeys: [],
       numberOfSignatures: 65,
-      t: (str) => str,
     };
     const error = 'Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.';
     expect(validateState(params).messages).toContain(error);
@@ -247,10 +259,10 @@ describe('validateState', () => {
   it('should return error if there are duplicate public keys', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {
+      ...commonParam,
       mandatoryKeys: new Array(2).fill(pbk),
       optionalKeys: [],
       numberOfSignatures: 2,
-      t: (str) => str,
     };
     const error = 'Duplicate public keys detected.';
     expect(validateState(params).messages).toContain(error);

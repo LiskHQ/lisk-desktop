@@ -25,6 +25,10 @@ const moduleCommandMap = {
     maxFee: 1e7,
     icon: 'txDefault',
   },
+  [moduleCommandNameMap.transferCrossChain]: {
+    maxFee: 1e7,
+    icon: 'txDefault',
+  },
   [moduleCommandNameMap.unlock]: {
     maxFee: 1e7,
     icon: 'unlock',
