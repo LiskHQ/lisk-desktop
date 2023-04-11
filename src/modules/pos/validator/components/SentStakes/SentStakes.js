@@ -27,11 +27,13 @@ function useStakerAddress(searchParam) {
 function ClaimRewardsDialogButton({ address }) {
   const { t } = useTranslation();
   const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
-  const hasClaimAbleRewards = rewardsClaimable?.meta?.total > 0;
+  const hasClaimableRewards =
+    rewardsClaimable?.data?.length &&
+    rewardsClaimable?.data?.reduce((acc, curr) => BigInt(curr.reward) + acc, BigInt(0)) > BigInt(0);
 
   return (
     <DialogLink component="claimRewardsView">
-      <SecondaryButton disabled={!hasClaimAbleRewards}>{t('Claim rewards')}</SecondaryButton>
+      <SecondaryButton disabled={!hasClaimableRewards}>{t('Claim rewards')}</SecondaryButton>
     </DialogLink>
   );
 }
