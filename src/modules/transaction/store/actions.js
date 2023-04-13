@@ -157,8 +157,8 @@ export const multisigTransactionSigned =
   async (dispatch, getState) => {
     const state = getState();
     const wallet = state.account?.current?.hw
-    ? state.account.current
-    : selectActiveTokenAccount(state);
+      ? state.account.current
+      : selectActiveTokenAccount(state);
     const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
     const options = {
       messageSchema: messagesSchemas[formProps.moduleCommand],
