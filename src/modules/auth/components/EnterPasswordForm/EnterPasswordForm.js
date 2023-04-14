@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
+import Icon from 'src/theme/Icon';
 import WalletVisual from '@wallet/components/walletVisual';
 import { decryptAccount } from '@account/utils/encryptAccount';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import { PrimaryButton } from 'src/theme/buttons';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
 
 const API_ERROR_NAME = 'API_ERROR_NAME';
@@ -19,6 +20,9 @@ const EnterPasswordForm = ({
   encryptedAccount,
   isDisabled,
   confirmText,
+  className,
+  prevStep,
+  showBackButton
 }) => {
   const { t } = useTranslation();
   const {
@@ -57,8 +61,13 @@ const EnterPasswordForm = ({
   };
 
   return (
-    <Box className={styles.container}>
+    <Box className={`${styles.container} ${className}`}>
       <BoxContent className={styles.content}>
+        {showBackButton && (
+          <TertiaryButton className={styles.backButton} onClick={prevStep}>
+            <Icon name="arrowLeftTailed" />
+          </TertiaryButton>
+        )}
         <h1>{t('Enter your account password')}</h1>
         <p className={styles.subheader}>
           {title || t('Please enter your account password to backup the secret recovery phrase.')}

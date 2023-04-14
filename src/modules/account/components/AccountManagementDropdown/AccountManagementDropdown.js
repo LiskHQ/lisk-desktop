@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DropdownButton from 'src/theme/DropdownButton';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
@@ -9,12 +9,22 @@ import styles from './AccountManagementDropdown.css';
 
 const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
   const { name, address, isHW } = currentAccount.metadata;
+  const [isDropdownShown, setIsDropdownShown] = useState(false);
+
+  const handleDismissMenu = () => {
+    setIsDropdownShown(false);
+  };
+  const handleOpenMenu = () => {
+    setIsDropdownShown(true);
+  };
 
   return (
     <DropdownButton
       className={styles.dropDownMenu}
       wrapperClassName={styles.wrapper}
       ButtonComponent={TertiaryButton}
+      isDropdownShown={isDropdownShown}
+      onDropdownOpen={handleOpenMenu}
       buttonClassName={`account-management-dropdown ${styles.dropdownButton}`}
       buttonLabel={
         <div className={styles.accountWrapper}>
@@ -32,7 +42,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
       size="m"
       trackDropdownState={onMenuClick}
     >
-      <AccountMenuListing className={styles.dropDownMenuList} />
+      <AccountMenuListing className={styles.dropDownMenuList} onItemClicked={handleDismissMenu} />
     </DropdownButton>
   );
 };

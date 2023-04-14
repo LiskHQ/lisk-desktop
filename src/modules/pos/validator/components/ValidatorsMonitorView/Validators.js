@@ -24,7 +24,7 @@ import LatestStakes from '../LatestStakes';
 import { useValidators } from '../../hooks/queries';
 import styles from './Validators.css';
 
-const ValidatorActions = ({ address, isValidator }) => {
+const ValidatorActionButton = ({ address, isValidator }) => {
   const { t } = useTranslation();
 
   if (!address) return null;
@@ -147,10 +147,12 @@ const ValidatorsMonitor = ({ watchList }) => {
             <BoxTabs {...pageTabs} />
           </div>
           <div className={grid['col-md-4']}>
-            <Link to={address ? routes.sentStakes.path : '#'}>
-              <SecondaryButton disabled={!address}>Stakes</SecondaryButton>
-            </Link>
-            <ValidatorActions isValidator={isValidator} address={address} />
+            {!!address && (
+              <Link to={routes.sentStakes.path}>
+                <SecondaryButton>Stakes</SecondaryButton>
+              </Link>
+            )}
+            <ValidatorActionButton isValidator={isValidator} address={address} />
           </div>
         </div>
       </BoxHeader>

@@ -1,72 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SecondaryButton } from 'src/theme/buttons';
 import Dropdown from 'src/theme/Dropdown/dropdown';
 import OutsideClickHandler from 'src/theme/Select/OutsideClickHandler';
 import styles from './dropdownButton.css';
 
-class DropdownButton extends React.Component {
-  constructor() {
-    super();
+function DropdownButton({
+  onDropdownOpen,
+  isDropdownShown,
+  trackDropdownState,
+  ButtonComponent,
+  buttonLabel,
+  buttonType,
+  children,
+  align,
+  size,
+  wrapperClassName,
+  buttonClassName,
+  className,
+}) {
+  const [shownDropdown, setShownDropdown] = useState(isDropdownShown);
 
-    this.state = {
-      shownDropdown: false,
-    };
+  const toggleDropdown = (_, showDropdownValue) => {
+    if( showDropdownValue || !shownDropdown) onDropdownOpen?.();
+    setShownDropdown(showDropdownValue || !shownDropdown);
+  };
 
-    this.toggleDropdown = this.toggleDropdown.bind(this);
-  }
+  useEffect(() => {
+    trackDropdownState?.(shownDropdown);
+  }, [shownDropdown]);
 
-  toggleDropdown(_, showDropdown) {
-    this.setState((prevState) => ({
-      shownDropdown: showDropdown || !prevState.shownDropdown,
-    }));
-  }
+  useEffect(() => {
+    setShownDropdown(isDropdownShown);
+  }, [isDropdownShown]);
 
-  componentDidUpdate(_, prevState) {
-    if (this.state.shownDropdown !== prevState.shownDropdown) {
-      this.props.trackDropdownState(this.state.shownDropdown || !prevState.shownDropdown);
-    }
-  }
-
-  render() {
-    const { shownDropdown } = this.state;
-    const {
-      ButtonComponent,
-      buttonLabel,
-      buttonType,
-      children,
-      align,
-      size,
-      wrapperClassName,
-      buttonClassName,
-      className,
-    } = this.props;
-    return (
-      <>
-        <OutsideClickHandler
-          className={`${styles.wrapper} ${wrapperClassName}`}
-          disabled={!shownDropdown}
-          onOutsideClick={this.toggleDropdown}
+  return (
+    <>
+      <OutsideClickHandler
+        className={`${styles.wrapper} ${wrapperClassName}`}
+        disabled={!shownDropdown}
+        onOutsideClick={toggleDropdown}
+      >
+        <ButtonComponent
+          onClick={toggleDropdown}
+          className={buttonClassName}
+          size={size}
+          type={buttonType}
         >
-          <ButtonComponent
-            onClick={this.toggleDropdown}
-            className={buttonClassName}
-            size={size}
-            type={buttonType}
-          >
-            {buttonLabel}
-          </ButtonComponent>
-          <Dropdown
-            showArrow={false}
-            showDropdown={shownDropdown}
-            className={`${styles.dropdown} ${className}`}
-            align={align}
-          >
-            {children}
-          </Dropdown>
-        </OutsideClickHandler>
-      </>
-    );
-  }
+          {buttonLabel}
+        </ButtonComponent>
+        <Dropdown
+          showArrow={false}
+          showDropdown={shownDropdown}
+          className={`${styles.dropdown} ${className}`}
+          align={align}
+        >
+          {children}
+        </Dropdown>
+      </OutsideClickHandler>
+    </>
+  );
 }
 
 DropdownButton.defaultProps = {
