@@ -1,65 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { SecondaryButton } from 'src/theme/buttons';
 import Dropdown from 'src/theme/Dropdown/dropdown';
 import OutsideClickHandler from 'src/theme/Select/OutsideClickHandler';
 import styles from './dropdownButton.css';
 
-function DropdownButton({
-  onDropdownOpen,
-  isDropdownShown,
-  trackDropdownState,
-  ButtonComponent,
-  buttonLabel,
-  buttonType,
-  children,
-  align,
-  size,
-  wrapperClassName,
-  buttonClassName,
-  className,
-}) {
-  const [shownDropdown, setShownDropdown] = useState(isDropdownShown);
+const DropdownButton = forwardRef(
+  (
+    {
+      onDropdownOpen,
+      isDropdownShown,
+      trackDropdownState,
+      ButtonComponent,
+      buttonLabel,
+      buttonType,
+      children,
+      align,
+      size,
+      wrapperClassName,
+      buttonClassName,
+      className,
+    },
+    ref
+  ) => {
+    const [shownDropdown, setShownDropdown] = useState(isDropdownShown);
 
-  const toggleDropdown = (_, showDropdownValue) => {
-    if( showDropdownValue || !shownDropdown) onDropdownOpen?.();
-    setShownDropdown(showDropdownValue || !shownDropdown);
-  };
+    const toggleDropdown = (_, showDropdownValue) => {
+      if (showDropdownValue || !shownDropdown) onDropdownOpen?.();
+      setShownDropdown(showDropdownValue || !shownDropdown);
+    };
 
-  useEffect(() => {
-    trackDropdownState?.(shownDropdown);
-  }, [shownDropdown]);
+    useEffect(() => {
+      trackDropdownState?.(shownDropdown);
+    }, [shownDropdown]);
 
-  useEffect(() => {
-    setShownDropdown(isDropdownShown);
-  }, [isDropdownShown]);
+    useEffect(() => {
+      setShownDropdown(isDropdownShown);
+    }, [isDropdownShown]);
 
-  return (
-    <>
-      <OutsideClickHandler
-        className={`${styles.wrapper} ${wrapperClassName}`}
-        disabled={!shownDropdown}
-        onOutsideClick={toggleDropdown}
-      >
-        <ButtonComponent
-          onClick={toggleDropdown}
-          className={buttonClassName}
-          size={size}
-          type={buttonType}
+    useImperativeHandle(ref, () => ({ toggleDropdown }), [shownDropdown]);
+
+    return (
+      <>
+        <OutsideClickHandler
+          className={`${styles.wrapper} ${wrapperClassName}`}
+          disabled={!shownDropdown}
+          onOutsideClick={toggleDropdown}
         >
-          {buttonLabel}
-        </ButtonComponent>
-        <Dropdown
-          showArrow={false}
-          showDropdown={shownDropdown}
-          className={`${styles.dropdown} ${className}`}
-          align={align}
-        >
-          {children}
-        </Dropdown>
-      </OutsideClickHandler>
-    </>
-  );
-}
+          <ButtonComponent
+            onClick={toggleDropdown}
+            className={buttonClassName}
+            size={size}
+            type={buttonType}
+          >
+            {buttonLabel}
+          </ButtonComponent>
+          <Dropdown
+            showArrow={false}
+            showDropdown={shownDropdown}
+            className={`${styles.dropdown} ${className}`}
+            align={align}
+          >
+            {children}
+          </Dropdown>
+        </OutsideClickHandler>
+      </>
+    );
+  }
+);
 
 DropdownButton.defaultProps = {
   className: '',

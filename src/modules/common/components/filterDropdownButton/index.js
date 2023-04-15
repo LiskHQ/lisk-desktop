@@ -135,7 +135,7 @@ class FilterDropdownButton extends React.Component {
   renderFooter() {
     const { hasErrors, areFiltersExtended } = this.state;
     const { t, fields } = this.props;
-
+    
     return (
       <>
         {fields.length > 3 && (

@@ -23,7 +23,7 @@ describe('AccountManagementDropdown', () => {
       screen.getByText(truncateAddress(mockCurrentAccount.metadata.address))
     ).toBeInTheDocument();
     fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
-    expect(mockOnMenuClick).toHaveBeenCalledTimes(1);
+    expect(mockOnMenuClick).toHaveBeenCalledTimes(2);
     expect(screen.getByText('Edit account name')).toBeInTheDocument();
     expect(screen.getByText('Switch account')).toBeInTheDocument();
     expect(screen.getByText('Backup account')).toBeInTheDocument();
