@@ -14,7 +14,7 @@ const useHWAccounts = () => {
   const [isLoadingHWAccounts, setIsLoadingHWAccounts] = useState(false);
   const [loadingHWAccountsError, setLoadingHWAccountsError] = useState();
 
-  const getAccountName = (address, model) => getNameFromAccount(address, hwAccounts, model);
+  const getAccountName = (address) => getNameFromAccount(address, hwAccounts);
 
   const dispatch = useDispatch();
   const { ipc } = window;
