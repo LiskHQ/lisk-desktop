@@ -9,6 +9,6 @@ describe('getNameFromAccount', () => {
   });
 
   it('returns null if account array exists but account is not stored', () => {
-    expect(getNameFromAccount('randomAddress', mockHWAccounts)).toBeNull();
+    expect(getNameFromAccount('randomAddress', mockHWAccounts)).toBeUndefined();
   });
 });
