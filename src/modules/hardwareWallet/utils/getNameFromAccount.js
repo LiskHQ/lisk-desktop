@@ -1,7 +1,7 @@
 export const getNameFromAccount = (address, hwAccounts) => {
   try {
-    const { name } = hwAccounts.find((account) => account.metadata?.address === address);
-    return name;
+    const hwAccount = hwAccounts.find((account) => account.metadata?.address === address);
+    return hwAccount.metadata.name;
   } catch (e) {
     return null;
   }

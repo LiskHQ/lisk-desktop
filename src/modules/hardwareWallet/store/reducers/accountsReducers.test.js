@@ -1,3 +1,5 @@
+import storeActionTypes from '@account/store/actionTypes';
+import { imDeleteFromArray } from 'src/utils/immutableUtils';
 import { mockHWAccounts } from '../../__fixtures__';
 import actionTypes from '../actions/actionTypes';
 import { accounts } from './accountsReducers';
@@ -25,9 +27,9 @@ describe('reducer: hardware wallet accounts', () => {
   it('stores the list of accounts', () => {
     const action = {
       type: actionTypes.setHWAccounts,
-      accounts: [...mockHWAccounts, testHWWalletAccount],
+      hwAccounts: [...mockHWAccounts, testHWWalletAccount],
     };
-    const expectedData = [...state, ...action.accounts];
+    const expectedData = [...state, ...action.hwAccounts];
     const updatedState = accounts(state, action);
     expect(updatedState).toEqual(expectedData);
   });
@@ -46,5 +48,18 @@ describe('reducer: hardware wallet accounts', () => {
     };
     const updatedState = accounts(state, action);
     expect(updatedState).toEqual(state);
+  });
+
+  it('should remove hw account', () => {
+    const accountToRemove = mockHWAccounts[0];
+    const action = {
+      type: storeActionTypes.deleteAccount,
+      address: accountToRemove.metadata.address,
+    };
+
+    const expected = imDeleteFromArray(mockHWAccounts, 0);
+
+    const updatedState = accounts(mockHWAccounts, action);
+    expect(updatedState).toEqual(expected);
   });
 });
