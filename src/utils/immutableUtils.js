@@ -19,3 +19,16 @@ export function imDeleteFromArrayById(array = [], idFieldName, idValue) {
 
   return imDeleteFromArray(array, indexToDelete);
 }
+
+export function imSetToArray(array = [], mapToAdd = {}, objUniqueField = '', index) {
+  const indexToUpdate =
+    index || array.findIndex((arrayItem) => arrayItem[objUniqueField] === mapToAdd[objUniqueField]);
+
+  if (indexToUpdate === -1) {
+    return imPush(array, mapToAdd);
+  }
+  // mapToAdd obj exists in list. Update old obj with mapToAdd
+  const firstPart = imPush(array.slice(0, indexToUpdate), mapToAdd);
+  const secondPart = array.slice(indexToUpdate + 1);
+  return imArrayMerge(firstPart, secondPart);
+}

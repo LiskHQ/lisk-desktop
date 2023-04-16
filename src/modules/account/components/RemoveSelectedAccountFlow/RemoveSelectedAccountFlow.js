@@ -1,15 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { selectSearchParamValue } from 'src/utils/searchParams';
 import RemoveAccount from '../RemoveAccount/RemoveAccount';
-import { useAccounts } from '../../hooks';
+import { useCurrentAccount } from '../../hooks';
 
-const RemoveSelectedAccountFlow = ({ history }) => {
-  const address = selectSearchParamValue(history.location.search, 'address');
-  const { getAccountByAddress } = useAccounts();
-  const account = getAccountByAddress(address);
+const RemoveSelectedAccountFlow = () => {
+  const [currentAccount] = useCurrentAccount();
 
-  return <RemoveAccount account={account} />;
+  return <RemoveAccount account={currentAccount} />;
 };
 
 export default withRouter(RemoveSelectedAccountFlow);
