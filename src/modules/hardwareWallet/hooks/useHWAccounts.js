@@ -25,7 +25,17 @@ const useHWAccounts = () => {
         setIsLoadingHWAccounts(true);
         try {
           const accounts = await getHWAccounts(currentHWDevice, getAccountName);
-          dispatch(setHWAccounts(accounts));
+          const uniqueAccounts = accounts.reduce((accum, account) => {
+            const indexOfAccount = accum.findIndex(
+              // eslint-disable-next-line max-nested-callbacks
+              (item) => item.metadata.address === account.metadata.address
+            );
+            if (indexOfAccount === -1) {
+              accum.push(account);
+            }
+            return accum;
+          }, []);
+          dispatch(setHWAccounts(uniqueAccounts));
           setLoadingHWAccountsError(undefined);
         } catch (error) {
           setLoadingHWAccountsError(error);

@@ -9,6 +9,9 @@ export function immutableArrayMerge(first = [], second = []) {
 }
 
 export function immutableDeleteFromArray(array = [], index) {
+  if (index === -1) {
+    return array;
+  }
   const firstPart = array.slice(0, index);
   const secondPart = array.slice(index + 1);
 
