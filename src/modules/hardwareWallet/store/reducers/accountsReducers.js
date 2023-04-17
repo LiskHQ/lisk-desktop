@@ -16,7 +16,10 @@ export const accounts = (
       return initAccounts;
     }
     case actionTypes.updateHWAccount: {
-      return imSetToArray(state, hwAccount, 'address');
+      const indexToUpdate = state.findIndex(
+        (account) => account.metadata.address === hwAccount.metadata.address
+      );
+      return imSetToArray({ array: state, mapToAdd: hwAccount, index: indexToUpdate });
     }
     case storeActionTypes.deleteAccount: {
       const indexToDelete = state.findIndex(
