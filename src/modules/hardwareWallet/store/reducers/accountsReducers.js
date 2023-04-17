@@ -1,4 +1,4 @@
-import { imDeleteFromArray, imSetToArray } from 'src/utils/immutableUtils';
+import { immutableDeleteFromArray, immutableSetToArray } from 'src/utils/immutableUtils';
 import storeActionTypes from '@account/store/actionTypes';
 import actionTypes from '../actions/actionTypes';
 
@@ -19,13 +19,13 @@ export const accounts = (
       const indexToUpdate = state.findIndex(
         (account) => account.metadata.address === hwAccount.metadata.address
       );
-      return imSetToArray({ array: state, mapToAdd: hwAccount, index: indexToUpdate });
+      return immutableSetToArray({ array: state, mapToAdd: hwAccount, index: indexToUpdate });
     }
     case storeActionTypes.deleteAccount: {
       const indexToDelete = state.findIndex(
         (account) => account.metadata.address === addressToDelete
       );
-      return imDeleteFromArray(state, indexToDelete);
+      return immutableDeleteFromArray(state, indexToDelete);
     }
     default:
       return state;
