@@ -1,22 +1,24 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { act } from 'react-dom/test-utils';
+import { act } from 'react-test-renderer';
 import { waitFor } from '@testing-library/react';
-import { validateAppNode } from '../utils';
+import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { useNetworkStatus } from '@network/hooks/queries';
 import { useSearchApplications } from './useSearchApplications';
 
-jest.mock('../utils/validateAppNode');
+jest.mock('@network/hooks/queries');
 
 describe('useSearchApplications', () => {
   let hookImport = null;
-  beforeEach(() => {
-    hookImport = renderHook(() => useSearchApplications());
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('returns status ok on successful URL search and node responds successfully', async () => {
+    const searchTerm = 'http://api.coinbase.com';
+    useNetworkStatus.mockReturnValue({ isLoading: false, isSuccess: true, isError: false });
+    hookImport = renderHook(() => useSearchApplications(), { wrapper });
     const { result } = hookImport;
     const { onSearchApplications } = result.current;
-    const searchTerm = 'http://api.coinbase.com';
-    validateAppNode.mockResolvedValue({ status: 'ok' });
     act(() => {
       onSearchApplications(searchTerm);
     });
@@ -27,10 +29,11 @@ describe('useSearchApplications', () => {
   });
 
   it('returns status error on URL search and node responds with failure', async () => {
+    const searchTerm = 'http://api.enevti.com';
+    useNetworkStatus.mockReturnValue({ isLoading: false, isSuccess: false, isError: true });
+    hookImport = renderHook(() => useSearchApplications(), { wrapper });
     const { result } = hookImport;
     const { onSearchApplications } = result.current;
-    const searchTerm = 'http://api.coinbase.com';
-    validateAppNode.mockRejectedValue({ status: 'error' });
     act(() => {
       onSearchApplications(searchTerm);
     });
@@ -41,9 +44,11 @@ describe('useSearchApplications', () => {
   });
 
   it('returns URL status as false on name search', async () => {
+    const searchTerm = 'test app';
+    useNetworkStatus.mockReturnValue({ isLoading: false, isSuccess: false, isError: false });
+    hookImport = renderHook(() => useSearchApplications(), { wrapper });
     const { result } = hookImport;
     const { onSearchApplications } = result.current;
-    const searchTerm = 'test app';
     act(() => {
       onSearchApplications(searchTerm);
     });

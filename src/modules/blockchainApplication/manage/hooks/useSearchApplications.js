@@ -24,9 +24,14 @@ export const useSearchApplications = () => {
     }, 500);
   };
   const formattedValue = removeTrailingSlash(addHttp(debouncedSearchValue));
-  const { data: networkData, isError: networkError } = useNetworkStatus({
-    client: useRef(new Client({ http: formattedValue })).current,
-    options: { enabled: !!url.isUrl && !!debouncedSearchValue.length },
+  const {
+    isLoading,
+    isSuccess: networkSuccess,
+    isError: networkError,
+  } = useNetworkStatus({
+    client: new Client({ http: formattedValue }),
+    config: { appUrl: formattedValue },
+    options: { enabled: !!url.isUrl },
   });
 
   const onSearchApplications = useCallback(
@@ -56,7 +61,7 @@ export const useSearchApplications = () => {
           isSearchLoading: false,
         });
       }
-      if (networkData) {
+      if (networkSuccess) {
         setUrl({
           urlStatus: 'ok',
           isUrl: isSearchValueUrl,
@@ -64,7 +69,7 @@ export const useSearchApplications = () => {
         });
       }
     }
-  }, [debouncedSearchValue]);
+  }, [debouncedSearchValue, isLoading]);
 
   return {
     searchValue,
