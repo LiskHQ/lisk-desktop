@@ -1,8 +1,9 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { Client } from 'src/utils/api/client';
 import { removeTrailingSlash } from 'src/modules/settings/components/customNode/editMode';
 import { regex } from 'src/const/regex';
 import { addHttp } from 'src/utils/login';
-import { validateAppNode } from '../utils';
+import { useNetworkStatus } from '@network/hooks/queries';
 
 export const useSearchApplications = () => {
   const [url, setUrl] = useState({
@@ -22,6 +23,11 @@ export const useSearchApplications = () => {
       setDebouncedSearchValue(value);
     }, 500);
   };
+  const formattedValue = removeTrailingSlash(addHttp(debouncedSearchValue));
+  const { data: networkData, isError: networkError } = useNetworkStatus({
+    client: useRef(new Client({ http: formattedValue })).current,
+    options: { enabled: !!url.isUrl && !!debouncedSearchValue.length },
+  });
 
   const onSearchApplications = useCallback(
     (value) => {
@@ -34,28 +40,31 @@ export const useSearchApplications = () => {
       // Ensure URL check is up-to-date including while pasting input
       // If URL, ping URL and if successful, then use the URL to get application information
       if (isUrl) {
-        // Ping URL and validate service
-        const formattedValue = removeTrailingSlash(addHttp(value));
-        setUrl({ ...url, isSearchLoading: true });
-        validateAppNode(formattedValue)
-          .then(() => {
-            setUrl({
-              urlStatus: 'ok',
-              isUrl,
-              isSearchLoading: false,
-            });
-          })
-          .catch(() => {
-            setUrl({
-              urlStatus: 'error',
-              isUrl,
-              isSearchLoading: false,
-            });
-          });
+        setUrl({ ...url, isUrl, isSearchLoading: true });
       }
     },
     [setSearchValue, setUrl]
   );
+
+  useEffect(() => {
+    const isSearchValueUrl = regex.url.test(addHttp(debouncedSearchValue));
+    if (url.isUrl) {
+      if (networkError) {
+        setUrl({
+          urlStatus: 'error',
+          isUrl: isSearchValueUrl,
+          isSearchLoading: false,
+        });
+      }
+      if (networkData) {
+        setUrl({
+          urlStatus: 'ok',
+          isUrl: isSearchValueUrl,
+          isSearchLoading: false,
+        });
+      }
+    }
+  }, [debouncedSearchValue]);
 
   return {
     searchValue,

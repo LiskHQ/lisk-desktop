@@ -1,4 +1,4 @@
-import http from 'src/utils/api/http';
+import client from 'src/utils/api/client';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 
 const httpPaths = {
@@ -13,11 +13,10 @@ const httpPaths = {
  *
  * @returns {Promise}
  */
-export const getApplicationStatus = ({ baseUrl, network }) =>
-  http({
-    baseUrl,
-    path: httpPaths.applicationStatus,
-    network,
+export const getApplicationStatus = ({ baseUrl }) =>
+  client.rest({
+    baseURL: baseUrl,
+    url: httpPaths.applicationStatus,
   });
 
 /**
@@ -28,7 +27,7 @@ export const getApplicationStatus = ({ baseUrl, network }) =>
  * @returns {Promise}
  */
 export const getApplicationConfig = ({ serviceUrl }) =>
-  getApplicationStatus({ baseUrl: serviceUrl, network: serviceUrl })
+  getApplicationStatus({ baseUrl: serviceUrl })
     .then((response) => ({
       ...response.data,
       serviceUrl,
