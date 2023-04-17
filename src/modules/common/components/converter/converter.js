@@ -6,7 +6,14 @@ import DiscreetMode from '@common/components/discreetMode';
 import styles from './converter.css';
 import useFiatRates from '../../hooks/useFiatRates';
 
-const Converter = ({ currency, value, tokenSymbol, emptyPlaceholder = null, className = '', Wrapper = DiscreetMode }) => {
+const Converter = ({
+  currency,
+  value,
+  tokenSymbol,
+  emptyPlaceholder = null,
+  className = '',
+  Wrapper = DiscreetMode,
+}) => {
   const priceTicker = useFiatRates();
   const ratio = priceTicker[tokenSymbol]?.[currency] || 0;
   const numericValue = numeral(value).value();
@@ -16,7 +23,7 @@ const Converter = ({ currency, value, tokenSymbol, emptyPlaceholder = null, clas
   let price = Number.isNaN(numericValue) ? 0 : numericValue * ratio;
   price = Number.isNaN(price) || price < 0 ? 0 : numeral(price).format('0,0.00');
 
-  if (!priceTicker[tokenSymbol]?.[currency] || !price) return emptyPlaceholder;
+  if (!priceTicker[tokenSymbol]?.[currency] || !price) return <span>{emptyPlaceholder}</span>;
 
   return (
     <Wrapper className={`${styles.wrapper} ${className}`}>
@@ -26,6 +33,5 @@ const Converter = ({ currency, value, tokenSymbol, emptyPlaceholder = null, clas
     </Wrapper>
   );
 };
-
 
 export default Converter;
