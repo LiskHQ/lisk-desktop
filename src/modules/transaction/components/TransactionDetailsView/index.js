@@ -89,6 +89,7 @@ const TransactionDetails = ({ location }) => {
       {
         label: t('Block height'),
         value: block.height,
+        redirectLink: `/block?id=${block.id}`,
       },
       {
         label: t('Parameters'),
