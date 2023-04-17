@@ -11,11 +11,8 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
   const { name, address, isHW } = currentAccount.metadata;
   const [isDropdownShown, setIsDropdownShown] = useState(false);
 
-  const handleDismissMenu = () => {
-    setIsDropdownShown(false);
-  };
-  const handleOpenMenu = () => {
-    setIsDropdownShown(true);
+  const onMenuDropdownChanged = () => {
+    setIsDropdownShown((state) => !state);
   };
 
   return (
@@ -24,7 +21,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
       wrapperClassName={styles.wrapper}
       ButtonComponent={TertiaryButton}
       isDropdownShown={isDropdownShown}
-      onDropdownOpen={handleOpenMenu}
+      onDropdownOpen={onMenuDropdownChanged}
       buttonClassName={`account-management-dropdown ${styles.dropdownButton}`}
       buttonLabel={
         <div className={styles.accountWrapper}>
@@ -42,7 +39,10 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
       size="m"
       trackDropdownState={onMenuClick}
     >
-      <AccountMenuListing className={styles.dropDownMenuList} onItemClicked={handleDismissMenu} />
+      <AccountMenuListing
+        className={styles.dropDownMenuList}
+        onItemClicked={onMenuDropdownChanged}
+      />
     </DropdownButton>
   );
 };

@@ -22,7 +22,7 @@ const EnterPasswordForm = ({
   confirmText,
   className,
   prevStep,
-  showBackButton
+  showBackButton,
 }) => {
   const { t } = useTranslation();
   const {

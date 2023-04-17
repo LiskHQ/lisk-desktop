@@ -40,7 +40,7 @@ describe('AccountManagementDropdown', () => {
     renderWithRouterAndQueryClient(AccountManagementDropdown, props);
     expect(screen.getByAltText('hardwareWalletIcon')).toBeTruthy();
   });
-  
+
   it('Should dismiss menu when item is clicked', () => {
     const props = {
       currentAccount: mockHWAccounts[0],
@@ -49,6 +49,6 @@ describe('AccountManagementDropdown', () => {
     renderWithRouterAndQueryClient(AccountManagementDropdown, props);
     fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
     fireEvent.click(screen.getByText('Backup account'));
-    expect(screen.getByText('Register multisignature account')).toBeVisible()
+    expect(screen.getByText('Register multisignature account')).toBeVisible();
   });
 });
