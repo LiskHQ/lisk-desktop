@@ -25,11 +25,11 @@ const accountUniqueValuePropositions = [
   {
     title: 'Send and request tokens',
     description:
-      'Creating an account is your first step in benefiting from blockchain technology. With your account, you can securely send and request tokens within and across blockchain applications.',
+      'Having an account is your first step in benefiting from blockchain technology. With your account, you can securely send and request tokens within and across blockchain applications.',
   },
   {
     title: 'Participate in blockchain governance',
-    description: 'Stake for your trusted validator or become a validator to secure the blockchain.',
+    description: 'Stake for your trusted validator and earn rewards or become a validator to secure the blockchain network.',
   },
   {
     title: 'Manage blockchain application assets',
