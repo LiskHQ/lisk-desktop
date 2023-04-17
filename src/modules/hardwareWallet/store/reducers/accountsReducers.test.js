@@ -1,5 +1,5 @@
 import storeActionTypes from '@account/store/actionTypes';
-import {immutableDeleteFromArray, immutableSetToArray} from 'src/utils/immutableUtils';
+import { immutableDeleteFromArray } from 'src/utils/immutableUtils';
 import { mockHWAccounts } from '../../__fixtures__';
 import actionTypes from '../actions/actionTypes';
 import { accounts } from './accountsReducers';
