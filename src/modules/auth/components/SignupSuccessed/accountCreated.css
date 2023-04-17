@@ -34,3 +34,9 @@
   color: var(--color-slate-gray);
   margin-bottom: 30px;
 }
+
+.subHeader {
+  color: var(--color-maastricht-blue);
+  margin-top: -20px;
+  margin-bottom: 30px;
+}

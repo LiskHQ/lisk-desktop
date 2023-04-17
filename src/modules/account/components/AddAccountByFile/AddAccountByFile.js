@@ -25,7 +25,12 @@ const AddAccountByPassFile = ({ history, location: { search } }) => {
   return (
     <MultiStep key="add-account-file" className={styles.container} ref={multiStepRef}>
       <RestoreAccountForm onBack={history.goBack} />
-      <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />
+      <EnterPasswordForm
+        showBackButton
+        prevStep={multiStepRef.current?.prev}
+        className={styles.enterPasswordContainer}
+        onEnterPasswordSuccess={onEnterPasswordSuccess}
+      />
       <SetPasswordSuccess
         encryptedPhrase={currentAccount}
         onClose={() => history.push(referrer || routes.wallet.path)}
