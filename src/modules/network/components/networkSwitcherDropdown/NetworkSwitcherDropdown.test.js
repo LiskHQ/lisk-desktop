@@ -36,6 +36,6 @@ describe('NetworkSwitcherDropdown', () => {
 
   it('should render properly', () => {
     rerenderWithRouterAndQueryClient(NetworkSwitcherDropdown, props);
-    expect(screen.getByText('Select network')).toBeTruthy();
+    expect(screen.getByText('Switch network')).toBeTruthy();
   });
 });
