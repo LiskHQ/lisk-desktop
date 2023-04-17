@@ -53,7 +53,7 @@ const BlockchainApplicationList = () => {
               value={searchValue}
               placeholder={t('Search application')}
               onChange={onSearchApplication}
-              size="m"
+              size="l"
             />
           </div>
         </div>
