@@ -12,7 +12,6 @@ import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Feedback from 'src/theme/feedback/feedback';
 import LabeledValue from 'src/theme/labeledValue';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import Icon from 'src/theme/Icon';
 import Transactions from '@transaction/components/BlockDetailsTransactions';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
