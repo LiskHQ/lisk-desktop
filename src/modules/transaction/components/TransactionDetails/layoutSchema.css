@@ -51,6 +51,14 @@
     "amount message";
 }
 
+.structuredGeneralLayout {
+  grid-template-areas:
+    "module command"
+    "sender sender"
+    "transactionId fee"
+    "genericParams genericParams";
+}
+
 .multiSigLayout {
   grid-template-areas:
     "illustration illustration"

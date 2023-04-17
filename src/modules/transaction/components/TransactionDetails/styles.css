@@ -59,6 +59,14 @@
   grid-area: message;
 }
 
+.module {
+  grid-area: module;
+}
+
+.command {
+  grid-area: command;
+}
+
 .amount {
   grid-area: amount;
 }
@@ -126,6 +134,11 @@
   grid-area: signedAndRemainingMembersList;
 }
 
+.genericParams {
+  grid-area: genericParams;
+  padding-top: var(--vertical-padding-m);
+}
+
 .multiSignatureMembers {
   grid-area: members;
 
@@ -146,6 +159,10 @@
     text-align: left;
     overflow-x: auto;
   }
+}
+
+.structuredAssets {
+  width: 100%;
 }
 
 .react-json-view {
