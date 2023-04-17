@@ -89,7 +89,7 @@ const getFields = (data = {}, token, t, currentHeight) => ({
   },
   totalGenerated: {
     label: t('Status'),
-    value: <Icon name="checkmark" />,
+    value: t('Final'),
   },
 });
 
