@@ -12,6 +12,7 @@ import { truncateAddress } from '@wallet/utils/account';
 import { getModuleCommandTitle } from '@transaction/utils/moduleCommand';
 import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';
+import Tooltip from 'src/theme/Tooltip';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
@@ -98,7 +99,13 @@ const WalletVisualWithAddress = ({
           <span className={styles.addressValue}>{title}</span>
         </>
       ) : (
-        <>
+        <Tooltip
+            noArrow
+            tooltipClassName={styles.summaryTooltipContainer}
+            className={styles.summaryTooltip}
+            position="center right"
+            size="maxContent"
+            content={<>
           <WalletVisual address={address} size={size} />
           <div className={`${styles.detailsWrapper} ${detailsClassName || ''}`}>
             <AccountName name={accountName} address={address} isMultisig={isMultisig} />
@@ -112,7 +119,10 @@ const WalletVisualWithAddress = ({
               isMultisig={isMultisig}
             />
           </div>
-        </>
+        </>}
+          >
+            kjaskdfjaksdfjasdf
+          </Tooltip>
       )}
     </div>
   );
