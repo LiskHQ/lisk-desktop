@@ -1,4 +1,3 @@
-import React from 'react';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { act } from 'react-dom/test-utils';
 import accounts from '@tests/constants/wallets';
