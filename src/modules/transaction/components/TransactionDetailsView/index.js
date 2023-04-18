@@ -107,7 +107,7 @@ const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : '';
 
   return (
     <div className={styles.wrapper}>
-      <Heading title="Transaction details" className={styles.heading} />
+      <Heading title="Transaction details" />
       <div className={styles.body}>
         <Box isLoading={isLoading} className={styles.container}>
           <BoxHeader>
