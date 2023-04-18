@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { accountMenu } from '@account/const';
 import { useAuth } from '@auth/hooks/queries';
 
-const AccountMenuListing = ({ className }) => {
+const AccountMenuListing = ({ className, onItemClicked }) => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
   const { data: authData } = useAuth({
@@ -30,7 +30,7 @@ const AccountMenuListing = ({ className }) => {
       {accountMenu(authData).map(
         ({ path, icon, label, component, isHidden }) =>
           !isHidden && (
-            <li key={label}>
+            <li key={label} onClick={onItemClicked}>
               {component ? (
                 <DialogLink {...getDialogProps(component)}>
                   <Icon name={icon} />
