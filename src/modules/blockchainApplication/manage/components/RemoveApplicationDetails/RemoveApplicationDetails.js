@@ -133,21 +133,23 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
               <Skeleton className={styles.skeleton} width="25%" />
             </Box>
           ) : (
-            <Box className={styles.addressRow}>
-              <ValueAndLabel className={styles.transactionId}>
-                <span className="copy-address-wrapper">
-                  <CopyToClipboard
-                    text={address}
-                    value={address}
-                    className="tx-id"
-                    containerProps={{
-                      size: 'xs',
-                      className: 'copy-address',
-                    }}
-                  />
-                </span>
-              </ValueAndLabel>
-            </Box>
+            address && (
+              <Box className={styles.addressRow}>
+                <ValueAndLabel className={styles.transactionId}>
+                  <span className="copy-address-wrapper">
+                    <CopyToClipboard
+                      text={address}
+                      value={address}
+                      className="tx-id"
+                      containerProps={{
+                        size: 'xs',
+                        className: 'copy-address',
+                      }}
+                    />
+                  </span>
+                </ValueAndLabel>
+              </Box>
+            )
           )}
           {onChainLoading || offChainLoading ? (
             <div className={`${styles.addressRow} ${styles.skeletonRowWrapper}`}>

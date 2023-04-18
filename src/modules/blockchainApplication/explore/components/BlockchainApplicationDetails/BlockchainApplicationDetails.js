@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Dialog from '@theme/dialog/dialog';
 import Box from 'src/theme/box';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
@@ -54,8 +53,6 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     depositedLsk = 0,
   } = aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
-  const { data: tokens } = useTokenBalances();
-  const token = tokens?.data?.[0] || {};
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -145,7 +142,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
           ) : (
             <ValueAndLabel label={t('Deposited:')} direction="horizontal">
               <span className={styles.value}>
-                <TokenAmount val={depositedLsk} token={token} />
+                <TokenAmount val={depositedLsk} isLsk />
               </span>
             </ValueAndLabel>
           )}
