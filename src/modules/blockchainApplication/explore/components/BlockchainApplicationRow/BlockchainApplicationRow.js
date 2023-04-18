@@ -60,7 +60,7 @@ const BlockchainApplicationRow = ({ data, className, t }) => {
   return (
     <div data-testid="applications-row" className={`application-row ${styles.container}`}>
       <DialogLink
-        className={`${grid.row} ${className} blockchain-application-row`}
+        className={`${grid.row} ${className} ${styles.dialogLink} blockchain-application-row`}
         component="blockChainApplicationDetails"
         data={{ chainId: application.chainID }}
       >
