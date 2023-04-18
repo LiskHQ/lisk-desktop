@@ -41,7 +41,7 @@ export const getHWAccounts = async (currentHWDevice, getAccountName) => {
       ...account,
       metadata: {
         ...account.metadata,
-        name: getAccountName(address),
+        name: getAccountName(address) || accountIndex + 1,
         creationTime: new Date().toISOString(),
       },
     });
