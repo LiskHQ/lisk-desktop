@@ -232,7 +232,7 @@ const Overview = () => {
           </div>
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
-          <h2 className={styles.title}>{t('Fee per transaction (LSK)')}</h2>
+          <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
           <div className={styles.graph}>
             <div>
               <GuideTooltip>
