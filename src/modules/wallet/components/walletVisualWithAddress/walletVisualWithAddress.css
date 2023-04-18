@@ -3,6 +3,10 @@
   display: flex;
   align-items: center;
 
+  & > div:first-child > div:first-child {
+    display: flex;
+  }
+
   & .detailsWrapper {
     display: flex;
     flex-direction: column;
@@ -30,4 +34,31 @@
 .txIcon {
   width: 32px;
   height: 32px;
+}
+
+.pubkeyTooltip {
+  left: 0 !important;
+  top: 50px !important;
+  border-radius: 3px !important;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  & span:first-child {
+    left: 10% !important;
+  }
+}
+
+.pubkey {
+  display: flex;
+  flex-direction: row;
+  padding-top: 5px;
+
+  & > span {
+    font-size: var(--paragraph-font-size-s);
+  }
+
+  & > span:first-child {
+    color: var(--color-blue-gray);
+    padding-right: 8px;
+  }
 }

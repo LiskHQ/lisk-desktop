@@ -54,10 +54,10 @@ describe('SeletNetwork', () => {
 
   it('should render details properly', () => {
     rerenderWithRouterAndQueryClient(SelectNetwork, props);
-    expect(screen.getByText('Select network')).toBeTruthy();
+    expect(screen.getByText('Switch network')).toBeTruthy();
     expect(screen.getAllByText(networks.devnet.label)[0]).toBeTruthy();
     expect(screen.getByText('Continue to wallet')).toBeTruthy();
-    expect(screen.getByText('Select network')).toBeTruthy();
+    expect(screen.getByText('Switch network')).toBeTruthy();
     expect(screen.getByAltText('liskLogoWhiteNormalized')).toBeTruthy();
     expect(
       screen.getByText(

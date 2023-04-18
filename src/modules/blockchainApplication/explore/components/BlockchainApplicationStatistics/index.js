@@ -37,6 +37,7 @@ const BlockchainApplicationStatistics = () => {
         description: t('Total LSK tokens in circulation'),
         amount: convertToBaseDenom(statistics?.data?.totalSupplyLSK),
         icon: 'totalSupplyToken',
+        tooltipSize: 'maxContent',
       },
       {
         title: t('Staked'),
@@ -45,6 +46,7 @@ const BlockchainApplicationStatistics = () => {
         ),
         amount: convertToBaseDenom(statistics?.data?.stakedLSK),
         icon: 'stakedToken',
+        tooltipSize: 'm',
       },
     ],
     [statistics]
@@ -74,12 +76,12 @@ const BlockchainApplicationStatistics = () => {
           </GuideTooltip>
         </div>
       </BoxContent>
-      {cardsMap.map(({ title, description, amount, icon }) => (
+      {cardsMap.map(({ title, description, amount, icon, tooltipSize }) => (
         <BoxContent key={`app-stats-card-${icon}`} className={styles.statsBox}>
           <div>
             <div>
               <span className={styles.statsInfoTitle}>{title}</span>
-              <Tooltip size="m" position="left">
+              <Tooltip size={tooltipSize} position="left">
                 <p>{description}</p>
               </Tooltip>
             </div>

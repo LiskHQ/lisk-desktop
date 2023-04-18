@@ -26,7 +26,15 @@ const TokenRow = ({ data: token }) => {
         />
         <Balance amount={numeral(convertFromBaseDenom(availableBalance, token)).format('0,0.00')} />
         <Balance amount={numeral(convertFromBaseDenom(totalLockedBalance, token)).format('0')} />
-        <Balance amount={<Converter value={convertFromBaseDenom(availableBalance, token)} />} />
+        <Balance
+          amount={
+            <Converter
+              emptyPlaceholder='-'
+              value={convertFromBaseDenom(availableBalance, token)}
+              tokenSymbol={token.symbol}
+            />
+          }
+        />
       </div>
     </div>
   );

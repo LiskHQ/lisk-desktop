@@ -3,8 +3,11 @@ import { MemoryRouter } from 'react-router';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
+import useFiatRates from 'src/modules/common/hooks/useFiatRates';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import TransactionEventsRow from './TokenCard';
+
+jest.mock('src/modules/common/hooks/useFiatRates');
 
 describe('TokenCard', () => {
   let wrapper;
@@ -12,6 +15,8 @@ describe('TokenCard', () => {
   const props = {
     token: { ...mockAppsTokens.data[0], ...mockTokensBalance.data[0] },
   };
+
+  useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
 
   it('should display properly ', async () => {
     wrapper = renderWithRouter(TransactionEventsRow, props);

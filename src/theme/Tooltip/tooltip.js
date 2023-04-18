@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'src/theme/Icon';
@@ -69,6 +70,7 @@ class Tooltip extends React.Component {
       size,
       indent,
       noArrow,
+      isHidden,
     } = this.props;
     const { showTooltip } = this.state;
     const { infoIcon = '', tooltip = '' } = this.props.styles || {};
@@ -98,7 +100,7 @@ class Tooltip extends React.Component {
             className={[
               styles.tooltip,
               positionStyles,
-              (alwaysShow || showTooltip) && styles.visible,
+              (alwaysShow || showTooltip) && !isHidden && styles.visible,
               tooltip,
               indent && styles.indent,
               'tooltip-window',
