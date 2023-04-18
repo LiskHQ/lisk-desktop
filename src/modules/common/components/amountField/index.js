@@ -135,6 +135,7 @@ const AmountField = ({
             value={amount.value}
             error={amount.error}
             isLoading={amount.isLoading}
+            tokenSymbol={token.symbol}
           />
         )}
       </span>

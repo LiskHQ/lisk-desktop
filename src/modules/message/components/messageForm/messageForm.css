@@ -22,3 +22,8 @@
 .noPadding {
   padding: 0 !important;
 }
+
+.messageWrapper {
+  padding: 0 var(--horizontal-padding-l);
+  box-sizing: border-box;
+}

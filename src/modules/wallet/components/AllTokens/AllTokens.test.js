@@ -13,6 +13,7 @@ import { mockValidators } from '@pos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { renderWithRouter } from 'src/utils/testHelpers';
+import useFiatRates from 'src/modules/common/hooks/useFiatRates';
 import AllTokens from './AllTokens';
 import tableHeaderMap from './tableHeaderMap';
 
@@ -28,6 +29,7 @@ jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@pos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('src/modules/common/hooks');
+jest.mock('src/modules/common/hooks/useFiatRates');
 
 describe('AllTokens', () => {
   const history = { location: { search: '' } };
@@ -48,6 +50,7 @@ describe('AllTokens', () => {
   useAuth.mockReturnValue({ data: mockAuth });
   useValidators.mockReturnValue({ data: mockValidators });
   useBlocks.mockReturnValue({ data: mockBlocks });
+  useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
 
   it('should display token details properly', async () => {
     const props = {

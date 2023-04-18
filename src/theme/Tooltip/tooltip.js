@@ -70,6 +70,7 @@ class Tooltip extends React.Component {
       size,
       indent,
       noArrow,
+      isHidden,
     } = this.props;
     const { showTooltip } = this.state;
     const { infoIcon = '', tooltip = '' } = this.props.styles || {};
@@ -98,6 +99,7 @@ class Tooltip extends React.Component {
         tooltipClassName={tooltipClassName}
         title={title}
         footer={footer}
+        isHidden={isHidden}
       >
         {children}
       </TooltipContent>
@@ -144,6 +146,7 @@ function TooltipContent({
   tooltipClassName,
   title,
   footer,
+  isHidden,
 }) {
   useOutsideClickListener(tooltipRef, showTooltip, handleMouseLeave);
 
@@ -168,7 +171,7 @@ function TooltipContent({
           className={[
             styles.tooltip,
             positionStyles,
-            (alwaysShow || showTooltip) && styles.visible,
+            (alwaysShow || showTooltip) && !isHidden && styles.visible,
             tooltip,
             indent && styles.indent,
             'tooltip-window',
