@@ -44,7 +44,7 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading }) => {
               <span className="chain-name-text">{name}</span>
               {chainAction}
             </div>
-            {!!address && (
+            {address && (
               <Box className={styles.addressRow}>
                 <ValueAndLabel>
                   <span className="copy-address-wrapper">

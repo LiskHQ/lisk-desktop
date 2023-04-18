@@ -133,7 +133,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
               <Skeleton className={styles.skeleton} width="25%" />
             </Box>
           ) : (
-            !!address && (
+            address && (
               <Box className={styles.addressRow}>
                 <ValueAndLabel className={styles.transactionId}>
                   <span className="copy-address-wrapper">
