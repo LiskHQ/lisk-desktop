@@ -23,7 +23,7 @@ describe('AccountManagementDropdown', () => {
       screen.getByText(truncateAddress(mockCurrentAccount.metadata.address))
     ).toBeInTheDocument();
     fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
-    expect(mockOnMenuClick).toHaveBeenCalledTimes(1);
+    expect(mockOnMenuClick).toHaveBeenCalledTimes(2);
     expect(screen.getByText('Edit account name')).toBeInTheDocument();
     expect(screen.getByText('Switch account')).toBeInTheDocument();
     expect(screen.getByText('Backup account')).toBeInTheDocument();
@@ -39,5 +39,16 @@ describe('AccountManagementDropdown', () => {
     };
     renderWithRouterAndQueryClient(AccountManagementDropdown, props);
     expect(screen.getByAltText('hardwareWalletIcon')).toBeTruthy();
+  });
+
+  it('Should dismiss menu when item is clicked', () => {
+    const props = {
+      currentAccount: mockHWAccounts[0],
+      onMenuClick: mockOnMenuClick,
+    };
+    renderWithRouterAndQueryClient(AccountManagementDropdown, props);
+    fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
+    fireEvent.click(screen.getByText('Backup account'));
+    expect(screen.getByText('Register multisignature account')).toBeVisible();
   });
 });
