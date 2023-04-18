@@ -21,10 +21,6 @@ class Tooltip extends React.Component {
     this.wrapperRef = React.createRef();
   }
 
-  setWrapperRef(node) {
-    this.wrapperRef = node;
-  }
-
   handleMouseMove() {
     this.setState({
       timeoutObj: null,
@@ -82,7 +78,7 @@ class Tooltip extends React.Component {
 
     return (
       <TooltipContent
-        tooltipRef={this.wrapperRef }
+        tooltipRef={this.wrapperRef}
         className={className}
         handleMouseLeave={this.handleMouseLeave}
         handleMouseMove={this.handleMouseMove}
