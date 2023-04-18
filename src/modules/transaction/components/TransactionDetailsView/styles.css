@@ -63,7 +63,7 @@
   width: 100%;
   position: relative;
   border-radius: 5px;
-  background-color: var(--color-ghost-white);
+  background-color: var(--color-json-view-bg);
   margin-bottom: 29px;
   padding: 12px 8px;
   box-sizing: border-box;

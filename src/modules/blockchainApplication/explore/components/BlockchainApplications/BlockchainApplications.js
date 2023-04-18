@@ -28,7 +28,7 @@ const BlockchainApplications = ({ applications, statistics, applyFilters, filter
               applyFilters={applyFilters}
               filters={filters}
               applications={applications}
-              name={t('All applications')}
+              name={t('Explore applications')}
               id="blockchainApplications"
             />
             <SessionManager name={t('Wallet connections')} id="SessionManager" />

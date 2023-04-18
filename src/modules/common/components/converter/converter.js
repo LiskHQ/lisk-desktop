@@ -4,38 +4,34 @@ import 'numeral/locales';
 import i18n from 'src/utils/i18n/i18n';
 import DiscreetMode from '@common/components/discreetMode';
 import styles from './converter.css';
+import useFiatRates from '../../hooks/useFiatRates';
 
 const Converter = ({
   currency,
   value,
-  error,
+  tokenSymbol,
+  emptyPlaceholder = null,
   className = '',
-  token,
-  priceTicker,
   Wrapper = DiscreetMode,
 }) => {
-  const ratio = priceTicker[token][currency];
+  const priceTicker = useFiatRates();
+  const ratio = priceTicker[tokenSymbol]?.[currency] || 0;
   const numericValue = numeral(value).value();
 
   numeral.locale(i18n.language);
 
-  let price = error || Number.isNaN(numericValue) ? 0 : numericValue * ratio;
+  let price = Number.isNaN(numericValue) ? 0 : numericValue * ratio;
   price = Number.isNaN(price) || price < 0 ? 0 : numeral(price).format('0,0.00');
+
+  if (!priceTicker[tokenSymbol]?.[currency] || !price) return <span>{emptyPlaceholder}</span>;
 
   return (
     <Wrapper className={`${styles.wrapper} ${className}`}>
-      {value !== '' && ratio ? (
+      {value !== '' && !!ratio && (
         <span className={`${styles.price} converted-price`}>{`~${price} ${currency}`}</span>
-      ) : null}
+      )}
     </Wrapper>
   );
 };
 
-/* istanbul ignore next */
-const areEqual = (prevProps, nextProps) =>
-  prevProps.value === nextProps.value &&
-  prevProps.priceTicker[prevProps.token][prevProps.currency] ===
-    nextProps.priceTicker[nextProps.token][nextProps.currency] &&
-  prevProps.isLoading === nextProps.isLoading;
-
-export default React.memo(Converter, areEqual);
+export default Converter;

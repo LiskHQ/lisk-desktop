@@ -11,6 +11,7 @@ import BoxContent from 'src/theme/box/content';
 import Heading from 'src/modules/common/components/Heading';
 import BoxHeader from 'src/theme/box/header';
 import Table from 'src/theme/table';
+import { useTheme } from 'src/theme/Theme';
 import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import NotFound from './notFound';
@@ -27,6 +28,9 @@ const TransactionDetails = ({ location }) => {
   const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
   const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
+
+  const theme = useTheme();
+  const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : '';
 
   const {
     data: transactions,
@@ -104,7 +108,7 @@ const TransactionDetails = ({ location }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Heading title="Transaction details" className={styles.heading} />
+      <Heading title={t('Transaction details')} />
       <div className={styles.body}>
         <Box isLoading={isLoading} className={styles.container}>
           <BoxHeader>
@@ -126,7 +130,7 @@ const TransactionDetails = ({ location }) => {
               data-testid="transaction-param-json-viewer"
               className={`${styles.jsonContainer} ${!isParamsCollapsed ? styles.shrink : ''}`}
             >
-              <ReactJson name={false} src={transaction.params} />
+              <ReactJson name={false} src={transaction.params} theme={jsonViewerTheme} />
             </div>
           </BoxContent>
         </Box>

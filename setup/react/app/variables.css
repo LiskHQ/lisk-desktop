@@ -208,6 +208,7 @@ or "warn/action" ineastd of "red/green"
   --color-success: #25ca95;
   --color-edit-button-background: var(--color-ghost-white);
   --color-edit-button-border: var(--color-very-light-gray);
+  --color-json-view-bg: var(--color-ghost-white);
 
   /*************************
         Box
@@ -271,6 +272,7 @@ or "warn/action" ineastd of "red/green"
   --color-platinum: #4d4d50;
   --color-white-smoke: #1c1c1c;
   --color-ghost-white: var(--color-satin-deep-black);
+  --color-json-view-bg: #1d1f21;
   --color-maastricht-blue: #fff;
   --color-black: #fff;
   --dark-border-color: #373739;
