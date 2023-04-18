@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import Input from '@theme/Input';
 import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
-import { imPush } from 'src/utils/immutableUtils';
+import { immutablePush } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
 import styles from './DialogAddNetwork.css';
 
@@ -28,7 +28,7 @@ const DialogAddNetwork = () => {
   function onSubmit(values) {
     setSuccessText('');
     const customNetwork = { ...values, label: values.name, isAvailable: true };
-    const updatedCustomNetworks = imPush(customNetworks, customNetwork);
+    const updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
     setValue(updatedCustomNetworks);
     reset();
     setSuccessText(t('Success: ') + values.name + t(' added'));

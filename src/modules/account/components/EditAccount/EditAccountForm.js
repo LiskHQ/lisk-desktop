@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -11,8 +11,7 @@ import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
 import { Input } from '@theme';
 import { PrimaryButton } from '@theme/buttons';
-import { settingsUpdated } from 'src/redux/actions';
-import { selectSettings } from 'src/redux/selectors';
+import {updateHWAccount} from "@hardwareWallet/store/actions";
 import { updateCurrentAccount, updateAccount } from '../../store/action';
 import styles from './EditAccountForm.css';
 
@@ -41,25 +40,15 @@ const EditAccountForm = ({ nextStep }) => {
   } = useForm({ resolver: yupResolver(editAccountFormSchema) });
   const formValues = watch();
   const [currentAccount] = useCurrentAccount();
-  const settings = useSelector(selectSettings);
 
   const onSubmit = async ({ accountName }) => {
     dispatch(updateCurrentAccount({ name: accountName }));
     if (currentAccount.metadata.isHW) {
-      const currentHWAccounts = settings.hardwareAccounts[currentAccount.hw.model];
-      const currentAccountIndex = currentAccount.metadata.accountIndex;
-      const selectedAccount = currentHWAccounts.find(
-        (acc) => acc.metadata.accountIndex === currentAccountIndex
-      );
-      const updatedHWAccounts = currentHWAccounts.splice(currentAccountIndex, 1, selectedAccount);
-      dispatch(
-        settingsUpdated({
-          hardwareAccounts: {
-            ...settings.hardwareAccounts,
-            [currentAccount.hw.model]: updatedHWAccounts,
-          },
-        })
-      );
+      const updatedAccount = {
+        ...currentAccount,
+        metadata: { ...currentAccount.metadata, name: accountName },
+      };
+      dispatch(updateHWAccount(updatedAccount));
     } else {
       dispatch(
         updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })

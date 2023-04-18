@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import actionTypes from '@hardwareWallet/store/actions/actionTypes';
-import { imDeleteFromArrayById, imPush } from 'src/utils/immutableUtils';
+import { immutableDeleteFromArrayById, immutablePush } from 'src/utils/immutableUtils';
 
 export const initialState = [];
 
@@ -15,10 +15,10 @@ export const devices = (state = initialState, { type, payload }) => {
       return payload;
     }
     case actionTypes.addHWDevice: {
-      return imPush(state, payload);
+      return immutablePush(state, payload);
     }
     case actionTypes.removeHWDevice: {
-      return imDeleteFromArrayById(state, 'path', payload.path);
+      return immutableDeleteFromArrayById(state, 'path', payload.path);
     }
     default:
       return state;
