@@ -31,8 +31,8 @@ const Success = ({ t, signature, copied, copy, history, onPrev }) => (
     <BoxFooter direction="horizontal">
       <SecondaryButton
         onClick={() => {
-          removeSearchParamsFromUrl(history, ['modal'], true);
           onPrev?.();
+          removeSearchParamsFromUrl(history, ['modal'], true);
         }}
         className={`${styles.button} close`}
       >

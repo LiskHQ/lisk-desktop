@@ -10,5 +10,5 @@ export default function useFiatRates() {
       (result, { from, to, rate }) => ({ ...result, [from]: { ...result[from], [to]: rate } }),
       {}
     );
-  }, [marketPrice.isFetching, marketPrice.isFetched, marketPrice.isError, marketPrice.data]);
+  }, [marketPrice.isFetching, marketPrice.isError, marketPrice.data]);
 }

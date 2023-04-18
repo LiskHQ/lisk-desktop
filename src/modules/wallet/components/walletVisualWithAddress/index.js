@@ -124,7 +124,7 @@ const WalletVisualWithAddress = ({
           }
         >
           <div className={styles.pubkey}>
-            <span>Publick key:</span>
+            <span>Public key:</span>
             <span>{truncateTransactionID(publicKey)}</span>
             <CopyToClipboard
               value={publicKey}
