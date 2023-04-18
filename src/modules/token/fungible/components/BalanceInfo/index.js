@@ -30,6 +30,7 @@ const BalanceInfo = ({ t, activeToken, isWalletRoute, account }) => {
               <Converter
                 className={styles.fiatValue}
                 value={convertFromBaseDenom(balance, activeToken)}
+                tokenSymbol={activeToken.symbol}
                 error=""
               />
             </div>

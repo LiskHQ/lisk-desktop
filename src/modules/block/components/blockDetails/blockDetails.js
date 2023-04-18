@@ -5,6 +5,7 @@ import routes from 'src/routes/routes';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
 import BoxTabs from 'src/theme/tabs';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
+import Heading from 'src/modules/common/components/Heading/Heading';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -112,7 +113,7 @@ const Rows = ({ data, t, currentHeight }) => {
   return <div className={styles.dataContainer}>{columns}</div>;
 };
 
-const BlockDetails = ({ height, id }) => {
+const BlockDetails = ({ height, id, history }) => {
   const {
     data: { height: currentHeight },
   } = useLatestBlock();
@@ -148,11 +149,15 @@ const BlockDetails = ({ height, id }) => {
     onClick: ({ value }) => setActiveTab(value),
   };
 
+  const handleBackToBlocksMonitorPage = () => {
+    history.push(routes.blocks.path);
+  };
+
   return (
     <div className={styles.blockDetailsWrapper}>
       <Box isLoading={isLoading} width="full">
         <BoxHeader>
-          <h1>{t('Block details')}</h1>
+          <Heading title={t('Block details')} onGoBack={handleBackToBlocksMonitorPage} />
         </BoxHeader>
         <BoxContent className={error ? styles.errorFeedbackWrapper : ''}>
           {error ? (

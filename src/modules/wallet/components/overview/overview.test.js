@@ -15,6 +15,7 @@ import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
+import useFiatRates from 'src/modules/common/hooks/useFiatRates';
 import Overview from './overview';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -29,6 +30,7 @@ jest.mock('@pos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
+jest.mock('src/modules/common/hooks/useFiatRates');
 
 describe('Overview', () => {
   const history = { location: { search: '' } };
@@ -37,6 +39,8 @@ describe('Overview', () => {
     ...mockTokensBalance.data[index],
     ...token,
   }));
+
+  useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
 
   it('should display properly', async () => {
     const props = {

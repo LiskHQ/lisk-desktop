@@ -5,7 +5,9 @@
 }
 
 .wrapper {
-  max-width: 750px;
   width: calc(100% - var(--horizontal-margin));
-  padding: 0 var(--horizontal-padding-l);
+}
+
+.header {
+  padding: 0 var(--horizontal-padding-l) !important;
 }

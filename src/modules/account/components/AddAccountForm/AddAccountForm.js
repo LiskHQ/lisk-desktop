@@ -70,7 +70,7 @@ const AddAccountFormContainer = ({
           <div className={styles.inputFields}>
             {settings.showNetwork && (
               <fieldset>
-                <label>{t('Select Network')}</label>
+                <label>{t('Switch network')}</label>
                 <NetworkSelector />
               </fieldset>
             )}

@@ -19,7 +19,7 @@ const UserApplicationSelector = ({ className, history }) => {
 
   return (
     <div className={classNames(styles.UserApplicationSelector, className)}>
-      <label className={styles.label}>{t('Select application')}</label>
+      <label className={styles.label}>{t('Switch application')}</label>
       <div className={styles.applicationListContainer}>
         <div className={styles.listWrapper}>
           {applications.map((application) => (

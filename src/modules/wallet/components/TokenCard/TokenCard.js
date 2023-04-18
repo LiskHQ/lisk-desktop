@@ -32,6 +32,7 @@ const TokenCard = ({ token }) => {
           <Converter
             className={styles.fiatBalance}
             value={convertFromBaseDenom(availableBalance, token)}
+            tokenSymbol={token.symbol}
           />
         )}
         {totalLockedBalance > BigInt(0) && (
