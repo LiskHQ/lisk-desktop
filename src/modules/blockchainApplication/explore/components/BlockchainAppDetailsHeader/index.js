@@ -44,21 +44,23 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading }) => {
               <span className="chain-name-text">{name}</span>
               {chainAction}
             </div>
-            <Box className={styles.addressRow}>
-              <ValueAndLabel className={styles.transactionId}>
-                <span className="copy-address-wrapper">
-                  <CopyToClipboard
-                    text={address}
-                    value={address}
-                    className="tx-id"
-                    containerProps={{
-                      size: 'xs',
-                      className: 'copy-address',
-                    }}
-                  />
-                </span>
-              </ValueAndLabel>
-            </Box>
+            {!!address && (
+              <Box className={styles.addressRow}>
+                <ValueAndLabel>
+                  <span className="copy-address-wrapper">
+                    <CopyToClipboard
+                      text={address}
+                      value={address}
+                      className="tx-id"
+                      containerProps={{
+                        size: 'xs',
+                        className: 'copy-address',
+                      }}
+                    />
+                  </span>
+                </ValueAndLabel>
+              </Box>
+            )}
             <div className={styles.addressRow}>
               <Link className={`${styles.appLink}`} target="_blank" to={projectPage}>
                 <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
