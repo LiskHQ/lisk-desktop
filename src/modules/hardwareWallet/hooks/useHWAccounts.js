@@ -20,21 +20,24 @@ const useHWAccounts = () => {
   const { ipc } = window;
 
   useEffect(() => {
+    function getUniqueAccounts(accounts) {
+      return accounts.reduce((accum, account) => {
+        const indexOfAccount = accum.findIndex(
+          (item) => item.metadata.address === account.metadata.address
+        );
+        if (indexOfAccount === -1) {
+          accum.push(account);
+        }
+        return accum;
+      }, []);
+    }
+
     if (ipc && dispatch && currentHWDevice?.path) {
       (async () => {
         setIsLoadingHWAccounts(true);
         try {
           const accounts = await getHWAccounts(currentHWDevice, getAccountName);
-          const uniqueAccounts = accounts.reduce((accum, account) => {
-            const indexOfAccount = accum.findIndex(
-              // eslint-disable-next-line max-nested-callbacks
-              (item) => item.metadata.address === account.metadata.address
-            );
-            if (indexOfAccount === -1) {
-              accum.push(account);
-            }
-            return accum;
-          }, []);
+          const uniqueAccounts = getUniqueAccounts(accounts);
           dispatch(setHWAccounts(uniqueAccounts));
           setLoadingHWAccountsError(undefined);
         } catch (error) {
