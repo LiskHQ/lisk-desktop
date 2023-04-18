@@ -29,8 +29,8 @@ const TransactionDetails = ({ location }) => {
   const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 
-const theme = useTheme();
-const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : '';
+  const theme = useTheme();
+  const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : '';
 
   const {
     data: transactions,
@@ -107,7 +107,7 @@ const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : '';
 
   return (
     <div className={styles.wrapper}>
-      <Heading title="Transaction details" />
+      <Heading title={t('Transaction details')} />
       <div className={styles.body}>
         <Box isLoading={isLoading} className={styles.container}>
           <BoxHeader>

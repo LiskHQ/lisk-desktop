@@ -150,14 +150,14 @@ const BlockDetails = ({ height, id, history }) => {
   };
 
   const handleBackToBlocksMonitorPage = () => {
-    history.push(routes.blocks.path)
-  }
+    history.push(routes.blocks.path);
+  };
 
   return (
     <div className={styles.blockDetailsWrapper}>
       <Box isLoading={isLoading} width="full">
         <BoxHeader>
-          <Heading title="Block details" onGoBack={handleBackToBlocksMonitorPage} />
+          <Heading title={t('Block details')} onGoBack={handleBackToBlocksMonitorPage} />
         </BoxHeader>
         <BoxContent className={error ? styles.errorFeedbackWrapper : ''}>
           {error ? (
