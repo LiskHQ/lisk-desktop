@@ -46,7 +46,7 @@ describe('QueryTable', () => {
     });
     render(<QueryTable {...props} />);
     expect(screen.getByText('10322980')).toBeTruthy();
-    expect(screen.getAllByText('30 Sep 2019')).toBeTruthy();
+    expect(screen.getAllByText('30 Sep 2019, 02:25:30 PM')).toBeTruthy();
     expect(screen.getAllByText('menfei')).toBeTruthy();
   });
 
