@@ -75,6 +75,6 @@ describe('BlockchainApplications', () => {
     expect(screen.getByText('Total Supply')).toBeTruthy();
     expect(screen.getByText('Staked')).toBeTruthy();
     expect(screen.getByText('5,000,000 LSK')).toBeTruthy();
-    expect(screen.getByText('3,000,000 LSK')).toBeTruthy();
+    expect(screen.getByText('300,000 LSK')).toBeTruthy();
   });
 });
