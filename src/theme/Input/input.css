@@ -236,6 +236,7 @@
   transform: translateY(-50%);
   right: 10px;
   background-color: transparent;
+  cursor: pointer;
 
   & .toggleIcon {
     display: flex;
