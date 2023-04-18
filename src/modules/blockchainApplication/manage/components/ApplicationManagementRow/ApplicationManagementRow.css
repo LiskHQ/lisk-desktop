@@ -70,6 +70,7 @@
   display: none;
   position: absolute;
   z-index: 5;
+  right: 40px;
 }
 
 .deleteBtn,
