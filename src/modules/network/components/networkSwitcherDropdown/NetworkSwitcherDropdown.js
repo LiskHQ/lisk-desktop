@@ -51,7 +51,7 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   return (
     <div className={styles.NetworkSwitcherDropdown}>
       <div className={styles.networkSelectionWrapper}>
-        {!noLabel && <label className={styles.label}>{t('Select network')}</label>}
+        {!noLabel && <label className={styles.label}>{t('Switch network')}</label>}
         <MenuSelect
           value={selectedNetwork}
           select={(selectedValue, option) => selectedValue.label === option.label}

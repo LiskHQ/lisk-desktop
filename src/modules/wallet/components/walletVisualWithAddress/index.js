@@ -8,10 +8,11 @@ import {
   MODULE_COMMANDS_NAME_MAP,
   MODULE_COMMANDS_MAP,
 } from '@transaction/configuration/moduleCommand';
-import { truncateAddress } from '@wallet/utils/account';
+import { truncateAddress, truncateTransactionID } from '@wallet/utils/account';
 import { getModuleCommandTitle } from '@transaction/utils/moduleCommand';
 import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';
+import Tooltip from 'src/theme/Tooltip';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
@@ -68,6 +69,7 @@ const WalletVisualWithAddress = ({
   detailsClassName,
   copy,
   isMultisig,
+  publicKey
 }) => {
   const getTransformedAddress = (addressValue) => {
     if (showBookmarkedAddress) {
@@ -98,21 +100,40 @@ const WalletVisualWithAddress = ({
           <span className={styles.addressValue}>{title}</span>
         </>
       ) : (
-        <>
-          <WalletVisual address={address} size={size} />
-          <div className={`${styles.detailsWrapper} ${detailsClassName || ''}`}>
-            <AccountName name={accountName} address={address} isMultisig={isMultisig} />
-            <AccountAddress
-              address={address}
-              truncate={truncate}
-              copy={copy}
-              transformedAddress={transformedAddress}
-              truncatedAddress={truncatedAddress}
-              name={accountName}
-              isMultisig={isMultisig}
+        <Tooltip
+          tooltipClassName={styles.pubkeyTooltip}
+          position="left bottom"
+          size="maxContent"
+          isHidden={!publicKey}
+          content={
+            <div>
+              <WalletVisual address={address} size={size} />
+              <div className={`${styles.detailsWrapper} ${detailsClassName || ''}`}>
+                <AccountName name={accountName} address={address} isMultisig={isMultisig} />
+                <AccountAddress
+                  address={address}
+                  truncate={truncate}
+                  copy={copy}
+                  transformedAddress={transformedAddress}
+                  truncatedAddress={truncatedAddress}
+                  name={accountName}
+                  isMultisig={isMultisig}
+                />
+              </div>
+            </div>
+          }
+        >
+          <div className={styles.pubkey}>
+            <span>Public key:</span>
+            <span>{truncateTransactionID(publicKey)}</span>
+            <CopyToClipboard
+              value={publicKey}
+              type="icon"
+              copyClassName={styles.copyIcon}
+              className={styles.copyIcon}
             />
           </div>
-        </>
+        </Tooltip>
       )}
     </div>
   );

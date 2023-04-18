@@ -1,11 +1,16 @@
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
+import useFiatRates from 'src/modules/common/hooks/useFiatRates';
 import numeral from 'numeral';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import TokenRow from './TokenRow';
 
+jest.mock('src/modules/common/hooks/useFiatRates');
+
 describe('TokenRow', () => {
+  useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
+
   it('should display properly', async () => {
     const props = {
       data: { ...mockTokensBalance.data[0], ...mockAppsTokens.data[0] },

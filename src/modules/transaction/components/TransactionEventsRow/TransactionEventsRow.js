@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactJson from 'react-json-view';
+import { useTheme } from 'src/theme/Theme';
 import styles from './TransactionEventsRow.css';
 import {
   EventIndex,
@@ -20,6 +21,8 @@ const TransactionEventRow = ({ data: transactionEvent, isWallet }) => {
     topics,
     block: { height, id },
   } = transactionEvent;
+  const theme = useTheme();
+  const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : '';
 
   return (
     <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
@@ -38,7 +41,7 @@ const TransactionEventRow = ({ data: transactionEvent, isWallet }) => {
         data-testid="transaction-event-json-viewer"
         className={`${styles.jsonContainer} ${!isCollapsed ? styles.shrink : ''}`}
       >
-        <ReactJson name={false} src={data} />
+        <ReactJson name={false} src={data} theme={jsonViewerTheme} />
       </div>
     </div>
   );
