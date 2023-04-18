@@ -1,10 +1,4 @@
-export const getNameFromAccount = (address, settings, model) => {
-  const { hardwareAccounts } = settings;
-  const accounts = hardwareAccounts[model];
-  try {
-    const { name } = accounts.find((account) => account.address === address);
-    return name;
-  } catch (e) {
-    return null;
-  }
+export const getNameFromAccount = (address, hwAccounts) => {
+  const hwAccount = hwAccounts?.find((account) => account.metadata?.address === address);
+  return hwAccount?.metadata?.name;
 };
