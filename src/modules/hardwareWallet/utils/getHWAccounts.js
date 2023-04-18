@@ -3,7 +3,7 @@ import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import { getTokenBalances } from '@account/utils/getTokenBalances';
 import { getPubKey } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
-export const getHWAccounts = async (currentHWDevice, getName) => {
+export const getHWAccounts = async (currentHWDevice, getAccountName) => {
   const accounts = [];
   let accountIndex = 0;
   // Get all initialized and uninitialized accounts
@@ -25,11 +25,12 @@ export const getHWAccounts = async (currentHWDevice, getName) => {
     };
 
     if (!isInitialized) {
+      const name = getAccountName(address) || 'New account';
       accounts.push({
         ...account,
         metadata: {
           ...account.metadata,
-          name: 'New account',
+          name,
           isNew: true,
         },
       });
@@ -40,7 +41,7 @@ export const getHWAccounts = async (currentHWDevice, getName) => {
       ...account,
       metadata: {
         ...account.metadata,
-        name: getName(address, 'Ledger'),
+        name: getAccountName(address) || `Account ${accountIndex + 1}`,
         creationTime: new Date().toISOString(),
       },
     });

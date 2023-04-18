@@ -1,7 +1,7 @@
-/* eslint-disable complexity */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'src/theme/Icon';
+import useOutsideClickListener from 'src/utils/useOutsideClickListener';
 import styles from './tooltip.css';
 
 class Tooltip extends React.Component {
@@ -18,11 +18,7 @@ class Tooltip extends React.Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.setWrapperRef = this.setWrapperRef.bind(this);
-  }
-
-  setWrapperRef(node) {
-    this.wrapperRef = node;
+    this.wrapperRef = React.createRef();
   }
 
   handleMouseMove() {
@@ -79,52 +75,30 @@ class Tooltip extends React.Component {
       .filter((key) => ['top', 'bottom', 'left', 'right'].indexOf(key) >= 0)
       .map((key) => styles[key])
       .join(' ');
+
     return (
-      React.isValidElement(children) && (
-        <div
-          className={[styles.tooltipWrapper, className].join(' ')}
-          onMouseLeave={this.handleMouseLeave}
-          onMouseMove={this.handleMouseMove}
-          ref={this.setWrapperRef}
-        >
-          {React.isValidElement(content) ? (
-            content
-          ) : (
-            <Icon
-              name="tooltipQuestionMark"
-              className={`${styles.infoIcon} ${infoIcon}`}
-              onClick={this.handleClick}
-            />
-          )}
-          <div
-            className={[
-              styles.tooltip,
-              positionStyles,
-              (alwaysShow || showTooltip) && !isHidden && styles.visible,
-              tooltip,
-              indent && styles.indent,
-              'tooltip-window',
-              styles[size],
-              tooltipClassName,
-            ].join(' ')}
-          >
-            {!noArrow && (
-              <span className={`${styles.tooltipArrow} tooltip-arrow`}>
-                <svg stroke="inherit" fill="currentColor" viewBox="0 0 14 28">
-                  <path d="M13.307.5S.5 10.488.5 13.896c0 3.409 12.785 12.893 12.785 12.893" />
-                </svg>
-              </span>
-            )}
-            {title !== '' && (
-              <header>
-                <p className={`${styles.title}`}>{title}</p>
-              </header>
-            )}
-            <main>{children}</main>
-            {React.isValidElement(footer) && <footer>{footer}</footer>}
-          </div>
-        </div>
-      )
+      <TooltipContent
+        tooltipRef={this.wrapperRef}
+        className={className}
+        handleMouseLeave={this.handleMouseLeave}
+        handleMouseMove={this.handleMouseMove}
+        content={content}
+        infoIcon={infoIcon}
+        handleClick={this.handleClick}
+        positionStyles={positionStyles}
+        alwaysShow={alwaysShow}
+        showTooltip={showTooltip}
+        tooltip={tooltip}
+        indent={indent}
+        size={size}
+        noArrow={noArrow}
+        tooltipClassName={tooltipClassName}
+        title={title}
+        footer={footer}
+        isHidden={isHidden}
+      >
+        {children}
+      </TooltipContent>
     );
   }
 }
@@ -148,3 +122,75 @@ Tooltip.defaultProps = {
 };
 
 export default Tooltip;
+
+function TooltipContent({
+  tooltipRef,
+  children,
+  className,
+  handleMouseLeave,
+  handleMouseMove,
+  content,
+  infoIcon,
+  handleClick,
+  positionStyles,
+  alwaysShow,
+  showTooltip,
+  tooltip,
+  indent,
+  size,
+  noArrow,
+  tooltipClassName,
+  title,
+  footer,
+  isHidden,
+}) {
+  useOutsideClickListener(tooltipRef, showTooltip, handleMouseLeave);
+
+  return (
+    React.isValidElement(children) && (
+      <div
+        className={[styles.tooltipWrapper, className].join(' ')}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+        ref={tooltipRef}
+      >
+        {React.isValidElement(content) ? (
+          content
+        ) : (
+          <Icon
+            name="tooltipQuestionMark"
+            className={`${styles.infoIcon} ${infoIcon}`}
+            onClick={handleClick}
+          />
+        )}
+        <div
+          className={[
+            styles.tooltip,
+            positionStyles,
+            (alwaysShow || showTooltip) && !isHidden && styles.visible,
+            tooltip,
+            indent && styles.indent,
+            'tooltip-window',
+            styles[size],
+            tooltipClassName,
+          ].join(' ')}
+        >
+          {!noArrow && (
+            <span className={`${styles.tooltipArrow} tooltip-arrow`}>
+              <svg stroke="inherit" fill="currentColor" viewBox="0 0 14 28">
+                <path d="M13.307.5S.5 10.488.5 13.896c0 3.409 12.785 12.893 12.785 12.893" />
+              </svg>
+            </span>
+          )}
+          {title !== '' && (
+            <header>
+              <p className={`${styles.title}`}>{title}</p>
+            </header>
+          )}
+          <main>{children}</main>
+          {React.isValidElement(footer) && <footer>{footer}</footer>}
+        </div>
+      </div>
+    )
+  );
+}
