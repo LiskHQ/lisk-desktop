@@ -1,9 +1,10 @@
+/* eslint-disable max-statements */
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Heading from 'src/modules/common/components/Heading';
 import { useFilter } from 'src/modules/common/hooks';
 import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
-
+import routes from 'src/routes/routes';
 import { Input } from 'src/theme';
 import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
@@ -42,10 +43,12 @@ const AllTokens = ({ history }) => {
     }, 500);
   }, []);
 
+  const handleGoBack = () => history.push(routes.wallet.path);
+
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
-        <Heading title={t('All tokens')}>
+        <Heading title={t('All tokens')} onGoBack={handleGoBack}>
           <div className={styles.rightHeaderSection}>
             <Input
               icon={<Icon className={styles.searchIcon} name="searchActive" />}
