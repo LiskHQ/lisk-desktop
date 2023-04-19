@@ -24,11 +24,7 @@ export const useSearchApplications = () => {
     }, 500);
   };
   const formattedValue = removeTrailingSlash(addHttp(debouncedSearchValue));
-  const {
-    isLoading,
-    isSuccess: networkSuccess,
-    isError: networkError,
-  } = useNetworkStatus({
+  const { isLoading, isError: networkError } = useNetworkStatus({
     client: new Client({ http: formattedValue }),
     config: { appUrl: formattedValue },
     options: { enabled: !!url.isUrl && regex.url.test(formattedValue) },
@@ -53,21 +49,12 @@ export const useSearchApplications = () => {
 
   useEffect(() => {
     const isSearchValueUrl = regex.url.test(addHttp(debouncedSearchValue));
-    if (url.isUrl) {
-      if (networkError) {
-        setUrl({
-          urlStatus: 'error',
-          isUrl: isSearchValueUrl,
-          isSearchLoading: false,
-        });
-      }
-      if (networkSuccess) {
-        setUrl({
-          urlStatus: 'ok',
-          isUrl: isSearchValueUrl,
-          isSearchLoading: false,
-        });
-      }
+    if (url.isUrl && !isLoading) {
+      setUrl({
+        urlStatus: networkError ? 'error' : 'ok',
+        isUrl: isSearchValueUrl,
+        isSearchLoading: false,
+      });
     }
   }, [debouncedSearchValue, isLoading]);
   return {
