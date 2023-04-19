@@ -29,7 +29,7 @@ const TokenRow = ({ data: token }) => {
         <Balance
           amount={
             <Converter
-              emptyPlaceholder='-'
+              emptyPlaceholder="-"
               value={convertFromBaseDenom(availableBalance, token)}
               tokenSymbol={token.symbol}
             />

@@ -60,7 +60,9 @@ describe('BlockchainApplicationList', () => {
 
   it('should apply search filter', () => {
     useBlockchainApplicationExplore.mockReturnValue({
-      data: { data: [...mockBlockchainApp.data, ...mockBlockchainApp.data, ...mockBlockchainApp.data]},
+      data: {
+        data: [...mockBlockchainApp.data, ...mockBlockchainApp.data, ...mockBlockchainApp.data],
+      },
       error: undefined,
       isLoading: false,
       isFetching: false,
