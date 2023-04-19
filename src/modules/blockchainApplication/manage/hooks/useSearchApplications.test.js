@@ -1,24 +1,29 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { act } from 'react-dom/test-utils';
+import { renderHook, act } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
-import { validateAppNode } from '../utils';
+import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { useNetworkStatus } from '@network/hooks/queries';
 import { useSearchApplications } from './useSearchApplications';
 
-jest.mock('../utils/validateAppNode');
+jest.mock('@network/hooks/queries');
 
 describe('useSearchApplications', () => {
-  let hookImport = null;
-  beforeEach(() => {
-    hookImport = renderHook(() => useSearchApplications());
-  });
-
   it('returns status ok on successful URL search and node responds successfully', async () => {
-    const { result } = hookImport;
-    const { onSearchApplications } = result.current;
     const searchTerm = 'http://api.coinbase.com';
-    validateAppNode.mockResolvedValue({ status: 'ok' });
+    useNetworkStatus.mockReturnValue({
+      isLoading: false,
+      isSuccess: true,
+      isError: false,
+    });
+    const hookImport = renderHook(() => useSearchApplications(), { wrapper });
+    const { result, rerender } = hookImport;
+    const { onSearchApplications } = result.current;
+    act(() => {
+      jest.runAllTimers();
+    });
+    rerender();
     act(() => {
       onSearchApplications(searchTerm);
+      jest.advanceTimersByTime(2000);
     });
     await waitFor(() => {
       expect(result.current.isUrl).toEqual(true);
@@ -27,12 +32,22 @@ describe('useSearchApplications', () => {
   });
 
   it('returns status error on URL search and node responds with failure', async () => {
-    const { result } = hookImport;
+    const searchTerm = 'http://api.enevti.com';
+    useNetworkStatus.mockReturnValue({
+      isLoading: false,
+      isSuccess: false,
+      isError: true,
+    });
+    const hookImport = renderHook(() => useSearchApplications(), { wrapper });
+    const { result, rerender } = hookImport;
     const { onSearchApplications } = result.current;
-    const searchTerm = 'http://api.coinbase.com';
-    validateAppNode.mockRejectedValue({ status: 'error' });
+    act(() => {
+      jest.runAllTimers();
+    });
+    rerender();
     act(() => {
       onSearchApplications(searchTerm);
+      jest.advanceTimersByTime(2000);
     });
     await waitFor(() => {
       expect(result.current.isUrl).toEqual(true);
@@ -41,9 +56,15 @@ describe('useSearchApplications', () => {
   });
 
   it('returns URL status as false on name search', async () => {
+    const searchTerm = 'test app';
+    useNetworkStatus.mockReturnValue({
+      isLoading: false,
+      isSuccess: false,
+      isError: false,
+    });
+    const hookImport = renderHook(() => useSearchApplications(), { wrapper });
     const { result } = hookImport;
     const { onSearchApplications } = result.current;
-    const searchTerm = 'test app';
     act(() => {
       onSearchApplications(searchTerm);
     });
