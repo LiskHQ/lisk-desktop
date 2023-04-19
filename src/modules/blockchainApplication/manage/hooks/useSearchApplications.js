@@ -31,7 +31,7 @@ export const useSearchApplications = () => {
   } = useNetworkStatus({
     client: new Client({ http: formattedValue }),
     config: { appUrl: formattedValue },
-    options: { enabled: !!url.isUrl },
+    options: { enabled: !!url.isUrl && regex.url.test(formattedValue) },
   });
 
   const onSearchApplications = useCallback(
@@ -70,7 +70,6 @@ export const useSearchApplications = () => {
       }
     }
   }, [debouncedSearchValue, isLoading]);
-
   return {
     searchValue,
     debouncedSearchValue,
