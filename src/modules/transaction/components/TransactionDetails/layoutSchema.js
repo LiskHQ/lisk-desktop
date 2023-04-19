@@ -19,6 +19,7 @@ import {
   PrettyJson,
   Command,
   Module,
+  Nonce,
   GenericParams,
 } from 'src/modules/transaction/components/TransactionDetails';
 import styles from './layoutSchema.css';
@@ -88,7 +89,7 @@ export const LayoutSchema = {
     className: styles.reclaimLSK,
   },
   structuredGeneralLayout: {
-    components: [Module, Command, Sender, TransactionId, Fee, GenericParams],
+    components: [Module, Command, Sender, TransactionId, Fee, Nonce, GenericParams],
     className: styles.structuredGeneralLayout,
   },
   default: {

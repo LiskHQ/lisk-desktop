@@ -9,16 +9,14 @@ import TransactionDetailsContext from '@transaction/context/transactionDetailsCo
 import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
 import styles from './signWCSummary.css';
 
-const Summary = (props) => {
-  const {
-    t,
-    transactionJSON,
-    actionFunction,
-    formProps,
-    nextStep,
-    prevStep,
-  } = props;
-  const wallet = {};
+const Summary = ({
+  t,
+  transactionJSON,
+  actionFunction,
+  formProps,
+  nextStep,
+  prevStep,
+}) => {
   const confirmButton = {
     label: t('Send'),
     onClick: () => {
@@ -36,7 +34,6 @@ const Summary = (props) => {
       prevStep({ formProps });
     },
   };
-
   const Layout = LayoutSchema.structuredGeneralLayout;
 
   return (
@@ -67,7 +64,6 @@ const Summary = (props) => {
         <Footer
           cancelButton={cancelButton}
           confirmButton={confirmButton}
-          account={wallet}
           confirmButtonText={t('Send')}
           cancelButtonText={t('Go back')}
           t={t}
