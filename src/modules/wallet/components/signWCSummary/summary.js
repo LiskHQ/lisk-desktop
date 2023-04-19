@@ -7,12 +7,13 @@ import Footer from '@transaction/components/TxSummarizer/footer';
 import { LayoutSchema } from '@transaction/components/TransactionDetails/layoutSchema';
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
 import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
-import styles from './styles.css';
+import styles from './signWCSummary.css';
 
 const Summary = (props) => {
   const {
     t,
     transactionJSON,
+    actionFunction,
     formProps,
     nextStep,
     prevStep,
@@ -25,7 +26,7 @@ const Summary = (props) => {
         formProps,
         transactionJSON,
         selectedPriority: 'normal',
-        actionFunction: () => {},
+        actionFunction,
       });
     },
   };
