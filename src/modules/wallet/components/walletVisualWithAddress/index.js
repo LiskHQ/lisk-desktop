@@ -69,7 +69,7 @@ const WalletVisualWithAddress = ({
   detailsClassName,
   copy,
   isMultisig,
-  publicKey
+  publicKey,
 }) => {
   const getTransformedAddress = (addressValue) => {
     if (showBookmarkedAddress) {
