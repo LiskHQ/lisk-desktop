@@ -5,7 +5,6 @@ import ConnectionContext from '@libs/wcm/context/connectionContext';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import AccountRow from '@account/components/AccountRow';
 import { useAccounts } from '@account/hooks/useAccounts';
-import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
@@ -23,6 +22,7 @@ import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
 
 const getTitle = (key, t) =>
@@ -36,7 +36,7 @@ const getRequestTransaction = (request) => {
 const defaultToken = { symbol: 'LSK' };
 
 // eslint-disable-next-line max-statements
-const RequestSummary = ({ nextStep }) => {
+const RequestSummary = ({ nextStep, history }) => {
   const { t } = useTranslation();
   const { getAccountByAddress } = useAccounts();
   const { events } = useContext(ConnectionContext);
@@ -44,7 +44,6 @@ const RequestSummary = ({ nextStep }) => {
   const [transaction, setTransaction] = useState(null);
   const [senderAccount, setSenderAccount] = useState(null);
   const { session } = useSession();
-  const { moduleCommandSchemas } = useCommandSchema();
   const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
   useSchemas();
@@ -54,7 +53,7 @@ const RequestSummary = ({ nextStep }) => {
 
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
-    const transactionJSON = toTransactionJSON(transaction, moduleCommandSchemas[moduleCommand]);
+    const transactionJSON = toTransactionJSON(transaction, request?.request?.params.schema);
     const { recipientChainID } = request?.request?.params ?? {};
     const sendingChain = metaData.data.data.find((item) => item.chainID === sendingChainID);
     sendingChain.chainID = sendingChainID;
@@ -78,10 +77,13 @@ const RequestSummary = ({ nextStep }) => {
           token,
         },
         moduleCommand,
+        chainID: sendingChainID,
+        schema: request?.request?.params.schema,
       },
       selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
     });
   };
+  
   const rejectHandler = () => {
     rejectLiskRequest(request);
   };
@@ -109,7 +111,7 @@ const RequestSummary = ({ nextStep }) => {
   }, [request]);
 
   if (!session.request || !request) {
-    return <div />;
+    return <EmptyState history={history} />;
   }
 
   const { icons, name, url } = session.request.peer.metadata;
