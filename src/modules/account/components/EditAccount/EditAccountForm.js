@@ -11,7 +11,7 @@ import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
 import { Input } from '@theme';
 import { PrimaryButton } from '@theme/buttons';
-import {updateHWAccount} from "@hardwareWallet/store/actions";
+import { updateHWAccount } from '@hardwareWallet/store/actions';
 import { updateCurrentAccount, updateAccount } from '../../store/action';
 import styles from './EditAccountForm.css';
 
