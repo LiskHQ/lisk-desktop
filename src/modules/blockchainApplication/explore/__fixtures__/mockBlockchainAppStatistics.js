@@ -4,8 +4,8 @@ export const mockBlockchainAppStatistics = {
     registered: 2503,
     active: 2328,
     terminated: 35,
-    totalSupplyLSK: '5000000',
-    stakedLSK: '3000000',
+    totalSupplyLSK: '500000000000000',
+    totalStakedLSK: '30000000000000',
     inflationRate: '4.50',
   },
 };
