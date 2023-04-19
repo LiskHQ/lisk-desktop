@@ -139,7 +139,7 @@ const Request = () => {
   };
 
   const { recipientChain, token, amount, reference } = state;
-  const selectedToken = tokens.find(({ tokenID })=> tokenID === token.value )
+  const selectedToken = tokens.find(({ tokenID }) => tokenID === token.value);
 
   return (
     <RequestWrapper

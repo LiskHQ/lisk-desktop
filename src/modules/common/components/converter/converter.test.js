@@ -47,15 +47,15 @@ describe('Converter', () => {
     wrapper = mount(<Converter {...newProps} />);
     expect(wrapper.find('.price').exists()).toBe(false);
   });
-  
+
   it('should not render placeholder', () => {
     const newProps = {
       ...props,
       value: '',
       emptyPlaceholder: 'test-placeholder',
-      tokenSymbol: null
+      tokenSymbol: null,
     };
     wrapper = mount(<Converter {...newProps} />);
-    expect(wrapper.text()).toContain('test-placeholder')
+    expect(wrapper.text()).toContain('test-placeholder');
   });
 });
