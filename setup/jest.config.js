@@ -300,6 +300,7 @@ module.exports = {
     'src/modules/wallet/store/action.js', // TODO: To be fixed when HW Manager is refactored
     'src/modules/hardwareWallet/manager/HWClient.js', // TODO: To be fixed when HW Manager is refactored
     'src/utils/immutableUtils.js', // TODO: To be fixed in PDD-1482
+    'src/utils/useOutsideClickListener.js',
     'src/utils/usePrevious.js', // TODO: To be fixed in PDD-1482
     'src/modules/hardwareWallet/store/actions/devicesActions.js', // TODO: To be fixed in PDD-1482
     'src/modules/hardwareWallet/utils/getHWAccounts.js', // TODO: To be fixed in PDD-1482
@@ -311,6 +312,7 @@ module.exports = {
     'src/modules/account/components/AccountRow/AccountRow.js', // TODO: To be fixed in PDD-1482
     'src/modules/account/components/ManageAccounts/ManageAccounts.js', // TODO: To be fixed in PDD-1482
     'src/modules/account/components/SwitchAccount/SwitchAccount.js', // TODO: To be fixed in PDD-1482
+    'src/modules/account/components/RemoveSelectedAccountFlow/RemoveSelectedAccountFlow.js',
     'src/modules/blockchainApplication/connection/components/RequestView/RequestView.js', // TODO: To be fixed in PDD-1482
     'src/modules/hardwareWallet/store/actions/devicesActions.js', // TODO: To be fixed in PDD-1482
     '/src/modules/hardwareWallet/store/reducers/devicesReducer.js', // TODO: To be fixed in PDD-1482

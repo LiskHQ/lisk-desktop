@@ -29,17 +29,16 @@ usePinBlockchainApplication.mockReturnValue({
   checkPinByChainId: jest.fn().mockReturnValue(true),
 });
 
-useBlockchainApplicationExplore.mockReturnValue({
-  data: mockBlockchainApp,
-  error: undefined,
-  isLoading: false,
-  isFetching: false,
-  hasNextPage: true,
-  fetchNextPage: mockFetchNextPage,
-});
-
 describe('BlockchainApplicationList', () => {
   beforeEach(() => {
+    useBlockchainApplicationExplore.mockReturnValue({
+      data: mockBlockchainApp,
+      error: undefined,
+      isLoading: false,
+      isFetching: false,
+      hasNextPage: true,
+      fetchNextPage: mockFetchNextPage,
+    });
     renderWithRouterAndQueryClient(BlockchainApplicationList);
   });
 
@@ -55,7 +54,22 @@ describe('BlockchainApplicationList', () => {
     expect(blockchainAppRow).toHaveLength(mockBlockchainApp.data.length);
   });
 
+  it('should not show search when less than 6 applications', () => {
+    expect(() => screen.getByAltText('application-filter')).toThrow();
+  });
+
   it('should apply search filter', () => {
+    useBlockchainApplicationExplore.mockReturnValue({
+      data: {
+        data: [...mockBlockchainApp.data, ...mockBlockchainApp.data, ...mockBlockchainApp.data],
+      },
+      error: undefined,
+      isLoading: false,
+      isFetching: false,
+      hasNextPage: true,
+      fetchNextPage: mockFetchNextPage,
+    });
+    renderWithRouterAndQueryClient(BlockchainApplicationList);
     const searchField = screen.getByTestId('application-filter');
     fireEvent.change(searchField, { target: { value: 'test' } });
     jest.runAllTimers();

@@ -6,7 +6,7 @@ describe('actions: hardware wallet', () => {
   it('stores the list of accounts', () => {
     const expectedAction = {
       type: actionTypes.setHWAccounts,
-      accounts: mockHWAccounts,
+      hwAccounts: mockHWAccounts,
     };
     expect(setHWAccounts(mockHWAccounts)).toEqual(expectedAction);
   });

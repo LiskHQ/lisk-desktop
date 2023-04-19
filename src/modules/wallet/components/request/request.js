@@ -139,6 +139,7 @@ const Request = () => {
   };
 
   const { recipientChain, token, amount, reference } = state;
+  const selectedToken = tokens.find(({ tokenID }) => tokenID === token.value);
 
   return (
     <RequestWrapper
@@ -206,6 +207,7 @@ const Request = () => {
             className={styles.converter}
             value={amount.value}
             error={amount.error}
+            tokenSymbol={selectedToken?.symbol}
           />
         </span>
       </label>

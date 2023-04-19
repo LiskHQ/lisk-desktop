@@ -38,7 +38,7 @@ const BlocksOverview = () => {
   ];
 
   const doughnutChartData = {
-    labels: [t('Empty'), t('Not empty')],
+    labels: [t('Empty'), t('Non empty')],
     datasets: [
       {
         backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
@@ -169,7 +169,7 @@ const BlocksOverview = () => {
           <div
             className={`${grid['col-sm-4']} ${grid['col-xs-5']} ${styles.chartBox} ${styles.doughnutChartContainer}`}
           >
-            <h2 className={styles.chartTitle}>{t('Empty/Not empty')}</h2>
+            <h2 className={styles.chartTitle}>{t('Empty/Non empty')}</h2>
             <div className={`${styles.chart} showOnLargeViewPort`}>
               <DoughnutChart
                 data={doughnutChartData}
@@ -191,7 +191,7 @@ const BlocksOverview = () => {
             <div className="hideOnLargeViewPort">
               <GuideTooltip>
                 <GuideTooltipItem color={chartStyles.mystic} label={t('Empty')} />
-                <GuideTooltipItem color={chartStyles.ultramarineBlue} label={t('Not empty')} />
+                <GuideTooltipItem color={chartStyles.ultramarineBlue} label={t('Non empty')} />
               </GuideTooltip>
             </div>
           </div>
