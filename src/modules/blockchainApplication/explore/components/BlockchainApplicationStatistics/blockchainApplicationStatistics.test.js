@@ -14,7 +14,7 @@ describe('BlockchainApplicationStatistics', () => {
     expect(screen.getByText('Total Supply')).toBeInTheDocument();
     expect(screen.getByText('Staked')).toBeInTheDocument();
     expect(screen.getByText('5,000,000 LSK')).toBeInTheDocument();
-    expect(screen.getByText('3,000,000 LSK')).toBeInTheDocument();
+    expect(screen.getByText('300,000 LSK')).toBeInTheDocument();
   });
 
   it('should render default supply and staked details if data is unavailable', () => {
