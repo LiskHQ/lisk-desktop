@@ -1,10 +1,11 @@
+import { to } from 'await-to-js';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 import actionTypes from './actionTypes';
-import { getTransactions, broadcast, dryRun } from '../api';
+import { getTransactions, broadcast, dryRun, signTransaction } from '../api';
 import { joinModuleAndCommand, signMultisigTransaction } from '../utils';
 import { fromTransactionJSON, toTransactionJSON } from '../utils/encoding';
 
@@ -209,3 +210,30 @@ export const signatureSkipped =
       data: transactionObject,
     });
   };
+
+export const transactionSigned = (formProps, transactionJSON, privateKey, _, senderAccount) =>
+async (dispatch) => {
+  const { schema, chainID } = formProps;
+  const [error, tx] = await to(
+    signTransaction({
+      transactionJSON,
+      wallet: senderAccount,
+      schema,
+      chainID,
+      privateKey,
+      senderAccount,
+    }),
+  );
+
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionSigned,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};
