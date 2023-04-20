@@ -35,6 +35,7 @@ export const useTransactionUpdate = (isLoading) => {
       const queries = queryClient.getQueriesData({ queryKey: [MY_TRANSACTIONS] });
       queries
         .filter((query) => {
+          console.log('----', query)
           const { params } = query[0][2];
           const isSameChain = query[0][1]?.length && query[0][1] === currentApplicationData.current;
           const isSameRecipient =

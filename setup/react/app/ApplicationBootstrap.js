@@ -19,7 +19,6 @@ const ApplicationBootstrap = ({ children }) => {
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { setApplications } = useApplicationManagement();
   const queryClient = useRef(new Client({ http: mainChainNetwork?.serviceUrl }));
-  useTransactionUpdate();
 
   const networkStatus = useNetworkStatus({
     options: { enabled: !!mainChainNetwork },
@@ -47,6 +46,9 @@ const ApplicationBootstrap = ({ children }) => {
   const isLoading =
     (networkStatus.isLoading && !!mainChainNetwork) ||
     (blockchainAppsMeta.isLoading && !!mainChainApplication);
+
+
+  useTransactionUpdate((!isLoading || !isFirstTimeLoading) && mainChainApplication?.chainID);
 
   useEffect(() => {
     if (mainChainApplication) {
