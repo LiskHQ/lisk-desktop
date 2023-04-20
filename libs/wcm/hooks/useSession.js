@@ -19,8 +19,8 @@ export const useSession = () => {
         data: proposalEvents.meta,
       });
       const status = await onApprove(proposalEvents.meta, selectedAccounts);
-      refreshPairings();
       removeEvent(proposalEvents);
+      refreshPairings();
       return {
         status,
         data: proposalEvents.meta,
