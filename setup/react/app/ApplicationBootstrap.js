@@ -71,7 +71,7 @@ const ApplicationBootstrap = ({ children }) => {
     );
   }
 
-  return !isLoading || !isFirstTimeLoading ? children : null;
+  return (!isLoading || !isFirstTimeLoading) && mainChainApplication?.chainID ? children : null;
 };
 
 export default ApplicationBootstrap;
