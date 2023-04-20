@@ -3,7 +3,8 @@
 }
 
 .boxContainer {
-  min-width: 75vw;  /* stylelint-disable-line unit-whitelist */
+  width: 75vw !important; /* stylelint-disable-line unit-whitelist */
+  max-width: 100% !important;
 
   & > header {
     display: flex;
