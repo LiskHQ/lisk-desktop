@@ -1,16 +1,9 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import { cryptography } from '@liskhq/lisk-client';
-import { mount } from 'enzyme';
-import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import { mockAuth } from '@auth/__fixtures__';
 import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
-import { mockAppsTokens, mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import Summary from './summary';
 
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
