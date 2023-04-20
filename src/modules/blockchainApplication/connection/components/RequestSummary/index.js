@@ -55,9 +55,9 @@ const RequestSummary = ({ nextStep, history }) => {
     const moduleCommand = joinModuleAndCommand(transaction);
     const transactionJSON = toTransactionJSON(transaction, request?.request?.params.schema);
     const { recipientChainID } = request?.request?.params ?? {};
-    const sendingChain = metaData.data.data.find((item) => item.chainID === sendingChainID);
+    const sendingChain = metaData.data.data.find(({ chainID }) => chainID === sendingChainID);
     sendingChain.chainID = sendingChainID;
-    const recipientChain = metaData.data.data.find((item) => item.chainID === recipientChainID);
+    const recipientChain = metaData.data.data.find(({ chainID }) => chainID === recipientChainID);
     recipientChain.chainID = recipientChainID;
     const token = tokenData.data.data.length > 0 ? tokenData.data.data[0] : defaultToken;
 
@@ -91,7 +91,10 @@ const RequestSummary = ({ nextStep, history }) => {
   useEffect(() => {
     const event = events.find((e) => e.name === EVENTS.SESSION_REQUEST);
     if (event?.meta?.params?.request?.params) {
-      setRequest(event.meta.params);
+      setRequest({
+        id: event.meta.id,
+        ...event.meta.params,
+      });
     }
   }, []);
 
@@ -163,6 +166,7 @@ const RequestSummary = ({ nextStep, history }) => {
             className={styles.button}
             onClick={approveHandler}
             data-testid="approve-button"
+            disabled={!metaData.data}
           >
             {t('Continue')}
           </PrimaryButton>
