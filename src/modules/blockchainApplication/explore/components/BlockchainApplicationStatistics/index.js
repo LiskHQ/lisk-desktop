@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { convertToBaseDenom } from '@token/fungible/utils/helpers';
+import useSettings from '@settings/hooks/useSettings';
+import { Client } from 'src/utils/api/client';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -17,7 +18,10 @@ import styles from './blockchainApplicationStatistics.css';
 
 const BlockchainApplicationStatistics = () => {
   const { t } = useTranslation();
-  const { data: statistics } = useBlockchainApplicationStatistics();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
+  const { data: statistics } = useBlockchainApplicationStatistics({
+    client: new Client({ http: mainChainNetwork?.serviceUrl }),
+  });
   const colorPalette = getColorPalette(useTheme());
   const { doughnutChartData, doughnutChartOptions } = prepareChartDataAndOptions(
     statistics?.data ?? {},
@@ -30,16 +34,18 @@ const BlockchainApplicationStatistics = () => {
       {
         title: t('Total Supply'),
         description: t('Total LSK tokens in circulation'),
-        amount: convertToBaseDenom(statistics?.data.totalSupplyLSK),
+        amount: statistics?.data?.totalSupplyLSK || 0,
         icon: 'totalSupplyToken',
+        tooltipSize: 'maxContent',
       },
       {
         title: t('Staked'),
         description: t(
-          'Amount of LSK tokens staked by validators and nominators for DPoS governance'
+          'Amount of LSK tokens staked by validators and nominators for PoS governance'
         ),
-        amount: convertToBaseDenom(statistics?.data.stakedLSK),
+        amount: statistics?.data?.totalStakedLSK || 0,
         icon: 'stakedToken',
+        tooltipSize: 'm',
       },
     ],
     [statistics]
@@ -69,18 +75,18 @@ const BlockchainApplicationStatistics = () => {
           </GuideTooltip>
         </div>
       </BoxContent>
-      {cardsMap.map(({ title, description, amount, icon }) => (
+      {cardsMap.map(({ title, description, amount, icon, tooltipSize }) => (
         <BoxContent key={`app-stats-card-${icon}`} className={styles.statsBox}>
           <div>
             <div>
               <span className={styles.statsInfoTitle}>{title}</span>
-              <Tooltip size="m" position="left">
+              <Tooltip size={tooltipSize} position="left">
                 <p>{description}</p>
               </Tooltip>
             </div>
-            <p className={`${styles.statsInfo} stats-info-value`}>
+            <div className={`${styles.statsInfo} stats-info-value`}>
               <TokenAmount isLsk val={amount} />
-            </p>
+            </div>
           </div>
           <div>
             <Icon name={icon} />

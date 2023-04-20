@@ -65,14 +65,13 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
     isRegisterMultisignature,
   });
   const alreadySigned = getNonEmptySignatures(transaction, isRegisterMultisignature).length;
-  const registrationExtra = 0;
-  const mandatorySigs = keys.mandatoryKeys?.length + registrationExtra;
+  const mandatorySigs = keys.mandatoryKeys?.length;
   const nonEmptyMandatorySigs = getNonEmptySignatures(transaction, isRegisterMultisignature).length;
 
   if (required > alreadySigned) {
     return signatureCollectionStatus.partiallySigned;
   }
-  if (required === alreadySigned && nonEmptyMandatorySigs === mandatorySigs) {
+  if (required === alreadySigned) {
     return signatureCollectionStatus.fullySigned;
   }
   if (required === alreadySigned && nonEmptyMandatorySigs < mandatorySigs) {

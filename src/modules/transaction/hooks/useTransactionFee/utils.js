@@ -3,17 +3,8 @@ import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { fromTransactionJSON } from '../../utils/encoding';
 
 /**
- * This is solution uses the same logic as implemented in transactions utility.
- * We'll replace this easily with said class methods.
- *
- * @param {object} transaction transaction object in JSON format
- * @param {object} paramsSchema transaction schema as retrieved from Service
- * @param {int} numberOfSignatures number of signatures on the sender account
- * @param {array} priorities list of objects with value (number) and title (string), and selected (boolean)
- * @param {boolean} isTxValid defines if the form was validated successfully
- * @param {bigint} extraFee
- *
- * @returns {bigint} the transaction fee in Beddows
+ * Computes the minimum fee for a provided transaction
+ * @returns {bigint} the transaction fee
  */
 
 export const computeTransactionMinFee = (
@@ -22,20 +13,33 @@ export const computeTransactionMinFee = (
   numberOfSignatures,
   extraCommandFee
 ) => {
+  // Transaction originating from multisignature account must pass non empty signature count
+  // So that transactions.computeMinFee can take into account future signatures bytes
+  // Once the originator creates the transaction, none of the properties will be able to modify
+  // If modified the integrity will be gone, hence accounting for future signatures bytes
+  const getNumberOfEmptySignatures = () => {
+    if (numberOfSignatures === 0) {
+      return 0;
+    }
+
+    const nonEmptySignature = transactionJSON.signatures.filter((s) => s.length > 0);
+    return numberOfSignatures - nonEmptySignature.length;
+  };
+
+  let transactionObject = {};
+  try {
+    transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
+  } catch (exp) {
+    transactionObject = {};
+  }
+
   const options = {
     numberOfSignatures,
-    numberOfEmptySignatures: 0,
+    numberOfEmptySignatures: getNumberOfEmptySignatures(),
     additionalFee: BigInt(extraCommandFee),
   };
 
-  let convertedTx = {};
-  try {
-    convertedTx = fromTransactionJSON(transactionJSON, paramsSchema);
-  } catch (exp) {
-    convertedTx = {};
-  }
-
-  return transactions.computeMinFee(convertedTx, paramsSchema, options);
+  return transactions.computeMinFee(transactionObject, paramsSchema, options);
 };
 
 export const getParamsSchema = (transaction, schemas) => {

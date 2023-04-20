@@ -1,35 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { SecondaryButton } from 'src/theme/buttons';
 import Dropdown from 'src/theme/Dropdown/dropdown';
 import OutsideClickHandler from 'src/theme/Select/OutsideClickHandler';
 import styles from './dropdownButton.css';
 
-class DropdownButton extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      shownDropdown: false,
-    };
-
-    this.toggleDropdown = this.toggleDropdown.bind(this);
-  }
-
-  toggleDropdown(_, showDropdown) {
-    this.setState((prevState) => ({
-      shownDropdown: showDropdown || !prevState.shownDropdown,
-    }));
-  }
-
-  componentDidUpdate(_, prevState) {
-    if (this.state.shownDropdown !== prevState.shownDropdown) {
-      this.props.trackDropdownState(this.state.shownDropdown || !prevState.shownDropdown);
-    }
-  }
-
-  render() {
-    const { shownDropdown } = this.state;
-    const {
+const DropdownButton = forwardRef(
+  (
+    {
+      onDropdownOpen,
+      isDropdownShown,
+      trackDropdownState,
       ButtonComponent,
       buttonLabel,
       buttonType,
@@ -39,16 +19,35 @@ class DropdownButton extends React.Component {
       wrapperClassName,
       buttonClassName,
       className,
-    } = this.props;
+    },
+    ref
+  ) => {
+    const [shownDropdown, setShownDropdown] = useState(isDropdownShown);
+
+    const toggleDropdown = (_, showDropdownValue) => {
+      if (showDropdownValue || !shownDropdown) onDropdownOpen?.();
+      setShownDropdown(showDropdownValue || !shownDropdown);
+    };
+
+    useEffect(() => {
+      trackDropdownState?.(shownDropdown);
+    }, [shownDropdown]);
+
+    useEffect(() => {
+      setShownDropdown(isDropdownShown);
+    }, [isDropdownShown]);
+
+    useImperativeHandle(ref, () => ({ toggleDropdown }), [shownDropdown]);
+
     return (
       <>
         <OutsideClickHandler
           className={`${styles.wrapper} ${wrapperClassName}`}
           disabled={!shownDropdown}
-          onOutsideClick={this.toggleDropdown}
+          onOutsideClick={toggleDropdown}
         >
           <ButtonComponent
-            onClick={this.toggleDropdown}
+            onClick={toggleDropdown}
             className={buttonClassName}
             size={size}
             type={buttonType}
@@ -67,7 +66,7 @@ class DropdownButton extends React.Component {
       </>
     );
   }
-}
+);
 
 DropdownButton.defaultProps = {
   className: '',

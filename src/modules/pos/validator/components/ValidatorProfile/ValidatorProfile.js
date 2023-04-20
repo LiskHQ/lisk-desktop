@@ -108,6 +108,7 @@ const ValidatorProfile = ({ history }) => {
               currentAddress={currentAddress}
               address={address}
               isBanned={isBanned}
+              isDisabled={isLoadingValidators}
             />
           </div>
         </div>

@@ -13,19 +13,22 @@ jest.mock('../../hooks/useSearchApplications');
 
 const [appExplore1, appExplore2] = mockApplicationsExplore;
 const [appManage1, appManage2] = mockApplicationsManage;
-useBlockchainApplicationExplore.mockReturnValue({
-  data: {
-    data: [appExplore1, appExplore2],
-  },
-  isLoading: false,
-  isFetching: false,
-});
-useBlockchainApplicationMeta.mockReturnValue({
-  data: {
-    data: [appManage1, appManage2],
-  },
-  isLoading: false,
-  isFetching: false,
+
+beforeEach(() => {
+  useBlockchainApplicationExplore.mockReturnValue({
+    data: {
+      data: [appExplore1, appExplore2],
+    },
+    isLoading: false,
+    isFetching: false,
+  });
+  useBlockchainApplicationMeta.mockReturnValue({
+    data: {
+      data: [appManage1, appManage2],
+    },
+    isLoading: false,
+    isFetching: false,
+  });
 });
 
 describe('AddApplicationList', () => {
@@ -45,6 +48,26 @@ describe('AddApplicationList', () => {
 
     expect(screen.getByText('Colecti')).toBeTruthy();
     expect(screen.getByText('0.5 LSK')).toBeTruthy();
+  });
+
+  it('displays loading screen', () => {
+    useBlockchainApplicationExplore.mockReturnValue({
+      data: {},
+      isLoading: true,
+      isFetching: true,
+    });
+    useBlockchainApplicationMeta.mockReturnValue({
+      data: {},
+      isLoading: true,
+      isFetching: true,
+    });
+    useSearchApplications.mockReturnValue({
+      isUrl: false,
+      urlStatus: '',
+      debouncedSearchValue: '',
+    });
+    renderWithRouterAndQueryClient(AddApplicationList);
+    expect(screen.getAllByTestId('wallet-address-skeleton-wrapper')).toHaveLength(5);
   });
 
   it('displays results for URL search', () => {

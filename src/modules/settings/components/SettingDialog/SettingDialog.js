@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { externalLinks } from 'src/utils/externalLinks';
 import settingsConst from 'src/modules/settings/const/settingConstants';
-import NetworkSwitcherDropdown from '@network/components/networkSwitcherDropdown';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -47,25 +46,8 @@ function SettingDialog() {
               </div>
             </label>
           </section>
-          <section className="network">
-            <h2>{t('Network')}</h2>
-            <div className={styles.fieldGroup}>
-              <NetworkSwitcherDropdown noLabel />
-            </div>
-          </section>
           <section className="advanced">
             <h2>{t('Advanced')}</h2>
-            <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-              <Toggle isCheckbox setting={settingsConst.keys.showNetwork} />
-              <div>
-                <span className={styles.labelName}>{t('Network switcher')}</span>
-                <p>
-                  {t(
-                    'Enable network switcher to connect to different networks or service nodes when signing in.'
-                  )}
-                </p>
-              </div>
-            </label>
             <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
               <Toggle isCheckbox setting={settingsConst.keys.enableCustomDerivationPath} />
               <div>

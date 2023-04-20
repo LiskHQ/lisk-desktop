@@ -13,22 +13,15 @@ describe('useGetInitializationFees hook', () => {
   const address = 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg';
 
   it('should not call the useInvoke query if useGetHasUserAccount is still loading', () => {
-    useGetHasUserAccount.mockReturnValue({ data: { data: { exits: false } }, isLoading: true });
+    useGetHasUserAccount.mockReturnValue({ data: { data: { exists: false } }, isLoading: true });
     const { result } = renderHook(() => useGetInitializationFees({ address }), { wrapper });
 
-    expect(result.current.data).toBe(null);
+    expect(result.current.data).toBe(undefined);
   });
 
-  it('should not call token_getInitializationFees when user account is initialized', () => {
-    useGetHasUserAccount.mockReturnValue({ data: { data: { exits: true } }, isLoading: true });
-    const { result } = renderHook(() => useGetInitializationFees({ address }), { wrapper });
-
-    expect(result.current.data).toBe(null);
-  });
-
-  it('should call token_getInitializationFees when user account is not initialized', async () => {
+  it('should return isAccountInitialized true with initializationFees', async () => {
     useGetHasUserAccount.mockReturnValue({
-      data: { data: { exits: false } },
+      data: { data: { exists: true } },
       isLoading: false,
     });
     const { result, waitFor } = renderHook(() => useGetInitializationFees({ address }), {
@@ -37,9 +30,9 @@ describe('useGetInitializationFees hook', () => {
 
     await waitFor(() => !result.current.isLoading);
 
-    expect(result.current.data).toEqual({
-      data: { escrowAccount: '5000000', userAccount: '5000000' },
-      meta: { endpoint: 'token_getInitializationFees', params: {} },
+    expect(result.current).toEqual({
+      isAccountInitialized: true,
+      initializationFees: { userAccount: '5000000', escrowAccount: '5000000' },
     });
   });
 });

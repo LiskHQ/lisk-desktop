@@ -12,7 +12,6 @@ import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleComman
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
-import { getValidators } from '@pos/validator/api';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';
@@ -44,27 +43,6 @@ const filters = {
 
 /**
  * Retrieves the list of transactions for given parameters
- *
- * @param {Object} data
- * @param {Object} data.network - Network setting from Redux store
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.params
- * @param {String} data.params.blockId The id of the block in which txs are included
- * @param {String} data.params.address Sender or recipient account
- * @param {String} data.params.dateFrom Unix timestamp, the start time of txs
- * @param {String} data.params.dateTo Unix timestamp, the end time of txs
- * @param {String} data.params.amountFrom The minimum value of txs
- * @param {String} data.params.amountTo The maximum value of txs
- * @param {String} data.params.moduleCommand The moduleCommand. 2:0, 5:1, etc
- * @param {Number} data.params.offset Used for pagination
- * @param {Number} data.params.limit Used for pagination
- * @param {String} data.params.sort an option of 'amount:asc',
- * 'amount:desc', 'timestamp:asc', 'timestamp:desc',
- * @param {Object} data.params.height The height of the block whose transaction we want.
- * If passed, all other parameter will be ignored.
- * @returns {Promise} Transactions list API call
  */
 export const getTransactions = ({ network, params, baseUrl }) => {
   const normParams = {};
@@ -87,72 +65,7 @@ export const getTransactions = ({ network, params, baseUrl }) => {
 };
 
 /**
- * Fetches and generates an array of monthly number of validator
- * registrations on Lisk blockchain.
- *
- * @param {Object} Network - Network setting from Redux store
- * @returns {Promise} Registered validators list API call
- */
-export const getRegisteredValidators = async ({ network }) => {
-  const validators = await getValidators({
-    network,
-    params: { limit: 1 },
-  });
-  const txs = await getTransactions({
-    network,
-    params: { moduleCommand: 'pos:registerValidator', limit: 100 },
-  });
-
-  if (validators.error || txs.error) {
-    return Error('Error fetching data.');
-  }
-
-  const getDate = (timestamp) => {
-    const d = new Date(timestamp * 1000);
-    return `${new Date(d).getFullYear()}-${new Date(d).getMonth() + 1}`;
-  };
-
-  // create monthly number of registration as a dictionary
-  const monthStats = txs.data
-    .map((tx) => tx.block.timestamp)
-    .reduce((acc, timestamp) => {
-      const date = getDate(timestamp);
-      acc[date] = typeof acc[date] === 'number' ? acc[date] + 1 : 1;
-      return acc;
-    }, {});
-
-  // Create a sorted array of monthly accumulated number of registrations
-  const res = Object.keys(monthStats)
-    .sort((a, b) => -1 * (b - 1))
-    .reduce(
-      (acc, month) => {
-        if (acc[0][0] === month) {
-          acc.unshift([null, acc[0][1] - monthStats[month]]);
-        } else if (acc[0][0] === null) {
-          acc[0][0] = month;
-          acc.unshift([null, acc[0][1] - monthStats[month]]);
-        }
-
-        return acc;
-      },
-      [[getDate(txs.data[0].block.timestamp), validators.meta.total]]
-    );
-
-  // Add the date of one month before the last tx
-  res[0][0] = getDate(txs.data[txs.data.length - 1].block.timestamp - 2670000);
-
-  return res;
-};
-
-/**
  * Retrieves the overall statistics of network transactions.
- *
- * @param {Object} data
- * @param {Object} data.params
- * @param {String} data.params.period - An option of 'day' or 'month'
- * @param {Number} data.params.limit - The number of results
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Object} Network transactions statistics
  */
 export const getTransactionStats = ({ network, params: { period } }) => {
   const normParams = {
@@ -191,10 +104,6 @@ export const getTransactionBaseFees = (network) =>
 /**
  * Returns the actual tx fee based on given tx details
  * and selected processing speed
- *
- * @param {String} txData - The transaction object
- * @param {Object} selectedPriority - network configuration
- * @returns {Promise} Object containing value, error and feedback
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({

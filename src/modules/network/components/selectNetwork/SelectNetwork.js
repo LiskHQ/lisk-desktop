@@ -5,8 +5,8 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
+import NetworkApplicationSelector from '@network/components/NetworkApplicationSelector/NetworkApplicationSelector';
 import styles from './SelectNetwork.css';
-import NetworkSwitcherDropdown from '../networkSwitcherDropdown';
 
 function SelectNetwork({ history }) {
   const { t } = useTranslation();
@@ -40,7 +40,7 @@ function SelectNetwork({ history }) {
             </div>
             <h6>Lisk</h6>
           </div>
-          <NetworkSwitcherDropdown onNetworkSwitchSuccess={onNetworkSwitchSuccess} />
+          <NetworkApplicationSelector onNetworkSwitchSuccess={onNetworkSwitchSuccess} />
           <PrimaryButton
             className={`${styles.button} ${styles.continueBtn}`}
             onClick={goToWallet}

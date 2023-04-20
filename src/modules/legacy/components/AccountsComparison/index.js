@@ -16,14 +16,16 @@ const AccountsComparison = ({ t }) => {
   useDeprecatedAccount();
   useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
-  const nonce = wallet.sequence?.nonce;
-  const { data: initializationFees } = useGetInitializationFees({
+  const { isAccountInitialized, initializationFees } = useGetInitializationFees({
     address: wallet.summary?.address,
     tokenID: wallet.token?.[0]?.tokenID,
   });
-  const extraCommandFee = initializationFees?.data?.userAccount;
-  const hasEnoughBalance = Number(wallet.token?.[0]?.availableBalance) >= extraCommandFee;
-  const hasAccountInitialized = hasEnoughBalance && Number(nonce) >= 0;
+  const additionalByteFee = BigInt(1000000);
+  const extraCommandFee = BigInt(initializationFees?.userAccount || 0) + additionalByteFee;
+  const amount = convertFromBaseDenom(extraCommandFee, wallet.token?.[0]);
+  const isInitializedAndHasEnoughBalance =
+    isAccountInitialized &&
+    BigInt(wallet.token?.[0]?.availableBalance || 0) >= BigInt(extraCommandFee || 0);
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -50,11 +52,13 @@ const AccountsComparison = ({ t }) => {
           {t('All you need to do before your balance transfer can be complete:')}
         </h5>
         <ul className={styles.list}>
-          <li className={`${styles.step} ${hasAccountInitialized ? styles.check : styles.green}`}>
+          <li
+            className={`${styles.step} ${
+              isInitializedAndHasEnoughBalance ? styles.check : styles.green
+            }`}
+          >
             <div>
-              {t('Deposit at least {{amount}} LSK to your new account', {
-                amount: convertFromBaseDenom(extraCommandFee, wallet.token?.[0]),
-              })}
+              {t('Deposit at least {{amount}} LSK to your new account', { amount })}
               <Tooltip position="right" size="m">
                 <>
                   <p>
@@ -82,29 +86,20 @@ const AccountsComparison = ({ t }) => {
               <br />
               <>
                 <span>
-                  {t('An initial one-time transfer fee will be deducted from the new account.')}
+                  {t(
+                    'Transfer {{amount}} LSK to your account {{address}} to initiate the reclaim tokens.',
+                    { amount, address: wallet.summary?.address }
+                  )}
                 </span>
                 <br />
-                <span>
-                  {t('Please use ')}
-                  <span
-                    className={`${styles.link} link`}
-                    onClick={() => {
-                      window.open(
-                        'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
-                        '_blank',
-                        'rel=noopener noreferrer'
-                      );
-                    }}
-                  >
-                    {t('external services')}
-                  </span>
-                  {t(' to deposit LSK.')}
-                </span>
               </>
             </div>
           </li>
-          <li className={`${styles.step} ${hasAccountInitialized ? styles.check : styles.green}`}>
+          <li
+            className={`${styles.step} ${
+              isInitializedAndHasEnoughBalance ? styles.check : styles.green
+            }`}
+          >
             <div>
               {t('Send a reclaim transaction')}
               <br />
@@ -118,7 +113,7 @@ const AccountsComparison = ({ t }) => {
         </ul>
       </section>
       <DialogLink component="reclaimBalance" data={{ tokenID: wallet.token?.[0]?.tokenID }}>
-        <PrimaryButton className={styles.button} disabled={!hasAccountInitialized}>
+        <PrimaryButton className={styles.button} disabled={!isInitializedAndHasEnoughBalance}>
           {t('Continue')}
         </PrimaryButton>
       </DialogLink>

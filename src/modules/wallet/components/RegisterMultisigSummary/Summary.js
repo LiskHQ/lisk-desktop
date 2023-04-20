@@ -19,7 +19,7 @@ const Summary = ({
 }) => {
   const [sender] = useCurrentAccount();
   const { txInitiatorAccount } = useTxInitiatorAccount({
-    transactionJSON,
+    senderPublicKey: transactionJSON.senderPublicKey,
   });
   const { data: account } = useAuth({
     config: { params: { address: sender.metadata.address } },

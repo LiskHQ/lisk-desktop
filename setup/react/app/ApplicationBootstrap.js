@@ -16,24 +16,26 @@ import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDevic
 const ApplicationBootstrap = ({ children }) => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
   const [isFirstTimeLoading, setIsFirstTimeLoading] = useState(true);
-  const [, setCurrentApplication] = useCurrentApplication();
+  const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { setApplications } = useApplicationManagement();
   const queryClient = useRef(new Client({ http: mainChainNetwork?.serviceUrl }));
   useTransactionUpdate();
 
   const networkStatus = useNetworkStatus({
-    options: { enabled: !!mainChainNetwork && isFirstTimeLoading },
+    options: { enabled: !!mainChainNetwork },
     client: queryClient.current,
   });
 
   const blockchainAppsMeta = useBlockchainApplicationMeta({
     config: {
       params: {
-        isDefault: true,
+        chainID: [...new Set([networkStatus.data?.data?.chainID, currentApplication.chainID])]
+          .filter((item) => item)
+          .join(','),
         network: mainChainNetwork?.name,
       },
     },
-    options: { enabled: !!networkStatus.data && !!mainChainNetwork && isFirstTimeLoading },
+    options: { enabled: !!networkStatus.data && !!mainChainNetwork },
     client: queryClient.current,
   });
 
@@ -47,12 +49,15 @@ const ApplicationBootstrap = ({ children }) => {
     (blockchainAppsMeta.isLoading && !!mainChainApplication);
 
   useEffect(() => {
-    if (mainChainApplication && isFirstTimeLoading) {
-      setCurrentApplication(mainChainApplication);
+    if (mainChainApplication) {
+      const refreshedCurrentApplication = blockchainAppsMeta?.data?.data?.find(
+        ({ chainID }) => chainID === currentApplication?.chainID
+      );
+      setCurrentApplication(refreshedCurrentApplication || mainChainApplication);
       setApplications(blockchainAppsMeta?.data?.data || []);
     }
     if (isFirstTimeLoading && blockchainAppsMeta.isFetched) setIsFirstTimeLoading(false);
-  }, [mainChainApplication, isFirstTimeLoading]);
+  }, [mainChainApplication?.chainID]);
 
   useLedgerDeviceListener();
 

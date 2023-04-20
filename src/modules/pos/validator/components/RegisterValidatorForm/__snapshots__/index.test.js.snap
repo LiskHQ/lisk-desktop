@@ -10,7 +10,7 @@ exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
             "components": Array [
               Object {
                 "type": "bytesFee",
-                "value": 328000n,
+                "value": 330000n,
               },
               Object {
                 "type": "Registration",
@@ -18,7 +18,7 @@ exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
               },
             ],
             "title": "Transaction",
-            "value": "10.00328 LSK",
+            "value": "10.0033 LSK",
           },
           Object {
             "components": Array [],
@@ -33,7 +33,7 @@ exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
               "components": Array [
                 Object {
                   "type": "bytesFee",
-                  "value": 328000n,
+                  "value": 330000n,
                 },
                 Object {
                   "type": "Registration",
@@ -41,7 +41,7 @@ exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
                 },
               ],
               "title": "Transaction",
-              "value": "10.00328 LSK",
+              "value": "10.0033 LSK",
             },
             Object {
               "components": Array [],
@@ -92,7 +92,7 @@ exports[`RegisterValidatorForm Pass valid tx accept a valid form 1`] = `
         },
         "transactionJSON": Object {
           "command": "registerValidator",
-          "fee": "1000328000",
+          "fee": "1000330000",
           "module": "pos",
           "nonce": "0",
           "params": Object {

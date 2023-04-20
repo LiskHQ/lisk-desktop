@@ -65,7 +65,7 @@ export const filterIncomingTransactions = (transactions, account) =>
     (transaction) =>
       transaction &&
       transaction.moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer &&
-      transaction.params.recipientAddress === account.metadata.address
+      transaction.params.recipientAddress === account.metadata?.address
   );
 
 export const dateRangeCompare = (filterDateRange, txDate) => {

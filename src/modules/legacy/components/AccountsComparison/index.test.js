@@ -16,6 +16,7 @@ jest.mock('src/utils/searchParams', () => ({
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0]]),
 }));
+jest.mock('@token/fungible/hooks/queries/useGetHasUserAccount');
 jest.mock('@token/fungible/hooks/queries/useGetInitializationFees');
 
 const mockNonMigrated = wallets.non_migrated;
@@ -38,7 +39,11 @@ window.open = jest.fn();
 describe('Reclaim balance screen', () => {
   let props;
 
-  useGetInitializationFees.mockReturnValue({ data: { data: { userAccount: 5000000 } } });
+  useGetInitializationFees.mockReturnValue({
+    isAccountInitialized: true,
+    initializationFees: { userAccount: 5000000 },
+  });
+
   beforeEach(() => {
     props = {
       t: (v) => v,
@@ -73,15 +78,8 @@ describe('Reclaim balance screen', () => {
 
     const wrapper = mountWithRouterAndQueryClient(Reclaim, props, {});
     wrapper.find('.link').at(0).simulate('click');
-    wrapper.find('.link').at(1).simulate('click');
     expect(window.open).toHaveBeenNthCalledWith(
       1,
-      'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
-      '_blank',
-      'rel=noopener noreferrer'
-    );
-    expect(window.open).toHaveBeenNthCalledWith(
-      2,
       'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
       '_blank',
       'rel=noopener noreferrer'

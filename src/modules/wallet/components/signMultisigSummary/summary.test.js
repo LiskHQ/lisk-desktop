@@ -8,6 +8,8 @@ import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
+import usePosToken from '@pos/validator/hooks/usePosToken';
+
 import { mockAppsTokens, mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import Summary from './summary';
 
@@ -23,6 +25,7 @@ jest.mock('@transaction/utils/transaction', () => ({
   getTotalSpendingAmount: () => '1000000000',
 }));
 jest.mock('@transaction/hooks/useTxInitiatorAccount');
+jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('Sign Multisignature Tx Review component', () => {
   let wrapper;
@@ -71,6 +74,10 @@ describe('Sign Multisignature Tx Review component', () => {
       signatures: [wallets.multiSig.summary.publicKey, '', ''],
     },
   };
+
+  beforeAll(() => {
+    usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
+  });
 
   beforeEach(() => {
     wrapper = mount(<Summary {...props} />);

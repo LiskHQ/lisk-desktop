@@ -61,11 +61,11 @@ export const LayoutSchema = {
     className: styles.registerValidatorPreview,
   },
   [registerMultisignature]: {
-    components: [...baseComponents, ...timeComponents, Members, NumberOfSignatures, PrettyJson],
+    components: [Sender, Fee, Members, NumberOfSignatures, PrettyJson],
     className: styles.multiSigLayout,
   },
   [`${registerMultisignature}-preview`]: {
-    components: [...previewBaseComponents, Members, NumberOfSignatures, ...restComponents],
+    components: [Sender, Members, NumberOfSignatures, Fee, SignedAndRemainingMembersList],
     className: styles.multiSigRegisterPreview,
   },
   [unlock]: {

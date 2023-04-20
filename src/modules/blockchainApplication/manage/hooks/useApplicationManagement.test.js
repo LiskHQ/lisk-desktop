@@ -132,7 +132,7 @@ describe('useApplicationManagement hook', () => {
 
     const { deleteApplicationByChainId } = current;
     act(() => {
-      deleteApplicationByChainId(mockCurrentApplication.chainID);
+      deleteApplicationByChainId(mockApplications[1].chainID);
     });
     await flushPromises();
     expect(mockDispatch).not.toHaveBeenCalledTimes(1);

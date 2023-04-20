@@ -41,7 +41,7 @@ function AccountRow({ account, currentAccount, onSelect, onRemove, truncate }) {
         <p className={`${styles.addressValue}`}>{truncate ? truncateAddress(address) : address}</p>
       </div>
       {isCurrentAccount && (
-        <div>
+        <div className={styles.currentAccountIcon}>
           <Icon name="checkboxCircleFilled" />
         </div>
       )}

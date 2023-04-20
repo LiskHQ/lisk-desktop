@@ -8,6 +8,8 @@ import { QueryTable } from '@theme/QueryTable';
 import { Input } from '@theme';
 import Icon from '@theme/Icon';
 import { useFilter } from '@common/hooks';
+import useSettings from '@settings/hooks/useSettings';
+import { Client } from 'src/utils/api/client';
 import useMergeApplicationExploreAndMetaData from '../../../manage/hooks/useMergeApplicationExploreAndMetaData';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import BlockchainApplicationRow from '../BlockchainApplicationRow';
@@ -19,6 +21,14 @@ const BlockchainApplicationList = () => {
   const { filters, applyFilters } = useFilter();
   const debounceTimeout = useRef(null);
   const { t } = useTranslation();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
+  const blockchainApplicationExploreQueryConfig = {
+    config: { params: filters },
+    client: new Client({ http: mainChainNetwork?.serviceUrl }),
+  };
+  const blockchainApplicationExplore = useBlockchainApplicationExplore(
+    blockchainApplicationExploreQueryConfig
+  );
 
   const onSearchApplication = useCallback(
     ({ target }) => {
@@ -41,25 +51,27 @@ const BlockchainApplicationList = () => {
     <Box main className="chain-application-box">
       <BoxHeader className={styles.boxHeader}>
         <div className={grid['col-xs-6']}>{t('Applications')}</div>
-        <div align="right" className={grid['col-xs-6']}>
-          <div className={styles.filterHolder}>
-            <Input
-              icon={<Icon className={styles.searchIcon} name="searchActive" />}
-              className={styles.chainSearch}
-              name="application-filter"
-              value={searchValue}
-              placeholder={t('Search application')}
-              onChange={onSearchApplication}
-              size="m"
-            />
+        {blockchainApplicationExplore?.data?.data?.length > 5 && (
+          <div align="right" className={grid['col-xs-6']}>
+            <div className={styles.filterHolder}>
+              <Input
+                icon={<Icon className={styles.searchIcon} name="searchActive" />}
+                className={styles.chainSearch}
+                name="application-filter"
+                value={searchValue}
+                placeholder={t('Search application')}
+                onChange={onSearchApplication}
+                size="l"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </BoxHeader>
       <BoxContent className={`${styles.content} chain-application-result`}>
         <QueryTable
           showHeader
           queryHook={useBlockchainApplicationExplore}
-          queryConfig={{ config: { params: filters } }}
+          queryConfig={blockchainApplicationExploreQueryConfig}
           transformResponse={useMergeApplicationExploreAndMetaData}
           row={BlockchainApplicationRow}
           header={header(t)}

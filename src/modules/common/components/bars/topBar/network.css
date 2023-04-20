@@ -19,11 +19,9 @@
     margin-left: 8px;
 
     /* Network name */
-    & > span {
-      margin-right: 5px;
+    & .networkLabel {
       font-weight: var(--font-weight-very-bold);
       text-transform: capitalize;
-      display: inline-block;
     }
 
     & > * {

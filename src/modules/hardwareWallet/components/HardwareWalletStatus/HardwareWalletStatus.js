@@ -49,7 +49,7 @@ export const HardwareWalletStatus = () => {
       >
         <div className={styles.dropdown}>
           <h6>
-            <b>{t('Hardware wallet details')}</b>
+            <b>{t('Hardware wallet')}</b>
           </h6>
           <ul>
             {hwStatusInfo.map(({ label, value }) => (
@@ -60,10 +60,10 @@ export const HardwareWalletStatus = () => {
             ))}
           </ul>
           <DialogLink className={styles.selectLinkLabel} component="switchAccount">
-            {t('Switch hardware account')}
+            {t('Switch account')}
           </DialogLink>
           <DialogLink className={styles.selectLinkLabel} component="selectHardwareDeviceModal">
-            {t('Switch hardware device')}
+            {t('Switch device')}
           </DialogLink>
         </div>
       </Tooltip>

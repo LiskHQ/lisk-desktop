@@ -19,7 +19,14 @@
   }
 
   & .footer {
-    margin-top: 48px;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > button.actionButton {
+      width: 80%;
+    }
   }
 
   & > div:nth-child(2) {
@@ -27,17 +34,17 @@
     align-items: center;
     justify-content: center;
 
-    & .illustartion {
+    & .illustration {
       width: 90px;
     }
 
-    & .illustartion ~ h4 {
+    & .illustration ~ h4 {
       @mixin contentLargest semi-bold;
 
       margin-top: 14px;
     }
 
-    & .illustartion ~ h4 ~ p {
+    & .illustration ~ h4 ~ p {
       @mixin contentLarge;
 
       color: var(--color-slate-gray);

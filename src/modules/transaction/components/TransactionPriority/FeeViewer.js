@@ -30,7 +30,7 @@ const FeesBreakdownDetails = ({ type, feeValueInfo, token }) => (
   <>
     <span>{type.replace('Fee', '')}</span>
     <span>
-      {displayFeeInfo(feeValueInfo)} {token.symbol}
+      {displayFeeInfo(feeValueInfo)} {token?.symbol}
     </span>
   </>
 );

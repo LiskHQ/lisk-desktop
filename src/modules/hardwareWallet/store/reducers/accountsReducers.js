@@ -1,13 +1,32 @@
+import { immutableDeleteFromArray, immutableSetToArray } from 'src/utils/immutableUtils';
+import storeActionTypes from '@account/store/actionTypes';
 import actionTypes from '../actions/actionTypes';
 
 const initAccounts = [];
 
-export const accounts = (state = initAccounts, { type, accounts: hwAccount = initAccounts }) => {
+export const accounts = (
+  state = initAccounts,
+  { type, hwAccounts = initAccounts, hwAccount, address: addressToDelete }
+) => {
   switch (type) {
-    case actionTypes.setHWAccounts:
-      return hwAccount;
-    case actionTypes.removeHWAccounts:
+    case actionTypes.setHWAccounts: {
+      return hwAccounts;
+    }
+    case actionTypes.removeHWAccounts: {
       return initAccounts;
+    }
+    case actionTypes.updateHWAccount: {
+      const indexToUpdate = state.findIndex(
+        (account) => account.metadata.address === hwAccount.metadata.address
+      );
+      return immutableSetToArray({ array: state, mapToAdd: hwAccount, index: indexToUpdate });
+    }
+    case storeActionTypes.deleteAccount: {
+      const indexToDelete = state.findIndex(
+        (account) => account.metadata.address === addressToDelete
+      );
+      return immutableDeleteFromArray(state, indexToDelete);
+    }
     default:
       return state;
   }

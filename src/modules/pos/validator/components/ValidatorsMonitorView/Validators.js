@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 /* istanbul ignore file */
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
@@ -24,8 +24,28 @@ import LatestStakes from '../LatestStakes';
 import { useValidators } from '../../hooks/queries';
 import styles from './Validators.css';
 
+const ValidatorActionButton = ({ address, isValidator }) => {
+  const { t } = useTranslation();
+
+  if (!address) return null;
+
+  if (isValidator) {
+    return (
+      <Link to={`${routes.validatorProfile.path}?address=${address}`}>
+        <PrimaryButton className="register-validator">{t('My validator profile')}</PrimaryButton>
+      </Link>
+    );
+  }
+
+  return (
+    <DialogLink component="registerValidator">
+      <PrimaryButton className="register-validator">{t('Register validator')}</PrimaryButton>
+    </DialogLink>
+  );
+};
+
 // eslint-disable-next-line max-statements
-const ValidatorsMonitor = ({ watchList, registrations }) => {
+const ValidatorsMonitor = ({ watchList }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const { filters, setFilter } = useFilter({});
@@ -38,14 +58,11 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
   const total = blocksData?.meta?.total ?? 0;
   const blocks = blocksData?.data ?? [];
   const generatedInRound = blocks.length ? blocks[0].height % ROUND_LENGTH : 0;
-  const { address } = currentAccount.metadata || {};
+  const { address } = currentAccount?.metadata || {};
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address } },
   });
-  const isValidator = useMemo(
-    () => !(!validators?.data?.length && !isLoadingValidators),
-    [validators]
-  );
+  const isValidator = validators?.data?.length > 0 && !isLoadingValidators;
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -130,27 +147,17 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
             <BoxTabs {...pageTabs} />
           </div>
           <div className={grid['col-md-4']}>
-            <Link to={address ? routes.sentStakes.path : '#'}>
-              <SecondaryButton disabled={!address}>Stakes</SecondaryButton>
-            </Link>
-            {isValidator ? (
-              <Link to={`${routes.validatorProfile.path}?address=${address}`}>
-                <PrimaryButton className="register-validator">
-                  {t('My validator profile')}
-                </PrimaryButton>
+            {!!address && (
+              <Link to={routes.sentStakes.path}>
+                <SecondaryButton>Stakes</SecondaryButton>
               </Link>
-            ) : (
-              <DialogLink component="registerValidator">
-                <PrimaryButton className="register-validator">
-                  {t('Register validator')}
-                </PrimaryButton>
-              </DialogLink>
             )}
+            <ValidatorActionButton isValidator={isValidator} address={address} />
           </div>
         </div>
       </BoxHeader>
       {activeDetailTab === 'overview' ? (
-        <ValidatorsOverview registrations={registrations} t={t} totalBlocks={total} />
+        <ValidatorsOverview t={t} totalBlocks={total} />
       ) : (
         <GeneratingDetails
           t={t}

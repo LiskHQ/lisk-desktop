@@ -1,5 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from './blocks.css'
+import styles from './blocks.css';
 
 export default (changeSort, t) => [
   {

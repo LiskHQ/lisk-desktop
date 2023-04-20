@@ -1,0 +1,54 @@
+.DialogAddNetwork {
+  min-height: 408px;
+  max-width: 594px;
+
+  & .boxProp {
+    padding: 24px;
+    box-sizing: border-box;
+
+    & .header {
+      padding: 0;
+      height: initial;
+
+      & .title {
+        margin: 0 auto 12px auto;
+        color: var(--color-black);
+        font-weight: var(--font-weight-bold);
+      }
+    }
+
+    & .description {
+      text-align: center;
+    }
+
+    & .content {
+      padding: 0;
+
+      & .form {
+        display: flex;
+        flex-direction: column;
+
+        & label {
+          color: var(--color-zodiac-blue);
+          margin-top: 16px;
+          font-weight: var(--font-weight-normal);
+          font-size: var(--paragraph-font-size-s);
+
+          &:first-child {
+            margin-top: 24px;
+          }
+        }
+
+        & .button {
+          margin-top: 24px;
+        }
+
+        & .successText {
+          margin-top: 8px;
+          color: var(--color-success);
+          align-self: center;
+        }
+      }
+    }
+  }
+}

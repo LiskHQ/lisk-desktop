@@ -1,7 +1,7 @@
 import { useInvokeQuery } from '@common/hooks';
 import { useGetHasUserAccount } from './useGetHasUserAccount';
 
-export const useGetInitializationFees = ({ options = {}, address, tokenID } = {}) => {
+export const useGetInitializationFees = ({ options = {}, address, tokenID }) => {
   const config = {
     data: {
       endpoint: 'token_getInitializationFees',
@@ -14,16 +14,17 @@ export const useGetInitializationFees = ({ options = {}, address, tokenID } = {}
     config: { params: { address, tokenID } },
   };
 
-  const { data: hasUserAccountInitialized, isLoading: isHasUserAccountLoading } =
-    useGetHasUserAccount(queryConfig);
+  const { data: hasUserAccountInitialized } = useGetHasUserAccount(queryConfig);
 
   const isAccountInitialized = hasUserAccountInitialized?.data?.exists;
-  const shouldReturnInitializationFee = !isAccountInitialized && !isHasUserAccountLoading;
 
   const result = useInvokeQuery({
     config,
-    options: { ...options, enabled: shouldReturnInitializationFee },
+    options: { ...options },
   });
 
-  return shouldReturnInitializationFee ? result : { data: null };
+  return {
+    isAccountInitialized,
+    initializationFees: { ...result?.data?.data },
+  };
 };

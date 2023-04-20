@@ -5,13 +5,17 @@ import {
   useApplicationManagement,
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import useSettings from '@settings/hooks/useSettings';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import ApplicationManagementList from './ApplicationManagementList';
+import networks from '@network/configuration/networks';
+import { DEFAULT_NETWORK } from 'src/const/config';
+import DialogNetworkApplicationSelector from './DialogNetworkApplicationSelector';
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
+jest.mock('@settings/hooks/useSettings');
 jest.mock('src/utils/searchParams');
 
 const mockTogglePin = jest.fn();
@@ -30,7 +34,12 @@ useApplicationManagement.mockReturnValue({
   applications: mockManagedApplications,
 });
 
-describe('ApplicationManagementList', () => {
+useSettings.mockReturnValue({
+  customNetworks: [],
+  mainChainNetwork: networks[DEFAULT_NETWORK],
+});
+
+describe('ModalNetworkApplicationSelector', () => {
   const props = {
     history: {
       push: jest.fn(),
@@ -39,12 +48,10 @@ describe('ApplicationManagementList', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    renderWithRouter(ApplicationManagementList, props);
+    renderWithRouterAndQueryClient(DialogNetworkApplicationSelector, props);
   });
 
   it('should display properly', () => {
-    expect(screen.getByText('Applications')).toBeTruthy();
-    expect(screen.getByText('Add application')).toBeTruthy();
     mockManagedApplications.forEach(({ chainName }) => {
       expect(screen.getByText(chainName)).toBeTruthy();
     });
@@ -52,8 +59,6 @@ describe('ApplicationManagementList', () => {
 
   it('should navigate to the add blockchain application flow', () => {
     fireEvent.click(screen.getByText('Add application'));
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, {
-      modal: 'addApplicationList',
-    });
+    expect(addSearchParamsToUrl).toHaveBeenCalled();
   });
 });

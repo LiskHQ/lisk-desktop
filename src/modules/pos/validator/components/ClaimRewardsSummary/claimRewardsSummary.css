@@ -14,6 +14,11 @@
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+
+    & button {
+      width: 80%;
+      max-width: 391px;
+    }
   }
 
   & .confirmBtn,

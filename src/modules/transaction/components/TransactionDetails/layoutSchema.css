@@ -145,11 +145,9 @@
 
 .multiSigRegisterPreview {
   grid-template-areas:
-    "illustration illustration"
     "sender sender"
-    "numberOfSignatures numberOfSignatures"
+    "numberOfSignatures fee"
     "members members"
-    "transactionId fee"
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 

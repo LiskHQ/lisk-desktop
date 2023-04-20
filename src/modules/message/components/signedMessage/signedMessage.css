@@ -1,9 +1,5 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-.noPadding {
-  padding: 0 !important;
-}
-
 .result {
   background: #08223c !important;
   color: #9bf436 !important;

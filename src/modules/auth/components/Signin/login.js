@@ -26,9 +26,7 @@ const RegisterTitle = ({ t }) => (
  */
 const redirectToReferrer = (history) => {
   const { referrer, ...restParams } = parseSearchParams(history.location.search);
-  const route = referrer
-    ? `${referrer}${stringifySearchParams(restParams)}`
-    : routes.wallet.path;
+  const route = referrer ? `${referrer}${stringifySearchParams(restParams)}` : routes.wallet.path;
 
   history.replace(route);
 };

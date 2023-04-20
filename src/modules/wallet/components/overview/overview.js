@@ -42,7 +42,7 @@ const Overview = ({ isWalletRoute, history }) => {
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: validators } = useValidators({ config: { params: { address } } });
-  const { data: account } = useAuth({ config: { params: { address } } });
+  const { data: authData } = useAuth({ config: { params: { address } } });
 
   const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
   const {
@@ -93,11 +93,12 @@ const Overview = ({ isWalletRoute, history }) => {
         <WalletVisualWithAddress
           copy
           size={50}
-          address={account?.meta?.address}
-          accountName={account?.meta?.name || name}
+          address={authData?.meta?.address}
+          accountName={authData?.meta?.name || name}
           detailsClassName={styles.accountSummary}
           truncate={false}
-          isMultisig={account?.data?.numberOfSignatures > 1}
+          isMultisig={authData?.data?.numberOfSignatures > 0}
+          publicKey={authData?.meta?.publicKey}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>

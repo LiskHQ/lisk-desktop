@@ -5,29 +5,40 @@ import {
   selectHWAccounts,
 } from '@hardwareWallet/store/selectors/hwSelectors';
 import { setHWAccounts } from '@hardwareWallet/store/actions';
-import { selectSettings } from 'src/redux/selectors';
 import { getNameFromAccount } from '@hardwareWallet/utils/getNameFromAccount';
 import { getHWAccounts } from '@hardwareWallet/utils/getHWAccounts';
 
 const useHWAccounts = () => {
   const hwAccounts = useSelector(selectHWAccounts);
   const currentHWDevice = useSelector(selectCurrentHWDevice);
-  const settings = useSelector(selectSettings);
   const [isLoadingHWAccounts, setIsLoadingHWAccounts] = useState(false);
   const [loadingHWAccountsError, setLoadingHWAccountsError] = useState();
 
-  const getAccountName = (address, model) => getNameFromAccount(address, settings, model);
+  const getAccountName = (address) => getNameFromAccount(address, hwAccounts);
 
   const dispatch = useDispatch();
   const { ipc } = window;
 
   useEffect(() => {
+    function getUniqueAccounts(accounts) {
+      return accounts.reduce((accum, account) => {
+        const indexOfAccount = accum.findIndex(
+          (item) => item.metadata.address === account.metadata.address
+        );
+        if (indexOfAccount === -1) {
+          accum.push(account);
+        }
+        return accum;
+      }, []);
+    }
+
     if (ipc && dispatch && currentHWDevice?.path) {
       (async () => {
         setIsLoadingHWAccounts(true);
         try {
           const accounts = await getHWAccounts(currentHWDevice, getAccountName);
-          dispatch(setHWAccounts(accounts));
+          const uniqueAccounts = getUniqueAccounts(accounts);
+          dispatch(setHWAccounts(uniqueAccounts));
           setLoadingHWAccountsError(undefined);
         } catch (error) {
           setLoadingHWAccountsError(error);

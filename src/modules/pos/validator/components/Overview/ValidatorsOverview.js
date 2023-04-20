@@ -7,16 +7,14 @@ import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
 import { useTransactions } from 'src/modules/transaction/hooks/queries';
-import { DoughnutChart, LineChart } from 'src/modules/common/components/charts';
+import { DoughnutChart } from 'src/modules/common/components/charts';
 import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
 import { useValidators } from '../../hooks/queries';
 import NumericInfo from './NumericInfo';
+import Registrations from './Registrations';
 import styles from './Overview.css';
 
-const getAmountOfValidatorsInTime = (registrations) => registrations.data.map((item) => item[1]);
-const getAmountOfValidatorsLabels = (registrations) => registrations.data.map((item) => item[0]);
-
-const Overview = ({ registrations, totalBlocks, t }) => {
+const Overview = ({ totalBlocks, t }) => {
   const colorPalette = getColorPalette(useTheme());
   const { data: validators } = useValidators({ config: { params: { limit: 1 } } });
   const { data: transactions } = useTransactions({ config: { params: { limit: 1 } } });
@@ -52,7 +50,7 @@ const Overview = ({ registrations, totalBlocks, t }) => {
           {typeof validatorsCount === 'number' ? (
             <>
               <div className={styles.chartBox}>
-                <h2 className={styles.title}>{t('Total')}</h2>
+                <h2 className={styles.title}>{t('Total validators')}</h2>
                 <div
                   className={`${styles.chart} ${styles.showOnLargeViewPort} showOnLargeViewPort`}
                 >
@@ -92,7 +90,7 @@ const Overview = ({ registrations, totalBlocks, t }) => {
         <div className={styles.column}>
           <div className={styles.centered}>
             <h2 className={styles.title}>
-              <span>{t('Generating totals')}</span>
+              <span>{t('Network stats')}</span>
             </h2>
             <div className={styles.list}>
               <NumericInfo title="Total blocks" value={totalBlocks} icon="totalBlocks" />
@@ -105,29 +103,7 @@ const Overview = ({ registrations, totalBlocks, t }) => {
           </div>
         </div>
         <div className={styles.column}>
-          {registrations.data.length ? (
-            <div className={styles.chartBox}>
-              <h2 className={styles.title}>{t('Registered validators')}</h2>
-              <div className={styles.chart}>
-                <LineChart
-                  data={{
-                    labels: getAmountOfValidatorsLabels(registrations),
-                    datasets: [
-                      {
-                        data: getAmountOfValidatorsInTime(registrations),
-                        pointStyle: 'line',
-                      },
-                    ],
-                  }}
-                  options={{ legend: { display: false } }}
-                />
-              </div>
-            </div>
-          ) : (
-            <BoxEmptyState>
-              <p>{t('No validators information')}</p>
-            </BoxEmptyState>
-          )}
+          <Registrations />
         </div>
       </BoxContent>
     </Box>

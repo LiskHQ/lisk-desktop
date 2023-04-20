@@ -2,7 +2,7 @@
 import wallets from '@tests/constants/wallets';
 import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
-import { mountWithRouter, mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import SettingDialog from './SettingDialog';
 import { mockNetworkStatus } from 'src/modules/network/__fixtures__';
 import { mockBlockchainAppMeta } from 'src/modules/blockchainApplication/manage/__fixtures__';
@@ -29,7 +29,6 @@ useBlockchainApplicationMeta.mockReturnValue({
 
 describe('Setting', () => {
   const settings = {
-    showNetwork: false,
     currency: undefined,
     statistics: false,
     discreetMode: false,
@@ -76,8 +75,6 @@ describe('Setting', () => {
       expect(wrapper.find('section.advanced')).toContainMatchingElement('Toggle');
       expect(wrapper.find('section.privacy')).toExist();
       expect(wrapper.find('section.privacy')).toContainMatchingElement('Toggle');
-      expect(wrapper.find('section.network')).toExist();
-      expect(wrapper.find('section.network')).toContainMatchingElement('NetworkSwitcherDropdown');
     });
   });
 

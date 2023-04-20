@@ -22,12 +22,14 @@ function StakeSuccessfulModal({ history, statusMessage }) {
         <h2>{t('Staking confirmation')}</h2>
       </BoxHeader>
       <BoxContent>
-        <Illustration className={styles.illustartion} name="stakingSuccess" />
+        <Illustration className={styles.illustration} name="stakingSuccess" />
         <h4 className={styles.stakedHeader}>{t('Tokens are now staked')}</h4>
         <p className={styles.messageLabel}>{statusMessage.message}</p>
       </BoxContent>
-      <BoxFooter>
-        <PrimaryButton onClick={handleBackToValidator}>{t('Back to validators')}</PrimaryButton>
+      <BoxFooter className={styles.footer}>
+        <PrimaryButton className={styles.actionButton} onClick={handleBackToValidator}>
+          {t('Back to validators')}
+        </PrimaryButton>
       </BoxFooter>
     </Box>
   );

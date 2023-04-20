@@ -2,16 +2,13 @@
 import { cryptography } from '@liskhq/lisk-client';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { splitModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
-import { getBase32AddressFromAddress } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 // import moduleCommandSchemas from '@tests/constants/schemas';
-import { mockAppTokens } from '@tests/fixtures/token';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import {
   getTotalSpendingAmount,
   containsTransactionType,
-  transactionToJSON,
   removeExcessSignatures,
   convertStringToBinary,
   normalizeTransactionsStatisticsParams,
@@ -460,47 +457,6 @@ describe.skip('API: LSK Transactions', () => {
 
       pending = [{ moduleCommand: transfer }];
       expect(containsTransactionType(pending, stakeValidator)).toEqual(false);
-    });
-  });
-
-  describe('transactionToJSON', () => {
-    beforeEach(() => {
-      // eslint-disable-next-line no-extend-native
-      BigInt.prototype.toJSON = function () {
-        return `${this.toString()}n`;
-      };
-    });
-
-    afterEach(() => {
-      // eslint-disable-next-line no-extend-native
-      BigInt.prototype.toJSON = undefined;
-    });
-    const transaction = {
-      ...baseElementsTx,
-      module: 2,
-      command: 0,
-      params: {
-        amount: BigInt(10000),
-        recipientAddress: getBase32AddressFromAddress(accounts.validator.summary.address),
-        data: '',
-        tokenID: mockAppTokens[0].tokenID,
-      },
-    };
-    it('should return the transaction as JSON', () => {
-      expect(JSON.parse(transactionToJSON(transaction))).toEqual({
-        senderPublicKey: accounts.genesis.summary.publicKey,
-        nonce: '1n',
-        fee: '1000000n',
-        signatures: [],
-        module: 2,
-        command: 0,
-        params: {
-          amount: '10000n',
-          recipientAddress: expect.stringContaining('lsk'),
-          data: '',
-          tokenID: mockAppTokens[0].tokenID,
-        },
-      });
     });
   });
 
