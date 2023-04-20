@@ -7,7 +7,7 @@ import Box from 'src/theme/box';
 import Icon from 'src/theme/Icon';
 import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import Illustration from '@common/components/illustration';
-import styles from './signWCStatus.css';
+import styles from './styles.css';
 
 const errorData = (t) => ({
   error: true,
@@ -23,7 +23,7 @@ const successData = (t) => ({
   description: t('Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.'),
 });
 
-const SignWCStatus = () => {
+const RequestSignStatus = () => {
   const { t } = useTranslation();
   const ref = useRef();
   const [copied, setCopied] = useState(false);
@@ -77,4 +77,4 @@ const SignWCStatus = () => {
   );
 };
 
-export default SignWCStatus;
+export default RequestSignStatus;

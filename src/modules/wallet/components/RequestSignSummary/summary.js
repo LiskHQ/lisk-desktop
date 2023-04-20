@@ -7,9 +7,9 @@ import Footer from '@transaction/components/TxSummarizer/footer';
 import { LayoutSchema } from '@transaction/components/TransactionDetails/layoutSchema';
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
 import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
-import styles from './signWCSummary.css';
+import styles from './styles.css';
 
-const Summary = ({
+const RequestSignSummary = ({
   t,
   transactionJSON,
   actionFunction,
@@ -72,4 +72,4 @@ const Summary = ({
     </Box>
   );
 };
-export default Summary;
+export default RequestSignSummary;

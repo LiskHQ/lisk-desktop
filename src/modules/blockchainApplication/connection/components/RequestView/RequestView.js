@@ -4,8 +4,8 @@ import routes from 'src/routes/routes';
 import MultiStep from '@common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
-import Summary from '@wallet/components/SignWCSummary';
-import Status from '@wallet/components/SignWCStatus';
+import Summary from '@wallet/components/RequestSignSummary';
+import Status from '@wallet/components/RequestSignStatus';
 import RequestSummary from '../RequestSummary';
 import styles from './requestView.css';
 

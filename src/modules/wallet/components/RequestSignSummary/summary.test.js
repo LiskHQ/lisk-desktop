@@ -19,7 +19,7 @@ jest.mock('@transaction/utils/transaction', () => ({
 }));
 jest.mock('@transaction/hooks/useTxInitiatorAccount');
 
-describe('SignWCSummary', () => {
+describe('RequestSignSummary', () => {
   const props = {
     t: (v) => v,
     nextStep: jest.fn(),
