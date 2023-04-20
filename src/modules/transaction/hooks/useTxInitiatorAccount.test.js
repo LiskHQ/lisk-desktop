@@ -25,6 +25,9 @@ describe('useTxInitiatorAccount', () => {
       keys: {
         ...(mockAuth.data || { mandatoryKeys: [], optionalKeys: [] }),
       },
+      summary: {
+        publicKey: senderPublicKey,
+      },
     });
   });
 
@@ -34,6 +37,9 @@ describe('useTxInitiatorAccount', () => {
     const { result } = renderHook(() => useTxInitiatorAccount({ senderPublicKey }));
     expect(result.current.txInitiatorAccount).toEqual({
       keys: { mandatoryKeys: [], optionalKeys: [] },
+      summary: {
+        publicKey: senderPublicKey,
+      },
     });
   });
 });

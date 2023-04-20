@@ -1,11 +1,11 @@
 import React from 'react';
 
 import routes from 'src/routes/routes';
-import MultiStep from 'src/modules/common/components/OldMultiStep';
+import MultiStep from '@common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
 import Summary from '@wallet/components/SignWCSummary';
-import Status from 'src/modules/wallet/components/SignWCStatus';
+import Status from '@wallet/components/SignWCStatus';
 import RequestSummary from '../RequestSummary';
 import styles from './requestView.css';
 

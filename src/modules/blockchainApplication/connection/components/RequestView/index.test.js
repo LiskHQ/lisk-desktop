@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
-import SendSummary from '@token/fungible/components/SendSummary';
-import SendStatus from '@token/fungible/components/SendStatus';
+import Summary from '@wallet/components/SignWCSummary';
+import Status from '@wallet/components/SignWCStatus';
 import RequestSummary from '../RequestSummary';
 import RequestView from './RequestView';
 
@@ -23,11 +23,11 @@ describe('RequestView', () => {
     expect(wrapper).toContainMatchingElement(Dialog);
     expect(wrapper).toContainMatchingElement(MultiStep);
     expect(wrapper).toContainMatchingElement(RequestSummary);
-    expect(wrapper).toContainMatchingElement(SendSummary);
-    expect(wrapper).not.toContainMatchingElement('SendSummary');
+    expect(wrapper).toContainMatchingElement(Summary);
+    expect(wrapper).not.toContainMatchingElement('Summary');
     expect(wrapper).toContainMatchingElement(TxSignatureCollector);
     expect(wrapper).not.toContainMatchingElement('TxSignatureCollector');
-    expect(wrapper).toContainMatchingElement(SendStatus);
-    expect(wrapper).not.toContainMatchingElement('SendStatus');
+    expect(wrapper).toContainMatchingElement(Status);
+    expect(wrapper).not.toContainMatchingElement('Status');
   });
 });
