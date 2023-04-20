@@ -123,26 +123,7 @@ LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true npm run start
 This comes with Redux dev tools.
 
 ### How to use ledger hardware wallet
-
-#### Step 1: Manually add the Lisk ledger app to your Ledger hardware wallet
-
-- Download `installer_nanos.sh` or `installer_nanos_plus.sh` from [ledger-lisk](https://github.com/Zondax/ledger-lisk/releases). Depending on your HW test device.
-- run `chmod +x ./installer.sh`
-- Make sure you have python3 on your environment
-- Connect your ledger nano to your computer
-- run `./installer.sh load` // to push the Lisk app to your ledger)
-- You might need to do pip install ledgerblue . Make sure you use pip for python3, depending on how you have set up your aliases to handle python2 and python3. I use pip3 for python3, in that case do pip3 install ledgerblue .
-- Accept all prompts on your connected ledger device
-- After accepting all prompts you should have an app called Lisk
-
-#### Step 2: How to sign in to your ledger wallet
-- `git clone git@github.com:LiskHQ/lisk-desktop.git`
-- run `npm run build`
-- Open two terminals
-- In terminal 1 run `npm run dev`
-- In terminal 2 run `LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true npm run start` // this will open the Lisk electron app)
-- In the Lisk electron app navigate to /dashboard → click “Add account” → click “Use a hardware wallet”
-- Open the Lisk app on your ledger (the app you installed in step 1)
+Please see [HARDWARE_WALLET_DEVELOPMENT.md](/docs/HARDWARE_WALLET_DEVELOPMENT.md) for more information. 
 
 ### Distribution
 
@@ -221,33 +202,44 @@ npm run cypress:run
 ```
 
 ## Directory Layout
-
+Note: It might not exactly look like this everywhere because of legacy code/features. However, this is the layout that we try to follow
 ```
-├── __mocks__/                     # Modules used to mock dependencies for testing purpose.
+├── .husky/                        # Contains pre commit hook which checks that files are prettified before commiting.
 ├── app/                           # Electron based application that launces the react app.
 ├── build/                         # Build specific materials.
-├── config/                        # Automation scripts (Webpack configurations, i18n scanner, etc)
 ├── coverage/                      # Results of Jest test coverage.
 ├── dist/                          # Platform specific built outputs.
 ├── docs/                          # Project documentations such as contribution guides and development guidelines.
-├── i18n/                          # Localization files including setup scripts and translation json files.
 ├── libs/                          # Modules which can be consumed individually in other projects.
+│   ├── hardwareWallet/            # HardwareWallet integrations
+│   ├── wcm/                       # Wallet connect
 ├── node_modules/                  # 3rd-party libraries and utilities.
+├── setup/                         # The top most application layer, contains MainRouter and globally imported css files
+│   ├── config/                    # Automation scripts (Webpack configurations, i18n scanner, etc)
+│   ├── react/                     # React presentational components are located here.
+│   │   ├── app/                   # The bootstrap React application
+│   │   ├── assets/                # Static files (images, fonts, etc)
 ├── src/                           # Application source code.
-│   ├── app/                       # The bootstrap React application
-│   ├── assets/                    # Static files (images, fonts, etc)
-│   ├── components/                # React presentational components are located here.
-│   │   ├── screens/               # These are the component that represent screens with dedicated URL.
-│   │   ├── shared/                # These are the React components used at least in 2 other components (calendar, liskAmount, etc)
-│   │   └── toolbox/               # Basic elements with basic styles and functionality which are used in numerous places (button, input, etc)
-│   ├── constants/                 # Names, addresses, static configurations and other values used throughout the application
-│   ├── context/                   # React context configuration files
-│   ├── hooks/                     # React custom hooks
-│   ├── store/                     # Redux store resides here.
-│   │   ├── actions/               # Store actions reside here and are broken into script files dedicated to each system entity.
-│   │   ├── middlewares/           # All the Redux middlewares are places here and have their dedicated script files based on the system entities.
-│   │   ├── reducers/              # Redux reducers are located here. similar to actions and reducers, they are placed in script files named after the entity they represent.
-│   ├── utils/                     # Utility functions
+│   ├── const/                     # Static configurations and other values used throughout the application
+│   ├── locales/                   # Contains the built localization files
+│   ├── modules/                   # Divided logic in domain specific areas, below is an example structure
+│   │   ├── hardwareWallet/        # Module/Domain
+│   │       ├── __fixtures__/      # Contains mock data for the hardwareWallet module
+│   │       ├── components/        # Components related to the hardwareWallet domain
+│   │       ├── hooks/             # Hooks related to the hardwareWallet domain
+│   │       ├── store/             # Redux encapsulated logic related to hardwareWallet domain
+│   │           ├── actions/       # HardwareWallet actions
+│   │           ├── selectors/     # HardwareWallet selectors
+│   │           ├── reducers/      # HardwareWallet reducers
+│   │       ├── utils/             # Utils used in the hardwareWallet module. Global utils should be put in src/utils
+│   ├── redux/                     # Contains the root reducer, all other reducers are imported here. It also has legacy pattern, selectors and actions (these should now be encapsulted in its specific module) 
+│   ├── routes/                    # Contains all routes in the application as well as modals
+│   │   ├── routes.js              # Route and modal paths with metadata. This object is used in all our links
+│   │   ├── routesMap.js           # Maps components to routes, it is used in the MainRouter.js
+│   ├── service/                   # Add services, such a mock services here
+│   ├── theme/                     # Themed components (Button, Input, ...)
+│   ├── utils/                     # Global utility functions used througout tha app
+        ├── i18n/                  # Localization setup
 └──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit test that live in /src
 ```
 
