@@ -9,19 +9,36 @@ import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import Illustration from '@common/components/illustration';
 import styles from './signWCStatus.css';
 
+const errorData = (t) => ({
+  error: true,
+  illustration: 'transactionError',
+  title: t('Transaction signing failed'),
+  description: t('There was an error signing your transaction. please close this dialog and try again.'),
+});
+
+const successData = (t) => ({
+  error: false,
+  illustration: 'transactionSuccess',
+  title: t('Transaction signing successful'),
+  description: t('Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.'),
+});
+
 const SignWCStatus = () => {
   const { t } = useTranslation();
   const ref = useRef();
   const [copied, setCopied] = useState(false);
   const transactions = useSelector(state => state.transactions);
-  const { respond } = useSession();
+  const { respond, reject } = useSession();
+
+  const data = !transactions.txSignatureError && transactions.signedTransaction?.signatures?.length
+    ? successData(t) : errorData(t);
 
   const onCopy = () => {
     setCopied(true);
     const signatures = transactions.signedTransaction?.signatures.map((sig) => sig.toString('hex'));
     const payload = JSON.stringify(signatures);
     copyToClipboard(payload);
-    // return to the application
+    // inform to the application
     respond({ payload });
     ref.current = setTimeout(() => setCopied(false), 1000);
   };
@@ -30,22 +47,32 @@ const SignWCStatus = () => {
 
   return (
     <Box className={`${styles.wrapper} transaction-status`}>
-      <Illustration name="transactionSuccess" />
-      <h5 className="result-box-header">{t('Transaction signing successful')}</h5>
+      <Illustration name={data.illustration} />
+      <h5 className="result-box-header">{data.title}</h5>
       <p>
-        {t('Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.')}
+        {data.description}
       </p>
-      <PrimaryButton
-        className={`${styles.signatureButton} copy-signature-button`}
-        onClick={onCopy}
+      {
+        !data.error && (
+          <PrimaryButton
+            className={`${styles.signatureButton} copy-signature-button`}
+            onClick={onCopy}
+          >
+            <span className={styles.buttonContent}>
+              <Icon name="copy" />
+              <span>
+                {copied ? 'Copied' : 'Copy and return to application'}
+              </span>
+            </span>
+          </PrimaryButton>
+        )
+      }
+      <TertiaryButton
+        className={styles.cancel}
+        onClick={reject}
       >
-        <span className={styles.buttonContent}>
-          <Icon name={copied ? 'checkmark' : 'copy'} />
-          <span>{t('Copy and return to application')}</span>
-        </span>
-      </PrimaryButton>
-      
-      <TertiaryButton className={styles.cancel}>{t('Cancel')}</TertiaryButton>
+        {t('Cancel')}
+      </TertiaryButton>
     </Box>
   );
 };
