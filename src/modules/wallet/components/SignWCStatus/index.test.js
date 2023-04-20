@@ -1,9 +1,9 @@
 import { screen, fireEvent } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import * as reactRedux from 'react-redux';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import SignWCStatus from './index';
-import { act } from 'react-dom/test-utils';
 
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
