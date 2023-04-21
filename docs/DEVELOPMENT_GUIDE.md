@@ -7,16 +7,10 @@ This is a live document, please expect updates and unfinished content.
 
 1. [Code of Conduct](#code-of-conduct)
 1. [How Can I Contribute?](CONTRIBUTING_GUIDE.md)
-1. [ES6](ES6_GUIDE.md)
-1. [Functional programming](FP_GUIDE.md)
 1. [React](REACT_GUIDE.md)
 1. [PostCSS](CSS_GUIDE.md)
-1. [HTML](HTML_GUIDE.md)
 1. [Testing](TEST_GUIDE.md)
-1. [Pull Requests](PR_GUIDE.md)
 1. [Epic Specification](EPIC_SPECIFICATION_GUIDE.md)
-1. [Code Documentation](DOCUMENTATION_GUIDE.md)
-
 1. [Lisk URL Protocols](PROTOCOL_GUIDE.md)
 
 ## Code of Conduct
