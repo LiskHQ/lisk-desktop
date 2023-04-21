@@ -34,7 +34,7 @@ const AmountField = ({
   name,
   displayConverter,
   useMaxWarning,
-  token,
+  token = {},
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);

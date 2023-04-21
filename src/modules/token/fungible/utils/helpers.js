@@ -23,7 +23,7 @@ const defaultTokenMeta = {
 };
 
 export const getTokenDecimals = (token) => {
-  const { decimals } = token.denomUnits?.find?.(({ denom }) => denom === token.displayDenom) || {};
+  const { decimals } = token?.denomUnits?.find?.(({ denom }) => denom === token.displayDenom) || {};
 
   return decimals;
 };
