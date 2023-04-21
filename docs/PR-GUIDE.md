@@ -15,10 +15,10 @@
 
 - The PR have an issue
 - All conflicts are resolved
-- The PR follows our [Test guide](/docs/TEST_GUIDE.md)
-- The PR follows our [CSS guide](/docs/CSS_GUIDE.md)
+- The PR follows our [Test guide](/docs/TEST_GUIDE.md).
+- The PR follows our [CSS guide](/docs/CSS_GUIDE.md).
 
-When you're done, submit a pull request and for one of the maintainers to check it out. We would let you know if there is any problem or any changes that should be considered.
+When you're done, submit a pull request and one of the maintainers will check it out. You will be informed if there are any problems or changes that may need to be considered.
 
 ##### Format of pull requests
 

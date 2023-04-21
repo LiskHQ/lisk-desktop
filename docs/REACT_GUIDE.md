@@ -8,7 +8,7 @@ Use functional components instead of class components.
 
 Each component folder contains at least an `index.js` file.
 
-If the component gets bigger than 200 lines, it should be split into multiple components that should reside in the same folder (if used only from this one component).
+If the component becomes larger than 200 lines, it should be split into multiple components that should reside in the same folder (if used only from this one component).
 
 ###  Component Example
 ```
