@@ -47,8 +47,7 @@ const ApplicationBootstrap = ({ children }) => {
     (networkStatus.isLoading && !!mainChainNetwork) ||
     (blockchainAppsMeta.isLoading && !!mainChainApplication);
 
-
-  useTransactionUpdate((!isLoading || !isFirstTimeLoading) && mainChainApplication?.chainID);
+  useTransactionUpdate();
 
   useEffect(() => {
     if (mainChainApplication) {
