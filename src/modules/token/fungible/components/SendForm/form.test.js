@@ -170,6 +170,25 @@ describe('Form', () => {
     expect(props.nextStep).toHaveBeenCalled();
   });
 
+  it('submit button should be disabled', async () => {
+    const wrapper = mountWithQueryClient(Form, { ...props, account: {} });
+    const { address } = accounts.genesis.summary;
+    wrapper
+      .find('input.recipient')
+      .simulate('change', { target: { name: 'recipient', value: address } });
+    wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '1' } });
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    act(() => {
+      wrapper.update();
+    });
+    await flushPromises();
+
+    expect(wrapper.find('.confirm-btn').at(0)).toBeDisabled();
+  });
+
   describe('Recipient field', () => {
     it('should validate bookmark', () => {
       const wrapper = mountWithQueryClient(Form, props);
