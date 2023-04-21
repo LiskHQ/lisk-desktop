@@ -13,8 +13,8 @@
 
 ##### Before creating PR make use that:
 
-- The PR have an issue
-- All conflicts are resolved
+- The PR have an issue.
+- All conflicts are resolved.
 - The PR follows our [Test guide](/docs/TEST_GUIDE.md).
 - The PR follows our [CSS guide](/docs/CSS_GUIDE.md).
 

@@ -4,7 +4,7 @@
 
 - Download `installer_nanos.sh` or `installer_nanos_plus.sh` from [ledger-lisk](https://github.com/Zondax/ledger-lisk/releases), depending on your HW test device.
 - run `chmod +x ./installer.sh`
-- Make sure you have python3 in your environment.
+- Ensure you have python3 in your environment.
 - Connect your ledger nano to your computer.
 - run `./installer.sh load` // to push the Lisk app to your ledger)
 - It may be necessary to perform a pip install ledgerblue. Ensure you use pip for python3, depending on how you have set up your aliases to handle python2 and python3. If you are using pip3 for python3, then in this case perform a pip3 install ledgerblue.
