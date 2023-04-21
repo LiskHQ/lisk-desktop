@@ -11,9 +11,9 @@
 
 ## PR practices
 
-##### Before creating PR make use that:
+##### Make sure to adhere to the following points below before creating a PR:
 
-- The PR have an issue.
+- The PR has an issue.
 - All conflicts are resolved.
 - The PR follows our [Test guide](/docs/TEST_GUIDE.md).
 - The PR follows our [CSS guide](/docs/CSS_GUIDE.md).

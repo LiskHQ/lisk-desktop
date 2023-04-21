@@ -209,38 +209,38 @@ Note: It might not exactly look like this everywhere because of legacy code/feat
 ├── build/                         # Build specific materials.
 ├── coverage/                      # Results of Jest test coverage.
 ├── dist/                          # Platform specific built outputs.
-├── docs/                          # Project documentations such as contribution guides and development guidelines.
+├── docs/                          # Project documentation such as contribution guides and development guidelines.
 ├── libs/                          # Modules which can be consumed individually in other projects.
-│   ├── hardwareWallet/            # HardwareWallet integrations
-│   ├── wcm/                       # Wallet connect
+│   ├── hardwareWallet/            # HardwareWallet integrations.
+│   ├── wcm/                       # Wallet connect.
 ├── node_modules/                  # 3rd-party libraries and utilities.
-├── setup/                         # The top most application layer, contains MainRouter and globally imported css files
-│   ├── config/                    # Automation scripts (Webpack configurations, i18n scanner, etc)
+├── setup/                         # The top most application layer, contains MainRouter and globally imported css files.
+│   ├── config/                    # Automation scripts (Webpack configurations, i18n scanner, etc.).
 │   ├── react/                     # React presentational components are located here.
-│   │   ├── app/                   # The bootstrap React application
-│   │   ├── assets/                # Static files (images, fonts, etc)
+│   │   ├── app/                   # The bootstrap React application.
+│   │   ├── assets/                # Static files (images, fonts, etc.).
 ├── src/                           # Application source code.
-│   ├── const/                     # Static configurations and other values used throughout the application
-│   ├── locales/                   # Contains the built localization files
-│   ├── modules/                   # Divided logic in domain specific areas, below is an example structure
-│   │   ├── hardwareWallet/        # Module/Domain
-│   │       ├── __fixtures__/      # Contains mock data for the hardwareWallet module
-│   │       ├── components/        # Components related to the hardwareWallet domain
-│   │       ├── hooks/             # Hooks related to the hardwareWallet domain
-│   │       ├── store/             # Redux encapsulated logic related to hardwareWallet domain
-│   │           ├── actions/       # HardwareWallet actions
-│   │           ├── selectors/     # HardwareWallet selectors
-│   │           ├── reducers/      # HardwareWallet reducers
-│   │       ├── utils/             # Utils used in the hardwareWallet module. Global utils should be put in src/utils
-│   ├── redux/                     # Contains the root reducer, all other reducers are imported here. It also has legacy pattern, selectors and actions (these should now be encapsulted in its specific module) 
-│   ├── routes/                    # Contains all routes in the application as well as modals
-│   │   ├── routes.js              # Route and modal paths with metadata. This object is used in all our links
-│   │   ├── routesMap.js           # Maps components to routes, it is used in the MainRouter.js
-│   ├── service/                   # Add services, such a mock services here
-│   ├── theme/                     # Themed components (Button, Input, ...)
-│   ├── utils/                     # Global utility functions used througout tha app
-        ├── i18n/                  # Localization setup
-└──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit test that live in /src
+│   ├── const/                     # Static configurations and other values used throughout the application.
+│   ├── locales/                   # Contains the built localization files.
+│   ├── modules/                   # Divided logic in domain specific areas, an example structure is shown below.
+│   │   ├── hardwareWallet/        # Module/Domain.
+│   │       ├── __fixtures__/      # Contains mock data for the hardwareWallet module.
+│   │       ├── components/        # Components related to the hardwareWallet domain.
+│   │       ├── hooks/             # Hooks related to the hardwareWallet domain.
+│   │       ├── store/             # Redux encapsulated logic related to the hardwareWallet domain.
+│   │           ├── actions/       # HardwareWallet actions.
+│   │           ├── selectors/     # HardwareWallet selectors.
+│   │           ├── reducers/      # HardwareWallet reducers.
+│   │       ├── utils/             # Utils used in the hardwareWallet module. Global utils should be put in src/utils.
+│   ├── redux/                     # Contains the root reducer, all other reducers are imported here. It also has legacy pattern, selectors, and actions (these should now be encapsulated in its specific module).
+│   ├── routes/                    # Contains all routes in the application as well as modals.
+│   │   ├── routes.js              # Route and modal paths with metadata. This object is used in all our links.
+│   │   ├── routesMap.js           # Maps components to routes, this is used in the MainRouter.js.
+│   ├── service/                   # Add services, such as mock services.
+│   ├── theme/                     # Themed components (Button, Input, ...).
+│   ├── utils/                     # Global utility functions used throughout the app.
+        ├── i18n/                  # Localization setup.
+└──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit test that live in /src.
 ```
 
 ## Contributors
