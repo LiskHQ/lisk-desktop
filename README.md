@@ -122,7 +122,7 @@ LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true npm run start
 
 This comes with Redux dev tools.
 
-### How to use ledger hardware wallet
+### How to use the Ledger hardware wallet
 Please see [HARDWARE_WALLET_DEVELOPMENT.md](/docs/HARDWARE_WALLET_DEVELOPMENT.md) for more information. 
 
 ### Distribution
