@@ -49,7 +49,6 @@ export class Client {
 
   create({ ws, http } = {}) {
     if (ws) {
-      console.log('===', `${ws}/blockchain`);
       this.socket = io(`${ws}/blockchain`, { transports: ['websocket'] });
       this.socketRPC = io(`${ws}/rpc-v3`, { transports: ['websocket'] });
     }
