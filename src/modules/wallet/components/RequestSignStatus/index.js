@@ -47,7 +47,7 @@ const RequestSignStatus = () => {
 
   return (
     <Box className={`${styles.wrapper} transaction-status`}>
-      <Illustration name={data.illustration} />
+      <Illustration name={data.illustration} className={styles.illustration} />
       <h5 className="result-box-header">{data.title}</h5>
       <p>
         {data.description}

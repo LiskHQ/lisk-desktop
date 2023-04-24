@@ -55,7 +55,7 @@
   grid-template-areas:
     "module command"
     "sender sender"
-    "fee Nonce"
+    "fee nonce"
     "transactionId transactionId"
     "genericParams genericParams";
 }

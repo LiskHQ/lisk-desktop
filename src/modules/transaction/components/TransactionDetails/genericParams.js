@@ -7,7 +7,7 @@ import styles from './styles.css';
 const GenericParams = ({ t }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
   return (
-    <ValueAndLabel label={t('Transaction asset')} className={styles.genericParams}>
+    <ValueAndLabel label={t('Params')} className={styles.genericParams}>
       <div className={styles.structuredAssets}>
         <GenericTxParams transaction={transaction} />
       </div>
