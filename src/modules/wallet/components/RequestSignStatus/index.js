@@ -23,12 +23,12 @@ const successData = (t) => ({
   description: t('Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.'),
 });
 
-const RequestSignStatus = () => {
+const RequestSignStatus = (props) => {
   const { t } = useTranslation();
   const ref = useRef();
   const [copied, setCopied] = useState(false);
   const transactions = useSelector(state => state.transactions);
-  const { respond, reject } = useSession();
+  const { respond } = useSession();
 
   const data = !transactions.txSignatureError && transactions.signedTransaction?.signatures?.length
     ? successData(t) : errorData(t);
@@ -61,18 +61,22 @@ const RequestSignStatus = () => {
             <span className={styles.buttonContent}>
               <Icon name="copy" />
               <span>
-                {copied ? 'Copied' : 'Copy and return to application'}
+                {copied ? 'Copied' : 'Copy signatures'}
               </span>
             </span>
           </PrimaryButton>
         )
       }
-      <TertiaryButton
+      <a
+        href={props.formProps.url}
+        target="_blank"
+        rel="noopener noreferrer"
         className={styles.cancel}
-        onClick={reject}
       >
-        {t('Cancel')}
-      </TertiaryButton>
+        <TertiaryButton>
+          {t('Return to application')}
+        </TertiaryButton>
+      </a>
     </Box>
   );
 };

@@ -14,6 +14,7 @@ import { decodeTransaction, toTransactionJSON } from '@transaction/utils/encodin
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
+import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { Link } from 'react-router-dom';
 import Icon from 'src/theme/Icon';
 import { useSession } from '@libs/wcm/hooks/useSession';
@@ -79,6 +80,7 @@ const RequestSummary = ({ nextStep, history }) => {
         moduleCommand,
         chainID: sendingChainID,
         schema: request?.request?.params.schema,
+        url: session.request.peer.metadata.url,
       },
       selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
     });
@@ -86,6 +88,7 @@ const RequestSummary = ({ nextStep, history }) => {
   
   const rejectHandler = () => {
     rejectLiskRequest(request);
+    removeSearchParamsFromUrl(history, ['modal', 'status', 'name', 'action']);
   };
 
   useEffect(() => {
