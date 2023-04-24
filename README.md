@@ -48,31 +48,7 @@ npm ci
 npm run dev
 ```
 
-### Run on browser
-
-Open http://localhost:8080
-
-If you are actively developing in a specific route, and want to be automatically signed in every time you reload the page, please add the following input pairs to your localStorage:
-
-_loginKey_: _a valid passphrase_
-
-Add the above pair using the storage tab in your dev tools or via JavaScript command:
-
-```
-localStorage.setItem('loginKey', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble') // desired account passphrase
-```
-
-When developing with hardware wallet, this will sign you in using the first account on the first connected hardware wallet:
-
-```
-localStorage.setItem('hwWalletAutoLogin', true);
-```
-
-You can use the same approach to define a desired network to which Lisk Desktop connects:
-
-```
-localStorage.setItem('liskServiceUrl', 'http://localhost:4000') // desired node to log in into
-```
+Open http://localhost:8080 to access wallet.
 
 ### Build
 
@@ -165,40 +141,6 @@ npm run test
 
 ```
 npm run test:live
-```
-
-### E2E tests
-
-In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk-core) as well as [lisk-service](https://github.com/LiskHQ/lisk-service).
-
-#### Setup Lisk Core
-
-Setup a lisk test node as described in Preparing Node headline under [the tests section of Lisk Framework README](https://github.com/LiskHQ/lisk-sdk/tree/development/framework).
-
-#### Setup Service
-
-Run Lisk Service against an already running local node as described in Preparing Node headline under [the installation section of Lisk Service README](https://github.com/liskhq/lisk-service#installation).
-
-#### Run
-
-Start the development version of Lisk:
-
-```
-npm run dev
-```
-
-Apply blockchain snapshot
-
-```
-./test/e2e-test-setup.sh ~/git/lisk/
-```
-
-(replace `~/git/lisk/` with your path to lisk core)
-
-Run e2e tests
-
-```
-npm run cypress:run
 ```
 
 ## Directory Layout
