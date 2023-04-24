@@ -40,9 +40,13 @@ export const getPubKey = async (devicePath, accountIndex, showOnDevice) => {
 };
 
 export const getIsInsideLiskApp = async (devicePath, accountIndex) => {
-  const pubKey = await getPubKey(devicePath, accountIndex);
+  try {
+    const pubKey = await getPubKey(devicePath, accountIndex);
 
-  return !!pubKey;
+    return !!pubKey;
+  } catch (e) {
+    return false;
+  }
 };
 
 export const getConnectedHWDevices = async () => {
