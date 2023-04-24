@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ConnectionContext from './connectionContext';
 import { createSignClient } from '../utils/connectionCreator';
 import { useConnectionEventsManager } from '../hooks/useConnectionEventsManager';
-import { usePairings } from '../hooks/usePairings';
 
 const ConnectionProvider = ({ children }) => {
   const [session, setSession] = useState({
@@ -11,7 +10,7 @@ const ConnectionProvider = ({ children }) => {
     loaded: false,
   });
   const [events, setEvents] = useState([]);
-  const { pairings, setPairings } = usePairings();
+  const [pairings, setPairings] = useState([]);
 
   const pushEvent = (event) => {
     setEvents([...events, event]);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { withRouter } from 'react-router';
@@ -13,23 +13,15 @@ import header from './tableHeader';
 import styles from './SessionManager.css';
 
 const SessionManager = ({ history }) => {
-  const { pairings, disconnect } = usePairings();
-  const [loading, setLoading] = useState(true);
+  const { pairings, disconnect, hasLoaded } = usePairings();
   const { t } = useTranslation();
 
   const addApplication = () => {
     addSearchParamsToUrl(history, { modal: 'connectionProposal' });
   };
 
-  useEffect(() => {
-    // istanbul ignore else
-    if (Array.isArray(pairings)) {
-      setLoading(false);
-    }
-  }, [pairings]);
-
   return (
-    <Box main isLoading={loading} className={`${styles.wrapper} pairings-list-box`}>
+    <Box main isLoading={!hasLoaded} className={`${styles.wrapper} pairings-list-box`}>
       <div className={styles.addButtonWrapper}>
         <PrimaryButton className="add-button" onClick={addApplication}>
           <span className={styles.buttonContent}>
@@ -42,8 +34,8 @@ const SessionManager = ({ history }) => {
         <Table
           showHeader
           headerClassName={styles.tableHeader}
-          data={pairings.slice(1)}
-          isLoading={loading}
+          data={pairings}
+          isLoading={!hasLoaded}
           row={SessionRow}
           header={header(t)}
           canLoadMore={false}
