@@ -1,4 +1,6 @@
 .wrapper {
+  width: 200px;
+
   & > .dropdownButton {
     display: flex;
     width: 100%;

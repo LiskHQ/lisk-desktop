@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DropdownButton from 'src/theme/DropdownButton';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import { truncateAddress } from '@wallet/utils/account';
+import { truncateAddress, truncateAccountName } from '@wallet/utils/account';
 import AccountMenuListing from '@account/components/AccountMenuListing/AccountMenuListing';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './AccountManagementDropdown.css';
@@ -15,8 +15,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
     setIsDropdownShown((state) => !state);
   };
 
-  const truncatedAcctName =
-    name.length > 10 ? name.replace(/^(.{6})(.+)?(.{4})$/, '$1...$3') : name;
+  const truncatedAcctName = name.length > 10 ? truncateAccountName(name) : name;
 
   return (
     <DropdownButton
