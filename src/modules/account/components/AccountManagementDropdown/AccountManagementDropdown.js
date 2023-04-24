@@ -15,6 +15,9 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
     setIsDropdownShown((state) => !state);
   };
 
+  const truncatedAcctName =
+    name.length > 10 ? name.replace(/^(.{6})(.+)?(.{4})$/, '$1...$3') : name;
+
   return (
     <DropdownButton
       className={styles.dropDownMenu}
@@ -28,7 +31,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
           <WalletVisual address={address} size={32} />
           <div className={styles.account}>
             <span className={styles.name}>
-              {name}
+              {truncatedAcctName}
               {isHW && <Icon className={styles.walletIcon} name="hardwareWalletIcon" />}
             </span>
             <span className={styles.address}>{truncateAddress(address)}</span>
