@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 /* eslint-disable max-statements */
 /* istanbul ignore file */
 import { useEffect, useCallback, useRef } from 'react';
@@ -33,6 +34,7 @@ export const useTransactionUpdate = (isLoading) => {
       // @todo if the transaction belongs to me,
       // need to check if transaction id exists then replace, otherwise add the transaction to my transaction
       const queries = queryClient.getQueriesData({ queryKey: [MY_TRANSACTIONS] });
+
       queries
         .filter((query) => {
           const { params } = query[0][2];
@@ -46,22 +48,27 @@ export const useTransactionUpdate = (isLoading) => {
           return isSameChain && isMyAddress && isWithinDateRange;
         })
         .forEach((query) => {
-          // eslint-disable-next-line max-nested-callbacks
-          queryClient.setQueriesData({ queryKey: query[0] }, (oldData) => ({
-            ...oldData,
-            pages: [
-              {
-                data: oldData?.pages[0].data
-                  ? [...newTransactions.data, ...oldData.pages[0].data]
-                  : newTransactions.data,
-                meta: {
-                  ...oldData?.pages[0].meta,
-                  count: oldData?.pages[0].meta.count + newTransactions.meta.count,
-                  total: oldData?.pages[0].meta.total + newTransactions.meta.total,
+          queryClient.setQueriesData({ queryKey: query[0] }, (oldData) => {
+            const newTransactionsData = newTransactions.data.filter(
+              (newTx) => !oldData.pages[0].data.some((oldTx) => oldTx.id === newTx.id)
+            );
+
+            return {
+              ...oldData,
+              pages: [
+                {
+                  data: oldData?.pages[0].data
+                    ? [...newTransactionsData, ...oldData.pages[0].data]
+                    : newTransactions.data,
+                  meta: {
+                    ...oldData?.pages[0].meta,
+                    count: oldData?.pages[0].meta.count + newTransactions.meta.count,
+                    total: oldData?.pages[0].meta.total + newTransactions.meta.total,
+                  },
                 },
-              },
-            ],
-          }));
+              ],
+            };
+          });
         });
       await queryClient.invalidateQueries({ queryKey: [AUTH] });
       await queryClient.invalidateQueries({ queryKey: [TOKENS_BALANCE] });
@@ -77,5 +84,5 @@ export const useTransactionUpdate = (isLoading) => {
 
     connect();
     return () => client.socket.off('new.transactions');
-  }, [chainID]);
+  }, [chainID, client.socket]);
 };
