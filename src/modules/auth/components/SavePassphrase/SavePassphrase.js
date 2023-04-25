@@ -9,7 +9,7 @@ const SavePassphrase = ({ t, passphrase, prevStep, nextStep, title }) => (
   <>
     <div className={registerStyles.titleHolder}>
       <h1>{title || t('Save your secret recovery phrase')}</h1>
-      <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
+      <p>{t('Ensure that you keep this in a safe place, with access to the seed you can re-create the account.')}</p>
     </div>
     <div className={`${grid['col-sm-10']} ${registerStyles.passphraseBackupContainer}`}>
       <PassphraseBackup

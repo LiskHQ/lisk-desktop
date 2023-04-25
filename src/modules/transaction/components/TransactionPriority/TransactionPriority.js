@@ -81,9 +81,8 @@ const TransactionPriority = ({
             return (
               <button
                 key={`fee-priority-${index}`}
-                className={`${styles.priorityTitle} ${
-                  index === selectedPriority ? styles.priorityTitleSelected : ''
-                } option-${priority.title}`}
+                className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''
+                  } option-${priority.title}`}
                 onClick={onClickPriority}
                 value={index}
                 disabled={disabled}
@@ -102,19 +101,21 @@ const TransactionPriority = ({
               <>
                 {displayedFees.Transaction && (
                   <div className={styles.feeInfoWrapper}>
-                    <span className={styles.feesHeader}>Transaction fee: </span>
+                    <span className={styles.feesHeader}>{t('Transaction fee: ')}</span>
                     <span className={styles.feesDetails}>
-                      Is a sum of byte based fee, extra command fee and selected network priority
+                      {t(
+                        'Transaction fees are the sum of the byte based fee, account initialisation fee, and the selected network priority fee.'
+                      )}
                     </span>
                   </div>
                 )}
                 {displayedFees.Message && (
                   <div className={styles.feeInfoWrapper}>
-                    <span className={styles.feesHeader}>Message fee: </span>
+                    <span className={styles.feesHeader}>{t('Message fee: ')}</span>
                     <span className={styles.feesDetails}>
-                      Cross chain messages are the objects containing the cross-chain commands, in
-                      the same way in which transactions contain commands. They have a fee property
-                      also called message fee to distinguish from transaction fees.
+                      {t(
+                        'Message fees are the incentive given to relayer for collecting messages to be transported from sending network to recipient network.'
+                      )}
                     </span>
                   </div>
                 )}

@@ -25,7 +25,7 @@ const accountUniqueValuePropositions = [
   {
     title: 'Send and request tokens',
     description:
-      'Having an account is your first step in benefiting from blockchain technology. With your account, you can securely send and request tokens within and across blockchain applications.',
+      'Creating an account is your first step in benefiting from blockchain technology. With your account, you can securely send and request tokens within and across blockchain applications.',
   },
   {
     title: 'Participate in blockchain governance',
@@ -34,7 +34,7 @@ const accountUniqueValuePropositions = [
   {
     title: 'Manage blockchain application assets',
     description:
-      'You can manage several blockchain application assets (claim tokens, NFTs, etc..) using your accounts.',
+      'You can manage several blockchain application assets using your accounts.',
   },
 ];
 
