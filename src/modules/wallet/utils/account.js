@@ -157,6 +157,18 @@ export const truncateAddress = (address, size) => {
 };
 
 /**
+ * Returns a shorter version of a given account name
+ * by replacing characters by ellipsis except for
+ * the first 6 and last 3.
+ * @param {String} accountName account name
+ * @returns {String} Truncated account name
+ */
+export const truncateAccountName = (accountName) => {
+  if (!accountName) return accountName;
+  return accountName.replace(/^(.{3})(.+)?(.{3})$/, '$1...$3');
+};
+
+/**
  * Returns a shorter version of a given transactionID
  * by replacing characters by ellipsis except for
  * the first 10 and last 5.
