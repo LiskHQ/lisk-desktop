@@ -4,10 +4,8 @@ import React from 'react';
 import routes from 'src/routes/routes';
 import { validateAddress } from 'src/utils/validators';
 import WalletVisual from '@wallet/components/walletVisual';
-
 import styles from './AccountInfo.css';
 
-// @todo removed token and network
 const WalletInfo = ({ name = '', label, address, addressClass, className }) => {
   const addressLink = `${routes.explorer.path}?address=${address}`;
   return (
