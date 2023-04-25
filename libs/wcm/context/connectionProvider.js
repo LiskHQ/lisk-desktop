@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ConnectionContext from './connectionContext';
 import { createSignClient } from '../utils/connectionCreator';
-import { useConnectionEventsManager } from '../hooks/useConnectionEventsManager';
+import { ConnectionEventsManagerWrapper } from '../hooks/useConnectionEventsManager';
 
 const ConnectionProvider = ({ children }) => {
   const [session, setSession] = useState({
@@ -21,12 +21,6 @@ const ConnectionProvider = ({ children }) => {
     setEvents(newEvents);
   };
 
-  useConnectionEventsManager({
-    pushEvent,
-    session,
-    setSession,
-  });
-
   const value = {
     events,
     pairings,
@@ -41,7 +35,13 @@ const ConnectionProvider = ({ children }) => {
     createSignClient();
   }, []);
 
-  return <ConnectionContext.Provider value={value}>{children}</ConnectionContext.Provider>;
+  return (
+    <ConnectionContext.Provider value={value}>
+      <ConnectionEventsManagerWrapper pushEvent={pushEvent} session={session} setSession={setSession}>
+        {children}
+      </ConnectionEventsManagerWrapper>
+    </ConnectionContext.Provider>
+  );
 };
 
 export default ConnectionProvider;

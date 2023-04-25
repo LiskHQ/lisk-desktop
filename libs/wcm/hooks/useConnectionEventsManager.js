@@ -3,8 +3,8 @@ import { client } from '@libs/wcm/utils/connectionCreator';
 import { EVENTS } from '../constants/lifeCycle';
 import { usePairings } from './usePairings';
 
-export const useConnectionEventsManager = ({ pushEvent, session, setSession }) => {
-  const { disconnect } = usePairings();
+export const ConnectionEventsManagerWrapper = ({ children, pushEvent, session, setSession }) => {
+  const { disconnect, pairings } = usePairings();
   const onSessionRequest = useCallback(async (event) => {
     const request = client.session.get(event.topic);
 
@@ -12,7 +12,7 @@ export const useConnectionEventsManager = ({ pushEvent, session, setSession }) =
   }, []);
 
   const onSessionDelete = useCallback((event) => {
-    disconnect(event.topic);
+    disconnect(event.topic, pairings);
   }, []);
 
   const eventHandler = useCallback((name, meta) => {
@@ -35,4 +35,6 @@ export const useConnectionEventsManager = ({ pushEvent, session, setSession }) =
       console.log('There was an error initializing the client');
     }
   }, [onSessionRequest, onSessionDelete, eventHandler, client?.on]);
+
+  return children;
 };
