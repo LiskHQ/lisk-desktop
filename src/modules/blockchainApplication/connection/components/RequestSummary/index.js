@@ -1,7 +1,6 @@
 /* istanbul ignore file */ // @todo Add unit tests by #4824
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import ConnectionContext from '@libs/wcm/context/connectionContext';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import AccountRow from '@account/components/AccountRow';
 import { useAccounts } from '@account/hooks/useAccounts';
@@ -18,6 +17,7 @@ import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { Link } from 'react-router-dom';
 import Icon from 'src/theme/Icon';
 import { useSession } from '@libs/wcm/hooks/useSession';
+import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
@@ -40,11 +40,11 @@ const defaultToken = { symbol: 'LSK' };
 const RequestSummary = ({ nextStep, history }) => {
   const { t } = useTranslation();
   const { getAccountByAddress } = useAccounts();
-  const { events } = useContext(ConnectionContext);
+  const { events } = useEvents();
   const [request, setRequest] = useState(null);
   const [transaction, setTransaction] = useState(null);
   const [senderAccount, setSenderAccount] = useState(null);
-  const { session } = useSession();
+  const { sessionRequest } = useSession();
   const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
   useSchemas();
@@ -80,7 +80,7 @@ const RequestSummary = ({ nextStep, history }) => {
         moduleCommand,
         chainID: sendingChainID,
         schema: request?.request?.params.schema,
-        url: session.request.peer.metadata.url,
+        url: sessionRequest.peer.metadata.url,
       },
       selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
     });
@@ -116,11 +116,11 @@ const RequestSummary = ({ nextStep, history }) => {
     }
   }, [request]);
 
-  if (!session.request || !request) {
+  if (!sessionRequest || !request) {
     return <EmptyState history={history} />;
   }
 
-  const { icons, name, url } = session.request.peer.metadata;
+  const { icons, name, url } = sessionRequest.peer.metadata;
   const { chainId } = request;
 
   return (

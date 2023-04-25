@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { withRouter } from 'react-router';
-import { usePairings } from '@libs/wcm/hooks/usePairings';
+import { useSession } from '@libs/wcm/hooks/useSession';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -13,7 +13,7 @@ import header from './tableHeader';
 import styles from './SessionManager.css';
 
 const SessionManager = ({ history }) => {
-  const { pairings, disconnect, hasLoaded } = usePairings();
+  const { sessions, disconnect, hasLoaded } = useSession();
   const { t } = useTranslation();
 
   const addApplication = () => {
@@ -34,7 +34,7 @@ const SessionManager = ({ history }) => {
         <Table
           showHeader
           headerClassName={styles.tableHeader}
-          data={pairings}
+          data={sessions}
           isLoading={!hasLoaded}
           row={SessionRow}
           header={header(t)}
