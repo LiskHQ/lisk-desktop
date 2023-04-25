@@ -1,18 +1,20 @@
 import { useCallback, useEffect } from 'react';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import { EVENTS } from '../constants/lifeCycle';
-import { usePairings } from './usePairings';
+import { useSession } from './useSession';
+import { useEvents } from './useEvents';
 
-export const ConnectionEventsManagerWrapper = ({ children, pushEvent, session, setSession }) => {
-  const { disconnect } = usePairings();
+export const ConnectionEventsManagerWrapper = ({ children }) => {
+  const { pushEvent } = useEvents();
+  const { setSessionRequest, setSessions } = useSession();
+
   const onSessionRequest = useCallback(async (event) => {
     const request = client.session.get(event.topic);
-
-    setSession({ ...session, request });
+    setSessionRequest(request);
   }, []);
 
   const onSessionDelete = useCallback((event) => {
-    disconnect(event.topic);
+    setSessions((prevSessions) => prevSessions.filter((session) => session.topic !== event.topic));
   }, []);
 
   const eventHandler = useCallback((name, meta) => {

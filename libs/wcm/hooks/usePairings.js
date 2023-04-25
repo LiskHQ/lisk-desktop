@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
-import { getSdkError } from '@walletconnect/utils';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { client } from '@libs/wcm/utils/connectionCreator';
-import { ERROR_CASES, STATUS } from '../constants/lifeCycle';
+import { STATUS } from '../constants/lifeCycle';
 
 export const usePairings = () => {
   const { pairings, setPairings } = useContext(ConnectionContext);
@@ -40,31 +39,6 @@ export const usePairings = () => {
   const addPairing = useCallback((pairing) => {
     setPairings((prevPairings) => [...prevPairings, pairing]);
   }, [setPairings]);
-  /**
-   * Disconnect a given pairing. Removes the pairing from context and the bridge.
-   *
-   * @param {string} topic - The pairing topic (Connection ID) to disconnect.
-   */
-  const disconnect = useCallback(
-    async (topic) => {
-      removePairing(topic);
-      try {
-        await client.disconnect({
-          topic,
-          reason: getSdkError(ERROR_CASES.USER_DISCONNECTED),
-        });
-        return {
-          status: STATUS.SUCCESS,
-        };
-      } catch (e) {
-        return {
-          status: STATUS.FAILURE,
-          message: e.message,
-        };
-      }
-    },
-    [client]
-  );
 
   /**
    * Retrieves the active parings and refreshes the list.
@@ -83,13 +57,12 @@ export const usePairings = () => {
   }, [client, setPairings]);
 
   return {
+    hasLoaded,
     pairings,
     setUri,
-    disconnect,
     addPairing,
     setPairings,
     removePairing,
     refreshPairings,
-    hasLoaded,
   };
 };
