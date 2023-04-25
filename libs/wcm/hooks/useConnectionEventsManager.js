@@ -4,7 +4,7 @@ import { EVENTS } from '../constants/lifeCycle';
 import { usePairings } from './usePairings';
 
 export const ConnectionEventsManagerWrapper = ({ children, pushEvent, session, setSession }) => {
-  const { disconnect, pairings } = usePairings();
+  const { disconnect } = usePairings();
   const onSessionRequest = useCallback(async (event) => {
     const request = client.session.get(event.topic);
 
@@ -12,7 +12,7 @@ export const ConnectionEventsManagerWrapper = ({ children, pushEvent, session, s
   }, []);
 
   const onSessionDelete = useCallback((event) => {
-    disconnect(event.topic, pairings);
+    disconnect(event.topic);
   }, []);
 
   const eventHandler = useCallback((name, meta) => {
