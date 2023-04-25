@@ -59,13 +59,7 @@ export const useBlocks = ({ config: customConfig = {}, options } = {}) => {
   const response = useCustomInfiniteQuery({
     keys: [BLOCKS],
     config,
-    options: {
-      ...options,
-      // TODO: Update custom infinite query with these
-      placeholderData: {
-        pages: [],
-      },
-    },
+    options,
   });
 
   return {

@@ -175,7 +175,7 @@
     border-color: var(--color-primary-standard);
   }
 
-  &:global(.error), /* TODO: Remove after all inputs use props */
+  &:global(.error),
   &.error {
     border-color: var(--color-burnt-sienna);
     color: var(--color-burnt-sienna);
