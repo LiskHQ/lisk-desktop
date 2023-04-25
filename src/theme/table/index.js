@@ -72,7 +72,7 @@ const Table = ({
   subHeader,
   row,
   currentSort,
-  isLoading, // @todo drop this at some point
+  isLoading,
   emptyState,
   iterationKey,
   canLoadMore,

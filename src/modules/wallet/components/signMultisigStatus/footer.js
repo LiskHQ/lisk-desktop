@@ -32,8 +32,6 @@ export const CopyFooter = ({ t, onCopy, copied, onDownload, prevStep }) => {
   );
 };
 
-// @todo Since now the sender should sign the last, we should update
-// the conditions in which we display this button. (#4506)
 export const CopyAndSendFooter = ({ t, onSend, onCopy, copied, onDownload, history, prevStep }) => {
   const [sent, setSent] = useState(false);
 

@@ -20,7 +20,6 @@ const http = ({
   // eslint-disable-next-line consistent-return
 }) => {
   try {
-    // @todo remove http function after removing the usage
     /* istanbul ignore next */
     const transformResult = async (response) => {
       if (!response.ok) {
@@ -45,7 +44,6 @@ const http = ({
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
-    // return Promise.reject(Error(e));
   }
 };
 
