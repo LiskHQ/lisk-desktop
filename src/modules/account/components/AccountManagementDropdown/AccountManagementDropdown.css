@@ -26,6 +26,7 @@
   & .nameTooltip {
     border-radius: 3px !important;
     padding: 10px;
+    z-index: var(--dialog-index);
   }
 
   & .name {
