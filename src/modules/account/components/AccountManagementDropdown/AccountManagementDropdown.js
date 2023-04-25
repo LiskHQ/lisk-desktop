@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import DropdownButton from 'src/theme/DropdownButton';
-import { TertiaryButton } from 'src/theme/buttons';
-import Icon from 'src/theme/Icon';
+import DropdownButton from '@theme/DropdownButton';
+import { TertiaryButton } from '@theme/buttons';
+import Icon from '@theme/Icon';
+import Tooltip from '@theme/Tooltip/tooltip';
 import { truncateAddress, truncateAccountName } from '@wallet/utils/account';
 import AccountMenuListing from '@account/components/AccountMenuListing/AccountMenuListing';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -29,10 +30,26 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
         <div className={styles.accountWrapper}>
           <WalletVisual address={address} size={32} />
           <div className={styles.account}>
-            <span className={styles.name}>
-              {truncatedAcctName}
-              {isHW && <Icon className={styles.walletIcon} name="hardwareWalletIcon" />}
-            </span>
+            {name.length > 10 ? (
+              <Tooltip
+                size="s"
+                position="bottom"
+                tooltipClassName={styles.nameTooltip}
+                content={
+                  <span className={styles.name}>
+                    {truncatedAcctName}
+                    {isHW && <Icon className={styles.walletIcon} name="hardwareWalletIcon" />}
+                  </span>
+                }
+              >
+                <span>{name}</span>
+              </Tooltip>
+            ) : (
+              <span className={styles.name}>
+                {truncatedAcctName}
+                {isHW && <Icon className={styles.walletIcon} name="hardwareWalletIcon" />}
+              </span>
+            )}
             <span className={styles.address}>{truncateAddress(address)}</span>
           </div>
           <Icon name="dropdownArrowIcon" />
