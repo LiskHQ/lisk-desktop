@@ -109,9 +109,9 @@ const RequestSummary = ({ nextStep, history }) => {
       const account = getAccountByAddress(address);
       // @todo if account doesn't exist, we should inform the user that the tx can't be signed
       setSenderAccount({
-        pubkey: account.metadata.pubkey,
+        pubkey: tx.senderPublicKey,
         address,
-        name: account.metadata.name,
+        name: account?.metadata?.name,
       });
     }
   }, [request]);
