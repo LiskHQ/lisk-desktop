@@ -12,8 +12,11 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
   const { name, address, isHW } = currentAccount.metadata;
   const [isDropdownShown, setIsDropdownShown] = useState(false);
 
-  const onMenuDropdownChanged = () => {
-    setIsDropdownShown((state) => !state);
+  const handleDismissMenu = () => {
+    setIsDropdownShown(false);
+  };
+  const handleOpenMenu = () => {
+    setIsDropdownShown(true);
   };
 
   const truncatedAcctName = name.length > 10 ? truncateAccountName(name) : name;
@@ -24,7 +27,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
       wrapperClassName={styles.wrapper}
       ButtonComponent={TertiaryButton}
       isDropdownShown={isDropdownShown}
-      onDropdownOpen={onMenuDropdownChanged}
+      onDropdownOpen={handleOpenMenu}
       buttonClassName={`account-management-dropdown ${styles.dropdownButton}`}
       buttonLabel={
         <div className={styles.accountWrapper}>
@@ -38,7 +41,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
                 content={
                   <span className={styles.name}>
                     {truncatedAcctName}
-                    {isHW && <Icon className={styles.walletIcon} name="hardwareWalletIcon" />}
+                    {true && <Icon className={styles.walletIcon} name="hardwareWalletIcon" />}
                   </span>
                 }
               >
@@ -58,10 +61,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
       size="m"
       trackDropdownState={onMenuClick}
     >
-      <AccountMenuListing
-        className={styles.dropDownMenuList}
-        onItemClicked={onMenuDropdownChanged}
-      />
+      <AccountMenuListing className={styles.dropDownMenuList} onItemClicked={handleDismissMenu} />
     </DropdownButton>
   );
 };

@@ -165,7 +165,7 @@ export const truncateAddress = (address, size) => {
  */
 export const truncateAccountName = (accountName) => {
   if (!accountName) return accountName;
-  return accountName.replace(/^(.{6})(.+)?(.{4})$/, '$1...$3');
+  return accountName.replace(/^(.{3})(.+)?(.{3})$/, '$1...$3');
 };
 
 /**
