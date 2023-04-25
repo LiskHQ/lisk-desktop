@@ -41,7 +41,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
                 content={
                   <span className={styles.name}>
                     {truncatedAcctName}
-                    {true && <Icon className={styles.walletIcon} name="hardwareWalletIcon" />}
+                    {isHW && <Icon className={styles.walletIcon} name="hardwareWalletIcon" />}
                   </span>
                 }
               >
