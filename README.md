@@ -48,7 +48,7 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:8080 to access wallet.
+Open http://localhost:8080 to access the wallet.
 
 ### Build
 
@@ -144,9 +144,9 @@ npm run test:live
 ```
 
 ## Directory Layout
-Note: It might not exactly look like this everywhere because of legacy code/features. However, this is the layout that we try to follow
+Note: The following layout structure may not appear exactly as shown below due to the legacy code/features. However, this is the layout that we try to follow:
 ```
-├── .husky/                        # Contains pre commit hook which checks that files are prettified before commiting.
+├── .husky/                        # Contains a pre commit hook which checks that files are prettified before committing.
 ├── app/                           # Electron based application that launces the react app.
 ├── build/                         # Build specific materials.
 ├── coverage/                      # Results of Jest test coverage.
@@ -179,10 +179,10 @@ Note: It might not exactly look like this everywhere because of legacy code/feat
 │   │   ├── routes.js              # Route and modal paths with metadata. This object is used in all our links.
 │   │   ├── routesMap.js           # Maps components to routes, this is used in the MainRouter.js.
 │   ├── service/                   # Add services, such as mock services.
-│   ├── theme/                     # Themed components (Button, Input, ...).
+│   ├── theme/                     # Themed components (Button, Input, etc.).
 │   ├── utils/                     # Global utility functions used throughout the app.
         ├── i18n/                  # Localization setup.
-└──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit test that live in /src.
+└──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit tests that live in /src.
 ```
 
 ## Contributors
