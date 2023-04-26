@@ -22,9 +22,7 @@ export const context = {
       },
     },
   ],
-  session: {
-    
-  },
+  session: {},
   sessionRequest: {
     peer: {
       metadata: {

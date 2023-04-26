@@ -44,15 +44,17 @@ describe('SessionManager', () => {
     reject,
     disconnect,
     hasLoaded: true,
-    sessions: [{
-      topic: '0x123',
-      expiry: 1598424880,
-      peer: {
-        metadata: {
-          name: 'Proposer name'
-        }
-      }
-    }]
+    sessions: [
+      {
+        topic: '0x123',
+        expiry: 1598424880,
+        peer: {
+          metadata: {
+            name: 'Proposer name',
+          },
+        },
+      },
+    ],
   });
 
   it('Displays a button to add a new connection', () => {

@@ -29,9 +29,7 @@ const ConnectionProvider = ({ children }) => {
 
   return (
     <ConnectionContext.Provider value={value}>
-      <ConnectionEventsManagerWrapper>
-        {children}
-      </ConnectionEventsManagerWrapper>
+      <ConnectionEventsManagerWrapper>{children}</ConnectionEventsManagerWrapper>
     </ConnectionContext.Provider>
   );
 };

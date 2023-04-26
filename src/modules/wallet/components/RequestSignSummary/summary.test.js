@@ -59,7 +59,9 @@ describe('RequestSignSummary', () => {
     renderWithQueryClient(Summary, props);
     // Page titles
     expect(screen.getByText('Transaction summary')).toBeInTheDocument();
-    expect(screen.getByText('Please review and verify the transaction details before signing.')).toBeInTheDocument();
+    expect(
+      screen.getByText('Please review and verify the transaction details before signing.')
+    ).toBeInTheDocument();
     // Transaction details
     expect(screen.getByText('token')).toBeInTheDocument();
     expect(screen.getByText('transfer')).toBeInTheDocument();
