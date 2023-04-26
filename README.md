@@ -99,7 +99,8 @@ LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true npm run start
 This comes with Redux dev tools.
 
 ### How to use the Ledger hardware wallet
-Please see [HARDWARE_WALLET_DEVELOPMENT.md](/docs/HARDWARE_WALLET_DEVELOPMENT.md) for more information. 
+
+Please see [HARDWARE_WALLET_DEVELOPMENT.md](/docs/HARDWARE_WALLET_DEVELOPMENT.md) for more information.
 
 ### Distribution
 
@@ -144,7 +145,9 @@ npm run test:live
 ```
 
 ## Directory Layout
+
 Note: The following layout structure may not appear exactly as shown below due to the legacy code/features. However, this is the layout that we try to follow:
+
 ```
 ├── .husky/                        # Contains a pre commit hook which checks that files are prettified before committing.
 ├── app/                           # Electron based application that launces the react app.

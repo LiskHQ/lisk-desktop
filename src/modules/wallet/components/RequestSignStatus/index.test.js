@@ -40,7 +40,7 @@ const props = {
 };
 const successTransactions = {
   signedTransaction: {
-    signatures: [Buffer.alloc(64)]
+    signatures: [Buffer.alloc(64)],
   },
   txSignatureError: null,
 };
@@ -59,7 +59,11 @@ describe('RequestSignStatus', () => {
     useSession.mockReturnValue({ respond, reject });
     renderWithRouterAndQueryClient(RequestSignStatus, props);
     expect(screen.getByText('Transaction signing successful')).toBeInTheDocument();
-    expect(screen.getByText('Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.'
+      )
+    ).toBeInTheDocument();
     expect(screen.getByText('Copy signatures')).toBeInTheDocument();
     expect(screen.getByText('Return to application')).toBeInTheDocument();
   });
@@ -69,7 +73,11 @@ describe('RequestSignStatus', () => {
     useSession.mockReturnValue({ respond, reject });
     renderWithRouterAndQueryClient(RequestSignStatus, props);
     expect(screen.getByText('Transaction signing failed')).toBeInTheDocument();
-    expect(screen.getByText('There was an error signing your transaction. please close this dialog and try again.')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'There was an error signing your transaction. please close this dialog and try again.'
+      )
+    ).toBeInTheDocument();
     expect(screen.queryAllByText('Copy signatures')).toHaveLength(0);
     expect(screen.getByText('Return to application')).toBeInTheDocument();
   });

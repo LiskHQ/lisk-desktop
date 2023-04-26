@@ -18,12 +18,8 @@ it('should use custom step when incrementing', () => {
   expect(result.current.sessions).toEqual([]);
 
   act(() => {
-    result.current.setSessions([
-      { id: '0x123' },
-    ]);
+    result.current.setSessions([{ id: '0x123' }]);
   });
 
-  expect(result.current.sessions).toEqual([
-    { id: '0x123' },
-  ]);
+  expect(result.current.sessions).toEqual([{ id: '0x123' }]);
 });

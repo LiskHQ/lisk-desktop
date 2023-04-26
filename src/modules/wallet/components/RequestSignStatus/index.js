@@ -13,25 +13,31 @@ const errorData = (t) => ({
   error: true,
   illustration: 'transactionError',
   title: t('Transaction signing failed'),
-  description: t('There was an error signing your transaction. please close this dialog and try again.'),
+  description: t(
+    'There was an error signing your transaction. please close this dialog and try again.'
+  ),
 });
 
 const successData = (t) => ({
   error: false,
   illustration: 'transactionSuccess',
   title: t('Transaction signing successful'),
-  description: t('Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.'),
+  description: t(
+    'Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.'
+  ),
 });
 
 const RequestSignStatus = (props) => {
   const { t } = useTranslation();
   const ref = useRef();
   const [copied, setCopied] = useState(false);
-  const transactions = useSelector(state => state.transactions);
+  const transactions = useSelector((state) => state.transactions);
   const { respond } = useSession();
 
-  const data = !transactions.txSignatureError && transactions.signedTransaction?.signatures?.length
-    ? successData(t) : errorData(t);
+  const data =
+    !transactions.txSignatureError && transactions.signedTransaction?.signatures?.length
+      ? successData(t)
+      : errorData(t);
 
   const onCopy = () => {
     setCopied(true);
@@ -49,33 +55,25 @@ const RequestSignStatus = (props) => {
     <Box className={`${styles.wrapper} transaction-status`}>
       <Illustration name={data.illustration} className={styles.illustration} />
       <h5 className="result-box-header">{data.title}</h5>
-      <p>
-        {data.description}
-      </p>
-      {
-        !data.error && (
-          <PrimaryButton
-            className={`${styles.signatureButton} copy-signature-button`}
-            onClick={onCopy}
-          >
-            <span className={styles.buttonContent}>
-              <Icon name="copy" />
-              <span>
-                {copied ? 'Copied' : 'Copy signatures'}
-              </span>
-            </span>
-          </PrimaryButton>
-        )
-      }
+      <p>{data.description}</p>
+      {!data.error && (
+        <PrimaryButton
+          className={`${styles.signatureButton} copy-signature-button`}
+          onClick={onCopy}
+        >
+          <span className={styles.buttonContent}>
+            <Icon name="copy" />
+            <span>{copied ? 'Copied' : 'Copy signatures'}</span>
+          </span>
+        </PrimaryButton>
+      )}
       <a
         href={props.formProps.url}
         target="_blank"
         rel="noopener noreferrer"
         className={styles.cancel}
       >
-        <TertiaryButton>
-          {t('Return to application')}
-        </TertiaryButton>
+        <TertiaryButton>{t('Return to application')}</TertiaryButton>
       </a>
     </Box>
   );

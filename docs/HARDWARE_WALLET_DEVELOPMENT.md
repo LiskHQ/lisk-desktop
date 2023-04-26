@@ -12,6 +12,7 @@
 - After accepting all prompts you should then have an app called Lisk.
 
 ## Step 2: How to sign in to your Ledger wallet
+
 - `git clone git@github.com:LiskHQ/lisk-desktop.git`
 - run `npm run build`
 - Open two terminals.

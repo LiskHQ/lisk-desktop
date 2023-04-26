@@ -211,29 +211,29 @@ export const signatureSkipped =
     });
   };
 
-export const transactionSigned = (formProps, transactionJSON, privateKey, _, senderAccount) =>
-async (dispatch) => {
-  const { schema, chainID } = formProps;
-  const [error, tx] = await to(
-    signTransaction({
-      transactionJSON,
-      wallet: senderAccount,
-      schema,
-      chainID,
-      privateKey,
-      senderAccount,
-    }),
-  );
+export const transactionSigned =
+  (formProps, transactionJSON, privateKey, _, senderAccount) => async (dispatch) => {
+    const { schema, chainID } = formProps;
+    const [error, tx] = await to(
+      signTransaction({
+        transactionJSON,
+        wallet: senderAccount,
+        schema,
+        chainID,
+        privateKey,
+        senderAccount,
+      })
+    );
 
-  if (!error) {
-    dispatch({
-      type: actionTypes.transactionSigned,
-      data: tx,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
-  }
-};
+    if (!error) {
+      dispatch({
+        type: actionTypes.transactionSigned,
+        data: tx,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    }
+  };
