@@ -11,10 +11,14 @@ const useTxInitiatorAccount = ({ senderPublicKey }) => {
 
   const txInitiatorAccount = useMemo(
     () => ({
-      ...(data?.data || {}),
-      ...(data?.meta || {}),
+      ...(data?.data ?? {}),
+      ...(data?.meta ?? {}),
       keys: {
-        ...(data?.data || { mandatoryKeys: [], optionalKeys: [] }),
+        ...(data?.data ?? { mandatoryKeys: [], optionalKeys: [] }),
+      },
+      summary: {
+        ...(data?.meta?.summary ?? {}),
+        publicKey: senderPublicKey,
       },
     }),
     [isLoading]

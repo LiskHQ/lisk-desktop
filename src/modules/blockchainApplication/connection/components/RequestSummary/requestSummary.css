@@ -122,3 +122,9 @@
     flex-grow: 1;
   }
 }
+
+.emptyState {
+  & .illustration {
+    width: 120px;
+  }
+}

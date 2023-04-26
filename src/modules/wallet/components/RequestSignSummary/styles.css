@@ -1,0 +1,39 @@
+.progressBarContainer {
+  margin: 5px 0 15px 0;
+}
+
+.boxContainer {
+  width: 75vw !important; /* stylelint-disable-line unit-whitelist */
+  max-width: 100% !important;
+
+  & > header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 20px 0 20px;
+    height: auto;
+    overflow-y: auto;
+
+    & > p {
+      margin-bottom: 0;
+      color: var(--color-maastricht-blue);
+    }
+  }
+}
+
+.txDetails {
+  max-height: calc(100vh - 80px - 290px) !important; /* stylelint-disable-line unit-whitelist */
+
+  &.small {
+    max-height: calc(100vh - 110px - 290px) !important; /* stylelint-disable-line unit-whitelist */
+  }
+}
+
+.container {
+  height: auto;
+  overflow-y: auto;
+  max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
+  display: block;
+  padding: 0;
+  box-sizing: border-box;
+}
