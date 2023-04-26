@@ -13,7 +13,7 @@
     "url": "https://github.com/LiskHQ/lisk-desktop"
   },
   "engines": {
-    "node": ">=v16.14.0"
+    "node": ">=16.20 <=16"
   },
   "scripts": {
     "dev": "cross-env DEBUG=true NACL_FAST=disable && webpack serve --config ./setup/config/webpack.config.dev",
