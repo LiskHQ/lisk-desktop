@@ -14,10 +14,13 @@ const staking = (state = {}, action) => {
       if (action.data.stakes) {
         const stakes = Object.assign(state, {});
         action.data.stakes.forEach(({ address, amount, name, commission }) => {
+          const stakeDifference = Math.abs(
+            +(state[address]?.unconfirmed ?? 0) - +(state[address]?.confirmed ?? 0)
+          );
           stakes[address] = {
-            commission,
+            commission: commission || state[address]?.commission,
             confirmed: +amount,
-            unconfirmed: +state[address]?.unconfirmed || +amount,
+            unconfirmed: stakeDifference !== 0 ? state[address]?.unconfirmed ?? 0 : +amount,
             name,
           };
 
@@ -41,11 +44,11 @@ const staking = (state = {}, action) => {
           else if (state[validator.address]) unconfirmed = state[validator.address].unconfirmed;
 
           mergedStakes[validator.address] = {
-            unconfirmed,
-            confirmed: state[validator.address] ? state[validator.address].confirmed : 0,
+            unconfirmed: +unconfirmed,
+            confirmed: state[validator.address] ? +state[validator.address].confirmed : 0,
             name: state[validator.address]?.name || validator.name,
             commission:
-              state[validator.address]?.commision || action.data[0]?.validator?.commission,
+              state[validator.address]?.commission || action.data[0]?.validator?.commission,
           };
           return mergedStakes;
         }, {}),

@@ -11,6 +11,7 @@ import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockTokensBalance, mockAppsTokens } from '@token/fungible/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
+import useFiatRates from 'src/modules/common/hooks/useFiatRates';
 import EditStake from './index';
 import { useValidators, useSentStakes, usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
@@ -38,6 +39,7 @@ jest.mock('../../hooks/queries');
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@pos/validator/hooks/usePosToken');
+jest.mock('src/modules/common/hooks/useFiatRates');
 
 describe('EditStake', () => {
   const validatorAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
@@ -77,6 +79,7 @@ describe('EditStake', () => {
     usePosToken.mockReturnValue({
       token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' },
     });
+    useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
   });
 
   it('should properly render add stake form', () => {

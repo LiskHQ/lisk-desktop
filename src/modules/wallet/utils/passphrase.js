@@ -82,9 +82,8 @@ export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = M
  * @returns {string} The generated passphrase
  */
 export const generatePassphraseFromSeed = ({ seed }) =>
-  // @TODO eslint-plugin-node
   // eslint-disable-next-line no-buffer-constructor
-  new mnemonic(new Buffer(seed.join(''), 'hex')).toString();
+  new mnemonic(Buffer.from(seed.join(''))).toString();
 
 /**
  * Generates a random passphrase using browser crypto api

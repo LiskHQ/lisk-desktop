@@ -34,7 +34,7 @@ const AmountField = ({
   name,
   displayConverter,
   useMaxWarning,
-  token,
+  token = {},
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
@@ -135,6 +135,7 @@ const AmountField = ({
             value={amount.value}
             error={amount.error}
             isLoading={amount.isLoading}
+            tokenSymbol={token.symbol}
           />
         )}
       </span>

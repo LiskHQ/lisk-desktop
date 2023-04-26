@@ -215,6 +215,7 @@ const generateStakes = (params, validators, token, t) => {
           {validators[stake.validatorAddress]?.name ?? truncateAddress(stake.validatorAddress)}
         </span>
       </Link>
+      {'— '}
       <span className={`${styles.value}`}>
         <TokenAmount val={stake.amount} token={token} />
       </span>
@@ -233,13 +234,13 @@ const generateStakes = (params, validators, token, t) => {
 
 export const Params = ({ t }) => {
   const { data, validators = [], activeToken } = useContext(TransactionRowContext);
-  const { stakeValidator, registerValidator, transfer } = MODULE_COMMANDS_NAME_MAP;
+  const { stake, registerValidator, transfer } = MODULE_COMMANDS_NAME_MAP;
 
   const getDetails = () => {
     switch (data.moduleCommand) {
       case registerValidator:
         return data.params.validator?.username;
-      case stakeValidator:
+      case stake:
         return generateStakes(data.params, validators, activeToken, t);
       case transfer:
         return data.params.data;

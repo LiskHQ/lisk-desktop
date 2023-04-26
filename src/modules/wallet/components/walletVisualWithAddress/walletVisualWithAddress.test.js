@@ -1,5 +1,7 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
+import mockWallet from '../../../../../tests/constants/wallets';
 import WalletVisualWithAddress from '.';
+import { truncateTransactionID } from '../../utils/account';
 
 describe('WalletVisualWithAddress component', () => {
   const props = {
@@ -24,5 +26,17 @@ describe('WalletVisualWithAddress component', () => {
   it('should show account name', () => {
     const wrapper = mountWithRouter(WalletVisualWithAddress, { ...props, accountName: 'test' });
     expect(wrapper.find('.accountName').at(0)).toHaveText('test');
+  });
+
+  it('should show account name', () => {
+    const wrapper = mountWithRouter(WalletVisualWithAddress, {
+      ...props,
+      accountName: 'test',
+      publicKey: mockWallet.genesis.summary.publicKey,
+    });
+    wrapper.find('.accountName').at(0).simulate('mouseover');
+    expect(wrapper.find('.pubkey').at(0)).toHaveText(
+      `Public key:${truncateTransactionID(mockWallet.genesis.summary.publicKey)}`
+    );
   });
 });

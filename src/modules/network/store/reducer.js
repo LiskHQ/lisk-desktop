@@ -1,3 +1,4 @@
+import actionTypesSettings from '@settings/store/actionTypes';
 import actionTypes from './actionTypes';
 
 const initialState = {
@@ -45,6 +46,16 @@ const network = (state = initialState, action) => {
         ...state,
         storedCustomNetwork: '',
       };
+    case actionTypesSettings.settingsUpdated: {
+      const mainChainNetwork = action.data?.mainChainNetwork;
+      if (mainChainNetwork) {
+        return {
+          ...state,
+          name: mainChainNetwork.name,
+        };
+      }
+      return state;
+    }
     case actionTypes.schemasRetrieved:
       return {
         ...state,

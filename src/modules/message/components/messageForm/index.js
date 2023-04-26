@@ -36,7 +36,7 @@ const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
   };
 
   return (
-    <Box>
+    <Box className={styles.messageWrapper}>
       <BoxContent className={styles.noPadding}>
         <BoxInfoText>
           <span>{t('Sign a message to prove its integrity')}</span>

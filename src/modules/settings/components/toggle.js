@@ -15,7 +15,7 @@ import useSettings from '../hooks/useSettings';
  * @param {Array} tips [activeTip, normalTip]
  * @param {boolean} isCheckbox show checkbox or tooltip
  */
-const Toggle = ({ setting, icons, tips, isCheckbox }) => {
+const Toggle = ({ setting, icons, tips, isCheckbox, className }) => {
   const { t } = useTranslation();
   const { toggleSetting, [setting]: value } = useSettings(setting);
 
@@ -32,13 +32,13 @@ const Toggle = ({ setting, icons, tips, isCheckbox }) => {
   return isCheckbox ? (
     <CheckBox
       name={setting}
-      className={`${styles.checkbox} ${setting}`}
+      className={`${styles.checkbox} ${setting} ${className}`}
       checked={value}
       onChange={handleCheckboxChange}
     />
   ) : (
     <Tooltip
-      className={styles.tooltipWrapper}
+      className={`${styles.tooltipWrapper} ${className}`}
       size="maxContent"
       position="bottom"
       content={

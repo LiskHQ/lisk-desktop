@@ -2,6 +2,9 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import Converter from './converter';
+import useFiatRates from '../../hooks/useFiatRates';
+
+jest.mock('../../hooks/useFiatRates');
 
 describe('Converter', () => {
   let wrapper;
@@ -13,7 +16,10 @@ describe('Converter', () => {
     className: 'test',
     token: tokenMap.LSK.key,
     priceTicker: { LSK: { USD: 123, EUR: 12 } },
+    tokenSymbol: 'LSK',
   };
+
+  useFiatRates.mockReturnValue(props.priceTicker);
 
   it('should render Converter component 1', () => {
     wrapper = mount(<Converter {...props} />);
@@ -40,5 +46,16 @@ describe('Converter', () => {
     };
     wrapper = mount(<Converter {...newProps} />);
     expect(wrapper.find('.price').exists()).toBe(false);
+  });
+
+  it('should not render placeholder', () => {
+    const newProps = {
+      ...props,
+      value: '',
+      emptyPlaceholder: 'test-placeholder',
+      tokenSymbol: null,
+    };
+    wrapper = mount(<Converter {...newProps} />);
+    expect(wrapper.text()).toContain('test-placeholder');
   });
 });

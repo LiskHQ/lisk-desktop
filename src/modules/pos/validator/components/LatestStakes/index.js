@@ -4,12 +4,14 @@ import { QueryTable } from 'src/theme/QueryTable';
 import { useTransactions } from 'src/modules/transaction/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import TransactionRow from '@transaction/components/TransactionRow';
-import header from './tableHeader';
+import usePosToken from '../../hooks/usePosToken';
 import { useValidators } from '../../hooks/queries';
+import header from './tableHeader';
 
 const LatestStakes = ({ filters }) => {
   const { t } = useTranslation();
   const { data: validators } = useValidators();
+  const { token } = usePosToken();
   const queryConfig = useMemo(
     () => ({
       config: {
@@ -46,7 +48,7 @@ const LatestStakes = ({ filters }) => {
       additionalRowProps={{
         t,
         validators: validatorsMap,
-        activeToken: 'LSK',
+        activeToken: token ?? { symbol: 'LSK' },
         layout: 'stake',
       }}
     />

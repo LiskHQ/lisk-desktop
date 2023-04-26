@@ -21,6 +21,7 @@ import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/
 import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
+import useFiatRates from 'src/modules/common/hooks/useFiatRates';
 import useMessageField from '../../hooks/useMessageField';
 import Form from './SendForm';
 import {
@@ -44,6 +45,7 @@ jest.mock('@token/fungible/hooks/queries');
 jest.mock('../../hooks');
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.mock('@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore');
+jest.mock('src/modules/common/hooks/useFiatRates');
 
 describe('Form', () => {
   let props;
@@ -61,11 +63,9 @@ describe('Form', () => {
   });
 
   useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
-
   useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
   useBlockchainApplicationExplore.mockReturnValue({ data: mockBlockchainApp, isSuccess: true });
   useBlockchainApplicationMeta.mockReturnValue({ data: mockBlockchainAppMeta, isSuccess: true });
-
   useTransferableTokens.mockReturnValue({
     data: mockAppsTokens.data.map((token) => ({
       ...token,
@@ -80,6 +80,7 @@ describe('Form', () => {
     data: { data: { escrowAccount: 165000, userAccount: 165000 } },
   });
   useGetMinimumMessageFee.mockReturnValue({ data: { data: { fee: 5000000 } } });
+  useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
 
   beforeEach(() => {
     bookmarks = {
@@ -167,6 +168,25 @@ describe('Form', () => {
     expect(wrapper.find('.confirm-btn').at(0)).not.toBeDisabled();
     wrapper.find('.confirm-btn').at(0).simulate('click');
     expect(props.nextStep).toHaveBeenCalled();
+  });
+
+  it('submit button should be disabled', async () => {
+    const wrapper = mountWithQueryClient(Form, { ...props, account: {} });
+    const { address } = accounts.genesis.summary;
+    wrapper
+      .find('input.recipient')
+      .simulate('change', { target: { name: 'recipient', value: address } });
+    wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '1' } });
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    act(() => {
+      wrapper.update();
+    });
+    await flushPromises();
+
+    expect(wrapper.find('.confirm-btn').at(0)).toBeDisabled();
   });
 
   describe('Recipient field', () => {

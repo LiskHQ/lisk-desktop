@@ -98,6 +98,7 @@ const Overview = ({ isWalletRoute, history }) => {
           detailsClassName={styles.accountSummary}
           truncate={false}
           isMultisig={authData?.data?.numberOfSignatures > 0}
+          publicKey={authData?.meta?.publicKey}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>

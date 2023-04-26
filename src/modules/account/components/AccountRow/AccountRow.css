@@ -67,6 +67,10 @@
       cursor: pointer;
     }
   }
+
+  & .currentAccountIcon {
+    margin-left: 8px;
+  }
 }
 
 .addressValue {

@@ -22,7 +22,7 @@ const ApplicationBootstrap = ({ children }) => {
   useTransactionUpdate();
 
   const networkStatus = useNetworkStatus({
-    options: { enabled: !!mainChainNetwork && isFirstTimeLoading },
+    options: { enabled: !!mainChainNetwork },
     client: queryClient.current,
   });
 
@@ -35,7 +35,7 @@ const ApplicationBootstrap = ({ children }) => {
         network: mainChainNetwork?.name,
       },
     },
-    options: { enabled: !!networkStatus.data && !!mainChainNetwork && isFirstTimeLoading },
+    options: { enabled: !!networkStatus.data && !!mainChainNetwork },
     client: queryClient.current,
   });
 
@@ -49,7 +49,7 @@ const ApplicationBootstrap = ({ children }) => {
     (blockchainAppsMeta.isLoading && !!mainChainApplication);
 
   useEffect(() => {
-    if (isFirstTimeLoading && mainChainApplication) {
+    if (mainChainApplication) {
       const refreshedCurrentApplication = blockchainAppsMeta?.data?.data?.find(
         ({ chainID }) => chainID === currentApplication?.chainID
       );
@@ -57,7 +57,7 @@ const ApplicationBootstrap = ({ children }) => {
       setApplications(blockchainAppsMeta?.data?.data || []);
     }
     if (isFirstTimeLoading && blockchainAppsMeta.isFetched) setIsFirstTimeLoading(false);
-  }, [mainChainApplication, isFirstTimeLoading]);
+  }, [mainChainApplication?.chainID]);
 
   useLedgerDeviceListener();
 
@@ -71,7 +71,7 @@ const ApplicationBootstrap = ({ children }) => {
     );
   }
 
-  return !isLoading || !isFirstTimeLoading ? children : null;
+  return (!isLoading || !isFirstTimeLoading) && mainChainApplication?.chainID ? children : null;
 };
 
 export default ApplicationBootstrap;

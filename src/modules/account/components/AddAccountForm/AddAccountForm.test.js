@@ -82,7 +82,7 @@ describe('AddAccountForm', () => {
     props.settings.showNetwork = true;
 
     accountFormInstance.rerender(<AddAccountForm {...props} />);
-    expect(screen.queryByText('Select Network')).toBeTruthy();
+    expect(screen.queryByText('Switch network')).toBeTruthy();
   });
 
   it('should have disabled button if derivation path has an error', () => {

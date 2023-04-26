@@ -14,7 +14,7 @@ const BlockRow = ({ data, className }) => (
   >
     <span className={grid['col-xs-2']}>{data.height}</span>
     <span className={grid['col-xs-3']}>
-      <DateTimeFromTimestamp time={data.timestamp} />
+      <DateTimeFromTimestamp time={data.timestamp} fulltimeExceptForToday />
     </span>
     <span className={grid['col-xs-3']}>{data.generator.name ?? data.generator.address}</span>
     <span className={grid['col-xs-1']}>{data.numberOfTransactions}</span>

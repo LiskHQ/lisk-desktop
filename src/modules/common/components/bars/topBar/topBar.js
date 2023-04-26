@@ -57,9 +57,9 @@ const TopBar = ({ stakeCount, location, history }) => {
         >
           <p>{t('Bookmarks')}</p>
         </Tooltip>
-        <LightDarkToggle />
+        <LightDarkToggle className="showOnLargeViewPort" />
         <StakeQueueToggle t={t} stakeCount={stakeCount} disabled={disabled} />
-        <DiscreteModeToggle />
+        <DiscreteModeToggle className="showOnLargeViewPort" />
         <ApplicationManagementDropDown />
       </div>
     </div>
