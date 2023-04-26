@@ -1,10 +1,10 @@
+import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import { usePairings } from './usePairings';
 
-// const setPairings = jest.fn();
+const setPairings = jest.fn();
 const defaultPairings = [{ topic: '0x123' }, { topic: '0x124' }];
-const loaded = { loaded: true };
 
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
@@ -18,15 +18,20 @@ jest.mock('../utils/connectionCreator', () => ({
       })
     ),
     pair: jest.fn(),
-    disconnect: jest.fn(),
     pairing: {
       getAll: jest.fn().mockReturnValue(defaultPairings),
     },
   },
 }));
 
+jest.spyOn(React, 'useContext');
+
 describe('usePairings', () => {
   describe('On mount time', () => {
+    React.useContext.mockReturnValue({
+      pairings: [],
+      setPairings: (...rest) => setPairings(...rest),
+    });
     it('Should get all active pairings once mounted', () => {
       renderHook(() => usePairings());
       expect(client.pairing.getAll).toHaveBeenCalledWith({ active: true });
@@ -34,18 +39,22 @@ describe('usePairings', () => {
   });
 
   describe('During the lifetime', () => {
-    afterEach(() => {
+    beforeEach(() => {
       jest.clearAllMocks();
+      React.useContext.mockReturnValue({
+        pairings: defaultPairings,
+        setPairings: (...rest) => setPairings(...rest),
+      });
     });
 
     it('Should remove pairings if removePairing is called', () => {
       const { result } = renderHook(() => usePairings());
       const { removePairing } = result.current;
-      expect(result.current.pairings).toEqual([loaded, ...defaultPairings]);
+
       act(() => {
         removePairing(defaultPairings[0].topic);
       });
-      expect(result.current.pairings).toEqual([loaded, defaultPairings[1]]);
+      expect(setPairings).toHaveBeenCalled();
     });
 
     it('Should call client.pair if a URI is provided with setUri method', () => {
@@ -62,18 +71,7 @@ describe('usePairings', () => {
       act(() => {
         result.current.addPairing(pairing);
       });
-      expect(result.current.pairings).toEqual([loaded, ...defaultPairings, pairing]);
-    });
-
-    it('Should call client.disconnect if disconnect is called', () => {
-      const { result } = renderHook(() => usePairings());
-      const { disconnect } = result.current;
-      const topic = defaultPairings[0].topic;
-      act(() => {
-        disconnect(topic);
-      });
-      // expect(result.current.pairings).toEqual([loaded, defaultPairings[1]]);
-      expect(client.disconnect).toHaveBeenCalled();
+      expect(setPairings).toHaveBeenCalled();
     });
 
     it('Should fetch pairings if refreshPairings is called', () => {
@@ -83,7 +81,7 @@ describe('usePairings', () => {
         refreshPairings();
       });
       expect(client.pairing.getAll).toHaveBeenCalledWith({ active: true });
-      expect(result.current.pairings).toEqual([loaded, ...defaultPairings]);
+      expect(result.current.pairings).toEqual(defaultPairings);
     });
   });
 });

@@ -34,6 +34,9 @@ const props = {
     push: jest.fn(),
   },
   status: 'success',
+  formProps: {
+    url: 'http://example.com',
+  },
 };
 const successTransactions = {
   signedTransaction: {
@@ -57,8 +60,8 @@ describe('RequestSignStatus', () => {
     renderWithRouterAndQueryClient(RequestSignStatus, props);
     expect(screen.getByText('Transaction signing successful')).toBeInTheDocument();
     expect(screen.getByText('Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.')).toBeInTheDocument();
-    expect(screen.getByText('Copy and return to application')).toBeInTheDocument();
-    expect(screen.getByText('Cancel')).toBeInTheDocument();
+    expect(screen.getByText('Copy signatures')).toBeInTheDocument();
+    expect(screen.getByText('Return to application')).toBeInTheDocument();
   });
 
   it('render the signature failure result', () => {
@@ -67,15 +70,15 @@ describe('RequestSignStatus', () => {
     renderWithRouterAndQueryClient(RequestSignStatus, props);
     expect(screen.getByText('Transaction signing failed')).toBeInTheDocument();
     expect(screen.getByText('There was an error signing your transaction. please close this dialog and try again.')).toBeInTheDocument();
-    expect(screen.queryAllByText('Copy and return to application')).toHaveLength(0);
-    expect(screen.getByText('Cancel')).toBeInTheDocument();
+    expect(screen.queryAllByText('Copy signatures')).toHaveLength(0);
+    expect(screen.getByText('Return to application')).toBeInTheDocument();
   });
 
   it('copy the signature if clicked on the copy button', () => {
     reactRedux.useSelector.mockReturnValue(successTransactions);
     useSession.mockReturnValue({ respond });
     renderWithRouterAndQueryClient(RequestSignStatus, props);
-    expect(screen.getByText('Copy and return to application')).toBeInTheDocument();
+    expect(screen.getByText('Copy signatures')).toBeInTheDocument();
     const button = screen.getAllByRole('button')[0];
     act(() => {
       fireEvent.click(button);
@@ -84,17 +87,6 @@ describe('RequestSignStatus', () => {
     expect(screen.getByText('Copied')).toBeInTheDocument();
 
     jest.runAllTimers();
-    expect(screen.getByText('Copy and return to application')).toBeInTheDocument();
-  });
-
-  it('reject the signature', () => {
-    reactRedux.useSelector.mockReturnValue(successTransactions);
-    useSession.mockReturnValue({ reject });
-    renderWithRouterAndQueryClient(RequestSignStatus, props);
-    const button = screen.getAllByRole('button')[1];
-    act(() => {
-      fireEvent.click(button);
-    });
-    expect(reject).toHaveBeenCalled();
+    expect(screen.getByText('Copy signatures')).toBeInTheDocument();
   });
 });

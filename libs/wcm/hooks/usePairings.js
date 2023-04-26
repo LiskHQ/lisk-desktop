@@ -49,7 +49,7 @@ export const usePairings = () => {
   }, [client]);
 
   useEffect(() => {
-    if (client?.pairing?.getAll && pairings?.length === 0 && setPairings) {
+    if (client?.pairing?.getAll && !pairings?.length && setPairings) {
       const activePairings = client.pairing.getAll({ active: true });
       setPairings([...activePairings]);
       setHasLoaded(true);
@@ -61,7 +61,6 @@ export const usePairings = () => {
     pairings,
     setUri,
     addPairing,
-    setPairings,
     removePairing,
     refreshPairings,
   };

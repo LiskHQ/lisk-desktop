@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from 'react';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import { EVENTS } from '../constants/lifeCycle';
-import { useSession } from './useSession';
-import { useEvents } from './useEvents';
+import { useSession } from '../hooks/useSession';
+import { useEvents } from '../hooks/useEvents';
 
 export const ConnectionEventsManagerWrapper = ({ children }) => {
   const { pushEvent } = useEvents();

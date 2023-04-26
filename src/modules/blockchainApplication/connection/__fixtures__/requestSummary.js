@@ -23,13 +23,14 @@ export const context = {
     },
   ],
   session: {
-    request: {
-      peer: {
-        metadata: {
-          icons: ['http://example.com/icon.png'],
-          name: 'test app',
-          url: 'http://example.com',
-        },
+    
+  },
+  sessionRequest: {
+    peer: {
+      metadata: {
+        icons: ['http://example.com/icon.png'],
+        name: 'test app',
+        url: 'http://example.com',
       },
     },
   },

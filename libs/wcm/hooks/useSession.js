@@ -35,7 +35,6 @@ export const useSession = () => {
   const approve = useCallback(async (selectedAccounts) => {
     const proposalEvents = events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
     try {
-      await setSessionProposal(proposalEvents.meta);
       const status = await onApprove(proposalEvents.meta, selectedAccounts);
       removeEvent(proposalEvents);
       setSessionProposal(null);

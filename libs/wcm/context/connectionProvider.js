@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ConnectionContext from './connectionContext';
 import { createSignClient } from '../utils/connectionCreator';
-import { ConnectionEventsManagerWrapper } from '../hooks/useConnectionEventsManager';
+import { ConnectionEventsManagerWrapper } from './ConnectionEventsManagerWrapper';
 
 const ConnectionProvider = ({ children }) => {
   const [sessions, setSessions] = useState([]);
