@@ -15,7 +15,7 @@ const TransactionId = ({ t }) => {
   }
 
   return (
-    <ValueAndLabel label={t('Transaction ID')} className={styles.transactionId}>
+    <ValueAndLabel label={t('ID')} className={styles.transactionId}>
       <span className="transaction-id">
         <CopyToClipboard
           text={truncateAddress(id)}

@@ -31,8 +31,6 @@ export const useTransactionUpdate = (isLoading) => {
     if (isLoading) return;
 
     client.socket.on('new.transactions', async (newTransactions) => {
-      // @todo if the transaction belongs to me,
-      // need to check if transaction id exists then replace, otherwise add the transaction to my transaction
       const queries = queryClient.getQueriesData({ queryKey: [MY_TRANSACTIONS] });
 
       queries

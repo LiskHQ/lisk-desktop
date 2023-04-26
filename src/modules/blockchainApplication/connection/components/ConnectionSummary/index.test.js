@@ -3,12 +3,14 @@ import { act } from 'react-dom/test-utils';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { usePairings } from '@libs/wcm/hooks/usePairings';
 import { useSession } from '@libs/wcm/hooks/useSession';
+import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import ConnectionSummary from './index';
 
 jest.mock('@libs/wcm/hooks/usePairings');
 jest.mock('@libs/wcm/hooks/useSession');
+jest.mock('@libs/wcm/hooks/useEvents');
 jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn().mockImplementation(() => ({
     accounts: [{ metadata: { address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt' } }],
@@ -53,9 +55,9 @@ const proposal = {
   },
 };
 
-const setup = (context) => {
+const setup = () => {
   const Component = () => (
-    <ConnectionContext.Provider value={context}>
+    <ConnectionContext.Provider>
       <ConnectionSummary />
     </ConnectionContext.Provider>
   );
@@ -74,17 +76,14 @@ describe('ConnectionSummary', () => {
   }));
   usePairings.mockReturnValue({ setUri: jest.fn() });
   useSession.mockReturnValue({ approve, reject });
-
-  const context = {
-    events: [{ name: EVENTS.SESSION_PROPOSAL, meta: proposal }],
-  };
+  useEvents.mockReturnValue({ events: [{ name: EVENTS.SESSION_PROPOSAL, meta: proposal }] });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('Display the connecting app information and connection summary', () => {
-    const wrapper = setup(context);
+    const wrapper = setup();
     expect(wrapper.find('.chain-name-text').text()).toEqual(proposal.params.proposer.metadata.name);
     expect(wrapper.find('img').at(0).prop('src')).toEqual(
       proposal.params.proposer.metadata.icons[0]
@@ -112,10 +111,8 @@ describe('ConnectionSummary', () => {
         pairingTopic: '0x123',
       },
     };
-    const newContext = {
-      events: [{ name: EVENTS.SESSION_PROPOSAL, meta: proposalWithNoEvents }],
-    };
-    const wrapper = setup(newContext);
+    useEvents.mockReturnValue({ events: [{ name: EVENTS.SESSION_PROPOSAL, meta: proposalWithNoEvents }] });
+    const wrapper = setup();
     wrapper.find('.events span').forEach((event) => {
       expect(event.text()).toEqual('-');
     });
@@ -148,7 +145,7 @@ describe('ConnectionSummary', () => {
   });
 
   it('Select accounts on a random basis', () => {
-    const wrapper = setup(context);
+    const wrapper = setup();
     expect(wrapper.find('button').at(1)).toBeDisabled();
     act(() => {
       wrapper.find('.accounts-list input').simulate('change', { target: { checked: true } });
@@ -163,7 +160,7 @@ describe('ConnectionSummary', () => {
   });
 
   it('Reject the connection if the reject button is clicked', () => {
-    const wrapper = setup(context);
+    const wrapper = setup();
     wrapper.find('button').at(0).simulate('click');
     expect(reject).toHaveBeenCalled();
   });
@@ -173,15 +170,8 @@ describe('ConnectionSummary', () => {
       ...proposal,
     };
     delete wongProposal.params.proposer.metadata.name;
-    const newContext = {
-      events: [
-        {
-          name: EVENTS.SESSION_PROPOSAL,
-          meta: wongProposal,
-        },
-      ],
-    };
-    const wrapper = setup(newContext);
+    useEvents.mockReturnValue({ events: [{ name: EVENTS.SESSION_PROPOSAL, meta: wongProposal }] });
+    const wrapper = setup();
     wrapper.find('button').at(0).simulate('click');
     expect(reject).toHaveBeenCalled();
   });

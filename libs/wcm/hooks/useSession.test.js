@@ -7,7 +7,7 @@ import { EVENTS } from '../constants/lifeCycle';
 import * as sessionHandlers from '../utils/sessionHandlers';
 import { useSession } from './useSession';
 
-const setSession = jest.fn();
+const setSessions = jest.fn();
 const setPairings = jest.fn();
 const session = { id: '0x123' };
 const pairings = [];
@@ -15,8 +15,8 @@ const selectedAccounts = [wallets.genesis.summary.address, wallets.validator.sum
 
 jest.spyOn(React, 'useContext').mockImplementation(() => ({
   events: [{ name: EVENTS.SESSION_PROPOSAL, meta: { id: '0x123' } }],
-  session: { data: false, request: false, loaded: false },
-  setSession,
+  sessions: [],
+  setSessions,
   setPairings,
   pairings: [],
 }));

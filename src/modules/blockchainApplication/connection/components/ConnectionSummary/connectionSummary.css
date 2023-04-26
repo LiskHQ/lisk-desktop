@@ -15,11 +15,6 @@
   padding: 24px;
   overflow-y: scroll;
 
-  & .section {
-    border-top: solid 1px var(--color-platinum);
-    padding: 24px 0;
-  }
-
   & .twoColumn {
     display: flex;
     flex-flow: row wrap;
@@ -70,6 +65,11 @@
         pointer-events: none;
       }
     }
+  }
+
+  & .section {
+    border-top: solid 1px var(--color-platinum);
+    padding: 24px 0;
   }
 
   & .permissions {
