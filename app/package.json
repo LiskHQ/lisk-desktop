@@ -9,9 +9,9 @@
     "email": "admin@lisk.com"
   },
   "dependencies": {
-    "get-port": "5.1.1",
-    "node-abi": "2.26.0",
-    "node-hid": "2.1.1",
-    "usb": "1.7.0"
+    "get-port": "^6.1.2",
+    "node-abi": "^3.40.0",
+    "node-hid": "^2.1.2",
+    "usb": "^2.9.0"
   }
 }
