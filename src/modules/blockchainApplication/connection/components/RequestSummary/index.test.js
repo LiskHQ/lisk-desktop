@@ -79,7 +79,7 @@ useEvents.mockReturnValue({
           request: {
             params: {
               recipientChainID: '00000001',
-            }
+            },
           },
         },
       },

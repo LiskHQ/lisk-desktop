@@ -32,13 +32,19 @@ export const usePairings = () => {
     [client]
   );
 
-  const removePairing = useCallback((topic) => {
-    setPairings((prevPairings) => prevPairings.filter((pairing) => pairing.topic !== topic));
-  }, [setPairings]);
+  const removePairing = useCallback(
+    (topic) => {
+      setPairings((prevPairings) => prevPairings.filter((pairing) => pairing.topic !== topic));
+    },
+    [setPairings]
+  );
 
-  const addPairing = useCallback((pairing) => {
-    setPairings((prevPairings) => [...prevPairings, pairing]);
-  }, [setPairings]);
+  const addPairing = useCallback(
+    (pairing) => {
+      setPairings((prevPairings) => [...prevPairings, pairing]);
+    },
+    [setPairings]
+  );
 
   /**
    * Retrieves the active parings and refreshes the list.

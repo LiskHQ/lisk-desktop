@@ -13,11 +13,7 @@ const Fee = ({ t }) => {
   return (
     <ValueAndLabel label={t('Fee')} className={styles.fee}>
       <span className="tx-fee">
-        {
-          token
-            ? (<TokenAmount val={fee} token={token} />)
-            : (<span>{fee}</span>)
-        }
+        {token ? <TokenAmount val={fee} token={token} /> : <span>{fee}</span>}
       </span>
     </ValueAndLabel>
   );

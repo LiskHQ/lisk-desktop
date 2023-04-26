@@ -70,7 +70,7 @@ const RequestSummary = ({ nextStep, history }) => {
             title: 'Transaction',
             value: `${convertFromBaseDenom(transaction.fee)} ${token.symbol}`,
             components: [],
-          }
+          },
         ],
         fields: {
           sendingChain,
@@ -85,7 +85,7 @@ const RequestSummary = ({ nextStep, history }) => {
       selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
     });
   };
-  
+
   const rejectHandler = () => {
     rejectLiskRequest(request);
     removeSearchParamsFromUrl(history, ['modal', 'status', 'name', 'action']);

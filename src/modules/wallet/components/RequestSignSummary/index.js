@@ -9,8 +9,4 @@ const dispatchToProps = {
   actionFunction: transactionSigned,
 };
 
-export default compose(
-  connect(null, dispatchToProps),
-  withRouter,
-  withTranslation()
-)(Summary);
+export default compose(connect(null, dispatchToProps), withRouter, withTranslation())(Summary);
