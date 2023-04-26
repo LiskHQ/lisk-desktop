@@ -40,7 +40,7 @@ const Send = ({ formProps = {}, transactionJSON, t }) => (
         <WalletVisual address={transactionJSON.params.recipientAddress} size={40} />
         <div className={styles.recipientDetail}>
           <span className={`${styles.information} recipient-confirm`}>
-            <b>{formProps.fields.recipient.title}</b>
+            <b>{formProps.fields.recipient?.title ?? t('Recipient')}</b>
           </span>
           <span className={`${styles.secondText} recipient-address`}>
             {transactionJSON.params.recipientAddress}

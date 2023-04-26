@@ -1,11 +1,11 @@
 import React from 'react';
 
 import routes from 'src/routes/routes';
-import MultiStep from 'src/modules/common/components/OldMultiStep';
+import MultiStep from '@common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
-import Summary from '@token/fungible/components/SendSummary';
-import Status from '@token/fungible/components/SendStatus';
+import Summary from '@wallet/components/RequestSignSummary';
+import Status from '@wallet/components/RequestSignStatus';
 import RequestSummary from '../RequestSummary';
 import styles from './requestView.css';
 
@@ -18,7 +18,7 @@ const RequestView = ({ history }) => {
   return (
     <Dialog hasClose className={styles.dialogWrapper}>
       <MultiStep key="RequestView" finalCallback={backToWallet} className={styles.wrapper}>
-        <RequestSummary />
+        <RequestSummary history={history} />
         <Summary />
         <TxSignatureCollector />
         <Status history={history} />
