@@ -24,7 +24,10 @@ const EmptyState = ({ history }) => {
 
   return (
     <BoxEmptyState className={styles.emptyState}>
-      <Illustration name="pageNotFound" className={`${styles.illustration} no-request-illustration`} />
+      <Illustration
+        name="pageNotFound"
+        className={`${styles.illustration} no-request-illustration`}
+      />
       <p>{t('There are no transactions requested from Lisk Desktop yet.')}</p>
     </BoxEmptyState>
   );

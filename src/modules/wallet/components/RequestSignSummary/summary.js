@@ -40,9 +40,7 @@ const RequestSignSummary = ({
     <Box className={styles.boxContainer}>
       <header>
         <h1>{t('Transaction summary')}</h1>
-        <p>
-          {t('Please review and verify the transaction details before signing.')}
-        </p>
+        <p>{t('Please review and verify the transaction details before signing.')}</p>
       </header>
       <BoxContent>
         <Box className={`${styles.container} ${styles.txDetails}`}>

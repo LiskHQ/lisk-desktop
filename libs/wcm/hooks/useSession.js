@@ -8,7 +8,7 @@ import { EVENTS, STATUS, ERROR_CASES } from '../constants/lifeCycle';
 import { useEvents } from './useEvents';
 
 export const useSession = () => {
-  const [ hasLoaded, setHasLoaded ] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const {
     events,
     sessions,
@@ -23,13 +23,15 @@ export const useSession = () => {
   const loadSessions = useCallback(async () => {
     const loadedSessions = [];
 
-      await Promise.all(client.session.keys.map(async (key, index) => {
+    await Promise.all(
+      client.session.keys.map(async (key, index) => {
         const session = client.session.get(key);
         loadedSessions[index] = session;
-      }));
+      })
+    );
 
-      setHasLoaded(true);
-      setSessions(loadedSessions);
+    setHasLoaded(true);
+    setSessions(loadedSessions);
   }, []);
 
   const approve = useCallback(async (selectedAccounts) => {

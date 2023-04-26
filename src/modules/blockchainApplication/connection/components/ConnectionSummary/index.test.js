@@ -111,7 +111,9 @@ describe('ConnectionSummary', () => {
         pairingTopic: '0x123',
       },
     };
-    useEvents.mockReturnValue({ events: [{ name: EVENTS.SESSION_PROPOSAL, meta: proposalWithNoEvents }] });
+    useEvents.mockReturnValue({
+      events: [{ name: EVENTS.SESSION_PROPOSAL, meta: proposalWithNoEvents }],
+    });
     const wrapper = setup();
     wrapper.find('.events span').forEach((event) => {
       expect(event.text()).toEqual('-');

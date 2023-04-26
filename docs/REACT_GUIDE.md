@@ -10,7 +10,8 @@ Each component folder contains at least an `index.js` file.
 
 If the component becomes larger than 200 lines, it should be split into multiple components that should reside in the same folder (if used only from this one component).
 
-###  Component Example
+### Component Example
+
 ```
 ├── Foo/                           # Component folder Foo
 │   ├── index.js                   # Uses <Bar /> and <Baz />
