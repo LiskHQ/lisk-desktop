@@ -1,5 +1,6 @@
 const { resolve } = require('path');
 const merge = require('webpack-merge');
+const nodeExternals = require('webpack-node-externals');
 const baseConfig = require('./webpack.config');
 
 const config = {
@@ -16,6 +17,7 @@ const config = {
     __dirname: false,
     __filename: false,
   },
+  externals: [nodeExternals()],
   module: {
     rules: [
       {
