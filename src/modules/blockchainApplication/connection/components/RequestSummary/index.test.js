@@ -1,10 +1,14 @@
-import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
 import { renderWithQueryClientAndWC } from 'src/utils/testHelpers';
 import { screen, fireEvent } from '@testing-library/react';
 import { useSession } from '@libs/wcm/hooks/useSession';
+import { useEvents } from '@libs/wcm/hooks/useEvents';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
+import mockApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
+import { mockAppTokens } from '@tests/fixtures/token';
 import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
@@ -12,9 +16,19 @@ import { context as defaultContext } from '../../__fixtures__/requestSummary';
 import RequestSummary from './index';
 
 const nextStep = jest.fn();
+const history = {
+  location: {
+    search: '?requestId=1',
+  },
+  push: jest.fn(),
+};
 const address = mockSavedAccounts[0].metadata.address;
+const [appManage1, appManage2] = mockApplicationsManage;
 
+jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
+jest.mock('@token/fungible/hooks/queries/useAppsMetaTokens');
 jest.mock('@libs/wcm/hooks/useSession');
+jest.mock('@libs/wcm/hooks/useEvents');
 jest.mock('@account/hooks/useAccounts', () => ({
   useAccounts: jest.fn().mockImplementation(() => ({
     accounts: [mockSavedAccounts],
@@ -30,9 +44,6 @@ jest.mock('@walletconnect/utils', () => ({
 }));
 jest.mock('@libs/wcm/utils/requestHandlers', () => ({
   rejectLiskRequest: jest.fn(),
-}));
-jest.spyOn(React, 'useContext').mockImplementation(() => ({
-  events: [{ name: EVENTS.SESSION_PROPOSAL, meta: { id: '1' } }],
 }));
 jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   createSignClient: jest.fn(() => Promise.resolve()),
@@ -56,13 +67,48 @@ useCommandSchema.mockReturnValue({
     {}
   ),
 });
+useEvents.mockReturnValue({
+  events: [
+    ...defaultContext.events,
+    {
+      name: EVENTS.SESSION_PROPOSAL,
+      meta: {
+        id: '1',
+        params: {
+          chainId: 'lisk:00000001',
+          request: {
+            params: {
+              recipientChainID: '00000001',
+            }
+          },
+        },
+      },
+    },
+  ],
+});
 
 describe('RequestSummary', () => {
   const reject = jest.fn();
-  useSession.mockReturnValue({ reject, session: defaultContext.session });
+  beforeEach(() => {
+    useBlockchainApplicationMeta.mockReturnValue({
+      data: {
+        data: [appManage1, appManage2],
+      },
+      isLoading: false,
+      isFetching: false,
+    });
+    useAppsMetaTokens.mockReturnValue({
+      data: {
+        data: mockAppTokens,
+      },
+      isLoading: false,
+      isFetching: false,
+    });
+  });
+  useSession.mockReturnValue({ reject, sessionRequest: defaultContext.sessionRequest });
 
   it('Display the requesting app information', () => {
-    renderWithQueryClientAndWC(RequestSummary, { nextStep });
+    renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
     expect(screen.getByTestId('logo')).toHaveAttribute('src', 'http://example.com/icon.png');
     expect(screen.getByText('Signature request')).toBeTruthy();
     expect(screen.getByText('test app')).toBeTruthy();
@@ -70,14 +116,14 @@ describe('RequestSummary', () => {
   });
 
   it('Reject the request if the reject button is clicked', () => {
-    renderWithQueryClientAndWC(RequestSummary, { nextStep });
+    renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
     const button = screen.getAllByRole('button')[0];
     fireEvent.click(button);
     expect(rejectLiskRequest).toHaveBeenCalled();
   });
 
   it('Normalize the rawTx object and send it to the next step', () => {
-    renderWithQueryClientAndWC(RequestSummary, { nextStep });
+    renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
     const button = screen.getAllByRole('button')[1];
     fireEvent.click(button);
     expect(nextStep).toHaveBeenCalled();

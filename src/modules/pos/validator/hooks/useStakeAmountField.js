@@ -53,7 +53,6 @@ const useStakeAmountField = (initialValue) => {
 
   const { i18n } = useTranslation();
   const balance = Number(token?.availableBalance);
-  // const balance = useSelector(selectAccountBalance); // @todo account has multiple balance now
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');

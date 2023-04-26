@@ -4,11 +4,9 @@ import { createContext } from 'react';
 const ConnectionContext = createContext({
   events: [],
   pairings: [],
-  session: {
-    request: false,
-    data: false,
-    loaded: false,
-  },
+  sessions: [],
+  sessionProposal: null,
+  sessionRequest: null,
 });
 
 export default ConnectionContext;

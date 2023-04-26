@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { truncateAddress } from '@wallet/utils/account';
+import { truncateAddress, truncateAccountName } from '@wallet/utils/account';
 import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
 import AccountManagementDropdown from './AccountManagementDropdown';
 
@@ -30,6 +30,21 @@ describe('AccountManagementDropdown', () => {
     expect(screen.getByText('Add new account')).toBeInTheDocument();
     expect(screen.getByText('Register multisignature account')).toBeInTheDocument();
     expect(screen.getByText('Remove account')).toBeInTheDocument();
+  });
+
+  it('truncates account name if necessary', () => {
+    const mockUpdatedCurrentAccount = {
+      ...mockCurrentAccount,
+      metadata: { ...mockCurrentAccount.metadata, name: 'very_long_account' },
+    };
+    const props = {
+      currentAccount: mockUpdatedCurrentAccount,
+      onMenuClick: mockOnMenuClick,
+    };
+    renderWithRouterAndQueryClient(AccountManagementDropdown, props);
+    expect(
+      screen.getByText(truncateAccountName(mockUpdatedCurrentAccount.metadata.name))
+    ).toBeInTheDocument();
   });
 
   it('Should display hw icon when current account is a hardware wallet account', () => {

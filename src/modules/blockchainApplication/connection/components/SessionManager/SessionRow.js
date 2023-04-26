@@ -12,7 +12,7 @@ const SessionRow = ({ data, t, disconnect }) => (
     className={`connection ${styles.sessionRow} ${tableStyles.row} ${grid.row}`}
   >
     <div className={grid['col-xs-3']}>
-      <span>{data.peerMetadata.name}</span>
+      <span>{data.peer.metadata.name}</span>
     </div>
     <div className={grid['col-xs-3']}>
       <span>{moment(data.expiry * 1000).format('DD MMM YYYY')}</span>
