@@ -32,7 +32,7 @@ const BackupRecoveryPhraseFlow = ({ history }) => {
         <MultiStep navStyles={{ multiStepWrapper: styles.wrapper }} ref={multiStepRef}>
           <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />
           <SavePassphrase passphrase={passphrase} title={t('Backup your secret recovery phrase')} />
-          <ConfirmPassphrase passphrase={passphrase} />
+          <ConfirmPassphrase passphrase={passphrase} continueText={t('Continue')} />
           <SetPasswordSuccess
             buttonText={t('Continue to wallet')}
             encryptedPhrase={account}

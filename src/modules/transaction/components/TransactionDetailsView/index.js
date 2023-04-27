@@ -3,7 +3,6 @@ import React, { useMemo, useState } from 'react';
 import { withRouter } from 'react-router';
 import ReactJson from 'react-json-view';
 import { useTranslation } from 'react-i18next';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { isEmpty } from 'src/utils/helpers';
 import { parseSearchParams } from 'src/utils/searchParams';
 import Box from 'src/theme/box';
@@ -12,12 +11,13 @@ import Heading from 'src/modules/common/components/Heading';
 import BoxHeader from 'src/theme/box/header';
 import Table from 'src/theme/table';
 import { useTheme } from 'src/theme/Theme';
+import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import NotFound from './notFound';
 import styles from './styles.css';
 import TransactionEvents from '../TransactionEvents';
-import { useTransactions } from '../../hooks/queries';
+import { useFees, useTransactions } from '../../hooks/queries';
 import TransactionDetailRow from '../TransactionDetailRow';
 import header from './headerMap';
 import { splitModuleAndCommand } from '../../utils';
@@ -26,8 +26,12 @@ const TransactionDetails = ({ location }) => {
   const transactionID = parseSearchParams(location.search).transactionID;
   const { t } = useTranslation();
   const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
-  const { data: tokens } = useTokenBalances();
-  const token = tokens?.data?.[0] || {};
+  const { data: fees } = useFees();
+  const feeTokenID = fees?.data?.feeTokenID;
+  const { data: token } = useAppsMetaTokens({
+    config: { params: { tokenID: feeTokenID }, options: { enable: !feeTokenID } },
+  });
+  const feeToken = token?.data[0];
 
   const theme = useTheme();
   const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : '';
@@ -60,7 +64,7 @@ const TransactionDetails = ({ location }) => {
       },
       {
         label: t('Fee'),
-        value: <TokenAmount val={fee} token={token} />,
+        value: <TokenAmount val={fee} token={feeToken} />,
       },
       {
         label: t('Date'),
@@ -108,7 +112,7 @@ const TransactionDetails = ({ location }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Heading title={t('Transaction details')} />
+      <Heading title={t('Transaction')} />
       <div className={styles.body}>
         <Box isLoading={isLoading} className={styles.container}>
           <BoxHeader>

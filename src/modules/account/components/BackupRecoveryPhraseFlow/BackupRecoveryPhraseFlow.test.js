@@ -53,7 +53,9 @@ describe('Backup account recovery phrase flow', () => {
     await waitFor(() => {
       expect(screen.getByText('Backup your secret recovery phrase')).toBeTruthy();
       expect(
-        screen.getByText('Ensure that you keep this in a safe place, with access to the seed you can re-create the account.')
+        screen.getByText(
+          'Ensure that you keep this in a safe place, with access to the seed you can re-create the account.'
+        )
       ).toBeTruthy();
       expect(
         screen.getByText(

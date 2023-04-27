@@ -81,8 +81,9 @@ const TransactionPriority = ({
             return (
               <button
                 key={`fee-priority-${index}`}
-                className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''
-                  } option-${priority.title}`}
+                className={`${styles.priorityTitle} ${
+                  index === selectedPriority ? styles.priorityTitleSelected : ''
+                } option-${priority.title}`}
                 onClick={onClickPriority}
                 value={index}
                 disabled={disabled}
