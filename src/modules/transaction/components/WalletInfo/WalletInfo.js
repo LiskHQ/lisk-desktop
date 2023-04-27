@@ -33,7 +33,7 @@ const WalletInfo = ({ name = '', label, address, addressClass, className }) => {
 
 WalletInfo.propTypes = {
   address: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   addressClass: PropTypes.string,
   name: PropTypes.string,
 };
