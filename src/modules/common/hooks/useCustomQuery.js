@@ -3,7 +3,7 @@ import defaultClient from 'src/utils/api/client';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 
 /**
- * Creates a custom hook for inifinite queries
+ * Creates a custom hook for infinite queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {string[]} configuration.keys - the query keys

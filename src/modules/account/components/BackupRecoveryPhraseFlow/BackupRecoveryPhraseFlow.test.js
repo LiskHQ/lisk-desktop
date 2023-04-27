@@ -32,6 +32,7 @@ reactRedux.useSelector = jest.fn().mockReturnValue(wallets.genesis);
 
 const props = {
   history: { push: jest.fn() },
+  confirmText: 'Confirm',
 };
 
 describe('Backup account recovery phrase flow', () => {

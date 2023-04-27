@@ -4,7 +4,7 @@ import PassphraseRenderer from '@wallet/components/passphraseRenderer';
 import registerStyles from '../Signup/register.css';
 import styles from './confirmPassphrase.css';
 
-const ConfirmPassphrase = ({ t, passphrase, prevStep, nextStep, continueText }) => (
+const ConfirmPassphrase = ({ t, passphrase, prevStep, nextStep, confirmText }) => (
   <>
     <div className={registerStyles.titleHolder}>
       <h1>{t('Confirm your secret recovery phrase')}</h1>
@@ -21,7 +21,7 @@ const ConfirmPassphrase = ({ t, passphrase, prevStep, nextStep, continueText }) 
         nextStep={nextStep}
         prevStep={prevStep}
         isConfirmation
-        continueText={continueText}
+        confirmText={confirmText}
       />
     </div>
   </>

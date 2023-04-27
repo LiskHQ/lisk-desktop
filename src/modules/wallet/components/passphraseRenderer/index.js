@@ -134,7 +134,7 @@ class PassphraseRenderer extends React.Component {
   }
 
   render() {
-    const { t, showInfo, isConfirmation, prevStep, footerStyle, subheader, continueText } =
+    const { t, showInfo, isConfirmation, prevStep, footerStyle, subheader, confirmText } =
       this.props;
     const { options, fieldSelected, chosenWords } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
@@ -190,7 +190,7 @@ class PassphraseRenderer extends React.Component {
               onClick={this.handleConfirm}
               disabled={Object.keys(chosenWords).length < 2}
             >
-              {continueText || t('Continue to set password')}
+              {confirmText || t('Continue to set password')}
             </PrimaryButton>
             <TertiaryButton className={styles.editBtn} onClick={prevStep}>
               {t('Go back')}
