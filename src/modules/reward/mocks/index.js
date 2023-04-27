@@ -8,7 +8,7 @@ export const rewardConstants = rest.get(
 );
 
 export const rewardInflation = rest.get(
-  `*/api/${API_VERSION}/reward/inflation`,
+  `*/api/${API_VERSION}/reward/annual-inflation`,
   async (req, res, ctx) => res(ctx.delay(20), ctx.json(mockRewardInflation))
 );
 

@@ -12,7 +12,7 @@ const WalletInfo = ({ name = '', label, address, addressClass, className }) => {
   const addressLink = `${routes.explorer.path}?address=${address}`;
   return (
     <div className={`${styles.walletInfo} ${className}`}>
-      <p className={styles.label}>{label}</p>
+      {!!label && <p className={styles.label}>{label}</p>}
       <div className={styles.addressRow}>
         <WalletVisual className={styles.avatar} address={address} size={25} />
         {validateAddress(address) === 0 ? (

@@ -21,7 +21,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 export const usePeers = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/peers`,
+    url: `/api/${API_VERSION}/network/peers`,
     event: 'get.peers',
     method: 'get',
     ...customConfig,
