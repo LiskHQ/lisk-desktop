@@ -8,19 +8,22 @@ import {
   mockTokensAccountExists,
 } from '@token/fungible/__fixtures__';
 
-export const tokensBalance = rest.get(`*/api/${API_VERSION}/tokens`, async (req, res, ctx) => {
-  const limit = Number(req.url.searchParams.get('limit'));
-  const offset = Number(req.url.searchParams.get('offset') || 0);
-  const response = {
-    data: mockTokensBalance.data.slice(offset, offset + limit),
-    meta: {
-      ...mockTokensBalance.meta,
-      count: limit,
-      offset,
-    },
-  };
-  return res(ctx.json(response));
-});
+export const tokensBalance = rest.get(
+  `*/api/${API_VERSION}/token/balances`,
+  async (req, res, ctx) => {
+    const limit = Number(req.url.searchParams.get('limit'));
+    const offset = Number(req.url.searchParams.get('offset') || 0);
+    const response = {
+      data: mockTokensBalance.data.slice(offset, offset + limit),
+      meta: {
+        ...mockTokensBalance.meta,
+        count: limit,
+        offset,
+      },
+    };
+    return res(ctx.json(response));
+  }
+);
 
 export const tokensTopLskBalance = rest.get(
   `*/api/${API_VERSION}/tokens/lsk/top`,
