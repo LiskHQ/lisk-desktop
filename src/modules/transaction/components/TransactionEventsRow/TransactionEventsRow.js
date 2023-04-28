@@ -22,7 +22,7 @@ const TransactionEventRow = ({ data: transactionEvent, isWallet }) => {
     block: { height, id },
   } = transactionEvent;
   const theme = useTheme();
-  const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : '';
+  const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : 'rjv-default';
 
   return (
     <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
