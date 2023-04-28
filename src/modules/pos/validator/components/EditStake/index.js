@@ -91,7 +91,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     return stakes.find(({ address: stakerAddress }) => stakerAddress === address);
   }, [sentStakes, address, staking]);
 
-  const [stakeAmount, setStakeAmount, isGettingPosToken] = useStakeAmountField(
+  const [stakeAmount, setStakeAmount, isGettingPosToken, initalStakeAmount] = useStakeAmountField(
     convertFromBaseDenom(staking[address]?.unconfirmed || validatorStake?.amount || 0, token)
   );
   const mode = validatorStake || staking[address] ? 'edit' : 'add';
@@ -150,6 +150,9 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     add: titles.title,
   };
 
+  const confirmHeaderTitle =
+    +initalStakeAmount - +stakeAmount.value > 0 ? t('Stake removed') : t('Stake added');
+  
   return (
     <Dialog
       hasClose
@@ -157,7 +160,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     >
       <Box>
         <BoxHeader>
-          <h1>{!isForm ? t('Stake added') : headerTitles[mode]}</h1>
+          <h1>{!isForm ? confirmHeaderTitle : headerTitles[mode]}</h1>
         </BoxHeader>
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>

@@ -72,7 +72,9 @@ const SentStakes = ({ history }) => {
         <QueryTable
           showHeader
           queryHook={useSentStakes}
-          transformResponse={(resp) => resp?.stakes || []}
+          transformResponse={(resp) =>
+            resp?.stakes.sort((a, b) => (b.address < a.address ? 1 : -1)) || []
+          }
           queryConfig={{ config: { params: { address: stakerAddress } } }}
           row={SentStakesRow}
           header={header(t)}

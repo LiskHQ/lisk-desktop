@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -70,6 +70,8 @@ const useStakeAmountField = (initialValue) => {
     error: false,
   });
 
+  const initalStakeAmount = useMemo(() => initialValue, []);
+
   useEffect(() => {
     if (!+amountField.value && initialValue) {
       setAmountField({
@@ -107,7 +109,7 @@ const useStakeAmountField = (initialValue) => {
     }, 300);
   };
 
-  return [amountField, onAmountInputChange, isGettingPosToken];
+  return [amountField, onAmountInputChange, isGettingPosToken, initalStakeAmount];
 };
 
 export default useStakeAmountField;
