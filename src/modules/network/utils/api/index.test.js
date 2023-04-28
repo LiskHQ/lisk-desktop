@@ -37,7 +37,7 @@ describe('API: LSK Network', () => {
       );
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
-        path: '/api/v3/peers',
+        path: '/api/v3/network/peers',
         params: { version: '3.0' },
         network,
       });

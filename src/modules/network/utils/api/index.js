@@ -3,7 +3,7 @@ import http from 'src/utils/api/http';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 
 const httpPaths = {
-  peers: `${HTTP_PREFIX}/peers`,
+  peers: `${HTTP_PREFIX}/network/peers`,
   networkStatus: `${HTTP_PREFIX}/network/status`,
   networkStatistics: `${HTTP_PREFIX}/network/statistics`,
 };

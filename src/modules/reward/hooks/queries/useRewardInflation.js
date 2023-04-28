@@ -14,7 +14,7 @@ import { useCustomQuery } from '@common/hooks';
 
 export const useRewardInflation = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/reward/inflation`,
+    url: `/api/${API_VERSION}/reward/annual-inflation`,
     method: 'get',
     event: 'get.reward.inflation',
     ...customConfig,
