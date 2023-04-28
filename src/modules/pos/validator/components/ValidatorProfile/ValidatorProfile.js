@@ -98,6 +98,7 @@ const ValidatorProfile = ({ history }) => {
               accountName={validator.name}
               detailsClassName={styles.accountSummary}
               truncate={false}
+              publicKey={validator.publicKey}
             />
           )
         }
