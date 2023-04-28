@@ -11,7 +11,7 @@ const getRewardsClaimableHeader = (t) => [
   },
   {
     title: t && t('Fiat'),
-    classList: `${grid['col-xs-1']}`,
+    classList: `${grid['col-xs-3']}`,
   },
 ];
 
