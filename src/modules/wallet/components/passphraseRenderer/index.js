@@ -145,7 +145,9 @@ class PassphraseRenderer extends React.Component {
             <h2 className={styles.header}>{t('Secret recovery phrase')}</h2>
             {subheader && (
               <p className={styles.subheader}>
-                {t('Please write down these 12 words carefully, and store them in a safe place.')}
+                {t(
+                  'Please write down these seed values carefully. Ensure that you keep this in a safe place, with access to the seed you can re-create the account.'
+                )}
               </p>
             )}
           </>

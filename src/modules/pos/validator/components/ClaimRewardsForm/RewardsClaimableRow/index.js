@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
+import numeral from 'numeral';
 import { getLogo } from '@token/fungible/utils/helpers';
+import Converter from '@common/components/converter';
 import styles from './RewardsClaimableRow.css';
 
 const RewardsClaimableRow = ({ data, rewardsClaimableHeader }) => {
@@ -16,9 +18,15 @@ const RewardsClaimableRow = ({ data, rewardsClaimableHeader }) => {
         <span className={styles.tokenName}>{tokenName}</span>
       </div>
       <div className={classNames(rewardsClaimableHeader[1].classList)}>
-        {`${parseInt(reward, denom)} ${symbol}`}
+        {`${numeral(parseInt(reward, denom)).format('0,0.00')} ${symbol}`}
       </div>
-      <div className={classNames(rewardsClaimableHeader[2].classList)}>{amountInFiat}</div>
+      <div className={classNames(rewardsClaimableHeader[2].classList)}>
+        <Converter
+          className={styles.fiatBalance}
+          value={numeral(amountInFiat).format('0,0.00')}
+          tokenSymbol={symbol}
+        />
+      </div>
     </div>
   );
 };
