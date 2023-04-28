@@ -12,7 +12,7 @@ import styles from './styles.css';
 const errorData = (t) => ({
   error: true,
   illustration: 'transactionError',
-  title: t('Transaction signing failed'),
+  title: t('Transaction signature failure'),
   description: t(
     'There was an error signing your transaction. please close this dialog and try again.'
   ),
@@ -21,9 +21,9 @@ const errorData = (t) => ({
 const successData = (t) => ({
   error: false,
   illustration: 'transactionSuccess',
-  title: t('Transaction signing successful'),
+  title: t('Transaction signature successful'),
   description: t(
-    'Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.'
+    'Your transaction has been signed. Please copy the signed transaction and return to application.'
   ),
 });
 

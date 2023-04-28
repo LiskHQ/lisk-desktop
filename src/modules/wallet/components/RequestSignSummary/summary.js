@@ -18,7 +18,7 @@ const RequestSignSummary = ({
   prevStep,
 }) => {
   const confirmButton = {
-    label: t('Send'),
+    label: t('Sign'),
     onClick: () => {
       nextStep({
         formProps,
@@ -62,7 +62,7 @@ const RequestSignSummary = ({
         <Footer
           cancelButton={cancelButton}
           confirmButton={confirmButton}
-          confirmButtonText={t('Send')}
+          confirmButtonText={t('Sign')}
           cancelButtonText={t('Go back')}
           t={t}
         />

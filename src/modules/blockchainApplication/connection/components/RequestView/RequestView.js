@@ -28,7 +28,7 @@ const RequestView = ({ history }) => {
       >
         <RequestSummary history={history} />
         <Summary />
-        <TxSignatureCollector />
+        <TxSignatureCollector confirmText="Confirm and sign"/>
         <Status history={history} />
       </MultiStep>
     </Dialog>
