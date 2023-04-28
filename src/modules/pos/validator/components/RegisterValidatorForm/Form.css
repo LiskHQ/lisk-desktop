@@ -12,6 +12,7 @@
 
   & .header {
     & h2 {
+      color: var(--color-black);
       font-size: var(--font-size-h5);
       font-weight: var(--font-weight-bold);
       margin: 0;
