@@ -146,7 +146,7 @@ class PassphraseRenderer extends React.Component {
             {subheader && (
               <p className={styles.subheader}>
                 {t(
-                  'Please write down these 12/24 words carefully, and store them in a safe place.'
+                  'Please write down these seed values carefully. Ensure that you keep this in a safe place, with access to the seed you can re-create the account.'
                 )}
               </p>
             )}
