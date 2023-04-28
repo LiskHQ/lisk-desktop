@@ -57,7 +57,7 @@ describe('Backup account recovery phrase flow', () => {
       ).toBeTruthy();
       expect(
         screen.getByText(
-          'Please write down these 12 words carefully, and store them in a safe place.'
+          'Please write down these 12/24 words carefully, and store them in a safe place.'
         )
       ).toBeTruthy();
       expect(screen.getByText('Copy')).toBeTruthy();
