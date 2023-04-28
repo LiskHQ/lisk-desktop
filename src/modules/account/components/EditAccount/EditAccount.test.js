@@ -22,7 +22,7 @@ describe('Edit Account', () => {
       target: { value: updatedAccountName },
     });
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Done'));
+      fireEvent.click(screen.getByText('Save'));
     });
     expect(screen.getByText('Edit account name')).toBeInTheDocument();
     expect(

@@ -68,7 +68,7 @@ describe('Validator Profile', () => {
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getAllByText('Round state')).toHaveLength(1);
     expect(screen.getByText('Validator weight')).toBeTruthy();
-    expect(screen.getByText('Last generated block')).toBeTruthy();
+    expect(screen.getByText('Last generated at')).toBeTruthy();
 
     expect(screen.getByText('Last generated block height')).toBeTruthy();
     expect(screen.getByText('Blocks generated')).toBeTruthy();
@@ -80,7 +80,7 @@ describe('Validator Profile', () => {
       screen.getByText('This validator is among the first 101 validators by validator weight.')
     ).toBeTruthy();
     expect(
-      screen.getByText('Active validators are select to generate blocks every round.')
+      screen.getByText('Active validators are selected to generate blocks every round.')
     ).toBeTruthy();
 
     expect(screen.getByText(mockBlocks.meta.total)).toBeTruthy();
