@@ -16,6 +16,7 @@
     width: 100%;
     border-bottom: 1px solid var(--color-platinum);
     box-sizing: border-box;
+    padding: 5px 0px;
 
     &:last-child {
       border-bottom: none;
@@ -63,6 +64,5 @@
   & .value {
     line-height: 26px;
     font-weight: 500;
-    padding-bottom: 8px;
   }
 }

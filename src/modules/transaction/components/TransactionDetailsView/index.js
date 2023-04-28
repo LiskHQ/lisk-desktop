@@ -34,7 +34,7 @@ const TransactionDetails = ({ location }) => {
   const feeToken = token?.data[0];
 
   const theme = useTheme();
-  const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : '';
+  const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : 'rjv-default';
 
   const {
     data: transactions,
