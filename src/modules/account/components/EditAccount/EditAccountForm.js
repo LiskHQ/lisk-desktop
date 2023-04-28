@@ -76,7 +76,7 @@ const EditAccountForm = ({ nextStep }) => {
               {...register('accountName')}
             />
             <PrimaryButton className={styles.button} disabled={!isDirty} type="submit">
-              {t('Done')}
+              {t('Save')}
             </PrimaryButton>
           </form>
         </BoxContent>

@@ -42,7 +42,7 @@ describe('Edit account', () => {
       target: { value: updatedAccountName },
     });
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Done'));
+      fireEvent.click(screen.getByText('Save'));
     });
     expect(mockDispatch).toHaveBeenCalledTimes(2);
     expect(mockDispatch).toHaveBeenCalledWith(updateCurrentAccount({ name: updatedAccountName }));
@@ -63,7 +63,7 @@ describe('Edit account', () => {
       target: { value: 'ac' },
     });
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Done'));
+      fireEvent.click(screen.getByText('Save'));
     });
     fireEvent.change(screen.getByTestId('accountName'), {
       target: { value: '' },
@@ -82,7 +82,7 @@ describe('Edit account', () => {
       target: { value: invalidAccountName },
     });
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Done'));
+      fireEvent.click(screen.getByText('Save'));
     });
     await waitFor(() => {
       expect(
@@ -101,7 +101,7 @@ describe('Edit account', () => {
       target: { value: updatedAccountName },
     });
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Done'));
+      fireEvent.click(screen.getByText('Save'));
     });
     expect(mockDispatch).toHaveBeenCalledTimes(2);
   });

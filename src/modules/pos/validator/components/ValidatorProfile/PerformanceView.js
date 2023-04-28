@@ -55,7 +55,7 @@ const ActiveValidator = ({ theme, t }) => (
   <div className={`${styles.validatorDescription} ${theme}`}>
     <p>{t('This validator is among the first 101 validators by validator weight.')}</p>
 
-    <p>{t('Active validators are select to generate blocks every round.')}</p>
+    <p>{t('Active validators are selected to generate blocks every round.')}</p>
   </div>
 );
 

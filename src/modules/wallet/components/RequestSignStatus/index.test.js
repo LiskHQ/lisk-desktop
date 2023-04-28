@@ -58,10 +58,10 @@ describe('RequestSignStatus', () => {
     reactRedux.useSelector.mockReturnValue(successTransactions);
     useSession.mockReturnValue({ respond, reject });
     renderWithRouterAndQueryClient(RequestSignStatus, props);
-    expect(screen.getByText('Transaction signing successful')).toBeInTheDocument();
+    expect(screen.getByText('Transaction signature successful')).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Your transaction has been signed, click the button below to copy your signed transaction, once copied you will be redirected to application.'
+        'Your transaction has been signed. Please copy the signed transaction and return to application.'
       )
     ).toBeInTheDocument();
     expect(screen.getByText('Copy signatures')).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe('RequestSignStatus', () => {
     reactRedux.useSelector.mockReturnValue(failureTransactions);
     useSession.mockReturnValue({ respond, reject });
     renderWithRouterAndQueryClient(RequestSignStatus, props);
-    expect(screen.getByText('Transaction signing failed')).toBeInTheDocument();
+    expect(screen.getByText('Transaction signature failure')).toBeInTheDocument();
     expect(
       screen.getByText(
         'There was an error signing your transaction. please close this dialog and try again.'
