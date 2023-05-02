@@ -48,6 +48,18 @@ describe('RemoveConfirmationScreen', () => {
     fireEvent.click(screen.getByText('Cancel'));
   });
 
+  it('Should show label for hwWallet', async () => {
+    const propsWithHWAccount = {
+      ...props,
+      account: {
+        ...props.account,
+        isHW: true,
+      },
+    };
+    removeScreen.rerender(<RemoveConfirmationScreen {...propsWithHWAccount} />);
+    expect(screen.getByText(message)).toBeTruthy();
+  });
+
   it('Should abort the removal when cancel with go back option', async () => {
     const removeProps = {
       ...props,
