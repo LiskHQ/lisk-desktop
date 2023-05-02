@@ -1,3 +1,4 @@
+import blockchainApplicationActionTypes from "@blockchainApplication/manage/store/actionTypes";
 import actionTypes from '../actions/actionTypes';
 
 /**
@@ -110,6 +111,10 @@ const staking = (state = {}, action) => {
     case actionTypes.stakeDiscarded:
       delete clonedState[action.data.address];
       return clonedState;
+
+    case blockchainApplicationActionTypes.setCurrentApplication: {
+      return {};
+    }
     /**
      * Resets the stake dictionary after the user signs out.
      */
