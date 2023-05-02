@@ -626,7 +626,7 @@
   "This account doesn’t have any stakes matching the searched username.": "This account doesn’t have any stakes matching the searched username.",
   "This account doesn’t have any stakes.": "This account doesn’t have any stakes.",
   "This account is a multisignature account.": "This account is a multisignature account.",
-  "This account will no longer be stored on this device.${\n            !isHw ? 'You can backup your secret recovery phrase before removing it.' : ''\n          }": "This account will no longer be stored on this device.${\n            !isHw ? 'You can backup your secret recovery phrase before removing it.' : ''\n          }",
+  "This account will no longer be stored on this device.{{text}}": "This account will no longer be stored on this device.{{text}}",
   "This avatar will be linked to your new Lisk address.": "This avatar will be linked to your new Lisk address.",
   "This is a legacy account and can not be used on this network.": "This is a legacy account and can not be used on this network.",
   "This is not a valid public key. Please enter the correct public key.": "This is not a valid public key. Please enter the correct public key.",

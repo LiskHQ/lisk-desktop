@@ -31,11 +31,9 @@ const RemoveConfirmation = ({ history, location, account, onRemoveAccount }) => 
       {accountName && <p className={styles.accountName}>{accountName}</p>}
       <p className={styles.accountAddress}>{account?.metadata?.address}</p>
       <p className={styles.subheader}>
-        {t(
-          `This account will no longer be stored on this device.${
-            !isHw ? 'You can backup your secret recovery phrase before removing it.' : ''
-          }`
-        )}
+        {t('This account will no longer be stored on this device.{{text}}', {
+          text: !isHw ? ' You can backup your secret recovery phrase before removing it.' : '',
+        })}
       </p>
       {!isHw && <DownloadJSON fileName={fileName} encryptedPhrase={account} />}
       <div className={classNames(styles.buttonRow, isHw && styles.mgt30)}>
