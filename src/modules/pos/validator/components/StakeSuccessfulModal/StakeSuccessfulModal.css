@@ -10,8 +10,18 @@
     padding-bottom: 4px !important;
   }
 
+  & > header > h2 {
+    font-size: var(--font-size-h3) !important;
+  }
+
+  & header ~ div {
+    padding-top: 10px;
+  }
+
   & .messageLabel {
     color: var(--color-maastricht-blue);
+    margin-top: 25px;
+    text-align: center;
   }
 
   & .stakedHeader {
@@ -33,10 +43,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    & .illustration {
-      width: 90px;
-    }
 
     & .illustration ~ h4 {
       @mixin contentLargest semi-bold;
