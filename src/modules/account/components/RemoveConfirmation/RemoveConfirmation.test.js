@@ -52,8 +52,10 @@ describe('RemoveConfirmationScreen', () => {
     const propsWithHWAccount = {
       ...props,
       account: {
-        ...props.account,
-        isHW: true,
+        metadata: {
+          ...props.account.metadata,
+          isHW: true,
+        }
       },
     };
     removeScreen.rerender(<RemoveConfirmationScreen {...propsWithHWAccount} />);
