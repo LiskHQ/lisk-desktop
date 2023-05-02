@@ -58,7 +58,7 @@ const ApplicationBootstrap = ({ children }) => {
     }
 
     if (isFirstTimeLoading && blockchainAppsMeta.isFetched) setIsFirstTimeLoading(false);
-  }, [mainChainApplication?.chainID, blockchainAppsMeta.isFetched]);
+  }, [mainChainApplication?.chainID, blockchainAppsMeta?.isFetched]);
 
   useLedgerDeviceListener();
 
