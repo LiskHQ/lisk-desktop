@@ -37,7 +37,7 @@ const RemoveConfirmation = ({ history, location, account, onRemoveAccount }) => 
           }`
         )}
       </p>
-      {!isHw ?? <DownloadJSON fileName={fileName} encryptedPhrase={account} />}
+      {!isHw && <DownloadJSON fileName={fileName} encryptedPhrase={account} />}
       <div className={classNames(styles.buttonRow, isHw && styles.mgt30)}>
         <SecondaryButton className={styles.button} onClick={handleCancelDialog}>
           {t('Cancel')}
