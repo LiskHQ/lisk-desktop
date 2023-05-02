@@ -56,8 +56,9 @@ const ApplicationBootstrap = ({ children }) => {
       setCurrentApplication(refreshedCurrentApplication || mainChainApplication);
       setApplications(blockchainAppsMeta?.data?.data || []);
     }
+
     if (isFirstTimeLoading && blockchainAppsMeta.isFetched) setIsFirstTimeLoading(false);
-  }, [mainChainApplication?.chainID]);
+  }, [mainChainApplication?.chainID, blockchainAppsMeta.isFetched]);
 
   useLedgerDeviceListener();
 
@@ -71,7 +72,7 @@ const ApplicationBootstrap = ({ children }) => {
     );
   }
 
-  return !isLoading || !isFirstTimeLoading ? children : null;
+  return !isFirstTimeLoading ? children : null;
 };
 
 export default ApplicationBootstrap;
