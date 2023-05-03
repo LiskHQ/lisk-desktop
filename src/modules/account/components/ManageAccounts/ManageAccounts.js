@@ -32,7 +32,7 @@ export const ManageAccountsContent = ({
   const [showRemove, setShowRemove] = useState(false);
   const title = customTitle ?? t('Manage accounts');
   const { accounts: hwAccounts, isLoadingHWAccounts } = useHWAccounts();
-  const hwAccountsToShow = currentHWDevice.path
+  const hwAccountsToShow = currentHWDevice?.path
     ? hwAccounts
     : hwAccounts.filter((account) => !account.metadata.isNew);
 
