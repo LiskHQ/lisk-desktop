@@ -12,12 +12,12 @@ const Network = () => {
   const { t } = useTranslation();
 
   return (
-    <div>
+    <div className={styles.networkMonitorWrapper}>
       <Statistics />
       <Box className="map-box">
         <BoxHeader>
-          <div>
-            <h1 className={`${styles.contentHeader} contentHeader`}>{t('Connected peers')}</h1>
+          <div className={styles.headerWrapper}>
+            <h5 className={`${styles.contentHeader} contentHeader`}>{t('Connected peers')}</h5>
             <Tooltip position="right">
               <p>
                 {t(

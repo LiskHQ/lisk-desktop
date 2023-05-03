@@ -157,7 +157,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     >
       <Box>
         <BoxHeader>
-          <h1>{!isForm ? t('Stake added') : headerTitles[mode]}</h1>
+          <h1>{!isForm ? t('Stake added to queue') : headerTitles[mode]}</h1>
         </BoxHeader>
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>

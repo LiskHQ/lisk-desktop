@@ -35,6 +35,7 @@
 
     & > div {
       display: flex;
+      justify-content: center;
     }
 
     & > label ~ div {

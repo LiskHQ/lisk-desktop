@@ -26,10 +26,10 @@ describe('AddAccountForm', () => {
     expect(
       screen.getByText('Enter your secret recovery phrase to manage your account.')
     ).toBeTruthy();
-    expect(screen.getByText('Continue')).toBeTruthy();
+    expect(screen.getByText('Continue to set password')).toBeTruthy();
     expect(screen.getByText('Go Back')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('Continue'));
+    fireEvent.click(screen.getByText('Continue to set password'));
     expect(props.onAddAccount).not.toBeCalled();
   });
 
@@ -44,7 +44,7 @@ describe('AddAccountForm', () => {
     });
 
     fireEvent(inputField, pasteEvent);
-    fireEvent.click(screen.getByText('Continue'));
+    fireEvent.click(screen.getByText('Continue to set password'));
     expect(props.onAddAccount).toBeCalled();
   });
 
@@ -63,7 +63,7 @@ describe('AddAccountForm', () => {
     expect(props.onAddAccount).toBeCalled();
   });
 
-  it('should not trigger add account with a wrong mneumoic secret recovery phrase', () => {
+  it('should not trigger add account with a wrong mnemonic secret recovery phrase', () => {
     const inputField = screen.getByTestId('recovery-1');
 
     const pasteEvent = createEvent.paste(inputField, {
@@ -74,7 +74,7 @@ describe('AddAccountForm', () => {
     });
 
     fireEvent(inputField, pasteEvent);
-    fireEvent.click(screen.getByText('Continue'));
+    fireEvent.click(screen.getByText('Continue to set password'));
     expect(props.onAddAccount).not.toBeCalled();
   });
 
@@ -100,7 +100,7 @@ describe('AddAccountForm', () => {
       },
     });
     fireEvent(passphraseInput1, pasteEvent);
-    expect(screen.getByText('Continue')).toHaveAttribute('disabled');
+    expect(screen.getByText('Continue to set password')).toHaveAttribute('disabled');
   });
 
   it('should trigger add account if derivation path and passphrase is correct', () => {
@@ -121,7 +121,7 @@ describe('AddAccountForm', () => {
     });
     fireEvent(passphraseInput1, pasteEvent);
 
-    fireEvent.click(screen.getByText('Continue'));
+    fireEvent.click(screen.getByText('Continue to set password'));
 
     expect(props.onAddAccount).toHaveBeenCalledWith(
       { value: passphrase, isValid: true },
