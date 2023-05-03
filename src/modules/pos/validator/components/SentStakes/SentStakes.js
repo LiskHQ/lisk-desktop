@@ -9,6 +9,7 @@ import { QueryTable } from 'src/theme/QueryTable';
 import BoxHeader from 'src/theme/box/header';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
+import routes from 'src/routes/routes';
 import StakesCount from '@pos/validator/components/StakesCount';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import styles from './SentStakes.css';
@@ -55,10 +56,14 @@ const SentStakes = ({ history }) => {
   const stakerAddress = useStakerAddress(history.location.search);
   const { token } = usePosToken({ address: stakerAddress });
 
+  const handleGoToValidators = () => {
+    history.push(routes.validators.path);
+  };
+
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
-        <Heading title={t('Stakes')}>
+        <Heading title={t('Stakes')} onGoBack={handleGoToValidators}>
           <div className={styles.rightHeaderSection}>
             <StakesCount className={styles.stakesCountProp} address={stakerAddress} />
             <div className={styles.actionButtons}>
@@ -72,7 +77,9 @@ const SentStakes = ({ history }) => {
         <QueryTable
           showHeader
           queryHook={useSentStakes}
-          transformResponse={(resp) => resp?.stakes || []}
+          transformResponse={(resp) =>
+            resp?.stakes.sort((a, b) => (b.address < a.address ? 1 : -1)) || []
+          }
           queryConfig={{ config: { params: { address: stakerAddress } } }}
           row={SentStakesRow}
           header={header(t)}

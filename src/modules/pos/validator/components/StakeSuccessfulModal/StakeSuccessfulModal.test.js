@@ -16,8 +16,7 @@ describe('StakeSuccessfulModal', () => {
     };
     renderWithRouter(TokenRow, props);
 
-    expect(screen.getByText('Staking confirmation')).toBeTruthy();
-    expect(screen.getByText('Tokens are now staked')).toBeTruthy();
+    expect(screen.getByText('Staking confirmed')).toBeTruthy();
     expect(screen.getByText('test message')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Back to validators'));
