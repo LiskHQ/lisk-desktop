@@ -146,7 +146,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
 
   const feedback = validateStakes(
     stakes,
-    BigInt(posToken?.availableBalance),
+    BigInt(posToken?.availableBalance ?? 0),
     BigInt(convertToBaseDenom(fee, token)),
     resultingNumOfStakes,
     t,

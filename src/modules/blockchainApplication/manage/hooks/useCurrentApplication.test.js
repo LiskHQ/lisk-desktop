@@ -1,6 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
 import client from 'src/utils/api/client';
+import stakesActionTypes from '@pos/validator/store/actions/actionTypes';
 import actionTypes from '../store/actionTypes';
 import { useCurrentApplication } from './useCurrentApplication';
 
@@ -36,6 +37,9 @@ describe('useCurrentApplication hook', () => {
       type: actionTypes.setCurrentApplication,
       app: mockApplications[0],
     };
+    const expectedStakesResetAction = {
+      type: stakesActionTypes.stakesReset,
+    };
     act(() => {
       setCurrentApplication(mockApplications[0]);
     });
@@ -43,7 +47,8 @@ describe('useCurrentApplication hook', () => {
       ws: expect.stringMatching('ws'),
       rest: expect.stringMatching('http'),
     });
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
+    expect(mockDispatch).toHaveBeenCalledTimes(2);
+    expect(mockDispatch).toHaveBeenNthCalledWith(1, expectedAction);
+    expect(mockDispatch).toHaveBeenNthCalledWith(2, expectedStakesResetAction);
   });
 });
