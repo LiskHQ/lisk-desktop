@@ -20,7 +20,7 @@ const signTransactionByHW = async ({ wallet, schema, chainID, transaction }) => 
 
   try {
     const signature = await getSignedTransaction(
-      wallet.metadata.path,
+      wallet.hw.path,
       wallet.metadata.accountIndex,
       unsignedMessage
     );
