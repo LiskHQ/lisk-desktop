@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  MODULE_COMMANDS_MAP,
-} from 'src/modules/transaction/configuration/moduleCommand';
+import { MODULE_COMMANDS_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Icon from 'src/theme/Icon';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import TransactionAddress from '../transactionAddress';
