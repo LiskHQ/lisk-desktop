@@ -42,7 +42,7 @@ describe('Add account by secret recovery phrase flow', () => {
       screen.getByText('Enter your secret recovery phrase to manage your account.')
     ).toBeTruthy();
     expect(screen.getByText('Continue to set password')).toBeTruthy();
-    expect(screen.getByText('Go Back')).toBeTruthy();
+    expect(screen.getByText('Go back')).toBeTruthy();
 
     const inputField = screen.getByTestId('recovery-1');
     const pasteEvent = createEvent.paste(inputField, {

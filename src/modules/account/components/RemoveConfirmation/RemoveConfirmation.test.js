@@ -55,7 +55,7 @@ describe('RemoveConfirmationScreen', () => {
         metadata: {
           ...props.account.metadata,
           isHW: true,
-        }
+        },
       },
     };
     removeScreen.rerender(<RemoveConfirmationScreen {...propsWithHWAccount} />);

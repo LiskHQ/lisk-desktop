@@ -32,7 +32,7 @@ const AddApplicationList = () => {
     <Dialog className={styles.dialog} hasClose>
       <Box className={styles.wrapper}>
         <BoxHeader className={`${styles.header} add-application-header`}>
-          <div>Add Application</div>
+          <div>{t('Add application')}</div>
           <AddApplicationSearch {...searchApplicationData} />
         </BoxHeader>
         <BoxContent className={`${styles.content} blockchain-application-add-list`}>
@@ -51,7 +51,7 @@ const AddApplicationList = () => {
             header={header()}
             additionalRowProps={{ t }}
             emptyState={{
-              message: t('There are no blockchain applications.'),
+              message: t('There are no blockchain applications added yet.'),
             }}
           />
         </BoxContent>

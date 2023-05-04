@@ -36,7 +36,7 @@ const ConnectionProposal = ({ history }) => {
       <Box>
         <div className={styles.title}>
           <h3>{t('Connect wallet')}</h3>
-          <h6>{t('Paste WalletConnect URI to connect your application to Lisk Desktop.')}</h6>
+          <h6>{t('Enter a URI to connect your wallet to a blockchain application.')}</h6>
         </div>
         <div>
           <div>
