@@ -32,7 +32,7 @@ const BlockchainApplicationStatistics = () => {
   const cardsMap = useMemo(
     () => [
       {
-        title: t('Total Supply'),
+        title: t('Total supply'),
         description: t('Total LSK tokens in circulation'),
         amount: statistics?.data?.totalSupplyLSK || 0,
         icon: 'totalSupplyToken',

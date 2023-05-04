@@ -52,6 +52,14 @@
   width: 100%;
   max-width: 878px;
 
+  &.setPasswordFormWrapper {
+    max-width: 652px;
+  }
+
+  & > div:nth-child(2) {
+    width: 90%;
+  }
+
   & .button {
     @mixin contentLargest bold;
 

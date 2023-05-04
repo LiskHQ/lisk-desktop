@@ -1,10 +1,12 @@
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import { fireEvent, screen } from '@testing-library/react';
+import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from '@account/hooks';
 import { mockRewardsClaimableWithToken } from '@pos/reward/__fixtures__';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
+import useFiatRates from '@common/hooks/useFiatRates';
 import ClaimRewardsForm from './index';
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -16,11 +18,13 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 jest.mock('@transaction/hooks/useTransactionPriority');
 jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('@transaction/api');
+jest.mock('@common/hooks/useFiatRates');
 
 jest.mock('@account/hooks/useCurrentAccount');
 jest.mock('@pos/reward/hooks/queries');
 
 describe('ClaimRewardsForm', () => {
+  const usdRate = '0.9699';
   useCurrentAccount.mockReturnValue([mockSavedAccounts[0]]);
   useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimableWithToken });
   useTransactionPriority.mockImplementation(() => [
@@ -33,6 +37,23 @@ describe('ClaimRewardsForm', () => {
       { title: 'Custom', value: undefined },
     ],
   ]);
+  useFiatRates.mockReturnValue({
+    LSK: {
+      BTC: '0.00003313',
+      EUR: '0.8882',
+      USD: usdRate,
+    },
+    COL: {
+      BTC: '0.00001382',
+      EUR: '0.8864',
+      USD: usdRate,
+    },
+    EVT: {
+      BTC: '0.00002574',
+      EUR: '0.8877',
+      USD: usdRate,
+    },
+  });
 
   const nextStep = jest.fn();
 
@@ -50,7 +71,9 @@ describe('ClaimRewardsForm', () => {
     ).toBeTruthy();
     mockRewardsClaimableWithToken.data.forEach(({ tokenName, reward }) => {
       expect(screen.getAllByText(tokenName)[0]).toBeTruthy();
-      expect(screen.getAllByText(reward)[0]).toBeTruthy();
+      expect(
+        screen.getAllByText(`~${numeral(parseInt(reward, 10) * usdRate).format('0,0.00')} USD`)[0]
+      ).toBeTruthy();
     });
     expect(screen.getByRole('button', { name: 'Claim rewards' })).toBeTruthy();
   });

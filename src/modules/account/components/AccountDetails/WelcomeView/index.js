@@ -29,12 +29,12 @@ const accountUniqueValuePropositions = [
   },
   {
     title: 'Participate in blockchain governance',
-    description: 'Stake for your trusted validator or become a validator to secure the blockchain.',
+    description:
+      'Stake for your trusted validator and earn rewards or become a validator to secure the blockchain network.',
   },
   {
     title: 'Manage blockchain application assets',
-    description:
-      'You can manage several blockchain application assets (claim tokens, NFTs, etc..) using your accounts.',
+    description: 'You can manage several blockchain application assets using your accounts.',
   },
 ];
 

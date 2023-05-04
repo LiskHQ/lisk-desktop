@@ -93,7 +93,7 @@ const AddAccountFormContainer = ({
               type="submit"
               disabled={!passphrase.isValid || isSubmitDisabled}
             >
-              {t('Continue')}
+              {t('Continue to set password')}
             </PrimaryButton>
             <Link
               className={`${styles.backLink} signin-hwWallet-button`}

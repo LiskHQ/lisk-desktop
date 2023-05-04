@@ -80,7 +80,7 @@ const GeneratingDetails = ({ t, generatedInRound, startTime }) => {
         <div className={styles.column}>
           {generators.length ? (
             <div className={styles.chartBox}>
-              <h2 className={styles.title}>{t('Validator generating status')}</h2>
+              <h2 className={styles.title}>{t('Validator slot status')}</h2>
               <div className={`${styles.chart} showOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}

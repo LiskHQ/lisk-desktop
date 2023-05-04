@@ -21,10 +21,7 @@ const AccountCreated = ({ t }) => (
       )}
     </p>
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-      <Link
-        className={`${registerStyles.button} login-button`}
-        to={routes.addAccountBySecretRecovery.path}
-      >
+      <Link className={`${registerStyles.button} login-button`} to={routes.wallet.path}>
         <PrimaryButton className={registerStyles.continueBtn}>
           {t('Continue to wallet')}
         </PrimaryButton>

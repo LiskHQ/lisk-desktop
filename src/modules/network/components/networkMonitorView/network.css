@@ -4,6 +4,9 @@
 
 .contentHeader {
   display: inline-block;
+  font-weight: var(--font-weight-bold);
+  line-height: var(--font-size-large);
+  color: var(--color-maastricht-blue);
 }
 
 .height {
@@ -14,6 +17,11 @@
   padding: 0 !important;
   margin-bottom: 15px;
   min-height: 0 !important;
+}
+
+.headerWrapper {
+  display: flex;
+  align-items: center;
 }
 
 .map {
@@ -62,4 +70,8 @@
 :global .leaflet-bar {
   box-shadow: none !important;
   border: 0 !important;
+}
+
+.networkMonitorWrapper {
+  padding-bottom: 30px;
 }

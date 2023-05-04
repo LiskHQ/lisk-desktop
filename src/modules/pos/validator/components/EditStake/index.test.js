@@ -134,7 +134,7 @@ describe('EditStake', () => {
     renderWithRouterAndQueryClient(EditStake, updatedProps);
 
     fireEvent.click(screen.getByText('Confirm'));
-    expect(screen.getByText('Stake added')).toBeTruthy();
+    expect(screen.getByText('Stake added to queue')).toBeTruthy();
     expect(screen.getByText('Your stake has been added to your staking queue')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Continue staking'));
@@ -190,7 +190,7 @@ describe('EditStake', () => {
       ]);
     });
 
-    expect(screen.getByText('Stake added')).toBeTruthy();
+    expect(screen.getByText('Stake added to queue')).toBeTruthy();
     expect(screen.getByText('Your stake has been added to your staking queue')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Continue staking'));

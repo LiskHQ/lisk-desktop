@@ -39,7 +39,7 @@ describe('Request', () => {
       )
     ).toBeTruthy();
     expect(wrapper.getByText('Account')).toBeTruthy();
-    expect(wrapper.getByText('Recipient Application')).toBeTruthy();
+    expect(wrapper.getByText('Recipient application')).toBeTruthy();
     expect(wrapper.getByText('Account')).toBeTruthy();
     expect(wrapper.getByText('Token')).toBeTruthy();
     expect(wrapper.getByText('Add message (Optional)')).toBeTruthy();

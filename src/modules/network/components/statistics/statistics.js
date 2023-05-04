@@ -285,7 +285,7 @@ const Statistics = () => {
     <Box className={styles.wrapper}>
       <BoxHeader>
         <div>
-          <h1 className={styles.boxHeading}>{t('Network statistics')}</h1>
+          <h5 className={styles.boxHeading}>{t('Network statistics')}</h5>
           <Tooltip position="bottom right" indent>
             <p>
               {t(

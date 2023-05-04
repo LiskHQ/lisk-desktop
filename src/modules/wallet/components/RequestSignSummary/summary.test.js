@@ -75,7 +75,7 @@ describe('RequestSignSummary', () => {
   it('should call nextStep and prevStep with correct params', () => {
     renderWithQueryClient(Summary, props);
 
-    fireEvent.click(screen.getByText('Send'));
+    fireEvent.click(screen.getByText('Sign'));
     expect(props.nextStep).toHaveBeenCalledWith({
       formProps: props.formProps,
       transactionJSON: props.transactionJSON,

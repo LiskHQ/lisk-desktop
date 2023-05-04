@@ -7,13 +7,13 @@ import styles from './styles.css';
 
 const unlockTime = 5;
 
-const LiskAmountFormatted = ({ val }) => (
+const LiskAmountFormatted = ({ val, token }) => (
   <span className={styles.subHeadingBold}>
-    <TokenAmount isLsk val={val} />
+    <TokenAmount val={val} token={token} />
   </span>
 );
 
-const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }) => {
+const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }, token) => {
   if (!locked && unlockable) {
     const regularUnlockable = BigInt(unlockable) - BigInt(selfUnstake.confirmed || 0);
     const selfUnstakeUnlockable = selfUnstake.confirmed;
@@ -22,13 +22,13 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
       <>
         {regularUnlockable > BigInt(0) ? (
           <>
-            <LiskAmountFormatted val={regularUnlockable.toString()} />{' '}
+            <LiskAmountFormatted val={regularUnlockable.toString()} token={token} />{' '}
             <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
           </>
         ) : null}
         {selfUnstakeUnlockable > 0 ? (
           <>
-            <LiskAmountFormatted val={selfUnstakeUnlockable} />{' '}
+            <LiskAmountFormatted val={selfUnstakeUnlockable} token={token} />{' '}
             <span>{t('will be available to unlock in 1 month.')}</span>
           </>
         ) : null}
@@ -38,15 +38,17 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
   if (locked && !unlockable) {
     return (
       <>
-        <LiskAmountFormatted val={locked} /> <span>{t('will be locked for staking.')}</span>
+        <LiskAmountFormatted val={locked} token={token} />{' '}
+        <span>{t('will be locked for staking.')}</span>
       </>
     );
   }
   if (locked && unlockable) {
     return (
       <>
-        <span>{t('You have now locked')}</span> <LiskAmountFormatted val={locked} />{' '}
-        <span>{t('for staking and may unlock')}</span> <LiskAmountFormatted val={unlockable} />{' '}
+        <span>{t('You have now locked')}</span> <LiskAmountFormatted val={locked} token={token} />{' '}
+        <span>{t('for staking and may unlock')}</span>{' '}
+        <LiskAmountFormatted val={unlockable} token={token} />{' '}
         <span>{t('in {{unlockTime}} hours.', { unlockTime })}</span>
       </>
     );
@@ -54,11 +56,17 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
   return '';
 };
 
-const stakeStatusMessages = (t, statusInfo) => ({
+const stakeStatusMessages = (t, statusInfo, token) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Tokens are staked'),
-    message: getSuccessMessage(t, statusInfo.locked, statusInfo.unlockable, statusInfo.selfUnstake),
+    message: getSuccessMessage(
+      t,
+      statusInfo.locked,
+      statusInfo.unlockable,
+      statusInfo.selfUnstake,
+      token
+    ),
   },
 });
 
