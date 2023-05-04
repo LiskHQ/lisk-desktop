@@ -22,7 +22,7 @@ export const getNetworkStatus = ({ baseUrl }) =>
     path: httpPaths.networkStatus,
   });
 
-const getServiceUrl = ({ name, address = 'http://mainnet-service.lisk.com' }) => {
+const getServiceUrl = ({ name, address = networks[networkKeys.mainnet].serviceUrl }) => {
   if ([networkKeys.mainnet, networkKeys.testNet].includes(name)) {
     return networks[name].serviceUrl;
   }
