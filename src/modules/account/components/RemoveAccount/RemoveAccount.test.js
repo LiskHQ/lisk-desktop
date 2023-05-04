@@ -33,11 +33,8 @@ describe('Remove account', () => {
     const { address, name } = mockSavedAccounts[0].metadata;
     const fileName = `${truncateAddress(address)}_${name}_lisk_account`;
     expect(screen.getByText('Remove Account?')).toBeTruthy();
-    expect(
-      screen.getByText(
-        'This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.'
-      )
-    ).toBeTruthy();
+    const message = 'This account will no longer be stored on this device.{{text}}';
+    expect(screen.getByText(message)).toBeTruthy();
     expect(screen.getByText(`${fileName}.json`)).toBeTruthy();
     expect(screen.getByText('Download')).toBeTruthy();
     expect(screen.getByText('Cancel')).toBeTruthy();

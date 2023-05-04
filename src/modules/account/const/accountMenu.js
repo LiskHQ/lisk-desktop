@@ -1,6 +1,6 @@
 import routes from 'src/routes/routes';
 
-export const accountMenu = (authData) => [
+export const accountMenu = (authData, isHW) => [
   {
     component: 'editAccount',
     icon: 'edit',
@@ -15,6 +15,7 @@ export const accountMenu = (authData) => [
     path: routes.backupRecoveryPhraseFlow.path,
     icon: 'refresh',
     label: 'Backup account',
+    isHidden: isHW,
   },
   {
     path: routes.addAccountOptions.path,

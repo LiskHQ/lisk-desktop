@@ -5,8 +5,7 @@ import RemoveConfirmationScreen from './RemoveConfirmation';
 
 const recoveryPhrase =
   'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-const message =
-  'This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.';
+const message = 'This account will no longer be stored on this device.{{text}}';
 const goBackFn = jest.fn();
 const props = {
   history: {
@@ -23,6 +22,7 @@ const props = {
     metadata: {
       name: 'test',
       address: '',
+      isHW: false,
     },
   },
 };
@@ -46,6 +46,20 @@ describe('RemoveConfirmationScreen', () => {
     expect(screen.getByText('Remove Account?')).toBeTruthy();
     expect(screen.getByText(message)).toBeTruthy();
     fireEvent.click(screen.getByText('Cancel'));
+  });
+
+  it('Should show label for hwWallet', async () => {
+    const propsWithHWAccount = {
+      ...props,
+      account: {
+        metadata: {
+          ...props.account.metadata,
+          isHW: true,
+        }
+      },
+    };
+    removeScreen.rerender(<RemoveConfirmationScreen {...propsWithHWAccount} />);
+    expect(screen.getByText(message)).toBeTruthy();
   });
 
   it('Should abort the removal when cancel with go back option', async () => {
