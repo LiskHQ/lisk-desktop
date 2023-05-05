@@ -21,7 +21,12 @@ jest.mock('@account/hooks', () => ({
 
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
-jest.mock('../../hooks/queries');
+jest.mock('../../hooks/queries', () => ({
+  ...jest.requireActual('../../hooks/queries'),
+  useValidators: jest.fn(),
+  useReceivedStakes: jest.fn(),
+  useSentStakes: jest.fn(),
+}));
 jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('Validator Profile', () => {

@@ -26,7 +26,9 @@ jest.mock('@account/hooks', () => ({
 
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@account/hooks');
-jest.mock('@pos/validator/hooks/queries');
+jest.mock('@pos/validator/hooks/queries', () => ({
+  useValidators: jest.fn(),
+}));
 jest.mock('@auth/hooks/queries');
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
