@@ -1,0 +1,48 @@
+@import '../../../../../setup/react/app/variables.css';
+
+.container {
+  width: 100vw; /* stylelint-disable-line unit-whitelist */
+  height: 100vh; /* stylelint-disable-line unit-whitelist */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > section:first-child {
+    max-width: 406px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  & .actionButton {
+    height: fit-content;
+  }
+}
+
+.tryAgainButton {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.illustration {
+  width: 193px;
+
+  & ~ b {
+    font-size: var(--font-size-h6);
+    margin-top: 10px;
+  }
+}
+
+.message {
+  width: 100%;
+  color: var(--color-slate-gray);
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+
+  &:nth-child(2) {
+    margin-bottom: 16px;
+    margin-top: 6px;
+  }
+}

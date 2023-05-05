@@ -56,6 +56,7 @@ import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-
 import validatorRegistrationSuccess from '@setup/react/assets/images/illustrations/validator-registration-success.svg';
 import validatorRegistrationError from '@setup/react/assets/images/illustrations/validator-registration-error.svg';
 import applicationDetailsError from '@setup/react/assets/images/illustrations/application-details-error.svg';
+import networkErrorIllustration from '@setup/react/assets/images/illustrations/networkError.svg';
 
 export const illustrations = {
   welcomeLiskValidators,
@@ -113,13 +114,14 @@ export const illustrations = {
   validatorRegistrationSuccess,
   validatorRegistrationError,
   applicationDetailsError,
+  networkErrorIllustration,
 };
 
 const Illustration = ({ name, className, noTheme, ...props }) => {
   const theme = useTheme();
   const themed =
     theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
-  return <img src={illustrations[themed]} className={className} {...props} />;
+  return <img src={illustrations[themed]} alt={name} className={className} {...props} />;
 };
 
 Illustration.propTypes = {

@@ -10,8 +10,8 @@ import {
 import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { Client } from 'src/utils/api/client';
-import { PrimaryButton } from 'src/theme/buttons';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
+import NetworkError from 'src/modules/common/components/NetworkError/NetworkError';
 
 const ApplicationBootstrap = ({ children }) => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
@@ -63,16 +63,10 @@ const ApplicationBootstrap = ({ children }) => {
   useLedgerDeviceListener();
 
   if (isError && !isLoading && isFirstTimeLoading) {
-    // @TODO: this return should be replaced with an actual error message page
-    return (
-      <div>
-        error
-        <PrimaryButton onClick={blockchainAppsMeta.refetch}>Retry</PrimaryButton>
-      </div>
-    );
+    return <NetworkError onRetry={blockchainAppsMeta.refetch} />;
   }
 
-  return !isFirstTimeLoading ? children : null;
+  return isFirstTimeLoading && isLoading ? null : children;
 };
 
 export default ApplicationBootstrap;
