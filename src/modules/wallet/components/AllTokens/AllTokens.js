@@ -78,6 +78,9 @@ const AllTokens = ({ history }) => {
           row={TokenRow}
           header={header(t)}
           headerClassName={styles.tableHeader}
+          emptyState={{
+            message: t('You do not have any tokens yet.'),
+          }}
         />
       </BoxContent>
     </Box>

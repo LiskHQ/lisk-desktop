@@ -31,6 +31,9 @@ const Peers = () => {
           currentSort={sort}
           error={error}
           canLoadMore={hasNextPage}
+          emptyState={{
+            message: t('No connected peers found.'),
+          }}
         />
       </BoxContent>
     </Box>
