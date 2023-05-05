@@ -12,7 +12,7 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
   const { address, isHW } = currentAccount?.metadata || {};
-  
+
   const { data: authData } = useAuth({
     config: { params: { address } },
   });

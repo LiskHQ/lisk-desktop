@@ -99,7 +99,7 @@ const AddAccountFormContainer = ({
               className={`${styles.backLink} signin-hwWallet-button`}
               to={routes.addAccountOptions.path}
             >
-              {t('Go Back')}
+              {t('Go back')}
             </Link>
           </div>
         </form>

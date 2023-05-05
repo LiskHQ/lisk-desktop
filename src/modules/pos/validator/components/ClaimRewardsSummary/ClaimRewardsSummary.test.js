@@ -63,7 +63,7 @@ describe('ClaimRewardsSummary', () => {
     expect(screen.getByText('Confirm')).toBeTruthy();
   });
 
-  it('should go to prev page when click Go Back button', () => {
+  it('should go to prev page when click Go back button', () => {
     const wrapper = mount(<ClaimRewardsSummary {...props} />);
     expect(props.prevStep).not.toBeCalled();
     wrapper.find('button.cancel-button').simulate('click');
