@@ -48,7 +48,8 @@ const ValidatorProfile = ({ history }) => {
 
   const isDisableStakeButton =
     isLoadingValidators ||
-    (tokenBalances.isLoading || BigInt(tokenBalances.data.data[0]?.availableBalance || 0)) === BigInt(0);
+    (tokenBalances.isLoading || BigInt(tokenBalances.data.data[0]?.availableBalance || 0)) ===
+      BigInt(0);
   const { data: generatedBlocks } = useBlocks({
     config: { params: { generatorAddress: address } },
   });
