@@ -6,3 +6,4 @@ export * from './useGetInitializationFees';
 export * from './useGetHasUserAccount';
 export * from './useGetMinimumMessageFee';
 export * from './useAppsMetaTokens';
+export * from './useNetworkSupportedTokens';

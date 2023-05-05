@@ -3,7 +3,7 @@ import React, { useMemo, useReducer } from 'react';
 import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
 import { useApplicationExploreAndMetaData } from '@blockchainApplication/manage/hooks';
-import { useTransferableTokens } from '@token/fungible/hooks';
+import { useNetworkSupportedTokens } from '@token/fungible/hooks/queries';
 import { validateAmountFormat } from 'src/utils/validators';
 import { getLogo } from '@token/fungible/utils/helpers';
 import { sizeOfString } from 'src/utils/helpers';
@@ -74,7 +74,7 @@ const Request = () => {
     requestInitState
   );
   const { applications } = useApplicationExploreAndMetaData();
-  const { data: tokens } = useTransferableTokens(state.recipientChain.value);
+  const networkSupportedTokens = useNetworkSupportedTokens(state.recipientChain.value);
 
   const shareLink = useMemo(
     () =>
@@ -139,7 +139,7 @@ const Request = () => {
   };
 
   const { recipientChain, token, amount, reference } = state;
-  const selectedToken = tokens.find(({ tokenID }) => tokenID === token.value);
+  const selectedToken = networkSupportedTokens.data?.find(({ tokenID }) => tokenID === token.value);
 
   return (
     <RequestWrapper
@@ -177,8 +177,19 @@ const Request = () => {
       <label className={`${styles.fieldGroup} token`}>
         <span className={`${styles.fieldLabel}`}>{t('Token')}</span>
         <span className={`${styles.amountField}`}>
-          <MenuSelect className="token-select" onChange={onSelectToken} value={token.value}>
-            {tokens.map(({ tokenName, tokenID, logo }) => (
+          <MenuSelect
+            className="token-select"
+            onChange={onSelectToken}
+            value={token.value}
+            feedback={t('Failed to fetch supported token metadata.')}
+            status={
+              networkSupportedTokens.isError || networkSupportedTokens.data.length === 0
+                ? 'error'
+                : 'ok'
+            }
+            size="m"
+          >
+            {networkSupportedTokens.data.map(({ tokenName, tokenID, logo }) => (
               <MenuItem className={styles.chainOptionWrapper} value={tokenID} key={tokenID}>
                 <img className={styles.chainLogo} src={getLogo({ logo })} />
                 <span>{tokenName}</span>

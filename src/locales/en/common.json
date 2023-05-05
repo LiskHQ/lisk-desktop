@@ -229,6 +229,7 @@
   "Explore decentralized applications": "Explore decentralized applications",
   "Explorer": "Explorer",
   "Failed to connect to network!": "Failed to connect to network!",
+  "Failed to fetch supported token metadata.": "Failed to fetch supported token metadata.",
   "Failed to load block details.": "Failed to load block details.",
   "Failed to pair with {{name}}": "Failed to pair with {{name}}",
   "Failed to setup password": "Failed to setup password",
