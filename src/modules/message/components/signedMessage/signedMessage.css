@@ -23,4 +23,8 @@
     color: var(--color-maastricht-blue);
     margin-bottom: 0;
   }
+
+  & .errorInfoText {
+    color: var(--color-maastricht-blue);
+  }
 }

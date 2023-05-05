@@ -3,6 +3,8 @@
 .HWConfirm {
   text-align: center;
   padding: 40px 24px;
+  max-width: 100%;
+  box-sizing: border-box;
 
   & .headerText {
     color: var(--color-maastricht-blue);
