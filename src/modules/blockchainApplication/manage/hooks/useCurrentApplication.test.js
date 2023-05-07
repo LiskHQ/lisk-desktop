@@ -1,7 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
 import client from 'src/utils/api/client';
-import stakesActionTypes from '@pos/validator/store/actions/actionTypes';
 import actionTypes from '../store/actionTypes';
 import { useCurrentApplication } from './useCurrentApplication';
 
@@ -10,6 +9,14 @@ const mockDispatch = jest.fn();
 const mockState = {
   blockChainApplications: {
     current: mockApplications[0],
+  },
+  staking: {
+    lskngtn9t6k4pg4foetmy493x96hraoq2krtcz4zy: {
+      unconfirmed: 2000000000,
+      confirmed: 0,
+      name: 'genesis_73',
+      commission: 10000,
+    },
   },
 };
 jest.mock('react-redux', () => ({
@@ -37,9 +44,6 @@ describe('useCurrentApplication hook', () => {
       type: actionTypes.setCurrentApplication,
       app: mockApplications[0],
     };
-    const expectedStakesResetAction = {
-      type: stakesActionTypes.stakesReset,
-    };
     act(() => {
       setCurrentApplication(mockApplications[0]);
     });
@@ -47,8 +51,7 @@ describe('useCurrentApplication hook', () => {
       ws: expect.stringMatching('ws'),
       rest: expect.stringMatching('http'),
     });
-    expect(mockDispatch).toHaveBeenCalledTimes(2);
-    expect(mockDispatch).toHaveBeenNthCalledWith(1, expectedAction);
-    expect(mockDispatch).toHaveBeenNthCalledWith(2, expectedStakesResetAction);
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
   });
 });
