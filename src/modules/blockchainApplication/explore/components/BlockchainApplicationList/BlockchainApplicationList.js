@@ -78,7 +78,7 @@ const BlockchainApplicationList = () => {
           headerClassName={styles.tableHeader}
           additionalRowProps={{ t }}
           emptyState={{
-            message: t('There are no blockchain applications.'),
+            message: t('No active or registered blockchain applications found.'),
           }}
         />
       </BoxContent>

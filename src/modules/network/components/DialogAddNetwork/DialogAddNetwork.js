@@ -50,7 +50,7 @@ const DialogAddNetwork = () => {
             <Input
               size="l"
               label="Name"
-              placeholder={t('network name')}
+              placeholder={t('Enter network name')}
               feedback={errors.name?.message}
               status={errors.name?.message ? 'error' : undefined}
               {...register('name', {
@@ -61,7 +61,7 @@ const DialogAddNetwork = () => {
             <Input
               size="l"
               label="Service URL"
-              placeholder={t('e.g https://service.lisk.com or localhost:9901')}
+              placeholder={t('Enter service URL, e.g. https://service.lisk.com or localhost:9901')}
               feedback={errors.serviceUrl?.message}
               status={errors.serviceUrl?.message ? 'error' : undefined}
               {...register('serviceUrl', {

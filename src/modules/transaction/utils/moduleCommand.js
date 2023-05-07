@@ -38,7 +38,7 @@ const getModuleCommandTitle = (t = (str) => str) => ({
   [MODULE_COMMANDS_NAME_MAP.stake]: t('Stake'),
   [MODULE_COMMANDS_NAME_MAP.changeCommission]: t('Edit commission'),
   [MODULE_COMMANDS_NAME_MAP.claimRewards]: t('Claim rewards'),
-  [MODULE_COMMANDS_NAME_MAP.transfer]: t('Transfer'),
+  [MODULE_COMMANDS_NAME_MAP.transfer]: t('Token transfer'),
   [MODULE_COMMANDS_NAME_MAP.transferCrossChain]: t('Cross chain transfer'),
 });
 

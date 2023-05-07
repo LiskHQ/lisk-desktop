@@ -50,6 +50,10 @@ h1 {
   align-items: center;
   justify-content: center;
 
+  &.mgt30 {
+    margin-top: 30px;
+  }
+
   & > .button {
     width: 100%;
     min-width: 160px;

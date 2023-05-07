@@ -98,7 +98,7 @@ const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet
           }}
           error={error}
           emptyState={{
-            message: t('There are no transaction events'),
+            message: t('There are no events for this account.'),
           }}
         />
       </BoxContent>

@@ -34,7 +34,7 @@ const accountUniqueValuePropositions = [
   },
   {
     title: 'Manage blockchain application assets',
-    description: 'You can manage several blockchain application assets using your accounts.',
+    description: 'Send and receive blockchain application assets using your account.',
   },
 ];
 

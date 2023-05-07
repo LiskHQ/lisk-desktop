@@ -16,8 +16,9 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   const token = useSelector((state) => state.token);
   const isNetworkSet = useSelector(({ network }) => !!network.name);
   const [currentAccount] = useCurrentAccount();
-  const isAuthenticated = !!currentAccount?.metadata?.address;
-  const { isMigrated } = useCheckLegacyAccount(currentAccount?.metadata?.pubkey);
+  const { pubkey, address, isHW } = currentAccount?.metadata || {};
+  const isAuthenticated = !!address;
+  const { isMigrated } = useCheckLegacyAccount(pubkey);
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
   const { mainChainNetwork } = useSettings('mainChainNetwork');
@@ -43,6 +44,11 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
 
   // Redirect back to actual path when an account is not reclaimable
   if (isMigrated && path === routes.reclaim.path) {
+    return <Redirect to={`${routes.wallet.path}`} />;
+  }
+
+  // Redirect back to wallet page when current account isHW and somehow has ended up on backupRecoveryPhraseFlow
+  if (isHW && path === routes.backupRecoveryPhraseFlow.path) {
     return <Redirect to={`${routes.wallet.path}`} />;
   }
 

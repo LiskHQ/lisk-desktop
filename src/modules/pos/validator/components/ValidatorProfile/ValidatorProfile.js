@@ -9,6 +9,7 @@ import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import Heading from 'src/modules/common/components/Heading';
 import { toast } from 'react-toastify';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import Box from '@theme/box';
 import styles from './ValidatorProfile.css';
 import DetailsView from './DetailsView';
@@ -36,12 +37,19 @@ const ValidatorProfile = ({ history }) => {
   const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
   const address = selectSearchParamValue(history.location.search, 'address') || currentAddress;
 
+  const tokenBalances = useTokenBalances({
+    config: { params: { address: currentAddress } },
+  });
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address } },
     options: { refetchInterval: 10000 },
   });
   const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
 
+  const isDisableStakeButton =
+    isLoadingValidators ||
+    (tokenBalances.isLoading || BigInt(tokenBalances.data.data[0]?.availableBalance || 0)) ===
+      BigInt(0);
   const { data: generatedBlocks } = useBlocks({
     config: { params: { generatorAddress: address } },
   });
@@ -109,7 +117,7 @@ const ValidatorProfile = ({ history }) => {
               currentAddress={currentAddress}
               address={address}
               isBanned={isBanned}
-              isDisabled={isLoadingValidators}
+              isDisabled={isDisableStakeButton}
             />
           </div>
         </div>

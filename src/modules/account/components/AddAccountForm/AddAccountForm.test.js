@@ -27,7 +27,7 @@ describe('AddAccountForm', () => {
       screen.getByText('Enter your secret recovery phrase to manage your account.')
     ).toBeTruthy();
     expect(screen.getByText('Continue to set password')).toBeTruthy();
-    expect(screen.getByText('Go Back')).toBeTruthy();
+    expect(screen.getByText('Go back')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Continue to set password'));
     expect(props.onAddAccount).not.toBeCalled();

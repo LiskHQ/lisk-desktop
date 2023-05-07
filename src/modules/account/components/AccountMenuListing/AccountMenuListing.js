@@ -11,8 +11,10 @@ import { useAuth } from '@auth/hooks/queries';
 const AccountMenuListing = ({ className, onItemClicked }) => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
+  const { address, isHW } = currentAccount?.metadata || {};
+
   const { data: authData } = useAuth({
-    config: { params: { address: currentAccount?.metadata?.address } },
+    config: { params: { address } },
   });
 
   function getDialogProps(component) {
@@ -27,7 +29,7 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
 
   return (
     <ul className={className}>
-      {accountMenu(authData).map(
+      {accountMenu(authData, isHW).map(
         ({ path, icon, label, component, isHidden }) =>
           !isHidden && (
             <li key={label} onClick={onItemClicked}>

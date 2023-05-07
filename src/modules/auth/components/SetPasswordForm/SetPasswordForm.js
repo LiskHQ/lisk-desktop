@@ -105,9 +105,10 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
             secureTextEntry
             feedback={errors.password?.message}
             status={errors.password ? 'error' : undefined}
+            placeholder={t('Enter password')}
             label={
               <span className="password-label-wrapper">
-                Enter Password
+                {t('Password')}
                 <Tooltip position="right" title={t('Requirements')}>
                   <p>
                     {t(
@@ -126,7 +127,8 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
             secureTextEntry
             feedback={errors.cPassword?.message}
             status={errors.cPassword ? 'error' : undefined}
-            label="Confirm your Password"
+            placeholder={t('Enter password confirmation')}
+            label="Password confirmation"
             {...register('cPassword')}
           />
         </div>
@@ -136,6 +138,7 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
             feedback={errors.accountName?.message}
             status={errors.accountName ? 'error' : undefined}
             label="Account name (Optional)"
+            placeholder={t('Enter account name')}
             {...register('accountName')}
           />
         </div>

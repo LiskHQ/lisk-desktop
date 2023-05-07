@@ -18,6 +18,9 @@ jest.mock('@account/hooks', () => ({
 jest.mock('src/modules/hardwareWallet/hooks/useHWAccounts', () =>
   jest.fn().mockReturnValue({ accounts: mockHWAccounts })
 );
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(),
+}));
 
 const props = {
   isRemoveAvailable: true,
