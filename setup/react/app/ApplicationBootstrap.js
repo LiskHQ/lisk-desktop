@@ -44,9 +44,6 @@ const ApplicationBootstrap = ({ children }) => {
   );
 
   const isError = (networkStatus.isError || blockchainAppsMeta.isError) && !!mainChainNetwork;
-  const isLoading =
-    (networkStatus.isLoading && !!mainChainNetwork) ||
-    (blockchainAppsMeta.isLoading && !!mainChainApplication);
 
   useEffect(() => {
     if (mainChainApplication) {
@@ -56,17 +53,35 @@ const ApplicationBootstrap = ({ children }) => {
       setCurrentApplication(refreshedCurrentApplication || mainChainApplication);
       setApplications(blockchainAppsMeta?.data?.data || []);
     }
-
-    if (isFirstTimeLoading && blockchainAppsMeta.isFetched) setIsFirstTimeLoading(false);
+    if (isFirstTimeLoading && blockchainAppsMeta.isFetched && !blockchainAppsMeta.isError) {
+      setIsFirstTimeLoading(false);
+    }
   }, [mainChainApplication?.chainID, blockchainAppsMeta?.isFetched]);
 
   useLedgerDeviceListener();
 
-  if (isError && !isLoading && isFirstTimeLoading) {
-    return <NetworkError onRetry={blockchainAppsMeta.refetch} />;
+  if (isError && !blockchainAppsMeta.isFetching && isFirstTimeLoading) {
+    const error = networkStatus.error || blockchainAppsMeta.error;
+    const errorMessage = {
+      message: error.message,
+      endpoint: `${error.config.baseURL}${error.config.url}`,
+      requestPayload: error.request.data,
+      method: error.config.method,
+      requestHeaders: error.config.headers,
+      responsePayload: error.response.data,
+      responseStatusCode: error.response.status,
+      responseStatusText: error.response.statusText,
+    };
+
+    return (
+      <NetworkError
+        onRetry={blockchainAppsMeta.refetch}
+        errorMessage={JSON.stringify(errorMessage)}
+      />
+    );
   }
 
-  return isFirstTimeLoading && isLoading ? null : children;
+  return isFirstTimeLoading ? null : children;
 };
 
 export default ApplicationBootstrap;
