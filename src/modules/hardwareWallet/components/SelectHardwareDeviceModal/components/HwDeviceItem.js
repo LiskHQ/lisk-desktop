@@ -30,7 +30,10 @@ function HwDeviceItem({ hwDevice }) {
       <Icon name="iconLedgerDevice" className={styles.hwWalletIcon} />
       <div className={styles.infoContainer}>
         <h5 className={styles.modelInfo}>{`${manufacturer} ${product}`}</h5>
-        <TertiaryButton className={classNames(styles.btnShowPubkey)} onClick={handleShowAddressOnDevice}>
+        <TertiaryButton
+          className={classNames(styles.btnShowPubkey)}
+          onClick={handleShowAddressOnDevice}
+        >
           {t('Ping device')}
         </TertiaryButton>
       </div>

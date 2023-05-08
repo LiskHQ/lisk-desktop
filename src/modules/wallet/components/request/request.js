@@ -222,7 +222,7 @@ const Request = () => {
             onChange={handleFieldChange}
             name="amount"
             value={amount.value}
-            placeholder={t('Requested amount')}
+            placeholder={t('Enter amount')}
             className={`${styles.input} amount-field`}
             status={amount.error ? 'error' : 'ok'}
             feedback={amount.feedback}
@@ -248,7 +248,7 @@ const Request = () => {
         error={reference.error}
         feedback={reference.feedback}
         label={t('Message (Optional)')}
-        placeholder={t('Write message')}
+        placeholder={t('Enter message')}
         onRemove={onRemoveMessageField}
       />
     </RequestWrapper>

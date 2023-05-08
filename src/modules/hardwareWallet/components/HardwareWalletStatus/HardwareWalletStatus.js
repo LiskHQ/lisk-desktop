@@ -7,7 +7,7 @@ import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelecto
 import DialogLink from '@theme/dialog/link';
 import { getPubKey } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 import { TertiaryButton } from 'src/theme/buttons';
-import classNames from "classnames";
+import classNames from 'classnames';
 import styles from './HardwareWalletStatus.css';
 
 /* TODO: To be fixed in PDD-1482
@@ -67,7 +67,10 @@ export const HardwareWalletStatus = () => {
           <DialogLink className={styles.selectLinkLabel} component="selectHardwareDeviceModal">
             {t('Switch device')}
           </DialogLink>
-          <TertiaryButton className={classNames(styles.selectLinkLabel)} onClick={handleShowAddressOnDevice}>
+          <TertiaryButton
+            className={classNames(styles.selectLinkLabel)}
+            onClick={handleShowAddressOnDevice}
+          >
             {t('Ping device')}
           </TertiaryButton>
         </div>
