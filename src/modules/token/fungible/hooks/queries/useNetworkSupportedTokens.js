@@ -8,21 +8,26 @@ export const useNetworkSupportedTokens = (application) => {
 
   const tokensSupported = useTokensSupported({ client: client.current });
   const isSupportAllTokens = tokensSupported.data?.supportedTokens?.isSupportAllTokens;
-
-  const appsMetaTokens = useAppsMetaTokens({ options: { enabled: isSupportAllTokens } });
+  console.log('-->', { config: { params: { chainID: application } } });
+  const appsMetaTokens = useAppsMetaTokens({
+    options: { enabled: isSupportAllTokens },
+    config: { params: { chainID: application.chainID } },
+    client: client.current,
+  });
   const isLoading = tokensSupported.isLoading || appsMetaTokens.isLoading;
   const isFetched = tokensSupported.isFetched && appsMetaTokens.isFetched;
   const isError = tokensSupported.isError || appsMetaTokens.isError;
 
   return useMemo(() => {
     let tokens = [];
+
     if (!isSupportAllTokens) {
       const { exactTokenIDs = [] } = tokensSupported.data?.data?.supportedTokens || {};
       tokens = exactTokenIDs
         .map((exactTokenID) =>
           appsMetaTokens.data?.data?.find(({ tokenID }) => tokenID === exactTokenID)
         )
-        .filter((t) => t);
+        .filter((token) => token);
     } else {
       tokens = appsMetaTokens.data?.data || [];
     }

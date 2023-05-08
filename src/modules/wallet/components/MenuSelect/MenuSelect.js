@@ -77,7 +77,7 @@ function MenuSelect({
         {!disabled && <DropdownIconState isLoading={isLoading} isValid={isValid} />}
       </div>
       <DropdownContext.Provider value={{ onChange: handleOnChange, selectedValue }}>
-        {!disabled ? (
+        {!disabled && (
           <Dropdown
             showArrow={!disabled}
             className={`${styles.optionListWrapper} ${popupClassName}`}
@@ -85,9 +85,9 @@ function MenuSelect({
           >
             {children}
           </Dropdown>
-        ) : null}
+        )}
       </DropdownContext.Provider>
-      <Feedback message={feedback} size={size} status={status} />
+      {disabled && <Feedback message={feedback} size={size} status={status} />}
     </>
   );
 }

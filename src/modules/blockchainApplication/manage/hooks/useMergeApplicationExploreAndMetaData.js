@@ -3,7 +3,7 @@ import useSettings from '@settings/hooks/useSettings';
 import { Client } from 'src/utils/api/client';
 import { useBlockchainApplicationMeta } from './queries/useBlockchainApplicationMeta';
 
-const useMergeApplicationExploreAndMetaData = (appOnChainData) => {
+const useMergeApplicationExploreAndMetaData = (appOnChainData = []) => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
   const chainIDs = appOnChainData?.map((data) => data.chainID).join(',');
   const { data: { data: appMetaData } = {}, isLoading } = useBlockchainApplicationMeta({
@@ -11,7 +11,12 @@ const useMergeApplicationExploreAndMetaData = (appOnChainData) => {
     options: { enabled: !!chainIDs?.length },
     client: new Client({ http: mainChainNetwork?.serviceUrl }),
   });
-  return isLoading ? appOnChainData : lodashMerge(appOnChainData, appMetaData);
+
+  const filteredOnChainData = appOnChainData.filter(({ chainID }) =>
+    appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
+  );
+  console.log('---', filteredOnChainData, lodashMerge(filteredOnChainData, appMetaData));
+  return isLoading ? filteredOnChainData : lodashMerge(filteredOnChainData, appMetaData);
 };
 
 export default useMergeApplicationExploreAndMetaData;
