@@ -3,16 +3,18 @@ import moment from 'moment';
 import { MemoryRouter } from 'react-router';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { truncateAddress } from '@wallet/utils/account';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTokenBalances, useAppsMetaTokens } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import i18n from 'src/utils/i18n/i18n';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { mockEvents, mockTransactions } from '../../__fixtures__';
 import TransactionDetailView from '.';
-import { useTransactionEvents, useTransactions } from '../../hooks/queries';
+import { useTransactionEvents, useTransactions, useFees } from '../../hooks/queries';
 
 jest.mock('../../hooks/queries');
-jest.mock('@token/fungible/hooks/queries');
+jest.mock('@token/fungible/hooks/queries/useAppsMetaTokens');
+jest.mock('@token/fungible/hooks/queries/useTokenBalances');
 
 describe('TransactionDetailsView', () => {
   let wrapper;
@@ -24,6 +26,12 @@ describe('TransactionDetailsView', () => {
   };
   moment.locale(i18n.language);
 
+  useFees.mockReturnValue({
+    data: { data: { feeTokenID: '0000000100000000' }, meta: {} },
+  });
+
+  useAppsMetaTokens.mockReturnValue({ data: mockAppsTokens });
+
   useTransactionEvents.mockReturnValue({
     data: { data: mockEvents.data.slice(0, 20) },
     isLoading: false,
@@ -32,6 +40,7 @@ describe('TransactionDetailsView', () => {
     isFetching: false,
     fetchNextPage: mockFetchEventNextPage,
   });
+
   useTransactions.mockReturnValue({
     data: { data: [transaction] },
     isLoading: false,
@@ -44,7 +53,7 @@ describe('TransactionDetailsView', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    wrapper = renderWithRouter(TransactionDetailView, props);
+    wrapper = renderWithRouterAndQueryClient(TransactionDetailView, props);
   });
 
   it('should display Transaction Events properly', async () => {
@@ -64,7 +73,7 @@ describe('TransactionDetailsView', () => {
       expect(mockFetchEventNextPage).toHaveBeenCalled();
     });
 
-    expect(screen.getByText(`Transaction details`)).toBeTruthy();
+    expect(screen.getByText(`Transaction`)).toBeTruthy();
     expect(screen.getByText('Details')).toBeTruthy();
     expect(screen.getByText('Events')).toBeTruthy();
   });
@@ -118,7 +127,7 @@ describe('TransactionDetailsView', () => {
       fetchNextPage: mockFetchTransactionsNextPage,
     });
 
-    wrapper = renderWithRouter(TransactionDetailView, props);
+    wrapper = renderWithRouterAndQueryClient(TransactionDetailView, props);
     expect(screen.getByText('The transaction was not found.')).toBeTruthy();
     expect(
       screen.getByText(
@@ -135,11 +144,14 @@ describe('TransactionDetailsView', () => {
       isFetching: false,
       fetchNextPage: mockFetchTransactionsNextPage,
     });
+    const queryClient = new QueryClient();
 
     wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <TransactionDetailView {...props} />)
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter initialEntries={['/']}>
+          <TransactionDetailView {...props} />)
+        </MemoryRouter>
+      </QueryClientProvider>
     );
     expect(screen.getByText('The transaction was not found.')).toBeTruthy();
     expect(

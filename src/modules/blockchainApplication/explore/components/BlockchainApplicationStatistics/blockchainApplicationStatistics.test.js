@@ -11,7 +11,7 @@ describe('BlockchainApplicationStatistics', () => {
     useBlockchainApplicationStatistics.mockReturnValue({ data: mockBlockchainAppStatistics });
     renderWithQueryClient(BlockchainApplicationStatistics);
 
-    expect(screen.getByText('Total Supply')).toBeInTheDocument();
+    expect(screen.getByText('Total supply')).toBeInTheDocument();
     expect(screen.getByText('Staked')).toBeInTheDocument();
     expect(screen.getByText('5,000,000 LSK')).toBeInTheDocument();
     expect(screen.getByText('300,000 LSK')).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe('BlockchainApplicationStatistics', () => {
     useBlockchainApplicationStatistics.mockReturnValue({});
     renderWithQueryClient(BlockchainApplicationStatistics);
 
-    expect(screen.getByText('Total Supply')).toBeInTheDocument();
+    expect(screen.getByText('Total supply')).toBeInTheDocument();
     expect(screen.getByText('Staked')).toBeInTheDocument();
     expect(screen.getAllByText('0 LSK')).toHaveLength(2);
   });

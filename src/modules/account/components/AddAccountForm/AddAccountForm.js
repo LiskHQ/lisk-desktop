@@ -93,13 +93,13 @@ const AddAccountFormContainer = ({
               type="submit"
               disabled={!passphrase.isValid || isSubmitDisabled}
             >
-              {t('Continue')}
+              {t('Continue to set password')}
             </PrimaryButton>
             <Link
               className={`${styles.backLink} signin-hwWallet-button`}
               to={routes.addAccountOptions.path}
             >
-              {t('Go Back')}
+              {t('Go back')}
             </Link>
           </div>
         </form>

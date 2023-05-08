@@ -1,48 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import ConnectionContext from './connectionContext';
 import { createSignClient } from '../utils/connectionCreator';
-import { useConnectionEventsManager } from '../hooks/useConnectionEventsManager';
-import { usePairings } from '../hooks/usePairings';
+import { ConnectionEventsManagerWrapper } from './ConnectionEventsManagerWrapper';
 
 const ConnectionProvider = ({ children }) => {
-  const [session, setSession] = useState({
-    request: false,
-    data: false,
-    loaded: false,
-  });
+  const [sessions, setSessions] = useState([]);
   const [events, setEvents] = useState([]);
-  const { pairings, setPairings } = usePairings();
-
-  const pushEvent = (event) => {
-    setEvents([...events, event]);
-  };
-
-  const removeEvent = (event) => {
-    const newEvents = events.filter((e) => e.name !== event.name);
-    setEvents(newEvents);
-  };
-
-  useConnectionEventsManager({
-    pushEvent,
-    session,
-    setSession,
-  });
+  const [pairings, setPairings] = useState([]);
+  const [sessionProposal, setSessionProposal] = useState();
+  const [sessionRequest, setSessionRequest] = useState();
 
   const value = {
     events,
     pairings,
-    session,
-    setSession,
-    pushEvent,
-    removeEvent,
+    sessions,
+    sessionProposal,
+    sessionRequest,
+    setSessions,
+    setEvents,
     setPairings,
+    setSessionProposal,
+    setSessionRequest,
   };
 
   useEffect(() => {
     createSignClient();
   }, []);
 
-  return <ConnectionContext.Provider value={value}>{children}</ConnectionContext.Provider>;
+  return (
+    <ConnectionContext.Provider value={value}>
+      <ConnectionEventsManagerWrapper>{children}</ConnectionEventsManagerWrapper>
+    </ConnectionContext.Provider>
+  );
 };
 
 export default ConnectionProvider;

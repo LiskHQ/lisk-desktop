@@ -18,6 +18,15 @@ describe('Utils: moduleCommand', () => {
         expect(t).toHaveBeenCalledWith(label);
       });
     });
+
+    it('should return a dictionary of strings if transaction is not provided', () => {
+      Object.values(MODULE_COMMANDS_NAME_MAP).forEach((moduleCommand) => {
+        const label = getModuleCommandSenderLabel()[moduleCommand];
+
+        expect(label).toBeDefined();
+        expect(typeof label).toBe('string');
+      });
+    });
   });
 
   describe('getModuleCommandTitle', () => {

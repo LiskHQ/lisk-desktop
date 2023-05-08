@@ -43,7 +43,7 @@ const LatestStakes = ({ filters }) => {
       row={TransactionRow}
       header={header(t)}
       emptyState={{
-        message: t('No latest stakes'),
+        message: t('No validator stakes found.'),
       }}
       additionalRowProps={{
         t,

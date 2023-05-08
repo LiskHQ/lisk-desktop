@@ -15,10 +15,18 @@
       min-height: 180px;
     }
   }
-}
 
-.boxHeading {
-  display: inline-block;
+  & h5.boxHeading {
+    display: inline-block;
+    font-weight: var(--font-weight-bold);
+    line-height: var(--font-size-large);
+    color: var(--color-maastricht-blue);
+  }
+
+  & > header > div:first-child {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .column {

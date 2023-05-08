@@ -70,7 +70,7 @@ const DialogHolder = ({ history }) => {
         ref={backdropRef}
         className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
         onAnimationEnd={onAnimationEnd}
-        onClick={onBackDropClick}
+        onMouseDown={onBackDropClick}
       >
         <ModalComponent />
       </div>

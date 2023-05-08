@@ -13,12 +13,12 @@ import StakeSuccessfulModal from '../StakeSuccessfulModal';
 const Status = ({ account, transactions, statusInfo, t, dposToken }) => {
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
-  const template = statusMessages(t, statusInfo)[status.code];
+  const template = statusMessages(t, statusInfo, dposToken)[status.code];
 
   return (
     <div className={styles.container}>
       {status.code === txStatusTypes.broadcastSuccess ? (
-        <StakeSuccessfulModal statusMessage={template} dposToken={dposToken} />
+        <StakeSuccessfulModal statusMessage={template} />
       ) : (
         <TxBroadcaster
           title={template.title}

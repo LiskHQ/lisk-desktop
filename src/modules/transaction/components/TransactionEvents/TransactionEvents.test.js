@@ -96,7 +96,7 @@ describe('TransactionEvents', () => {
     });
     wrapper.rerender(<TransactionEvents {...props} />);
 
-    expect(wrapper.getByText('There are no transaction events')).toBeTruthy();
+    expect(wrapper.getByText('There are no events for this account.')).toBeTruthy();
   });
 
   it('should display filter fields', async () => {

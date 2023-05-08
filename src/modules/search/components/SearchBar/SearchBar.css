@@ -24,6 +24,12 @@
   }
 }
 
+@media (--medium-viewport) {
+  .wrapper {
+    min-width: 114px;
+  }
+}
+
 .linear {
   background: transparent;
   height: 3px;

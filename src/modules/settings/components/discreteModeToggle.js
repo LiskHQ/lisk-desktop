@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import settingConstants from 'src/modules/settings/const/settingConstants';
 import Toggle from './toggle';
 
-function DiscreteModeToggle() {
+function DiscreteModeToggle({ className }) {
   const { t } = useTranslation();
 
   return (
@@ -11,6 +11,7 @@ function DiscreteModeToggle() {
       setting={settingConstants.keys.discreetMode}
       icons={['discreetModeActive', 'discreetMode']}
       tips={[t('Disable discreet mode'), t('Enable discreet mode')]}
+      className={className}
     />
   );
 }

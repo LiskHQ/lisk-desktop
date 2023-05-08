@@ -15,3 +15,6 @@ export { default as SignedAndRemainingMembersList } from './signedAndRemainingMe
 export { default as TransactionId } from './transactionId';
 export { default as TxDate } from './txDate';
 export { default as Stakes } from './stakes';
+export { default as GenericParams } from './genericParams';
+export { default as Module } from './module';
+export { default as Command } from './command';

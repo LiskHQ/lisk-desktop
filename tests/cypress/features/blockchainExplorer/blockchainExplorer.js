@@ -46,7 +46,7 @@ Then(/^blockchain applications list should be accurately rendered$/, function ()
 });
 
 Then(/^blockchain applications statistics should be accurately rendered$/, function () {
-  cy.contains('Total Supply').eq(0).should('have.text', 'Total Supply');
+  cy.contains('Total supply').eq(0).should('have.text', 'Total supply');
   cy.contains('Staked').eq(0).should('have.text', 'Staked');
   cy.get('.stats-info-value').eq(0).should('have.text', '5,000,000 LSK');
   cy.get('.stats-info-value').eq(1).should('have.text', '3,000,000 LSK');

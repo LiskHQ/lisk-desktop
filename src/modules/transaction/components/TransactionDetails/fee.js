@@ -11,9 +11,9 @@ const Fee = ({ t }) => {
   } = React.useContext(TransactionDetailsContext);
 
   return (
-    <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
+    <ValueAndLabel label={t('Fee')} className={styles.fee}>
       <span className="tx-fee">
-        <TokenAmount val={fee} token={token} />
+        {token ? <TokenAmount val={fee} token={token} /> : <span>{fee}</span>}
       </span>
     </ValueAndLabel>
   );

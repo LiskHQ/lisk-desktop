@@ -67,7 +67,7 @@ class MultiStep extends React.Component {
 
   move = ({ moves, to, data, reset = false }) => {
     const { key, current } = this.state;
-    const { children } = this.props;
+    const { children, onChange } = this.props;
     const next = this.keepTargetInRange(to, moves, current, children.length);
 
     this.setState({
@@ -76,6 +76,8 @@ class MultiStep extends React.Component {
       origin: current,
       key: reset ? key + 1 : key, // re-mounts child component.
     });
+
+    onChange?.(next);
   };
 
   render() {

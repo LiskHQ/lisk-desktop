@@ -157,7 +157,7 @@ const Request = () => {
       <p>Account</p>
       <Account />
       <label className={`${styles.fieldGroup} recipient-application`}>
-        <span className={`${styles.fieldLabel}`}>{t('Recipient Application')}</span>
+        <span className={`${styles.fieldLabel}`}>{t('Recipient application')}</span>
         <span className={`${styles.amountField}`}>
           <MenuSelect
             className="recipient-chain-select"

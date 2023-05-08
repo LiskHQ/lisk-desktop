@@ -1,26 +1,47 @@
-import { useContext, useEffect, useCallback } from 'react';
+import { useContext, useEffect, useCallback, useState } from 'react';
+import { getSdkError } from '@walletconnect/utils';
 import { formatJsonRpcResult } from '@json-rpc-tools/utils';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
 import { onApprove, onReject } from '../utils/sessionHandlers';
-import { usePairings } from './usePairings';
-import { EVENTS, STATUS } from '../constants/lifeCycle';
+import { EVENTS, STATUS, ERROR_CASES } from '../constants/lifeCycle';
+import { useEvents } from './useEvents';
 
 export const useSession = () => {
-  const { events, removeEvent, session, setSession } = useContext(ConnectionContext);
-  const { refreshPairings } = usePairings();
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const {
+    events,
+    sessions,
+    sessionRequest,
+    sessionProposal,
+    setSessions,
+    setSessionProposal,
+    setSessionRequest,
+  } = useContext(ConnectionContext);
+  const { removeEvent } = useEvents();
+
+  const loadSessions = useCallback(async () => {
+    const loadedSessions = [];
+
+    await Promise.all(
+      client.session.keys.map(async (key, index) => {
+        const session = client.session.get(key);
+        loadedSessions[index] = session;
+      })
+    );
+
+    setHasLoaded(true);
+    setSessions(loadedSessions);
+  }, []);
 
   const approve = useCallback(async (selectedAccounts) => {
     const proposalEvents = events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
     try {
-      await setSession({
-        ...session,
-        request: false,
-        data: proposalEvents.meta,
-      });
       const status = await onApprove(proposalEvents.meta, selectedAccounts);
-      refreshPairings();
       removeEvent(proposalEvents);
+      setSessionProposal(null);
+      setSessionRequest(null);
+      await loadSessions();
       return {
         status,
         data: proposalEvents.meta,
@@ -36,9 +57,9 @@ export const useSession = () => {
   const reject = useCallback(async () => {
     const proposalEvents = events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
     try {
-      setSession({ ...session, request: false });
       await onReject(proposalEvents.meta);
-      removeEvent(proposalEvents);
+      setSessionProposal(null);
+      setSessionRequest(null);
       return {
         status: STATUS.SUCCESS,
         data: proposalEvents.meta,
@@ -73,20 +94,48 @@ export const useSession = () => {
     }
   }, []);
 
+  /**
+   * Disconnect a given pairing. Removes the pairing from context and the bridge.
+   *
+   * @param {string} topic - The pairing topic (Connection ID) to disconnect.
+   */
+  const disconnect = useCallback(
+    async (topic) => {
+      setSessions((prevSessions) => prevSessions.filter((session) => session.topic !== topic));
+      try {
+        await client.disconnect({
+          topic,
+          reason: getSdkError(ERROR_CASES.USER_DISCONNECTED),
+        });
+        return {
+          status: STATUS.SUCCESS,
+        };
+      } catch (e) {
+        return {
+          status: STATUS.FAILURE,
+          message: e.message,
+        };
+      }
+    },
+    [client]
+  );
+
   useEffect(() => {
-    if (client?.session && !session.loaded) {
-      const lastKeyIndex = client.session.keys.length - 1;
-      const data =
-        lastKeyIndex === 0 ? client.session.get(client.session.keys[lastKeyIndex]) : false;
-      setSession({ ...session, loaded: true, data });
+    if (client?.session && !hasLoaded) {
+      loadSessions();
     }
-  }, [client, session]);
+  }, [client, sessions]);
 
   return {
+    hasLoaded,
     reject,
     approve,
     respond,
-    session,
-    setSession,
+    sessions,
+    sessionRequest,
+    setSessions,
+    sessionProposal,
+    disconnect,
+    setSessionRequest,
   };
 };

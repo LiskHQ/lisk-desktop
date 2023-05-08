@@ -11,7 +11,7 @@ const Illustration = () => {
   const {
     transaction: { senderPublicKey, module, command },
   } = params;
-  const moduleCommand = joinModuleAndCommand(module, command);
+  const moduleCommand = joinModuleAndCommand({ module, command });
   const title = getModuleCommandTitle()[moduleCommand];
   const address = extractAddressFromPublicKey(senderPublicKey);
 

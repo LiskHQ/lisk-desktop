@@ -17,6 +17,10 @@ import {
   Members,
   SignedAndRemainingMembersList,
   PrettyJson,
+  Command,
+  Module,
+  Nonce,
+  GenericParams,
 } from 'src/modules/transaction/components/TransactionDetails';
 import styles from './layoutSchema.css';
 
@@ -83,6 +87,10 @@ export const LayoutSchema = {
   [reclaimLSK]: {
     components: [...baseComponents, ...timeComponents, Amount, PrettyJson],
     className: styles.reclaimLSK,
+  },
+  structuredGeneralLayout: {
+    components: [Module, Command, Sender, TransactionId, Fee, Nonce, GenericParams],
+    className: styles.structuredGeneralLayout,
   },
   default: {
     components: [...baseComponents, PrettyJson],

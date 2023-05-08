@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Dialog from '@theme/dialog/dialog';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -7,7 +7,7 @@ import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { EVENTS, ACTIONS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import BlockchainAppDetailsHeader from '../../../explore/components/BlockchainAppDetailsHeader';
 import AccountsSelector from './AccountsSelector';
@@ -17,7 +17,7 @@ import styles from './connectionSummary.css';
 const ConnectionSummary = ({ history }) => {
   const [addresses, setAddresses] = useState([]);
   const { t } = useTranslation();
-  const { events } = useContext(ConnectionContext);
+  const { events } = useEvents();
   const { approve, reject } = useSession();
 
   const connectHandler = async () => {

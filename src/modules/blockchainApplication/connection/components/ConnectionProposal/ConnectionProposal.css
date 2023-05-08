@@ -9,11 +9,13 @@
     font-weight: 700;
     line-height: 32px;
     margin: 0;
+    color: var(--color-maastricht-blue);
   }
 
   & h6 {
     line-height: 18px;
     margin: var(--vertical-padding-m) auto;
+    color: var(--color-maastricht-blue);
 
     &.error {
       color: var(--color-red);

@@ -1,6 +1,6 @@
 {
   "name": "lisk-desktop",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.3",
   "productName": "Lisk",
   "description": "Lisk",
   "main": "./build/main.js",

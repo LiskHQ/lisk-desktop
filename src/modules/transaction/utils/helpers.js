@@ -33,7 +33,7 @@ export const getFeeStatus = ({ fee, tokenSymbol, customFee }) => {
   return !fee.error ? `${formatAmountBasedOnLocale({ value: fee })} ${tokenSymbol}` : fee.feedback;
 };
 
-export const getSpaceSeparated = (str) => str.replace(/([A-Z])/g, ' $1');
+export const getSpaceSeparated = (str) => str.replace(/([a-z])([A-Z]|[0-9]+)/g, '$1 $2');
 
 export default getTxDirectionConfig;
 
