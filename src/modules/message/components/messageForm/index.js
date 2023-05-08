@@ -32,7 +32,8 @@ const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
     Piwik.trackingEvent('SignMessageInput', 'button', 'Next step');
     nextStep({
       message,
-      actionFunction: (formProps, _, privateKey) => signMessage({ message, nextStep, privateKey, currentAccount }),
+      actionFunction: (formProps, _, privateKey) =>
+        signMessage({ message, nextStep, privateKey, currentAccount }),
     });
     onNext?.();
   };

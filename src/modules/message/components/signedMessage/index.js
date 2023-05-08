@@ -18,7 +18,9 @@ const Error = ({ t, hwInfo }) => {
     <BoxContent className={styles.statusWrapper}>
       <Illustration name={`${deviceType}HwRejection`} />
       <h5>{t('Transaction aborted on device')}</h5>
-      <p className={styles.errorInfoText}>{t('You have cancelled the transaction on your hardware wallet.')}</p>
+      <p className={styles.errorInfoText}>
+        {t('You have cancelled the transaction on your hardware wallet.')}
+      </p>
     </BoxContent>
   );
 };
