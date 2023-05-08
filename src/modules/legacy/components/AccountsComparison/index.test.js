@@ -5,7 +5,7 @@ import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { tokensBalance as mockTokens } from '@token/fungible/__fixtures__';
+import { mockTokensBalance as mockTokens } from '@token/fungible/__fixtures__';
 import Reclaim from './index';
 import styles from './reclaim.css';
 
@@ -29,7 +29,8 @@ jest.mock('react-redux', () => {
     ...originalModule,
     useSelector: jest.fn(() => ({
       ...mockNonMigrated,
-      token: mockTokens,
+      token: mockTokens.data,
+      staking: {},
     })),
   };
 });
@@ -65,6 +66,7 @@ describe('Reclaim balance screen', () => {
     wrapper.find(styles.button).first().simulate('click');
     expect(addSearchParamsToUrl).toHaveBeenNthCalledWith(1, expect.objectContaining({}), {
       modal: 'reclaimBalance',
+      tokenID: mockTokens.data[0].tokenID,
     });
   });
 
@@ -73,6 +75,7 @@ describe('Reclaim balance screen', () => {
       jest.fn(() => ({
         ...mockNonMigrated,
         token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: '0' }],
+        staking: {},
       }))
     );
 
@@ -91,6 +94,7 @@ describe('Reclaim balance screen', () => {
       jest.fn(() => ({
         ...mockNonMigrated,
         token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: '100000000' }],
+        staking: {},
       }))
     );
 
