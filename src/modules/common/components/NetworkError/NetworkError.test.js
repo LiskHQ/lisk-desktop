@@ -15,7 +15,7 @@ describe('ChangeCommissionDialog', () => {
     expect(screen.getByText('Report the error via email')).toBeTruthy();
     expect(
       screen.getByText(
-        "At the moment, the app is experiencing difficulty loading due to a lack of response from the network. Please attempt to retry."
+        'At the moment, the app is experiencing difficulty loading due to a lack of response from the network. Please attempt to retry.'
       )
     ).toBeTruthy();
 

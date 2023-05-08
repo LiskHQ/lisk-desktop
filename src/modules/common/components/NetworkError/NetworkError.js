@@ -20,7 +20,9 @@ const NetworkError = ({ onRetry, errorMessage }) => {
         <Illustration name="networkErrorIllustration" className={styles.illustration} />
         <b>{t('Network Connection Issues')}</b>
         <p className={styles.message}>
-          {t('At the moment, the app is experiencing difficulty loading due to a lack of response from the network. Please attempt to retry.')}
+          {t(
+            'At the moment, the app is experiencing difficulty loading due to a lack of response from the network. Please attempt to retry.'
+          )}
         </p>
         <TertiaryButton onClick={onRetry} className={styles.tryAgainButton}>
           {t('Try again')}
