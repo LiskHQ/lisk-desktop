@@ -172,6 +172,13 @@ const Request = () => {
             value={recipientChain.value}
             onChange={onSelectReceipentChain}
             select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
+            feedback={t('Failed to fetch applications metadata.')}
+            status={
+              networkSupportedTokens.isError || networkSupportedTokens.data.length === 0
+                ? 'error'
+                : 'ok'
+            }
+            size="m"
           >
             {applicationExploreAndMetaData.applications.map((chain) => (
               <MenuItem className={styles.chainOptionWrapper} value={chain} key={chain.chainID}>
@@ -190,15 +197,15 @@ const Request = () => {
             onChange={onSelectToken}
             value={token.value}
             isLoading={networkSupportedTokens.isLoading}
-            feedback={t('Failed to fetch supported token metadata.')}
+            feedback={t('Failed to fetch supported tokens metadata.')}
             status={
-              networkSupportedTokens.isError || networkSupportedTokens.data.length === 0
+              networkSupportedTokens.isError || networkSupportedTokens.data?.length === 0
                 ? 'error'
                 : 'ok'
             }
             size="m"
           >
-            {networkSupportedTokens.data.map(({ tokenName, tokenID, logo }) => (
+            {networkSupportedTokens.data?.map(({ tokenName, tokenID, logo }) => (
               <MenuItem className={styles.chainOptionWrapper} value={tokenID} key={tokenID}>
                 <img className={styles.chainLogo} src={getLogo({ logo })} />
                 <span>{tokenName}</span>

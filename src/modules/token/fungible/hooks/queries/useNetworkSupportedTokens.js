@@ -11,7 +11,7 @@ export const useNetworkSupportedTokens = (application) => {
 
   const appsMetaTokens = useAppsMetaTokens({
     options: { enabled: isSupportAllTokens },
-    config: { params: { chainID: application.chainID } },
+    config: { params: { chainID: application?.chainID } },
     client: client.current,
   });
   const isLoading = tokensSupported.isLoading || appsMetaTokens.isLoading;

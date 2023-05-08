@@ -12,7 +12,7 @@ const useMergeApplicationExploreAndMetaData = (appOnChainData = []) => {
     client: new Client({ http: mainChainNetwork?.serviceUrl }),
   });
 
-  const filteredOnChainData = appOnChainData.filter(({ chainID }) =>
+  const filteredOnChainData = appOnChainData?.filter(({ chainID }) =>
     appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
   );
 
