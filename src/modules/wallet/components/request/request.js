@@ -82,7 +82,6 @@ const Request = () => {
   );
   const applicationExploreAndMetaData = useApplicationExploreAndMetaData();
   const networkSupportedTokens = useNetworkSupportedTokens(state.recipientChain.value);
-  console.log('>>', applicationExploreAndMetaData.applications, state, networkSupportedTokens);
 
   const shareLink = useMemo(
     () =>

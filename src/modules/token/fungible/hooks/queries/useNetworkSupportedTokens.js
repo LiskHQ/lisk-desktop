@@ -8,7 +8,7 @@ export const useNetworkSupportedTokens = (application) => {
 
   const tokensSupported = useTokensSupported({ client: client.current });
   const isSupportAllTokens = tokensSupported.data?.supportedTokens?.isSupportAllTokens;
-  console.log('-->', { config: { params: { chainID: application } } });
+
   const appsMetaTokens = useAppsMetaTokens({
     options: { enabled: isSupportAllTokens },
     config: { params: { chainID: application.chainID } },
