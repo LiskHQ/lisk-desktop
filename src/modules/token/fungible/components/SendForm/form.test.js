@@ -215,7 +215,7 @@ describe('Form', () => {
       });
       wrapper.update();
 
-      expect(wrapper.find('.feedback').at(1)).toHaveClassName('error');
+      expect(wrapper.find('.feedback').at(4)).toHaveClassName('error');
     });
 
     it('Should show bookmark title if address is a bookmark', () => {
