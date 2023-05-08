@@ -51,11 +51,11 @@ const updateTransactionSignatures = (account, transaction, signature) => {
 };
 /* eslint-disable max-statements */
 
-const signMessageByHW = async ({ wallet, message }) => {
+const signMessageByHW = async ({ account, message }) => {
   try {
     const signedMessage = await getSignedMessage(
-      wallet.metadata.path,
-      wallet.metadata.accountIndex,
+      account.hw.path,
+      account.metadata.accountIndex,
       message
     );
     const signature = signedMessage?.signature;
@@ -63,7 +63,7 @@ const signMessageByHW = async ({ wallet, message }) => {
     if (!signature) {
       throw new Error(
         i18next.t('The message signature has been canceled on your {{model}}', {
-          model: wallet.hwInfo.deviceModel,
+          model: account.hw.product,
         })
       );
     }
@@ -72,7 +72,7 @@ const signMessageByHW = async ({ wallet, message }) => {
   } catch (error) {
     throw new Error(
       i18next.t('The message signature has been canceled on your {{model}}', {
-        model: wallet.hwInfo.deviceModel,
+        model: account.hw.product,
       })
     );
   }

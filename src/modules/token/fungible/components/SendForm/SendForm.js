@@ -276,7 +276,7 @@ const SendForm = (props) => {
               maxAmount={maxAmount}
               displayConverter
               label={t('Amount')}
-              placeholder={t('Insert transaction amount')}
+              placeholder={t('Enter amount')}
               name="amount"
             />
             <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
@@ -293,7 +293,7 @@ const SendForm = (props) => {
               value={reference.value}
               onChange={setReference}
               label={t('Message (Optional)')}
-              placeholder={t('Write message')}
+              placeholder={t('Enter message')}
               onRemove={handleRemoveMessage}
               maxMessageLength={maxMessageLength}
               error={reference.error}

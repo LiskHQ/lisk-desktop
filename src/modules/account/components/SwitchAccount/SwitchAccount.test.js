@@ -19,6 +19,9 @@ jest.mock('@account/hooks', () => ({
   })),
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], jest.fn()]),
 }));
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(),
+}));
 
 describe('Switch account', () => {
   it('Should render properly', () => {
