@@ -5,6 +5,9 @@ import Icon from '@theme/Icon';
 import { useSelector } from 'react-redux';
 import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
 import DialogLink from '@theme/dialog/link';
+import { getPubKey } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import { TertiaryButton } from 'src/theme/buttons';
+import classNames from "classnames";
 import styles from './HardwareWalletStatus.css';
 
 const Status = ({ status }) => (
@@ -20,19 +23,18 @@ export const HardwareWalletStatus = () => {
     return null;
   }
 
-  const { manufacturer, product, isAppOpen, path } = currentHWDevice;
+  const { manufacturer, product, isAppOpen } = currentHWDevice;
   const status = isAppOpen ? 'connected' : 'standby';
-  const usbPort = path
-    ?.split('/')
-    ?.find((segment) => segment.startsWith('usb'))
-    ?.split('@')[0];
 
   const hwStatusInfo = [
     { label: `${t('Brand')} : `, value: manufacturer },
     { label: `${t('Model')} : `, value: product },
-    { label: `${t('USB ID')} : `, value: usbPort },
     { label: `${t('Status')} : `, value: <Status status={status} /> },
   ];
+
+  async function handleShowAddressOnDevice() {
+    await getPubKey(currentHWDevice.path, undefined, true);
+  }
 
   return (
     <section className={styles.wrapper}>
@@ -64,6 +66,9 @@ export const HardwareWalletStatus = () => {
           <DialogLink className={styles.selectLinkLabel} component="selectHardwareDeviceModal">
             {t('Switch device')}
           </DialogLink>
+          <TertiaryButton className={classNames(styles.selectLinkLabel)} onClick={handleShowAddressOnDevice}>
+            {t('Ping device')}
+          </TertiaryButton>
         </div>
       </Tooltip>
     </section>
