@@ -10,12 +10,12 @@ describe('ChangeCommissionDialog', () => {
 
     expect(screen.getByAltText('networkErrorIllustration')).toBeTruthy();
     expect(screen.getByText('Try again')).toBeTruthy();
-    expect(screen.getByText('Something went wrong')).toBeTruthy();
+    expect(screen.getByText('Network Connection Issues')).toBeTruthy();
     expect(screen.getByText('Is the problem persisting?')).toBeTruthy();
     expect(screen.getByText('Report the error via email')).toBeTruthy();
     expect(
       screen.getByText(
-        "We're sorry, but the app is having trouble loading right now. Please try again."
+        "At the moment, the app is experiencing difficulty loading due to a lack of response from the network. Please attempt to retry."
       )
     ).toBeTruthy();
 
