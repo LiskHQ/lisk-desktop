@@ -2,7 +2,10 @@
 import React, { useMemo, useReducer } from 'react';
 import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
-import { useApplicationExploreAndMetaData } from '@blockchainApplication/manage/hooks';
+import {
+  useApplicationExploreAndMetaData,
+  useCurrentApplication,
+} from '@blockchainApplication/manage/hooks';
 import { useNetworkSupportedTokens } from '@token/fungible/hooks/queries';
 import { validateAmountFormat } from 'src/utils/validators';
 import { getLogo } from '@token/fungible/utils/helpers';
@@ -67,14 +70,19 @@ const Request = () => {
       metadata: { address },
     },
   ] = useCurrentAccount();
+  const [currentApplication] = useCurrentApplication();
 
   const { t } = useTranslation();
+
+  requestInitState.recipientChain.value = currentApplication;
+
   const [state, dispatch] = useReducer(
     (stateData, value) => ({ ...stateData, ...value }),
     requestInitState
   );
-  const { applications } = useApplicationExploreAndMetaData();
+  const applicationExploreAndMetaData = useApplicationExploreAndMetaData();
   const networkSupportedTokens = useNetworkSupportedTokens(state.recipientChain.value);
+  console.log('>>', applicationExploreAndMetaData.applications, state, networkSupportedTokens);
 
   const shareLink = useMemo(
     () =>
@@ -161,11 +169,12 @@ const Request = () => {
         <span className={`${styles.amountField}`}>
           <MenuSelect
             className="recipient-chain-select"
+            isLoading={applicationExploreAndMetaData.isLoading}
             value={recipientChain.value}
             onChange={onSelectReceipentChain}
             select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
           >
-            {applications.map((chain) => (
+            {applicationExploreAndMetaData.applications.map((chain) => (
               <MenuItem className={styles.chainOptionWrapper} value={chain} key={chain.chainID}>
                 <img className={styles.chainLogo} src={getLogo({ logo: chain.logo })} />
                 <span>{chain.chainName}</span>
@@ -181,6 +190,7 @@ const Request = () => {
             className="token-select"
             onChange={onSelectToken}
             value={token.value}
+            isLoading={networkSupportedTokens.isLoading}
             feedback={t('Failed to fetch supported token metadata.')}
             status={
               networkSupportedTokens.isError || networkSupportedTokens.data.length === 0
