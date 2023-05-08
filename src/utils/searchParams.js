@@ -112,19 +112,24 @@ export const addSearchParamsToUrl = (history, data = {}) => {
  * @param {string[]} [paramsToRemove] the array of params to remove. Leave it blank to remove all.
  * @param {boolean} [cleanParamsAfter] clean parameters
  */
-export const removeSearchParamsFromUrl = (history, paramsToRemove, cleanParamsAfter) => {
+export const removeSearchParamsFromUrl = (history, paramsToRemove, state, cleanParamsAfter) => {
   let newSearchString = '';
   if (Array.isArray(paramsToRemove) && paramsToRemove.length) {
     newSearchString = removeSearchParams(history.location.search, paramsToRemove, cleanParamsAfter);
   }
-  history.push(`${history.location.pathname}${newSearchString}`);
+  if (state) {
+    history.push({ search: `${history.location.pathname}${newSearchString}`, state });
+  } else {
+    history.push(`${history.location.pathname}${newSearchString}`);
+  }
 };
 
 export const removeThenAppendSearchParamsToUrl = (
   history,
   paramsToAdd,
   paramsToRemove,
-  cleanParamsAfter
+  cleanParamsAfter,
+  state
 ) => {
   let newSearchString = '';
   let formattedSearchString = '';
@@ -136,5 +141,9 @@ export const removeThenAppendSearchParamsToUrl = (
   } else {
     formattedSearchString = appendSearchParams('', paramsToAdd);
   }
-  history.push(`${history.location.pathname}${formattedSearchString}`);
+  if (state) {
+    history.push({ search: `${formattedSearchString}`, state });
+  } else {
+    history.push(`${history.location.pathname}${formattedSearchString}`);
+  }
 };

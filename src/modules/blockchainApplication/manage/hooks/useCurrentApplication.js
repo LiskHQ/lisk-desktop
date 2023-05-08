@@ -2,11 +2,15 @@ import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import client from 'src/utils/api/client';
 import { selectStaking } from 'src/redux/selectors';
-import { removeSearchParams } from 'src/utils/searchParams';
+import { stakesReset } from 'src/redux/actions';
+import {
+  removeThenAppendSearchParamsToUrl,
+  removeSearchParamsFromUrl,
+} from 'src/utils/searchParams';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 
-export function useCurrentApplication() {
+export function useCurrentApplication(history) {
   const dispatch = useDispatch();
 
   const currentApplication = useSelector(selectCurrentApplication);
@@ -21,9 +25,22 @@ export function useCurrentApplication() {
     client.create(applicationNode || application.serviceURLs[0]);
     // clear stakes list during application switch
     if (pendingStakes.length) {
-      const [urlOrigin, searchParams] = window.location.href.split('?');
-      const modifiedSearchPrams = removeSearchParams(searchParams, ['modal']);
-      window.location = `${urlOrigin}${modifiedSearchPrams}&modal=confirmationDialog&mode=pendingStakes&contentType=switchAppOrNetwork`;
+      const state = {
+        header: 'Pending Stakes',
+        content:
+          'Switching your application and (or) network will remove all your pending stakes. Are you sure you want to continue?',
+        cancelText: 'Cancel switch',
+        cancelFn: removeSearchParamsFromUrl(history, ['modal']),
+        confirmText: 'Continue to switch',
+        confirmFn: () => dispatch(stakesReset()),
+      };
+      removeThenAppendSearchParamsToUrl(
+        history,
+        { modal: 'confirmationDialog' },
+        ['modal'],
+        undefined,
+        state
+      );
     }
   }, []);
 

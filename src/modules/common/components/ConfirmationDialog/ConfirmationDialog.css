@@ -1,0 +1,47 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  min-width: 300px;
+  max-width: 430px;
+
+  & .container {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  & header {
+    padding: 20px 20px 0 !important;
+    display: flex;
+    flex-direction: column !important;
+    height: auto !important;
+
+    & h2 {
+      @mixin headingNormalIntermediate very-bold;
+
+      font-size: 28px !important;
+      line-height: 32px !important;
+    }
+  }
+
+  & .content {
+    text-align: center;
+    font-size: 16px;
+    color: var(--color-slate-gray);
+
+    & p {
+      margin-top: 0;
+    }
+  }
+
+  & .cancelBtn {
+    width: 100%;
+    color: var(--color-red);
+    border-color: var(--color-red);
+  }
+
+  & .confirmBtn {
+    width: 100%;
+    color: var(--color-constant-white);
+  }
+}
