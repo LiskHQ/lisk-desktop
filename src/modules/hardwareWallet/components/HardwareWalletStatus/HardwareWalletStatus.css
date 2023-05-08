@@ -72,6 +72,7 @@
     font-weight: var(--font-weight-semi-bold);
     height: initial;
     padding: initial;
+    text-align: left;
 
     &:hover {
       text-decoration: underline;

@@ -30,6 +30,7 @@
       font-weight: var(--font-weight-semi-bold);
       height: initial;
       padding: initial;
+      text-align: left;
     }
   }
 

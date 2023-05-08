@@ -21,7 +21,7 @@ function HwDeviceItem({ hwDevice }) {
     dispatch(setCurrentHWDevice(hwDevice));
   }
 
-  async function handleShowPubkeyOnDevice() {
+  async function handleShowAddressOnDevice() {
     await getPubKey(hwDevice.path, undefined, true);
   }
 
@@ -30,8 +30,8 @@ function HwDeviceItem({ hwDevice }) {
       <Icon name="iconLedgerDevice" className={styles.hwWalletIcon} />
       <div className={styles.infoContainer}>
         <h5 className={styles.modelInfo}>{`${manufacturer} ${product}`}</h5>
-        <TertiaryButton className={classNames(styles.btnShowPubkey)} onClick={handleShowPubkeyOnDevice}>
-          {t('Show pubkey on device')}
+        <TertiaryButton className={classNames(styles.btnShowPubkey)} onClick={handleShowAddressOnDevice}>
+          {t('Ping device')}
         </TertiaryButton>
       </div>
       <CheckBox

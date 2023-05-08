@@ -33,7 +33,7 @@ export const HardwareWalletStatus = () => {
     /*    { label: `${t('Status')} : `, value: <Status status={status} /> }, TODO: To be fixed in PDD-1482 */
   ];
 
-  async function handleShowPubkeyOnDevice() {
+  async function handleShowAddressOnDevice() {
     await getPubKey(currentHWDevice.path, undefined, true);
   }
 
@@ -61,15 +61,15 @@ export const HardwareWalletStatus = () => {
               </li>
             ))}
           </ul>
-          <TertiaryButton className={classNames(styles.selectLinkLabel)} onClick={handleShowPubkeyOnDevice}>
-            {t('Show pubkey on device')}
-          </TertiaryButton>
           <DialogLink className={styles.selectLinkLabel} component="switchAccount">
             {t('Switch account')}
           </DialogLink>
           <DialogLink className={styles.selectLinkLabel} component="selectHardwareDeviceModal">
             {t('Switch device')}
           </DialogLink>
+          <TertiaryButton className={classNames(styles.selectLinkLabel)} onClick={handleShowAddressOnDevice}>
+            {t('Ping device')}
+          </TertiaryButton>
         </div>
       </Tooltip>
     </section>
