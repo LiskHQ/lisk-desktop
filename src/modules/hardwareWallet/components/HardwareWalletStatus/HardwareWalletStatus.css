@@ -65,10 +65,17 @@
   }
 
   & .selectLinkLabel {
+    font-size: 12px;
     margin-top: 10px;
     cursor: pointer;
     color: var(--color-ultramarine-blue);
     font-weight: var(--font-weight-semi-bold);
+    height: initial;
+    padding: initial;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   & h6 ~ ul {

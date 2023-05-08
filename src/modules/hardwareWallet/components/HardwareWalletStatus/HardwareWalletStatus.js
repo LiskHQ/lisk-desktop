@@ -5,6 +5,9 @@ import Icon from '@theme/Icon';
 import { useSelector } from 'react-redux';
 import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
 import DialogLink from '@theme/dialog/link';
+import { getPubKey } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import { TertiaryButton } from 'src/theme/buttons';
+import classNames from "classnames";
 import styles from './HardwareWalletStatus.css';
 
 /* TODO: To be fixed in PDD-1482
@@ -22,18 +25,17 @@ export const HardwareWalletStatus = () => {
     return null;
   }
 
-  const { manufacturer, product, status, path } = currentHWDevice;
-  const usbPort = path
-    ?.split('/')
-    ?.find((segment) => segment.startsWith('usb'))
-    ?.split('@')[0];
+  const { manufacturer, product, status } = currentHWDevice;
 
   const hwStatusInfo = [
     { label: `${t('Brand')} : `, value: manufacturer },
     { label: `${t('Model')} : `, value: product },
-    { label: `${t('USB ID')} : `, value: usbPort },
     /*    { label: `${t('Status')} : `, value: <Status status={status} /> }, TODO: To be fixed in PDD-1482 */
   ];
+
+  async function handleShowPubkeyOnDevice() {
+    await getPubKey(currentHWDevice.path, undefined, true);
+  }
 
   return (
     <section className={styles.wrapper}>
@@ -59,6 +61,9 @@ export const HardwareWalletStatus = () => {
               </li>
             ))}
           </ul>
+          <TertiaryButton className={classNames(styles.selectLinkLabel)} onClick={handleShowPubkeyOnDevice}>
+            {t('Show pubkey on device')}
+          </TertiaryButton>
           <DialogLink className={styles.selectLinkLabel} component="switchAccount">
             {t('Switch account')}
           </DialogLink>

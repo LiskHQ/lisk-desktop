@@ -22,10 +22,14 @@
       color: var(--color-maastricht-blue);
     }
 
-    & .path {
+    & .btnShowPubkey {
       margin-top: 12px;
-      font-size: var(--paragraph-font-size-s);
-      color: var(--color-blue-gray);
+      font-size: var(--button-font-size-s);
+      cursor: pointer;
+      color: var(--color-ultramarine-blue);
+      font-weight: var(--font-weight-semi-bold);
+      height: initial;
+      padding: initial;
     }
   }
 
