@@ -52,7 +52,7 @@ function SettingDialog() {
               <Toggle isCheckbox setting={settingsConst.keys.enableCustomDerivationPath} />
               <div>
                 <span className={styles.labelName}>{t('Enable custom derivation path')}</span>
-                <p>{t('Modify recovery phrase derivation path')}</p>
+                <p>{t('Modify recovery phrase derivation path.')}</p>
               </div>
             </label>
           </section>

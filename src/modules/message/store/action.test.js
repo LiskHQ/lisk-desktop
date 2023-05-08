@@ -1,7 +1,10 @@
 import { cryptography } from '@liskhq/lisk-client';
+import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
+import * as signMessageUtil from '@wallet/utils/signMessage';
 import { signMessage } from './action';
 
 jest.spyOn(cryptography.ed, 'signAndPrintMessage');
+jest.spyOn(signMessageUtil, 'signMessageUsingHW');
 
 describe('balanceReclaimed', () => {
   const message = 'test-message';
@@ -34,6 +37,16 @@ describe('balanceReclaimed', () => {
     expect(nextStep).toHaveBeenCalledWith({
       signature: defaultPrintedMessage,
       message,
+    });
+  });
+
+  it('should dispatch transactionCreatedSuccess', async () => {
+    const mockCurrentAccount = mockHWAccounts[0];
+    await signMessage({ nextStep, privateKey, message, currentAccount: mockCurrentAccount })();
+
+    expect(signMessageUtil.signMessageUsingHW).toHaveBeenCalledWith({
+      message,
+      account: mockCurrentAccount,
     });
   });
 });

@@ -52,9 +52,9 @@ export async function getSignedMessage({ devicePath, accountIndex, unsignedMessa
     transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
-    const signature = await liskLedger.sign(
+    const signature = await liskLedger.signMessage(
       ledgerAccount.derivePath(),
-      Buffer.from(unsignedMessage, 'hex')
+      Buffer.from(unsignedMessage)
     );
     await transport?.close();
     return signature;

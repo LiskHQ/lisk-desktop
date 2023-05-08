@@ -66,7 +66,7 @@ describe('Validator Registration Summary', () => {
     expect(wrapper).toContainMatchingElement('button.cancel-button');
   });
 
-  it('go to prev page when click Go Back button', () => {
+  it('go to prev page when click Go back button', () => {
     const wrapper = mount(<Summary {...props} />);
     expect(props.prevStep).not.toBeCalled();
     wrapper.find('button.cancel-button').simulate('click');

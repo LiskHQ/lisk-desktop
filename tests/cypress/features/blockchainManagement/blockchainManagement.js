@@ -64,7 +64,7 @@ Then(/^blockchain details should be accurately displayed$/, function () {
 
 Then(/^I should be on add blockchain application modal$/, function () {
   cy.visit(`${urls.wallet}?modal=addApplicationList`);
-  cy.get(ss.addApplicationHeader).should('have.text', 'Add Application');
+  cy.get(ss.addApplicationHeader).should('have.text', 'Add application');
   cy.get(ss.addApplicationTable).should('exist');
 });
 

@@ -25,7 +25,7 @@ export const getHWAccounts = async (currentHWDevice, getAccountName) => {
     };
 
     if (!isInitialized) {
-      const name = getAccountName(address) || 'New account';
+      const name = getAccountName(address) || `Account ${accountIndex + 1}`;
       accounts.push({
         ...account,
         metadata: {
