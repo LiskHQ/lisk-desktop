@@ -71,7 +71,7 @@ describe('useTransferableTokens hook', () => {
       data: {
         data: {
           supportedTokens: {
-            isSupportAllToken: true,
+            isSupportAllTokens: true,
             exactTokenIDs: [],
             patternTokenIDs: [],
           },
@@ -84,6 +84,7 @@ describe('useTransferableTokens hook', () => {
     jest.spyOn(queries, 'useTokensSupported').mockReturnValue(mockTokensSupported);
     const { result } = renderHook(() => useTransferableTokens(), { wrapper });
     const { data } = result.current;
+
     expect(data).toEqual(mockAllTokens);
   });
 
