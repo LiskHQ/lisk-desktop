@@ -20,9 +20,6 @@ export function useCurrentApplication(history) {
   );
 
   const setApplication = useCallback((application, applicationNode) => {
-    dispatch(setCurrentApplication(application));
-    /* istanbul ignore next */
-    client.create(applicationNode || application.serviceURLs[0]);
     // clear stakes list during application switch
     if (pendingStakes.length) {
       const state = {
@@ -32,15 +29,20 @@ export function useCurrentApplication(history) {
         cancelText: 'Cancel switch',
         cancelFn: removeSearchParamsFromUrl(history, ['modal']),
         confirmText: 'Continue to switch',
-        confirmFn: () => dispatch(stakesReset()),
+        confirmFn: () => {
+          dispatch(setCurrentApplication(application));
+          /* istanbul ignore next */
+          client.create(applicationNode || application.serviceURLs[0]);
+
+          dispatch(stakesReset());
+          removeSearchParamsFromUrl(history, ['modal']);
+        },
       };
-      removeThenAppendSearchParamsToUrl(
-        history,
-        { modal: 'confirmationDialog' },
-        ['modal'],
-        undefined,
-        state
-      );
+      removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
+    } else {
+      dispatch(setCurrentApplication(application));
+      /* istanbul ignore next */
+      client.create(applicationNode || application.serviceURLs[0]);
     }
   }, []);
 
