@@ -8,7 +8,7 @@ const props = {
   t: (s) => s,
   transactions: { txSignatureError: null, signedTransaction: {} },
   statusInfo: { locked: 200, unlockable: 100, selfUnstake: undefined },
-  dposToken: mockAppsTokens.data[0],
+  posToken: mockAppsTokens.data[0],
 };
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({

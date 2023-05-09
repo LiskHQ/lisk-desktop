@@ -22,7 +22,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
     config: { params: { tokenID: posConstants?.posTokenID } },
     options: { enabled: !isGettingPosConstants },
   });
-  const dposToken = tokens?.data?.[0] || {};
+  const posToken = tokens?.data?.[0] || {};
 
   const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -36,7 +36,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
     fields: {
-      token: dposToken,
+      token: posToken,
     },
     isFormValid: unlockedAmount > 0,
     unlockedAmount,
@@ -64,7 +64,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
               unlockedAmount={unlockedAmount}
               currentBlockHeight={latestBlock?.height ?? 0}
               lockedPendingUnlocks={lockedPendingUnlocks}
-              token={dposToken}
+              token={posToken}
             />
           </BoxContent>
         </>
