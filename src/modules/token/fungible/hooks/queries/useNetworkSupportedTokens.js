@@ -20,7 +20,6 @@ export const useNetworkSupportedTokens = (application) => {
 
   return useMemo(() => {
     let tokens = [];
-    console.log('.>>>>', isSupportAllTokens);
     if (!isSupportAllTokens) {
       const { exactTokenIDs = [] } = tokensSupported.data?.data?.supportedTokens || {};
       tokens = exactTokenIDs
