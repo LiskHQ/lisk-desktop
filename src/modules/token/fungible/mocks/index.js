@@ -43,7 +43,7 @@ export const tokensTopLskBalance = rest.get(
 );
 
 export const tokensSupported = rest.get(
-  `*/api/${API_VERSION}/tokens/summary`,
+  `*/api/${API_VERSION}/token/summary`,
   async (req, res, ctx) => {
     const limit = Number(req.url.searchParams.get('limit'));
     const offset = Number(req.url.searchParams.get('offset') || 0);
