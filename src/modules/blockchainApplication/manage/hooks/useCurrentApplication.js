@@ -29,9 +29,8 @@ export function useCurrentApplication(history) {
         cancelText: 'Cancel switch',
         cancelFn: removeSearchParamsFromUrl(history, ['modal']),
         confirmText: 'Continue to switch',
-        confirmFn: () => {
+        confirmFn: /* istanbul ignore next */ () => {
           dispatch(setCurrentApplication(application));
-          /* istanbul ignore next */
           client.create(applicationNode || application.serviceURLs[0]);
 
           dispatch(stakesReset());

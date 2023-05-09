@@ -74,7 +74,7 @@ describe('Reclaim balance screen', () => {
     useSelector.mockImplementation(
       jest.fn(() => ({
         ...mockNonMigrated,
-        token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: '0' }],
+        token: [],
         staking: {},
       }))
     );
