@@ -28,7 +28,7 @@ export function useCurrentApplication(history) {
         content:
           'Switching your application and (or) network will remove all your pending stakes. Are you sure you want to continue?',
         cancelText: 'Cancel switch',
-        onCancel: removeSearchParamsFromUrl(history, ['modal']),
+        onCancel: () => removeSearchParamsFromUrl(history, ['modal']),
         confirmText: 'Continue to switch',
         onConfirm: /* istanbul ignore next */ () => {
           dispatch(setCurrentApplication(application));
