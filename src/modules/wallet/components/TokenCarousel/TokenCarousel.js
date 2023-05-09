@@ -88,7 +88,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
             }}
           />
         )}
-        {!swiperInstance.isEnd && !isLoading && (
+        {!swiperInstance?.isEnd && !isLoading && (
           <NavButton
             isNext
             ref={nextRef}
