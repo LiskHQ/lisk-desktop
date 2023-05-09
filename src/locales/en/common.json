@@ -79,7 +79,7 @@
   "Balance to reclaim": "Balance to reclaim",
   "Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK": "Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK",
   "Before you continue using Lisk, please read and accept the": "Before you continue using Lisk, please read and accept the",
-  "Below are the details of your reward balances, you can continue to claim your rewards and they will be transferred to your wallet balance.": "Below are the details of your reward balances, you can continue to claim your rewards and they will be transferred to your wallet balance.",
+  "Below are the details of your reward balances, once you click \"Claim rewards\" the rewarded tokens will be added to your wallet.": "Below are the details of your reward balances, once you click \"Claim rewards\" the rewarded tokens will be added to your wallet.",
   "Below are the details of your staked balances, as well as the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.": "Below are the details of your staked balances, as well as the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.",
   "Block": "Block",
   "Block ID": "Block ID",
