@@ -184,7 +184,7 @@ const SendForm = (props) => {
       >
         <>
           <BoxHeader className={styles.header}>
-            <h2>{t('Send Tokens')}</h2>
+            <h2>{t('Send tokens')}</h2>
           </BoxHeader>
           <BoxContent className={styles.formSection}>
             <div className={`${styles.ApplicationFieldWrapper}`}>

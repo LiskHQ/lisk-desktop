@@ -51,7 +51,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
       >
         <>
           <BoxHeader className={styles.header}>
-            <h2>{t('Pending unlock details')}</h2>
+            <h2>{t('Unlock stakes')}</h2>
           </BoxHeader>
           <BoxContent className={styles.container}>
             <p>
