@@ -142,7 +142,7 @@ const TransactionDetails = ({ location }) => {
               data-testid="transaction-param-json-viewer"
               className={`${styles.jsonContainer} ${!isParamsCollapsed ? styles.shrink : ''}`}
             >
-              <ReactJson name={false} src={transactionMetaData.params} theme={jsonViewerTheme} />
+              <ReactJson name={false} src={transactionData.params} theme={jsonViewerTheme} />
             </div>
           </BoxContent>
         </Box>

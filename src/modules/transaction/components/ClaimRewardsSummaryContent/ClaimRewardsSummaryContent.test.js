@@ -27,7 +27,9 @@ describe('ClaimRewardsSummaryContent', () => {
     mockRewardsClaimableWithToken.data.forEach((rewardClaimable) => {
       const { reward, symbol } = rewardClaimable;
 
-      expect(screen.getByText(`${convertFromBaseDenom(reward, rewardClaimable)} ${symbol}`)).toBeTruthy();
+      expect(
+        screen.getByText(`${convertFromBaseDenom(reward, rewardClaimable)} ${symbol}`)
+      ).toBeTruthy();
     });
   });
 });
