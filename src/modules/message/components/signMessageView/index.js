@@ -31,7 +31,10 @@ const signMessageView = ({ account, t, history, signMessage }) => {
         )}
         <MultiStep onChange={onMultiStepChange}>
           <MessageForm history={history} signMessage={signMessage} />
-          <TxSignatureCollector transactionJSON={{ senderPublicKey: pubkey, params: {} }} />
+          <TxSignatureCollector
+            type="message"
+            transactionJSON={{ senderPublicKey: pubkey, params: {} }}
+          />
           <SignedMessage history={history} account={account} />
         </MultiStep>
       </Box>
