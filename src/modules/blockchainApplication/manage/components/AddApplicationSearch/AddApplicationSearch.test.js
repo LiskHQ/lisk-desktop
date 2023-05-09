@@ -20,7 +20,7 @@ describe('AddApplicationSearch', () => {
       onSearchApplications: mockSearchApplication,
     };
     render(<AddApplicationSearch {...props} />);
-    fireEvent.change(screen.getByPlaceholderText('Search by name or application URL'), {
+    fireEvent.change(screen.getByPlaceholderText('Search by name'), {
       target: { value: 'test' },
     });
     jest.runAllTimers();
@@ -37,7 +37,7 @@ describe('AddApplicationSearch', () => {
       onSearchApplications: mockSearchApplication,
     };
     const { rerender } = render(<AddApplicationSearch {...props} />);
-    fireEvent.change(screen.getByPlaceholderText('Search by name or application URL'), {
+    fireEvent.change(screen.getByPlaceholderText('Search by name'), {
       target: { value: searchUrl },
     });
     expect(mockSearchApplication).toHaveBeenCalledTimes(1);

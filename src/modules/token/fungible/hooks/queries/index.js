@@ -1,5 +1,5 @@
 export * from './useTokenBalances';
-export * from './useTokensSupported';
+export * from './useTokenSummary';
 export * from './useTokensTopLskBalance';
 export * from './useTokenAccountExists';
 export * from './useGetInitializationFees';
