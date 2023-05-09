@@ -54,7 +54,12 @@ const Overview = ({ isWalletRoute, history }) => {
 
   const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
-  const { data: tokens, isLoading, error } = useTokenBalances({ config: { params: { address } } });
+  const {
+    data: tokens,
+    isFetching,
+    error,
+    refetch,
+  } = useTokenBalances({ config: { params: { address } } });
   const host = wallet.summary?.address ?? '';
 
   const showWarning = () => {
@@ -126,8 +131,9 @@ const Overview = ({ isWalletRoute, history }) => {
           <TokenCarousel
             data={tokens?.data ?? []}
             error={error}
-            isLoading={isLoading}
+            isLoading={isFetching}
             renderItem={renderTokenCard}
+            onRetry={refetch}
           />
         </div>
       </div>

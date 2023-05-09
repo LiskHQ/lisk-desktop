@@ -1,5 +1,5 @@
 // istanbul ignore file
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import Skeleton from 'src/modules/common/components/skeleton';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
@@ -26,29 +26,35 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
   const prevRef = useRef(null);
 
   const [activeIndex, setSwiperIndex] = useState(0);
-  const [swiperInstance, setSwiperInstance] = useState(null);
+  const [, setWindowSize] = useState(0);
+  const [swiperInstance = {}, setSwiperInstance] = useState(null);
 
-  const { virtualSize, width } = swiperInstance || {};
-
-  const isNextVisible = useMemo(
-    () => Math.floor(virtualSize / width) > activeIndex + 1,
-    [virtualSize, width, activeIndex]
-  );
   const isPrevVisible = useMemo(() => activeIndex > 0, [activeIndex]);
   const renderData = useMemo(() => (isLoading ? [...new Array(4).keys()] : data), [data]);
 
   if (error) {
     return (
       <div className={styles.errorWrapper}>
-        <p>{error.message || error}</p>
+        <p>{error?.message || error}</p>
+        <TertiaryButton onClick={rest.onRetry}>Retry</TertiaryButton>
       </div>
     );
   }
+
+  useEffect(() => {
+    const onResize = ({ target: { innerWidth, innerHeight } }) => {
+      setWindowSize({ innerWidth, innerHeight });
+    };
+
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <Swiper
         className={styles.swiperWrapper}
-        slidesPerView={2}
+        slidesPerView="auto"
         spaceBetween={20}
         modules={[Navigation]}
         onSlideChange={(ref) => {
@@ -82,7 +88,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
             }}
           />
         )}
-        {isNextVisible && !isLoading && (
+        {!swiperInstance.isEnd && !isLoading && (
           <NavButton
             isNext
             ref={nextRef}
