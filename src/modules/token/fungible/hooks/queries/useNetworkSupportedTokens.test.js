@@ -5,7 +5,7 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { API_VERSION } from 'src/const/config';
 import { server } from 'src/service/mock/server';
-import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { queryWrapper as wrapper, queryClient } from 'src/utils/test/queryWrapper';
 import { useNetworkSupportedTokens } from './useNetworkSupportedTokens';
 import { mockAppsTokens, mockTokenSummary } from '../../__fixtures__';
 
@@ -18,7 +18,7 @@ describe('useNetworkSupportedTokens', () => {
 
   useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
 
-  it.skip('should fetch supported network tokens', async () => {
+  it('should fetch supported network tokens', async () => {
     const { result, waitFor } = renderHook(
       () => useNetworkSupportedTokens(mockBlockchainAppMeta.data[0]),
       { wrapper }
@@ -31,6 +31,8 @@ describe('useNetworkSupportedTokens', () => {
   });
 
   it('should get all supported tokens if network support all tokens', async () => {
+    queryClient.resetQueries();
+    server.resetHandlers();
     server.use(
       rest.get(`*/api/${API_VERSION}/token/summary`, async (req, res, ctx) => {
         const response = {
@@ -57,7 +59,10 @@ describe('useNetworkSupportedTokens', () => {
     expect(result.current.data).toEqual(mockAppsTokens.data);
   });
 
-  it.skip('should not return tokens if tokens meta data fails', async () => {
+  it('should not return tokens if tokens meta data fails', async () => {
+    queryClient.resetQueries();
+    server.resetHandlers();
+
     server.use(
       rest.get(`*/api/${API_VERSION}/token/summary`, async (req, res, ctx) => res(ctx.json({})))
     );
