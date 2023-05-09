@@ -9,7 +9,7 @@ import { PrimaryButton, OutlineButton } from 'src/theme/buttons';
 import styles from './ConfirmationDialog.css';
 
 const ConfirmationDialog = ({ location }) => {
-  const { header, content, cancelText, cancelFn, confirmText, confirmFn } = location.state ?? {};
+  const { header, content, cancelText, onCancel, confirmText, onConfirm } = location.state ?? {};
   return (
     <Dialog hasClose className={styles.wrapper}>
       <Box className={styles.container}>
@@ -22,12 +22,12 @@ const ConfirmationDialog = ({ location }) => {
           </div>
           <div className={grid.row}>
             <div className={grid['col-xs-6']}>
-              <OutlineButton className={styles.cancelBtn} onClick={cancelFn}>
+              <OutlineButton className={styles.cancelBtn} onClick={onCancel}>
                 {cancelText ?? 'Cancel switch'}
               </OutlineButton>
             </div>
             <div className={grid['col-xs-6']}>
-              <PrimaryButton className={styles.confirmBtn} onClick={confirmFn}>
+              <PrimaryButton className={styles.confirmBtn} onClick={onConfirm}>
                 {confirmText ?? 'Continue to switch'}
               </PrimaryButton>
             </div>

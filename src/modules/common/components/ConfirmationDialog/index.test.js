@@ -2,8 +2,8 @@ import { screen, fireEvent } from '@testing-library/react';
 import { renderWithCustomRouter } from 'src/utils/testHelpers';
 import ConfirmationDialog from '.';
 
-const mockCancelFn = jest.fn();
-const mockConfirmFn = jest.fn();
+const mockOnCancel = jest.fn();
+const mockOnConfirm = jest.fn();
 const cancelBtnText = 'Cancel app switch';
 const confirmBtnText = 'Continue to app switch';
 
@@ -15,9 +15,9 @@ describe('ConfirmationDialog', () => {
       content:
         'Switching your application and (or) network will remove all your pending stakes. Are you sure you want to continue?',
       cancelText: cancelBtnText,
-      cancelFn: mockCancelFn,
+      onCancel: mockOnCancel,
       confirmText: confirmBtnText,
-      confirmFn: mockConfirmFn,
+      onConfirm: mockOnConfirm,
     },
   };
   const props = {
@@ -38,7 +38,7 @@ describe('ConfirmationDialog', () => {
     expect(screen.getByText(cancelBtnText)).toBeInTheDocument();
     expect(screen.getByText(confirmBtnText)).toBeInTheDocument();
     fireEvent.click(screen.getByText(confirmBtnText));
-    expect(mockConfirmFn).toHaveBeenCalled();
+    expect(mockOnConfirm).toHaveBeenCalled();
   });
 
   it('renders fallback if not location state is passed', () => {
