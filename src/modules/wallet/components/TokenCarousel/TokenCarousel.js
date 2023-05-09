@@ -71,7 +71,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
       >
         {renderData.map((props, index) => (
           <SwiperSlide key={index}>
-            {isLoading ? (
+            {isLoading || data.length === 0 ? (
               <Skeleton className={styles.skeletonLoader} width="240px" height="96px" />
             ) : (
               <RenderItem {...props} />

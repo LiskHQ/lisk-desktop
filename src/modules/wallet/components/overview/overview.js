@@ -56,7 +56,7 @@ const Overview = ({ isWalletRoute, history }) => {
   const wallet = useSelector(selectActiveTokenAccount);
   const {
     data: tokens,
-    isFetching,
+    isLoading,
     error,
     refetch,
   } = useTokenBalances({ config: { params: { address } } });
@@ -131,7 +131,7 @@ const Overview = ({ isWalletRoute, history }) => {
           <TokenCarousel
             data={tokens?.data ?? []}
             error={error}
-            isLoading={isFetching}
+            isLoading={isLoading}
             renderItem={renderTokenCard}
             onRetry={refetch}
           />
