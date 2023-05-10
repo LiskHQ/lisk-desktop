@@ -6,6 +6,7 @@ import {
   removeThenAppendSearchParamsToUrl,
   removeSearchParamsFromUrl,
 } from 'src/utils/searchParams';
+import { createConfirmSwitchState } from '@common/utils/createConfirmSwitchState';
 import routes from 'src/routes/routes';
 import { setCurrentAccount } from '../store/action';
 
@@ -20,23 +21,24 @@ export function useCurrentAccount(history) {
   const setAccount = (encryptedAccount, referrer) => {
     // clear stakes list during login or accounts switch
     if (pendingStakes.length) {
-      const state = {
-        header: 'Pending stakes',
-        content:
-          'Switching your account will remove all your pending stakes. Are you sure you want to continue?',
-        cancelText: 'Cancel switch',
-        onCancel: /* istanbul ignore next */ () => removeSearchParamsFromUrl(history, ['modal']),
-        confirmText: 'Continue to switch',
-        onConfirm: /* istanbul ignore next */ () => {
-          dispatch(setCurrentAccount(encryptedAccount));
+      const onCancel = /* istanbul ignore next */ () =>
+        removeSearchParamsFromUrl(history, ['modal']);
+      const onConfirm = /* istanbul ignore next */ () => {
+        dispatch(setCurrentAccount(encryptedAccount));
 
-          dispatch(stakesReset());
-          history.push(referrer || routes.wallet.path);
-        },
+        dispatch(stakesReset());
+        history.push(referrer || routes.wallet.path);
       };
+      const state = createConfirmSwitchState({
+        mode: 'pendingStakes',
+        type: 'account',
+        onCancel,
+        onConfirm,
+      });
       removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
     } else {
       dispatch(setCurrentAccount(encryptedAccount));
+      history.push(referrer || routes.wallet.path);
     }
   };
   const currentAccount = useSelector(selectCurrentAccount);

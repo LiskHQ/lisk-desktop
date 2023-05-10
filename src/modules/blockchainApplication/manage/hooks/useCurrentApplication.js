@@ -7,6 +7,7 @@ import {
   removeThenAppendSearchParamsToUrl,
   removeSearchParamsFromUrl,
 } from 'src/utils/searchParams';
+import { createConfirmSwitchState } from '@common/utils/createConfirmSwitchState';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 
@@ -23,21 +24,21 @@ export function useCurrentApplication(history) {
   const setApplication = useCallback((application, applicationNode) => {
     // clear stakes list during application switch
     if (pendingStakes.length) {
-      const state = {
-        header: 'Pending stakes',
-        content:
-          'Switching your application and (or) network will remove all your pending stakes. Are you sure you want to continue?',
-        cancelText: 'Cancel switch',
-        onCancel: /* istanbul ignore next */ () => removeSearchParamsFromUrl(history, ['modal']),
-        confirmText: 'Continue to switch',
-        onConfirm: /* istanbul ignore next */ () => {
-          dispatch(setCurrentApplication(application));
-          client.create(applicationNode || application.serviceURLs[0]);
+      const onConfirm = /* istanbul ignore next */ () => {
+        dispatch(setCurrentApplication(application));
+        client.create(applicationNode || application.serviceURLs[0]);
 
-          dispatch(stakesReset());
-          removeSearchParamsFromUrl(history, ['modal']);
-        },
+        dispatch(stakesReset());
+        removeSearchParamsFromUrl(history, ['modal']);
       };
+      const onCancel = /* istanbul ignore next */ () =>
+        removeSearchParamsFromUrl(history, ['modal']);
+      const state = createConfirmSwitchState({
+        mode: 'pendingStakes',
+        type: 'application',
+        onConfirm,
+        onCancel,
+      });
       removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
     } else {
       dispatch(setCurrentApplication(application));

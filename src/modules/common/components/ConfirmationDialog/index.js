@@ -23,12 +23,12 @@ const ConfirmationDialog = ({ location }) => {
           <div className={grid.row}>
             <div className={grid['col-xs-6']}>
               <OutlineButton className={styles.cancelBtn} onClick={onCancel}>
-                {cancelText ?? 'Cancel switch'}
+                {cancelText ?? 'Cancel'}
               </OutlineButton>
             </div>
             <div className={grid['col-xs-6']}>
               <PrimaryButton className={styles.confirmBtn} onClick={onConfirm}>
-                {confirmText ?? 'Continue to switch'}
+                {confirmText ?? 'Continue'}
               </PrimaryButton>
             </div>
           </div>

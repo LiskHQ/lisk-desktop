@@ -45,7 +45,7 @@ describe('ConfirmationDialog', () => {
     renderWithCustomRouter(ConfirmationDialog, { history: {} });
     expect(screen.getByText('Confirm')).toBeInTheDocument();
     expect(screen.getByText('Are you sure?')).toBeInTheDocument();
-    expect(screen.getByText('Cancel switch')).toBeInTheDocument();
-    expect(screen.getByText('Continue to switch')).toBeInTheDocument();
+    expect(screen.getByText('Cancel')).toBeInTheDocument();
+    expect(screen.getByText('Continue')).toBeInTheDocument();
   });
 });

@@ -14,6 +14,7 @@ import {
   removeThenAppendSearchParamsToUrl,
   removeSearchParamsFromUrl,
 } from 'src/utils/searchParams';
+import { createConfirmSwitchState } from '@common/utils/createConfirmSwitchState';
 import stylesSecondaryButton from '@theme/buttons/css/secondaryButton.css';
 import classNames from 'classnames';
 import networks from '../../configuration/networks';
@@ -50,20 +51,21 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess, history }) {
         if (!res.error) {
           // clear stakes list during network switch
           if (pendingStakes.length) {
-            const state = {
-              header: 'Pending stakes',
-              content:
-                'Switching your application and (or) network will remove all your pending stakes. Are you sure you want to continue?',
-              cancelText: 'Cancel switch',
-              onCancel: () => removeSearchParamsFromUrl(history, ['modal']),
-              confirmText: 'Continue to switch',
-              onConfirm: /* istanbul ignore next */ () => {
-                setValue(network);
+            const onCancel = /* istanbul ignore next */ () =>
+              removeSearchParamsFromUrl(history, ['modal']);
+            const onConfirm = /* istanbul ignore next */ () => {
+              setValue(network);
+              setSelectedNetwork(network);
 
-                dispatch(stakesReset());
-                removeSearchParamsFromUrl(history, ['modal']);
-              },
+              dispatch(stakesReset());
+              removeSearchParamsFromUrl(history, ['modal']);
             };
+            const state = createConfirmSwitchState({
+              mode: 'pendingStakes',
+              type: 'network',
+              onCancel,
+              onConfirm,
+            });
             removeThenAppendSearchParamsToUrl(
               history,
               { modal: 'confirmationDialog' },
@@ -72,9 +74,9 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess, history }) {
             );
           } else {
             setValue(network);
+            setSelectedNetwork(network);
           }
         }
-        setSelectedNetwork(network);
       });
     },
     [networkStatus]
