@@ -27,7 +27,7 @@ const NodeComponent = ({ node, selectAppNode }) => (
 const SelectNode = ({ history, location }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
-  const [, setApplication] = useCurrentApplication();
+  const [, setApplication] = useCurrentApplication(history);
   const { getApplicationByChainId } = useApplicationManagement();
   const application = getApplicationByChainId(chainId);
 

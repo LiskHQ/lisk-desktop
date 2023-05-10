@@ -35,7 +35,12 @@ jest.mock('@network/hooks', () => ({
 }));
 
 jest.mock('@block/hooks/queries/useLatestBlock');
-jest.mock('../../hooks/queries');
+jest.mock('../../hooks/queries', () => ({
+  ...jest.requireActual('../../hooks/queries'),
+  useValidators: jest.fn(),
+  useSentStakes: jest.fn(),
+  usePosConstants: jest.fn(),
+}));
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@pos/validator/hooks/usePosToken');

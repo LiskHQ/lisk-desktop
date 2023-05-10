@@ -93,7 +93,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
                 onChange={onChangeUsername}
                 name="validator-username"
                 value={name.value}
-                placeholder={t('e.g. peter_pan')}
+                placeholder={t('Enter name e.g. peter_pan')}
                 className={`${styles.input} select-name-input`}
                 error={name.error && name.value.length}
                 isLoading={name.loading}
@@ -110,7 +110,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
                 onChange={(e) => setGenKey(e.target.value)}
                 name="generatorKey"
                 value={generatorKey.value}
-                placeholder={t('A string value')}
+                placeholder={t('Copy and paste generator key value from CLI')}
                 className={`${styles.input} generator-publicKey-input`}
                 error={generatorKey.error}
                 status={generatorKey.error ? 'error' : 'ok'}
@@ -126,7 +126,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
                 onChange={(e) => setBlsKey(e.target.value)}
                 name="blsKey"
                 value={blsKey.value}
-                placeholder={t('A string value')}
+                placeholder={t('Copy and paste BLS key value from CLI')}
                 className={`${styles.input} bls-key-input`}
                 error={blsKey.error}
                 status={blsKey.error ? 'error' : 'ok'}
@@ -145,7 +145,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
                 onChange={(e) => setPop(e.target.value)}
                 name="proofOfPossession"
                 value={proofOfPossession.value}
-                placeholder={t('A string value')}
+                placeholder={t('Copy and paste BLS proof Of possession value from CLI')}
                 className={`${styles.input} pop-input`}
                 error={proofOfPossession.error}
                 status={proofOfPossession.error ? 'error' : 'ok'}

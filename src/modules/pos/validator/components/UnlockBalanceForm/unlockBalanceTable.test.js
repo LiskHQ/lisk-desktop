@@ -8,9 +8,12 @@ import {
 import { mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
+import { useNetworkStatus } from '@network/hooks/queries';
+import { mockNetworkStatus } from '@network/__fixtures__';
 import BalanceTable from './BalanceTable';
 
 jest.mock('@pos/validator/hooks/usePosToken');
+jest.mock('@network/hooks/queries/useNetworkStatus');
 
 describe('unlockBalanceTable', () => {
   let wrapper;
@@ -31,6 +34,7 @@ describe('unlockBalanceTable', () => {
   };
 
   usePosToken.mockReturnValue({ token: mockToken });
+  useNetworkStatus.mockReturnValue({ data: mockNetworkStatus });
 
   it('renders properly', () => {
     wrapper = mount(<BalanceTable {...props} />);

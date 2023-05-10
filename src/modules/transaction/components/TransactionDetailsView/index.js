@@ -37,18 +37,26 @@ const TransactionDetails = ({ location }) => {
   const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : 'rjv-default';
 
   const {
-    data: transactions,
+    data: transaction,
     error,
     isLoading,
     isFetching,
   } = useTransactions({
     config: { params: { transactionID } },
   });
-  const transaction = useMemo(() => transactions?.data?.[0] || {}, [transactions]);
-  const transactionDetailList = useMemo(() => {
-    if (error || isEmpty(transactions?.data)) return [];
+  const transactionData = useMemo(() => transaction?.data?.[0] || {}, [transaction]);
+  const transactionMetaData = useMemo(() => {
+    if (error || isEmpty(transactionData)) return [];
 
-    const { id, moduleCommand, sender = {}, nonce, fee, block = {}, executionStatus } = transaction;
+    const {
+      id,
+      moduleCommand,
+      sender = {},
+      nonce,
+      fee,
+      block = {},
+      executionStatus,
+    } = transactionData;
     const [txModule, txType] = splitModuleAndCommand(moduleCommand);
 
     return [
@@ -104,9 +112,9 @@ const TransactionDetails = ({ location }) => {
         type: 'expand',
       },
     ];
-  }, [transaction]);
+  }, [transactionData]);
 
-  if (error || isEmpty(transactions?.data)) {
+  if (error || (isEmpty(transactionMetaData) && !isFetching)) {
     return <NotFound t={t} />;
   }
 
@@ -120,8 +128,8 @@ const TransactionDetails = ({ location }) => {
           </BoxHeader>
           <BoxContent>
             <Table
-              data={transactionDetailList}
-              isLoading={isFetching}
+              data={transactionMetaData}
+              isLoading={isLoading}
               row={TransactionDetailRow}
               header={header(t)}
               headerClassName={styles.tableHeader}
@@ -134,7 +142,7 @@ const TransactionDetails = ({ location }) => {
               data-testid="transaction-param-json-viewer"
               className={`${styles.jsonContainer} ${!isParamsCollapsed ? styles.shrink : ''}`}
             >
-              <ReactJson name={false} src={transaction.params} theme={jsonViewerTheme} />
+              <ReactJson name={false} src={transactionData.params} theme={jsonViewerTheme} />
             </div>
           </BoxContent>
         </Box>

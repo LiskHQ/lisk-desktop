@@ -14,7 +14,7 @@ describe('AddApplicationSuccess', () => {
 
     expect(screen.getByText('Perfect! Application has now been added')).toBeTruthy();
     expect(
-      screen.getByText('You can see a list of your applications on the application dropdown.')
+      screen.getByText('You can see a list of your applications on the network dropdown.')
     ).toBeTruthy();
   });
 

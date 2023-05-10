@@ -56,7 +56,7 @@ describe('Account Select Form', () => {
 
   it('Should trigger the onSelectAccount callback', async () => {
     fireEvent.click(screen.getByTestId(firstItemAddress));
-    expect(history.location.pathname).toEqual(routes.wallet.path);
+    expect(mockSetAccount).toHaveBeenCalledWith(mockSavedAccounts[0], null);
   });
 
   it('should show and hide remove button', async () => {

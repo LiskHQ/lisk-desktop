@@ -22,7 +22,7 @@ const AddApplicationSuccess = ({ history }) => {
             {t('Perfect! Application has now been added')}
           </div>
           <div className={styles.detail}>
-            {t('You can see a list of your applications on the application dropdown.')}
+            {t('You can see a list of your applications on the network dropdown.')}
           </div>
         </Box>
         <Box className={styles.footer}>

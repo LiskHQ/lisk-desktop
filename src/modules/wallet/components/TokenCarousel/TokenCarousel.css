@@ -10,11 +10,17 @@
 
 .swiperWrapper > div > div {
   width: fit-content !important;
+  margin-right: 0px !important;
 }
 
 .swiperWrapper {
   margin-left: unset;
   margin-right: unset;
+  width: 100%;
+
+  & > div:first-child {
+    column-gap: 20px;
+  }
 }
 
 .navButtonWrapper {
@@ -67,13 +73,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   & > p {
-    background-color: var(--color-red);
     border-radius: 5px;
     text-align: center;
-    color: var(--color-constant-white);
+    color: var(--color-slate-gray);
     font-size: var(--paragraph-font-size-s);
-    padding: 10px;
+    padding: 2px;
+  }
+
+  & > button {
+    color: var(--color-ultramarine-blue);
+    height: fit-content !important;
   }
 }

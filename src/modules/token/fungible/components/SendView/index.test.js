@@ -1,5 +1,5 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import { mockTokensBalance, mockTokensSupported } from '@token/fungible/__fixtures__/mockTokens';
+import { mockTokensBalance, mockTokenSummary } from '@token/fungible/__fixtures__/mockTokens';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -16,7 +16,7 @@ import {
   useGetInitializationFees,
   useGetMinimumMessageFee,
   useTokenBalances,
-  useTokensSupported,
+  useTokenSummary,
 } from '../../hooks/queries';
 import { useTransferableTokens } from '../../hooks';
 
@@ -44,8 +44,8 @@ useApplicationManagement.mockReturnValue({
 useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
 useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
 useTokenBalances.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
-useTokensSupported.mockReturnValue({
-  data: mockTokensSupported,
+useTokenSummary.mockReturnValue({
+  data: mockTokenSummary,
   isLoading: false,
   isSuccess: true,
 });

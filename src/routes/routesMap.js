@@ -13,7 +13,7 @@ import RegisterValidator from '@pos/validator/manager/registerValidatorManager';
 import Send from '@token/fungible/components/SendView';
 import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';
-import TermsOfUse from 'src/modules/common/components/TermsOfUse';
+import TermsOfUse from '@common/components/TermsOfUse';
 import Explorer from '@wallet/manager/explorerManager';
 import AccountDetails from '@account/components/AccountDetails';
 import TransactionDetails from '@transaction/manager/transactionDetailViewManager';
@@ -23,7 +23,8 @@ import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
 import ClaimRewardsView from '@pos/validator/components/ClaimRewardsView';
 import editStakeManager from '@pos/validator/manager/editStakeManager';
 import StakingQueue from '@pos/validator/manager/stakingQueueManager';
-import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
+import DeviceDisconnect from '@common/components/deviceDisconnectDialog';
+import ConfirmationDialog from '@common/components/ConfirmationDialog';
 import { ChangeCommissionDialog } from '@pos/validator/components/ChangeCommission/Dialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
@@ -92,6 +93,7 @@ export default {
   selectHardwareDeviceModal: SelectHardwareDeviceModal,
   stakingQueue: StakingQueue,
   deviceDisconnectDialog: DeviceDisconnect,
+  confirmationDialog: ConfirmationDialog,
   reclaimBalance: ReclaimBalanceModal,
   multiSignature: RegisterMultisig,
   multisigAccountDetails: MultisigAccountDetails,
