@@ -4,6 +4,7 @@
   --content-font: 'gilroy';
 
   width: 260px;
+  min-height: 96px;
   border-radius: 16px;
   box-sizing: border-box;
   display: flex;
