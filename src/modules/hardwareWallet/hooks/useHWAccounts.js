@@ -59,7 +59,9 @@ const useHWAccounts = () => {
     return () => {
       setIsLoadingHWAccounts(false);
       isMounted = false;
-      resetLedgerIPCQueue();
+      if (ipc) {
+        resetLedgerIPCQueue();
+      }
     };
   }, [ipc, dispatch, currentHWDevice]);
 
