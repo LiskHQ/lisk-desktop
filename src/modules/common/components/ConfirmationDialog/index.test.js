@@ -11,7 +11,7 @@ describe('ConfirmationDialog', () => {
   const location = {
     pathname: 'modal=confirmationDialog',
     state: {
-      header: 'Pending Stakes',
+      header: 'Pending stakes',
       content:
         'Switching your application and (or) network will remove all your pending stakes. Are you sure you want to continue?',
       cancelText: cancelBtnText,
@@ -29,7 +29,7 @@ describe('ConfirmationDialog', () => {
 
   it('renders properly', () => {
     renderWithCustomRouter(ConfirmationDialog, props);
-    expect(screen.getByText('Pending Stakes')).toBeInTheDocument();
+    expect(screen.getByText('Pending stakes')).toBeInTheDocument();
     expect(
       screen.getByText(
         'Switching your application and (or) network will remove all your pending stakes. Are you sure you want to continue?'

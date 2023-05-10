@@ -24,7 +24,7 @@ export function useCurrentApplication(history) {
     // clear stakes list during application switch
     if (pendingStakes.length) {
       const state = {
-        header: 'Pending Stakes',
+        header: 'Pending stakes',
         content:
           'Switching your application and (or) network will remove all your pending stakes. Are you sure you want to continue?',
         cancelText: 'Cancel switch',
