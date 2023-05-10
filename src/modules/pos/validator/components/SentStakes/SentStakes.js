@@ -87,6 +87,7 @@ const SentStakes = ({ history }) => {
             token,
           }}
           headerClassName={styles.tableHeader}
+          emptyState={{ illustration: 'emptyTransactionsIllustration' }}
         />
       </BoxContent>
     </Box>

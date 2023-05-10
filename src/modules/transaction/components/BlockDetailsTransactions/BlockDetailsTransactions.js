@@ -54,6 +54,7 @@ const BlockDetailsTransactions = ({ blockId, height }) => {
             !error
               ? {
                   message: t('There are no transactions for this block.'),
+                  illustration: 'emptyTransactionsIllustration',
                 }
               : undefined
           }
