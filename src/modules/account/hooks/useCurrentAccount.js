@@ -25,7 +25,7 @@ export function useCurrentAccount(history) {
         content:
           'Switching your account will remove all your pending stakes. Are you sure you want to continue?',
         cancelText: 'Cancel switch',
-        onCancel: () => removeSearchParamsFromUrl(history, ['modal']),
+        onCancel: /* istanbul ignore next */ () => removeSearchParamsFromUrl(history, ['modal']),
         confirmText: 'Continue to switch',
         onConfirm: /* istanbul ignore next */ () => {
           dispatch(setCurrentAccount(encryptedAccount));
