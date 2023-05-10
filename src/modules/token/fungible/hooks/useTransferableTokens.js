@@ -19,7 +19,7 @@ export const useTransferableTokens = (application) => {
   return useMemo(() => {
     const isSuccess = isTokensSuccess && isSupportedSuccess;
     const isLoading = isTokenLoading || isSupportLoading;
-    const isSupportAllToken = supportedTokens?.isSupportAllTokens;
+    const isSupportAllTokens = supportedTokens?.isSupportAllTokens;
     const exactTokensSupported = !isSuccess
       ? []
       : myTokens.filter((token) =>
@@ -34,7 +34,7 @@ export const useTransferableTokens = (application) => {
           })
           .flatMap((res) => res);
     const supportedAppTokens = [...(patternTokensSupported || []), ...exactTokensSupported];
-    const tokens = isSupportAllToken ? myTokens : Array.from(new Set(supportedAppTokens));
+    const tokens = isSupportAllTokens ? myTokens : Array.from(new Set(supportedAppTokens));
 
     return {
       isLoading,
