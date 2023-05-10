@@ -36,7 +36,7 @@ export function useLedgerDeviceListener() {
     }
 
     if (currentHwDevice?.path) {
-      const id = setInterval(checkStatus, 3000);
+      const id = setInterval(checkStatus, 4000);
       return () => clearInterval(id);
     }
   }, [currentHwDevice, dispatch]);

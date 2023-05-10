@@ -1,8 +1,13 @@
 import { executeIPCCommand } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication/utils';
 import { LEDGER_HW_IPC_CHANNELS } from '@libs/hardwareWallet/ledger/constants';
 
-const { GET_CONNECTED_DEVICES, GET_SIGNED_TRANSACTION, GET_PUB_KEY, GET_SIGNED_MESSAGE } =
-  LEDGER_HW_IPC_CHANNELS;
+const {
+  GET_CONNECTED_DEVICES,
+  RESET_LEDGER_IPC_QUEUE,
+  GET_SIGNED_TRANSACTION,
+  GET_PUB_KEY,
+  GET_SIGNED_MESSAGE,
+} = LEDGER_HW_IPC_CHANNELS;
 
 // TODO: remove when server have a queuing system
 function sleep(ms) {
@@ -37,6 +42,10 @@ export const getPubKey = async (devicePath, accountIndex, showOnDevice) => {
   });
 
   return pubKey;
+};
+
+export const resetLedgerIPCQueue = async () => {
+  await executeIPCCommand(RESET_LEDGER_IPC_QUEUE);
 };
 
 export const getIsInsideLiskApp = async (devicePath, accountIndex) => {
