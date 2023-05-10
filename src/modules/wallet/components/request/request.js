@@ -181,7 +181,7 @@ const Request = () => {
             }
             size="m"
           >
-            {applicationExploreAndMetaData.applications.map((chain) => (
+            {applicationExploreAndMetaData.applications?.map((chain) => (
               <MenuItem className={styles.chainOptionWrapper} value={chain} key={chain.chainID}>
                 <img className={styles.chainLogo} src={getLogo({ logo: chain.logo })} />
                 <span>{chain.chainName}</span>
