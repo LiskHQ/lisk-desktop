@@ -45,6 +45,7 @@ describe('Dialog Holder Component', () => {
       name: 'testnet',
       serviceUrl: 'someUrl',
     },
+    staking: {},
   };
 
   afterEach(() => {

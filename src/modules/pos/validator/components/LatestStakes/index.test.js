@@ -8,8 +8,10 @@ import { useValidators } from '../../hooks/queries';
 import LatestStakes from './index';
 import { mockValidators } from '../../__fixtures__';
 
-jest.mock('src/modules/transaction/hooks/queries');
-jest.mock('../../hooks/queries');
+jest.mock('@transaction/hooks/queries');
+jest.mock('../../hooks/queries', () => ({
+  useValidators: jest.fn(),
+}));
 jest.mock('@pos/validator/hooks/usePosToken');
 jest.mock('@token/fungible/hooks/queries');
 

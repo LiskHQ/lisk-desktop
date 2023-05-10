@@ -27,7 +27,7 @@ export const ManageAccountsContent = ({
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
-  const [currentAccount, setAccount] = useCurrentAccount();
+  const [currentAccount, setAccount] = useCurrentAccount(history);
   const currentHWDevice = useSelector(selectCurrentHWDevice);
   const [showRemove, setShowRemove] = useState(false);
   const title = customTitle ?? t('Manage accounts');
@@ -50,8 +50,7 @@ export const ManageAccountsContent = ({
   }, []);
   const onSelectAccount = useCallback(
     (account) => {
-      setAccount(account);
-      history.push(referrer || routes.wallet.path);
+      setAccount(account, referrer);
     },
     [referrer]
   );

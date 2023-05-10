@@ -1,23 +1,37 @@
 /* eslint-disable complexity, max-statements */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { withRouter } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import Icon from 'src/theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
 import { Client } from 'src/utils/api/client';
 import DialogLink from '@theme/dialog/link';
+import { selectStaking } from 'src/redux/selectors';
+import { stakesReset } from 'src/redux/actions';
+import {
+  removeThenAppendSearchParamsToUrl,
+  removeSearchParamsFromUrl,
+} from 'src/utils/searchParams';
+import { createConfirmSwitchState } from '@common/utils/createConfirmSwitchState';
 import stylesSecondaryButton from '@theme/buttons/css/secondaryButton.css';
 import classNames from 'classnames';
 import networks from '../../configuration/networks';
 import { useNetworkStatus } from '../../hooks/queries';
 import styles from './NetworkSwitcherDropdown.css';
 
-function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
+function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess, history }) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
   const [selectedNetwork, setSelectedNetwork] = useState(mainChainNetwork);
   const { customNetworks } = useSettings('customNetworks');
   const networksWithCustomNetworks = [...Object.values(networks), ...customNetworks];
+  const stakingQueue = useSelector(selectStaking);
+  const pendingStakes = Object.values(stakingQueue).filter(
+    (stake) => stake.confirmed !== stake.unconfirmed
+  );
 
   const queryClient = useRef(new Client({ http: selectedNetwork.serviceUrl }));
 
@@ -35,9 +49,34 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
       });
       networkStatus.refetch().then((res) => {
         if (!res.error) {
-          setValue(network);
+          // clear stakes list during network switch
+          if (pendingStakes.length) {
+            const onCancel = /* istanbul ignore next */ () =>
+              removeSearchParamsFromUrl(history, ['modal']);
+            const onConfirm = /* istanbul ignore next */ () => {
+              setValue(network);
+              setSelectedNetwork(network);
+
+              dispatch(stakesReset());
+              removeSearchParamsFromUrl(history, ['modal']);
+            };
+            const state = createConfirmSwitchState({
+              mode: 'pendingStakes',
+              type: 'network',
+              onCancel,
+              onConfirm,
+            });
+            removeThenAppendSearchParamsToUrl(
+              history,
+              { modal: 'confirmationDialog' },
+              ['modal'],
+              state
+            );
+          } else {
+            setValue(network);
+            setSelectedNetwork(network);
+          }
         }
-        setSelectedNetwork(network);
       });
     },
     [networkStatus]
@@ -98,4 +137,4 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   );
 }
 
-export default NetworkSwitcherDropdown;
+export default withRouter(NetworkSwitcherDropdown);
