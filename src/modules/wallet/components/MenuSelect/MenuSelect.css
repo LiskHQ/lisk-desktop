@@ -29,9 +29,16 @@
   cursor: pointer;
 }
 
-.optionListWrapper .menuItemWrapper {
-  padding: 10px !important;
-  box-sizing: border-box;
+.optionListWrapper {
+  & .menuItemWrapper {
+    padding: 10px !important;
+    box-sizing: border-box;
+  }
+
+  & ~ div {
+    position: absolute;
+    margin-top: 46px;
+  }
 }
 
 .overlay {

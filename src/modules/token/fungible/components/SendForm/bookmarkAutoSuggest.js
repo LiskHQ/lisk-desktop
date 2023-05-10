@@ -77,7 +77,7 @@ class BookmarkAutoSuggest extends React.Component {
         onChangeDelayed={this.validateBookmark}
         items={bookmarks}
         onChange={this.onInputChange}
-        placeholder={t('Insert address or bookmark name')}
+        placeholder={t('Enter address or bookmark name')}
         selectedItem={recipient}
         onSelectItem={this.onSelectedAccount}
         renderIcon={() => (

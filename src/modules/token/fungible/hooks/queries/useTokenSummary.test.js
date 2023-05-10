@@ -1,22 +1,37 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { mockLegacy } from '@legacy/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useTokensSupported } from './useTokensSupported';
+import { useTokenSummary } from './useTokenSummary';
 
 jest.useRealTimers();
 
-describe('useTokensSupported hook', () => {
+describe.skip('useTokenSummary hook', () => {
   const limit = 5;
-  const config = {
-    params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' },
-  };
   let hookResult;
 
   beforeEach(() => {
-    hookResult = renderHook(() => useTokensSupported({ config }), { wrapper });
+    hookResult = renderHook(() => useTokenSummary(), { wrapper });
   });
 
-  it.skip('fetches data correctly', async () => {
+  it('returns error if param is invalid', async () => {
+    const errorConfig = {
+      params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' },
+    };
+    hookResult = renderHook(() => useTokenSummary({ config: errorConfig }), { wrapper });
+    const { result, waitFor } = hookResult;
+
+    expect(result.current.isLoading).toBeTruthy();
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = {
+      error: true,
+      message: 'Unknown input parameter(s): publicKey',
+    };
+
+    expect(result.current.error).toEqual(expectedResponse);
+  });
+
+  it('fetches data correctly', async () => {
     const { result, waitFor } = hookResult;
 
     expect(result.current.isLoading).toBeTruthy();
@@ -25,7 +40,7 @@ describe('useTokensSupported hook', () => {
     expect(result.current.data).toEqual(mockLegacy);
   });
 
-  it.skip('should fetch next set of data correctly', async () => {
+  it('should fetch next set of data correctly', async () => {
     const { result, waitFor } = hookResult;
 
     expect(result.current.isLoading).toBeTruthy();
@@ -51,23 +66,5 @@ describe('useTokensSupported hook', () => {
     await waitFor(() => result.current.isFetchingNextPage);
     await waitFor(() => !result.current.isFetchingNextPage);
     expect(result.current.data).toEqual(expectedResponse);
-  });
-
-  it.skip('returns error if param is invalid', async () => {
-    const errorConfig = {
-      params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' },
-    };
-    hookResult = renderHook(() => useTokensSupported({ config: errorConfig }), { wrapper });
-    const { result, waitFor } = hookResult;
-
-    expect(result.current.isLoading).toBeTruthy();
-    await waitFor(() => result.current.isFetched);
-    expect(result.current.isSuccess).toBeTruthy();
-    const expectedResponse = {
-      error: true,
-      message: 'Unknown input parameter(s): publicKey',
-    };
-
-    expect(result.current.error).toEqual(expectedResponse);
   });
 });

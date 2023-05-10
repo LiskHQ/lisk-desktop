@@ -22,7 +22,7 @@ const AddApplicationSearch = ({
           className={styles.chainSearch}
           name="application-filter"
           value={searchValue}
-          placeholder={t('Search by name or application URL')}
+          placeholder={t('Search by name')}
           onChange={({ target: { value } }) => onSearchApplications(value)}
           size="m"
           isLoading={isSearchLoading}

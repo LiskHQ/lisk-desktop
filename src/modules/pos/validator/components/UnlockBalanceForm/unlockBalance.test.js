@@ -20,6 +20,8 @@ import {
   useValidators,
 } from '@pos/validator/hooks/queries';
 import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
+import { useNetworkStatus } from '@network/hooks/queries';
+import { mockNetworkStatus } from '@network/__fixtures__';
 import UnlockBalanceForm from '.';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
@@ -40,6 +42,7 @@ jest.mock('@token/fungible/hooks/queries');
 jest.mock('../../hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@pos/validator/hooks/queries');
+jest.mock('@network/hooks/queries/useNetworkStatus');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
@@ -63,6 +66,7 @@ describe('Unlock LSK modal', () => {
   }));
   useSentStakes.mockReturnValue({ data: mockSentStakes });
   useUnlocks.mockReturnValue({ data: mockUnlocks });
+  useNetworkStatus.mockReturnValue({ data: mockNetworkStatus });
 
   const nextStep = jest.fn();
 

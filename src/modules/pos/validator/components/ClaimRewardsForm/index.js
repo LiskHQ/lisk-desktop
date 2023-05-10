@@ -58,7 +58,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
           </BoxHeader>
           <p className={styles.description}>
             {t(
-              'Below are the details of your reward balances, you can continue to claim your rewards and they will be transferred to your wallet balance.'
+              'Below are the details of your reward balances, once you click "Claim rewards" the rewarded tokens will be added to your wallet.'
             )}
           </p>
           <div className={styles.tableContainer}>

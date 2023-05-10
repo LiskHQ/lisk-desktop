@@ -25,7 +25,7 @@ export const mockTokensTopLskBalance = {
     total: 30,
   },
 };
-export const mockTokensSupported = {
+export const mockTokenSummary = {
   data: {
     escrowedAmounts,
     supportedTokens: tokensSupported,

@@ -1,5 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import {
   renderWithRouterAndQueryClient,
   rerenderWithRouterAndQueryClient,
@@ -15,6 +17,7 @@ const mockFetchNextPage = jest.fn();
 
 jest.useFakeTimers();
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
+jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.mock('../../hooks/queries/useBlockchainApplicationExplore');
 jest.mock('@common/hooks/useFilter', () => ({
   __esModule: true,
@@ -39,6 +42,12 @@ describe('BlockchainApplicationList', () => {
       hasNextPage: true,
       fetchNextPage: mockFetchNextPage,
     });
+    useBlockchainApplicationMeta.mockReturnValue({
+      data: { ...mockBlockchainAppMeta, data: mockBlockchainAppMeta.data.slice(0, 2) },
+      error: undefined,
+      isLoading: false,
+      isFetching: false,
+    });
     renderWithRouterAndQueryClient(BlockchainApplicationList);
   });
 
@@ -51,7 +60,7 @@ describe('BlockchainApplicationList', () => {
 
   it('should display the right number of applications', () => {
     const blockchainAppRow = screen.getAllByTestId('applications-row');
-    expect(blockchainAppRow).toHaveLength(mockBlockchainApp.data.length);
+    expect(blockchainAppRow).toHaveLength(2);
   });
 
   it('should not show search when less than 6 applications', () => {

@@ -120,7 +120,7 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess, history }) {
             })}
         </MenuSelect>
       </div>
-      {networkStatus.isError && networkStatus.isFetched && (
+      {networkStatus.isError && !networkStatus.isFetching && networkStatus.isFetched && (
         <div className={styles.connectionFailedBlock}>
           <span>{t('Failed to connect to network!')}</span>
           <span onClick={networkStatus.refetch}>{t('Try again')}</span>

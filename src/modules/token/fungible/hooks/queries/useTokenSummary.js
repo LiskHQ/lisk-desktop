@@ -5,15 +5,10 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import defaultClient from 'src/utils/api/client';
 
 /**
- * Creates a custom hook for supported tokens query
- *
- * @param {object} configuration - the custom query configuration object
- * @param {object} configuration.config - the query config
- *
- * @returns the query object
+ * Get an overview(escrowedAmounts, supportedTokens, totalSupply, etc..) of token specific to a network
  */
 
-export const useTokensSupported = ({
+export const useTokenSummary = ({
   config: customConfig = {},
   options,
   client = defaultClient,
