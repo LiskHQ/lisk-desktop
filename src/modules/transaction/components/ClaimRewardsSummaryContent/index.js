@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCurrentAccount } from '@account/hooks';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './ClaimRewardsSummaryContent.css';
 
 const ClaimRewardsSummaryContent = ({ t }) => {
@@ -15,16 +16,11 @@ const ClaimRewardsSummaryContent = ({ t }) => {
     <div className={styles.ClaimRewardsSummaryContent}>
       <h2 className={styles.title}>{t('Claim reward')}</h2>
       <div className={styles.rewardListing}>
-        {rewardsClaimable.data?.map((rewardClaimable, index) => {
-          const { reward, symbol, denomUnits, displayDenom } = rewardClaimable;
-          const denom = denomUnits?.find((denomUnit) => denomUnit.denom === displayDenom);
-
-          return (
-            <div key={index} className={styles.rewardLabel}>
-              {`${parseInt(reward, denom)} ${symbol}`}
-            </div>
-          );
-        })}
+        {rewardsClaimable.data?.map((rewardClaimable, index) => (
+          <div key={index} className={styles.rewardLabel}>
+            <TokenAmount val={rewardClaimable.reward} token={rewardClaimable} />
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -24,6 +24,7 @@ const mockState = {
   settings: {
     network: { name: 'Custom Nodee', address: 'hhtp://localhost:4000' },
   },
+  staking: {},
 };
 
 const mockDispatch = jest.fn();

@@ -15,6 +15,7 @@ const mockState = {
   network: {
     name: 'testnet',
   },
+  staking: {},
 };
 
 const mockDispatch = jest.fn();

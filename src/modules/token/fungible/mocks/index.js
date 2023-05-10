@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { API_VERSION } from 'src/const/config';
 import {
   mockTokensBalance,
-  mockTokensSupported,
+  mockTokenSummary,
   mockTokensTopLskBalance,
   mockAppsTokens,
   mockTokensAccountExists,
@@ -43,14 +43,14 @@ export const tokensTopLskBalance = rest.get(
 );
 
 export const tokensSupported = rest.get(
-  `*/api/${API_VERSION}/tokens/summary`,
+  `*/api/${API_VERSION}/token/summary`,
   async (req, res, ctx) => {
     const limit = Number(req.url.searchParams.get('limit'));
     const offset = Number(req.url.searchParams.get('offset') || 0);
     const response = {
-      data: mockTokensSupported.data,
+      data: mockTokenSummary.data,
       meta: {
-        ...mockTokensSupported.meta,
+        ...mockTokenSummary.meta,
         count: limit,
         offset,
       },
@@ -67,7 +67,7 @@ export const appsTokens = rest.get(
     const response = {
       data: mockAppsTokens.data.slice(offset, offset + limit),
       meta: {
-        ...mockTokensSupported.meta,
+        ...mockTokenSummary.meta,
         count: limit,
         offset,
       },

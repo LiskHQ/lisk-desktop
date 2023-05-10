@@ -1,12 +1,13 @@
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import { fireEvent, screen } from '@testing-library/react';
-import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from '@account/hooks';
 import { mockRewardsClaimableWithToken } from '@pos/reward/__fixtures__';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import useFiatRates from '@common/hooks/useFiatRates';
+import { convertFromBaseDenom } from 'src/modules/token/fungible/utils/helpers';
+import { mockAppsTokens } from 'src/modules/token/fungible/__fixtures__';
 import ClaimRewardsForm from './index';
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -66,13 +67,13 @@ describe('ClaimRewardsForm', () => {
     expect(screen.getByRole('heading', { name: 'Claim rewards' })).toBeTruthy();
     expect(
       screen.getByText(
-        'Below are the details of your reward balances, you can continue to claim your rewards and they will be transferred to your wallet balance.'
+        'Below are the details of your reward balances, once you click "Claim rewards" the rewarded tokens will be added to your wallet.'
       )
     ).toBeTruthy();
-    mockRewardsClaimableWithToken.data.forEach(({ tokenName, reward }) => {
+    mockRewardsClaimableWithToken.data.forEach(({ tokenName, symbol, reward }) => {
       expect(screen.getAllByText(tokenName)[0]).toBeTruthy();
       expect(
-        screen.getAllByText(`~${numeral(parseInt(reward, 10) * usdRate).format('0,0.00')} USD`)[0]
+        screen.getAllByText(`${convertFromBaseDenom(reward, mockAppsTokens.data[0])} ${symbol}`)[0]
       ).toBeTruthy();
     });
     expect(screen.getByRole('button', { name: 'Claim rewards' })).toBeTruthy();

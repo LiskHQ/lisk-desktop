@@ -112,6 +112,10 @@
       padding-right: 120px;
       width: 100%;
     }
+
+    & img {
+      top: calc(var(--height-l) / 2) !important;
+    }
   }
 
   & .referenceField {

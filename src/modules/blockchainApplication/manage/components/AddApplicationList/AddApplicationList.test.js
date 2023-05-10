@@ -41,7 +41,7 @@ describe('AddApplicationList', () => {
     renderWithRouterAndQueryClient(AddApplicationList);
 
     expect(screen.getByText('Add application')).toBeTruthy();
-    expect(screen.getByPlaceholderText('Search by name or application URL')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Search by name')).toBeTruthy();
 
     expect(screen.getByText('Lisk')).toBeTruthy();
     expect(screen.getByText('5 LSK')).toBeTruthy();
@@ -79,7 +79,7 @@ describe('AddApplicationList', () => {
     renderWithRouterAndQueryClient(AddApplicationList);
 
     expect(screen.getByText('Add application')).toBeTruthy();
-    expect(screen.getByPlaceholderText('Search by name or application URL')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Search by name')).toBeTruthy();
 
     expect(screen.getByText('Colecti')).toBeTruthy();
     expect(screen.getByText('0.5 LSK')).toBeTruthy();

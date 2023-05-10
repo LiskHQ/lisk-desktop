@@ -15,7 +15,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import {
   mockAppsTokens,
   mockTokensBalance,
-  mockTokensSupported,
+  mockTokenSummary,
 } from '@token/fungible/__fixtures__/mockTokens';
 import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore';
 import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__';
@@ -28,7 +28,7 @@ import {
   useGetInitializationFees,
   useGetMinimumMessageFee,
   useTokenBalances,
-  useTokensSupported,
+  useTokenSummary,
 } from '../../hooks/queries';
 import { useTransferableTokens } from '../../hooks';
 
@@ -52,8 +52,8 @@ describe('Form', () => {
   let bookmarks;
 
   useTokenBalances.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
-  useTokensSupported.mockReturnValue({
-    data: mockTokensSupported,
+  useTokenSummary.mockReturnValue({
+    data: mockTokenSummary,
     isLoading: false,
     isSuccess: true,
   });
@@ -215,7 +215,7 @@ describe('Form', () => {
       });
       wrapper.update();
 
-      expect(wrapper.find('.feedback').at(1)).toHaveClassName('error');
+      expect(wrapper.find('.feedback').at(4)).toHaveClassName('error');
     });
 
     it('Should show bookmark title if address is a bookmark', () => {

@@ -21,6 +21,7 @@ import defaultClient from 'src/utils/api/client';
 export const useAppsMetaTokensConfig = () => {
   const network = useSelector(selectNetworkName);
   const [{ chainID }] = useCurrentApplication();
+
   return (customConfig = {}) => ({
     url: `/api/${API_VERSION}/blockchain/apps/meta/tokens`,
     method: 'get',
@@ -36,6 +37,7 @@ export const useAppsMetaTokens = ({
   client = defaultClient,
 } = {}) => {
   const config = useAppsMetaTokensConfig()(customConfig);
+
   return useCustomInfiniteQuery({
     keys: [BLOCKCHAIN_APPS_META_TOKENS],
     config,

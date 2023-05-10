@@ -98,7 +98,7 @@ const Table = ({
     <Empty
       data={emptyState}
       error={error}
-      isLoading={isFetching}
+      isLoading={isLoading}
       isListEmpty={data.length === 0}
       className={styles.emptyState}
     />
