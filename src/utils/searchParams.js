@@ -124,6 +124,7 @@ export const removeThenAppendSearchParamsToUrl = (
   history,
   paramsToAdd,
   paramsToRemove,
+  state,
   cleanParamsAfter
 ) => {
   let newSearchString = '';
@@ -136,5 +137,9 @@ export const removeThenAppendSearchParamsToUrl = (
   } else {
     formattedSearchString = appendSearchParams('', paramsToAdd);
   }
-  history.push(`${history.location.pathname}${formattedSearchString}`);
+  if (state) {
+    history.push({ search: `${formattedSearchString}`, state });
+  } else {
+    history.push(`${history.location.pathname}${formattedSearchString}`);
+  }
 };

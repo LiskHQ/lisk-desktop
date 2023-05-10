@@ -1,18 +1,50 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import client from 'src/utils/api/client';
+import { selectStaking } from 'src/redux/selectors';
+import { stakesReset } from 'src/redux/actions';
+import {
+  removeThenAppendSearchParamsToUrl,
+  removeSearchParamsFromUrl,
+} from 'src/utils/searchParams';
+import { createConfirmSwitchState } from '@common/utils/createConfirmSwitchState';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 
-export function useCurrentApplication() {
+export function useCurrentApplication(history) {
+  // @TODO: Remove history param and use hooks after #4986 is implemented
   const dispatch = useDispatch();
 
   const currentApplication = useSelector(selectCurrentApplication);
+  const stakingQueue = useSelector(selectStaking);
+  const pendingStakes = Object.values(stakingQueue).filter(
+    (stake) => stake.confirmed !== stake.unconfirmed
+  );
 
   const setApplication = useCallback((application, applicationNode) => {
-    dispatch(setCurrentApplication(application));
-    /* istanbul ignore next */
-    client.create(applicationNode || application.serviceURLs[0]);
+    // clear stakes list during application switch
+    if (pendingStakes.length) {
+      const onConfirm = /* istanbul ignore next */ () => {
+        dispatch(setCurrentApplication(application));
+        client.create(applicationNode || application.serviceURLs[0]);
+
+        dispatch(stakesReset());
+        removeSearchParamsFromUrl(history, ['modal']);
+      };
+      const onCancel = /* istanbul ignore next */ () =>
+        removeSearchParamsFromUrl(history, ['modal']);
+      const state = createConfirmSwitchState({
+        mode: 'pendingStakes',
+        type: 'application',
+        onConfirm,
+        onCancel,
+      });
+      removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
+    } else {
+      dispatch(setCurrentApplication(application));
+      /* istanbul ignore next */
+      client.create(applicationNode || application.serviceURLs[0]);
+    }
   }, []);
 
   return [currentApplication ?? {}, setApplication];

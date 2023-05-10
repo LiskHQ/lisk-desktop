@@ -198,6 +198,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  confirmationDialog: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   reclaimBalance: {
     isPrivate: true,
     forbiddenTokens: [],
