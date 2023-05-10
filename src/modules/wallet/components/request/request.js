@@ -174,7 +174,8 @@ const Request = () => {
             select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
             feedback={t('Failed to fetch applications metadata.')}
             status={
-              networkSupportedTokens.isError || networkSupportedTokens.data.length === 0
+              applicationExploreAndMetaData.isError ||
+              applicationExploreAndMetaData.applications?.length === 0
                 ? 'error'
                 : 'ok'
             }

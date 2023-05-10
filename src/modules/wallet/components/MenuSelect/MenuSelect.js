@@ -87,7 +87,7 @@ function MenuSelect({
           </Dropdown>
         )}
       </DropdownContext.Provider>
-      {!showDropdown && <Feedback message={feedback} size={size} status={status} />}
+      {!showDropdown && !isLoading && <Feedback message={feedback} size={size} status={status} />}
     </>
   );
 }
