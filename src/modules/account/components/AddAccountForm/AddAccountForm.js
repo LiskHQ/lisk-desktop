@@ -106,18 +106,20 @@ const AddAccountFormContainer = ({
   );
 };
 
-const AddAccountFormWithDerivationPath = (props) => (
-  <AddAccountFormContainer
-    {...props}
-    isSubmitDisabled={!!derivationPathErrorMessage}
-    derivationPath={derivationPath}
-  >
-    <CustomDerivationPath
-      onChange={onDerivationPathChange}
-      value={derivationPath}
-      errorMessage={derivationPathErrorMessage}
-    />
-  </AddAccountFormContainer>
-);
+const AddAccountFormWithDerivationPath = (props) => {
+  const [derivationPathEvent, setDerivationPathEvent] = useState({});
+
+  return (
+    <AddAccountFormContainer
+      {...props}
+      isSubmitDisabled={!!derivationPathEvent.derivationPathErrorMessage}
+      derivationPath={derivationPathEvent.derivationPath}
+    >
+      <CustomDerivationPath
+        onChange={setDerivationPathEvent}
+      />
+    </AddAccountFormContainer>
+  );
+};
 
 export default AddAccountForm;

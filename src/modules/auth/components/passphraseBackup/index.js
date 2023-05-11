@@ -6,6 +6,7 @@ import PassphraseRenderer from '@wallet/components/passphraseRenderer';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Icon from 'src/theme/Icon';
 import styles from './passphraseBackup.css';
+import CustomDerivationPath from '../CustomDerivationPath';
 
 class PassphraseBackup extends React.Component {
   constructor(props) {
@@ -75,6 +76,7 @@ class PassphraseBackup extends React.Component {
               </div>
             </div>
           </div>
+          <CustomDerivationPath />
           <div className={styles.hrSection} />
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
