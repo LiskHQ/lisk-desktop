@@ -1,7 +1,6 @@
 import React from 'react';
 import { createEvent, fireEvent, screen } from '@testing-library/react';
 import { renderWithStore } from 'src/utils/testHelpers';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import AddAccountForm from '.';
 
 jest.mock('react-i18next');
