@@ -32,7 +32,7 @@ describe('ValidatorPerformance', () => {
     expect(screen.getByText('Punishment details')).toBeInTheDocument();
     expect(
       screen.getByText(
-        'The validator was punished 1 time. Four more punishments will cause the permanent ban of the validator.'
+        'The validator was punished one time. Four more punishments will cause the permanent ban of the validator.'
       )
     ).toBeInTheDocument();
     expect(screen.getByText('100')).toBeInTheDocument();
