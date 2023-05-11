@@ -7,7 +7,7 @@ import NotFound from '@common/components/NotFound';
 import { parseSearchParams } from 'src/utils/searchParams';
 import { isEmpty } from 'src/utils/helpers';
 import { useValidators } from '../../hooks/queries';
-import validatorPerformanceDetails from './ValidatorPerformanceDetails';
+import validatorPerformanceDetails from './validatorPerformanceDetails';
 import styles from './styles.css';
 
 const ValidatorPerformance = ({ history }) => {
