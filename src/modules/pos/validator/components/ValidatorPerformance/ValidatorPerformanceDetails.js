@@ -1,4 +1,4 @@
-const ValidatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks = 0) => {
+const validatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks = 0) => {
   if (!pomHeights) return 'Punishment information unavailable.';
   if (status === 'punished') {
     // Since this can only be accessed if the validator has been punished at least once
@@ -21,4 +21,4 @@ const ValidatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks
   return `The validator is banned because of not generating blocks for 1 month and missing ${consecutiveMissedBlocks} consecutive blocks`;
 };
 
-export default ValidatorPerformanceDetails;
+export default validatorPerformanceDetails;
