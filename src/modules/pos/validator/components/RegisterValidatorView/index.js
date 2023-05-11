@@ -17,7 +17,7 @@ const RegisterValidator = ({ history, t }) => {
   return (
     <Dialog hasClose size={isStepTxSignatureCollector && 'sm'}>
       <MultiStep
-        className={styles.multiStep}
+        className={styles.wrapper}
         prevPage={history.goBack}
         backButtonLabel={t('Back')}
         onChange={onMultiStepChange}

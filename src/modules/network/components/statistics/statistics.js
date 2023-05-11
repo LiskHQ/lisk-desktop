@@ -8,6 +8,7 @@ import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
+import Empty from 'src/theme/table/empty';
 import { DoughnutChart } from 'src/modules/common/components/charts';
 import Tooltip from 'src/theme/Tooltip';
 import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
@@ -279,7 +280,7 @@ const ChartsWithData = ({ networkVersion, height, basic, t }) => {
 
 const Statistics = () => {
   const { t } = useTranslation();
-  const { data: networkStatistics } = useNetworkStatistics();
+  const { data: networkStatistics, isLoading } = useNetworkStatistics();
 
   return (
     <Box className={styles.wrapper}>
@@ -297,6 +298,12 @@ const Statistics = () => {
       </BoxHeader>
       <BoxContent className={styles.content}>
         <ChartsWithData {...networkStatistics?.data} t={t} />
+        <Empty
+          data={{ illustration: 'emptyNetworkStatisticsIllustration' }}
+          isLoading={isLoading}
+          isListEmpty={(networkStatistics?.data || []).length === 0}
+          className={styles.emptyState}
+        />
       </BoxContent>
     </Box>
   );
