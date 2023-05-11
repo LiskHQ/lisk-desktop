@@ -1,7 +1,6 @@
 import React from 'react';
 import { createEvent, fireEvent, screen } from '@testing-library/react';
 import { renderWithStore } from 'src/utils/testHelpers';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import AddAccountForm from '.';
 
 jest.mock('react-i18next');
@@ -86,7 +85,7 @@ describe('AddAccountForm', () => {
   });
 
   it('should have disabled button if derivation path has an error', () => {
-    props.settings.enableCustomDerivationPath = true;
+    props.settings.enableAccessToLegacyAccounts = false;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
     const input = screen.getByLabelText('Custom derivation path');
@@ -100,15 +99,18 @@ describe('AddAccountForm', () => {
       },
     });
     fireEvent(passphraseInput1, pasteEvent);
-    expect(screen.getByText('Continue to set password')).toHaveAttribute('disabled');
+    expect(screen.queryByText('Continue to set password')).toHaveAttribute('disabled');
   });
 
   it('should trigger add account if derivation path and passphrase is correct', () => {
-    props.settings.enableCustomDerivationPath = true;
-    accountFormInstance.rerender(<AddAccountForm {...props} />);
+    const correctDerivationPath = "m/44'/134'/0'";
+
+    props.settings.enableAccessToLegacyAccounts = false;
+    accountFormInstance.rerender(
+      <AddAccountForm {...props} derivationPath={correctDerivationPath} />
+    );
 
     const input = screen.getByLabelText('Custom derivation path');
-    const correctDerivationPath = "m/44'/134'/0'";
     fireEvent.change(input, { target: { value: correctDerivationPath } });
 
     const passphrase =
@@ -129,10 +131,10 @@ describe('AddAccountForm', () => {
     );
   });
 
-  it('should render the custom derivation path field with no default value', () => {
-    props.settings.enableCustomDerivationPath = true;
+  it('should not render custom derivation path input', () => {
+    props.settings.enableAccessToLegacyAccounts = true;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
-    expect(accountFormInstance.getByDisplayValue(defaultDerivationPath)).toBeTruthy();
+    expect(screen.queryByLabelText('Custom derivation path')).toBeFalsy();
   });
 });

@@ -99,7 +99,7 @@ describe('encryptAccount', () => {
     const { error, result } = await encryptAccount({
       ...accountDetails,
       derivationPath: customDerivationPath,
-      enableCustomDerivationPath: true,
+      enableAccessToLegacyAccounts: true,
     });
     expect(error).toEqual(false);
     expect(result).toEqual(updatedMockAccount);
