@@ -6,7 +6,8 @@
   background: transparent;
   width: 100%;
   height: auto;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   & > div > header {
     padding-left: var(--horizontal-padding-l) !important;
