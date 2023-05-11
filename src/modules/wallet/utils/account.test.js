@@ -30,11 +30,10 @@ describe('Utils: Account', () => {
     });
 
     it('should call getCustomDerivationKeyPair', async () => {
-      await extractPublicKey(passphrase, enableAccessToLegacyAccounts, customDerivationPath);
+      await extractPublicKey(passphrase, false, customDerivationPath);
       expect(cryptography.ed.getPrivateKeyFromPhraseAndPath).toHaveBeenCalledWith(
         passphrase,
-        customDerivationPath,
-        enableAccessToLegacyAccounts
+        customDerivationPath
       );
     });
   });
