@@ -10,6 +10,7 @@ import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/Passp
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
+import { getDerivationPathErrorMessage } from 'src/modules/wallet/utils/account';
 import styles from './AddAccountForm.css';
 
 const AddAccountForm = ({ settings, onAddAccount }) => {
@@ -108,17 +109,27 @@ const AddAccountFormContainer = ({
 };
 
 const AddAccountFormWithDerivationPath = (props) => {
-  const [derivationPathEvent, setDerivationPathEvent] = useState({
-    derivationPath: defaultDerivationPath,
-  });
+  const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
+  const derivationPathErrorMessage = useMemo(
+    () => getDerivationPathErrorMessage(derivationPath),
+    [derivationPath]
+  );
+
+  const onDerivationPathChange = (value) => {
+    setDerivationPath(value);
+  };
 
   return (
     <AddAccountFormContainer
       {...props}
-      isSubmitDisabled={!!derivationPathEvent.derivationPathErrorMessage}
-      derivationPath={derivationPathEvent.derivationPath}
+      isSubmitDisabled={!!derivationPathErrorMessage}
+      derivationPath={derivationPath}
     >
-      <CustomDerivationPath onChange={setDerivationPathEvent} />
+      <CustomDerivationPath
+        onChange={onDerivationPathChange}
+        value={derivationPath}
+        errorMessage={derivationPathErrorMessage}
+      />
     </AddAccountFormContainer>
   );
 };
