@@ -5,6 +5,7 @@ import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Form from '../UnlockBalanceForm';
 import Status from '../UnlockBalanceStatus';
 import Summary from '../UnlockBalanceSummary';
+import styles from './styles.css';
 
 const UnlockBalanceView = () => {
   const [isStepTxSignatureCollector, setIsStepTxSignatureCollector] = useState(false);
@@ -14,7 +15,7 @@ const UnlockBalanceView = () => {
 
   return (
     <Dialog hasClose size={isStepTxSignatureCollector && 'sm'}>
-      <MultiStep key="unlockBalance" onChange={onMultiStepChange}>
+      <MultiStep key="unlockBalance" onChange={onMultiStepChange} className={styles.wrapper}>
         <Form />
         <Summary />
         <TxSignatureCollector />
