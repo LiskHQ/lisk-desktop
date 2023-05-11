@@ -277,7 +277,6 @@ module.exports = {
     'src/modules/common/components/newsFeed/news.js',
     'src/modules/common/components/newsFeed/newsFeed.js',
     'src/modules/pos/validator/components/ValidatorPerformance/ValidatorPerformanceDetails.js',
-    'src/modules/pos/validator/components/ValidatorPerformance/ValidatorPerformance.js',
     'src/modules/pos/validator/components/ValidatorPerformanceModal/index.js',
     'src/modules/transaction/components/Overview/index.js',
     'src/modules/transaction/components/Transactions/index.js',

@@ -24,7 +24,6 @@ const ValidatorPerformance = ({ history }) => {
   if (error && isEmpty(data)) {
     return <NotFound />;
   }
-
   const { punishmentPeriods, status, consecutiveMissedBlocks } = data[0];
   const headerTitle = {
     punished: 'Punishment details',
