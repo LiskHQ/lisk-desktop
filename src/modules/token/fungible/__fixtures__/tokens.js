@@ -72,7 +72,7 @@ export const escrowedAmounts = [
 ];
 
 export const tokensSupported = {
-  isSupportAllToken: false,
+  isSupportAllTokens: false,
   exactTokenIDs: [
     '0000000100000000',
     '0000000200000000',

@@ -35,7 +35,7 @@ const MemberField = ({
         <Input
           className={`${styles.inputWithSwitcher} msign-pk-input`}
           onChange={changeIdentifier}
-          placeholder={t('Public Key')}
+          placeholder={t('Enter public key')}
           size="m"
           value={publicKey}
         />

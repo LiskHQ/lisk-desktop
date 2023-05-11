@@ -17,7 +17,7 @@ describe('useMergeApplicationExploreAndMetaData', () => {
     });
     const { result } = renderHook(() => useMergeApplicationExploreAndMetaData(apps));
 
-    expect(result.current).toBe(apps);
+    expect(result.current).toStrictEqual([]);
   });
 
   it('returns the merged data', () => {
@@ -28,6 +28,6 @@ describe('useMergeApplicationExploreAndMetaData', () => {
     });
     const { result } = renderHook(() => useMergeApplicationExploreAndMetaData(apps));
     const mergedAppData = lodashMerge(apps, appMetaData);
-    expect(result.current).toBe(mergedAppData);
+    expect(result.current).toStrictEqual(mergedAppData);
   });
 });

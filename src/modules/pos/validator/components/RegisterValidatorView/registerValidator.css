@@ -3,7 +3,7 @@
 .wrapper {
   background-color: var(--color-white);
   border-radius: var(--border-radius-box);
-  overflow: scroll;
+  overflow: auto;
 
   & .box {
     & > header {

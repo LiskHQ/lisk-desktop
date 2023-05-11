@@ -12,7 +12,7 @@ describe('StakeSuccessfulModal', () => {
       statusMessage: {
         message: 'test message',
       },
-      dposToken: mockTokensBalance.data[0],
+      posToken: mockTokensBalance.data[0],
     };
     renderWithRouter(TokenRow, props);
 

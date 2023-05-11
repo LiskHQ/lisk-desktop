@@ -85,7 +85,7 @@ const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet
       )}
       <BoxContent className={`${styles.content}`}>
         <Table
-          showHeader
+          showHeader={!isFetching}
           data={transactionEvents?.data || []}
           isLoading={isFetching}
           row={TransactionEventRow}
@@ -99,6 +99,7 @@ const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet
           error={error}
           emptyState={{
             message: t('There are no events for this account.'),
+            illustration: 'emptyEventsIllustration'
           }}
         />
       </BoxContent>

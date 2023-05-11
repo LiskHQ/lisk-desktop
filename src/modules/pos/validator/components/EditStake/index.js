@@ -191,7 +191,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                   displayConverter
                   label={t('Stake amount')}
                   labelClassname={`${styles.fieldLabel}`}
-                  placeholder={t('Insert stake amount')}
+                  placeholder={t('Enter stake amount')}
                   name="stake"
                 />
               </label>
