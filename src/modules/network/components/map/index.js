@@ -5,6 +5,7 @@ import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
 import markerIcon from '@setup/react/assets/images/marker.svg';
 import mapboxWatermarkImage from '@setup/react/assets/images/mapbox.png';
+import Empty from 'src/theme/table/empty';
 import styles from './map.css';
 import { usePeers } from '../../hooks/queries';
 
@@ -61,11 +62,12 @@ const getTiles = () =>
 const FullMap = () => {
   const ref = useRef();
   const [peersCount, setPeersCount] = useState(0);
-  const { data } = usePeers();
+  const { data, isLoading, error } = usePeers();
 
   const peers = useMemo(() => data?.data || [], [data]);
 
   useEffect(() => {
+    // eslint-disable-next-line no-constant-condition
     if (peers.length) {
       if (!ref.current) {
         const networkMap = L.map('mapContainer', mapOptions).setView([36.414203, 11.25], 2);
@@ -88,6 +90,12 @@ const FullMap = () => {
         <div className={styles.map}>
           <div className={styles.wrapper}>
             <div id="mapContainer" />
+            <Empty
+              data={{ illustration: 'emptyConnectedPeersIllustration' }}
+              error={error}
+              isLoading={isLoading}
+              isListEmpty={peers.length !== 0}
+            />
           </div>
         </div>
       </BoxContent>

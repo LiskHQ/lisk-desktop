@@ -79,6 +79,7 @@ const BlockchainApplicationList = () => {
           additionalRowProps={{ t }}
           emptyState={{
             message: t('No active or registered blockchain applications found.'),
+            illustration: 'emptyExploreApplicationsIllustration'
           }}
         />
       </BoxContent>
