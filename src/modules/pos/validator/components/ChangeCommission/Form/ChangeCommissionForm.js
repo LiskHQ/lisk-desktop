@@ -115,7 +115,7 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
                 name="newCommission"
                 value={newCommission.value}
                 isLoading={isLoading}
-                placeholder="*.**"
+                placeholder="Enter commission in percentage e.g. 50.00"
                 className={`${styles.input} select-name-input`}
                 status={newCommission.feedback ? 'error' : 'ok'}
                 feedback={newCommission.feedback}

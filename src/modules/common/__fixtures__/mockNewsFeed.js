@@ -199,7 +199,7 @@ export const mockNewsFeed = {
     {
       author: 'Tony Morinello',
       content:
-        'Lisk utilizes DPoS, which was created to be a much more energy efficient,\nenvironmentally friendly alternative to PoW, while adding additional security\nconsiderations and other improvements from PoS.',
+        'Lisk utilizes PoS, which was created to be a much more energy efficient,\nenvironmentally friendly alternative to PoW, while adding additional security\nconsiderations and other improvements from PoS.',
       imageUrl:
         'https://lisk.com/sites/default/files/styles/blog_main_image_xl_retina/public/images/2022-06/Validatord-Proof-of-Stake-Consensus.png?itok=L7ZolHFD',
       source: 'drupal_lisk_general',

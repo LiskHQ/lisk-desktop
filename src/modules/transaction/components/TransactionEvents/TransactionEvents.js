@@ -85,7 +85,7 @@ const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet
       )}
       <BoxContent className={`${styles.content}`}>
         <Table
-          showHeader
+          showHeader={!isFetching}
           data={transactionEvents?.data || []}
           isLoading={isFetching}
           row={TransactionEventRow}

@@ -28,6 +28,7 @@ const TxSignatureCollector = ({
   fees,
   selectedPriority,
   confirmText,
+  type = 'transaction',
 }) => {
   const [currentAccount] = useCurrentAccount();
   const { moduleCommandSchemas, messagesSchemas } = useCommandSchema();
@@ -134,7 +135,7 @@ const TxSignatureCollector = ({
         <Icon name="arrowLeftTailed" />
       </TertiaryButton>
       <EnterPasswordForm
-        title={t('Please enter your account password to sign this transaction.')}
+        title={t('Please enter your account password to sign this {{type}}.', { type })}
         confirmText={confirmText}
         onEnterPasswordSuccess={onEnterPasswordSuccess}
         isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}

@@ -10,10 +10,10 @@ import statusMessages from './statusMessages';
 import styles from './styles.css';
 import StakeSuccessfulModal from '../StakeSuccessfulModal';
 
-const Status = ({ account, transactions, statusInfo, t, dposToken }) => {
+const Status = ({ account, transactions, statusInfo, t, posToken }) => {
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
-  const template = statusMessages(t, statusInfo, dposToken)[status.code];
+  const template = statusMessages(t, statusInfo, posToken)[status.code];
 
   return (
     <div className={styles.container}>

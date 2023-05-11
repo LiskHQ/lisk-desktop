@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Dropdown from 'src/theme/Dropdown/dropdown';
+import Feedback from 'src/theme/feedback/feedback';
 import Icon from 'src/theme/Icon';
 import Spinner from 'src/theme/Spinner';
 import DropdownContext from '../../context/dropdownContext';
@@ -21,6 +23,9 @@ function MenuSelect({
   popupClassName,
   isLoading,
   isValid,
+  size,
+  feedback,
+  status,
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -72,7 +77,7 @@ function MenuSelect({
         {!disabled && <DropdownIconState isLoading={isLoading} isValid={isValid} />}
       </div>
       <DropdownContext.Provider value={{ onChange: handleOnChange, selectedValue }}>
-        {!disabled ? (
+        {!disabled && (
           <Dropdown
             showArrow={!disabled}
             className={`${styles.optionListWrapper} ${popupClassName}`}
@@ -80,10 +85,23 @@ function MenuSelect({
           >
             {children}
           </Dropdown>
-        ) : null}
+        )}
       </DropdownContext.Provider>
+      {!showDropdown && !isLoading && <Feedback message={feedback} size={size} status={status} />}
     </>
   );
 }
+
+MenuSelect.propTypes = {
+  size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
+  status: PropTypes.oneOf(['ok', 'error', 'pending', undefined]),
+  feedback: PropTypes.string,
+};
+
+MenuSelect.defaultProps = {
+  size: 'l',
+  status: undefined,
+  feedback: '',
+};
 
 export default MenuSelect;
