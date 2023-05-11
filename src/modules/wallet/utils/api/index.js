@@ -32,13 +32,13 @@ const wsMethods = {
  */
 const getAccountParams = async (params) => {
   if (!params || isEmpty(params)) return {};
-  const { username, address, passphrase, publicKey } = params;
+  const { username, address, passphrase, publicKey, derivationPath } = params;
 
   if (username) return { username };
   if (publicKey) return { publicKey };
   if (address) return { address };
   if (passphrase) {
-    return { publicKey: await extractPublicKey(passphrase) };
+    return { publicKey: await extractPublicKey(passphrase, undefined, derivationPath) };
   }
 
   return {};

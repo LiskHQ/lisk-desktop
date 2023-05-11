@@ -3,6 +3,7 @@ import { HTTP_CODES } from 'src/const/httpCodes';
 import http from 'src/utils/api/http';
 import ws from 'src/utils/api/ws';
 import accounts from '@tests/constants/wallets';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import { getAccount, getAccounts } from './index';
 
 jest.mock('src/utils/api/http', () => jest.fn().mockReturnValue([]));
@@ -177,35 +178,42 @@ describe('API: LSK Account', () => {
     });
 
     it('should call http without base url if not passed', async () => {
-      http.mockImplementation(() => Promise.resolve({ data: [{ summary: { publicKey } }] }));
+      const pubKey = '727d7c81084e8fa3a66a11a6716698826f6c89b377e9ade2934998cefe0a69ac';
+      http.mockImplementation(() =>
+        Promise.resolve({ data: [{ summary: { publicKey: pubKey } }] })
+      );
       // Checks with no baseUrl
       await getAccount({
         network,
-        params: { passphrase },
+        params: { passphrase, derivationPath: defaultDerivationPath },
       });
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { publicKey },
+        params: { publicKey: pubKey },
         baseUrl: undefined,
         path,
       });
     });
 
     it('should call http with right address, if passphrase passed', async () => {
-      http.mockImplementation(() => Promise.resolve({ data: [{ summary: { publicKey } }] }));
+      const pubKey = '727d7c81084e8fa3a66a11a6716698826f6c89b377e9ade2934998cefe0a69ac';
+      http.mockImplementation(() =>
+        Promise.resolve({ data: [{ summary: { publicKey: pubKey } }] })
+      );
       // Checks the baseUrl too
       await getAccount({
         network,
         params: {
           passphrase,
+          derivationPath: defaultDerivationPath,
         },
         baseUrl,
       });
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { publicKey },
+        params: { publicKey: pubKey },
         baseUrl,
         path,
       });

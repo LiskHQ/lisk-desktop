@@ -25,7 +25,7 @@ export const extractKeyPair = async ({
     };
   }
 
-  if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
+  if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase) && !!derivationPath) {
     const privateKey = await cryptography.ed.getPrivateKeyFromPhraseAndPath(
       passphrase,
       derivationPath
