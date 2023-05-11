@@ -76,7 +76,6 @@ class PassphraseBackup extends React.Component {
               </div>
             </div>
           </div>
-          <CustomDerivationPath />
           <div className={styles.hrSection} />
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>

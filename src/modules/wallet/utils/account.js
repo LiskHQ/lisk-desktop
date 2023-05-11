@@ -13,8 +13,8 @@ import i18next from 'i18next';
  */
 export const extractKeyPair = async ({
   passphrase,
-  enableAccessToLegacyAccounts = false,
   derivationPath,
+  enableAccessToLegacyAccounts = false,
 }) => {
   if (enableAccessToLegacyAccounts) {
     const keyPair = cryptography.legacy.getKeys(passphrase);
@@ -53,7 +53,11 @@ export const extractPublicKey = async (
   enableAccessToLegacyAccounts = false,
   derivationPath
 ) => {
-  const keyPair = await extractKeyPair({ passphrase, enableAccessToLegacyAccounts, derivationPath });
+  const keyPair = await extractKeyPair({
+    passphrase,
+    enableAccessToLegacyAccounts,
+    derivationPath,
+  });
 
   if (keyPair.isValid) {
     return keyPair.publicKey;
@@ -75,7 +79,11 @@ export const extractPrivateKey = async (
   enableAccessToLegacyAccounts = false,
   derivationPath
 ) => {
-  const keyPair = await extractKeyPair({ passphrase, enableAccessToLegacyAccounts, derivationPath });
+  const keyPair = await extractKeyPair({
+    passphrase,
+    enableAccessToLegacyAccounts,
+    derivationPath,
+  });
   if (keyPair.isValid) {
     return keyPair.privateKey;
   }
