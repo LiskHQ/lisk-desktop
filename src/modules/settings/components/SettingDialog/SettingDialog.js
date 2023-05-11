@@ -51,7 +51,9 @@ function SettingDialog() {
             <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
               <Toggle isCheckbox setting={settingsConst.keys.enableAccessToLegacyAccounts} />
               <div>
-                <span className={styles.labelName}>{t('Enable access to legacy Lisk accounts')}</span>
+                <span className={styles.labelName}>
+                  {t('Enable access to legacy Lisk accounts')}
+                </span>
                 <p>{t('Access to Lisk protocol v3 or older accounts.')}</p>
               </div>
             </label>

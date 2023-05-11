@@ -8,6 +8,7 @@ import CustomDerivationPath from 'src/modules/auth/components/CustomDerivationPa
 import { PrimaryButton } from 'src/theme/buttons';
 import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
 import styles from './AddAccountForm.css';
 
@@ -107,7 +108,9 @@ const AddAccountFormContainer = ({
 };
 
 const AddAccountFormWithDerivationPath = (props) => {
-  const [derivationPathEvent, setDerivationPathEvent] = useState({});
+  const [derivationPathEvent, setDerivationPathEvent] = useState({
+    derivationPath: defaultDerivationPath,
+  });
 
   return (
     <AddAccountFormContainer
@@ -115,9 +118,7 @@ const AddAccountFormWithDerivationPath = (props) => {
       isSubmitDisabled={!!derivationPathEvent.derivationPathErrorMessage}
       derivationPath={derivationPathEvent.derivationPath}
     >
-      <CustomDerivationPath
-        onChange={setDerivationPathEvent}
-      />
+      <CustomDerivationPath onChange={setDerivationPathEvent} />
     </AddAccountFormContainer>
   );
 };
