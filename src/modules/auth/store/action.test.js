@@ -77,7 +77,7 @@ describe('actions: account', () => {
           },
         },
         settings: {
-          enableCustomDerivationPath: true,
+          enableAccessToLegacyAccounts: true,
           customDerivationPath: '1/2',
         },
         token: {

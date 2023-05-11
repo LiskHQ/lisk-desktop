@@ -8,13 +8,14 @@ import MultiStep from 'src/modules/common/components/MultiStep';
 import SetPasswordSuccess from 'src/modules/auth/components/SetPasswordSuccess';
 import routes from 'src/routes/routes';
 import { useCurrentAccount, useAccounts } from '@account/hooks';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
 
 const AddAccountBySecretRecovery = ({ history, location: { search } }) => {
   const multiStepRef = useRef(null);
   const [recoveryPhrase, setRecoveryPhrase] = useState(null);
-  const [customDerivationPath, setCustomDerivationPath] = useState();
+  const [customDerivationPath, setCustomDerivationPath] = useState(defaultDerivationPath);
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
   const { setAccount } = useAccounts();
 
