@@ -5,6 +5,7 @@ import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import ClaimRewardsSummary from '@pos/validator/components/ClaimRewardsSummary';
 import TxBroadcasterWithStatus from '@transaction/components/TxBroadcasterWithStatus';
 import ClaimRewardsForm from '../ClaimRewardsForm';
+import styles from './styles.css';
 
 const ClaimRewardsView = () => {
   const [isStepTxSignatureCollector, setIsStepTxSignatureCollector] = useState(false);
@@ -15,7 +16,7 @@ const ClaimRewardsView = () => {
 
   return (
     <Dialog hasClose size={isStepTxSignatureCollector && 'sm'}>
-      <MultiStep onChange={onMultiStepChange}>
+      <MultiStep onChange={onMultiStepChange} className={styles.wrapper}>
         <ClaimRewardsForm />
         <ClaimRewardsSummary />
         <TxSignatureCollector />
