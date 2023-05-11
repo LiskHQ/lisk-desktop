@@ -136,6 +136,14 @@
   min-width: 360px !important;
 }
 
+.errorLabel {
+  margin-top: 4px;
+  width: 100%;
+  color: var(--color-red);
+  font-size: var(--paragraph-font-size-s);
+  text-align: center;
+}
+
 .header {
   display: flex;
   justify-content: flex-start !important;

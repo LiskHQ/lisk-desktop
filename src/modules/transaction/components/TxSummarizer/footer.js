@@ -4,6 +4,8 @@ import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import BoxFooter from 'src/theme/box/footer';
 import { useAuth } from 'src/modules/auth/hooks/queries';
 import { useCurrentAccount } from 'src/modules/account/hooks';
+import { useSelector } from 'react-redux';
+import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
 import styles from './txSummarizer.css';
 
 const Actions = ({ isMultisignature, cancelButton, confirmButton, inputStatus, t }) => (
@@ -31,9 +33,11 @@ const Actions = ({ isMultisignature, cancelButton, confirmButton, inputStatus, t
 const Footer = ({ confirmButton, cancelButton, footerClassName, t }) => {
   const [
     {
-      metadata: { address },
+      metadata: { address, isHW },
     },
   ] = useCurrentAccount();
+  const { isAppOpen } = useSelector(selectCurrentHWDevice);
+
   const { data: authData } = useAuth({ config: { params: { address } } });
   const { numberOfSignatures } = useMemo(
     () => ({ ...authData?.data, ...authData?.meta }),
@@ -46,10 +50,18 @@ const Footer = ({ confirmButton, cancelButton, footerClassName, t }) => {
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
       <Actions
         cancelButton={cancelButton}
-        confirmButton={confirmButton}
+        confirmButton={{
+          ...confirmButton,
+          disabled: isHW ? !isAppOpen || confirmButton.disabled : confirmButton.disabled,
+        }}
         isMultisignature={isMultisignature}
         t={t}
       />
+      {isHW && !isAppOpen && (
+        <div className={styles.errorLabel}>
+          <span>{t('Open the Lisk app to continue')}</span>
+        </div>
+      )}
     </BoxFooter>
   );
 };
