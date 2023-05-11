@@ -86,7 +86,7 @@ describe('AddAccountForm', () => {
   });
 
   it('should have disabled button if derivation path has an error', () => {
-    props.settings.enableCustomDerivationPath = true;
+    props.settings.enableAccessToLegacyAccounts = true;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
     const input = screen.getByLabelText('Custom derivation path');
@@ -104,7 +104,7 @@ describe('AddAccountForm', () => {
   });
 
   it('should trigger add account if derivation path and passphrase is correct', () => {
-    props.settings.enableCustomDerivationPath = true;
+    props.settings.enableAccessToLegacyAccounts = true;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
     const input = screen.getByLabelText('Custom derivation path');
@@ -130,7 +130,7 @@ describe('AddAccountForm', () => {
   });
 
   it('should render the custom derivation path field with no default value', () => {
-    props.settings.enableCustomDerivationPath = true;
+    props.settings.enableAccessToLegacyAccounts = true;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
     expect(accountFormInstance.getByDisplayValue(defaultDerivationPath)).toBeTruthy();

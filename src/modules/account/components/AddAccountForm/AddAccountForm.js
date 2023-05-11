@@ -9,8 +9,6 @@ import { PrimaryButton } from 'src/theme/buttons';
 import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
-import { getDerivationPathErrorMessage } from '@wallet/utils/account';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import styles from './AddAccountForm.css';
 
 const AddAccountForm = ({ settings, onAddAccount }) => {
@@ -25,10 +23,10 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
 
   const props = { settings, onAddAccount, setPassphrase, passphrase };
 
-  if (settings.enableCustomDerivationPath) {
-    return <AddAccountFormWithDerivationPath {...props} />;
+  if (settings.enableAccessToLegacyAccounts) {
+    return <AddAccountFormContainer {...props} />;
   }
-  return <AddAccountFormContainer {...props} />;
+  return <AddAccountFormWithDerivationPath {...props} />;
 };
 
 const AddAccountFormContainer = ({
@@ -108,30 +106,18 @@ const AddAccountFormContainer = ({
   );
 };
 
-const AddAccountFormWithDerivationPath = (props) => {
-  const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
-  const derivationPathErrorMessage = useMemo(
-    () => getDerivationPathErrorMessage(derivationPath),
-    [derivationPath]
-  );
-
-  const onDerivationPathChange = (value) => {
-    setDerivationPath(value);
-  };
-
-  return (
-    <AddAccountFormContainer
-      {...props}
-      isSubmitDisabled={!!derivationPathErrorMessage}
-      derivationPath={derivationPath}
-    >
-      <CustomDerivationPath
-        onChange={onDerivationPathChange}
-        value={derivationPath}
-        errorMessage={derivationPathErrorMessage}
-      />
-    </AddAccountFormContainer>
-  );
-};
+const AddAccountFormWithDerivationPath = (props) => (
+  <AddAccountFormContainer
+    {...props}
+    isSubmitDisabled={!!derivationPathErrorMessage}
+    derivationPath={derivationPath}
+  >
+    <CustomDerivationPath
+      onChange={onDerivationPathChange}
+      value={derivationPath}
+      errorMessage={derivationPathErrorMessage}
+    />
+  </AddAccountFormContainer>
+);
 
 export default AddAccountForm;

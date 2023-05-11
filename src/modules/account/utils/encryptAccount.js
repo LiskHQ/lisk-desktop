@@ -11,12 +11,12 @@ export const encryptAccount = async ({
   password,
   name,
   derivationPath,
-  enableCustomDerivationPath = false,
+  enableAccessToLegacyAccounts = false,
 }) => {
   const options = {
     passphrase: recoveryPhrase,
-    enableCustomDerivationPath,
-    derivationPath: enableCustomDerivationPath ? derivationPath : defaultDerivationPath,
+    enableAccessToLegacyAccounts,
+    derivationPath: enableAccessToLegacyAccounts ? derivationPath : defaultDerivationPath,
   };
 
   try {
