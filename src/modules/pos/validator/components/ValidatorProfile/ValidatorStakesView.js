@@ -71,7 +71,7 @@ const ValidatorStakesView = ({ address }) => {
             queryConfig={{ config: { params: filters } }}
             transformResponse={({ stakers: stakerResult } = {}) => stakerResult || []}
             iterationKey="address"
-            emptyState={{ message: emptyMessage }}
+            emptyState={{ message: emptyMessage, illustration: 'emptyStakersIllustration' }}
             row={StakerRow}
             additionalRowProps={{
               t,

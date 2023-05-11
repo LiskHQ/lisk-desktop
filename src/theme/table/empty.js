@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react';
 import { isReactComponent } from 'src/utils/helpers';
 import Illustration from 'src/modules/common/components/illustration';
@@ -9,6 +10,7 @@ const Empty = ({ isListEmpty, isLoading, data, error, className, message }) => {
     const Element = data;
     return <Element />;
   }
+
   return (
     <div className={`${styles.wrapper} ${className} empty-state`}>
       <Illustration name={data?.illustration ?? 'emptyWallet'} />

@@ -126,3 +126,8 @@
     height: 180px;
   }
 }
+
+.emptyState {
+  animation: fadeIn 1 150ms linear;
+  animation-fill-mode: forwards;
+}
