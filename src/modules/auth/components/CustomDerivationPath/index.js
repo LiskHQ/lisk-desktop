@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getDerivationPathErrorMessage } from 'src/modules/wallet/utils/account';
 import { Input } from 'src/theme';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 
-const CustomDerivationPath = ({ onChange, value, errorMessage }) => {
+const CustomDerivationPath = ({ onChange }) => {
   const { t } = useTranslation();
 
-  const onPathInputChange = (e) => {
-    onChange(e.target.value);
+  const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
+  const derivationPathErrorMessage = useMemo(
+    () => getDerivationPathErrorMessage(derivationPath),
+    [derivationPath]
+  );
+
+  const onPathInputChange = ({ target }) => {
+    const value = target.value;
+
+    setDerivationPath(value);
+    onChange?.({ derivationPathErrorMessage, derivationPath: value });
   };
 
   return (
@@ -17,9 +28,9 @@ const CustomDerivationPath = ({ onChange, value, errorMessage }) => {
         size="m"
         name="custom-derivation-path"
         onChange={onPathInputChange}
-        value={value}
-        feedback={errorMessage}
-        error={!!errorMessage}
+        value={derivationPath}
+        feedback={derivationPathErrorMessage}
+        error={!!derivationPathErrorMessage}
       />
     </fieldset>
   );
