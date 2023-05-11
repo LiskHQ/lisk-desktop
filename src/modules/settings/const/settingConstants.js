@@ -13,7 +13,7 @@ const config = {
     sideBarExpanded: 'sideBarExpanded',
     currency: 'currency',
     darkMode: 'darkMode',
-    enableCustomDerivationPath: 'enableCustomDerivationPath',
+    enableAccessToLegacyAccounts: 'enableAccessToLegacyAccounts',
   },
 };
 export default config;

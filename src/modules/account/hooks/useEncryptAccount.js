@@ -4,13 +4,13 @@ import { encryptAccount as encryptAccountUtils } from '@account/utils';
 
 // eslint-disable-next-line
 export function useEncryptAccount(customDerivationPath) {
-  const { enableCustomDerivationPath } = useSelector(selectSettings);
+  const { enableAccessToLegacyAccounts } = useSelector(selectSettings);
   const encryptAccount = ({ recoveryPhrase, password, name }) =>
     encryptAccountUtils({
       recoveryPhrase,
       password,
       name,
-      enableCustomDerivationPath,
+      enableAccessToLegacyAccounts,
       derivationPath: customDerivationPath,
     });
   return { encryptAccount };
