@@ -65,7 +65,7 @@ const Regular = ({
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {typeof illustration === 'string' ? (
-        <Illustration name={getIllustration(status.code, illustration, account)} />
+        <Illustration name={getIllustration(status.code, illustration)} />
       ) : (
         React.cloneElement(illustration)
       )}

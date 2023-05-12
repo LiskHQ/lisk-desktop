@@ -68,7 +68,6 @@ const Multisignature = ({
   noBackButton,
   resetTransactionResult,
   transactionBroadcasted,
-  account,
   network,
   moduleCommandSchemas,
 }) => {
@@ -107,7 +106,7 @@ const Multisignature = ({
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <Illustration name={getIllustration(status.code, 'signMultisignature', account.hwInfo)} />
+      <Illustration name={getIllustration(status.code, 'signMultisignature')} />
       <h6 className="result-box-header">{title}</h6>
       <p className="transaction-status body-message">{message}</p>
 
