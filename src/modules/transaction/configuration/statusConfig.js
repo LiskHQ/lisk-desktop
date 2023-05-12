@@ -2,7 +2,6 @@
 import { transactions as LiskTransaction } from '@liskhq/lisk-client';
 import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { LEDGER_HW_IPC_CHANNELS } from '@libs/hardwareWallet/ledger/constants';
 import { getNumberOfSignatures, joinModuleAndCommand, toTransactionJSON } from '../utils';
 import { MODULE_COMMANDS_NAME_MAP } from './moduleCommand';
 
@@ -47,6 +46,14 @@ export const statusMessages = (t) => ({
     title: t('Transaction aborted on device'),
     message: t('You have cancelled the transaction on your hardware wallet.'),
   },
+  [txStatusTypes.hwDisconnected]: {
+    title: t('Device disconnected'),
+    message: t('You have disconnected the device'),
+  },
+  [txStatusTypes.hwLiskAppClosed]: {
+    title: t('The Lisk application is closed'),
+    message: t('The lisk app needs to be open to perform transactions from the ledger'),
+  },
 });
 
 const getErrorMessage = (data, paramSchema) => {
@@ -72,12 +79,10 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
   // Signature errors
   if (transactions.txSignatureError) {
     const txSignatureErrorMsg = transactions.txSignatureError.message;
-    const isHWError = new RegExp(Object.keys(LEDGER_HW_IPC_CHANNELS).join('|')).test(
-      txSignatureErrorMsg
-    );
-    if (isHWError) {
+    const hwTxStatusType = transactions.txSignatureError?.hwTxStatusType;
+    if (hwTxStatusType) {
       return {
-        code: txStatusTypes.hwRejected,
+        code: hwTxStatusType,
         message: txSignatureErrorMsg,
       };
     }
