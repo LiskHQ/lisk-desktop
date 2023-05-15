@@ -137,7 +137,7 @@ describe('Login', () => {
         {},
         {
           settings: {
-            enableCustomDerivationPath: false,
+            enableAccessToLegacyAccounts: false,
             customDerivationPath: defaultDerivationPath,
           },
         }

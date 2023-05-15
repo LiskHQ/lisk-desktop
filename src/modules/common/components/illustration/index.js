@@ -58,6 +58,18 @@ import validatorRegistrationError from '@setup/react/assets/images/illustrations
 import applicationDetailsError from '@setup/react/assets/images/illustrations/application-details-error.svg';
 import networkErrorIllustration from '@setup/react/assets/images/illustrations/networkError.svg';
 
+import emptyEventsIllustration from '@setup/react/assets/images/illustrations/emptyStates/events-empty-illustration.svg';
+import emptyExploreApplicationsIllustration from '@setup/react/assets/images/illustrations/emptyStates/explore-applications-illustration.svg';
+import emptyConnectedPeersIllustration from '@setup/react/assets/images/illustrations/emptyStates/connected-peers-empty-illustration.svg';
+import emptyNetworkStatisticsIllustration from '@setup/react/assets/images/illustrations/emptyStates/network-statistics-empty-illustration.svg';
+import emptyStakersIllustration from '@setup/react/assets/images/illustrations/emptyStates/stakers-empty-illustration.svg';
+import emptyStakesIllustration from '@setup/react/assets/images/illustrations/emptyStates/stakes-empty-illstration.svg';
+import emptyTokensIllustration from '@setup/react/assets/images/illustrations/emptyStates/tokens-empty-illustration.svg';
+import emptyTransactionsIllustration from '@setup/react/assets/images/illustrations/emptyStates/transactions-empty-illustration.svg';
+import emptyValidatorsIllustration from '@setup/react/assets/images/illustrations/emptyStates/validators-empty-illustration.svg';
+import emptyWalletConnectionsIllustration from '@setup/react/assets/images/illustrations/emptyStates/wallet-connections-illustration.svg';
+import emptyStakingQueueIllustration from '@setup/react/assets/images/illustrations/emptyStates/staking-queue-empty-illustration.svg';
+
 export const illustrations = {
   welcomeLiskValidators,
   yourVoiceMatters,
@@ -115,6 +127,18 @@ export const illustrations = {
   validatorRegistrationError,
   applicationDetailsError,
   networkErrorIllustration,
+
+  emptyEventsIllustration,
+  emptyExploreApplicationsIllustration,
+  emptyConnectedPeersIllustration,
+  emptyNetworkStatisticsIllustration,
+  emptyStakersIllustration,
+  emptyStakesIllustration,
+  emptyTokensIllustration,
+  emptyTransactionsIllustration,
+  emptyValidatorsIllustration,
+  emptyWalletConnectionsIllustration,
+  emptyStakingQueueIllustration,
 };
 
 const Illustration = ({ name, className, noTheme, ...props }) => {

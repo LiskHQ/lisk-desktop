@@ -5,6 +5,7 @@
   width: 100%;
   padding: 20px;
   padding-bottom: 0;
+  overflow: auto;
 
   & .container {
     display: flex;

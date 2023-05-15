@@ -25,10 +25,10 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
 
   const props = { settings, onAddAccount, setPassphrase, passphrase };
 
-  if (settings.enableCustomDerivationPath) {
-    return <AddAccountFormWithDerivationPath {...props} />;
+  if (settings.enableAccessToLegacyAccounts) {
+    return <AddAccountFormContainer {...props} />;
   }
-  return <AddAccountFormContainer {...props} />;
+  return <AddAccountFormWithDerivationPath {...props} />;
 };
 
 const AddAccountFormContainer = ({
@@ -110,12 +110,10 @@ const AddAccountFormContainer = ({
 
 const AddAccountFormWithDerivationPath = (props) => {
   const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
-  const derivationPathErrorMessage = useMemo(
-    () => getDerivationPathErrorMessage(derivationPath),
-    [derivationPath]
-  );
+  const derivationPathErrorMessage = getDerivationPathErrorMessage(derivationPath);
 
-  const onDerivationPathChange = (value) => {
+  const onPathInputChange = ({ target }) => {
+    const value = target.value;
     setDerivationPath(value);
   };
 
@@ -126,9 +124,9 @@ const AddAccountFormWithDerivationPath = (props) => {
       derivationPath={derivationPath}
     >
       <CustomDerivationPath
-        onChange={onDerivationPathChange}
+        onChange={onPathInputChange}
         value={derivationPath}
-        errorMessage={derivationPathErrorMessage}
+        derivationPathErrorMessage={derivationPathErrorMessage}
       />
     </AddAccountFormContainer>
   );

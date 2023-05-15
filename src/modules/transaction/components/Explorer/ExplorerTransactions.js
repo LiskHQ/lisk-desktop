@@ -70,6 +70,7 @@ const Transactions = ({ activeToken, address }) => {
           currentSort={sort}
           emptyState={{
             message: t('There are no transactions for this account.'),
+            illustration: 'emptyTransactionsIllustration',
           }}
           scrollToSelector=".transactions-box"
         />
