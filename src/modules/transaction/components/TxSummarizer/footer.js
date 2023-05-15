@@ -48,6 +48,11 @@ const Footer = ({ confirmButton, cancelButton, footerClassName, t }) => {
 
   return (
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
+      {isHW && !isAppOpen && (
+        <div className={styles.errorLabel}>
+          <span>{t('Open the Lisk app to continue')}</span>
+        </div>
+      )}
       <Actions
         cancelButton={cancelButton}
         confirmButton={{
@@ -57,11 +62,6 @@ const Footer = ({ confirmButton, cancelButton, footerClassName, t }) => {
         isMultisignature={isMultisignature}
         t={t}
       />
-      {isHW && !isAppOpen && (
-        <div className={styles.errorLabel}>
-          <span>{t('Open the Lisk app to continue')}</span>
-        </div>
-      )}
     </BoxFooter>
   );
 };
