@@ -24,7 +24,7 @@ export const initialState = {
   darkMode: false,
   discreetMode: false,
   sideBarExpanded: true,
-  enableCustomDerivationPath: false,
+  enableAccessToLegacyAccounts: false,
   currency: 'USD',
   customNetworks: [],
   mainChainNetwork: networks[DEFAULT_NETWORK],

@@ -15,6 +15,7 @@ import {
 const passphrase = accounts.genesis.passphrase;
 const { address, privateKey, publicKey } = accounts.genesis.summary;
 const customDerivationPath = "m/44'/134'/1'";
+const enableAccessToLegacyAccounts = true;
 
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 jest
@@ -24,12 +25,12 @@ jest
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
     it('should return a hex string from any given string', async () => {
-      const key = await extractPublicKey(passphrase);
+      const key = await extractPublicKey(passphrase, enableAccessToLegacyAccounts);
       await expect(key).toEqual(publicKey);
     });
 
     it('should call getCustomDerivationKeyPair', async () => {
-      await extractPublicKey(passphrase, true, customDerivationPath);
+      await extractPublicKey(passphrase, false, customDerivationPath);
       expect(cryptography.ed.getPrivateKeyFromPhraseAndPath).toHaveBeenCalledWith(
         passphrase,
         customDerivationPath
@@ -39,12 +40,12 @@ describe('Utils: Account', () => {
 
   describe('extractPrivateKey', () => {
     it('should return a hex string from any given string', async () => {
-      const key = await extractPrivateKey(passphrase);
+      const key = await extractPrivateKey(passphrase, enableAccessToLegacyAccounts);
       expect(key).toEqual(privateKey);
     });
 
     it('should call getCustomDerivationKeyPair', async () => {
-      await extractPrivateKey(passphrase, true, customDerivationPath);
+      await extractPrivateKey(passphrase, !enableAccessToLegacyAccounts, customDerivationPath);
       expect(cryptography.ed.getPrivateKeyFromPhraseAndPath).toHaveBeenCalledWith(
         passphrase,
         customDerivationPath

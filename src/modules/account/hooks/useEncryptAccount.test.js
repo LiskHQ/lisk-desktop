@@ -3,7 +3,7 @@ import { useEncryptAccount } from './useEncryptAccount';
 const mockDispatch = jest.fn();
 const mockState = {
   settings: {
-    enableCustomDerivationPath: true,
+    enableAccessToLegacyAccounts: true,
     customDerivationPath: "m/44'/134'/1'",
   },
 };
