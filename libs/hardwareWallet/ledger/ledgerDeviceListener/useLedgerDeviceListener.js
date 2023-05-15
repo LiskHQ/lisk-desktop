@@ -8,17 +8,39 @@ import {
   setHWDevices,
 } from '@hardwareWallet/store/actions';
 import { subscribeToLedgerDeviceEvents } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/subscribeToLedgerDevices';
-import { selectHardwareDevices } from '@hardwareWallet/store/selectors/hwSelectors';
-import { getConnectedHWDevices } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import {
+  selectCurrentHWDevice,
+  selectHardwareDevices,
+} from '@hardwareWallet/store/selectors/hwSelectors';
+import {
+  getConnectedHWDevices,
+  getIsInsideLiskApp,
+} from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 import { usePrevious } from 'src/utils/usePrevious';
 import DeviceToast from '@hardwareWallet/components/DeviceToast/DeviceToast';
+import { CHECK_STATUS_INTERVAL } from '@libs/hardwareWallet/ledger/constants';
 
 export function useLedgerDeviceListener() {
   const dispatch = useDispatch();
   const hwDevices = useSelector(selectHardwareDevices);
+  const currentHwDevice = useSelector(selectCurrentHWDevice);
   const prevHWDevices = usePrevious(hwDevices);
   const [hasCheckedHWDevices, setHasCheckedHWDevices] = useState(false);
   const { ipc } = window;
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    async function checkStatus() {
+      const pubKey = await getIsInsideLiskApp(currentHwDevice?.path, currentHwDevice?.accountIndex);
+      const isInsideApp = !!pubKey;
+      dispatch(setCurrentHWDevice({ ...currentHwDevice, isAppOpen: isInsideApp }));
+    }
+
+    if (currentHwDevice?.path) {
+      const id = setInterval(checkStatus, CHECK_STATUS_INTERVAL);
+      return () => clearInterval(id);
+    }
+  }, [currentHwDevice, dispatch]);
 
   useEffect(() => {
     if (ipc && dispatch && !hasCheckedHWDevices) {

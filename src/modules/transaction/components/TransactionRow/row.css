@@ -71,6 +71,10 @@
 
   & .value {
     color: var(--color-maastricht-blue);
+
+    & div {
+      display: inline;
+    }
   }
 
   & .more {

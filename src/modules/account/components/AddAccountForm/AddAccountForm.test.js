@@ -1,7 +1,6 @@
 import React from 'react';
 import { createEvent, fireEvent, screen } from '@testing-library/react';
 import { renderWithStore } from 'src/utils/testHelpers';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import AddAccountForm from '.';
 
 jest.mock('react-i18next');
@@ -26,10 +25,10 @@ describe('AddAccountForm', () => {
     expect(
       screen.getByText('Enter your secret recovery phrase to manage your account.')
     ).toBeTruthy();
-    expect(screen.getByText('Continue')).toBeTruthy();
-    expect(screen.getByText('Go Back')).toBeTruthy();
+    expect(screen.getByText('Continue to set password')).toBeTruthy();
+    expect(screen.getByText('Go back')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('Continue'));
+    fireEvent.click(screen.getByText('Continue to set password'));
     expect(props.onAddAccount).not.toBeCalled();
   });
 
@@ -44,7 +43,7 @@ describe('AddAccountForm', () => {
     });
 
     fireEvent(inputField, pasteEvent);
-    fireEvent.click(screen.getByText('Continue'));
+    fireEvent.click(screen.getByText('Continue to set password'));
     expect(props.onAddAccount).toBeCalled();
   });
 
@@ -63,7 +62,7 @@ describe('AddAccountForm', () => {
     expect(props.onAddAccount).toBeCalled();
   });
 
-  it('should not trigger add account with a wrong mneumoic secret recovery phrase', () => {
+  it('should not trigger add account with a wrong mnemonic secret recovery phrase', () => {
     const inputField = screen.getByTestId('recovery-1');
 
     const pasteEvent = createEvent.paste(inputField, {
@@ -74,7 +73,7 @@ describe('AddAccountForm', () => {
     });
 
     fireEvent(inputField, pasteEvent);
-    fireEvent.click(screen.getByText('Continue'));
+    fireEvent.click(screen.getByText('Continue to set password'));
     expect(props.onAddAccount).not.toBeCalled();
   });
 
@@ -82,11 +81,11 @@ describe('AddAccountForm', () => {
     props.settings.showNetwork = true;
 
     accountFormInstance.rerender(<AddAccountForm {...props} />);
-    expect(screen.queryByText('Select Network')).toBeTruthy();
+    expect(screen.queryByText('Switch network')).toBeTruthy();
   });
 
   it('should have disabled button if derivation path has an error', () => {
-    props.settings.enableCustomDerivationPath = true;
+    props.settings.enableAccessToLegacyAccounts = false;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
     const input = screen.getByLabelText('Custom derivation path');
@@ -100,15 +99,18 @@ describe('AddAccountForm', () => {
       },
     });
     fireEvent(passphraseInput1, pasteEvent);
-    expect(screen.getByText('Continue')).toHaveAttribute('disabled');
+    expect(screen.queryByText('Continue to set password')).toHaveAttribute('disabled');
   });
 
   it('should trigger add account if derivation path and passphrase is correct', () => {
-    props.settings.enableCustomDerivationPath = true;
-    accountFormInstance.rerender(<AddAccountForm {...props} />);
+    const correctDerivationPath = "m/44'/134'/0'";
+
+    props.settings.enableAccessToLegacyAccounts = false;
+    accountFormInstance.rerender(
+      <AddAccountForm {...props} derivationPath={correctDerivationPath} />
+    );
 
     const input = screen.getByLabelText('Custom derivation path');
-    const correctDerivationPath = "m/44'/134'/0'";
     fireEvent.change(input, { target: { value: correctDerivationPath } });
 
     const passphrase =
@@ -121,7 +123,7 @@ describe('AddAccountForm', () => {
     });
     fireEvent(passphraseInput1, pasteEvent);
 
-    fireEvent.click(screen.getByText('Continue'));
+    fireEvent.click(screen.getByText('Continue to set password'));
 
     expect(props.onAddAccount).toHaveBeenCalledWith(
       { value: passphrase, isValid: true },
@@ -129,10 +131,10 @@ describe('AddAccountForm', () => {
     );
   });
 
-  it('should render the custom derivation path field with no default value', () => {
-    props.settings.enableCustomDerivationPath = true;
+  it('should not render custom derivation path input', () => {
+    props.settings.enableAccessToLegacyAccounts = true;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
-    expect(accountFormInstance.getByDisplayValue(defaultDerivationPath)).toBeTruthy();
+    expect(screen.queryByLabelText('Custom derivation path')).toBeFalsy();
   });
 });

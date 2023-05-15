@@ -136,6 +136,17 @@
   min-width: 360px !important;
 }
 
+.errorLabel {
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  color: var(--color-red);
+  font-size: var(--paragraph-font-size-s);
+  font-weight: var(--font-weight-normal);
+  text-align: center;
+  background-color: rgba(255, 69, 87, 0.1);
+}
+
 .header {
   display: flex;
   justify-content: flex-start !important;

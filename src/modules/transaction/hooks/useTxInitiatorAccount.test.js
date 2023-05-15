@@ -10,16 +10,14 @@ jest
   .mockReturnValue('lsk93msac7pppaqaxy2w84fcpfvq45caxtguednsp');
 
 describe('useTxInitiatorAccount', () => {
-  const transactionJSON = {
-    senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-  };
+  const senderPublicKey = 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f';
 
   it('should return command schemas', async () => {
     useAuth.mockReturnValue({
       data: mockAuth,
     });
 
-    const { result } = renderHook(() => useTxInitiatorAccount({ transactionJSON }));
+    const { result } = renderHook(() => useTxInitiatorAccount({ senderPublicKey }));
 
     expect(result.current.txInitiatorAccount).toEqual({
       ...(mockAuth.data || {}),
@@ -27,15 +25,21 @@ describe('useTxInitiatorAccount', () => {
       keys: {
         ...(mockAuth.data || { mandatoryKeys: [], optionalKeys: [] }),
       },
+      summary: {
+        publicKey: senderPublicKey,
+      },
     });
   });
 
   it('should return empty object if no command parameters', async () => {
     useAuth.mockReturnValue({});
 
-    const { result } = renderHook(() => useTxInitiatorAccount({ transactionJSON }));
+    const { result } = renderHook(() => useTxInitiatorAccount({ senderPublicKey }));
     expect(result.current.txInitiatorAccount).toEqual({
       keys: { mandatoryKeys: [], optionalKeys: [] },
+      summary: {
+        publicKey: senderPublicKey,
+      },
     });
   });
 });

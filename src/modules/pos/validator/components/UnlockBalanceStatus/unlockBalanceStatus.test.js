@@ -42,7 +42,6 @@ describe('unlock transaction Status', () => {
       status: { code: 'SIGNATURE_SUCCESS' },
       title: 'Submitting the transaction',
       message: 'Your transaction is signed successfully.',
-      className: 'content',
     });
   });
 
@@ -62,14 +61,16 @@ describe('unlock transaction Status', () => {
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
       message: 'An error occurred while signing your transaction. Please try again.',
-      className: 'content',
     });
 
     const propsWithHWError = {
       ...props,
       transactions: {
         txBroadcastError: null,
-        txSignatureError: { message: LEDGER_HW_IPC_CHANNELS.GET_SIGNED_TRANSACTION },
+        txSignatureError: {
+          message: LEDGER_HW_IPC_CHANNELS.GET_SIGNED_TRANSACTION,
+          hwTxStatusType: 'HW_REJECTED',
+        },
         signedTransaction: { signatures: ['123'] },
       },
     };
@@ -80,7 +81,6 @@ describe('unlock transaction Status', () => {
       status: { code: 'HW_REJECTED', message: LEDGER_HW_IPC_CHANNELS.GET_SIGNED_TRANSACTION },
       title: 'Transaction aborted on device',
       message: 'You have cancelled the transaction on your hardware wallet.',
-      className: 'content',
     });
   });
 
@@ -100,7 +100,6 @@ describe('unlock transaction Status', () => {
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
       message: 'An error occurred while sending your transaction to the network. Please try again.',
-      className: 'content',
     });
   });
 
@@ -119,7 +118,6 @@ describe('unlock transaction Status', () => {
       illustration: 'default',
       status: { code: 'BROADCAST_SUCCESS' },
       title: 'Transaction submitted',
-      className: 'content',
     });
   });
 });

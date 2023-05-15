@@ -19,15 +19,16 @@ function StakeSuccessfulModal({ history, statusMessage }) {
   return (
     <Box className={styles.successContainer}>
       <BoxHeader>
-        <h2>{t('Staking confirmation')}</h2>
+        <h2>{t('Staking confirmed')}</h2>
       </BoxHeader>
       <BoxContent>
-        <Illustration className={styles.illustartion} name="stakingSuccess" />
-        <h4 className={styles.stakedHeader}>{t('Tokens are now staked')}</h4>
+        <Illustration className={styles.illustration} name="stakingSuccess" />
         <p className={styles.messageLabel}>{statusMessage.message}</p>
       </BoxContent>
-      <BoxFooter>
-        <PrimaryButton onClick={handleBackToValidator}>{t('Back to validators')}</PrimaryButton>
+      <BoxFooter className={styles.footer}>
+        <PrimaryButton className={styles.actionButton} onClick={handleBackToValidator}>
+          {t('Back to validators')}
+        </PrimaryButton>
       </BoxFooter>
     </Box>
   );

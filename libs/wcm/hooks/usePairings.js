@@ -1,10 +1,11 @@
-import { useEffect, useState, useCallback } from 'react';
-import { getSdkError } from '@walletconnect/utils';
-import { client } from '../utils/connectionCreator';
-import { ERROR_CASES, STATUS } from '../constants/lifeCycle';
+import { useState, useEffect, useCallback, useContext } from 'react';
+import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { client } from '@libs/wcm/utils/connectionCreator';
+import { STATUS } from '../constants/lifeCycle';
 
 export const usePairings = () => {
-  const [pairings, setPairings] = useState([]);
+  const { pairings, setPairings } = useContext(ConnectionContext);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   /**
    * Sets the pairing URI as an acknowledgement to the client.
@@ -33,67 +34,39 @@ export const usePairings = () => {
 
   const removePairing = useCallback(
     (topic) => {
-      const newPairings = pairings.filter((pairing) => pairing.topic !== topic);
-      // Also inform the bridge
-      setPairings(newPairings);
+      setPairings((prevPairings) => prevPairings.filter((pairing) => pairing.topic !== topic));
     },
-    [pairings]
+    [setPairings]
   );
 
   const addPairing = useCallback(
     (pairing) => {
-      setPairings([...pairings, pairing]);
+      setPairings((prevPairings) => [...prevPairings, pairing]);
     },
-    [pairings]
-  );
-
-  /**
-   * Disconnect a given pairing. Removes the pairing from context and the bridge.
-   *
-   * @param {string} topic - The pairing topic (Connection ID) to disconnect.
-   */
-  const disconnect = useCallback(
-    async (topic) => {
-      removePairing(topic);
-      try {
-        await client.disconnect({
-          topic,
-          reason: getSdkError(ERROR_CASES.USER_DISCONNECTED),
-        });
-        return {
-          status: STATUS.SUCCESS,
-        };
-      } catch (e) {
-        return {
-          status: STATUS.FAILURE,
-          message: e.message,
-        };
-      }
-    },
-    [client]
+    [setPairings]
   );
 
   /**
    * Retrieves the active parings and refreshes the list.
    */
-  const refreshPairings = useCallback(async () => {
+  const refreshPairings = useCallback(() => {
     const activePairings = client.pairing.getAll({ active: true });
-    setPairings([{ loaded: true }, ...activePairings]);
+    setPairings([...activePairings]);
   }, [client]);
 
   useEffect(() => {
-    if (client?.pairing?.getAll && pairings?.length === 0) {
+    if (client?.pairing?.getAll && !pairings?.length && setPairings) {
       const activePairings = client.pairing.getAll({ active: true });
-      setPairings([{ loaded: true }, ...activePairings]);
+      setPairings([...activePairings]);
+      setHasLoaded(true);
     }
-  }, [client]);
+  }, [client, setPairings]);
 
   return {
+    hasLoaded,
     pairings,
     setUri,
-    disconnect,
     addPairing,
-    setPairings,
     removePairing,
     refreshPairings,
   };

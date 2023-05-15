@@ -15,7 +15,7 @@ const getOnboardingSlides = (t) => [
     illustration: 'hubReadyToGo',
   },
   {
-    title: t('Stay Informed'),
+    title: t('Stay informed'),
     content: t(
       'Keep up-to-date with announcements from the Lisk Foundation. Check what network validators have been up to with dedicated profile pages.'
     ),
@@ -27,7 +27,7 @@ const getOnboardingSlides = (t) => [
     illustration: 'sendLSKTokens',
   },
   {
-    title: t('Get Involved'),
+    title: t('Get involved'),
     content: t(
       'Community is key. Stake for validators, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.'
     ),

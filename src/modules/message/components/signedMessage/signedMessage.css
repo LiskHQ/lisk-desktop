@@ -1,9 +1,5 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-.noPadding {
-  padding: 0 !important;
-}
-
 .result {
   background: #08223c !important;
   color: #9bf436 !important;
@@ -26,5 +22,9 @@
     font-weight: var(--font-weight-bold);
     color: var(--color-maastricht-blue);
     margin-bottom: 0;
+  }
+
+  & .errorInfoText {
+    color: var(--color-maastricht-blue);
   }
 }

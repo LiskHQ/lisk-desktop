@@ -1,41 +1,35 @@
 import wallets from '@tests/constants/wallets';
 import moduleCommandSchemas from '@tests/constants/schemas';
-import { convertStringToBinary } from '@transaction/utils';
 import { computeTransactionMinFee } from './utils';
-import * as encodingUtils from '../../utils/encoding';
 
 const transactionBase = {
-  nonce: BigInt(0),
-  senderPublicKey: Buffer.from(wallets.genesis.summary.publicKey, 'hex'),
+  nonce: 1,
+  senderPublicKey: wallets.genesis.summary.publicKey,
 };
-
-jest.spyOn(encodingUtils, 'fromTransactionJSON').mockImplementation((tx) => tx);
+const dummySignature = Buffer.alloc(64).toString('hex');
 
 describe('computeTransactionMinFee', () => {
   it('Returns invalid fee if transaction is not valid', () => {
-    expect(computeTransactionMinFee({}, null, null, false)).toEqual(BigInt(72000));
+    expect(computeTransactionMinFee({}, null, 0, 0)).toEqual(BigInt(5000));
   });
 
-  describe('Normal account', () => {
+  describe('Token transfer', () => {
     const tokenTransfer = {
       ...transactionBase,
       module: 'token',
       command: 'transfer',
       params: {
-        tokenId: convertStringToBinary('00000000'),
-        amount: BigInt('1000000'),
-        recipientAddress: convertStringToBinary(wallets.genesis.summary.address),
+        tokenID: '0400000100000000',
+        amount: '100000000',
+        recipientAddress: wallets.genesis.summary.address,
         data: '',
       },
-      signatures: [],
+      signatures: [dummySignature],
     };
     const schema = moduleCommandSchemas['token:transfer'];
-    const auth = {
-      numberOfSignatures: 1,
-    };
 
     it('Returns the calculated fee given transaction using a normal account is valid', () => {
-      expect(computeTransactionMinFee(tokenTransfer, schema, auth, true)).toEqual(BigInt(133001));
+      expect(computeTransactionMinFee(tokenTransfer, schema, 1, 0)).toEqual(BigInt(164000));
     });
   });
 
@@ -46,23 +40,17 @@ describe('computeTransactionMinFee', () => {
       command: 'registerMultisignature',
       params: {
         numberOfSignatures: 2,
-        mandatoryKeys: [
-          convertStringToBinary(wallets.genesis.summary.publicKey),
-          convertStringToBinary(wallets.validator.summary.publicKey),
-        ],
+        mandatoryKeys: [wallets.genesis.summary.publicKey, wallets.validator.summary.publicKey],
         optionalKeys: [],
-        signatures: [],
+        signatures: [dummySignature, dummySignature],
       },
-      signatures: [],
+      signatures: [dummySignature],
     };
     const schema = moduleCommandSchemas['auth:registerMultisignature'];
-    const auth = {
-      numberOfSignatures: 1,
-    };
 
-    it('Returns the calculated fee given multisig regi. transaction is valid', () => {
-      expect(computeTransactionMinFee(registerMultisignature, schema, auth, true)).toEqual(
-        BigInt(208001)
+    it('Returns the calculated fee given multisig registration. transaction is valid', () => {
+      expect(computeTransactionMinFee(registerMultisignature, schema, 1, 0)).toEqual(
+        BigInt(341000)
       );
     });
   });
@@ -73,21 +61,18 @@ describe('computeTransactionMinFee', () => {
       module: 'token',
       command: 'transfer',
       params: {
-        tokenId: convertStringToBinary('00000000'),
-        amount: BigInt('1000000'),
-        recipientAddress: convertStringToBinary(wallets.genesis.summary.address),
+        tokenID: '00000000',
+        amount: '1000000',
+        recipientAddress: wallets.genesis.summary.address,
         data: '',
       },
-      signatures: [],
+      signatures: [dummySignature, dummySignature],
     };
     const schema = moduleCommandSchemas['token:transfer'];
-    const auth = {
-      numberOfSignatures: 1,
-    };
 
     it('Returns the calculated fee given transaction using a multisig is valid', () => {
-      expect(computeTransactionMinFee(registerMultisignature, schema, auth, true)).toEqual(
-        BigInt(133001)
+      expect(computeTransactionMinFee(registerMultisignature, schema, 2, 0)).toEqual(
+        BigInt(225000)
       );
     });
   });

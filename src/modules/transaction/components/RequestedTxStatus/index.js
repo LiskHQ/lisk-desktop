@@ -26,7 +26,7 @@ const ErrorActions = ({ t, status, message, network }) => (
   <a
     className="report-error-link"
     href={getErrorReportMailto({
-      error: status.message,
+      error: status?.message,
       errorMessage: message,
       networkIdentifier: network.networkIdentifier,
       serviceUrl: network.serviceUrl,
@@ -47,7 +47,6 @@ const RequestedTxStatus = ({
   status,
   className,
   resetTransactionResult,
-  account,
   network,
 }) => {
   const { respond } = useSession();
@@ -72,7 +71,7 @@ const RequestedTxStatus = ({
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <Illustration
-        name={getIllustration(status.code, 'signMultisignature', account.hwInfo)}
+        name={getIllustration(status.code, 'signMultisignature')}
         data-testid="illustration"
       />
       <h6 className="result-box-header">{title}</h6>

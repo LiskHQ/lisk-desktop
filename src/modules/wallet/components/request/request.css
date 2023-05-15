@@ -4,6 +4,7 @@
   display: flex;
   padding: 25px;
   flex-wrap: wrap;
+  overflow: scroll;
 
   & h5 {
     font-family: var(--heading-font);
@@ -111,6 +112,10 @@
       padding-left: 10px;
       padding-right: 120px;
       width: 100%;
+    }
+
+    & img {
+      top: calc(var(--height-l) / 2) !important;
     }
   }
 

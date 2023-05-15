@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useRegistrations } from "./useRegistrations";
+import { useRegistrations } from './useRegistrations';
 
 jest.useRealTimers();
 
-describe("useRegistrations", () => {
-  it("should return the correct data", async () => {
+describe('useRegistrations', () => {
+  it('should return the correct data', async () => {
     const { result, waitFor } = renderHook(() => useRegistrations(), { wrapper });
 
     await waitFor(() => result.current.isFetched);

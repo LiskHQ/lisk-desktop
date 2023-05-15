@@ -17,8 +17,6 @@ jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   },
 }));
 
-jest.mock('src/redux/selectors');
-
 const mockHistory = {
   push: jest.fn(),
   location: { search: '', pathname: '' },
@@ -58,6 +56,7 @@ describe('useIpc', () => {
       name: 'testnet',
       serviceUrl: 'someUrl',
     },
+    staking: {},
   };
 
   beforeEach(() => {

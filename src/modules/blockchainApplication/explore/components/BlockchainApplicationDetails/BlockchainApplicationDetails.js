@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Dialog from '@theme/dialog/dialog';
 import Box from 'src/theme/box';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
@@ -21,8 +20,6 @@ import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockcha
 import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useBlockchainApplicationMeta';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
-
-const deposit = 5e10;
 
 // eslint-disable-next-line max-statements, complexity
 const BlockchainApplicationDetails = ({ history, location }) => {
@@ -48,10 +45,14 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   });
   const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const { status, lastCertificateHeight, lastUpdated, logo } = aggregatedApplicationData;
+  const {
+    status,
+    lastCertificateHeight,
+    lastUpdated,
+    logo,
+    depositedLsk = 0,
+  } = aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
-  const { data: tokens } = useTokenBalances();
-  const token = tokens?.data?.[0] || {};
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -110,7 +111,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
       <Dialog hasClose className={`${grid.row} ${grid['center-xs']}`}>
         <div className={`${styles.wrapper} ${styles.errorWrapper}`}>
           <Illustration name="applicationDetailsError" />
-          <div className={styles.errorText}>{t("Couldn't load application data")}</div>
+          <div className={styles.errorText}>{t('Error loading application data')}</div>
           <div className={styles.retryBtn}>
             <TertiaryButton onClick={reloadAppDetails}>Try again</TertiaryButton>
           </div>
@@ -141,7 +142,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
           ) : (
             <ValueAndLabel label={t('Deposited:')} direction="horizontal">
               <span className={styles.value}>
-                <TokenAmount val={deposit} token={token} />
+                <TokenAmount val={depositedLsk} isLsk />
               </span>
             </ValueAndLabel>
           )}
@@ -183,7 +184,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
               data-testid="add-application-button"
               onClick={addNewApplication}
             >
-              {t('Add application to my list')}
+              {t('Add application')}
             </PrimaryButton>
           </Box>
         ) : null}

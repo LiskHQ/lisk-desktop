@@ -1,11 +1,11 @@
 // istanbul ignore file
-import React, { useEffect, useMemo, useState } from 'react';
-import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
-import useSecondPassphrase from '@transaction/hooks/setSecondPassphrase';
-import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
+import React, { useMemo } from 'react';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import BoxFooter from 'src/theme/box/footer';
 import { useAuth } from 'src/modules/auth/hooks/queries';
 import { useCurrentAccount } from 'src/modules/account/hooks';
+import { useSelector } from 'react-redux';
+import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
 import styles from './txSummarizer.css';
 
 const Actions = ({ isMultisignature, cancelButton, confirmButton, inputStatus, t }) => (
@@ -30,82 +30,35 @@ const Actions = ({ isMultisignature, cancelButton, confirmButton, inputStatus, t
   </div>
 );
 
-const SecondPassInput = ({ t, secondPassphraseStored, inputStatus, setInputStatus }) => {
-  const [secondPass, set2ndPass] = useSecondPassphrase();
-
-  useEffect(() => {
-    if (secondPass.error === 0) {
-      secondPassphraseStored(secondPass.data);
-      setInputStatus('valid');
-    } else if (secondPass.error > 0) {
-      setInputStatus('invalid');
-    }
-  }, [secondPass]);
-
-  return inputStatus === 'hidden' ? (
-    <div className={styles.secondaryActions}>
-      <span className={styles.or}>or</span>
-      <TertiaryButton
-        className="use-second-passphrase-btn"
-        onClick={() => setInputStatus('visible')}
-      >
-        {t('Send using second passphrase right away')}
-      </TertiaryButton>
-    </div>
-  ) : (
-    <div className={styles.secondPassphrase}>
-      <PassphraseInput t={t} onFill={set2ndPass} inputsLength={12} maxInputsLength={24} />
-    </div>
-  );
-};
-
-const Footer = ({
-  confirmButton,
-  cancelButton,
-  footerClassName,
-  t,
-  secondPassphraseStored,
-  account,
-}) => {
+const Footer = ({ confirmButton, cancelButton, footerClassName, t }) => {
   const [
     {
-      metadata: { address },
+      metadata: { address, isHW },
     },
   ] = useCurrentAccount();
+  const { isAppOpen } = useSelector(selectCurrentHWDevice);
+
   const { data: authData } = useAuth({ config: { params: { address } } });
-  const { numberOfSignatures, mandatoryKeys, optionalKeys } = useMemo(
+  const { numberOfSignatures } = useMemo(
     () => ({ ...authData?.data, ...authData?.meta }),
     [authData]
   );
 
   const isMultisignature = !!numberOfSignatures;
-  const hasSecondPass =
-    numberOfSignatures === 2 &&
-    mandatoryKeys.length === 2 &&
-    optionalKeys.length === 0 &&
-    !account.hwInfo;
-  const [inputStatus, setInputStatus] = useState(hasSecondPass ? 'hidden' : 'notRequired');
 
   return (
-    <BoxFooter
-      className={`${footerClassName} ${
-        inputStatus === 'hidden' ? styles.reverse : ''
-      } summary-footer`}
-      direction="horizontal"
-    >
-      {hasSecondPass ? (
-        <SecondPassInput
-          t={t}
-          secondPassphraseStored={secondPassphraseStored}
-          inputStatus={inputStatus}
-          setInputStatus={setInputStatus}
-        />
-      ) : null}
+    <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
+      {isHW && !isAppOpen && (
+        <div className={styles.errorLabel}>
+          <span>{t('Open the Lisk app on Ledger device to continue')}</span>
+        </div>
+      )}
       <Actions
         cancelButton={cancelButton}
-        confirmButton={confirmButton}
-        hasSecondPass={hasSecondPass}
-        inputStatus={inputStatus}
+        confirmButton={{
+          ...confirmButton,
+          disabled: isHW ? !isAppOpen || confirmButton.disabled : confirmButton.disabled,
+        }}
         isMultisignature={isMultisignature}
         t={t}
       />

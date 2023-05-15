@@ -9,6 +9,7 @@ import accounts from '@tests/constants/wallets';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { useAuth } from '@auth/hooks/queries/useAuth';
 import { mockAuth } from '@auth/__fixtures__';
+import {mockHWCurrentDevice} from "@hardwareWallet/__fixtures__";
 import TxSignatureCollector from './TxSignatureCollector';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
@@ -96,7 +97,6 @@ describe('TxSignatureCollector', () => {
     },
     nextStep: jest.fn(),
     statusInfo: {},
-    transactionDoubleSigned: jest.fn(),
   };
 
   useCommandSchema.mockReturnValue({
@@ -150,25 +150,15 @@ describe('TxSignatureCollector', () => {
     expect(screen.getByText('Reconnect to hardware wallet')).toBeInTheDocument();
   });
 
-  // this should be re-instated when HW fix has been done
-  it('should HW pending view if connected to one', () => {
+  it('should show HW pending view if connected to one', () => {
     const mockConnectedAppState = {
       hardwareWallet: {
-        currentDevice: {
-          path: 20350,
-          model: 'Nano S Plus',
-          brand: 'Ledger',
-          status: 'connected',
-        },
+        currentDevice: mockHWCurrentDevice,
       },
     };
     const mockHWAcct = {
       ...mockCurrentAccount,
-      hw: {
-        path: 20350,
-        model: 'Nano S Plus',
-        brand: 'Ledger',
-      },
+      hw: mockHWCurrentDevice,
       metadata: {
         ...mockCurrentAccount.metadata,
         isHW: true,
@@ -177,7 +167,7 @@ describe('TxSignatureCollector', () => {
     useCurrentAccount.mockReturnValue([mockHWAcct, mockSetCurrentAccount]);
     renderWithRouterAndStore(TxSignatureCollector, props, mockConnectedAppState);
     expect(
-      screen.getByText('Please confirm the transaction on your Nano S Plus')
+      screen.getByText('Please confirm the transaction on your Ledger S Plus')
     ).toBeInTheDocument();
   });
 
@@ -285,19 +275,5 @@ describe('TxSignatureCollector', () => {
     };
     renderWithStore(TxSignatureCollector, signedTransactionProps, mockAppState);
     expect(props.nextStep).toHaveBeenCalled();
-  });
-
-  // @TODO: should be re-instated if double tx signing is reinstated
-  it.skip('should call transactionDoubleSigned', () => {
-    const signedTransactionProps = {
-      ...props,
-      transactions: {
-        ...props.transactions,
-        txSignatureError: null,
-        signedTransaction: { id: '123', signatures: ['', 'sig2'] },
-      },
-    };
-    render(<TxSignatureCollector {...signedTransactionProps} />);
-    expect(props.nextStep).not.toHaveBeenCalled();
   });
 });

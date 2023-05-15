@@ -10,8 +10,18 @@
     padding-bottom: 4px !important;
   }
 
+  & > header > h2 {
+    font-size: var(--font-size-h3) !important;
+  }
+
+  & header ~ div {
+    padding-top: 10px;
+  }
+
   & .messageLabel {
     color: var(--color-maastricht-blue);
+    margin-top: 25px;
+    text-align: center;
   }
 
   & .stakedHeader {
@@ -19,7 +29,14 @@
   }
 
   & .footer {
-    margin-top: 48px;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > button.actionButton {
+      width: 80%;
+    }
   }
 
   & > div:nth-child(2) {
@@ -27,17 +44,13 @@
     align-items: center;
     justify-content: center;
 
-    & .illustartion {
-      width: 90px;
-    }
-
-    & .illustartion ~ h4 {
+    & .illustration ~ h4 {
       @mixin contentLargest semi-bold;
 
       margin-top: 14px;
     }
 
-    & .illustartion ~ h4 ~ p {
+    & .illustration ~ h4 ~ p {
       @mixin contentLarge;
 
       color: var(--color-slate-gray);

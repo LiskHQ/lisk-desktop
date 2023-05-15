@@ -10,6 +10,7 @@ import { useTokenBalances } from '@token/fungible/hooks/queries';
 import Validators from 'src/modules/wallet/components/searchBarWallets/validators';
 import Blocks from '@block/components/BlockResultList';
 import IconSearch from '@search/components/IconSearch/IconSearch';
+import useOutsideClickListener from 'src/utils/useOutsideClickListener';
 import Transactions from '../../../transaction/components/TransactionResultList';
 import styles from './SearchBar.css';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -19,6 +20,7 @@ const SearchBar = ({ className, history }) => {
   const [searchTextValue, setSearchTextValue] = useState('');
   const [rowItemIndex, setRowIndex] = useState(0);
   const searchBarRef = useRef();
+  const searchBarContainerRef = useRef();
   const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 
@@ -34,6 +36,8 @@ const SearchBar = ({ className, history }) => {
   const clearSearch = () => {
     setSearchTextValue('');
   };
+
+  useOutsideClickListener(searchBarContainerRef, !!searchTextValue, clearSearch);
 
   const onSelectedRow = (type, value) => {
     if (type === 'transactions') {
@@ -115,7 +119,7 @@ const SearchBar = ({ className, history }) => {
   feedback = isEmptyResults ? t('Nothing has been found for your search') : feedback;
 
   return (
-    <div className={className}>
+    <div className={className} ref={searchBarContainerRef}>
       <div className={`${styles.wrapper} search-bar`}>
         <Input
           className="search-input"

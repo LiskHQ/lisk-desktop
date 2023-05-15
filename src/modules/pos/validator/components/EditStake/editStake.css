@@ -19,9 +19,10 @@
   max-width: 477px;
   width: calc(100% - var(--horizontal-margin));
   padding: 0 var(--horizontal-padding-l);
+  overflow: auto;
 
   &.confirmWrapper {
-    max-width: 371px !important;
+    max-width: 425px !important;
   }
 
   & footer {
@@ -35,6 +36,7 @@
 
     & > div {
       display: flex;
+      justify-content: center;
     }
 
     & > label ~ div {
@@ -74,10 +76,14 @@
     & > p:nth-child(3) {
       color: var(--color-blue-gray) !important;
       margin-top: -3px;
+      margin-bottom: 5px;
 
       &,
       & ~ p {
         @mixin contentNormal;
+
+        margin-top: 0px;
+        margin-bottom: 5px;
       }
     }
 
@@ -99,24 +105,25 @@
   margin: 10px;
 }
 
+.availableBalance {
+  @mixin contentSmall normal;
+
+  display: flex;
+  column-gap: 5px;
+
+  & > span {
+    color: var(--color-blue-gray) !important;
+  }
+
+  & > span:last-child {
+    @mixin contentSmall semi-bold;
+
+    color: var(--color-ultramarine-blue) !important;
+  }
+}
+
 .fieldGroup {
   position: relative;
-
-  & > .availableBalance {
-    @mixin contentSmall normal;
-
-    position: absolute;
-    display: flex;
-    right: 5px;
-    top: -5px;
-    color: var(--color-slate-gray);
-
-    & > span:last-child {
-      @mixin contentSmall semi-bold;
-
-      color: var(--color-ultramarine-blue);
-    }
-  }
 }
 
 .removeStakeButton {

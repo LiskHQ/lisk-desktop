@@ -71,7 +71,7 @@ const SendForm = (props) => {
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
-  const { data: initializationFees } = useGetInitializationFees({
+  const { isAccountInitialized, initializationFees } = useGetInitializationFees({
     address: recipient.value,
     tokenID: token?.tokenID,
   });
@@ -79,8 +79,8 @@ const SendForm = (props) => {
 
   const extraCommandFee =
     sendingChain.chainID !== recipientChain.chainID
-      ? initializationFees?.data?.escrowAccount
-      : initializationFees?.data?.userAccount;
+      ? initializationFees?.escrowAccount
+      : initializationFees?.userAccount;
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
@@ -152,7 +152,7 @@ const SendForm = (props) => {
       token,
       recipient,
     },
-    extraCommandFee: extraCommandFee || 0,
+    extraCommandFee: isAccountInitialized ? 0 : extraCommandFee,
   };
   let commandParams = {
     tokenID: token?.tokenID,
@@ -161,11 +161,16 @@ const SendForm = (props) => {
     data: reference.value,
   };
   if (sendingChain.chainID !== recipientChain.chainID) {
+    // TODO: Hardcoded 200 bytes length for cross chain message
+    const messageFee = BigInt(messageFeeResult?.data?.fee || 0) * BigInt(100000);
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
-      messageFee: messageFeeResult?.data?.fee,
+      messageFee: messageFee.toString(),
+      // TODO: Message fees are always paid in LSK, so we need to fetch the tokenID based on Mainchain for a given selected network
+      messageFeeTokenID: '0400000000000000',
     };
+    sendFormProps.moduleCommand = MODULE_COMMANDS_NAME_MAP.transferCrossChain;
   }
 
   return (
@@ -179,7 +184,7 @@ const SendForm = (props) => {
       >
         <>
           <BoxHeader className={styles.header}>
-            <h2>{t('Send Tokens')}</h2>
+            <h2>{t('Send tokens')}</h2>
           </BoxHeader>
           <BoxContent className={styles.formSection}>
             <div className={`${styles.ApplicationFieldWrapper}`}>
@@ -271,7 +276,7 @@ const SendForm = (props) => {
               maxAmount={maxAmount}
               displayConverter
               label={t('Amount')}
-              placeholder={t('Insert transaction amount')}
+              placeholder={t('Enter amount')}
               name="amount"
             />
             <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
@@ -288,7 +293,7 @@ const SendForm = (props) => {
               value={reference.value}
               onChange={setReference}
               label={t('Message (Optional)')}
-              placeholder={t('Write message')}
+              placeholder={t('Enter message')}
               onRemove={handleRemoveMessage}
               maxMessageLength={maxMessageLength}
               error={reference.error}

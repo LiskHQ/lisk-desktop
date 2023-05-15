@@ -1,0 +1,49 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 40px 40px;
+  width: auto;
+
+  & .illustration {
+    width: 140px;
+  }
+
+  & h5 {
+    font-weight: var(--font-weight-very-bold);
+    margin: 20px 0 14px;
+    letter-spacing: -1px;
+    color: var(--color-maastricht-blue);
+  }
+
+  & p {
+    width: 430px;
+    margin-top: 0px;
+    margin-bottom: 23px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.35em; /* stylelint-disable-line unit-whitelist */
+    color: var(--color-maastricht-blue);
+  }
+
+  & .signatureButton {
+    & .buttonContent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 var(--horizontal-padding-m);
+
+      & img {
+        filter: brightness(100);
+        padding-right: 5px;
+      }
+    }
+  }
+
+  & .cancel {
+    margin-top: 15px;
+  }
+}

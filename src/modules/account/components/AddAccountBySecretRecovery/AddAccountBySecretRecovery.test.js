@@ -41,8 +41,8 @@ describe('Add account by secret recovery phrase flow', () => {
     expect(
       screen.getByText('Enter your secret recovery phrase to manage your account.')
     ).toBeTruthy();
-    expect(screen.getByText('Continue')).toBeTruthy();
-    expect(screen.getByText('Go Back')).toBeTruthy();
+    expect(screen.getByText('Continue to set password')).toBeTruthy();
+    expect(screen.getByText('Go back')).toBeTruthy();
 
     const inputField = screen.getByTestId('recovery-1');
     const pasteEvent = createEvent.paste(inputField, {
@@ -53,7 +53,7 @@ describe('Add account by secret recovery phrase flow', () => {
     });
 
     fireEvent(inputField, pasteEvent);
-    fireEvent.click(screen.getByText('Continue'));
+    fireEvent.click(screen.getByText('Continue to set password'));
 
     const password = screen.getByTestId('password');
     const cPassword = screen.getByTestId('cPassword');

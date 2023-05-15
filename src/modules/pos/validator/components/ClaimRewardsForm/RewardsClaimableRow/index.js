@@ -1,12 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
-import { getLogo } from '@token/fungible/utils/helpers';
+import { convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
+import Converter from '@common/components/converter';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './RewardsClaimableRow.css';
 
-const RewardsClaimableRow = ({ data, rewardsClaimableHeader }) => {
-  const { tokenName, logo, reward, symbol, denomUnits, displayDenom } = data;
-  const amountInFiat = reward;
-  const denom = denomUnits?.find((denomUnit) => denomUnit.denom === displayDenom);
+const RewardsClaimableRow = ({ data: token, rewardsClaimableHeader }) => {
+  const { tokenName, logo, reward, symbol } = token;
   const logoUrl = getLogo({ logo });
 
   return (
@@ -16,9 +16,15 @@ const RewardsClaimableRow = ({ data, rewardsClaimableHeader }) => {
         <span className={styles.tokenName}>{tokenName}</span>
       </div>
       <div className={classNames(rewardsClaimableHeader[1].classList)}>
-        {`${parseInt(reward, denom)} ${symbol}`}
+        <TokenAmount val={reward} token={token} />
       </div>
-      <div className={classNames(rewardsClaimableHeader[2].classList)}>{amountInFiat}</div>
+      <div className={classNames(rewardsClaimableHeader[2].classList)}>
+        <Converter
+          className={styles.fiatBalance}
+          value={convertFromBaseDenom(reward, token)}
+          tokenSymbol={symbol}
+        />
+      </div>
     </div>
   );
 };

@@ -32,6 +32,7 @@ reactRedux.useSelector = jest.fn().mockReturnValue(wallets.genesis);
 
 const props = {
   history: { push: jest.fn() },
+  confirmText: 'Confirm',
 };
 
 describe('Backup account recovery phrase flow', () => {
@@ -53,11 +54,13 @@ describe('Backup account recovery phrase flow', () => {
     await waitFor(() => {
       expect(screen.getByText('Backup your secret recovery phrase')).toBeTruthy();
       expect(
-        screen.getByText('Keep it safe as it is the only way to access your wallet.')
+        screen.getByText(
+          'Ensure that you keep this in a safe place, with access to the seed you can re-create the account.'
+        )
       ).toBeTruthy();
       expect(
         screen.getByText(
-          'Please write down these 12 words carefully, and store them in a safe place.'
+          'Please write down these seed values carefully. Ensure that you keep this in a safe place, with access to the seed you can re-create the account.'
         )
       ).toBeTruthy();
       expect(screen.getByText('Copy')).toBeTruthy();

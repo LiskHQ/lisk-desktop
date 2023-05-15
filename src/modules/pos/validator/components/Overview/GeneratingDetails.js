@@ -43,7 +43,7 @@ const getPassedMinutes = (startTime) => {
 const GeneratingDetails = ({ t, generatedInRound, startTime }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
-  const validatorsGeneratedLabels = [t('Generated blocks'), t('Awaiting slot'), t('Missed blocks')];
+  const validatorsGeneratedLabels = [t('Generated slots'), t('Awaiting slots'), t('Missed slots')];
 
   // The API returns only one generator, so we need to fetch all of them
   const { data: generatorsData } = useGenerators({ config: { params: { limit: 103 } } });
@@ -80,7 +80,7 @@ const GeneratingDetails = ({ t, generatedInRound, startTime }) => {
         <div className={styles.column}>
           {generators.length ? (
             <div className={styles.chartBox}>
-              <h2 className={styles.title}>{t('Validator Generating Status')}</h2>
+              <h2 className={styles.title}>{t('Validator slot status')}</h2>
               <div className={`${styles.chart} showOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}

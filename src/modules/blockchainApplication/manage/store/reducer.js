@@ -27,6 +27,12 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
       }
       return chainId ? [...state, chainId] : [...state];
 
+    case actionTypes.deleteApplicationByChainId:
+      if (state.includes(chainId)) {
+        return state.filter((pinnedChainId) => pinnedChainId !== chainId);
+      }
+      return state;
+
     default:
       return state;
   }
@@ -83,8 +89,7 @@ export const current = (state = initialState.current, { type, app }) => {
 const persistConfig = {
   storage,
   key: 'blockChainApplications',
-  whitelist: ['pins', 'applications'],
-  blacklist: ['current'],
+  whitelist: ['pins', 'applications', 'current'],
 };
 
 const blockChainApplicationsReducer = combineReducers({

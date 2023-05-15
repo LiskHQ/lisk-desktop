@@ -5,7 +5,7 @@ import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { tokensBalance as mockTokens } from '@token/fungible/__fixtures__';
+import { mockTokensBalance as mockTokens } from '@token/fungible/__fixtures__';
 import Reclaim from './index';
 import styles from './reclaim.css';
 
@@ -16,6 +16,7 @@ jest.mock('src/utils/searchParams', () => ({
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0]]),
 }));
+jest.mock('@token/fungible/hooks/queries/useGetHasUserAccount');
 jest.mock('@token/fungible/hooks/queries/useGetInitializationFees');
 
 const mockNonMigrated = wallets.non_migrated;
@@ -28,7 +29,8 @@ jest.mock('react-redux', () => {
     ...originalModule,
     useSelector: jest.fn(() => ({
       ...mockNonMigrated,
-      token: mockTokens,
+      token: mockTokens.data,
+      staking: {},
     })),
   };
 });
@@ -38,7 +40,11 @@ window.open = jest.fn();
 describe('Reclaim balance screen', () => {
   let props;
 
-  useGetInitializationFees.mockReturnValue({ data: { data: { userAccount: 5000000 } } });
+  useGetInitializationFees.mockReturnValue({
+    isAccountInitialized: true,
+    initializationFees: { userAccount: 5000000 },
+  });
+
   beforeEach(() => {
     props = {
       t: (v) => v,
@@ -60,6 +66,7 @@ describe('Reclaim balance screen', () => {
     wrapper.find(styles.button).first().simulate('click');
     expect(addSearchParamsToUrl).toHaveBeenNthCalledWith(1, expect.objectContaining({}), {
       modal: 'reclaimBalance',
+      tokenID: mockTokens.data[0].tokenID,
     });
   });
 
@@ -67,21 +74,15 @@ describe('Reclaim balance screen', () => {
     useSelector.mockImplementation(
       jest.fn(() => ({
         ...mockNonMigrated,
-        token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: '0' }],
+        token: [],
+        staking: {},
       }))
     );
 
     const wrapper = mountWithRouterAndQueryClient(Reclaim, props, {});
     wrapper.find('.link').at(0).simulate('click');
-    wrapper.find('.link').at(1).simulate('click');
     expect(window.open).toHaveBeenNthCalledWith(
       1,
-      'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
-      '_blank',
-      'rel=noopener noreferrer'
-    );
-    expect(window.open).toHaveBeenNthCalledWith(
-      2,
       'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
       '_blank',
       'rel=noopener noreferrer'
@@ -93,6 +94,7 @@ describe('Reclaim balance screen', () => {
       jest.fn(() => ({
         ...mockNonMigrated,
         token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: '100000000' }],
+        staking: {},
       }))
     );
 

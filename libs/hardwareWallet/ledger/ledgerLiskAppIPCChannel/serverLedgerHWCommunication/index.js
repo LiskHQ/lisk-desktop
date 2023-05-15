@@ -9,15 +9,14 @@ export async function getPubKey({ devicePath, accountIndex, showOnDevice }) {
     transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
-    const account = showOnDevice
+    const response = showOnDevice
       ? await liskLedger.showAddressAndPubKey(ledgerAccount.derivePath())
       : await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
     await transport?.close();
-    const errorMessage = account?.error_message;
-    if (errorMessage === 'No errors') {
-      return account?.pubKey;
+    if (response?.error_message === 'No errors') {
+      return response?.pubKey;
     }
-    return Promise.reject(errorMessage);
+    return Promise.reject(response.return_code);
   } catch (error) {
     await transport?.close();
     return Promise.reject(error);
@@ -30,16 +29,15 @@ export async function getSignedTransaction({ devicePath, accountIndex, unsignedM
     transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
-    const signature = await liskLedger.sign(
+    const response = await liskLedger.sign(
       ledgerAccount.derivePath(),
       Buffer.from(unsignedMessage, 'hex')
     );
     if (transport && transport.close) await transport.close();
-    const errorMessage = signature?.error_message;
-    if (errorMessage === 'No errors') {
-      return signature;
+    if (response?.error_message === 'No errors') {
+      return response;
     }
-    return Promise.reject(errorMessage);
+    return Promise.reject(response.return_code);
   } catch (error) {
     if (transport && transport.close) await transport.close();
     return Promise.reject(error);
@@ -52,9 +50,9 @@ export async function getSignedMessage({ devicePath, accountIndex, unsignedMessa
     transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
-    const signature = await liskLedger.sign(
+    const signature = await liskLedger.signMessage(
       ledgerAccount.derivePath(),
-      Buffer.from(unsignedMessage, 'hex')
+      Buffer.from(unsignedMessage)
     );
     await transport?.close();
     return signature;

@@ -10,7 +10,7 @@ const actionTypes = {
   transactionLoadRequested: 'TRANSACTION_LOAD_REQUESTED',
   transactionCreatedSuccess: 'TRANSACTION_CREATED_SUCCESS',
   transactionSignError: 'TRANSACTION_SIGN_ERROR',
-  transactionDoubleSigned: 'TRANSACTION_DOUBLE_SIGNED',
+  transactionSigned: 'TRANSACTION_SIGNED',
   transactionsRetrieved: 'TRANSACTION_RETRIEVED',
   resetTransactionResult: 'RESET_TRANSACTION_RESULTS',
   broadcastedTransactionSuccess: 'BROADCAST_TRANSACTION_SUCCESS',

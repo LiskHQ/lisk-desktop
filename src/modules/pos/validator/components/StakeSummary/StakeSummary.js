@@ -5,26 +5,26 @@ import StakeStats from '../StakeStats';
 
 import styles from './styles.css';
 
-const getResultProps = ({ added, removed, edited }) => {
-  let unlockable = Object.values(removed).reduce((sum, { confirmed }) => {
-    sum += confirmed;
-    return sum;
-  }, 0);
+const calculateAccumulatedStakes = ({ added, removed, edited }) => {
+  let unlockable = Object.values(removed).reduce((accumulator, { confirmed }) => {
+    accumulator += BigInt(confirmed);
+    return accumulator;
+  }, BigInt(0));
 
-  let locked = Object.values(added).reduce((sum, { unconfirmed }) => {
-    sum += unconfirmed;
-    return sum;
-  }, 0);
+  let locked = Object.values(added).reduce((accumulator, { unconfirmed }) => {
+    accumulator += BigInt(unconfirmed);
+    return accumulator;
+  }, BigInt(0));
 
-  const editedWeight = Object.values(edited).reduce((sum, { confirmed, unconfirmed }) => {
-    sum += unconfirmed - confirmed;
-    return sum;
-  }, 0);
+  const editedStake = Object.values(edited).reduce((accumulator, { confirmed, unconfirmed }) => {
+    accumulator += BigInt(unconfirmed) - BigInt(confirmed);
+    return accumulator;
+  }, BigInt(0));
 
-  if (editedWeight > 0) {
-    locked += editedWeight;
+  if (editedStake >= BigInt(0)) {
+    locked += editedStake;
   } else {
-    unlockable += Math.abs(editedWeight);
+    unlockable += editedStake * BigInt(-1);
   }
 
   return { locked, unlockable };
@@ -43,7 +43,7 @@ const StakeSummary = ({
   stakesSubmitted,
   selectedPriority,
 }) => {
-  const { locked, unlockable } = getResultProps({ added, removed, edited });
+  const { locked, unlockable } = calculateAccumulatedStakes({ added, removed, edited });
 
   const onConfirm = () => {
     nextStep({

@@ -8,9 +8,11 @@ import { mockBlocks } from '@block/__fixtures__';
 import { mockValidators, mockReceivedStakes, mockSentStakes } from '@pos/validator/__fixtures__';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
-import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import ValidatorProfile from './ValidatorProfile';
 import { useValidators, useReceivedStakes, useSentStakes } from '../../hooks/queries';
 
@@ -18,10 +20,15 @@ const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
-
+jest.mock('@token/fungible/hooks/queries/useTokenBalances');
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
-jest.mock('../../hooks/queries');
+jest.mock('../../hooks/queries', () => ({
+  ...jest.requireActual('../../hooks/queries'),
+  useValidators: jest.fn(),
+  useReceivedStakes: jest.fn(),
+  useSentStakes: jest.fn(),
+}));
 jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('Validator Profile', () => {
@@ -33,9 +40,11 @@ describe('Validator Profile', () => {
       goBack: jest.fn(),
     },
   };
+  let queryClient;
 
   beforeEach(() => {
     wrapper = renderWithRouter(ValidatorProfile, props);
+    queryClient = new QueryClient();
   });
 
   useValidators.mockReturnValue({ data: mockValidators });
@@ -44,6 +53,7 @@ describe('Validator Profile', () => {
   useSentStakes.mockReturnValue({ data: mockSentStakes });
   useReceivedStakes.mockReturnValue({ data: mockReceivedStakes });
   usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
+  useTokenBalances.mockReturnValue({ data: mockTokensBalance });
 
   it('Should render active validator profile details', () => {
     useSentStakes.mockReturnValue({
@@ -68,7 +78,7 @@ describe('Validator Profile', () => {
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getAllByText('Round state')).toHaveLength(1);
     expect(screen.getByText('Validator weight')).toBeTruthy();
-    expect(screen.getByText('Last generated block')).toBeTruthy();
+    expect(screen.getByText('Last generated at')).toBeTruthy();
 
     expect(screen.getByText('Last generated block height')).toBeTruthy();
     expect(screen.getByText('Blocks generated')).toBeTruthy();
@@ -80,7 +90,7 @@ describe('Validator Profile', () => {
       screen.getByText('This validator is among the first 101 validators by validator weight.')
     ).toBeTruthy();
     expect(
-      screen.getByText('Active validators are select to generate blocks every round.')
+      screen.getByText('Active validators are selected to generate blocks every round.')
     ).toBeTruthy();
 
     expect(screen.getByText(mockBlocks.meta.total)).toBeTruthy();
@@ -109,9 +119,11 @@ describe('Validator Profile', () => {
       },
     });
     wrapper.rerender(
-      <MemoryRouter>
-        <ValidatorProfile {...props} />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ValidatorProfile {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     expect(
@@ -129,9 +141,11 @@ describe('Validator Profile', () => {
       },
     });
     wrapper.rerender(
-      <MemoryRouter>
-        <ValidatorProfile {...props} />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ValidatorProfile {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     expect(
@@ -154,9 +168,11 @@ describe('Validator Profile', () => {
       },
     });
     wrapper.rerender(
-      <MemoryRouter>
-        <ValidatorProfile {...props} />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ValidatorProfile {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     expect(
@@ -175,9 +191,11 @@ describe('Validator Profile', () => {
       },
     });
     wrapper.rerender(
-      <MemoryRouter>
-        <ValidatorProfile {...props} />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ValidatorProfile {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     expect(
@@ -197,9 +215,11 @@ describe('Validator Profile', () => {
     useSentStakes.mockReturnValue({ data: {} });
 
     wrapper.rerender(
-      <MemoryRouter>
-        <ValidatorProfile {...props} />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ValidatorProfile {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     expect(screen.getByText('Stake validator')).toBeTruthy();
@@ -215,9 +235,11 @@ describe('Validator Profile', () => {
     useSentStakes.mockReturnValue({ data: {} });
 
     wrapper.rerender(
-      <MemoryRouter>
-        <ValidatorProfile {...props} />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ValidatorProfile {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     expect(screen.getByText('Stake validator')).toBeTruthy();
@@ -244,9 +266,11 @@ describe('Validator Profile', () => {
     });
 
     wrapper.rerender(
-      <MemoryRouter>
-        <ValidatorProfile {...props} />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ValidatorProfile {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     expect(screen.getByText('Stake validator')).toBeTruthy();

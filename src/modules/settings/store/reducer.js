@@ -1,6 +1,8 @@
 import { persistReducer } from 'redux-persist';
 import { deepMergeObj } from 'src/utils/helpers';
 import { storage } from 'src/redux/store';
+import networks from '@network/configuration/networks';
+import { DEFAULT_NETWORK } from 'src/const/config';
 import actionTypes from './actionTypes';
 
 export const channels = {
@@ -22,8 +24,10 @@ export const initialState = {
   darkMode: false,
   discreetMode: false,
   sideBarExpanded: true,
-  enableCustomDerivationPath: false,
+  enableAccessToLegacyAccounts: false,
   currency: 'USD',
+  customNetworks: [],
+  mainChainNetwork: networks[DEFAULT_NETWORK],
 };
 
 /**

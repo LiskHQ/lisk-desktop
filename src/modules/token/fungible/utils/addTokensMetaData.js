@@ -10,6 +10,7 @@ export const addTokensMetaData =
         params: {
           tokenID: tokenIDs,
           limit: tokens.length,
+          chainID: null, // Omit chainID while fetching all token metadata for a given network
         },
       });
       const metaRes = await client.call(metaConfig);

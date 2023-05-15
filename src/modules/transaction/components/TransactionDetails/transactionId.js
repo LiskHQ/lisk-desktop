@@ -10,8 +10,12 @@ const TransactionId = ({ t }) => {
     transaction: { id },
   } = React.useContext(TransactionDetailsContext);
 
+  if (!id) {
+    return null;
+  }
+
   return (
-    <ValueAndLabel label={t('Transaction ID')} className={styles.transactionId}>
+    <ValueAndLabel label={t('ID')} className={styles.transactionId}>
       <span className="transaction-id">
         <CopyToClipboard
           text={truncateAddress(id)}

@@ -17,12 +17,6 @@ const menuLinks = (t) => [
       path: routes.blockchainApplications.path,
     },
     {
-      icon: 'networkMonitor',
-      id: 'network',
-      label: t('Network'),
-      path: routes.network.path,
-    },
-    {
       icon: 'transactionsMonitor',
       id: 'transactions',
       label: t('Transactions'),
@@ -34,18 +28,24 @@ const menuLinks = (t) => [
       label: t('Blocks'),
       path: routes.blocks.path,
     },
-    // {
-    //   icon: 'walletsMonitor',
-    //   id: 'wallets',
-    //   label: t('Accounts'),
-    //   path: routes.wallets.path,
-    // },
     {
       icon: 'validatorsMonitor',
       id: 'validators',
       label: t('Validators'),
       path: routes.validators.path,
     },
+    {
+      icon: 'networkMonitor',
+      id: 'network',
+      label: t('Network'),
+      path: routes.network.path,
+    },
+    // {
+    //   icon: 'walletsMonitor',
+    //   id: 'wallets',
+    //   label: t('Accounts'),
+    //   path: routes.wallets.path,
+    // },
   ],
   [
     {

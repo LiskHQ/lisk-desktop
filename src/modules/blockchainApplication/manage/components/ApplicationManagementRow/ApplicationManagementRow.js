@@ -4,6 +4,7 @@ import { TertiaryButton } from 'src/theme/buttons';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
+import { getLogo } from '@token/fungible/utils/helpers';
 import styles from './ApplicationManagementRow.css';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 import { useCurrentApplication } from '../../hooks/useCurrentApplication';
@@ -69,16 +70,16 @@ const RightRowComponent = ({
   );
 };
 
-const ApplicationManagementRow = ({ application, history, location }) => {
+const ApplicationManagementRow = ({ className, application, history, location }) => {
   const { togglePin, checkPinByChainId } = usePinBlockchainApplication();
-  const [currentApplication, setApplication] = useCurrentApplication();
+  const [currentApplication, setApplication] = useCurrentApplication(history);
 
   const isPinned = useMemo(() => checkPinByChainId(application.chainID), [checkPinByChainId]);
   const isCurrentApplication = useMemo(
     () => currentApplication?.chainID === application.chainID,
     [currentApplication, application]
   );
-  const isTerminated = useMemo(() => application.state === 'terminated', [application.state]);
+  const isTerminated = useMemo(() => application.status === 'terminated', [application.status]);
 
   const handleTogglePin = useCallback((event) => {
     event.stopPropagation();
@@ -109,7 +110,7 @@ const ApplicationManagementRow = ({ application, history, location }) => {
 
   return (
     <div
-      className={`managed-application-row ${styles.appItemWrapper} ${
+      className={`managed-application-row ${styles.appItemWrapper} ${className} ${
         isCurrentApplication ? styles.activeAppBg : ''
       } ${isTerminated ? styles.terminated : ''}`}
       onClick={handleSetCurrentApplication}
@@ -122,7 +123,7 @@ const ApplicationManagementRow = ({ application, history, location }) => {
             </TertiaryButton>
           </div>
         )}
-        <img className={styles.chainLogo} src={application.logo.png} />
+        <img className={styles.chainLogo} src={getLogo(application)} />
         <span>{application.chainName}</span>
       </div>
       <div className={styles.rightWrapper} align="right">

@@ -185,8 +185,8 @@ describe('StakingQueue.Summary', () => {
       formProps: props.formProps,
       actionFunction: props.stakesSubmitted,
       statusInfo: {
-        locked: 0,
-        unlockable: 0,
+        locked: 0n,
+        unlockable: 0n,
         selfUnstake: {},
       },
     });
@@ -207,8 +207,8 @@ describe('StakingQueue.Summary', () => {
       formProps: props.formProps,
       actionFunction: props.stakesSubmitted,
       statusInfo: {
-        locked: 100,
-        unlockable: 120,
+        locked: 100n,
+        unlockable: 120n,
         selfUnstake: {},
       },
     });

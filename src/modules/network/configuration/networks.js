@@ -14,7 +14,7 @@ const networks = {
   [networkKeys.mainnet]: {
     name: networkKeys.mainnet,
     label: 'Mainnet',
-    serviceUrl: 'http://165.227.246.146:9901',
+    serviceUrl: 'http://mainnet-service.lisk.com',
     wsServiceUrl: 'ws://mainnet-service.lisk.com',
     isAvailable: false,
   },
@@ -30,7 +30,7 @@ const networks = {
     label: 'Betanet',
     serviceUrl: 'http://betanet-service.lisk.com',
     wsServiceUrl: 'ws://betanet-service.lisk.com',
-    isAvailable: false,
+    isAvailable: true,
   },
   [networkKeys.devnet]: {
     name: networkKeys.devnet,

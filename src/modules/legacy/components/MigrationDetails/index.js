@@ -4,13 +4,10 @@ import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Icon from 'src/theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
 import styles from './migrationDetails.css';
 
 const MigrationDetails = ({ wallet, showBalance }) => {
   const { t } = useTranslation();
-  const { data: tokens } = useTokenBalances();
-  const token = tokens?.data?.[0] || {};
 
   return (
     <div className={styles.accountContainer}>
@@ -27,7 +24,7 @@ const MigrationDetails = ({ wallet, showBalance }) => {
         {showBalance && (
           <p className={styles.accountBalance}>
             <span>{`${t('Wallet balance')}: `}</span>
-            <TokenAmount val={Number(wallet.legacy?.balance)} token={token} />
+            <TokenAmount val={Number(wallet.legacy?.balance)} isLsk />
           </p>
         )}
       </div>
@@ -48,7 +45,7 @@ const MigrationDetails = ({ wallet, showBalance }) => {
         {showBalance && (
           <p className={styles.accountBalance}>
             <span>{`${t('Wallet balance')}: `}</span>
-            <TokenAmount val={Number(wallet.token?.[0]?.availableBalance)} token={token} />
+            <TokenAmount val={Number(wallet.token?.[0]?.availableBalance)} isLsk />
           </p>
         )}
       </div>

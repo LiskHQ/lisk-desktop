@@ -48,14 +48,27 @@ import registerMultisignatureError from '@setup/react/assets/images/illustration
 import registerMultisignatureErrorDark from '@setup/react/assets/images/illustrations/multisignature-error-dark.svg';
 import reclaimTokensIntro from '@setup/react/assets/images/illustrations/reclaim-tokens-intro.svg';
 import hwLedgerConfirm from '@setup/react/assets/images/illustrations/hw-ledger-confirm.svg';
-import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
-import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
+import hwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
+import hwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
 import hwReconnection from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect.svg';
 import hwReconnectionDark from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect-dark.svg';
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
 import validatorRegistrationSuccess from '@setup/react/assets/images/illustrations/validator-registration-success.svg';
 import validatorRegistrationError from '@setup/react/assets/images/illustrations/validator-registration-error.svg';
 import applicationDetailsError from '@setup/react/assets/images/illustrations/application-details-error.svg';
+import networkErrorIllustration from '@setup/react/assets/images/illustrations/networkError.svg';
+
+import emptyEventsIllustration from '@setup/react/assets/images/illustrations/emptyStates/events-empty-illustration.svg';
+import emptyExploreApplicationsIllustration from '@setup/react/assets/images/illustrations/emptyStates/explore-applications-illustration.svg';
+import emptyConnectedPeersIllustration from '@setup/react/assets/images/illustrations/emptyStates/connected-peers-empty-illustration.svg';
+import emptyNetworkStatisticsIllustration from '@setup/react/assets/images/illustrations/emptyStates/network-statistics-empty-illustration.svg';
+import emptyStakersIllustration from '@setup/react/assets/images/illustrations/emptyStates/stakers-empty-illustration.svg';
+import emptyStakesIllustration from '@setup/react/assets/images/illustrations/emptyStates/stakes-empty-illstration.svg';
+import emptyTokensIllustration from '@setup/react/assets/images/illustrations/emptyStates/tokens-empty-illustration.svg';
+import emptyTransactionsIllustration from '@setup/react/assets/images/illustrations/emptyStates/transactions-empty-illustration.svg';
+import emptyValidatorsIllustration from '@setup/react/assets/images/illustrations/emptyStates/validators-empty-illustration.svg';
+import emptyWalletConnectionsIllustration from '@setup/react/assets/images/illustrations/emptyStates/wallet-connections-illustration.svg';
+import emptyStakingQueueIllustration from '@setup/react/assets/images/illustrations/emptyStates/staking-queue-empty-illustration.svg';
 
 export const illustrations = {
   welcomeLiskValidators,
@@ -105,21 +118,34 @@ export const illustrations = {
   multisignaturePartialSuccess,
   multisignaturePartialSuccessDark,
   hwLedgerConfirm,
-  ledgerNanoHwRejection,
-  ledgerNanoHwRejectionDark,
+  hwRejection,
+  hwRejectionDark,
   hwReconnection,
   hwReconnectionDark,
   addApplicationSuccess,
   validatorRegistrationSuccess,
   validatorRegistrationError,
   applicationDetailsError,
+  networkErrorIllustration,
+
+  emptyEventsIllustration,
+  emptyExploreApplicationsIllustration,
+  emptyConnectedPeersIllustration,
+  emptyNetworkStatisticsIllustration,
+  emptyStakersIllustration,
+  emptyStakesIllustration,
+  emptyTokensIllustration,
+  emptyTransactionsIllustration,
+  emptyValidatorsIllustration,
+  emptyWalletConnectionsIllustration,
+  emptyStakingQueueIllustration,
 };
 
 const Illustration = ({ name, className, noTheme, ...props }) => {
   const theme = useTheme();
   const themed =
     theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
-  return <img src={illustrations[themed]} className={className} {...props} />;
+  return <img src={illustrations[themed]} alt={name} className={className} {...props} />;
 };
 
 Illustration.propTypes = {

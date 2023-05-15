@@ -51,6 +51,15 @@
     "amount message";
 }
 
+.structuredGeneralLayout {
+  grid-template-areas:
+    "module command"
+    "sender sender"
+    "fee nonce"
+    "transactionId transactionId"
+    "genericParams genericParams";
+}
+
 .multiSigLayout {
   grid-template-areas:
     "illustration illustration"
@@ -145,11 +154,9 @@
 
 .multiSigRegisterPreview {
   grid-template-areas:
-    "illustration illustration"
     "sender sender"
-    "numberOfSignatures numberOfSignatures"
+    "numberOfSignatures fee"
     "members members"
-    "transactionId fee"
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 

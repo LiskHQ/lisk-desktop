@@ -8,14 +8,13 @@ import Tooltip from 'src/theme/Tooltip';
 import StakeQueueToggle from '@common/components/bars/topBar/stakeQueueToggle';
 import DiscreteModeToggle from 'src/modules/settings/components/discreteModeToggle';
 import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle';
-import ApplicationManagementDropDown from '@blockchainApplication/manage/components/ApplicationManagementDropDown';
+import ApplicationManagementDropDown from '@blockchainApplication/manage/components/NetworkApplicationDropDownButton';
 import SearchBar from 'src/modules/search/manager/searchBarManager';
 import { useCurrentAccount } from '@account/hooks';
 import { HardwareWalletStatus } from '@hardwareWallet/components/HardwareWalletStatus';
 import { isEmpty } from 'src/utils/helpers';
 import NavigationButtons from '@common/components/bars/topBar/navigationButtons';
 import styles from './topBar.css';
-import Network from './networkName';
 
 const TopBar = ({ stakeCount, location, history }) => {
   const disabled = [routes.reclaim.path, routes.selectNetwork.path].includes(location.pathname);
@@ -58,13 +57,10 @@ const TopBar = ({ stakeCount, location, history }) => {
         >
           <p>{t('Bookmarks')}</p>
         </Tooltip>
-        <LightDarkToggle />
+        <LightDarkToggle className="showOnLargeViewPort" />
         <StakeQueueToggle t={t} stakeCount={stakeCount} disabled={disabled} />
-        <DiscreteModeToggle />
-        {routes.selectNetwork.path !== location.pathname && <ApplicationManagementDropDown />}
-        {![routes.register.path, routes.selectNetwork.path].includes(location.pathname) && (
-          <Network />
-        )}
+        <DiscreteModeToggle className="showOnLargeViewPort" />
+        <ApplicationManagementDropDown />
       </div>
     </div>
   );

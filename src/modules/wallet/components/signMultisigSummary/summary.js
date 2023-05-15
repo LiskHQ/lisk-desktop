@@ -10,26 +10,19 @@ import { LayoutSchema } from '@transaction/components/TransactionDetails/layoutS
 import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
 import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
+import usePosToken from '@pos/validator/hooks/usePosToken';
 import ProgressBar from '../signMultisigView/progressBar';
 import { ActionBar, Feedback } from './footer';
 import styles from './styles.css';
 import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 
-const Summary = ({
-  t,
-  transactionJSON,
-  formProps,
-  account,
-  nextStep,
-  history,
-  activeToken,
-  network,
-}) => {
+const Summary = ({ t, transactionJSON, formProps, account, nextStep, history, network }) => {
   const [currentAccount] = useCurrentAccount();
+  const { token } = usePosToken();
 
   // This is to replace previous withData implementations.
   const { txInitiatorAccount: senderAccount } = useTxInitiatorAccount({
-    transactionJSON,
+    senderPublicKey: transactionJSON.senderPublicKey,
   });
 
   const { isMember, signatureStatus, canSenderSignTx } = useMultiSignatureStatus({
@@ -67,7 +60,9 @@ const Summary = ({
       <header>
         <h1>{t('Sign multisignature transaction')}</h1>
         <p>
-          {t('Provide a signature for a transaction which belongs to a multisignature account.')}
+          {t(
+            'If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.'
+          )}
         </p>
       </header>
       <BoxContent>
@@ -76,7 +71,7 @@ const Summary = ({
           <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
             <TransactionDetailsContext.Provider
               value={{
-                activeToken,
+                token,
                 network,
                 wallet: senderAccount,
                 transaction: transactionJSON,

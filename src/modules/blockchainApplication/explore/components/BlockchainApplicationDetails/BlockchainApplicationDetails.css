@@ -95,11 +95,13 @@
 .footerButton {
   padding: 16px;
   box-sizing: border-box;
+  align-items: center;
 }
 
 .addButton {
   border-radius: 10px;
   font-weight: 500;
+  width: 50%;
 }
 
 .errorWrapper {

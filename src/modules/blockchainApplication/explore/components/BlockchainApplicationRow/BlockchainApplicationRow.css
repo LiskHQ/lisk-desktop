@@ -1,6 +1,10 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .container {
+  & .dialogLink {
+    cursor: pointer;
+  }
+
   & > div:first-child {
     padding: 0px 20px;
   }

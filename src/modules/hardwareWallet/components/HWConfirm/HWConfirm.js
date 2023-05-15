@@ -20,7 +20,7 @@ const HWConfirm = () => {
         <h3 className={styles.headerText}>{t('Confirm your transaction')}</h3>
         <p className={styles.description}>
           {t('Please confirm the transaction on your {{deviceModel}}', {
-            deviceModel: currentAccount?.hw?.model,
+            deviceModel: `${currentAccount?.hw?.manufacturer} ${currentAccount?.hw?.product}`,
           })}
         </p>
         <TransactionConfirmFooter className={styles.transactionConfirmFooterProp} />

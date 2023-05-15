@@ -1,9 +1,9 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .wrapper {
-  max-width: 720px;
   background-color: var(--color-white);
   border-radius: var(--border-radius-box);
+  overflow: auto;
 
   & .box {
     & > header {

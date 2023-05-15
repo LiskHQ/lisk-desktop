@@ -2,7 +2,6 @@ import { screen, fireEvent, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
-import { settingsUpdated } from 'src/redux/actions';
 import { useCurrentAccount } from '@account/hooks/useCurrentAccount';
 import { updateCurrentAccount, updateAccount } from '../../store/action';
 import EditAccountForm from './EditAccountForm';
@@ -43,7 +42,7 @@ describe('Edit account', () => {
       target: { value: updatedAccountName },
     });
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Done'));
+      fireEvent.click(screen.getByText('Save'));
     });
     expect(mockDispatch).toHaveBeenCalledTimes(2);
     expect(mockDispatch).toHaveBeenCalledWith(updateCurrentAccount({ name: updatedAccountName }));
@@ -64,7 +63,7 @@ describe('Edit account', () => {
       target: { value: 'ac' },
     });
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Done'));
+      fireEvent.click(screen.getByText('Save'));
     });
     fireEvent.change(screen.getByTestId('accountName'), {
       target: { value: '' },
@@ -83,7 +82,7 @@ describe('Edit account', () => {
       target: { value: invalidAccountName },
     });
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Done'));
+      fireEvent.click(screen.getByText('Save'));
     });
     await waitFor(() => {
       expect(
@@ -102,13 +101,8 @@ describe('Edit account', () => {
       target: { value: updatedAccountName },
     });
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Done'));
+      fireEvent.click(screen.getByText('Save'));
     });
     expect(mockDispatch).toHaveBeenCalledTimes(2);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      settingsUpdated(
-        expect.objectContaining({ hardwareAccounts: { 'Nano S': [mockHWAccounts[0]] } })
-      )
-    );
   });
 });

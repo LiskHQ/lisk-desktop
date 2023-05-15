@@ -2,16 +2,14 @@ import React from 'react';
 import { mount } from 'enzyme';
 import copyToClipboard from 'copy-to-clipboard';
 import * as txUtils from '@transaction/utils/transaction';
-import { codec } from '@liskhq/lisk-client';
 import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Multisignature, { FullySignedActions, PartiallySignedActions } from '.';
-import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
+import { toTransactionJSON } from '../../utils';
 
 jest.mock('copy-to-clipboard');
-
-jest.spyOn(codec.codec, 'toJSON').mockReturnValue({});
 
 describe('TransactionResult Multisignature', () => {
   const props = {
@@ -19,12 +17,22 @@ describe('TransactionResult Multisignature', () => {
       txBroadcastError: null,
       txSignatureError: null,
       signedTransaction: {
-        id: 1,
-        senderPublicKey: accounts.multiSig.summary.publicKey,
-        signatures: [accounts.multiSig.summary.publicKey, ''],
+        id: Buffer.from('94aa29aa94c55323c3e4b8a1409b879f1766477a84bb028143ac10aa7f44b217', 'hex'),
         module: 'token',
         command: 'transfer',
-        params: {},
+        nonce: BigInt('7339636738092037709'),
+        fee: BigInt('9886722176580209175'),
+        senderPublicKey: Buffer.from(
+          'bfbef2a36e17ca75b66fd56adea8dd04ed234cd4188aca42fc8a7299d8eaadd8',
+          'hex'
+        ),
+        params: {
+          tokenID: Buffer.from('0400000100000000', 'hex'),
+          amount: BigInt('9140968487542404274'),
+          recipientAddress: Buffer.from('lskr8xo6fkzg2m3fhgsofbnfozcn7nnsdgbma6e42', 'hex'),
+          data: 'survey twist collect recipe morning reunion crop loyal celery',
+        },
+        signatures: [],
       },
     },
     title: 'Test title',
@@ -38,7 +46,10 @@ describe('TransactionResult Multisignature', () => {
     transactionBroadcasted: jest.fn(),
     resetTransactionResult: jest.fn(),
     account: accounts.multiSig,
-    moduleCommandSchemas: { [MODULE_COMMANDS_NAME_MAP.transfer]: 'test schema' },
+    moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    ),
   };
 
   it('should render properly', () => {
@@ -71,15 +82,20 @@ describe('TransactionResult Multisignature', () => {
         }}
       />
     );
+    const transactionJSON = toTransactionJSON(
+      props.transactions.signedTransaction,
+      props.moduleCommandSchemas['token:transfer']
+    );
     expect(wrapper.find(FullySignedActions)).not.toExist();
     expect(wrapper.find(PartiallySignedActions)).toExist();
 
     wrapper.find('.download-button').at(0).simulate('click');
-    expect(downloadJSONSpy).toHaveBeenCalledWith(props.transactions.signedTransaction, 'tx-1');
-    wrapper.find('.copy-button').at(0).simulate('click');
-    expect(copyToClipboard).toHaveBeenCalledWith(
-      JSON.stringify(props.transactions.signedTransaction)
+    expect(downloadJSONSpy).toHaveBeenCalledWith(
+      transactionJSON,
+      'sign-multisignature-request-94aa29aa94c55323c3e4b8a1409b879f1766477a84bb028143ac10aa7f44b217'
     );
+    wrapper.find('.copy-button').at(0).simulate('click');
+    expect(copyToClipboard).toHaveBeenCalledWith(JSON.stringify(transactionJSON));
   });
 
   it('should props.transactionBroadcasted', () => {

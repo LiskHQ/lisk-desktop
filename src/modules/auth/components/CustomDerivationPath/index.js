@@ -2,12 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input } from 'src/theme';
 
-const CustomDerivationPath = ({ onChange, value, errorMessage }) => {
+const CustomDerivationPath = ({ onChange, derivationPath, derivationPathErrorMessage }) => {
   const { t } = useTranslation();
-
-  const onPathInputChange = (e) => {
-    onChange(e.target.value);
-  };
 
   return (
     <fieldset>
@@ -16,10 +12,10 @@ const CustomDerivationPath = ({ onChange, value, errorMessage }) => {
         id="custom-derivation-path-input"
         size="m"
         name="custom-derivation-path"
-        onChange={onPathInputChange}
-        value={value}
-        feedback={errorMessage}
-        error={!!errorMessage}
+        onChange={onChange}
+        value={derivationPath}
+        feedback={derivationPathErrorMessage}
+        error={!!derivationPathErrorMessage}
       />
     </fieldset>
   );

@@ -105,7 +105,7 @@ describe('ApplicationManangementRow', () => {
   });
 
   it('should not toggle terminated application as a current application', () => {
-    props.application.state = 'terminated';
+    props.application.status = 'terminated';
     wrapper.rerender(
       <MemoryRouter initialEntries={[]}>
         <ApplicationManagementRow {...props} />
@@ -125,7 +125,7 @@ describe('ApplicationManangementRow', () => {
   });
 
   it('should invoke the remove application flow for a terminated non default application', () => {
-    props.application.state = 'terminated';
+    props.application.status = 'terminated';
     props.application.isDefault = false;
 
     wrapper.rerender(

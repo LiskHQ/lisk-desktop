@@ -28,7 +28,7 @@ const getAmountFieldState = (initialValue, getAmountFeedbackAndError) =>
         value: '',
       };
 
-const useAmountField = (initialValue, balance, token) => {
+const useAmountField = (initialValue, balance = '0', token) => {
   const { t, i18n } = useTranslation();
 
   const getAmountFeedbackAndError = (value, maxAmount = balance) => {

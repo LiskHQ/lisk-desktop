@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import Box from 'src/theme/box';
@@ -7,14 +7,14 @@ import { PrimaryButton } from 'src/theme/buttons';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { Input } from 'src/theme';
 import { usePairings } from '@libs/wcm/hooks/usePairings';
-import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import styles from './ConnectionProposal.css';
 
 const ConnectionProposal = ({ history }) => {
   const [value, setValue] = useState('');
   const [status, setStatus] = useState({});
-  const { events } = useContext(ConnectionContext);
+  const { events } = useEvents();
   const { setUri } = usePairings();
   const { t } = useTranslation();
 
@@ -36,7 +36,7 @@ const ConnectionProposal = ({ history }) => {
       <Box>
         <div className={styles.title}>
           <h3>{t('Connect wallet')}</h3>
-          <h6>{t('Paste WalletConnect URI to connect your application to Lisk Desktop.')}</h6>
+          <h6>{t('Enter a URI to connect your wallet to a blockchain application.')}</h6>
         </div>
         <div>
           <div>
@@ -47,7 +47,7 @@ const ConnectionProposal = ({ history }) => {
               className={styles.input}
               placeholder={t('Enter connection URI')}
             />
-            <span className={styles.feedback}>{status.message ?? ''}</span>
+            <span className={styles.feedback}>{status?.message}</span>
             <PrimaryButton onClick={clickHandler} disabled={value.length === 0 || status.isPending}>
               {t('Connect')}
             </PrimaryButton>

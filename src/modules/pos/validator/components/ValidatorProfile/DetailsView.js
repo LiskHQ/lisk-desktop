@@ -52,7 +52,7 @@ const DetailsView = ({ data, history, isMyProfile }) => {
     },
     {
       icon: 'calendar',
-      label: t('Last generated block'),
+      label: t('Last generated at'),
       value: latestBlockTimestamp ? (
         <DateTimeFromTimestamp fulltime className="date" time={latestBlockTimestamp} />
       ) : (

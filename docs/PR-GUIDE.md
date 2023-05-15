@@ -3,7 +3,7 @@
 ## Table Of Contents
 
 1. [PR workflow](#pr-workflow)
-1. [PR practices](#pr-practices)
+2. [PR practices](#pr-practices)
 
 ## PR workflow
 
@@ -11,13 +11,14 @@
 
 ## PR practices
 
-##### Before creating PR make use that:
+##### Make sure to adhere to the following points below before creating a PR:
 
-- All conflicts are resolved
-- The PR follows our [Test guide](/LiskHQ/lisk-desktop/blob/development/docs/TEST_GUIDE.md)
-- The PR follows our [CSS guide](/LiskHQ/lisk-desktop/blob/development/docs/CSS_GUIDE.md)
+- The PR has an issue.
+- All conflicts are resolved.
+- The PR follows our [Test guide](/docs/TEST_GUIDE.md).
+- The PR follows our [CSS guide](/docs/CSS_GUIDE.md).
 
-When you're done, submit a pull request and for one of the maintainers to check it out. We would let you know if there is any problem or any changes that should be considered.
+When you're done, submit a pull request and one of the maintainers will check it out. You will be informed if there are any problems or changes that may need to be considered.
 
 ##### Format of pull requests
 

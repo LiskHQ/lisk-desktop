@@ -11,6 +11,8 @@ import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import useHWAccounts from '@hardwareWallet/hooks/useHWAccounts';
+import { useSelector } from 'react-redux';
+import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
@@ -25,10 +27,14 @@ export const ManageAccountsContent = ({
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
-  const [currentAccount, setAccount] = useCurrentAccount();
+  const [currentAccount, setAccount] = useCurrentAccount(history);
+  const currentHWDevice = useSelector(selectCurrentHWDevice);
   const [showRemove, setShowRemove] = useState(false);
   const title = customTitle ?? t('Manage accounts');
   const { accounts: hwAccounts, isLoadingHWAccounts } = useHWAccounts();
+  const hwAccountsToShow = currentHWDevice?.path
+    ? hwAccounts
+    : hwAccounts.filter((account) => !account.metadata.isNew);
 
   const queryParams = new URLSearchParams(search);
   const referrer = queryParams.get('referrer');
@@ -44,8 +50,7 @@ export const ManageAccountsContent = ({
   }, []);
   const onSelectAccount = useCallback(
     (account) => {
-      setAccount(account);
-      history.push(referrer || routes.wallet.path);
+      setAccount(account, referrer);
     },
     [referrer]
   );
@@ -57,7 +62,7 @@ export const ManageAccountsContent = ({
       </div>
       <Box className={styles.accountListWrapper}>
         <>
-          {[...accounts, ...hwAccounts].map((account) => (
+          {[...accounts, ...hwAccountsToShow].map((account) => (
             <AccountRow
               key={account.metadata.address}
               account={account}

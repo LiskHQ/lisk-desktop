@@ -15,23 +15,11 @@ it('should use custom step when incrementing', () => {
   const wrapper = ({ children }) => <ConnectionProvider>{children}</ConnectionProvider>;
   const { result } = renderHook(() => useSession(), { wrapper });
 
-  expect(result.current.session).toEqual({
-    data: false,
-    loaded: false,
-    request: false,
-  });
+  expect(result.current.sessions).toEqual([]);
 
   act(() => {
-    result.current.setSession({
-      data: { id: '0x123' },
-      loaded: true,
-      request: false,
-    });
+    result.current.setSessions([{ id: '0x123' }]);
   });
 
-  expect(result.current.session).toEqual({
-    data: { id: '0x123' },
-    loaded: true,
-    request: false,
-  });
+  expect(result.current.sessions).toEqual([{ id: '0x123' }]);
 });

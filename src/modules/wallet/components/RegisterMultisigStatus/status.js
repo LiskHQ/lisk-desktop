@@ -1,11 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
+import { selectModuleCommandSchemas } from 'src/redux/selectors';
+
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
 
 const Status = ({ account, transactions, t }) => {
-  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
+  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
+  const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
 
   return (

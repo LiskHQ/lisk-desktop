@@ -21,7 +21,6 @@ const TxSummarizer = ({
   wallet,
   width = 'medium',
   t,
-  secondPassphraseStored,
   className,
   token,
   footerClassName,
@@ -32,8 +31,6 @@ const TxSummarizer = ({
   hasCancel,
   hasNoTopCancelButton,
   noFeeStatus,
-  confirmButtonText,
-  cancelButtonText,
 }) => {
   const fee = !(
     wallet.summary.isMultisignature ||
@@ -108,11 +105,8 @@ const TxSummarizer = ({
         cancelButton={hasCancel && cancelButton}
         confirmButton={confirmButton}
         footerClassName={footerClassName}
-        account={wallet}
-        secondPassphraseStored={secondPassphraseStored}
-        confirmButtonText={confirmButtonText}
-        cancelButtonText={cancelButtonText}
         t={t}
+        account={wallet}
       />
     </Box>
   );

@@ -53,7 +53,7 @@ const TokenAmount = ({
 };
 
 TokenAmount.defaultProps = {
-  token: '',
+  token: {},
 };
 
 export default TokenAmount;

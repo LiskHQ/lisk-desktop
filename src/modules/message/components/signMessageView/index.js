@@ -22,16 +22,19 @@ const signMessageView = ({ account, t, history, signMessage }) => {
   }, []);
 
   return (
-    <Dialog hasClose className={styles.wrapper}>
+    <Dialog hasClose className={styles.wrapper} size={multiStepPosition === 1 && 'sm'}>
       <Box>
         {multiStepPosition !== 1 && (
-          <BoxHeader>
+          <BoxHeader className={styles.header}>
             <h1>{multiStepPosition === 2 ? t('Signed message') : t('Sign message')}</h1>
           </BoxHeader>
         )}
         <MultiStep onChange={onMultiStepChange}>
           <MessageForm history={history} signMessage={signMessage} />
-          <TxSignatureCollector transactionJSON={{ senderPublicKey: pubkey, params: {} }} />
+          <TxSignatureCollector
+            type="message"
+            transactionJSON={{ senderPublicKey: pubkey, params: {} }}
+          />
           <SignedMessage history={history} account={account} />
         </MultiStep>
       </Box>

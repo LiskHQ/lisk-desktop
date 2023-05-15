@@ -7,16 +7,25 @@ import i18next from 'i18next';
  * Extracts Lisk PrivateKey/PublicKey pair from a given valid Mnemonic passphrase
  *
  * @param {String} passphrase - Valid Mnemonic passphrase
- * @param {boolean} enableCustomDerivationPath - enable custom derivation for HW
+ * @param {boolean} enableAccessToLegacyAccounts - enable custom derivation for HW
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {object} - Extracted publicKey for a given valid passphrase
  */
 export const extractKeyPair = async ({
   passphrase,
-  enableCustomDerivationPath = false,
   derivationPath,
+  enableAccessToLegacyAccounts = false,
 }) => {
-  if (enableCustomDerivationPath) {
+  if (enableAccessToLegacyAccounts) {
+    const keyPair = cryptography.legacy.getKeys(passphrase);
+    return {
+      publicKey: keyPair.publicKey.toString('hex'),
+      privateKey: keyPair.privateKey.toString('hex'),
+      isValid: true,
+    };
+  }
+
+  if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase) && !!derivationPath) {
     const privateKey = await cryptography.ed.getPrivateKeyFromPhraseAndPath(
       passphrase,
       derivationPath
@@ -28,15 +37,6 @@ export const extractKeyPair = async ({
       isValid: true,
     };
   }
-
-  if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
-    const keyPair = cryptography.legacy.getKeys(passphrase);
-    return {
-      publicKey: keyPair.publicKey.toString('hex'),
-      privateKey: keyPair.privateKey.toString('hex'),
-      isValid: true,
-    };
-  }
   return { isValid: false };
 };
 
@@ -44,16 +44,20 @@ export const extractKeyPair = async ({
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
  *
  * @param {String} passphrase - Valid Mnemonic passphrase
- * @param {boolean} enableCustomDerivationPath - enable custom derivation for HW
+ * @param {boolean} enableAccessToLegacyAccounts - enable custom derivation for HW
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
 export const extractPublicKey = async (
   passphrase,
-  enableCustomDerivationPath = false,
+  enableAccessToLegacyAccounts = false,
   derivationPath
 ) => {
-  const keyPair = await extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
+  const keyPair = await extractKeyPair({
+    passphrase,
+    enableAccessToLegacyAccounts,
+    derivationPath,
+  });
 
   if (keyPair.isValid) {
     return keyPair.publicKey;
@@ -66,16 +70,20 @@ export const extractPublicKey = async (
  * Extracts Lisk PrivateKey from a given valid Mnemonic passphrase
  *
  * @param {String} passphrase - Valid Mnemonic passphrase
- * @param {boolean} enableCustomDerivationPath - enable custom derivation for HW
+ * @param {boolean} enableAccessToLegacyAccounts - enable custom derivation for HW
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {String?} - Extracted PrivateKey for a given valid passphrase
  */
 export const extractPrivateKey = async (
   passphrase,
-  enableCustomDerivationPath = false,
+  enableAccessToLegacyAccounts = false,
   derivationPath
 ) => {
-  const keyPair = await extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
+  const keyPair = await extractKeyPair({
+    passphrase,
+    enableAccessToLegacyAccounts,
+    derivationPath,
+  });
   if (keyPair.isValid) {
     return keyPair.privateKey;
   }
@@ -154,6 +162,18 @@ export const truncateAddress = (address, size) => {
   const selectedSize = truncateOptions.includes(size) ? size : truncateOptions[0];
   if (!address) return address;
   return address.replace(regex.truncate[selectedSize], '$1...$3');
+};
+
+/**
+ * Returns a shorter version of a given account name
+ * by replacing characters by ellipsis except for
+ * the first 6 and last 3.
+ * @param {String} accountName account name
+ * @returns {String} Truncated account name
+ */
+export const truncateAccountName = (accountName) => {
+  if (!accountName) return accountName;
+  return accountName.replace(/^(.{3})(.+)?(.{3})$/, '$1...$3');
 };
 
 /**

@@ -70,10 +70,10 @@ describe('SideBar', () => {
       const expectedLinks = [
         'Wallet',
         'Applications',
-        'Network',
         'Transactions',
         'Blocks',
         'Validators',
+        'Network',
       ];
 
       mockAppState.settings = { ...mockAppState.settings, sideBarExpanded: true };

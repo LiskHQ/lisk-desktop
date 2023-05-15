@@ -1,5 +1,6 @@
 import { mountWithRouter, mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Result from './Status';
 
@@ -7,6 +8,7 @@ const props = {
   t: (s) => s,
   transactions: { txSignatureError: null, signedTransaction: {} },
   statusInfo: { locked: 200, unlockable: 100, selfUnstake: undefined },
+  posToken: mockAppsTokens.data[0],
 };
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({

@@ -4,12 +4,14 @@ import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import TxComposer from '@transaction/components/TxComposer';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
+import { useCurrentAccount } from '@account/hooks';
+
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
-import { MAX_MULTI_SIG_MEMBERS } from '../../configuration/constants';
+import { MAX_MULTI_SIG_MEMBERS, DEFAULT_SIGNATURE_BYTE_SIZE } from '../../configuration/constants';
 import MemberField from './MemberField';
 import validators from './validators';
 import styles from './styles.css';
@@ -18,6 +20,11 @@ const placeholderMember = {
   publicKey: undefined,
   isMandatory: true,
 };
+
+const initializeDefaultSignatures = (mandatoryKeys, optionalKeys) =>
+  new Array(mandatoryKeys.length + optionalKeys.length).fill(
+    Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE).toString('hex')
+  );
 
 const getInitialMembersState = (prevState) => {
   if (prevState.transactionJSON && prevState.transactionJSON.params) {
@@ -39,11 +46,17 @@ const getInitialMembersState = (prevState) => {
 const getInitialSignaturesState = (prevState) =>
   prevState.transactionJSON?.params?.numberOfSignatures ?? 2;
 
-export const validateState = ({ mandatoryKeys, optionalKeys, numberOfSignatures, t }) => {
+export const validateState = ({
+  mandatoryKeys,
+  optionalKeys,
+  numberOfSignatures,
+  t,
+  currentAccount,
+}) => {
   const messages = validators
     .map((scenario) => {
-      if (scenario.pattern(mandatoryKeys, optionalKeys, numberOfSignatures)) {
-        return scenario.message(t, mandatoryKeys, optionalKeys);
+      if (scenario.pattern(mandatoryKeys, optionalKeys, numberOfSignatures, currentAccount)) {
+        return scenario.message(t, mandatoryKeys, optionalKeys, currentAccount);
       }
       return null;
     })
@@ -64,6 +77,7 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
   );
   const [members, setMembers] = useState(() => getInitialMembersState(prevState));
 
+  const [currentAccount] = useCurrentAccount();
   const [currentApplication] = useCurrentApplication();
   const { data: tokens } = useTokenBalances(currentApplication);
   const defaultToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
@@ -124,6 +138,7 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
   const feedback = useMemo(
     () =>
       validateState({
+        currentAccount,
         mandatoryKeys,
         optionalKeys,
         numberOfSignatures,
@@ -144,7 +159,7 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
     mandatoryKeys,
     optionalKeys,
     numberOfSignatures,
-    signatures: [],
+    signatures: initializeDefaultSignatures(mandatoryKeys, optionalKeys),
   };
 
   return (

@@ -9,11 +9,13 @@ import Tooltip from 'src/theme/Tooltip';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import BoxInfoText from 'src/theme/box/infoText';
+import { useCurrentAccount } from '@account/hooks';
 import styles from './messageForm.css';
 
 const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
   const [message, setMessage] = useState(prevState?.message || '');
   const { t } = useTranslation();
+  const [currentAccount] = useCurrentAccount();
 
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
@@ -30,13 +32,14 @@ const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
     Piwik.trackingEvent('SignMessageInput', 'button', 'Next step');
     nextStep({
       message,
-      actionFunction: (formProps, _, privateKey) => signMessage({ message, nextStep, privateKey }),
+      actionFunction: (formProps, _, privateKey) =>
+        signMessage({ message, nextStep, privateKey, currentAccount }),
     });
     onNext?.();
   };
 
   return (
-    <Box>
+    <Box className={styles.messageWrapper}>
       <BoxContent className={styles.noPadding}>
         <BoxInfoText>
           <span>{t('Sign a message to prove its integrity')}</span>

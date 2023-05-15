@@ -1,23 +1,13 @@
-import networks from '@network/configuration/networks';
 import analytics from 'src/utils/analytics';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import { settingsUpdated } from 'src/modules/settings/store/actions';
-import { DEFAULT_NETWORK } from 'src/const/config';
 import { networkSelected, networkStatusUpdated, networkConfigSet } from './action';
 import actionTypes from './actionTypes';
 
 const readStoredNetwork = ({ dispatch, getState }) => {
-  const { statistics, statisticsRequest, statisticsFollowingDay, network } = getState().settings;
-
-  const config =
-    network?.name && network?.address
-      ? network
-      : {
-          // This wuold always read the default network from the config
-          name: DEFAULT_NETWORK,
-          address: networks[DEFAULT_NETWORK].serviceUrl,
-        };
-  dispatch(networkSelected(config));
+  const { statistics, statisticsRequest, statisticsFollowingDay, mainChainNetwork } =
+    getState().settings;
+  dispatch(networkSelected({ name: mainChainNetwork?.name }));
   dispatch(networkStatusUpdated({ online: true }));
 
   if (!statistics) {

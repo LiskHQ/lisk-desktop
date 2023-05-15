@@ -1,0 +1,11 @@
+.DialogNetworkApplicationSelector {
+  background: var(--color-white);
+  border-radius: 6px;
+  position: absolute;
+  top: 50px;
+  right: 18px;
+  width: 100%;
+  max-width: 400px;
+  padding: 16px;
+  box-sizing: border-box;
+}

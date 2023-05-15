@@ -13,7 +13,7 @@ import RegisterValidator from '@pos/validator/manager/registerValidatorManager';
 import Send from '@token/fungible/components/SendView';
 import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';
-import TermsOfUse from 'src/modules/common/components/TermsOfUse';
+import TermsOfUse from '@common/components/TermsOfUse';
 import Explorer from '@wallet/manager/explorerManager';
 import AccountDetails from '@account/components/AccountDetails';
 import TransactionDetails from '@transaction/manager/transactionDetailViewManager';
@@ -23,7 +23,8 @@ import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
 import ClaimRewardsView from '@pos/validator/components/ClaimRewardsView';
 import editStakeManager from '@pos/validator/manager/editStakeManager';
 import StakingQueue from '@pos/validator/manager/stakingQueueManager';
-import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
+import DeviceDisconnect from '@common/components/deviceDisconnectDialog';
+import ConfirmationDialog from '@common/components/ConfirmationDialog';
 import { ChangeCommissionDialog } from '@pos/validator/components/ChangeCommission/Dialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
@@ -44,7 +45,8 @@ import BlockchainApplications from '@blockchainApplication/explore/components/Bl
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
-import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
+import NetworkApplicationDropDownButton from '@blockchainApplication/manage/components/DialogNetworkApplicationSelector';
+import DialogAddNetwork from '@network/components/DialogAddNetwork';
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
@@ -91,6 +93,7 @@ export default {
   selectHardwareDeviceModal: SelectHardwareDeviceModal,
   stakingQueue: StakingQueue,
   deviceDisconnectDialog: DeviceDisconnect,
+  confirmationDialog: ConfirmationDialog,
   reclaimBalance: ReclaimBalanceModal,
   multiSignature: RegisterMultisig,
   multisigAccountDetails: MultisigAccountDetails,
@@ -108,7 +111,7 @@ export default {
   blockChainApplicationDetails: BlockchainApplicationDetails,
   addApplicationList: AddApplicationList,
   addApplicationSuccess: AddApplicationSuccess,
-  manageApplications: ApplicationManagementList,
+  manageApplications: NetworkApplicationDropDownButton,
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
   sentStakes: SentStakes,
@@ -119,4 +122,5 @@ export default {
   connectionStatus: ConnectionStatus,
   changeCommission: ChangeCommissionDialog,
   selectNetwork: SelectNetwork,
+  dialogAddNetwork: DialogAddNetwork,
 };

@@ -72,7 +72,7 @@ const Table = ({
   subHeader,
   row,
   currentSort,
-  isLoading, // @todo drop this at some point
+  isLoading,
   emptyState,
   iterationKey,
   canLoadMore,
@@ -98,7 +98,7 @@ const Table = ({
     <Empty
       data={emptyState}
       error={error}
-      isLoading={isFetching}
+      isLoading={isLoading}
       isListEmpty={data.length === 0}
       className={styles.emptyState}
     />

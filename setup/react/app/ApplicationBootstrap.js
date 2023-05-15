@@ -10,30 +10,32 @@ import {
 import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { Client } from 'src/utils/api/client';
-import { PrimaryButton } from 'src/theme/buttons';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
+import NetworkError from 'src/modules/common/components/NetworkError/NetworkError';
 
 const ApplicationBootstrap = ({ children }) => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
   const [isFirstTimeLoading, setIsFirstTimeLoading] = useState(true);
-  const [, setCurrentApplication] = useCurrentApplication();
+  const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { setApplications } = useApplicationManagement();
   const queryClient = useRef(new Client({ http: mainChainNetwork?.serviceUrl }));
   useTransactionUpdate();
 
   const networkStatus = useNetworkStatus({
-    options: { enabled: !!mainChainNetwork && isFirstTimeLoading },
+    options: { enabled: !!mainChainNetwork },
     client: queryClient.current,
   });
 
   const blockchainAppsMeta = useBlockchainApplicationMeta({
     config: {
       params: {
-        isDefault: true,
+        chainID: [...new Set([networkStatus.data?.data?.chainID, currentApplication.chainID])]
+          .filter((item) => item)
+          .join(','),
         network: mainChainNetwork?.name,
       },
     },
-    options: { enabled: !!networkStatus.data && !!mainChainNetwork && isFirstTimeLoading },
+    options: { enabled: !!networkStatus.data && !!mainChainNetwork },
     client: queryClient.current,
   });
 
@@ -42,31 +44,44 @@ const ApplicationBootstrap = ({ children }) => {
   );
 
   const isError = (networkStatus.isError || blockchainAppsMeta.isError) && !!mainChainNetwork;
-  const isLoading =
-    (networkStatus.isLoading && !!mainChainNetwork) ||
-    (blockchainAppsMeta.isLoading && !!mainChainApplication);
 
   useEffect(() => {
-    if (mainChainApplication && isFirstTimeLoading) {
-      setCurrentApplication(mainChainApplication);
+    if (mainChainApplication) {
+      const refreshedCurrentApplication = blockchainAppsMeta?.data?.data?.find(
+        ({ chainID }) => chainID === currentApplication?.chainID
+      );
+      setCurrentApplication(refreshedCurrentApplication || mainChainApplication);
       setApplications(blockchainAppsMeta?.data?.data || []);
     }
-    if (isFirstTimeLoading && blockchainAppsMeta.isFetched) setIsFirstTimeLoading(false);
-  }, [mainChainApplication, isFirstTimeLoading]);
+    if (isFirstTimeLoading && blockchainAppsMeta.isFetched && !blockchainAppsMeta.isError) {
+      setIsFirstTimeLoading(false);
+    }
+  }, [mainChainApplication?.chainID, blockchainAppsMeta?.isFetched]);
 
   useLedgerDeviceListener();
 
-  if (isError && !isLoading && isFirstTimeLoading) {
-    // @TODO: this return should be replaced with an actual error message page
+  if (isError && !blockchainAppsMeta.isFetching && isFirstTimeLoading) {
+    const error = networkStatus.error || blockchainAppsMeta.error;
+    const errorMessage = {
+      message: error.message,
+      endpoint: `${error.config.baseURL}${error.config.url}`,
+      requestPayload: error.request.data,
+      method: error.config.method,
+      requestHeaders: error.config.headers,
+      responsePayload: error.response.data,
+      responseStatusCode: error.response.status,
+      responseStatusText: error.response.statusText,
+    };
+
     return (
-      <div>
-        error
-        <PrimaryButton onClick={blockchainAppsMeta.refetch}>Retry</PrimaryButton>
-      </div>
+      <NetworkError
+        onRetry={blockchainAppsMeta.refetch}
+        errorMessage={JSON.stringify(errorMessage)}
+      />
     );
   }
 
-  return !isLoading || !isFirstTimeLoading ? children : null;
+  return isFirstTimeLoading ? null : children;
 };
 
 export default ApplicationBootstrap;
