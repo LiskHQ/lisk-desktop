@@ -50,7 +50,7 @@ const Footer = ({ confirmButton, cancelButton, footerClassName, t }) => {
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
       {isHW && !isAppOpen && (
         <div className={styles.errorLabel}>
-          <span>{t('Open the Lisk app to continue')}</span>
+          <span>{t('Open the Lisk app on Ledger device to continue')}</span>
         </div>
       )}
       <Actions
