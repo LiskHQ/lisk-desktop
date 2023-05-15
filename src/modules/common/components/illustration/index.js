@@ -48,8 +48,8 @@ import registerMultisignatureError from '@setup/react/assets/images/illustration
 import registerMultisignatureErrorDark from '@setup/react/assets/images/illustrations/multisignature-error-dark.svg';
 import reclaimTokensIntro from '@setup/react/assets/images/illustrations/reclaim-tokens-intro.svg';
 import hwLedgerConfirm from '@setup/react/assets/images/illustrations/hw-ledger-confirm.svg';
-import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
-import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
+import hwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
+import hwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
 import hwReconnection from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect.svg';
 import hwReconnectionDark from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect-dark.svg';
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
@@ -118,8 +118,8 @@ export const illustrations = {
   multisignaturePartialSuccess,
   multisignaturePartialSuccessDark,
   hwLedgerConfirm,
-  ledgerNanoHwRejection,
-  ledgerNanoHwRejectionDark,
+  hwRejection,
+  hwRejectionDark,
   hwReconnection,
   hwReconnectionDark,
   addApplicationSuccess,

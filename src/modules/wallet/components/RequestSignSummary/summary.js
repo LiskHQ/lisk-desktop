@@ -62,8 +62,6 @@ const RequestSignSummary = ({
         <Footer
           cancelButton={cancelButton}
           confirmButton={confirmButton}
-          confirmButtonText={t('Sign')}
-          cancelButtonText={t('Go back')}
           t={t}
         />
       </BoxContent>

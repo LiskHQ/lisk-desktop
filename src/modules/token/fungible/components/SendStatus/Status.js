@@ -20,9 +20,9 @@ const shouldShowBookmark = (bookmarks, account, transactionJSON, token) => {
   );
 };
 
-const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
+const getMessagesDetails = (transactions, status, t) => {
   const messages = statusMessages(t);
-  const code = isHardwareWalletError ? txStatusTypes.hwRejected : status.code;
+  const code = status.code;
   const messageDetails = messages[code];
 
   if (
@@ -58,7 +58,7 @@ const TransactionStatus = ({
 
   const showBookmark = shouldShowBookmark(bookmarks, account, transactionJSON, token);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
-  const template = getMessagesDetails(transactions, status, t, false);
+  const template = getMessagesDetails(transactions, status, t);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>

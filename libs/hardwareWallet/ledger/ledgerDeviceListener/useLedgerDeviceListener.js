@@ -18,6 +18,7 @@ import {
 } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 import { usePrevious } from 'src/utils/usePrevious';
 import DeviceToast from '@hardwareWallet/components/DeviceToast/DeviceToast';
+import { CHECK_STATUS_INTERVAL } from '@libs/hardwareWallet/ledger/constants';
 
 export function useLedgerDeviceListener() {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export function useLedgerDeviceListener() {
     }
 
     if (currentHwDevice?.path) {
-      const id = setInterval(checkStatus, 4000);
+      const id = setInterval(checkStatus, CHECK_STATUS_INTERVAL);
       return () => clearInterval(id);
     }
   }, [currentHwDevice, dispatch]);

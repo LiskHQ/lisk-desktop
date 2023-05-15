@@ -5,25 +5,20 @@ import { useTranslation } from 'react-i18next';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import Illustration from 'src/modules/common/components/illustration';
-import { getDeviceType } from '@wallet/utils/hwManager';
 import { AutoResizeTextarea } from 'src/theme';
 import { SecondaryButton, PrimaryButton } from 'src/theme/buttons';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import styles from './signedMessage.css';
 
-const Error = ({ t, hwInfo }) => {
-  const deviceType = getDeviceType(hwInfo?.deviceModel);
-
-  return (
+const Error = ({ t }) => (
     <BoxContent className={styles.statusWrapper}>
-      <Illustration name={`${deviceType}HwRejection`} />
+      <Illustration name="ledgerNanoHwRejection" />
       <h5>{t('Transaction aborted on device')}</h5>
       <p className={styles.errorInfoText}>
         {t('You have cancelled the transaction on your hardware wallet.')}
       </p>
     </BoxContent>
   );
-};
 
 const Success = ({ t, signature, copied, copy, history, onPrev }) => (
   <>
