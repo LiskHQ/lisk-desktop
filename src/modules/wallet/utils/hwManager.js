@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-unresolved
 import i18next from 'i18next';
 import { getSignedMessage } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
+import { getMembersAndSenderIndex, joinModuleAndCommand, updateMultiSigRegSignatures } from 'src/modules/transaction/utils';
 
 const isKeyMatch = (aPublicKey, signerPublicKey) =>
   Buffer.isBuffer(aPublicKey)
@@ -13,18 +15,35 @@ const isKeyMatch = (aPublicKey, signerPublicKey) =>
  * The below logic is copied from Lisk SDK https://github.com/LiskHQ/lisk-sdk/blob/2593d1fe70154a9209b713994a252c494cad7123/elements/lisk-transactions/src/sign.ts#L228-L297
  */
 /* eslint-disable max-statements, complexity */
-const updateTransactionSignatures = (account, transaction, signature) => {
-  const isMultisigReg = transaction.module === 4; // @todo fix this
-  const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
+const updateTransactionSignatures = (wallet, senderAccount, transaction, signature) => {
+  const isMultisigReg = joinModuleAndCommand(transaction) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const signerPublicKey = Buffer.from(senderAccount.summary.publicKey, 'hex');
   const isSender =
     Buffer.isBuffer(transaction.senderPublicKey) &&
     signerPublicKey.equals(transaction.senderPublicKey);
-  const { mandatoryKeys, optionalKeys } = {}; // @todo get this keys from sender account
-  if (mandatoryKeys.length + optionalKeys.length === 0 || (isSender && isMultisigReg)) {
+  const { mandatoryKeys, optionalKeys } = senderAccount;
+  const isAccountMultisignature = mandatoryKeys.length + optionalKeys.length > 0;
+  const currentAccountPubKey = Buffer.from(wallet.metadata.pubkey, 'hex');
+
+  // When signing a regular account
+  if (!isAccountMultisignature && !isMultisigReg) {
     transaction.signatures[0] = signature;
+
+    return transaction;
   }
 
-  if (mandatoryKeys.length + optionalKeys.length > 0) {
+  // When registering multisignature account
+  if (!isAccountMultisignature || (isSender && isMultisigReg)) {
+    const { senderIndex, members } = getMembersAndSenderIndex(transaction, currentAccountPubKey);
+    if (senderIndex >= 0) {
+      updateMultiSigRegSignatures(transaction, members, senderIndex, signature);
+    }
+
+    return transaction;
+  }
+
+  // When signing transaction from an existing multisignature account
+  if (isAccountMultisignature) {
     const mandatoryKeyIndex = mandatoryKeys.findIndex((aPublicKey) =>
       isKeyMatch(aPublicKey, signerPublicKey)
     );

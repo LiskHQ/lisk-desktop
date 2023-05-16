@@ -183,6 +183,35 @@ const signMessageSignature = (chainIDBuffer, transaction, privateKeyBuffer, mess
   return cryptography.ed.signData(MESSAGE_TAG_MULTISIG_REG, chainIDBuffer, data, privateKeyBuffer);
 };
 
+const getMembersAndSenderIndex = (transaction, publicKeyBuffer) => {
+  const members = [
+    ...transaction.params.mandatoryKeys.sort((publicKeyA, publicKeyB) =>
+      publicKeyA.compare(publicKeyB)
+    ),
+    ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) =>
+      publicKeyA.compare(publicKeyB)
+    ),
+  ];
+
+  const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
+
+  return { members, senderIndex };
+}
+
+const updateMultiSigRegSignatures = (transaction, members, senderIndex, memberSignature) => {
+  const signatures = [...Array(members.length).keys()].map((index) => {
+    if (index === senderIndex) return memberSignature;
+
+    if (!transaction.params.signatures[index] || !transaction.params.signatures[index].length) {
+      return Buffer.alloc(64);
+    }
+    return transaction.params.signatures[index];
+  });
+
+  transaction.params.signatures = signatures;
+  
+}
+
 // eslint-disable-next-line max-statements
 const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, options) => {
   const moduleCommand = joinModuleAndCommand(transaction);
@@ -193,16 +222,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
 
   // Sign the params if tx is a group registration and the current account is a member
   if (isGroupRegistration) {
-    const members = [
-      ...transaction.params.mandatoryKeys.sort((publicKeyA, publicKeyB) =>
-        publicKeyA.compare(publicKeyB)
-      ),
-      ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) =>
-        publicKeyA.compare(publicKeyB)
-      ),
-    ];
-
-    const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
+    const { members, senderIndex } = getMembersAndSenderIndex(transaction, publicKeyBuffer);
 
     if (senderIndex > -1) {
       const { messageSchema } = options;
@@ -213,16 +233,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
         messageSchema
       );
 
-      // @todo use correct index once SDK exposes the sort endpoint (#4497)
-      const signatures = [...Array(members.length).keys()].map((index) => {
-        if (index === senderIndex) return memberSignature;
-
-        if (!transaction.params.signatures[index] || !transaction.params.signatures[index].length) {
-          return Buffer.alloc(64);
-        }
-        return transaction.params.signatures[index];
-      });
-      transaction.params.signatures = signatures;
+      updateMultiSigRegSignatures(transaction, members, senderIndex, memberSignature);
     }
   }
 
@@ -259,9 +270,9 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
 };
 
 // eslint-disable-next-line max-statements
-const signTransactionUsingHW = async (wallet, schema, chainID, transaction) => {
+const signTransactionUsingHW = async (wallet, schema, chainID, transaction, senderAccount) => {
   const [error, signedTransaction] = await to(
-    signTransactionByHW({ wallet, chainID, transaction, schema })
+    signTransactionByHW({ wallet, chainID, transaction, schema, senderAccount })
   );
 
   if (error) {
@@ -282,7 +293,7 @@ export const sign = async (
   options
 ) => {
   if (wallet.metadata?.isHW) {
-    return signTransactionUsingHW(wallet, schema, chainID, transaction);
+    return signTransactionUsingHW(wallet, schema, chainID, transaction, senderAccount);
   }
 
   if (options?.txInitiatorAccount?.numberOfSignatures > 0) {
@@ -425,4 +436,6 @@ export {
   getNumberOfSignatures,
   normalizeTransactionsStatisticsParams,
   normalizeNumberRange,
+  getMembersAndSenderIndex,
+  updateMultiSigRegSignatures,
 };
