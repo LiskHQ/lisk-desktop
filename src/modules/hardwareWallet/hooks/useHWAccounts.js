@@ -7,6 +7,7 @@ import {
 import { setHWAccounts } from '@hardwareWallet/store/actions';
 import { getNameFromAccount } from '@hardwareWallet/utils/getNameFromAccount';
 import { getHWAccounts } from '@hardwareWallet/utils/getHWAccounts';
+import { resetLedgerIPCQueue } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
 const useHWAccounts = () => {
   const hwAccounts = useSelector(selectHWAccounts);
@@ -20,6 +21,7 @@ const useHWAccounts = () => {
   const { ipc } = window;
 
   useEffect(() => {
+    let isMounted = true;
     function getUniqueAccounts(accounts) {
       return accounts.reduce((accum, account) => {
         const indexOfAccount = accum.findIndex(
@@ -32,21 +34,35 @@ const useHWAccounts = () => {
       }, []);
     }
 
-    if (ipc && dispatch && currentHWDevice?.path) {
+    if (ipc && dispatch && currentHWDevice?.path && !isLoadingHWAccounts) {
+      // eslint-disable-next-line max-statements
       (async () => {
         setIsLoadingHWAccounts(true);
         try {
           const accounts = await getHWAccounts(currentHWDevice, getAccountName);
           const uniqueAccounts = getUniqueAccounts(accounts);
-          dispatch(setHWAccounts(uniqueAccounts));
-          setLoadingHWAccountsError(undefined);
+          if (isMounted) {
+            dispatch(setHWAccounts(uniqueAccounts));
+            setLoadingHWAccountsError(undefined);
+          }
         } catch (error) {
-          setLoadingHWAccountsError(error);
+          if (isMounted) {
+            setLoadingHWAccountsError(error);
+          }
         } finally {
-          setIsLoadingHWAccounts(false);
+          if (isMounted) {
+            setIsLoadingHWAccounts(false);
+          }
         }
       })();
     }
+    return () => {
+      setIsLoadingHWAccounts(false);
+      isMounted = false;
+      if (ipc) {
+        resetLedgerIPCQueue();
+      }
+    };
   }, [ipc, dispatch, currentHWDevice]);
 
   return { accounts: hwAccounts, isLoadingHWAccounts, loadingHWAccountsError };

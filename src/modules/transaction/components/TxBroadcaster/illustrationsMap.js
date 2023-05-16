@@ -1,5 +1,4 @@
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { getDeviceType } from '@wallet/utils/hwManager';
 
 const illustrations = {
   default: {
@@ -7,21 +6,27 @@ const illustrations = {
     [txStatusTypes.broadcastSuccess]: 'transactionSuccess',
     [txStatusTypes.broadcastError]: 'transactionError',
     [txStatusTypes.signatureError]: 'transactionError',
-    [txStatusTypes.hwRejected]: 'HwRejection',
+    [txStatusTypes.hwRejected]: 'hwRejection',
+    [txStatusTypes.hwDisconnected]: 'hwRejection',
+    [txStatusTypes.hwLiskAppClosed]: 'hwRejection',
   },
   stake: {
     [txStatusTypes.signatureSuccess]: 'stakingSuccess',
     [txStatusTypes.broadcastSuccess]: 'stakingSuccess',
     [txStatusTypes.broadcastError]: 'transactionError',
     [txStatusTypes.signatureError]: 'transactionError',
-    [txStatusTypes.hwRejected]: 'HwRejection',
+    [txStatusTypes.hwRejected]: 'hwRejection',
+    [txStatusTypes.hwDisconnected]: 'hwRejection',
+    [txStatusTypes.hwLiskAppClosed]: 'hwRejection',
   },
   registerMultisignature: {
     [txStatusTypes.signatureSuccess]: 'registerMultisignatureSuccess',
     [txStatusTypes.broadcastSuccess]: 'registerMultisignatureSuccess',
     [txStatusTypes.broadcastError]: 'registerMultisignatureError',
     [txStatusTypes.signatureError]: 'registerMultisignatureError',
-    [txStatusTypes.hwRejected]: 'HwRejection',
+    [txStatusTypes.hwRejected]: 'hwRejection',
+    [txStatusTypes.hwDisconnected]: 'hwRejection',
+    [txStatusTypes.hwLiskAppClosed]: 'hwRejection',
   },
   signMultisignature: {
     [txStatusTypes.multisigSignaturePartialSuccess]: 'multisignaturePartialSuccess',
@@ -30,7 +35,9 @@ const illustrations = {
     [txStatusTypes.signatureError]: 'registerMultisignatureError',
     [txStatusTypes.broadcastSuccess]: 'transactionSuccess',
     [txStatusTypes.broadcastError]: 'transactionError',
-    [txStatusTypes.hwRejected]: 'HwRejection',
+    [txStatusTypes.hwRejected]: 'hwRejection',
+    [txStatusTypes.hwDisconnected]: 'hwRejection',
+    [txStatusTypes.hwLiskAppClosed]: 'hwRejection',
   },
   registerValidator: {
     [txStatusTypes.broadcastSuccess]: 'validatorRegistrationSuccess',
@@ -38,11 +45,10 @@ const illustrations = {
   },
 };
 
-const getIllustration = (status, type, hwInfo) => {
+const getIllustration = (status, type) => {
   const name = illustrations[type][status];
-  const deviceType = getDeviceType(hwInfo?.deviceModel);
 
-  return status === txStatusTypes.hwRejected ? `${deviceType}${name}` : name;
+  return name;
 };
 
 export default getIllustration;

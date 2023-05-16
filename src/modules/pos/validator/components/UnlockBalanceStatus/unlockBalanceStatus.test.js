@@ -67,7 +67,10 @@ describe('unlock transaction Status', () => {
       ...props,
       transactions: {
         txBroadcastError: null,
-        txSignatureError: { message: LEDGER_HW_IPC_CHANNELS.GET_SIGNED_TRANSACTION },
+        txSignatureError: {
+          message: LEDGER_HW_IPC_CHANNELS.GET_SIGNED_TRANSACTION,
+          hwTxStatusType: 'HW_REJECTED',
+        },
         signedTransaction: { signatures: ['123'] },
       },
     };
