@@ -27,7 +27,9 @@
     line-height: var(--horizontal-padding-l);
 
     & > p {
-      margin-top: 0px;
+      margin-top: 0;
+      font-size: var(--subtitle-font-size-s);
+      line-height: 24px;
       color: var(--color-slate-gray);
     }
   }
