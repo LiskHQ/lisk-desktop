@@ -6,12 +6,10 @@ import Tooltip from '@theme/Tooltip/tooltip';
 import { truncateAddress, truncateAccountName } from '@wallet/utils/account';
 import AccountMenuListing from '@account/components/AccountMenuListing/AccountMenuListing';
 import WalletVisual from '@wallet/components/walletVisual';
-import { useTransactionUpdate } from '@transaction/hooks/useTransactionUpdate';
 import styles from './AccountManagementDropdown.css';
 
 const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
   const { name, address, isHW } = currentAccount.metadata;
-  useTransactionUpdate();
   const [isDropdownShown, setIsDropdownShown] = useState(false);
 
   const handleDismissMenu = () => {
