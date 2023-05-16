@@ -25,17 +25,13 @@ const NetworkApplicationDropDownButton = ({ history, location }) => {
         className={`application-management-dropdown ${styles.wrapper}`}
         onClick={handleShowApplications}
       >
-        {(
-          <div className={styles.chainContainer}>
-            <div className={styles.chainLogo}>
-              <img src={getLogo({ logo: currentApplication?.logo || {} })} />
-            </div>
-            <span className={styles.chainLabel}>{currentApplication?.chainName}</span>
+        <div className={styles.chainContainer}>
+          <div className={styles.chainLogo}>
+            <img src={getLogo({ logo: currentApplication?.logo || {} })} />
           </div>
-        )}
-        {(isNotOnRegisterPath) && (
-          <Network className={styles.networkProp} />
-        )}
+          <span className={styles.chainLabel}>{currentApplication?.chainName}</span>
+        </div>
+        <Network className={styles.networkProp} />
         <Icon name="dropdownArrowIcon" />
       </TertiaryButton>
     </div>
