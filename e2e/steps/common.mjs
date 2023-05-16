@@ -32,3 +32,7 @@ Then('I may see {string}', async function (textContent) {
 Then('I should see an image with alt text {string}', async function (altText) {
   await expect(this.page.getByAltText(altText)).toBeVisible();
 });
+
+Then('I should be redirected to route: {string}', async function (route) {
+  await expect(this.page.url()).toBe(`#/${route}`);
+});
