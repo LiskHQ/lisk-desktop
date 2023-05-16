@@ -1,6 +1,6 @@
 import { transactions, cryptography, codec } from '@liskhq/lisk-client';
-import { getSignedMessage, getSignedTransaction } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
-import { updateTransactionSignatures } from 'src/modules/wallet/utils/hwManager';
+import { getSignedTransaction } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import { signMessageByHW, updateTransactionSignatures } from 'src/modules/wallet/utils/hwManager';
 import { joinModuleAndCommand } from '../moduleCommand';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 import { MESSAGE_TAG_MULTISIG_REG } from '../transaction';
@@ -40,6 +40,7 @@ const signTransactionByHW = async ({ wallet, schema, chainID, transaction, sende
   ).length;
 
   let unsignedMessage;
+  let signature;
 
   if (isSender && isMultisigReg && !isFullySigned) {
     const unsignedBytes = createUnsignedBytes(transaction, options);
@@ -48,11 +49,7 @@ const signTransactionByHW = async ({ wallet, schema, chainID, transaction, sende
       chainID,
       unsignedBytes
     );
-    const { signature } = await getSignedMe(
-      wallet.hw.path,
-      wallet.metadata.accountIndex,
-      unsignedMessage
-    );
+    signature = await signMessageByHW({ wallet, unsignedMessage });
   } else {
     const unsignedBytes = transactions.getSigningBytes(transaction, schema);
     unsignedMessage = createUnsignedMessage(
@@ -60,14 +57,18 @@ const signTransactionByHW = async ({ wallet, schema, chainID, transaction, sende
       chainID,
       unsignedBytes
     );
-    const { signature } = await getSignedTransaction(
+
+    const signedTransaction = await getSignedTransaction(
       wallet.hw.path,
       wallet.metadata.accountIndex,
-      unsignedMessage
+      unsignedMessage,
     );
-  }
+    signature = signedTransaction?.signature;
 
-  
+    if (signature instanceof Uint8Array) {
+      signature = Buffer.from(signature);
+    }
+  }
 
   return updateTransactionSignatures(wallet, senderAccount, transaction, Buffer.from(signature));
 };
