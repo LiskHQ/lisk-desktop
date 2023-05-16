@@ -15,12 +15,9 @@ const NetworkApplicationDropDownButton = ({ history, location }) => {
     addSearchParamsToUrl(history, { modal: 'manageApplications' });
   }, []);
 
-  const isNotOnSelectNetworkPath = routes.selectNetwork.path !== location.pathname;
   const isNotOnRegisterPath = routes.register.path !== location.pathname;
 
-  if (!(isNotOnSelectNetworkPath && isNotOnRegisterPath)) {
-    return null;
-  }
+  if (!isNotOnRegisterPath) return null;
 
   return (
     <div className={styles.container}>
@@ -28,7 +25,7 @@ const NetworkApplicationDropDownButton = ({ history, location }) => {
         className={`application-management-dropdown ${styles.wrapper}`}
         onClick={handleShowApplications}
       >
-        {isNotOnSelectNetworkPath && (
+        {(
           <div className={styles.chainContainer}>
             <div className={styles.chainLogo}>
               <img src={getLogo({ logo: currentApplication?.logo || {} })} />
@@ -36,7 +33,7 @@ const NetworkApplicationDropDownButton = ({ history, location }) => {
             <span className={styles.chainLabel}>{currentApplication?.chainName}</span>
           </div>
         )}
-        {(isNotOnSelectNetworkPath || isNotOnRegisterPath) && (
+        {(isNotOnRegisterPath) && (
           <Network className={styles.networkProp} />
         )}
         <Icon name="dropdownArrowIcon" />
