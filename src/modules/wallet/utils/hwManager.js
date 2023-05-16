@@ -77,7 +77,7 @@ const signMessageByHW = async ({ account, message }) => {
       account.metadata.accountIndex,
       message
     );
-    const signature = signedMessage?.signature;
+    let signature = signedMessage?.signature;
 
     if (!signature) {
       throw new Error(
@@ -85,6 +85,10 @@ const signMessageByHW = async ({ account, message }) => {
           model: account.hw.product,
         })
       );
+    }
+
+    if (signature instanceof Uint8Array) {
+      signature = Buffer.from(signature);
     }
 
     return signature;

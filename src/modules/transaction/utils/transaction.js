@@ -170,7 +170,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
   return signedTransaction;
 };
 
-const signMessageSignature = (chainIDBuffer, transaction, privateKeyBuffer, messageSignature) => {
+const signMessageSignature = (chainIDBuffer, transaction, privateKeyBuffer, messageSchema) => {
   const message = {
     mandatoryKeys: transaction.params.mandatoryKeys,
     optionalKeys: transaction.params.optionalKeys,
@@ -179,7 +179,7 @@ const signMessageSignature = (chainIDBuffer, transaction, privateKeyBuffer, mess
     nonce: transaction.nonce,
   };
 
-  const data = codec.codec.encode(messageSignature, message);
+  const data = codec.codec.encode(messageSchema, message);
   return cryptography.ed.signData(MESSAGE_TAG_MULTISIG_REG, chainIDBuffer, data, privateKeyBuffer);
 };
 
@@ -270,9 +270,9 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
 };
 
 // eslint-disable-next-line max-statements
-const signTransactionUsingHW = async (wallet, schema, chainID, transaction, senderAccount) => {
+const signTransactionUsingHW = async (wallet, schema, chainID, transaction, senderAccount, options) => {
   const [error, signedTransaction] = await to(
-    signTransactionByHW({ wallet, chainID, transaction, schema, senderAccount })
+    signTransactionByHW({ wallet, chainID, transaction, schema, senderAccount, options })
   );
 
   if (error) {
@@ -293,7 +293,7 @@ export const sign = async (
   options
 ) => {
   if (wallet.metadata?.isHW) {
-    return signTransactionUsingHW(wallet, schema, chainID, transaction, senderAccount);
+    return signTransactionUsingHW(wallet, schema, chainID, transaction, senderAccount, options);
   }
 
   if (options?.txInitiatorAccount?.numberOfSignatures > 0) {

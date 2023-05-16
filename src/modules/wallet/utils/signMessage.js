@@ -9,13 +9,11 @@ import { signMessageByHW } from './hwManager';
  * @return {string} a signed value of the message
  */
 export const signMessageUsingHW = async ({ message, account }) => {
-  let signature = await signMessageByHW({
+  const signature = await signMessageByHW({
     account,
     message,
   });
-  if (signature instanceof Uint8Array) {
-    signature = Buffer.from(signature);
-  }
+
   const result = cryptography.ed.printSignedMessage({
     message,
     signature,
