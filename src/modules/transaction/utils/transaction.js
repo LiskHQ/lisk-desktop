@@ -196,7 +196,7 @@ const getMembersAndSenderIndex = (transaction, publicKeyBuffer) => {
   const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
 
   return { members, senderIndex };
-}
+};
 
 const updateMultiSigRegSignatures = (transaction, members, senderIndex, memberSignature) => {
   const signatures = [...Array(members.length).keys()].map((index) => {
@@ -209,8 +209,7 @@ const updateMultiSigRegSignatures = (transaction, members, senderIndex, memberSi
   });
 
   transaction.params.signatures = signatures;
-  
-}
+};
 
 // eslint-disable-next-line max-statements
 const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, options) => {
@@ -270,7 +269,14 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
 };
 
 // eslint-disable-next-line max-statements
-const signTransactionUsingHW = async (wallet, schema, chainID, transaction, senderAccount, options) => {
+const signTransactionUsingHW = async (
+  wallet,
+  schema,
+  chainID,
+  transaction,
+  senderAccount,
+  options
+) => {
   const [error, signedTransaction] = await to(
     signTransactionByHW({ wallet, chainID, transaction, schema, senderAccount, options })
   );

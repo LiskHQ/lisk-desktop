@@ -23,54 +23,71 @@ const createUnsignedBytes = (transaction, options) => {
   return codec.codec.encode(messageSchema, message);
 };
 
+const signMultiSignatureTransaction = async (wallet, schema, chainID, transaction) => {
+  const unsignedBytes = transactions.getSigningBytes(transaction, schema);
+  const unsignedMessage = createUnsignedMessage(
+    transactions.TAG_TRANSACTION,
+    chainID,
+    unsignedBytes
+  );
+
+  const signedTransaction = await getSignedTransaction(
+    wallet.hw.path,
+    wallet.metadata.accountIndex,
+    unsignedMessage
+  );
+  let signature = signedTransaction?.signature;
+
+  if (signature instanceof Uint8Array) {
+    signature = Buffer.from(signature);
+  }
+
+  return signature;
+};
+
 /**
  * signTransactionByHW - Function.
  * This function is used for sign a send hardware wallet transaction.
  */
 // eslint-disable-next-line max-statements
-const signTransactionByHW = async ({ wallet, schema, chainID, transaction, senderAccount, options }) => {
-  const isMultisigReg = joinModuleAndCommand(transaction) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+const signTransactionByHW = async ({
+  wallet,
+  schema,
+  chainID,
+  transaction,
+  senderAccount,
+  options,
+}) => {
+  const isMultisigReg =
+    joinModuleAndCommand(transaction) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
   const signerPublicKey = Buffer.from(senderAccount.summary.publicKey, 'hex');
   const isSender =
     Buffer.isBuffer(transaction.senderPublicKey) &&
     signerPublicKey.equals(transaction.senderPublicKey);
 
-  const isFullySigned = isMultisigReg && transactions.params.signatures.filter(
-    (sig) => sig.compare(Buffer.alloc(64)) >= 0
-  ).length;
-
   let unsignedMessage;
   let signature;
 
-  if (isSender && isMultisigReg && !isFullySigned) {
-    const unsignedBytes = createUnsignedBytes(transaction, options);
-    unsignedMessage = createUnsignedMessage(
-      MESSAGE_TAG_MULTISIG_REG,
-      chainID,
-      unsignedBytes
-    );
-    signature = await signMessageByHW({ wallet, unsignedMessage });
-  } else {
-    const unsignedBytes = transactions.getSigningBytes(transaction, schema);
-    unsignedMessage = createUnsignedMessage(
-      transactions.TAG_TRANSACTION,
-      chainID,
-      unsignedBytes
-    );
+  if (isMultisigReg) {
+    const isNonEmptySignatureExists =
+      transaction.params.signatures.filter((sig) => sig.compare(Buffer.alloc(64)) === 0).length > 0;
 
-    const signedTransaction = await getSignedTransaction(
-      wallet.hw.path,
-      wallet.metadata.accountIndex,
-      unsignedMessage,
-    );
-    signature = signedTransaction?.signature;
+    if (isNonEmptySignatureExists) {
+      const unsignedBytes = createUnsignedBytes(transaction, options);
+      unsignedMessage = createUnsignedMessage(MESSAGE_TAG_MULTISIG_REG, chainID, unsignedBytes);
 
-    if (signature instanceof Uint8Array) {
-      signature = Buffer.from(signature);
+      signature = unsignedMessage;
+      signature = await signMessageByHW({ account: wallet, unsignedMessage });
     }
+
+    if (isSender && !isNonEmptySignatureExists) {
+      signature = await signMultiSignatureTransaction(wallet, schema, chainID, transaction);
+    }
+  } else {
+    signature = await signMultiSignatureTransaction(wallet, schema, chainID, transaction);
   }
 
-  return updateTransactionSignatures(wallet, senderAccount, transaction, Buffer.from(signature));
+  return updateTransactionSignatures(wallet, senderAccount, transaction, signature);
 };
 
 export { signTransactionByHW, createUnsignedMessage };

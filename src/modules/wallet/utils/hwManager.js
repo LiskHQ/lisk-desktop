@@ -2,7 +2,11 @@
 import i18next from 'i18next';
 import { getSignedMessage } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import { getMembersAndSenderIndex, joinModuleAndCommand, updateMultiSigRegSignatures } from 'src/modules/transaction/utils';
+import {
+  getMembersAndSenderIndex,
+  joinModuleAndCommand,
+  updateMultiSigRegSignatures,
+} from 'src/modules/transaction/utils';
 
 const isKeyMatch = (aPublicKey, signerPublicKey) =>
   Buffer.isBuffer(aPublicKey)
@@ -16,7 +20,8 @@ const isKeyMatch = (aPublicKey, signerPublicKey) =>
  */
 /* eslint-disable max-statements, complexity */
 const updateTransactionSignatures = (wallet, senderAccount, transaction, signature) => {
-  const isMultisigReg = joinModuleAndCommand(transaction) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const isMultisigReg =
+    joinModuleAndCommand(transaction) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
   const signerPublicKey = Buffer.from(senderAccount.summary.publicKey, 'hex');
   const isSender =
     Buffer.isBuffer(transaction.senderPublicKey) &&

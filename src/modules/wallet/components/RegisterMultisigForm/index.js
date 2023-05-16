@@ -41,7 +41,16 @@ const getInitialMembersState = (prevState) => {
     ];
   }
 
-  return [];
+  return [
+    {
+      isMandatory: true,
+      publicKey: '96826fd80ac39442b7e6e351178310b940ae3186f76ebfd16aab10096a64ba13',
+    },
+    {
+      isMandatory: true,
+      publicKey: 'fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122',
+    },
+  ];
 };
 const getInitialSignaturesState = (prevState) =>
   prevState.transactionJSON?.params?.numberOfSignatures ?? 2;

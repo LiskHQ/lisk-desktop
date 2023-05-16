@@ -1,6 +1,6 @@
 import { LedgerAccount } from '@zondax/ledger-lisk';
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
-import {getPubKey} from "@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/serverLedgerHWCommunication/index";
+import { getPubKey } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/serverLedgerHWCommunication/index';
 
 export const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();
@@ -16,7 +16,7 @@ export async function getDevicesFromPaths(devicePaths) {
     let isAppOpen = false;
     if (devicePaths[0]) {
       try {
-        isAppOpen = !!await getPubKey({ devicePath: devicePaths[0], accountIndex: 1 });
+        isAppOpen = !!(await getPubKey({ devicePath: devicePaths[0], accountIndex: 1 }));
       } catch (e) {
         isAppOpen = false;
       }
