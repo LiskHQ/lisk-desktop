@@ -59,11 +59,7 @@ const RequestSignSummary = ({
             </TransactionDetailsContext.Provider>
           </BoxContent>
         </Box>
-        <Footer
-          cancelButton={cancelButton}
-          confirmButton={confirmButton}
-          t={t}
-        />
+        <Footer cancelButton={cancelButton} confirmButton={confirmButton} t={t} />
       </BoxContent>
     </Box>
   );
