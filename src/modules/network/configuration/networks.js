@@ -14,7 +14,7 @@ const networks = {
   [networkKeys.mainnet]: {
     name: networkKeys.mainnet,
     label: 'Mainnet',
-    serviceUrl: 'http://mainnet-service.lisk.com',
+    serviceUrl: 'https://mainnet-service.lisk.com',
     wsServiceUrl: 'ws://mainnet-service.lisk.com',
     isAvailable: false,
   },
@@ -28,7 +28,7 @@ const networks = {
   [networkKeys.betanet]: {
     name: networkKeys.betanet,
     label: 'Betanet',
-    serviceUrl: 'http://betanet-service.lisk.com',
+    serviceUrl: 'https://betanet-service.lisk.com',
     wsServiceUrl: 'ws://betanet-service.lisk.com',
     isAvailable: true,
   },
@@ -42,7 +42,7 @@ const networks = {
   [networkKeys.testnet]: {
     name: networkKeys.testnet,
     label: 'Testnet',
-    serviceUrl: 'http://testnet-service.lisk.com',
+    serviceUrl: 'https://testnet-service.lisk.com',
     wsServiceUrl: 'ws://testnet-service.lisk.com',
     isAvailable: false,
   },
