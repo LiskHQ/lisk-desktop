@@ -68,7 +68,8 @@
       "category": "Network"
     },
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "publisherName": "Lisk Stiftung"
     },
     "mac": {
       "hardenedRuntime": true,
