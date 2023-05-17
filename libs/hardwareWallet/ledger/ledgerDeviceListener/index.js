@@ -8,7 +8,7 @@ export const ledgerDeviceListener = (win) => {
       let isAppOpen = false;
       if (fullDevice.path) {
         try {
-          isAppOpen = !!await getPubKey({ devicePath: fullDevice.path, accountIndex: 1 });
+          isAppOpen = !!(await getPubKey({ devicePath: fullDevice.path, accountIndex: 1 }));
         } catch (e) {
           isAppOpen = false;
         }
