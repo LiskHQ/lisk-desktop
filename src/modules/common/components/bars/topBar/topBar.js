@@ -17,7 +17,7 @@ import NavigationButtons from '@common/components/bars/topBar/navigationButtons'
 import styles from './topBar.css';
 
 const TopBar = ({ stakeCount, location, history }) => {
-  const disabled = [routes.reclaim.path, routes.selectNetwork.path].includes(location.pathname);
+  const disabled = [routes.reclaim.path].includes(location.pathname);
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
   const { t } = useTranslation();

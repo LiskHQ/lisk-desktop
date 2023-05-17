@@ -58,7 +58,6 @@ import ConnectionSummary from 'src/modules/blockchainApplication/connection/comp
 import RequestView from '@blockchainApplication/connection/components/RequestView';
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
 import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardwareDeviceModal';
-import SelectNetwork from 'src/modules/network/components/selectNetwork';
 
 export default {
   wallet: AccountDetails,
@@ -121,6 +120,5 @@ export default {
   connectionSummary: ConnectionSummary,
   connectionStatus: ConnectionStatus,
   changeCommission: ChangeCommissionDialog,
-  selectNetwork: SelectNetwork,
   dialogAddNetwork: DialogAddNetwork,
 };
