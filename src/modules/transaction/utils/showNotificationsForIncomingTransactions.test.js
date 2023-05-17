@@ -110,9 +110,7 @@ describe('showNotificationsForIncomingTransactions', () => {
     showNotificationsForIncomingTransactions(zeroAmtTxns, currAcct, mockToken);
 
     expect(toast.info).toHaveBeenCalledTimes(1);
-    expect(toast.info).toHaveBeenCalledWith(
-      'You received tokens'
-    );
+    expect(toast.info).toHaveBeenCalledWith('You received tokens');
   });
 
   it('should display notification no notification for other tx types', () => {

@@ -1,8 +1,6 @@
 /* istanbul ignore file */
-import { useSelector } from 'react-redux';
 import { BLOCKCHAIN_APPS_META_TOKENS } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
-import { selectNetworkName } from 'src/redux/selectors';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import defaultClient from 'src/utils/api/client';
@@ -19,7 +17,6 @@ import defaultClient from 'src/utils/api/client';
  * @returns the query object
  */
 export const useAppsMetaTokensConfig = () => {
-  const network = useSelector(selectNetworkName);
   const [{ chainID }] = useCurrentApplication();
 
   return (customConfig = {}) => ({
@@ -27,7 +24,7 @@ export const useAppsMetaTokensConfig = () => {
     method: 'get',
     event: 'get.blockchain.apps.meta.tokens',
     ...customConfig,
-    params: { limit, network, chainID, ...(customConfig?.params || {}) },
+    params: { limit, chainID, ...(customConfig?.params || {}) },
   });
 };
 
