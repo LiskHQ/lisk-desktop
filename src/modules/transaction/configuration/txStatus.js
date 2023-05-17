@@ -7,6 +7,8 @@ export const txStatusTypes = {
   signatureError: 'SIGNATURE_ERROR',
   broadcastError: 'BROADCAST_ERROR',
   hwRejected: 'HW_REJECTED',
+  hwLiskAppClosed: 'HW_LISK_APP_CLOSED',
+  hwDisconnected: 'HW_DISCONNECTED',
 };
 
 export const signatureCollectionStatus = {

@@ -10,13 +10,11 @@ import { TertiaryButton } from 'src/theme/buttons';
 import classNames from 'classnames';
 import styles from './HardwareWalletStatus.css';
 
-/* TODO: To be fixed in PDD-1482
 const Status = ({ status }) => (
   <div className={`${styles.statusWrapper} ${styles[status]}`}>
     <b>{status}</b>
   </div>
 );
-*/
 
 export const HardwareWalletStatus = () => {
   const { t } = useTranslation();
@@ -25,12 +23,13 @@ export const HardwareWalletStatus = () => {
     return null;
   }
 
-  const { manufacturer, product, status } = currentHWDevice;
+  const { manufacturer, product, isAppOpen } = currentHWDevice;
+  const status = isAppOpen ? 'connected' : 'standby';
 
   const hwStatusInfo = [
     { label: `${t('Brand')} : `, value: manufacturer },
     { label: `${t('Model')} : `, value: product },
-    /*    { label: `${t('Status')} : `, value: <Status status={status} /> }, TODO: To be fixed in PDD-1482 */
+    { label: `${t('Status')} : `, value: <Status status={status} /> },
   ];
 
   async function handleShowAddressOnDevice() {

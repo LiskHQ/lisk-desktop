@@ -11,11 +11,16 @@ import {
   getSignedTransaction,
 } from './serverLedgerHWCommunication';
 
-const { GET_CONNECTED_DEVICES, GET_SIGNED_MESSAGE, GET_PUB_KEY, GET_SIGNED_TRANSACTION } =
-  LEDGER_HW_IPC_CHANNELS;
+const {
+  GET_CONNECTED_DEVICES,
+  GET_SIGNED_MESSAGE,
+  GET_PUB_KEY,
+  GET_SIGNED_TRANSACTION,
+  RESET_LEDGER_IPC_QUEUE,
+} = LEDGER_HW_IPC_CHANNELS;
 
 export const ledgerLiskAppIPCChannel = () => {
-  const myq = new Queue();
+  let myq = new Queue();
 
   createIpcMainChannel(GET_SIGNED_TRANSACTION, async (data) => {
     const id = `${GET_SIGNED_TRANSACTION}-${Date.now()}`;
@@ -33,6 +38,15 @@ export const ledgerLiskAppIPCChannel = () => {
     const id = `${GET_PUB_KEY}-${Date.now()}`;
     const result = await getSequentiallyQueuedData(myq, id, () => getPubKey(data));
     return result;
+  });
+
+  createIpcMainChannel(RESET_LEDGER_IPC_QUEUE, async () => {
+    try {
+      myq = new Queue();
+      return true;
+    } catch (e) {
+      return false;
+    }
   });
 
   createIpcMainChannel(GET_CONNECTED_DEVICES, async () => {

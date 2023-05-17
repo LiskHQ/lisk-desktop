@@ -42,12 +42,6 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  selectNetwork: {
-    path: '/select-network',
-    isPrivate: false,
-    exact: true,
-    forbiddenTokens: [],
-  },
   backupRecoveryPhraseFlow: {
     path: '/account/backup-recovery-phrase',
     isPrivate: true,

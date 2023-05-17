@@ -17,19 +17,14 @@ const signTransactionByHW = async ({ wallet, schema, chainID, transaction }) => 
     chainID,
     unsignedBytes
   );
-
-  try {
-    const signature = await getSignedTransaction(
-      wallet.hw.path,
-      wallet.metadata.accountIndex,
-      unsignedMessage
-    );
-    transaction.signatures.push(signature.signature);
-    return transaction;
-    // return updateTransactionSignatures(wallet, transaction, signature);
-  } catch (error) {
-    throw new Error(error);
-  }
+  const signature = await getSignedTransaction(
+    wallet.hw.path,
+    wallet.metadata.accountIndex,
+    unsignedMessage
+  );
+  transaction.signatures.push(signature.signature);
+  return transaction;
+  // return updateTransactionSignatures(wallet, transaction, signature);
 };
 
 export { signTransactionByHW, createUnsignedMessage };

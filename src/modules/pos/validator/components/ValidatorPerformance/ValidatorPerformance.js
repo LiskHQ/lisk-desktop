@@ -3,13 +3,20 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
-import NotFound from 'src/modules/common/components/NotFound';
+import NotFound from '@common/components/NotFound';
+import { parseSearchParams } from 'src/utils/searchParams';
 import { isEmpty } from 'src/utils/helpers';
-import validatorPerformanceDetails from './ValidatorPerformanceDetails';
+import { useValidators } from '../../hooks/queries';
+import validatorPerformanceDetails from './validatorPerformanceDetails';
 import styles from './styles.css';
 
-// eslint-disable-next-line max-statements
-const ValidatorPerformance = ({ validator: { error, isLoading, data } } = {}) => {
+const ValidatorPerformance = ({ history }) => {
+  const address = parseSearchParams(history.location.search).address;
+  const {
+    isLoading,
+    data: { data } = {},
+    error,
+  } = useValidators({ config: { params: { address } } });
   if (!error && isEmpty(data)) {
     return <div />;
   }
@@ -17,12 +24,7 @@ const ValidatorPerformance = ({ validator: { error, isLoading, data } } = {}) =>
   if (error && isEmpty(data)) {
     return <NotFound />;
   }
-
-  const {
-    pos: {
-      validator: { punishmentPeriods, status, consecutiveMissedBlocks },
-    },
-  } = data;
+  const { punishmentPeriods, status, consecutiveMissedBlocks } = data[0];
   const headerTitle = {
     punished: 'Punishment details',
     banned: 'Ban details',

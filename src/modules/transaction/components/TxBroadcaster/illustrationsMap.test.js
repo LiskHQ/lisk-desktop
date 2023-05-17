@@ -5,14 +5,12 @@ describe('getIllustration', () => {
   it('displays illustration type for all non hardware wallet statuses', () => {
     const txStatus = txStatusTypes.signatureSuccess;
     const illustration = 'stake';
-    const accountHwInfo = {};
-    expect(getIllustration(txStatus, illustration, accountHwInfo)).toEqual('stakingSuccess');
+    expect(getIllustration(txStatus, illustration)).toEqual('stakingSuccess');
   });
 
   it('displays illustration type for all hardware wallet status', () => {
     const txStatus = txStatusTypes.hwRejected;
     const illustration = 'stake';
-    const accountHwInfo = { path: 1, deviceModel: 'ledger' };
-    expect(getIllustration(txStatus, illustration, accountHwInfo)).toEqual('ledgerNanoHwRejection');
+    expect(getIllustration(txStatus, illustration)).toEqual('hwRejection');
   });
 });
