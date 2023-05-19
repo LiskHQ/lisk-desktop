@@ -45,7 +45,7 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
     [activeTab, sort, filters]
   );
   const { data: validators } = useValidators({
-    config: { params: { limit: ROUND_LENGTH, status: 'active' } },
+    config: { params: { limit: 103, status: 'active' } },
     options: { enabled: activeTab === 'active' },
   });
 
