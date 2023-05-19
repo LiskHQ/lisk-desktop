@@ -4,17 +4,27 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useSort } from 'src/modules/common/hooks';
+import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import { useValidators } from '../../hooks/queries';
 import { useGenerators } from '../../hooks/queries/useGenerators';
 import ValidatorRow from './ValidatorRow';
 import header from './TableHeader';
 import { ROUND_LENGTH } from '../../consts';
 
+// eslint-disable-next-line max-statements
 const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
   const { t } = useTranslation();
   const watchList = useSelector((state) => state.watchList);
   const queryHook = activeTab === 'active' ? useGenerators : useValidators;
+  const { data: { data: latestBlocks = [] } = {} } = useBlocks({
+    config: { params: { limit: 100 } },
+    options: {
+      refetchInterval: 10000,
+    },
+  });
   const { sort, toggleSort } = useSort();
+  const forgedBlocksInRound = latestBlocks[0]?.height % ROUND_LENGTH;
+  const remainingBlocksInRound = ROUND_LENGTH - forgedBlocksInRound;
 
   const queryConfig = useMemo(
     () => ({
@@ -35,7 +45,7 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
     [activeTab, sort, filters]
   );
   const { data: validators } = useValidators({
-    config: { params: { limit: 103, status: 'active' } },
+    config: { params: { limit: ROUND_LENGTH, status: 'active' } },
     options: { enabled: activeTab === 'active' },
   });
 
@@ -48,12 +58,20 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
         (acc, val) => ({ ...acc, [val.address]: val }),
         {}
       );
-      return generatorsData.map((gen) => ({
-        ...gen,
-        ...normalizedValidators[gen.address],
-      }));
+      return generatorsData.map((gen, index) => {
+        const haveForgedInRound = latestBlocks
+          ?.filter((_, i) => forgedBlocksInRound >= i)
+          .map((genData) => genData.generator.name);
+        if (haveForgedInRound.indexOf(gen.name) > -1) {
+          return { ...gen, ...normalizedValidators[gen.address], state: 'generating' };
+        }
+        if (index < remainingBlocksInRound) {
+          return { ...gen, ...normalizedValidators[gen.address], state: 'awaitingSlot' };
+        }
+        return { ...gen, ...normalizedValidators[gen.address], state: 'missedBlock' };
+      });
     },
-    [validators]
+    [validators, latestBlocks]
   );
 
   return (
