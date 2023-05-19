@@ -11,8 +11,8 @@ describe('Peer Row', () => {
       location: {
         countryCode: 49,
       },
-      version: '3.0',
-      httpPort: 8080,
+      networkVersion: '3.0',
+      port: 8080,
     },
     className: 'customTestClassNames',
   };
