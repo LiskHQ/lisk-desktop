@@ -89,7 +89,7 @@ const getFields = (data = {}, token, t, currentHeight) => ({
   },
   totalGenerated: {
     label: t('Status'),
-    value: data.isFinal ? 'Final' : 'Not final',
+    value: data.isFinal ? 'Final' : 'Pending',
   },
 });
 

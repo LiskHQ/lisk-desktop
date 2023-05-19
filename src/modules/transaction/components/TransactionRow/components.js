@@ -128,9 +128,7 @@ export const Date = ({ t }) => {
   const { data } = useContext(TransactionRowContext);
 
   if (!data.block.timestamp) {
-    return (
-      <Spinner completed={data.block.isFinal || data.block?.timestamp} label={t('Pending...')} />
-    );
+    return <Spinner completed={data.block.isFinal} label={t('Pending...')} />;
   }
 
   return (
@@ -192,7 +190,7 @@ export const Status = ({ t }) => {
   return (
     <span>
       <Tooltip
-        title={data.block.isFinal ? t('Final') : t('Not final')}
+        title={data.block.isFinal ? t('Final') : t('Pending')}
         position="left"
         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
         content={<Icon name={data.block.isFinal ? 'approved' : 'inprogress'} />}
