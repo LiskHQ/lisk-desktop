@@ -2,7 +2,7 @@ const peer = (index) => ({
   ip: `94.130.96.${index}`,
   port: 5000,
   networkVersion: `3.0.0-beta.${index}`,
-  state: "connected",
+  state: 'connected',
   height: 25941 + index,
   location: {
     countryCode: 'DE',

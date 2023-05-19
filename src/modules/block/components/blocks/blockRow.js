@@ -19,7 +19,7 @@ const BlockRow = ({ data, className }) => (
     <span className={grid['col-xs-3']}>{data.generator.name ?? data.generator.address}</span>
     <span className={grid['col-xs-1']}>{data.numberOfTransactions}</span>
     <span className={grid['col-xs-3']}>
-      <Icon name="checkmark" />
+      <Icon name={`${data.isFinal ? 'checkmark' : 'inprogress'}`} />
     </span>
   </Link>
 );
