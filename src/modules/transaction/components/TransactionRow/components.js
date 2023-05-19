@@ -193,7 +193,7 @@ export const Status = ({ t }) => {
         title={data.block.isFinal ? t('Final') : t('Pending')}
         position="left"
         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
-        content={<Icon name={data.block.isFinal ? 'approved' : 'inprogress'} />}
+        content={<Icon name={data.block.isFinal ? 'approved' : 'inProgress'} />}
         size="s"
       />
     </span>

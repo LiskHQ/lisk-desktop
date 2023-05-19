@@ -26,7 +26,7 @@ import bookmarksIconEmptyStateDark from '@setup/react/assets/images/icons/bookma
 import checkboxFilled from '@setup/react/assets/images/icons/checkmark-filled.svg';
 import checkboxCircleFilled from '@setup/react/assets/images/icons/checkmark-circle-filled.svg';
 import checkmark from '@setup/react/assets/images/icons/checkmark.svg';
-import inprogress from '@setup/react/assets/images/icons/inprogress.svg';
+import inProgress from '@setup/react/assets/images/icons/inprogress.svg';
 import copy from '@setup/react/assets/images/icons/copy.svg';
 import copyActive from '@setup/react/assets/images/icons/copy-active.svg';
 import discord from '@setup/react/assets/images/icons/discord.svg';
@@ -457,7 +457,7 @@ export const icons = {
   multisigKeys,
   multisigKeysDark,
   hardwareWalletIcon,
-  inprogress,
+  inProgress,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
