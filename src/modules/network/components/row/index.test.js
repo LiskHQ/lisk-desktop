@@ -24,6 +24,12 @@ describe('Peer Row', () => {
     expect(wrapper.find('.network-span')).toHaveText('3.0');
   });
 
+  it('renders the fallback data if data is unavailable', () => {
+    const wrapper = mount(<Row data={{}} />);
+    expect(wrapper.find('span').at(3)).toHaveText('Unknown');
+    expect(wrapper.find('span').at(4)).toHaveText('Unknown');
+  });
+
   it('does not re-render if height or ip do not change', () => {
     const wrapper = mount(<Row {...props} />);
     expect(wrapper.find('span').at(0)).toHaveText('192.168.0.1');
