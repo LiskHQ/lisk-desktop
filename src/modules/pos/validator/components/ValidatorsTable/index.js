@@ -62,7 +62,7 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
         const haveForgedInRound = latestBlocks
           ?.filter((_, i) => forgedBlocksInRound >= i)
           .map((genData) => genData.generator.name);
-        if (haveForgedInRound.indexOf(gen.name) > -1) {
+        if (haveForgedInRound?.indexOf(gen.name) > -1) {
           return { ...gen, ...normalizedValidators[gen.address], state: 'generating' };
         }
         if (index < remainingBlocksInRound) {
