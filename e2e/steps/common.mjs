@@ -21,6 +21,10 @@ Given('I click on a button with exact text {string}', async function (buttonText
   await this.page.getByText(buttonText, { exact: true }).click();
 });
 
+Given('I click on text {string}', async function (text) {
+  await this.page.getByText(text, { exact: true }).click();
+});
+
 Then('I should exactly see {string}', async function (textContent) {
   await expect(this.page.getByText(textContent, { exact: true })).toBeVisible();
 });
@@ -34,5 +38,22 @@ Then('I should see an image with alt text {string}', async function (altText) {
 });
 
 Then('I should be redirected to route: {string}', async function (route) {
-  await expect(this.page.url()).toBe(`#/${route}`);
+  await expect(this.page.url()).toBe(`http://localhost:8080/#/${route}`);
+});
+
+Then('button with text {string} should be disabled', async function (textContent) {
+  await expect(this.page.getByText(textContent, { exact: true })).toBeDisabled();
+});
+
+Given('I fill in mnemonic phrases {string}', async function (passPhrase) {
+  const phrases = passPhrase.split(' ');
+
+  for (let index = 0; index < phrases.length; index++) {
+    // eslint-disable-next-line no-await-in-loop
+    await this.page.getByTestId(`recovery-${index}`).fill(phrases[index]);
+  }
+});
+
+Given('I type {string} in {string}', async function (text, dataTestId) {
+  await this.page.getByTestId(dataTestId).fill(text);
 });

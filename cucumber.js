@@ -6,5 +6,6 @@ module.exports = {
     import: ['./e2e/steps/**/*.mjs', './e2e/steps/**/*.js'],
     dryRun: false,
     publishQuite: true,
+    failFast: false,
   },
 };

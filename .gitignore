@@ -29,3 +29,6 @@ tests/cypress/videos
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+## Cucumber
+cucumber-report.html
