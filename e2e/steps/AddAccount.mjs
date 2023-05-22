@@ -1,10 +1,16 @@
 /* eslint-disable new-cap */
-import { Then } from '@cucumber/cucumber';
+import { Then, Given } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 
-Then('custom derivation path input field should be enabled', async function () {
-  await expect(this.page.getByText('Custom derivation path', { exact: true })).toBeTruthy();
-  await expect(this.page.getByTestId('custom-derivation-path')).toBeTruthy();
+Then('custom derivation path input field should be {string}', async function (state) {
+  if (state === 'enabled') {
+    await expect(this.page.getByText('Custom derivation path', { exact: true })).toBeTruthy();
+    await expect(this.page.getByTestId('custom-derivation-path')).toBeTruthy();
+  } else {
+    await expect(
+      await this.page.getByText('Custom derivation path', { exact: true }).count()
+    ).toEqual(0);
+  }
 });
 
 Then('I should see the final add account step', async function () {
@@ -15,4 +21,24 @@ Then('I should see the final add account step', async function () {
       { exact: true }
     )
   ).toBeTruthy();
+});
+
+Given('I input encrypted account:', async function (encryptedAccountJson) {
+  //   await this.page.getByTestId('tx-sign-input').fill(encryptedAccountJson);
+  //   await this.page.getByTestId('tx-sign-input').focus();
+  await this.page.evaluate(async (text) => {
+    document.querySelector('[data-testid="tx-sign-input"]').value = text;
+    document.querySelector('[data-testid="tx-sign-input"]').focus();
+    document.querySelector('[data-testid="tx-sign-input"]').select();
+    document.execCommand('copy');
+
+    document.querySelector('[data-testid="tx-sign-input"]').focus();
+    document.querySelector('[data-testid="tx-sign-input"]').select();
+    document.execCommand('paste');
+    // const data = await navigator.clipboard.readText();
+  }, encryptedAccountJson);
+
+  //   await this.page.getByTestId('tx-sign-input').focus();
+  //   await this.page.getByTestId('tx-sign-input').press('Control+c');
+  //   await this.page.getByTestId('tx-sign-input').press('Control+v');
 });

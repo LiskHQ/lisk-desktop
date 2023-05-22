@@ -47,10 +47,11 @@ const networks = {
     isAvailable: false,
   },
   [networkKeys.customNode]: {
-    name: networkKeys.customNode,
+    name: networkKeys.devnet,
     label: 'Custom Service Node',
     serviceUrl: 'http://localhost:9901',
     wsServiceUrl: 'ws://localhost:9901',
+    isAvailable: true,
   },
 };
 

@@ -21,6 +21,10 @@ Given('I click on a button with exact text {string}', async function (buttonText
   await this.page.getByText(buttonText, { exact: true }).click();
 });
 
+Given('I click on a button with testId {string}', async function (testId) {
+  await this.page.getByTestId(testId).click();
+});
+
 Given('I click on text {string}', async function (text) {
   await this.page.getByText(text, { exact: true }).click();
 });
@@ -57,3 +61,20 @@ Given('I fill in mnemonic phrases {string}', async function (passPhrase) {
 Given('I type {string} in {string}', async function (text, dataTestId) {
   await this.page.getByTestId(dataTestId).fill(text);
 });
+
+Then(
+  'I should be on the password collection step having address: {string} and account name {string}',
+  async function (address, accountName) {
+    await expect(
+      this.page.getByText('Enter your account password', { exact: true })
+    ).toBeDisabled();
+    await expect(this.page.getByText(address, { exact: true })).toBeDisabled();
+    await expect(this.page.getByText(accountName, { exact: true })).toBeDisabled();
+    await expect(
+      this.page.getByText(
+        'Please enter your account password to backup the secret recovery phrase.',
+        { exact: true }
+      )
+    ).toBeDisabled();
+  }
+);
