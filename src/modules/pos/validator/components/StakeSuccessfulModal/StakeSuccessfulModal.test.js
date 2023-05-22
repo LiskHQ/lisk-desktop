@@ -19,7 +19,7 @@ describe('StakeSuccessfulModal', () => {
     expect(screen.getByText('Staking confirmed')).toBeTruthy();
     expect(screen.getByText('test message')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('Back to validators'));
+    fireEvent.click(screen.getByText('Show all your stakes'));
 
     await waitFor(() => {
       expect(props.history.push).toHaveBeenCalledWith('/validators');
