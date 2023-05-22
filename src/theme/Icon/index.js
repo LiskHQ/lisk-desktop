@@ -25,7 +25,6 @@ import bookmarksIconEmptyState from '@setup/react/assets/images/icons/bookmarks-
 import bookmarksIconEmptyStateDark from '@setup/react/assets/images/icons/bookmarks-empty-state-dark.svg';
 import checkboxFilled from '@setup/react/assets/images/icons/checkmark-filled.svg';
 import checkboxCircleFilled from '@setup/react/assets/images/icons/checkmark-circle-filled.svg';
-import checkmark from '@setup/react/assets/images/icons/checkmark.svg';
 import copy from '@setup/react/assets/images/icons/copy.svg';
 import copyActive from '@setup/react/assets/images/icons/copy-active.svg';
 import discord from '@setup/react/assets/images/icons/discord.svg';
@@ -71,9 +70,10 @@ import showPassphraseIcon from '@setup/react/assets/images/icons/icon-show-passp
 import signIn from '@setup/react/assets/images/icons/signin.svg';
 import signInActive from '@setup/react/assets/images/icons/signin-active.svg';
 import tooltipQuestionMark from '@setup/react/assets/images/icons/tooltip-question-icon.svg';
-import transactionApproved from '@setup/react/assets/images/icons/transaction-status-approved.svg';
 import transactionError from '@setup/react/assets/images/icons/transaction-error.svg';
-import transactionPending from '@setup/react/assets/images/icons/transaction-status-pending.svg';
+import transactionStatusSuccess from '@setup/react/assets/images/icons/transaction-status-success.svg';
+import transactionStatusPending from '@setup/react/assets/images/icons/transaction-status-pending.svg';
+import transactionStatusFail from '@setup/react/assets/images/icons/transaction-status-fail.svg';
 import transactionSuccess from '@setup/react/assets/images/icons/transaction-success.svg';
 import txDefault from '@setup/react/assets/images/icons/tx-default.svg';
 import txDefaultDark from '@setup/react/assets/images/icons/tx-default-dark.svg';
@@ -251,7 +251,6 @@ export const icons = {
   calendarDark,
   checkboxFilled,
   checkboxCircleFilled,
-  checkmark,
   consecutiveMissedBlocks,
   consecutiveMissedBlocksDark,
   copy,
@@ -301,9 +300,10 @@ export const icons = {
   star,
   starDark,
   tooltipQuestionMark,
-  transactionApproved,
   transactionError,
-  transactionPending,
+  transactionStatusSuccess,
+  transactionStatusPending,
+  transactionStatusFail,
   transactionSuccess,
   txDefault,
   txDefaultDark,
