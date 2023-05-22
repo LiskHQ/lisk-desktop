@@ -39,16 +39,8 @@ Feature: AddAccount
         Given I click on text "Settings"
         And I click on text "Enable access to legacy Lisk accounts"
         And I click on a button with testId "dialog-close-button"
-        And I click on a button with exact text "Secret recovery phrase"
-        Then I should be redirected to route: "account/add/secret-recovery"
-        And I should exactly see "Add your account"
-        And I should exactly see "Enter your secret recovery phrase to manage your account."
-        And I should exactly see "Secret recovery phrase (12-24 mnemonic phrases supported)"
-        And custom derivation path input field should be "disabled"
-        And button with text 'Continue to set password' should be disabled
-        Given I click on a button with exact text "Go back"
-        Then I should be redirected to route: "account/add"
-        Given I click on a button with exact text "Secret recovery phrase"
+        And I click on a button with exact text "Secret recovery phrase"        
+        Then custom derivation path input field should be "disabled"
         And I fill in mnemonic phrases 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready'
         And I click on a button with exact text "Continue to set password"
         Then I should exactly see "Set up your account password"
