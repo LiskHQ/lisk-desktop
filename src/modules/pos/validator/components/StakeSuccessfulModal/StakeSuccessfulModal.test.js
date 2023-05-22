@@ -22,7 +22,7 @@ describe('StakeSuccessfulModal', () => {
     fireEvent.click(screen.getByText('Show all your stakes'));
 
     await waitFor(() => {
-      expect(props.history.push).toHaveBeenCalledWith('/validators');
+      expect(props.history.push).toHaveBeenCalledWith('/validators/profile/stakes');
     });
   });
 });
