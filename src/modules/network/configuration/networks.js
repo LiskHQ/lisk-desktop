@@ -37,7 +37,7 @@ const networks = {
     label: 'Devnet',
     serviceUrl: 'http://devnet-service.liskdev.net:9901',
     wsServiceUrl: 'ws://devnet-service.liskdev.net:9901',
-    isAvailable: false,
+    isAvailable: true,
   },
   [networkKeys.testnet]: {
     name: networkKeys.testnet,
@@ -47,11 +47,10 @@ const networks = {
     isAvailable: false,
   },
   [networkKeys.customNode]: {
-    name: networkKeys.devnet,
+    name: networkKeys.customNode,
     label: 'Custom Service Node',
     serviceUrl: 'http://localhost:9901',
     wsServiceUrl: 'ws://localhost:9901',
-    isAvailable: true,
   },
 };
 
