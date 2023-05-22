@@ -42,7 +42,6 @@
     "clean:build": "rm -rf app/build",
     "clean:dist": "rm -rf dist",
     "postinstall": "patch-package && electron-builder install-app-deps",
-    "playwright:open": "playwright test --project=chromium --workers=3 --headed -c e2e/playwright.config.js",
     "cucumber:playwright:open": "cucumber-js test -c cucumber.js"
   },
   "build": {

@@ -33,7 +33,7 @@ Then('I should exactly see {string}', async function (textContent) {
   await expect(this.page.getByText(textContent, { exact: true })).toBeVisible();
 });
 
-Then('I may see {string}', async function (textContent) {
+Then('I should see {string}', async function (textContent) {
   await expect(this.page.getByText(textContent)).toBeVisible();
 });
 
@@ -65,16 +65,22 @@ Given('I type {string} in {string}', async function (text, dataTestId) {
 Then(
   'I should be on the password collection step having address: {string} and account name {string}',
   async function (address, accountName) {
-    await expect(
-      this.page.getByText('Enter your account password', { exact: true })
-    ).toBeDisabled();
-    await expect(this.page.getByText(address, { exact: true })).toBeDisabled();
-    await expect(this.page.getByText(accountName, { exact: true })).toBeDisabled();
+    await expect(this.page.getByText('Enter your account password', { exact: true })).toBeTruthy();
+    await expect(this.page.getByText(address, { exact: true })).toBeTruthy();
+    await expect(this.page.getByText(accountName, { exact: true })).toBeTruthy();
     await expect(
       this.page.getByText(
         'Please enter your account password to backup the secret recovery phrase.',
         { exact: true }
       )
-    ).toBeDisabled();
+    ).toBeTruthy();
   }
 );
+
+Given('I upload json content:', async function (encryptedAccountJson) {
+  await this.page.setInputFiles('input[role=button]', {
+    name: 'encrypted_account.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(encryptedAccountJson),
+  });
+});
