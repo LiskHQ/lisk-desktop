@@ -125,7 +125,7 @@ const AddAccountFormWithDerivationPath = (props) => {
     >
       <CustomDerivationPath
         onChange={onPathInputChange}
-        value={derivationPath}
+        derivationPath={derivationPath}
         derivationPathErrorMessage={derivationPathErrorMessage}
       />
     </AddAccountFormContainer>

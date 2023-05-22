@@ -32,7 +32,6 @@ const ApplicationBootstrap = ({ children }) => {
         chainID: [...new Set([networkStatus.data?.data?.chainID, currentApplication.chainID])]
           .filter((item) => item)
           .join(','),
-        network: mainChainNetwork?.name,
       },
     },
     options: { enabled: !!networkStatus.data && !!mainChainNetwork },

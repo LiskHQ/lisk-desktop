@@ -16,12 +16,11 @@ export const useTransactionUpdate = (isLoading) => {
   const queryClient = useQueryClient();
   const [currentAccount] = useCurrentAccount();
   const [currentApplication] = useCurrentApplication();
-  const { data: tokens } = useTokenBalances({
+  const { data: tokens, isLoading: isTokensLoading } = useTokenBalances({
     config: { params: { address: currentAccount?.metadata?.address } },
     options: { enabled: !!currentAccount?.metadata?.address },
   });
 
-  const token = tokens?.data?.[0] || {};
   const { chainID } = currentApplication;
   const currentApplicationData = useRef(currentApplication);
   currentApplicationData.current = chainID;
@@ -70,17 +69,17 @@ export const useTransactionUpdate = (isLoading) => {
         });
       await queryClient.invalidateQueries({ queryKey: [AUTH] });
       await queryClient.invalidateQueries({ queryKey: [TOKENS_BALANCE] });
-      // @TODO: token is temporarily hardcoded pending handling of token meta data
-      // like tokenID and baseDenom
+
+      const token = tokens?.data.length ? tokens?.data[0] : {};
       showNotificationsForIncomingTransactions(newTransactions.data, currentAccount, token);
       client.socket.off('new.transactions');
     });
-  }, [chainID, isLoading]);
+  }, [chainID, isLoading, currentAccount, tokens]);
 
   useEffect(() => {
-    if (!client.socket) return () => {};
+    if (!client.socket || isTokensLoading) return () => {};
 
     connect();
     return () => client.socket.off('new.transactions');
-  }, [chainID, client.socket]);
+  }, [chainID, client.socket, isTokensLoading]);
 };

@@ -52,6 +52,7 @@ describe('showNotificationsForIncomingTransactions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
   it('should display notifications for transactions related to current account', () => {
     showNotificationsForIncomingTransactions(txns, currAcct, mockToken);
 
@@ -86,7 +87,7 @@ describe('showNotificationsForIncomingTransactions', () => {
     );
   });
 
-  it('should display notifications with additional info for transactions related to current account', () => {
+  it('should display notification with no value if the amount is zero', () => {
     const zeroAmtTxns = [
       {
         id: `bd2b83bafc284b068264ab12f132897eba8a89b4d8591f424e04bc5bb24e5628`,
@@ -108,9 +109,29 @@ describe('showNotificationsForIncomingTransactions', () => {
     ];
     showNotificationsForIncomingTransactions(zeroAmtTxns, currAcct, mockToken);
 
-    expect(toast.info).not.toHaveBeenCalledTimes(1);
-    expect(toast.info).not.toHaveBeenCalledWith(
-      'Your account just received 0 LSK with message test'
-    );
+    expect(toast.info).toHaveBeenCalledTimes(1);
+    expect(toast.info).toHaveBeenCalledWith('You received tokens');
+  });
+
+  it('should display notification no notification for other tx types', () => {
+    const zeroAmtTxns = [
+      {
+        id: `bd2b83bafc284b068264ab12f132897eba8a89b4d8591f424e04bc5bb24e5628`,
+        type: 0,
+        moduleCommand: 'pos:registerValidator',
+        fee: '10000000',
+        isPending: false,
+        sender: { address: 'lskqw2b528hc6ud7y56toq3kmaq6kj2fpvf9amvtx' },
+        params: {
+          name: 'test',
+        },
+        block: {
+          timestamp: 106359582,
+          height: 9383851,
+        },
+      },
+    ];
+    showNotificationsForIncomingTransactions(zeroAmtTxns, currAcct, mockToken);
+    expect(toast.info).toHaveBeenCalledTimes(0);
   });
 });

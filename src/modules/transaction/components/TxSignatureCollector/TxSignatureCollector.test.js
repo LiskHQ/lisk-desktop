@@ -9,7 +9,7 @@ import accounts from '@tests/constants/wallets';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { useAuth } from '@auth/hooks/queries/useAuth';
 import { mockAuth } from '@auth/__fixtures__';
-import {mockHWCurrentDevice} from "@hardwareWallet/__fixtures__";
+import { mockHWCurrentDevice } from '@hardwareWallet/__fixtures__';
 import TxSignatureCollector from './TxSignatureCollector';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
