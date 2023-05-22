@@ -83,7 +83,7 @@ const TransactionDetails = ({ location }) => {
         value: nonce,
       },
       {
-        label: t('Status'),
+        label: t('Execution status'),
         value: executionStatus,
         type: 'status',
       },

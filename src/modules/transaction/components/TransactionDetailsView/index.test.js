@@ -85,7 +85,7 @@ describe('TransactionDetailsView', () => {
     expect(screen.getByText('Date')).toBeTruthy();
     expect(screen.getByText('Nonce')).toBeTruthy();
     expect(screen.getByText('Block status')).toBeTruthy();
-    expect(screen.getByText('Status')).toBeTruthy();
+    expect(screen.getByText('Execution status')).toBeTruthy();
     expect(screen.getByText('ID')).toBeTruthy();
     expect(screen.getByText('Block ID')).toBeTruthy();
     expect(screen.getByText('Block height')).toBeTruthy();
