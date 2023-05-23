@@ -13,7 +13,6 @@ import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 
 export function useCurrentApplication() {
-  // @TODO: Remove history param and use hooks after #4986 is implemented
   const dispatch = useDispatch();
   const history = useHistory();
 

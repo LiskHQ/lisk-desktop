@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TertiaryButton } from 'src/theme/buttons';
+import { useHistory, useLocation } from 'react-router-dom';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
@@ -70,7 +71,10 @@ const RightRowComponent = ({
   );
 };
 
-const ApplicationManagementRow = ({ className, application, history, location }) => {
+/* eslint max-statements: ["error", 15] */
+const ApplicationManagementRow = ({ className, application }) => {
+  const history = useHistory();
+  const location = useLocation();
   const { togglePin, checkPinByChainId } = usePinBlockchainApplication();
   const [currentApplication, setApplication] = useCurrentApplication();
 
