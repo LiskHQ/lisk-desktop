@@ -29,4 +29,4 @@ export const DeviceDisconnectDialog = ({ t }) => {
   );
 };
 
-export default withRouter(withTranslation()(DeviceDisconnectDialog));
+export default withTranslation()(DeviceDisconnectDialog);
