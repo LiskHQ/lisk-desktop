@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
@@ -12,12 +12,12 @@ const addAccountOptions = (t) => [
   {
     text: t('Secret recovery phrase'),
     iconName: 'secretPassphrase',
-    pathname: routes.addAccountBySecretRecovery.path,
+    pathName: routes.addAccountBySecretRecovery.path,
   },
   {
     text: t('Restore from backup'),
     iconName: 'accountUpload',
-    pathname: routes.addAccountByFile.path,
+    pathName: routes.addAccountByFile.path,
   },
 ];
 
@@ -30,7 +30,9 @@ const AddAccountOptionButton = ({ iconName, text, onClick }) => (
   </button>
 );
 
-const AddAccountOptions = ({ history, location: { search } }) => {
+const AddAccountOptions = () => {
+  const history = useHistory();
+  const { search } = useLocation();
   const { t } = useTranslation();
 
   return (
@@ -43,12 +45,12 @@ const AddAccountOptions = ({ history, location: { search } }) => {
             <h1>{t('Add your account')}</h1>
             <p>{t('Choose an option to add your account to Lisk wallet.')}</p>
             <div className={styles.selectRowWrapper}>
-              {addAccountOptions(t).map(({ text, iconName, pathname }) => (
+              {addAccountOptions(t).map(({ text, iconName, pathName }) => (
                 <AddAccountOptionButton
                   key={text}
                   text={text}
                   iconName={iconName}
-                  onClick={() => history.push({ pathname, search })}
+                  onClick={() => history.push({ pathName, search })}
                 />
               ))}
             </div>
@@ -63,4 +65,4 @@ const AddAccountOptions = ({ history, location: { search } }) => {
   );
 };
 
-export default withRouter(AddAccountOptions);
+export default AddAccountOptions;

@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import Spinner from 'src/theme/Spinner';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -19,12 +19,12 @@ import AccountRow from '../AccountRow';
 
 export const ManageAccountsContent = ({
   isRemoveAvailable,
-  history,
   className,
   truncate,
   title: customTitle,
-  location: { search } = { search: '' },
 }) => {
+  const history = useHistory();
+  const { search } = useLocation();
   const { t } = useTranslation();
   const { accounts } = useAccounts();
   const [currentAccount, setAccount] = useCurrentAccount(history);
@@ -138,4 +138,4 @@ ManageAccounts.defaultProps = {
   isDialog: false,
 };
 
-export default withRouter(ManageAccounts);
+export default ManageAccounts;

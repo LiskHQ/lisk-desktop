@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Dialog from '@theme/dialog/dialog';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { withRouter } from 'react-router';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { EVENTS, ACTIONS } from '@libs/wcm/constants/lifeCycle';
@@ -14,7 +14,8 @@ import AccountsSelector from './AccountsSelector';
 import styles from './connectionSummary.css';
 
 // eslint-disable-next-line max-statements
-const ConnectionSummary = ({ history }) => {
+const ConnectionSummary = () => {
+  const history = useHistory();
   const [addresses, setAddresses] = useState([]);
   const { t } = useTranslation();
   const { events } = useEvents();
@@ -110,4 +111,4 @@ const ConnectionSummary = ({ history }) => {
   );
 };
 
-export default withRouter(ConnectionSummary);
+export default ConnectionSummary;

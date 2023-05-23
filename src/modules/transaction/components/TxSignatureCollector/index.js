@@ -1,5 +1,5 @@
 // istanbul ignore file
-import { withRouter } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { multisigTransactionSigned, signatureSkipped } from 'src/redux/actions';

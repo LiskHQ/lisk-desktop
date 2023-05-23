@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import SetPasswordSuccess from '@auth/components/SetPasswordSuccess';
@@ -8,7 +8,8 @@ import EditAccountForm from './EditAccountForm';
 import { useCurrentAccount } from '../../hooks';
 import styles from './EditAccountForm.css';
 
-const EditAccount = ({ history }) => {
+const EditAccount = () => {
+  const history = useHistory();
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
 
@@ -30,4 +31,4 @@ const EditAccount = ({ history }) => {
   );
 };
 
-export default withRouter(EditAccount);
+export default EditAccount;

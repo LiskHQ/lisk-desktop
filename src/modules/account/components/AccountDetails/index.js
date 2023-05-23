@@ -1,7 +1,6 @@
-/* eslint-disable max-statements */
 /* istanbul ignore file */
 import React, { useEffect } from 'react';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { addSearchParamsToUrl, parseSearchParams } from 'src/utils/searchParams';
@@ -15,7 +14,8 @@ import AccountOverview from '@account/components/AccountDetails/AccountOverview'
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './accountDetails.css';
 
-const AccountDetails = ({ history }) => {
+const AccountDetails = () => {
+  const history = useHistory();
   const [currentAccount] = useCurrentAccount();
   const { accounts } = useAccounts();
   const { t } = useTranslation();
@@ -57,4 +57,4 @@ const AccountDetails = ({ history }) => {
   return renderComponent();
 };
 
-export default compose(withRouter)(AccountDetails);
+export default compose(AccountDetails);

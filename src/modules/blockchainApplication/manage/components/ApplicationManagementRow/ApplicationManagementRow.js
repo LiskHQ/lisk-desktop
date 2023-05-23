@@ -72,7 +72,7 @@ const RightRowComponent = ({
 
 const ApplicationManagementRow = ({ className, application, history, location }) => {
   const { togglePin, checkPinByChainId } = usePinBlockchainApplication();
-  const [currentApplication, setApplication] = useCurrentApplication(history);
+  const [currentApplication, setApplication] = useCurrentApplication();
 
   const isPinned = useMemo(() => checkPinByChainId(application.chainID), [checkPinByChainId]);
   const isCurrentApplication = useMemo(
