@@ -2,19 +2,10 @@
 import { Given, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import routes from '../fixtures/routes.mjs';
-import waitFor from '../utilities/waitFor.mjs';
+// import waitFor from '../utilities/waitFor.mjs';
 
 Given('I navigate to page {string}', async function (pageName) {
   await this.openUrl(routes[pageName]);
-});
-
-Given('I switch to network {string}', async function (network) {
-  await this.openUrl(routes.selectNetwork);
-  await waitFor(1000);
-  await this.page.getByTestId('selected-menu-item').click();
-  await this.page.getByText(network, { exact: true }).click();
-
-  await expect(this.page.getByText('Alphanet', { exact: true })).toBeVisible();
 });
 
 Given('I click on a button with exact text {string}', async function (buttonText) {
@@ -84,3 +75,30 @@ Given('I upload json content:', async function (encryptedAccountJson) {
     buffer: Buffer.from(encryptedAccountJson),
   });
 });
+
+Given('I switch to network {string}', async function (networkName) {
+  await this.page.getByTestId('network-application-trigger').click();
+  await this.page.getByTestId('selected-menu-item').click();
+  await this.page.getByText(networkName).click();
+});
+
+Given('I go back to the previous page', async function () {
+  await this.page.goBack();
+});
+
+Given(
+  'I add a custom network with name {string} and serviceUrl {string}',
+  async function (networkName, serviceUrl) {
+    await this.page.getByTestId('network-application-trigger').click();
+    await this.page.getByText('Add network').click();
+
+    await this.page.getByTestId('name').fill(networkName);
+    await this.page.getByTestId('serviceUrl').fill(serviceUrl);
+    await this.page
+      .locator('[type="submit"]')
+      .filter({
+        hasText: 'Add network',
+      })
+      .click();
+  }
+);

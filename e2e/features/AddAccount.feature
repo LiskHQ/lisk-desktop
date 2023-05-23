@@ -1,6 +1,10 @@
 Feature: AddAccount
     Background: Navigate to add account options
         Given I navigate to page "wallet"
+        And I add a custom network with name "local_network" and serviceUrl "http://127.0.0.1:9901"
+        And I click on a button with testId "dialog-close-button"
+        And I switch to network "local_network"
+        And I go back to the previous page
         Then I should exactly see "Welcome to Lisk"
         And I should exactly see "If you are new to Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”."
         Given I click on a button with exact text "Add account"
@@ -39,7 +43,7 @@ Feature: AddAccount
         Given I click on text "Settings"
         And I click on text "Enable access to legacy Lisk accounts"
         And I click on a button with testId "dialog-close-button"
-        And I click on a button with exact text "Secret recovery phrase"        
+        And I click on a button with exact text "Secret recovery phrase"
         Then custom derivation path input field should be "disabled"
         And I fill in mnemonic phrases 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready'
         And I click on a button with exact text "Continue to set password"
