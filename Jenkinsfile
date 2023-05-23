@@ -86,7 +86,7 @@ pipeline {
 									# echo $! >lisk-core.pid
 									npm i -g lisk-core --registry=https://npm.lisk.com
 									rm -rf ~/.lisk/
-									lisk-core blockchain:import --force e2e/artifacts/blockchain.db.tar.gz
+									lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
 									nohup lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8080 --enable-http-api-plugin >lisk-core.out 2>lisk-core.err &
 									echo $! >lisk-core.pid
 
