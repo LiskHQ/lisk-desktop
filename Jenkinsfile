@@ -87,14 +87,14 @@ pipeline {
 									npm i -g lisk-core --registry=https://npm.lisk.com
 									rm -rf ~/.lisk/
 									lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
-									nohup lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8080 --enable-http-api-plugin >lisk-core.out 2>lisk-core.err &
+									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 >lisk-core.out 2>lisk-core.err &
 									echo $! >lisk-core.pid
 
 									# wait for core to be up and running
 									# TODO: Remove comments and fix Lisk core endpoint integration (we have to use ./bin/run endpoint invoke system_getNodeInfo --pretty)
 									# https://github.com/LiskHQ/lisk-desktop/issues/4509
-									set -e; while ! curl --silent --fail http://127.0.0.1:4000/api/node/info >/dev/null; do echo waiting; sleep 10; done; set +e
-									curl --verbose http://127.0.0.1:4000/api/node/info
+									set -e; while ! curl --silent --fail http://127.0.0.1:7887/api/node/info >/dev/null; do echo waiting; sleep 10; done; set +e
+									curl --verbose http://127.0.0.1:7887/api/node/info
 
 									# lisk-service
 									cp -f lisk-service/docker/example.env lisk-service/.env
