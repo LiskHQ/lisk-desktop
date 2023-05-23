@@ -3,7 +3,7 @@ import playwright from 'playwright';
 
 class CustomWorld {
   async openUrl(path) {
-    this.pageBaseUrl = 'http://localhost:8080/#';
+    this.pageBaseUrl = process.env.PW_BASE_URL;
 
     const browser = await playwright.chromium.launch({
       headless: false,

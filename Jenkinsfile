@@ -84,18 +84,22 @@ pipeline {
 									# ./lisk-core/bin/lisk-core generator-info:import --force tests/dev_config_and_db/generator.db.tar.gz
 									# nohup ./lisk-core/bin/lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8080 --enable-http-api-plugin >lisk-core.out 2>lisk-core.err &
 									# echo $! >lisk-core.pid
+									npm i -g lisk-core --registry=https://npm.lisk.com
+									rm -rf ~/.lisk/
+									lisk-core blockchain:import --force e2e/artifacts/blockchain.db.tar.gz
+									nohup lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8080 --enable-http-api-plugin >lisk-core.out 2>lisk-core.err &
+									echo $! >lisk-core.pid
 
 									# wait for core to be up and running
 									# TODO: Remove comments and fix Lisk core endpoint integration (we have to use ./bin/run endpoint invoke system_getNodeInfo --pretty)
 									# https://github.com/LiskHQ/lisk-desktop/issues/4509
-									# set -e; while ! curl --silent --fail http://127.0.0.1:4000/api/node/info >/dev/null; do echo waiting; sleep 10; done; set +e
-									# curl --verbose http://127.0.0.1:4000/api/node/info
+									set -e; while ! curl --silent --fail http://127.0.0.1:4000/api/node/info >/dev/null; do echo waiting; sleep 10; done; set +e
+									curl --verbose http://127.0.0.1:4000/api/node/info
 
 									# lisk-service
-									# cp -f lisk-service/docker/example.env lisk-service/.env
-									# magic value for the above snapshot
-									# echo GENESIS_HEIGHT=250 >>lisk-service/.env
-									# make -C lisk-service up
+									cp -f lisk-service/docker/example.env lisk-service/.env
+									echo LISK_APP_WS=ws://host.docker.internal:7887 >>lisk-service/.env
+									make -C lisk-service up
 
 									# workaround for https://github.com/LiskHQ/lisk-service/issues/916
 									# until https://github.com/LiskHQ/lisk-service/issues/920 is resolved
@@ -106,15 +110,14 @@ pipeline {
 									# wait for service to be up and running
 									# TODO: Remove comments and fix Lisk Service endpoint integration
 									# https://github.com/LiskHQ/lisk-desktop/issues/4509
-									# set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/blocks >/dev/null; do echo waiting; sleep 10; done; set +e
-									# curl --verbose http://127.0.0.1:9901/api/v3/blocks
-									# set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/network/status >/dev/null; do echo waiting; sleep 10; done; set +e
-									# curl --verbose http://127.0.0.1:9901/api/v3/network/status
-									# curl --verbose http://127.0.0.1:9901/api/v3/blocks
+									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/blocks >/dev/null; do echo waiting; sleep 10; done; set +e
+									curl --verbose http://127.0.0.1:9901/api/v3/blocks
+									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/network/status >/dev/null; do echo waiting; sleep 10; done; set +e
+									curl --verbose http://127.0.0.1:9901/api/v3/network/status
+									curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
-									CYPRESS_baseUrl=https://jenkins.lisk.com/test/${JOB_NAME%/*}/$BRANCH_NAME/#/ \
-									CYPRESS_serviceUrl=http://127.0.0.1:9901 \
-									npm run cypress:run
+									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/$BRANCH_NAME/#/ \
+									npm run cucumber:playwright:open
 									'''
 								}
 							}
