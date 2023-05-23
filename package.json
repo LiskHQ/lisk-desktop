@@ -146,7 +146,7 @@
     "lodash.debounce": "4.0.8",
     "lodash.merge": "4.6.2",
     "moment": "2.29.4",
-    "msw": "0.46.1",
+    "msw": "0.47.3",
     "node-hid": "2.1.1",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "path-browserify": "^1.0.1",
