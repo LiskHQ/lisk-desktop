@@ -2,9 +2,8 @@
 import { Given, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import routes from '../fixtures/routes.mjs';
-// import waitFor from '../utilities/waitFor.mjs';
 
-Given('I navigate to page {string}', async function (pageName) {
+Given('I navigate to page {string}', { timeout: 120 * 1000 }, async function (pageName) {
   await this.openUrl(routes[pageName]);
 });
 
@@ -33,7 +32,7 @@ Then('I should see an image with alt text {string}', async function (altText) {
 });
 
 Then('I should be redirected to route: {string}', async function (route) {
-  await expect(this.page.url()).toBe(`http://localhost:8080/#/${route}`);
+  await expect(this.page.url()).toBe(`${process.env.PW_BASE_URL}/${route}`);
 });
 
 Then('button with text {string} should be disabled', async function (textContent) {

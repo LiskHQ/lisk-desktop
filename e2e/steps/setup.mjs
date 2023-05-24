@@ -6,7 +6,8 @@ class CustomWorld {
     this.pageBaseUrl = process.env.PW_BASE_URL;
 
     const browser = await playwright.chromium.launch({
-      headless: true,
+      headless: false,
+      timeout: 0,
     });
     const context = await browser.newContext();
 
