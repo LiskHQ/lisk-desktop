@@ -8,9 +8,8 @@ pipeline {
 		ansiColor('xterm')
 	}
 	parameters {
-		string(name: 'CORE_VERSION', defaultValue: '3.0.2')
-		// @todo: this should be re-instated when the issue with lisk-client is fixed
-		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.6.4')
+		string(name: 'CORE_VERSION', defaultValue: '4.0.0-beta.1')
+		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'development')
 	}
 	stages {
 		stage('install') {
@@ -87,7 +86,7 @@ pipeline {
 									npm i -g lisk-core --registry=https://npm.lisk.com
 									rm -rf ~/.lisk/
 									lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
-									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 >lisk-core.out 2>lisk-core.err &
+									lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 >lisk-core.out 2>lisk-core.err &
 									echo $! >lisk-core.pid
 
 									# wait for core to be up and running
