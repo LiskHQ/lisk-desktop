@@ -4,10 +4,13 @@ import { mount } from 'enzyme';
 import { MemoryRouter, Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { context as wsContext } from '@blockchainApplication/connection/__fixtures__/requestSummary';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
+const history = createMemoryHistory();
 
 /**
  * Mounts components that require to access Redux store
@@ -36,7 +39,7 @@ export const mountWithProps = (Component, props, store) =>
  */
 export const mountWithRouter = (Component, props, routeConfig = {}) =>
   mount(
-    <MemoryRouter initialEntries={[routeConfig]}>
+    <MemoryRouter initialEntries={[history, routeConfig]}>
       <Component {...props} />
     </MemoryRouter>
   );
@@ -113,11 +116,14 @@ export const mountWithRouterAndStore = (Component, props, routeConfig = {}, stor
  * @returns {Object} Mounted component
  */
 export const mountWithQueryClient = (Component, props = {}) => {
+  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
   return mount(
-    <QueryClientProvider client={queryClient}>
-      <Component {...props} />
-    </QueryClientProvider>
+    <MemoryRouter initialEntries={[history]}>
+      <QueryClientProvider client={queryClient}>
+        <Component {...props} />
+      </QueryClientProvider>
+    </MemoryRouter>
   );
 };
 
@@ -130,6 +136,7 @@ export const mountWithQueryClient = (Component, props = {}) => {
  * @returns {Object} Rendered component
  */
 export const mountWithRouterAndQueryClient = (Component, props) => {
+  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return mount(
@@ -154,7 +161,7 @@ export const mountWithRouterAndQueryClient = (Component, props) => {
  */
 export const renderWithRouter = (Component, props, routeConfig = {}) =>
   render(
-    <MemoryRouter initialEntries={[routeConfig]}>
+    <MemoryRouter initialEntries={[history, routeConfig]}>
       <Component {...props} />
     </MemoryRouter>
   );
@@ -185,6 +192,7 @@ export const renderWithCustomRouter = (Component, props) =>
  * @returns {Object} Rendered component
  */
 export const renderWithQueryClient = (Component, props) => {
+  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
   return render(
     <QueryClientProvider client={queryClient}>
@@ -202,6 +210,7 @@ export const renderWithQueryClient = (Component, props) => {
  * @returns {Object} Rendered component
  */
 export const renderWithRouterAndQueryClient = (Component, props = {}) => {
+  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return render(
@@ -224,6 +233,7 @@ export const renderWithRouterAndQueryClient = (Component, props = {}) => {
  * @returns {Object} Rerendered component
  */
 export const rerenderWithRouterAndQueryClient = (Component, props = {}) => {
+  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return render(
@@ -245,6 +255,7 @@ export const rerenderWithRouterAndQueryClient = (Component, props = {}) => {
  * @returns {Object} Mounted component
  */
 export const mountWithQueryAndProps = (Component, props, store) => {
+  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return mount(
@@ -291,6 +302,7 @@ export const renderWithRouterAndStore = (Component, props, store) =>
   );
 
 export const renderWithRouterAndStoreAndQueryClient = (Component, props = {}, store) => {
+  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return render(
@@ -313,6 +325,7 @@ export const renderWithRouterAndStoreAndQueryClient = (Component, props = {}, st
  * @returns {Object} Rendered component
  */
 export const renderWithQueryClientAndWC = (Component, props) => {
+  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
   return render(
     <ConnectionContext.Provider value={wsContext}>
@@ -321,4 +334,60 @@ export const renderWithQueryClientAndWC = (Component, props) => {
       </QueryClientProvider>
     </ConnectionContext.Provider>
   );
+};
+
+const analyzeProps = (
+  props,
+  config = { router: false, queryClient: false, store: false, wc: false }
+) => {
+  const defaultLocation = {
+    pathname: '',
+    search: '',
+    hash: '',
+  };
+  const defaultRouterProps = {
+    history: {
+      listen: jest.fn(),
+      push: jest.fn(),
+      replace: jest.fn(),
+      location: defaultLocation,
+    },
+  };
+
+  const defaultStore = {};
+  const defaultQueryClient = new QueryClient();
+
+  return [
+    config.router ? [Router, { ...defaultRouterProps, ...props.history }] : [],
+    config.queryClient
+      ? [QueryClientProvider, { client: props.queryClient ?? defaultQueryClient }]
+      : null,
+    config.store ? [Provider, { store: props.store ?? defaultStore }] : null,
+    config.wc ? [ConnectionContext.Provider, { value: wsContext }] : null,
+  ].filter(Boolean);
+};
+
+const recursiveRender = (Component, props, providers) =>
+  providers.reduce(
+    (wrapperComponent, [CurrentProvider, currentProps], index) => (
+      <CurrentProvider {...currentProps} key={index}>
+        {wrapperComponent}
+      </CurrentProvider>
+    ),
+    <Component {...props} />
+  );
+
+export const smartRender = (Component, props, config) => {
+  const providers = analyzeProps(props, config);
+  const mergedProviderProps = providers.reduce(
+    (acc, [, currentProps]) => ({ ...acc, ...currentProps }),
+    {}
+  );
+
+  const wrapper = render(recursiveRender(Component, props, providers));
+
+  return {
+    wrapper,
+    ...mergedProviderProps,
+  };
 };
