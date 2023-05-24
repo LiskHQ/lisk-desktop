@@ -96,6 +96,7 @@ pipeline {
 									# lisk-service
 									cp -f lisk-service/docker/example.env lisk-service/.env
 									echo LISK_APP_WS=ws://host.docker.internal:7887 >>lisk-service/.env
+									make -C lisk-service build
 									make -C lisk-service up
 
 									# workaround for https://github.com/LiskHQ/lisk-service/issues/916
@@ -130,20 +131,20 @@ pipeline {
 			}
 			post {
 				failure {
-					archiveArtifacts artifacts: 'tests/cypress/screenshots/', allowEmptyArchive: true
+					archiveArtifacts artifacts: 'cucumber-report.html', allowEmptyArchive: true
 				}
 				always {
 					sh '''
-					# lisk-service
-					# make -C lisk-service logs
-					# make -C lisk-service down
+					# kill lisk-service process
+					make -C lisk-service logs
+					make -C lisk-service down
 
-					# lisk-core
-					# kill $( cat lisk-core.pid ) || true
-					# sleep 10
-					# kill -9 $( cat lisk-core.pid ) || true
-					# cat lisk-core.out
-					# cat lisk-core.err
+					# kill lisk-core process
+					kill $( cat lisk-core.pid ) || true
+					sleep 10
+					kill -9 $( cat lisk-core.pid ) || true
+					cat lisk-core.out
+					cat lisk-core.err
 					'''
 				}
 			}
