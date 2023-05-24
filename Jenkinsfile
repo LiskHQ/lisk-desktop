@@ -114,8 +114,8 @@ pipeline {
 									set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
 									curl --verbose http://127.0.0.1:9901/api/v3/network/status
 									curl --verbose http://127.0.0.1:9901/api/v3/blocks
-									echo https://jenkins.lisk.com/test/${BRANCH_NAME%/*}
-									PW_BASE_URL=https://jenkins.lisk.com/test/${BRANCH_NAME%/*} \
+
+									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*} \
 									npm run cucumber:playwright:open
 									'''
 								}
