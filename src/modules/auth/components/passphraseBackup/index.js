@@ -22,14 +22,14 @@ class PassphraseBackup extends React.Component {
 
   /* istanbul ignore next */
   generatePaperWallet() {
-    import(/* webpackChunkName: "jspdf" */ 'jspdf').then((module) => {
+    import(/* webpackChunkName: "jspdf" */ 'jspdf').then(async (module) => {
       const JSPDF = module.default;
       const data = {
         ...this.props,
         now: new Date(),
         qrcode: this.canvasRef.firstChild.toDataURL(),
       };
-      renderPaperWallet(JSPDF, data, this.walletName);
+      await renderPaperWallet(JSPDF, data, this.walletName);
     });
   }
 
