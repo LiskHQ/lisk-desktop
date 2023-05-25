@@ -12,12 +12,12 @@ const addAccountOptions = (t) => [
   {
     text: t('Secret recovery phrase'),
     iconName: 'secretPassphrase',
-    pathName: routes.addAccountBySecretRecovery.path,
+    pathname: routes.addAccountBySecretRecovery.path,
   },
   {
     text: t('Restore from backup'),
     iconName: 'accountUpload',
-    pathName: routes.addAccountByFile.path,
+    pathname: routes.addAccountByFile.path,
   },
 ];
 
@@ -45,12 +45,12 @@ const AddAccountOptions = () => {
             <h1>{t('Add your account')}</h1>
             <p>{t('Choose an option to add your account to Lisk wallet.')}</p>
             <div className={styles.selectRowWrapper}>
-              {addAccountOptions(t).map(({ text, iconName, pathName }) => (
+              {addAccountOptions(t).map(({ text, iconName, pathname }) => (
                 <AddAccountOptionButton
                   key={text}
                   text={text}
                   iconName={iconName}
-                  onClick={() => history.push({ pathName, search })}
+                  onClick={() => history.push({ pathname, search })}
                 />
               ))}
             </div>
