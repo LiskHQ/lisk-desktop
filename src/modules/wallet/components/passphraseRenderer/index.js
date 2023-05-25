@@ -24,6 +24,10 @@ class PassphraseRenderer extends React.Component {
     this.setRandomIndexesFromPassphrase = this.setRandomIndexesFromPassphrase.bind(this);
   }
 
+  componentDidMount() {
+    this.setRandomIndexesFromPassphrase();
+  }
+
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
@@ -137,6 +141,7 @@ class PassphraseRenderer extends React.Component {
     const { t, showInfo, isConfirmation, prevStep, footerStyle, subheader, confirmText } =
       this.props;
     const { options, fieldSelected, chosenWords } = this.state;
+    console.log('---', options);
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
 
     return (
