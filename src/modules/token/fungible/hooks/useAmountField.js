@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
 import { regex } from 'src/const/regex';
-import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { validateAmountFormat } from 'src/utils/validators';
 import { convertToBaseDenom } from '../utils/helpers';
 

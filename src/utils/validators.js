@@ -1,7 +1,6 @@
 import { cryptography } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 import { regex as reg } from 'src/const/regex';
-import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { convertToBaseDenom, getTokenDecimals } from '@token/fungible/utils/helpers';
 import i18n from 'src/utils/i18n/i18n';
 
