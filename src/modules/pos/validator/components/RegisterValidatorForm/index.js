@@ -19,7 +19,7 @@ const getTooltips = (field, t) => {
   if (field === 'name') {
     return t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.');
   }
-  return t('Run lisk keys:generate and copy the value of {{field}}', { field });
+  return t('Run lisk keys:create and copy the value of {{field}}', { field });
 };
 
 // eslint-disable-next-line max-statements
