@@ -110,7 +110,7 @@ export const validateAmountFormat = ({
       ),
       fn: () => {
         const rawValue = convertToBaseDenom(numeral(value).value(), token);
-        return funds - rawValue < MIN_ACCOUNT_BALANCE;
+        return funds - rawValue;
       },
     },
   };

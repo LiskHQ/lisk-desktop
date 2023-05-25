@@ -42,7 +42,7 @@ const useAmountField = (initialValue, balance = '0', token) => {
     let { message: feedback } = validateAmountFormat({
       value,
       token,
-      funds: Number(maxAmount) + Number(MIN_ACCOUNT_BALANCE),
+      funds: maxAmount,
       checklist: [...checklist, 'MIN_BALANCE'],
     });
 
@@ -88,7 +88,7 @@ const useAmountField = (initialValue, balance = '0', token) => {
       const { message: feedback } = validateAmountFormat({
         token,
         value: amount,
-        funds: Number(balance) + Number(MIN_ACCOUNT_BALANCE),
+        funds: balance,
         checklist: ['MAX_ACCURACY'],
       });
 
