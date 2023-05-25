@@ -1,7 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { smartRender } from 'src/utils/testHelpers';
 import { cryptography } from '@liskhq/lisk-client';
-import { mount } from 'enzyme';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import { mockAuth } from '@auth/__fixtures__';
