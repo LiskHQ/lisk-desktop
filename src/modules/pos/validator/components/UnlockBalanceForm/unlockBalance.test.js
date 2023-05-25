@@ -4,7 +4,7 @@ import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from '@auth/__fixtures__';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
-import { mountWithQueryAndProps } from 'src/utils/testHelpers';
+import { /* mountWithQueryAndProps,  */ smartRender } from 'src/utils/testHelpers';
 import * as hwManager from '@transaction/utils/hwManager';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockBlocks } from '@block/__fixtures__';
@@ -144,9 +144,10 @@ describe('Unlock LSK modal', () => {
     senderPublicKey: 'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535',
     signatures: [],
   };
+  const config = { renderType: 'mount', queryClient: true, store: true, storeInfo: store };
 
   beforeEach(() => {
-    wrapper = mountWithQueryAndProps(UnlockBalanceForm, props, store);
+    wrapper = smartRender(UnlockBalanceForm, props, config).wrapper;
     hwManager.signTransactionByHW.mockResolvedValue({});
   });
 
@@ -275,7 +276,8 @@ describe('Unlock LSK modal', () => {
         },
       },
     };
-    wrapper = mountWithQueryAndProps(UnlockBalanceForm, props, newStore);
+    const newConfig = { ...config, storeInfo: newStore };
+    wrapper = smartRender(UnlockBalanceForm, props, newConfig).wrapper;
     wrapper.find('.confirm-btn button').simulate('click');
     expect(props.nextStep).not.toBeCalled();
   });

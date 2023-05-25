@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import {
   calculateSentStakesAmount,
   calculateUnlockedAmount,
@@ -37,7 +36,7 @@ describe('unlockBalanceTable', () => {
   useNetworkStatus.mockReturnValue({ data: mockNetworkStatus });
 
   it('renders properly', () => {
-    wrapper = mount(<BalanceTable {...props} />);
+    wrapper = mountWithRouter(BalanceTable, props);
     expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
     expect(wrapper.find('.locked-balance').text()).toEqual('280 LSK');
     expect(wrapper.find('.available-balance').text()).toEqual('4,550 LSK');
@@ -45,17 +44,17 @@ describe('unlockBalanceTable', () => {
   });
 
   it('should not show lockedPendingUnlocks if undefined', () => {
-    wrapper = mount(<BalanceTable {...props} lockedPendingUnlocks={undefined} />);
+    wrapper = mountWithRouter(BalanceTable, { ...props, lockedPendingUnlocks: undefined });
     expect(wrapper.find('.unlocking-balance')).toHaveLength(0);
   });
 
   it('should not show available-balance if 0', () => {
-    wrapper = mount(<BalanceTable {...props} unlockedAmount={0} />);
+    wrapper = mountWithRouter(BalanceTable, { ...props, unlockedAmount: 0 });
     expect(wrapper.find('.available-balance')).toHaveLength(0);
   });
 
   it('should not show locked-balance if 0', () => {
-    wrapper = mount(<BalanceTable {...props} sentStakesAmount={0} />);
+    wrapper = mountWithRouter(BalanceTable, { ...props, sentStakesAmount: 0 });
     expect(wrapper.find('.locked-balance')).toHaveLength(0);
   });
 });
