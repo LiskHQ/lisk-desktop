@@ -93,11 +93,13 @@ export const generatePassphraseFromSeed = ({ seed }) =>
 export const generatePassphrase = () => {
   // istanbul ignore next
   const crypotObj = window.crypto || window.msCrypto;
-  return generatePassphraseFromSeed({
+  const data = generatePassphraseFromSeed({
     seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map((x) =>
       `00${(x % 256).toString(16)}`.slice(-2)
     ),
   });
+
+  return data;
 };
 
 /**

@@ -1,9 +1,14 @@
 /* istanbul ignore file */
-import { extractAddressFromPassphrase } from '@wallet/utils/account';
+import {
+  extractAddressFromPassphrase,
+  extractAddressFromPublicKey,
+  extractKeyPair,
+} from '@wallet/utils/account';
 import logo from '@setup/react/assets/images/paperWallet/lisk-logo-blue-on-white-rgb.png';
 import usbStick from '@setup/react/assets/images/paperWallet/usb-stick.png';
 import printer from '@setup/react/assets/images/paperWallet/print.png';
 import fonts from './paperWalletFonts';
+import { defaultDerivationPath } from './explicitBipKeyDerivation';
 
 class PaperWallet {
   constructor(JSPDF, props) {
@@ -92,10 +97,17 @@ class PaperWallet {
     return this;
   }
 
-  renderAccount() {
+  // eslint-disable-next-line max-statements
+  async renderAccount() {
     const { t, passphrase } = this.props;
     const textOptions = this.textOptions;
-    const address = extractAddressFromPassphrase(passphrase);
+    // const address = extractAddressFromPassphrase(passphrase);
+    const options = {
+      passphrase,
+      derivationPath: defaultDerivationPath,
+    };
+    const { publicKey } = await extractKeyPair(options);
+    const address = extractAddressFromPublicKey(publicKey);
 
     this.doc
       .setFont('gilroy', 'normal', 'bold')
