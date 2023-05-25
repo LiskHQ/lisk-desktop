@@ -355,11 +355,18 @@ const analyzeConfig = (config = { queryClient: false, store: false, wc: false })
   const defaultQueryClient = new QueryClient();
 
   return [
-    [Router, { ...defaultRouterProps, ...config?.historyInfo }],
+    [
+      Router,
+      {
+        history: config.historyInfo
+          ? { ...defaultRouterProps, ...config.historyInfo }
+          : defaultHistoryProps,
+      },
+    ],
     config.queryClient
-      ? [QueryClientProvider, { client: config?.queryClientInfo ?? defaultQueryClient }]
+      ? [QueryClientProvider, { client: config.queryClientInfo ?? defaultQueryClient }]
       : null,
-    config.store ? [Provider, { store: config?.storeInfo ?? defaultStore }] : null,
+    config.store ? [Provider, { store: config.storeInfo ?? defaultStore }] : null,
     config.wc ? [ConnectionContext.Provider, { value: wsContext }] : null,
   ].filter(Boolean);
 };
