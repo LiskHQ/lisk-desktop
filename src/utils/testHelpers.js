@@ -39,7 +39,7 @@ export const mountWithProps = (Component, props, store) =>
  */
 export const mountWithRouter = (Component, props, routeConfig = {}) =>
   mount(
-    <MemoryRouter initialEntries={[history, routeConfig]}>
+    <MemoryRouter initialEntries={[props?.location ?? props.history.location ?? routeConfig]}>
       <Component {...props} />
     </MemoryRouter>
   );
@@ -381,7 +381,7 @@ const recursiveRender = (Component, props, providers) =>
     <Component {...props} />
   );
 
-export const smartRender = (Component, props, config) => {
+export const smartRender = (Component, props, config = {}) => {
   const providers = analyzeConfig(config);
   const mergedProviderProps = providers.reduce(
     (acc, [, currentProps]) => ({ ...acc, ...currentProps }),

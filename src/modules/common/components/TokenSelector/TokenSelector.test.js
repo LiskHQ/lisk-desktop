@@ -19,12 +19,9 @@ describe('TokenSelector', () => {
       ...mockAppsTokens.data[0],
     },
   };
-  const config = {
-    router: true,
-  };
 
   it('renders properly', async () => {
-    smartRender(TokenSelector, props, config);
+    smartRender(TokenSelector, props);
 
     expect(screen.getByText('Token')).toBeTruthy();
     expect(screen.getByText('Balance:')).toBeTruthy();
@@ -52,7 +49,7 @@ describe('TokenSelector', () => {
 
   it('should render no tokens in the dropdown options', async () => {
     useTokenBalances.mockReturnValue({ data: {}, isLoading: false });
-    const { wrapper } = smartRender(TokenSelector, props, config);
+    const { wrapper } = smartRender(TokenSelector, props);
     expect(screen.queryByText(mockTokensBalance.data[0].chainName)).toBeFalsy();
 
     useTokenBalances.mockReturnValue({ isLoading: false, isSuccess: true });
