@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { truncateAddress } from '@wallet/utils/account';
 import wallets from '@tests/constants/wallets';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
@@ -20,7 +19,7 @@ describe('MigrationDetails component', () => {
   useTokenBalances.mockReturnValue({ data: mockAppsTokens });
 
   it('should render properly', () => {
-    const wrapper = mount(<MigrationDetails {...props} />);
+    const wrapper = mountWithRouter(MigrationDetails, props);
     const html = wrapper.html();
     expect(html).toContain(wallets.empty_wallet.legacy.address);
     expect(html).toContain(truncateAddress(wallets.empty_wallet.summary.address, 'medium'));
@@ -28,7 +27,7 @@ describe('MigrationDetails component', () => {
   });
 
   it('should not render balance', () => {
-    const wrapper = mount(<MigrationDetails {...props} showBalance={false} />);
+    const wrapper = mountWithRouter(MigrationDetails, { ...props, showBalance: false });
     const html = wrapper.html();
     expect(html).toContain(wallets.empty_wallet.legacy.address, 'medium');
     expect(html).toContain(truncateAddress(wallets.empty_wallet.summary.address, 'medium'));
