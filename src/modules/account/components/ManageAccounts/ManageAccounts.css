@@ -16,7 +16,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 30px 10px;
   box-sizing: border-box;
   background-color: var(--color-white);
   border-radius: 16px;
@@ -52,6 +52,7 @@
 .addAccountBtn {
   color: var(--color-link);
   margin-top: 16px;
+  width: calc(100% - 40px);
 }
 
 .manageAccounts {
