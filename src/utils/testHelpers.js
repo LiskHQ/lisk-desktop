@@ -116,7 +116,7 @@ export const mountWithRouterAndStore = (Component, props, routeConfig = {}, stor
  * @returns {Object} Mounted component
  */
 export const mountWithQueryClient = (Component, props = {}) => {
-  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
+  console.log('## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
   return mount(
     <MemoryRouter initialEntries={[history]}>
@@ -136,7 +136,7 @@ export const mountWithQueryClient = (Component, props = {}) => {
  * @returns {Object} Rendered component
  */
 export const mountWithRouterAndQueryClient = (Component, props) => {
-  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
+  console.log('## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return mount(
@@ -192,7 +192,7 @@ export const renderWithCustomRouter = (Component, props) =>
  * @returns {Object} Rendered component
  */
 export const renderWithQueryClient = (Component, props) => {
-  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
+  console.log('## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
   return render(
     <QueryClientProvider client={queryClient}>
@@ -210,7 +210,7 @@ export const renderWithQueryClient = (Component, props) => {
  * @returns {Object} Rendered component
  */
 export const renderWithRouterAndQueryClient = (Component, props = {}) => {
-  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
+  console.log('## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return render(
@@ -233,7 +233,7 @@ export const renderWithRouterAndQueryClient = (Component, props = {}) => {
  * @returns {Object} Rerendered component
  */
 export const rerenderWithRouterAndQueryClient = (Component, props = {}) => {
-  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
+  console.log('## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return render(
@@ -255,7 +255,7 @@ export const rerenderWithRouterAndQueryClient = (Component, props = {}) => {
  * @returns {Object} Mounted component
  */
 export const mountWithQueryAndProps = (Component, props, store) => {
-  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
+  console.log('## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return mount(
@@ -302,7 +302,7 @@ export const renderWithRouterAndStore = (Component, props, store) =>
   );
 
 export const renderWithRouterAndStoreAndQueryClient = (Component, props = {}, store) => {
-  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
+  console.log('## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
 
   return render(
@@ -325,7 +325,7 @@ export const renderWithRouterAndStoreAndQueryClient = (Component, props = {}, st
  * @returns {Object} Rendered component
  */
 export const renderWithQueryClientAndWC = (Component, props) => {
-  console.log(' ## NOTE ##  This function is deprecated, please use smartRender instead.');
+  console.log('## NOTE ##  This function is deprecated, please use smartRender instead.');
   const queryClient = new QueryClient();
   return render(
     <ConnectionContext.Provider value={wsContext}>
@@ -366,7 +366,7 @@ const analyzeConfig = (config = { queryClient: false, store: false, wc: false })
     config.queryClient
       ? [QueryClientProvider, { client: config.queryClientInfo ?? defaultQueryClient }]
       : null,
-    config.store ? [Provider, { store: config.storeInfo ?? defaultStore }] : null,
+    config.store ? [Provider, { store: configureStore()(config.storeInfo ?? defaultStore) }] : null,
     config.wc ? [ConnectionContext.Provider, { value: wsContext }] : null,
   ].filter(Boolean);
 };
@@ -381,6 +381,22 @@ const recursiveRender = (Component, props, providers) =>
     <Component {...props} />
   );
 
+/**
+ * Renders components that are wrapped in WithRouter
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ * @param {Object} [config] - Set of configurations for the render process
+ * @param {String} [config.renderType] - Render type for the render process based on library. Could be render or mount
+ * @param {Boolean} [config.queryClient] - QueryClient configuration for the render process
+ * @param {Class} [config.queryClientInfo] - QueryClient data for the render process
+ * @param {Boolean} [config.store] - Redux store configuration for the render process
+ * @param {Object} [config.storeInfo] - Redux store data for the render process
+ * @param {Boolean} [config.wc] - WalletConnect configuration for the render process
+ *
+ * @returns {Object} Rendered component
+ * @returns {Object} Component wrapper
+ */
 export const smartRender = (Component, props, config = {}) => {
   const providers = analyzeConfig(config);
   const mergedProviderProps = providers.reduce(
@@ -388,7 +404,10 @@ export const smartRender = (Component, props, config = {}) => {
     {}
   );
 
-  const wrapper = render(recursiveRender(Component, props, providers));
+  const wrapper =
+    config.renderType === 'mount'
+      ? mount(recursiveRender(Component, props, providers))
+      : render(recursiveRender(Component, props, providers));
 
   return {
     wrapper,
