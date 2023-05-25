@@ -13,7 +13,7 @@ const getAccountRoleText = (accountRole, t) => {
 };
 
 const Member = ({ member, i, t }) => (
-  <div className={`${styles.memberInfo} member-info`}>
+  <div className={`${styles.memberInfo} member-info`} data-testid="member-info">
     <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>
     <WalletVisual address={member.address} />
     <div className={styles.memberDetails}>
