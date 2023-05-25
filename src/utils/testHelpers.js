@@ -39,7 +39,7 @@ export const mountWithProps = (Component, props, store) =>
  */
 export const mountWithRouter = (Component, props, routeConfig = {}) =>
   mount(
-    <MemoryRouter initialEntries={[props?.location ?? props.history.location ?? routeConfig]}>
+    <MemoryRouter initialEntries={[props?.location ?? props?.history?.location ?? routeConfig]}>
       <Component {...props} />
     </MemoryRouter>
   );
