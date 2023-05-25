@@ -50,10 +50,12 @@ const aggregatedApplicationData = {
 };
 
 describe('BlockchainApplicationDetails', () => {
+  const location = {
+    search: 'chainId=test-chain-id',
+  };
   const props = {
-    location: {
-      search: 'chainId=test-chain-id',
-    },
+    history: { location },
+    location,
   };
 
   beforeEach(() => {
@@ -143,12 +145,14 @@ describe('BlockchainApplicationDetails', () => {
   });
 
   it('should display add application button if in add application mode', () => {
+    const updatedLocation = {
+      ...props.location,
+      search: 'chainId=test-chain-id&mode=addApplication',
+    };
     const updatedProps = {
       ...props,
-      location: {
-        ...props.location,
-        search: 'chainId=test-chain-id&mode=addApplication',
-      },
+      history: { location: updatedLocation },
+      location: updatedLocation,
     };
     rerenderWithRouterAndQueryClient(BlockchainApplicationDetails, updatedProps);
     expect(screen.getByTestId('add-application-button')).toBeTruthy();

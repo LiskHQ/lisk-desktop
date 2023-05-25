@@ -161,7 +161,7 @@ export const mountWithRouterAndQueryClient = (Component, props) => {
  */
 export const renderWithRouter = (Component, props, routeConfig = {}) =>
   render(
-    <MemoryRouter initialEntries={[history, routeConfig]}>
+    <MemoryRouter initialEntries={[routeConfig]}>
       <Component {...props} />
     </MemoryRouter>
   );
@@ -238,7 +238,7 @@ export const rerenderWithRouterAndQueryClient = (Component, props = {}) => {
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={[props?.history ?? defaultHistoryProps]}>
+      <MemoryRouter initialEntries={[props?.location ?? {}]}>
         <Component {...props} />
       </MemoryRouter>
     </QueryClientProvider>
@@ -295,7 +295,7 @@ export const renderWithStore = (Component, props, store) =>
 export const renderWithRouterAndStore = (Component, props, store) =>
   render(
     <Provider store={configureStore()(store)}>
-      <MemoryRouter initialEntries={[props?.history ?? defaultHistoryProps]}>
+      <MemoryRouter initialEntries={[props?.location ?? {}]}>
         <Component {...props} />
       </MemoryRouter>
     </Provider>
@@ -308,7 +308,7 @@ export const renderWithRouterAndStoreAndQueryClient = (Component, props = {}, st
   return render(
     <Provider store={configureStore()(store)}>
       <QueryClientProvider client={queryClient}>
-        <MemoryRouter initialEntries={[props?.history ?? defaultHistoryProps]}>
+        <MemoryRouter initialEntries={[props?.location ?? {}]}>
           <Component {...props} />
         </MemoryRouter>
       </QueryClientProvider>
@@ -336,10 +336,7 @@ export const renderWithQueryClientAndWC = (Component, props) => {
   );
 };
 
-const analyzeProps = (
-  props,
-  config = { router: false, queryClient: false, store: false, wc: false }
-) => {
+const analyzeConfig = (config = { queryClient: false, store: false, wc: false }) => {
   const defaultLocation = {
     pathname: '',
     search: '',
@@ -358,11 +355,11 @@ const analyzeProps = (
   const defaultQueryClient = new QueryClient();
 
   return [
-    config.router ? [Router, { ...defaultRouterProps, ...props.history }] : [],
+    [Router, { ...defaultRouterProps, ...config?.historyInfo }],
     config.queryClient
-      ? [QueryClientProvider, { client: props.queryClient ?? defaultQueryClient }]
+      ? [QueryClientProvider, { client: config?.queryClientInfo ?? defaultQueryClient }]
       : null,
-    config.store ? [Provider, { store: props.store ?? defaultStore }] : null,
+    config.store ? [Provider, { store: config?.storeInfo ?? defaultStore }] : null,
     config.wc ? [ConnectionContext.Provider, { value: wsContext }] : null,
   ].filter(Boolean);
 };
@@ -378,7 +375,7 @@ const recursiveRender = (Component, props, providers) =>
   );
 
 export const smartRender = (Component, props, config) => {
-  const providers = analyzeProps(props, config);
+  const providers = analyzeConfig(config);
   const mergedProviderProps = providers.reduce(
     (acc, [, currentProps]) => ({ ...acc, ...currentProps }),
     {}
