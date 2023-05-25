@@ -1,8 +1,5 @@
 /* istanbul ignore file */
-import {
-  extractAddressFromPublicKey,
-  extractKeyPair,
-} from '@wallet/utils/account';
+import { extractAddressFromPublicKey, extractKeyPair } from '@wallet/utils/account';
 import logo from '@setup/react/assets/images/paperWallet/lisk-logo-blue-on-white-rgb.png';
 import usbStick from '@setup/react/assets/images/paperWallet/usb-stick.png';
 import printer from '@setup/react/assets/images/paperWallet/print.png';
@@ -19,7 +16,7 @@ class PaperWallet {
     this.props = props;
 
     this.setupDoc();
-    this.publicKey = publicKey
+    this.publicKey = publicKey;
   }
 
   setupDoc() {

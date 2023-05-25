@@ -186,7 +186,8 @@ export const Fee = ({ t }) => {
 
 export const Status = ({ t }) => {
   const { data } = useContext(TransactionRowContext);
-  const transactionStatus = data.executionStatus.charAt(0).toUpperCase() + data.executionStatus.slice(1);
+  const transactionStatus =
+    data.executionStatus.charAt(0).toUpperCase() + data.executionStatus.slice(1);
   const transactionStatusIcon = `transactionStatus${transactionStatus}`;
 
   return (
