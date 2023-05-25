@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { tokenMap, tokenKeys } from '@token/fungible/consts/tokens';
 import accounts from '@tests/constants/wallets';
 import AddBookmark from './AddBookmark';
@@ -45,7 +44,7 @@ describe('Add a new bookmark component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<AddBookmark {...props} />);
+    wrapper = mountWithRouter(AddBookmark, props);
   });
 
   afterEach(() => {
@@ -102,7 +101,8 @@ describe('Add a new bookmark component', () => {
             name: 'address',
           },
         });
-      wrapper.setProps({
+      const updatedProps = {
+        ...props,
         account: { ...props.account, data: accounts.validator },
         history: {
           push: jest.fn(),
@@ -110,8 +110,8 @@ describe('Add a new bookmark component', () => {
             search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isValidator=true`,
           },
         },
-      });
-      wrapper.update();
+      };
+      wrapper = mountWithRouter(AddBookmark, updatedProps);
       expect(wrapper.find('input[name="label"]')).toHaveValue(accountUsername);
       expect(wrapper.find('input[name="label"]')).toHaveProp('readOnly', true);
       expect(wrapper.find('button').at(0)).not.toBeDisabled();
@@ -121,11 +121,13 @@ describe('Add a new bookmark component', () => {
 
   describe('Fail scenarios', () => {
     beforeEach(() => {
-      wrapper.setProps({
+      const updatedProps = {
+        ...props,
         bookmarks: {
           LSK: [{ address: addresses.LSK, title: 'genesis' }],
         },
-      });
+      };
+      wrapper = mountWithRouter(AddBookmark, updatedProps);
     });
 
     tokenKeys.forEach((token) => {
