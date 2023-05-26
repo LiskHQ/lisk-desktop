@@ -64,11 +64,11 @@ describe('TxBroadcasterWithStatus', () => {
   });
 
   it('should show message for error occurred while broadcasting', () => {
-    const most = jest.fn();
+    const prevStep = jest.fn();
 
     renderWithRouterAndStoreAndQueryClient(
       TxBroadcasterWithStatus,
-      { prevStep: most },
+      { prevStep },
       {
         ...store,
         transactions: {
@@ -86,6 +86,6 @@ describe('TxBroadcasterWithStatus', () => {
     ).toBeTruthy();
 
     fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
-    expect(most).toHaveBeenCalled();
+    expect(prevStep).toHaveBeenCalled();
   });
 });

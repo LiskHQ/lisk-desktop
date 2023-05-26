@@ -1,9 +1,9 @@
 import React from 'react';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
-import { screen, fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
-import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import * as transactionStatus from '@transaction/configuration/statusConfig';
+import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import ChangeCommissionStatus from './ChangeCommissionStatus';
@@ -17,12 +17,12 @@ jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
 }));
 jest.mock('@transaction/components/TxBroadcaster', () =>
-  jest.fn(({ title, message, successButtonText, onSuccessClick }) => (
+  jest.fn(({ title, message, successButtonText, onSuccessClick, onRetry }) => (
     <div>
       <div data-testid="title">{title}</div>
       <div data-testid="message">{message}</div>
-      <button data-testid="button" onClick={onSuccessClick}>
-        {successButtonText}
+      <button data-testid="button" onClick={onRetry || onSuccessClick}>
+        {onRetry ? 'Try again' : successButtonText}
       </button>
     </div>
   ))
@@ -70,5 +70,18 @@ describe('ChangeCommissionDialog', () => {
     expect(screen.getByTestId('message')).toHaveTextContent(message);
     fireEvent.click(screen.getByText('Continue to validator profile'));
     expect(removeSearchParamsFromUrl).toHaveBeenCalledTimes(1);
+  });
+
+  it('should show error message when broadcastError ', () => {
+    const prevStep = jest.fn();
+    getTransactionStatus.mockReturnValue({
+      code: txStatusTypes.broadcastError,
+    });
+    const { title, message } = statusMessages((v) => v)[txStatusTypes.broadcastError];
+    renderWithRouterAndQueryClient(ChangeCommissionStatus, { account, transactions, prevStep });
+    expect(screen.getByTestId('title')).toHaveTextContent(title);
+    expect(screen.getByTestId('message')).toHaveTextContent(message);
+    fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
+    expect(prevStep).toHaveBeenCalledTimes(1);
   });
 });
