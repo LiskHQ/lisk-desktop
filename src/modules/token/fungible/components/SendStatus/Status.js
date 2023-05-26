@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
-import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
+import {
+  getTransactionStatus,
+  isTxStatusError,
+  statusMessages,
+} from '@transaction/configuration/statusConfig';
 import { PrimaryButton } from '@theme/buttons';
 import DialogLink from '@theme/dialog/link';
 import { selectModuleCommandSchemas } from 'src/redux/selectors';
@@ -58,7 +62,7 @@ const TransactionStatus = ({
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = getMessagesDetails(transactions, status, t);
 
-  const isBroadcastError = status.code === txStatusTypes.broadcastError;
+  const isBroadcastError = isTxStatusError(status.code);
   const showBookmark =
     !isBroadcastError && shouldShowBookmark(bookmarks, account, transactionJSON, token);
 

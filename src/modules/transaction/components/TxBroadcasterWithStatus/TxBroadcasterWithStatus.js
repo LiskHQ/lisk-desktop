@@ -1,11 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
-import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
+import {
+  getTransactionStatus,
+  isTxStatusError,
+  statusMessages,
+} from '@transaction/configuration/statusConfig';
 import { selectModuleCommandSchemas } from 'src/redux/selectors';
 
 import classNames from 'classnames';
-import { txStatusTypes } from '@transaction/configuration/txStatus';
 import styles from './TxBroadcasterWithStatus.css';
 
 const TxBroadcasterWithStatus = ({
@@ -19,7 +22,7 @@ const TxBroadcasterWithStatus = ({
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
-  const isBroadcastError = status.code === txStatusTypes.broadcastError;
+  const isBroadcastError = isTxStatusError(status.code);
 
   return (
     <div className={classNames(styles.TxBroadcasterWithStatus, className)}>
