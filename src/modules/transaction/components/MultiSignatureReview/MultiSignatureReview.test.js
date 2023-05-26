@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import Review from './index';
@@ -29,7 +28,7 @@ describe('Multisignature Review component', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Review {...props} />);
+    wrapper = mountWithRouter(Review, props);
   });
 
   useTokenBalances.mockReturnValue({ data: mockAppsTokens });
