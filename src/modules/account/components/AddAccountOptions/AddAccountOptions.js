@@ -6,9 +6,9 @@ import { withRouter } from 'react-router';
 import DropdownButton from '@theme/DropdownButton';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
+import { TertiaryButton } from 'src/theme/buttons';
 import routes from 'src/routes/routes';
 import styles from './AddAccountOptions.css';
-import { TertiaryButton } from 'src/theme/buttons';
 
 const addAccountOptions = (t) => [
   {
@@ -57,15 +57,19 @@ const AddAccountOptions = ({ history, location: { search } }) => {
             <p>
               {t('Don’t have a Lisk account yet?')}{' '}
               <DropdownButton
-                className="input-with-dropdown-dropdown"
+                className={`${styles.dropdownWrapper} input-with-dropdown-dropdown`}
                 buttonClassName={`${styles.inputDropdownButton}`}
-                buttonLabel="Create one now"
+                buttonLabel={
+                  <span>
+                    Create one now <Icon name="arrowBlueDown" />{' '}
+                  </span>
+                }
                 size="s"
                 ButtonComponent={TertiaryButton}
                 align="right"
               >
-                <Link to={`${routes.register.path}?strength=${128}`}>12 words</Link>
-                <Link to={`${routes.register.path}?strength=${256}`}>24 words</Link>
+                <Link to={`${routes.register.path}?strength=${128}`}>12 word passphrase</Link>
+                <Link to={`${routes.register.path}?strength=${256}`}>24 word passphrase</Link>
               </DropdownButton>
             </p>
           </div>

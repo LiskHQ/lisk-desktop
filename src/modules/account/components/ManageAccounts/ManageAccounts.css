@@ -37,7 +37,6 @@
 }
 
 .button {
-  width: 100%;
   display: flex;
   color: var(--color-maastricht-blue);
   margin-top: 17px;
