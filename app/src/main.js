@@ -98,16 +98,20 @@ app.on('activate', () => {
 app.setAsDefaultProtocolClient('lisk');
 
 // Force single instance application
-app.requestSingleInstanceLock();
-app.on('second-instance', (argv) => {
-  if (process.platform !== 'darwin') {
-    win.send({ event: 'openUrl', value: argv[1] || '/' });
-  }
-  if (win.browser) {
-    if (win.browser.isMinimized()) win.browser.restore();
-    win.browser.focus();
-  }
-});
+const isSingleLock = app.requestSingleInstanceLock();
+if (!isSingleLock) {
+  app.quit();
+} else {
+  app.on('second-instance', (argv) => {
+    if (process.platform !== 'darwin') {
+      win.send({ event: 'openUrl', value: argv[1] || '/' });
+    }
+    if (win.browser) {
+      if (win.browser.isMinimized()) win.browser.restore();
+      win.browser.focus();
+    }
+  });
+}
 
 app.on('will-finish-launching', () => {
   handleProtocol();

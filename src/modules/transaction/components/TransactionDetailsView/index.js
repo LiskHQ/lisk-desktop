@@ -83,7 +83,7 @@ const TransactionDetails = ({ location }) => {
         value: nonce,
       },
       {
-        label: t('Status'),
+        label: t('Execution status'),
         value: executionStatus,
         type: 'status',
       },
@@ -100,7 +100,7 @@ const TransactionDetails = ({ location }) => {
       },
       {
         label: t('Block status'),
-        value: block.isFinal ? 'Final' : 'Not final',
+        value: block.isFinal ? 'Final' : 'Pending',
       },
       {
         label: t('Block height'),

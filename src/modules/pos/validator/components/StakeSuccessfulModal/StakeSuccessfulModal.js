@@ -13,7 +13,7 @@ function StakeSuccessfulModal({ history, statusMessage }) {
   const { t } = useTranslation();
 
   const handleBackToValidator = useCallback(() => {
-    history.push(routes.validators.path);
+    history.push(routes.sentStakes.path);
   }, [history]);
 
   return (
@@ -27,7 +27,7 @@ function StakeSuccessfulModal({ history, statusMessage }) {
       </BoxContent>
       <BoxFooter className={styles.footer}>
         <PrimaryButton className={styles.actionButton} onClick={handleBackToValidator}>
-          {t('Back to validators')}
+          {t('Show all your stakes')}
         </PrimaryButton>
       </BoxFooter>
     </Box>
