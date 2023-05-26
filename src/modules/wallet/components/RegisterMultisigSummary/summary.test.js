@@ -102,7 +102,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should call props.nextStep', async () => {
-    smartRender(Summary, props, { router: true });
+    smartRender(Summary, props);
     await waitFor(() => {
       fireEvent.click(screen.getByText('Sign'));
     });
@@ -118,7 +118,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should call props.prevStep', async () => {
-    smartRender(Summary, props, { router: true });
+    smartRender(Summary, props);
     await waitFor(() => {
       fireEvent.click(screen.getByText('Edit'));
     });
@@ -126,6 +126,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should render properly', () => {
+    smartRender(Summary, props);
     expect(screen.queryAllByTestId('member-info').length).toEqual(
       props.transactionJSON.params.mandatoryKeys.length +
         props.transactionJSON.params.optionalKeys.length
@@ -143,7 +144,7 @@ describe('Multisignature Summary component', () => {
         signedTransaction: {},
       },
     };
-    smartRender(Summary, newProps, { router: true });
+    smartRender(Summary, newProps);
     expect(props.nextStep).not.toHaveBeenCalledWith();
   });
 });
