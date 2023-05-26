@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
 import { regex } from 'src/const/regex';
-import { validateAmountFormat } from 'src/utils/validators';
+import { validateAmount } from 'src/utils/validators';
 import { convertToBaseDenom } from '../utils/helpers';
 
 let loaderTimeout = null;
@@ -38,10 +38,10 @@ const useAmountField = (initialValue, balance = '0', token) => {
       'MIN_BALANCE',
       'FORMAT',
     ];
-    let { message: feedback } = validateAmountFormat({
-      value,
+    let { message: feedback } = validateAmount({
+      amount: value,
       token,
-      funds: maxAmount,
+      accountBalance: maxAmount,
       checklist: [...checklist, 'MIN_BALANCE'],
     });
 
@@ -84,10 +84,10 @@ const useAmountField = (initialValue, balance = '0', token) => {
         });
       }, 300);
     } else {
-      const { message: feedback } = validateAmountFormat({
+      const { message: feedback } = validateAmount({
         token,
-        value: amount,
-        funds: balance,
+        amount,
+        accountBalance: balance,
         checklist: ['MAX_ACCURACY'],
       });
 
