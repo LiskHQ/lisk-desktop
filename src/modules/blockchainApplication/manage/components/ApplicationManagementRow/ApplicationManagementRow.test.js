@@ -29,13 +29,12 @@ describe('ApplicationManangementRow', () => {
     pathname: '/',
     search: '',
   };
+  const history = {
+    push: jest.fn(),
+    location,
+  };
   const props = {
     application: mockManagedApplications[0],
-    history: {
-      push: jest.fn(),
-      location,
-    },
-    location,
   };
 
   beforeEach(() => {
@@ -94,7 +93,7 @@ describe('ApplicationManangementRow', () => {
     fireEvent.click(deleteButton);
     expect(addSearchParamsToUrl).toHaveBeenCalledWith(
       expect.objectContaining({
-        entries: expect.arrayContaining([expect.objectContaining(props.history.location)]),
+        entries: expect.arrayContaining([expect.objectContaining(history.location)]),
       }),
       {
         modal: `removeApplicationFlow&chainId=${props.application.chainID}`,
@@ -147,7 +146,7 @@ describe('ApplicationManangementRow', () => {
     fireEvent.click(deleteButton);
     expect(addSearchParamsToUrl).toHaveBeenCalledWith(
       expect.objectContaining({
-        entries: expect.arrayContaining([expect.objectContaining(props.history.location)]),
+        entries: expect.arrayContaining([expect.objectContaining(history.location)]),
       }),
       {
         modal: `removeApplicationFlow&chainId=${props.application.chainID}`,

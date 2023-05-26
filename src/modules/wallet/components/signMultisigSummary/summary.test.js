@@ -28,7 +28,6 @@ jest.mock('@transaction/hooks/useTxInitiatorAccount');
 jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('Sign Multisignature Tx Review component', () => {
-  // let wrapper;
   const props = {
     t: (v) => v,
     account: {
@@ -79,10 +78,6 @@ describe('Sign Multisignature Tx Review component', () => {
     usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
   });
 
-  // beforeEach(() => {
-  //   wrapper = smartRender(Summary, props, { router: true });
-  // });
-
   useTxInitiatorAccount.mockReturnValue({
     txInitiatorAccount: {
       ...mockAuth.data,
@@ -97,7 +92,7 @@ describe('Sign Multisignature Tx Review component', () => {
   });
 
   it('Should call props.nextStep passing the signed transaction', async () => {
-    smartRender(Summary, props, { router: true });
+    smartRender(Summary, props);
     const { transactionJSON, formProps } = props;
     const signatures = props.transactionJSON.signatures;
     signatures[1] = wallets.genesis.summary.publicKey;
@@ -125,7 +120,7 @@ describe('Sign Multisignature Tx Review component', () => {
   });
 
   it('Should call props.prevStep', async () => {
-    smartRender(Summary, props, { router: true });
+    smartRender(Summary, props);
     await waitFor(() => {
       fireEvent.click(screen.getByText('Reject'));
     });
@@ -157,7 +152,7 @@ describe('Sign Multisignature Tx Review component', () => {
         },
       },
     };
-    smartRender(Summary, newProps, { router: true });
+    smartRender(Summary, newProps);
     const { params } = newProps.transactionJSON;
     const expectedLength = params.mandatoryKeys.length + params.optionalKeys.length;
     expect(screen.queryAllByTestId('member-info').length).toEqual(expectedLength);
@@ -168,7 +163,7 @@ describe('Sign Multisignature Tx Review component', () => {
     useTxInitiatorAccount.mockReturnValue({
       txInitiatorAccount: {},
     });
-    smartRender(Summary, props, { router: true });
+    smartRender(Summary, props);
     expect(screen.queryAllByTestId('member-info').length).toEqual(0);
     expect(screen.queryAllByText('Reject').length).toEqual(0);
     expect(screen.queryAllByText('Sign').length).toEqual(0);
