@@ -14,11 +14,14 @@ import AccountCreated from '../AccountCreated';
 import styles from './register.css';
 import SetPasswordForm from '../SetPasswordForm';
 
-const Register = ({ account, token, history }) => {
+const Register = ({ account, token, history, location: { search }  }) => {
   const multiStepRef = useRef(null);
+  const queryParams = new URLSearchParams(search);
+  const strength = queryParams.get('strength');
+
   const [isStepSetPasswordForm, setIsStepSetPasswordForm] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState({});
-  const { suggestionAccounts } = useCreateAccounts();
+  const { suggestionAccounts } = useCreateAccounts(strength);
   const [, setCurrentAccount] = useCurrentAccount();
   const { setAccount } = useAccounts();
 

@@ -11,6 +11,8 @@ import DiscreetModeToggle from 'src/modules/settings/components/discreetModeTogg
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
 import { getDerivationPathErrorMessage } from '@wallet/utils/account';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
+import Toggle from 'src/modules/settings/components/toggle';
+import settingsConst from 'src/modules/settings/const/settingConstants';
 import styles from './AddAccountForm.css';
 
 const AddAccountForm = ({ settings, onAddAccount }) => {
@@ -109,6 +111,7 @@ const AddAccountFormContainer = ({
 };
 
 const AddAccountFormWithDerivationPath = (props) => {
+  const { t } = useTranslation();
   const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
   const derivationPathErrorMessage = getDerivationPathErrorMessage(derivationPath);
 
@@ -123,6 +126,16 @@ const AddAccountFormWithDerivationPath = (props) => {
       isSubmitDisabled={!!derivationPathErrorMessage}
       derivationPath={derivationPath}
     >
+      <div>
+        <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+          <Toggle isCheckbox setting={settingsConst.keys.enableAccessToLegacyAccounts} />
+          <div>
+            <span className={styles.labelName}>
+              {t('Enable access to legacy Lisk accounts')}
+            </span>
+          </div>
+        </label>
+      </div>
       <CustomDerivationPath
         onChange={onPathInputChange}
         derivationPath={derivationPath}

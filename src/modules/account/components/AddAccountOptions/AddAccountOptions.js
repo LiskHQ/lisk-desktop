@@ -3,10 +3,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
+import DropdownButton from '@theme/DropdownButton';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import styles from './AddAccountOptions.css';
+import { TertiaryButton } from 'src/theme/buttons';
 
 const addAccountOptions = (t) => [
   {
@@ -54,7 +56,17 @@ const AddAccountOptions = ({ history, location: { search } }) => {
             </div>
             <p>
               {t('Don’t have a Lisk account yet?')}{' '}
-              <Link to={routes.register.path}>Create one now</Link>
+              <DropdownButton
+                className="input-with-dropdown-dropdown"
+                buttonClassName={`${styles.inputDropdownButton}`}
+                buttonLabel="Create one now"
+                size="s"
+                ButtonComponent={TertiaryButton}
+                align="right"
+              >
+                <Link to={`${routes.register.path}?strength=${128}`}>12 words</Link>
+                <Link to={`${routes.register.path}?strength=${256}`}>24 words</Link>
+              </DropdownButton>
             </p>
           </div>
         </div>
