@@ -359,8 +359,12 @@ const analyzeConfig = (config = { queryClient: false, store: false, wc: false })
       Router,
       {
         history: config.historyInfo
-          ? { ...defaultRouterProps, ...config.historyInfo }
-          : defaultHistoryProps,
+          ? {
+              ...defaultRouterProps.history,
+              ...config.historyInfo,
+              location: { ...defaultRouterProps.history.location, ...config.historyInfo.location },
+            }
+          : defaultRouterProps.history,
       },
     ],
     config.queryClient
