@@ -51,7 +51,7 @@
 
       & .dropdownWrapper {
         min-width: 180px;
-  
+
         & div > a {
           color: var(--color-zodiac-blue) !important;
           font-size: 14px !important;

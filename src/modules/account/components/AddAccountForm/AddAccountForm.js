@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from 'src/routes/routes';
 import CustomDerivationPath from 'src/modules/auth/components/CustomDerivationPath';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -27,9 +27,6 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
 
   const props = { settings, onAddAccount, setPassphrase, passphrase };
 
-  if (settings.enableAccessToLegacyAccounts) {
-    return <AddAccountFormContainer {...props} />;
-  }
   return <AddAccountFormWithDerivationPath {...props} />;
 };
 
@@ -87,7 +84,6 @@ const AddAccountFormContainer = ({
               />
             </fieldset>
             {children}
-            <DiscreetModeToggle className={styles.discreetMode} />
           </div>
           <div className={`${styles.buttonsHolder}`}>
             <PrimaryButton
@@ -126,21 +122,22 @@ const AddAccountFormWithDerivationPath = (props) => {
       isSubmitDisabled={!!derivationPathErrorMessage}
       derivationPath={derivationPath}
     >
-      <div>
+      <div className={styles.labelWrapper}>
         <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
           <Toggle isCheckbox setting={settingsConst.keys.enableAccessToLegacyAccounts} />
-          <div>
-            <span className={styles.labelName}>
-              {t('Enable access to legacy Lisk accounts')}
-            </span>
-          </div>
+          <span className={styles.labelName}>{t('Enable access to legacy Lisk accounts')}</span>
+        </label>
+        <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+          <DiscreetModeToggle className={styles.discreetMode} />
         </label>
       </div>
-      <CustomDerivationPath
-        onChange={onPathInputChange}
-        derivationPath={derivationPath}
-        derivationPathErrorMessage={derivationPathErrorMessage}
-      />
+      {!props.settings.enableAccessToLegacyAccounts ? (
+        <CustomDerivationPath
+          onChange={onPathInputChange}
+          derivationPath={derivationPath}
+          derivationPathErrorMessage={derivationPathErrorMessage}
+        />
+      ) : null}
     </AddAccountFormContainer>
   );
 };
