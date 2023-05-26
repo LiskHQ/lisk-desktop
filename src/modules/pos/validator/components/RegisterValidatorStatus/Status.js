@@ -12,7 +12,7 @@ const RegisterValidatorStatus = ({ transactions, account, t, prevStep }) => {
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
-  const isBroadcastError = status?.code === txStatusTypes.broadcastError;
+  const isBroadcastError = status.code === txStatusTypes.broadcastError;
 
   return (
     <div className={`${styles.wrapper} status-container`}>

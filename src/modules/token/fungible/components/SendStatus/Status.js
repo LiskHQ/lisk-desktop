@@ -58,7 +58,7 @@ const TransactionStatus = ({
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = getMessagesDetails(transactions, status, t);
 
-  const isBroadcastError = status?.code === txStatusTypes.broadcastError;
+  const isBroadcastError = status.code === txStatusTypes.broadcastError;
   const showBookmark =
     !isBroadcastError && shouldShowBookmark(bookmarks, account, transactionJSON, token, status);
 
