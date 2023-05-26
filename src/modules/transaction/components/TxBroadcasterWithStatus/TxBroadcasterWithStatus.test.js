@@ -2,7 +2,7 @@ import { renderWithRouterAndStoreAndQueryClient } from 'src/utils/testHelpers';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import accounts from '@tests/constants/wallets';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import TxBroadcasterWithStatus from './index';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
@@ -64,9 +64,11 @@ describe('TxBroadcasterWithStatus', () => {
   });
 
   it('should show message for error occurred while broadcasting', () => {
+    const most = jest.fn();
+
     renderWithRouterAndStoreAndQueryClient(
       TxBroadcasterWithStatus,
-      {},
+      { prevStep: most },
       {
         ...store,
         transactions: {
@@ -82,5 +84,8 @@ describe('TxBroadcasterWithStatus', () => {
         'An error occurred while sending your transaction to the network. Please try again.'
       )
     ).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
+    expect(most).toHaveBeenCalled();
   });
 });
