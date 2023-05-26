@@ -64,6 +64,7 @@ describe('unlock transaction Status', () => {
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
       message: 'An error occurred while signing your transaction. Please try again.',
+      onRetry: expect.any(Function),
     });
 
     const propsWithHWError = {
