@@ -5,14 +5,16 @@ import { selectModuleCommandSchemas } from 'src/redux/selectors';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
+import { txStatusTypes } from '@transaction/configuration/txStatus';
 import statusMessages from './statusMessages';
 import styles from './ChangeCommissionStatus.css';
 
-const ChangeCommissionStatus = ({ transactions, account, history }) => {
+const ChangeCommissionStatus = ({ transactions, account, history, prevStep }) => {
   const { t } = useTranslation();
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
+  const isBroadcastError = status?.code === txStatusTypes.broadcastError;
 
   const onSuccessClick = async () => {
     removeSearchParamsFromUrl(history, ['modal']);
@@ -28,6 +30,7 @@ const ChangeCommissionStatus = ({ transactions, account, history }) => {
         className={styles.content}
         successButtonText={t('Continue to validator profile')}
         onSuccessClick={onSuccessClick}
+        onRetry={isBroadcastError ? () => prevStep({ step: 0 }) : undefined}
       />
     </div>
   );

@@ -5,6 +5,7 @@ import { getTransactionStatus, statusMessages } from '@transaction/configuration
 import { selectModuleCommandSchemas } from 'src/redux/selectors';
 
 import classNames from 'classnames';
+import { txStatusTypes } from '@transaction/configuration/txStatus';
 import styles from './TxBroadcasterWithStatus.css';
 
 const TxBroadcasterWithStatus = ({
@@ -13,10 +14,12 @@ const TxBroadcasterWithStatus = ({
   account,
   transactions,
   t,
+  prevStep,
 }) => {
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
+  const isBroadcastError = status?.code === txStatusTypes.broadcastError;
 
   return (
     <div className={classNames(styles.TxBroadcasterWithStatus, className)}>
@@ -26,6 +29,7 @@ const TxBroadcasterWithStatus = ({
         status={status}
         title={template.title}
         message={template.message}
+        onRetry={isBroadcastError ? () => prevStep({ step: 0 }) : undefined}
       />
     </div>
   );

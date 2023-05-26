@@ -5,11 +5,13 @@ import { PrimaryButton } from 'src/theme/buttons';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
 import { selectModuleCommandSchemas } from 'src/redux/selectors';
+import { txStatusTypes } from '@transaction/configuration/txStatus';
 
-const TransactionStatus = ({ account, transactions, t }) => {
+const TransactionStatus = ({ account, transactions, t, prevStep }) => {
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
+  const isBroadcastError = status?.code === txStatusTypes.broadcastError;
 
   return (
     <div className="transaction-status">
@@ -18,6 +20,7 @@ const TransactionStatus = ({ account, transactions, t }) => {
         status={status}
         title={template.title}
         message={template.message}
+        onRetry={isBroadcastError ? () => prevStep({ step: 0 }) : undefined}
       >
         {template.button && (
           <PrimaryButton
