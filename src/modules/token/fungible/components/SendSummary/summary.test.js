@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { mockAppTokens } from '@tests/fixtures/token';
@@ -73,7 +72,7 @@ describe('Summary', () => {
         },
       },
     };
-    wrapper = mount(<Summary {...props} />);
+    wrapper = mountWithRouter(Summary, { ...props });
   });
   useAuth.mockReturnValue({ data: mockAuth });
 
@@ -99,23 +98,21 @@ describe('Summary', () => {
   });
 
   it('should show props.fields.recipient.title if it is present', () => {
-    wrapper = mount(
-      <Summary
-        {...{
-          ...props,
-          formProps: {
-            ...props.formProps,
-            params: {
-              ...props.formProps.params,
-              recipient: {
-                ...props.formProps.params.recipient,
-                title,
-              },
+    wrapper = mountWithRouter(Summary, {
+      ...{
+        ...props,
+        formProps: {
+          ...props.formProps,
+          params: {
+            ...props.formProps.params,
+            recipient: {
+              ...props.formProps.params.recipient,
+              title,
             },
           },
-        }}
-      />
-    );
+        },
+      },
+    });
     expect(wrapper.find('.recipient-address')).toIncludeText(
       props.transactionJSON.params.recipientAddress
     );
