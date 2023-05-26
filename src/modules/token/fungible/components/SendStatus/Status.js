@@ -60,7 +60,7 @@ const TransactionStatus = ({
 
   const isBroadcastError = status.code === txStatusTypes.broadcastError;
   const showBookmark =
-    !isBroadcastError && shouldShowBookmark(bookmarks, account, transactionJSON, token, status);
+    !isBroadcastError && shouldShowBookmark(bookmarks, account, transactionJSON, token);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
