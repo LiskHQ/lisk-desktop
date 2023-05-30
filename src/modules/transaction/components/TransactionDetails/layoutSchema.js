@@ -26,7 +26,7 @@ import styles from './layoutSchema.css';
 
 const {
   transfer,
-  stakeValidator,
+  stake,
   unlock,
   registerValidator,
   registerMultisignature,
@@ -48,11 +48,11 @@ export const LayoutSchema = {
     components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],
     className: styles.transferPreview,
   },
-  [stakeValidator]: {
+  [stake]: {
     components: [...baseComponents, ...timeComponents, Stakes, PrettyJson],
     className: styles.stakeLayout,
   },
-  [`${stakeValidator}-preview`]: {
+  [`${stake}-preview`]: {
     components: [...previewBaseComponents, Stakes, ...restComponents],
     className: styles.stakePreview,
   },
