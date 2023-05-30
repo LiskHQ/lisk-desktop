@@ -3,8 +3,6 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import ConfirmPassphrase from './confirmPassphrase';
 
 describe('Register Process - Confirm Passphrase', () => {
-  let wrapper;
-
   const props = {
     passphrase: 'barely feature filter inmate exotic sister dog boil crush build canvas latin',
     nextStep: jest.fn(),
@@ -27,12 +25,12 @@ describe('Register Process - Confirm Passphrase', () => {
   };
 
   beforeEach(() => {
-    wrapper = render(<ConfirmPassphrase {...props} />);
+    render(<ConfirmPassphrase {...props} />);
   });
 
   it('Should handle selection', async () => {
-    selectRightWords(wrapper);
-    selectRightWords(wrapper);
+    selectRightWords();
+    selectRightWords();
     fireEvent.click(screen.getByTestId('confirm-button'));
 
     await waitFor(() => {
@@ -41,7 +39,7 @@ describe('Register Process - Confirm Passphrase', () => {
   });
 
   it('Should update empty values after wrong selection', async () => {
-    selectWrongWords(wrapper);
+    selectWrongWords();
     fireEvent.click(screen.getByTestId('confirm-button'));
 
     await waitFor(() => {

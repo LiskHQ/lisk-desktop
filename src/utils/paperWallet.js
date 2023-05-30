@@ -98,7 +98,6 @@ class PaperWallet {
   renderAccount() {
     const { t } = this.props;
     const textOptions = this.textOptions;
-    // const address = extractAddressFromPassphrase(passphrase);
     const address = extractAddressFromPublicKey(this.publicKey);
 
     this.doc
