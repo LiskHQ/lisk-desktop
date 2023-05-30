@@ -51,6 +51,7 @@ describe('Register Process - Confirm Passphrase', () => {
   it('Should update empty values after wrong selection', () => {
     wrapper.find('.passphraseContainer');
     selectWrongWords(wrapper);
+    expect(wrapper.find('.selected')).toExist();
     selectWrongWords(wrapper);
     wrapper.find('.confirmPassphraseFooter Button').at(0).simulate('click');
     clock.tick(1500);

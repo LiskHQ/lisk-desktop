@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -9,11 +10,15 @@ class PassphraseRenderer extends React.Component {
   constructor(props) {
     super(props);
     this.values = props.passphrase.split(' ');
+    const initialIndexes = [2, 9];
 
     this.state = {
       chosenWords: {},
       isCorrect: false,
       hasErrors: false,
+      indexes: initialIndexes,
+      fieldSelected: initialIndexes[0],
+      options: this.assembleWordOptions(this.values, initialIndexes),
     };
 
     this.handleConfirm = this.handleConfirm.bind(this);
@@ -137,8 +142,9 @@ class PassphraseRenderer extends React.Component {
     const { t, showInfo, isConfirmation, prevStep, footerStyle, subheader, confirmText } =
       this.props;
     const { options, fieldSelected, chosenWords } = this.state;
+    const hasChoosenWords = Object.values(chosenWords).length === 2;
 
-    if (!(fieldSelected && options)) return null;
+    if (!(fieldSelected || hasChoosenWords) || !options) return null;
 
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
 
