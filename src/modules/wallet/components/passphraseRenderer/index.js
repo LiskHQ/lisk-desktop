@@ -9,13 +9,9 @@ class PassphraseRenderer extends React.Component {
   constructor(props) {
     super(props);
     this.values = props.passphrase.split(' ');
-    const initialIndexes = [2, 9];
 
     this.state = {
-      indexes: initialIndexes,
-      fieldSelected: initialIndexes[0],
       chosenWords: {},
-      options: this.assembleWordOptions(this.values, initialIndexes),
       isCorrect: false,
       hasErrors: false,
     };
@@ -141,6 +137,9 @@ class PassphraseRenderer extends React.Component {
     const { t, showInfo, isConfirmation, prevStep, footerStyle, subheader, confirmText } =
       this.props;
     const { options, fieldSelected, chosenWords } = this.state;
+
+    if (!(fieldSelected && options)) return null;
+
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
 
     return (
@@ -161,11 +160,14 @@ class PassphraseRenderer extends React.Component {
           <div className={`${styles.inputsRow} ${grid.row} passphrase`}>
             {this.values.map((value, i) => (
               <div
-                onClick={() => this.handleClick(i)}
+                onClick={() =>
+                  isConfirmation && missingWordsIndexes.includes(i) ? this.handleClick(i) : null
+                }
                 className={`${grid['col-xs-2']} ${styles.inputContainer}`}
                 key={i}
               >
                 <span
+                  data-testid="word"
                   className={`${styles.inputValue} ${this.getStyle(i, missingWordsIndexes)} word`}
                 >
                   {isConfirmation && missingWordsIndexes.includes(i)
