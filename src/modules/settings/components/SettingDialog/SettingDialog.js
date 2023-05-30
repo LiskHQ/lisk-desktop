@@ -46,18 +46,6 @@ function SettingDialog() {
               </div>
             </label>
           </section>
-          <section className="advanced">
-            <h2>{t('Advanced')}</h2>
-            <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-              <Toggle isCheckbox setting={settingsConst.keys.enableAccessToLegacyAccounts} />
-              <div>
-                <span className={styles.labelName}>
-                  {t('Enable access to legacy Lisk accounts')}
-                </span>
-                <p>{t('Access to Lisk protocol v3 or older accounts.')}</p>
-              </div>
-            </label>
-          </section>
           <section className="privacy">
             <h2>{t('Privacy')}</h2>
             <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
