@@ -164,6 +164,7 @@ const renderPaperWallet = async (JSPDF, data, walletName) => {
   };
   const { publicKey } = await extractKeyPair(options);
   const pdf = new PaperWallet(JSPDF, data, publicKey);
+
   pdf.save(walletName);
   return pdf.doc;
 };
