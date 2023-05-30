@@ -189,6 +189,7 @@ class PassphraseRenderer extends React.Component {
             typeof fieldSelected === 'number' &&
             options[fieldSelected].map((option, i) => (
               <div
+                data-testid="option"
                 className="option"
                 onClick={() => this.chooseWord(fieldSelected, option)}
                 key={i}
@@ -200,6 +201,7 @@ class PassphraseRenderer extends React.Component {
         {isConfirmation && (
           <div className={`${styles.confirmPassphraseFooter} ${footerStyle}`}>
             <PrimaryButton
+              data-testid="confirm-button"
               className={[styles.confirmBtn, 'confirm'].join(' ')}
               onClick={this.handleConfirm}
               disabled={Object.keys(chosenWords).length < 2}
