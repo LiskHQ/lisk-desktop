@@ -4,15 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from 'src/routes/routes';
-import CustomDerivationPath from 'src/modules/auth/components/CustomDerivationPath';
+import CustomDerivationPath from '@auth/components/CustomDerivationPath';
 import { PrimaryButton } from 'src/theme/buttons';
-import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
-import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
-import NetworkSelector from 'src/modules/settings/components/networkSelector';
+import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
+import DiscreetModeToggle from '@settings/components/discreetModeToggle';
+import NetworkSelector from '@settings/components/networkSelector';
 import { getDerivationPathErrorMessage } from '@wallet/utils/account';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
-import Toggle from 'src/modules/settings/components/toggle';
-import settingsConst from 'src/modules/settings/const/settingConstants';
+import Toggle from '@settings/components/toggle';
+import Tooltip from '@theme/Tooltip/tooltip';
+import settingsConst from '@settings/const/settingConstants';
 import styles from './AddAccountForm.css';
 
 const AddAccountForm = ({ settings, onAddAccount }) => {
@@ -125,7 +126,16 @@ const AddAccountFormWithDerivationPath = (props) => {
       <div className={styles.labelWrapper}>
         <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
           <Toggle isCheckbox setting={settingsConst.keys.enableAccessToLegacyAccounts} />
-          <span className={styles.labelName}>{t('Enable access to legacy Lisk accounts')}</span>
+          <span className={styles.labelName}>
+            {t('Enable access to legacy Lisk accounts')}
+            <Tooltip position="bottom">
+              <span>
+                {t(
+                  'Enable this option to access your Lisk accounts created using Lisk v3 protocol or older.'
+                )}
+              </span>
+            </Tooltip>
+          </span>
         </label>
         <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
           <DiscreetModeToggle className={styles.discreetMode} />

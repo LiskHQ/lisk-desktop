@@ -67,6 +67,7 @@ const AddAccountOptions = ({ history, location: { search } }) => {
                 size="s"
                 ButtonComponent={TertiaryButton}
                 align="right"
+                showArrow
               >
                 <Link to={`${routes.register.path}?strength=${128}`}>12 word passphrase</Link>
                 <Link to={`${routes.register.path}?strength=${256}`}>24 word passphrase</Link>

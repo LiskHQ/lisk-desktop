@@ -71,6 +71,7 @@ export default function WelcomeView() {
             size="s"
             ButtonComponent={PrimaryButton}
             align="right"
+            showArrow
           >
             <Link to={`${routes.register.path}?strength=${128}`}>12 word passphrase</Link>
             <Link to={`${routes.register.path}?strength=${256}`}>24 word passphrase</Link>
