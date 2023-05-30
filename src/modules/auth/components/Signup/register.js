@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from 'src/routes/routes';
 import useCreateAccounts from '@auth/hooks/useCreateAccounts';
@@ -14,7 +15,9 @@ import AccountCreated from '../AccountCreated';
 import styles from './register.css';
 import SetPasswordForm from '../SetPasswordForm';
 
-const Register = ({ account, token, history, location: { search }  }) => {
+const Register = ({ account, token }) => {
+  const history = useHistory();
+  const { search = '' } = useLocation();
   const multiStepRef = useRef(null);
   const queryParams = new URLSearchParams(search);
   const strength = queryParams.get('strength');
