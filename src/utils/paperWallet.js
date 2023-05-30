@@ -98,7 +98,6 @@ class PaperWallet {
   renderAccount() {
     const { t } = this.props;
     const textOptions = this.textOptions;
-    // const address = extractAddressFromPassphrase(passphrase);
     const address = extractAddressFromPublicKey(this.publicKey);
 
     this.doc
@@ -164,6 +163,7 @@ const renderPaperWallet = async (JSPDF, data, walletName) => {
   };
   const { publicKey } = await extractKeyPair(options);
   const pdf = new PaperWallet(JSPDF, data, publicKey);
+
   pdf.save(walletName);
   return pdf.doc;
 };

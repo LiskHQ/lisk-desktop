@@ -1,5 +1,5 @@
-import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { smartRender } from 'src/utils/testHelpers';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
@@ -10,7 +10,6 @@ jest.mock('@token/fungible/hooks/queries');
 useTokenBalances.mockReturnValue({ data: mockTokensBalance, isLoading: false });
 
 describe('TokenSelector', () => {
-  let wrapper;
   const props = {
     onChange: jest.fn(),
     styles: {},
@@ -22,7 +21,7 @@ describe('TokenSelector', () => {
   };
 
   it('renders properly', async () => {
-    render(<TokenSelector {...props} />);
+    smartRender(TokenSelector, props);
 
     expect(screen.getByText('Token')).toBeTruthy();
     expect(screen.getByText('Balance:')).toBeTruthy();
@@ -50,11 +49,11 @@ describe('TokenSelector', () => {
 
   it('should render no tokens in the dropdown options', async () => {
     useTokenBalances.mockReturnValue({ data: {}, isLoading: false });
-    wrapper = render(<TokenSelector {...props} />);
+    const { wrapper } = smartRender(TokenSelector, props);
     expect(screen.queryByText(mockTokensBalance.data[0].chainName)).toBeFalsy();
 
     useTokenBalances.mockReturnValue({ isLoading: false, isSuccess: true });
-    wrapper.rerender(<TokenSelector {...props} />);
+    wrapper.rerender(TokenSelector, props);
 
     expect(screen.queryByText(mockTokensBalance.data[0].chainName)).toBeFalsy();
   });

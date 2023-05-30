@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
@@ -9,7 +9,8 @@ import Icon from '@theme/Icon';
 import classNames from 'classnames';
 import styles from './UserApplicationSelector.css';
 
-const UserApplicationSelector = ({ className, history }) => {
+const UserApplicationSelector = ({ className }) => {
+  const history = useHistory();
   const { t } = useTranslation();
   const { applications } = useApplicationManagement();
 
@@ -42,4 +43,4 @@ const UserApplicationSelector = ({ className, history }) => {
   );
 };
 
-export default withRouter(UserApplicationSelector);
+export default UserApplicationSelector;

@@ -1,5 +1,4 @@
 // istanbul ignore file
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { multisigTransactionSigned, signatureSkipped } from 'src/redux/actions';
@@ -17,7 +16,6 @@ const dispatchToProps = {
 };
 
 export default compose(
-  withRouter,
   connect(mapStateToProps, dispatchToProps),
   withTranslation()
 )(TxSignatureCollector);

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import RemoveConfirmation from '@account/components/RemoveConfirmation';
 import RemoveSuccess from '@account/components/RemoveSuccess/RemoveSuccess';
@@ -10,7 +10,8 @@ import BoxContent from 'src/theme/box/content';
 import { useAccounts } from '../../hooks';
 import styles from './RemoveAccount.css';
 
-const RemoveAccount = ({ account, history }) => {
+const RemoveAccount = ({ account }) => {
+  const history = useHistory();
   const { deleteAccountByAddress } = useAccounts();
   const multiStepRef = useRef(null);
 
@@ -36,4 +37,4 @@ const RemoveAccount = ({ account, history }) => {
   );
 };
 
-export default withRouter(RemoveAccount);
+export default RemoveAccount;

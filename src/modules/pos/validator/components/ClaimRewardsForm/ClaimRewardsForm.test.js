@@ -1,4 +1,4 @@
-import { renderWithQueryClient } from 'src/utils/testHelpers';
+import { smartRender } from 'src/utils/testHelpers';
 import { fireEvent, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from '@account/hooks';
@@ -61,9 +61,10 @@ describe('ClaimRewardsForm', () => {
   const props = {
     nextStep,
   };
+  const config = { queryClient: true };
 
   it('Should display properly', async () => {
-    renderWithQueryClient(ClaimRewardsForm, props);
+    smartRender(ClaimRewardsForm, props, config);
     expect(screen.getByRole('heading', { name: 'Claim rewards' })).toBeTruthy();
     expect(
       screen.getByText(
@@ -80,7 +81,7 @@ describe('ClaimRewardsForm', () => {
   });
 
   it('Should call onConfirm when clicking claim rewards', async () => {
-    renderWithQueryClient(ClaimRewardsForm, props);
+    smartRender(ClaimRewardsForm, props, config);
     fireEvent.click(screen.getByRole('button', { name: 'Claim rewards' }));
     expect(props.nextStep).toHaveBeenCalled();
   });

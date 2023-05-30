@@ -1,4 +1,5 @@
-import { mountWithRouter } from 'src/utils/testHelpers';
+import React from 'react';
+import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import accounts from '@tests/constants/wallets';
 import Status from '.';
@@ -16,7 +17,7 @@ describe('Sign Message: Status', () => {
       error: null,
       signature: 'sample signature',
     };
-    const wrapper = mountWithRouter(Status, props);
+    const wrapper = mount(<Status {...props} />);
     expect(wrapper.find('AutoResizeTextarea')).toExist();
   });
 
@@ -26,7 +27,7 @@ describe('Sign Message: Status', () => {
       error: null,
       signature: 'sample signature',
     };
-    const wrapper = mountWithRouter(Status, props);
+    const wrapper = mount(<Status {...props} />);
     expect(wrapper).toContainMatchingElements(2, 'button');
     wrapper.find('button').at(1).simulate('click');
     expect(wrapper.find('button').at(1)).toBeDisabled();
@@ -50,7 +51,7 @@ describe('Sign Message: Status', () => {
       error: 'some error',
       signature: undefined,
     };
-    const wrapper = mountWithRouter(Status, props);
+    const wrapper = mount(<Status {...props} />);
     expect(wrapper.find('h5').text()).toMatch('Transaction aborted on device');
   });
 });

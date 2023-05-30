@@ -30,22 +30,6 @@ ReactRouterDom.Link = jest.fn(({ children, to, activeClassName, ...props }) => (
   </a>
 ));
 
-ReactRouterDom.withRouter = jest.fn((Component) => (props) => (
-  <Component
-    {...{
-      history: {
-        push: jest.fn(),
-        replace: jest.fn(),
-        createHref: jest.fn(),
-        listen: jest.fn(() => jest.fn()),
-        location: {
-          pathname: '/',
-        },
-      },
-      ...props,
-    }}
-  />
-));
 ReactRouterDom.NavLink = ReactRouterDom.Link;
 
 ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => (Component) => {
