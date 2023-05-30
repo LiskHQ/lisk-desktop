@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { compose } from 'redux';
 import { addSearchParamsToUrl, parseSearchParams } from 'src/utils/searchParams';
 
 import Box from 'src/theme/box';
@@ -57,4 +56,4 @@ const AccountDetails = () => {
   return renderComponent();
 };
 
-export default compose(AccountDetails);
+export default AccountDetails;
