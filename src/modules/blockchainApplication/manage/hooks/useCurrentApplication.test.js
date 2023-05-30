@@ -23,7 +23,7 @@ const mockState = {
     },
   },
 };
-const history = {
+const mockHistory = {
   location: {
     pathname: '',
   },
@@ -32,6 +32,10 @@ const history = {
 jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
   useDispatch: () => mockDispatch,
+}));
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: jest.fn().mockReturnValue(mockHistory),
 }));
 
 describe('useCurrentApplication hook', () => {
@@ -44,7 +48,7 @@ describe('useCurrentApplication hook', () => {
   });
 
   it('should return correct current application', async () => {
-    const { result } = renderHook(() => useCurrentApplication(history));
+    const { result } = renderHook(() => useCurrentApplication());
     const [currentApplication] = result.current;
     expect(currentApplication).toEqual(mockApplications[0]);
   });
@@ -56,13 +60,13 @@ describe('useCurrentApplication hook', () => {
         blockChainApplications: {},
       })
     );
-    const { result } = renderHook(() => useCurrentApplication(history));
+    const { result } = renderHook(() => useCurrentApplication());
     const [currentApplication] = result.current;
     expect(currentApplication).toEqual({});
   });
 
   it('should open confirmation dialog if pending stakes exists', () => {
-    const { result } = renderHook(() => useCurrentApplication(history));
+    const { result } = renderHook(() => useCurrentApplication());
     const [, setCurrentApplication] = result.current;
     act(() => {
       setCurrentApplication(mockApplications[0]);
@@ -77,7 +81,7 @@ describe('useCurrentApplication hook', () => {
     const mockUpdatedState = { ...mockState };
     delete mockUpdatedState.staking;
     useSelector.mockImplementation((fn) => fn({ ...mockUpdatedState, staking: {} }));
-    const { result } = renderHook(() => useCurrentApplication(history));
+    const { result } = renderHook(() => useCurrentApplication());
     const [, setCurrentApplication] = result.current;
     const expectedAction = {
       type: actionTypes.setCurrentApplication,

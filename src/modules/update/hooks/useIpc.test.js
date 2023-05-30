@@ -3,7 +3,6 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { appUpdateAvailable } from 'src/redux/actions';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
-import DialogHolder from 'src/theme/dialog/holder';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import useIpc from './useIpc';
 
@@ -85,10 +84,8 @@ describe('useIpc', () => {
     renderHook(() => useIpc(mockHistory));
     const spy = jest.spyOn(FlashMessageHolder, 'addMessage');
     const wrapper = mountWithRouter(FlashMessageHolder);
-    const dialogWrapper = mountWithRouter(DialogHolder);
 
     expect(wrapper).toBeEmptyRender();
-    expect(dialogWrapper).toBeEmptyRender();
     expect(ipc.on).toHaveBeenCalled();
 
     callbacks['update:available']({}, { version, releaseNotes });
@@ -123,13 +120,11 @@ describe('useIpc', () => {
     renderHook(() => useIpc(mockHistory));
     const spy = jest.spyOn(FlashMessageHolder, 'deleteMessage');
     const wrapper = mountWithRouter(FlashMessageHolder);
-    const dialogWrapper = mountWithRouter(DialogHolder);
 
     callbacks['update:available']({}, { version, releaseNotes });
     wrapper.update();
     wrapper.find('button.update-now').simulate('click');
     jest.runAllTimers();
-    dialogWrapper.update();
 
     expect(ipc.send).toHaveBeenCalledWith('update:started');
     expect(spy).toHaveBeenCalledWith('NewRelease');

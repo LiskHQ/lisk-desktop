@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTheme } from '@theme/Theme';
 import Box from '@theme/box';
@@ -15,7 +15,8 @@ import styles from './ValidatorProfile.css';
 import { convertCommissionToPercentage } from '../../utils';
 import usePosToken from '../../hooks/usePosToken';
 
-const DetailsView = ({ data, history, isMyProfile }) => {
+const DetailsView = ({ data, isMyProfile }) => {
+  const history = useHistory();
   const theme = useTheme();
   const { t } = useTranslation();
   const { rank } = data;
@@ -90,4 +91,4 @@ const DetailsView = ({ data, history, isMyProfile }) => {
   );
 };
 
-export default withRouter(DetailsView);
+export default DetailsView;

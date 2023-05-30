@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
@@ -30,7 +30,9 @@ const AddAccountOptionButton = ({ iconName, text, onClick }) => (
   </button>
 );
 
-const AddAccountOptions = ({ history, location: { search } }) => {
+const AddAccountOptions = () => {
+  const history = useHistory();
+  const { search } = useLocation();
   const { t } = useTranslation();
 
   return (
@@ -63,4 +65,4 @@ const AddAccountOptions = ({ history, location: { search } }) => {
   );
 };
 
-export default withRouter(AddAccountOptions);
+export default AddAccountOptions;

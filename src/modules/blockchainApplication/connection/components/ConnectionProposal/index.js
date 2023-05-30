@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -11,7 +11,8 @@ import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import styles from './ConnectionProposal.css';
 
-const ConnectionProposal = ({ history }) => {
+const ConnectionProposal = () => {
+  const history = useHistory();
   const [value, setValue] = useState('');
   const [status, setStatus] = useState({});
   const { events } = useEvents();
@@ -58,4 +59,4 @@ const ConnectionProposal = ({ history }) => {
   );
 };
 
-export default withRouter(ConnectionProposal);
+export default ConnectionProposal;

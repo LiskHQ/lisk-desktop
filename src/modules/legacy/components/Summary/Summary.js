@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useMemo } from 'react';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useGetInitializationFees } from '@token/fungible/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee/useTransactionFee';
@@ -9,7 +9,8 @@ import TransactionSummary from '@transaction/manager/transactionSummary';
 import { splitModuleAndCommand } from 'src/modules/transaction/utils';
 import styles from './summary.css';
 
-const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
+const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
+  const history = useHistory();
   const formProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.reclaimLSK,
   };
@@ -90,4 +91,4 @@ const areEqual = (
   nextProps // @todo account has multiple balance now
 ) => prevProps.wallet.summary.balance === nextProps.wallet.summary.balance;
 
-export default withRouter(React.memo(Summary, areEqual));
+export default React.memo(Summary, areEqual);

@@ -1,6 +1,6 @@
+import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import SetPasswordForm from './SetPasswordForm';
 
@@ -57,7 +57,7 @@ let hasAgreed = null;
 let accountName = null;
 
 beforeEach(() => {
-  renderWithRouter(SetPasswordForm, props);
+  render(<SetPasswordForm {...props} />);
 
   password = screen.getByTestId('password');
   cPassword = screen.getByTestId('cPassword');

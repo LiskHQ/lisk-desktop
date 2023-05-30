@@ -1,7 +1,6 @@
 /* eslint-disable max-statements */
-/* eslint-disable max-lines */
 import React, { useRef, useState } from 'react';
-import { withRouter } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import SetPasswordForm from 'src/modules/auth/components/SetPasswordForm/SetPasswordForm';
 import MultiStep from 'src/modules/common/components/MultiStep';
@@ -12,7 +11,9 @@ import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
 
-const AddAccountBySecretRecovery = ({ history, location: { search } }) => {
+const AddAccountBySecretRecovery = () => {
+  const history = useHistory();
+  const { search } = useLocation();
   const multiStepRef = useRef(null);
   const [recoveryPhrase, setRecoveryPhrase] = useState(null);
   const [customDerivationPath, setCustomDerivationPath] = useState(defaultDerivationPath);
@@ -53,4 +54,4 @@ const AddAccountBySecretRecovery = ({ history, location: { search } }) => {
   );
 };
 
-export default withRouter(AddAccountBySecretRecovery);
+export default AddAccountBySecretRecovery;

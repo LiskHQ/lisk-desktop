@@ -6,7 +6,7 @@ import { truncateAddress } from '../../utils/account';
 import styles from './styles.css';
 
 const Member = ({ member, i, t, size }) => (
-  <div className={`${styles.memberInfo} member-info`}>
+  <div className={`${styles.memberInfo} member-info`} data-testid="member-info">
     {i !== undefined && <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>}
     <WalletVisual address={member.address} size={size} />
     <div className={styles.memberDetails}>
