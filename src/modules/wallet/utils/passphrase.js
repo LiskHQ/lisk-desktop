@@ -1,3 +1,4 @@
+import { passphrase as LiskPassphrase} from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import { inDictionary } from 'src/utils/similarWord';
 
@@ -19,15 +20,7 @@ export const generatePassphraseFromSeed = ({ seed }) =>
  *
  * @returns {string} The generated passphrase
  */
-export const generatePassphrase = () => {
-  // istanbul ignore next
-  const cryptoObj = window.crypto || window.msCrypto;
-  return generatePassphraseFromSeed({
-    seed: [...cryptoObj.getRandomValues(new Uint16Array(16))].map((x) =>
-      `00${(x % 256).toString(16)}`.slice(-2)
-    ),
-  });
-};
+export const generatePassphrase = (strength) => LiskPassphrase.Mnemonic.generateMnemonic(strength);
 
 /**
  * Checks if passphrase is valid using mnemonic

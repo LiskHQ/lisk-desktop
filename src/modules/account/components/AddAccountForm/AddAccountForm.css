@@ -82,10 +82,6 @@
     max-width: 665px;
     margin: 30px auto 0px;
   }
-
-  & > .discreetMode {
-    margin-top: 16px;
-  }
 }
 
 .link {
@@ -117,5 +113,42 @@ form {
 
   & .backLink {
     margin-top: 24px;
+  }
+}
+
+.labelWrapper {
+  display: flex;
+
+  & .fieldGroup {
+    font-size: 16px;
+
+    &:last-child {
+      margin-left: 10px;
+    }
+
+    &.checkboxField {
+      align-items: flex-start;
+      display: flex;
+
+      & > div:last-child {
+        flex-basis: calc(100% - 25px);
+        margin-left: auto;
+      }
+
+      & .checkmark {
+        margin-top: 3px;
+      }
+
+      & .checkbox {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  & .discreetMode {
+    & span {
+      font-size: 16px;
+      color: var(--color-zodiac-blue);
+    }
   }
 }

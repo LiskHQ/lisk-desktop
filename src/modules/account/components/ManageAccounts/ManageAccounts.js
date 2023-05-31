@@ -84,8 +84,10 @@ export const ManageAccountsContent = ({
       {showRemove ? (
         <OutlineButton
           className={`${styles.button} ${styles.addAccountBtn}`}
-          onClick={() => setShowRemove(false)}
-        >
+          onClick={() => {
+            setShowRemove(false);
+            setTruncate(false);
+          }}>
           {t('Done')}
         </OutlineButton>
       ) : (

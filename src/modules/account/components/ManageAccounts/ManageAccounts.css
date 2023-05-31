@@ -37,11 +37,11 @@
 }
 
 .button {
-  width: 100%;
   display: flex;
   color: var(--color-maastricht-blue);
   margin-top: 17px;
   border-radius: 10px;
+  width: calc(100% - 40px);
 
   & > img {
     width: 18px;

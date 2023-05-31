@@ -1,8 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import Icon from '@theme/Icon';
 import { Link } from 'react-router-dom';
+import Icon from '@theme/Icon';
+import DropdownButton from '@theme/DropdownButton';
+import { PrimaryButton } from 'src/theme/buttons';
 import stylesPrimaryButton from '@theme/buttons/css/primaryButton.css';
 import routes from 'src/routes/routes';
 import stylesSecondary from '@theme/buttons/css/secondaryButton.css';
@@ -13,7 +15,7 @@ function AccountUniqueValueProposition({ className, valueProposition, bulletPoin
   const { t } = useTranslation();
 
   return (
-    <div className={classNames(className, styles.AccountUniqueValueProposition)}>
+    <div className={classNames(className, styles.accountUniqueValueProposition)}>
       <div className={styles.bulletPointNr}>0{bulletPointNr}</div>
       <h4 className={styles.title}>{t(title)}</h4>
       <p className={styles.description}>{t(description)}</p>
@@ -42,7 +44,7 @@ export default function WelcomeView() {
   const { t } = useTranslation();
 
   return (
-    <section className={styles.WelcomeView}>
+    <section className={styles.welcomeView}>
       <header className={styles.welcomeHeader}>
         <div className={styles.logoContainer}>
           <Icon name="liskLogoWhiteNormalized" height={32} />
@@ -54,12 +56,26 @@ export default function WelcomeView() {
           )}
         </p>
         <div className={styles.actionButtons}>
-          <Link
-            className={classNames(stylesPrimaryButton.button, styles.createAccountBtn)}
-            to={routes.register.path}
+          <DropdownButton
+            className={classNames(styles.dropdownWrapper, 'input-with-dropdown-dropdown')}
+            buttonClassName={classNames(
+              stylesPrimaryButton.button,
+              styles.createAccountBtn,
+              styles.inputDropdownButton
+            )}
+            buttonLabel={
+              <span>
+                {t('Create account')} <Icon name="arrowWhiteDown" />
+              </span>
+            }
+            size="s"
+            ButtonComponent={PrimaryButton}
+            align="right"
+            showArrow
           >
-            {t('Create account')}
-          </Link>
+            <Link to={`${routes.register.path}?strength=${128}`}>12 word passphrase</Link>
+            <Link to={`${routes.register.path}?strength=${256}`}>24 word passphrase</Link>
+          </DropdownButton>
           <Link
             className={classNames(stylesSecondary.button, styles.addAccountBtn)}
             to={routes.addAccountOptions.path}
