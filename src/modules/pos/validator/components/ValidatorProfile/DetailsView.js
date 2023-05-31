@@ -44,7 +44,7 @@ const DetailsView = ({ data, isMyProfile }) => {
       value: <TokenAmount val={data.validatorWeight} token={token} />,
     },
     {
-      icon: 'commissionsIcon',
+      icon: 'commissionIcon',
       label: t('Commission'),
       value: `${convertCommissionToPercentage(data.commission)}%`,
       onEdit: !isMyProfile

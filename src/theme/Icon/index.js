@@ -227,7 +227,7 @@ import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-
 import transferArrow from '@setup/react/assets/images/icons/transfer-arrow.svg';
 import receivedTransactionIcon from '@setup/react/assets/images/icons/received_transaction_icon.svg';
 import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
-import commissionsIcon from '@setup/react/assets/images/icons/commissions.svg';
+import commissionIcon from '@setup/react/assets/images/icons/commission.svg';
 import editActiveIcon from '@setup/react/assets/images/icons/editActive.svg';
 import hardwareWalletIcon from '@setup/react/assets/images/icons/hardware-wallet-icon.svg';
 
@@ -453,7 +453,7 @@ export const icons = {
   transferArrow,
   receivedTransactionIcon,
   sentTransactionIcon,
-  commissionsIcon,
+  commissionIcon,
   editActiveIcon,
   arrowBlueRight,
   arrowBlueDown,
