@@ -8,12 +8,17 @@ describe('Register Process - Confirm Passphrase', () => {
     nextStep: jest.fn(),
   };
 
-  const selectWrongWords = () => {
-    screen
+  const selectWrongWords = async () => {
+    const [wrong1, wrong2] = screen
       .getAllByTestId('option')
-      .forEach(
-        (element) => !props.passphrase.includes(element.innerText) && fireEvent.click(element)
+      .reduce(
+        (result, element) =>
+          !props.passphrase.includes(element.innerHTML) ? [...result, element] : result,
+        []
       );
+
+    fireEvent.click(wrong1);
+    fireEvent.click(wrong2);
   };
 
   const selectRightWords = () => {
@@ -24,11 +29,8 @@ describe('Register Process - Confirm Passphrase', () => {
       );
   };
 
-  beforeEach(() => {
-    render(<ConfirmPassphrase {...props} />);
-  });
-
   it('Should handle selection', async () => {
+    render(<ConfirmPassphrase {...props} />);
     selectRightWords();
     selectRightWords();
     fireEvent.click(screen.getByTestId('confirm-button'));
@@ -39,6 +41,7 @@ describe('Register Process - Confirm Passphrase', () => {
   });
 
   it('Should update empty values after wrong selection', async () => {
+    render(<ConfirmPassphrase {...props} />);
     selectWrongWords();
     fireEvent.click(screen.getByTestId('confirm-button'));
 
