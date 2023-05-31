@@ -144,7 +144,8 @@ class PassphraseRenderer extends React.Component {
     const { options, fieldSelected, chosenWords } = this.state;
     const hasChoosenWords = Object.values(chosenWords).length === 2;
 
-    if (!(fieldSelected || hasChoosenWords) || !options) return null;
+    // eslint-disable-next-line no-restricted-globals
+    if ((isNaN(fieldSelected) && !hasChoosenWords) || !options) return null;
 
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
 
