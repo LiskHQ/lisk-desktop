@@ -7,7 +7,7 @@ Given('I navigate to page {string}', { timeout: 120 * 1000 }, async function (pa
   await this.openUrl(routes[pageName]);
 });
 
-Given('I click on a button with exact text {string}', async function (buttonText) {
+Given('I click on a button with text {string}', async function (buttonText) {
   await this.page.getByText(buttonText, { exact: true }).click();
 });
 
@@ -19,12 +19,8 @@ Given('I click on text {string}', async function (text) {
   await this.page.getByText(text, { exact: true }).click();
 });
 
-Then('I should exactly see {string}', async function (textContent) {
-  await expect(this.page.getByText(textContent, { exact: true })).toBeVisible();
-});
-
 Then('I should see {string}', async function (textContent) {
-  await expect(this.page.getByText(textContent)).toBeVisible();
+  await expect(this.page.getByText(textContent, { exact: true })).toBeVisible();
 });
 
 Then('I should see an image with alt text {string}', async function (altText) {
