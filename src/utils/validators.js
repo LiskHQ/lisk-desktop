@@ -1,9 +1,9 @@
 import { cryptography } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 import { regex as reg } from 'src/const/regex';
-import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { convertToBaseDenom, getTokenDecimals } from '@token/fungible/utils/helpers';
 import i18n from 'src/utils/i18n/i18n';
+import { MIN_ACCOUNT_BALANCE } from 'src/modules/transaction/configuration/transactions';
 
 /**
  * Validates the given value to be numeric
@@ -43,17 +43,17 @@ export const validateLSKPublicKey = (publicKey) => {
 };
 
 /**
- * Validate the format of the value param
+ * Validate amount against the checklist
  * - Check that only have numbers and commas and points
  * - Validate structure of the value, just one . or ,
  * - Not ending with . or ,
  * - Check that has no more than 8 floating points digits
  */
-export const validateAmountFormat = ({
-  value,
+export const validateAmount = ({
+  amount,
   token,
   locale = i18n.language,
-  funds,
+  accountBalance,
   checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT'],
   minValue,
   inputValue,
@@ -63,24 +63,24 @@ export const validateAmountFormat = ({
     NEGATIVE_STAKE: {
       message: i18n.t("Stake amount can't be zero or negative."),
       fn: () =>
-        numeral(value).value() < minValue ||
+        numeral(amount).value() < minValue ||
         numeral(inputValue).value() < 0 ||
         Object.is(numeral(inputValue).value(), -0),
     },
     NEGATIVE_AMOUNT: {
       message: i18n.t("Amount can't be negative."),
-      fn: () => numeral(value).value() < 0,
+      fn: () => numeral(amount).value() < 0,
     },
     ZERO: {
       message: i18n.t("Amount can't be zero."),
-      fn: () => numeral(Math.abs(value)).value() === 0,
+      fn: () => numeral(Math.abs(amount)).value() === 0,
     },
     FORMAT: {
       message: i18n.t('Provide a correct amount of {{token}}', { token: token?.symbol || '' }),
       fn: () => {
         try {
-          convertToBaseDenom(value.toString(), token);
-          return !isNumeric(value);
+          convertToBaseDenom(amount.toString(), token);
+          return !isNumeric(amount);
         } catch (error) {
           return true;
         }
@@ -90,27 +90,28 @@ export const validateAmountFormat = ({
       message: i18n.t('Maximum allowed decimal point is {{decimal}}.', {
         decimal: getTokenDecimals(token),
       }),
-      fn: () => maxDecimals(token).test(value),
+      fn: () => maxDecimals(token).test(amount),
     },
     STAKE_10X: {
       message: i18n.t('You can only stake in multiplies of 10 LSK.'),
-      fn: () => value % 10 !== 0,
+      fn: () => amount % 10 !== 0,
     },
     INSUFFICIENT_FUNDS: {
       message: i18n.t('Provided amount is higher than your current balance.'),
-      fn: () => funds < convertToBaseDenom(numeral(value).value(), token),
+      fn: () => accountBalance < convertToBaseDenom(numeral(amount).value(), token),
     },
     INSUFFICIENT_STAKE_FUNDS: {
       message: i18n.t('The provided amount is higher than your available staking balance.'),
-      fn: () => funds < convertToBaseDenom(numeral(value).value(), token),
+      fn: () => accountBalance < convertToBaseDenom(numeral(amount).value(), token),
     },
     MIN_BALANCE: {
       message: i18n.t(
         'Provided amount will result in a wallet with less than the minimum balance.'
       ),
       fn: () => {
-        const rawValue = convertToBaseDenom(numeral(value).value(), token);
-        return funds - rawValue < MIN_ACCOUNT_BALANCE;
+        const amountInBase = convertToBaseDenom(numeral(amount).value(), token);
+        // TODO: this minimum balance logic should be replaced by actual fee (transaction + cross chain transfer) as one can make 0 balance for an account in Lisk v4
+        return MIN_ACCOUNT_BALANCE > accountBalance - amountInBase;
       },
     },
   };

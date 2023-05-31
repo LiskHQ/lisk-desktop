@@ -34,28 +34,4 @@ describe('API: Market', () => {
       ).rejects.toEqual(expectedResponse);
     });
   });
-
-  describe('getNews', () => {
-    beforeEach(() => {
-      http.mockClear();
-    });
-
-    it('should return news data', async () => {
-      const expectedResponse = { data: [{}, {}] };
-      const params = { source: ['source1', 'source2'] };
-      http.mockImplementation(() => Promise.resolve(expectedResponse));
-      await expect(market.getNews({ params })).resolves.toEqual(expectedResponse);
-      expect(http).toHaveBeenCalledWith({
-        path: '/api/v3/newsfeed',
-        params,
-      });
-    });
-
-    it('should throw when api fails', async () => {
-      const expectedResponse = new Error('API call could not be completed');
-      const params = { source: ['source1', 'source2'] };
-      http.mockImplementation(() => Promise.reject(new Error(expectedResponse.message)));
-      await expect(market.getNews({ params })).rejects.toEqual(expectedResponse);
-    });
-  });
 });

@@ -1,4 +1,4 @@
-.WelcomeView {
+.welcomeView {
   padding: 24px;
   border-radius: 16px;
   background-color: var(--color-white);
@@ -49,6 +49,15 @@
       margin-top: 24px;
       display: flex;
 
+      & .dropdownWrapper {
+        min-width: 180px;
+
+        & div > a {
+          color: var(--color-zodiac-blue) !important;
+          font-size: 14px !important;
+        }
+      }
+
       & .createAccountBtn,
       & .addAccountBtn {
         display: flex;
@@ -86,7 +95,7 @@
   }
 }
 
-.AccountUniqueValueProposition {
+.accountUniqueValueProposition {
   & .bulletPointNr {
     height: 40px;
     width: 40px;
