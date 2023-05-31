@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import MultiStep from 'src/modules/common/components/MultiStep';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
@@ -7,7 +7,8 @@ import RemoveApplicationDetails from '../RemoveApplicationDetails';
 import RemoveApplicationSuccess from '../RemoveApplicationSuccess';
 import styles from './RemoveApplicationFlow.css';
 
-const RemoveApplicationFlow = ({ history, testHistory, testLocation }) => {
+const RemoveApplicationFlow = ({ testHistory, testLocation }) => {
+  const history = useHistory();
   const handleCancelAppDetails = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
   };
@@ -26,4 +27,4 @@ const RemoveApplicationFlow = ({ history, testHistory, testLocation }) => {
   );
 };
 
-export default withRouter(RemoveApplicationFlow);
+export default RemoveApplicationFlow;

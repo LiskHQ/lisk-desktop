@@ -1,6 +1,6 @@
-import React from 'react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { cryptography } from '@liskhq/lisk-client';
-import { mount } from 'enzyme';
+import { smartRender } from 'src/utils/testHelpers';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import { mockAuth } from '@auth/__fixtures__';
@@ -44,7 +44,6 @@ describe('Multisignature Summary component', () => {
     (item) => item.summary.publicKey
   );
 
-  let wrapper;
   const props = {
     t: (v) => v,
     prevStep: jest.fn(),
@@ -90,7 +89,6 @@ describe('Multisignature Summary component', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Summary {...props} />);
     hwManager.signTransactionByHW.mockResolvedValue({});
   });
 
@@ -104,7 +102,10 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should call props.nextStep', async () => {
-    wrapper.find('.confirm-button').at(0).simulate('click');
+    smartRender(Summary, props);
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Sign'));
+    });
     const { transactionJSON, formProps } = props;
     expect(props.nextStep).toHaveBeenCalledWith(
       {
@@ -116,17 +117,21 @@ describe('Multisignature Summary component', () => {
     );
   });
 
-  it('Should call props.prevStep', () => {
-    wrapper.find('.cancel-button').at(0).simulate('click');
+  it('Should call props.prevStep', async () => {
+    smartRender(Summary, props);
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Edit'));
+    });
     expect(props.prevStep).toBeCalled();
   });
 
   it('Should render properly', () => {
-    expect(wrapper.find('.member-info').length).toEqual(
+    smartRender(Summary, props);
+    expect(screen.queryAllByTestId('member-info').length).toEqual(
       props.transactionJSON.params.mandatoryKeys.length +
         props.transactionJSON.params.optionalKeys.length
     );
-    expect(wrapper.find('.info-fee').at(0).text()).toContain('0.02 LSK');
+    expect(screen.getByText('0.02 LSK')).toBeInTheDocument();
   });
 
   it('Should not call props.nextStep when signedTransaction is empty', () => {
@@ -139,7 +144,7 @@ describe('Multisignature Summary component', () => {
         signedTransaction: {},
       },
     };
-    wrapper = mount(<Summary {...newProps} />);
+    smartRender(Summary, newProps);
     expect(props.nextStep).not.toHaveBeenCalledWith();
   });
 });

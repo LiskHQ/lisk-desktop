@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { validateBookmarkAddress, validateBookmarkLabel, getBookmarkMode } from '@bookmark/utils';
@@ -20,13 +21,13 @@ const AddBookmark = ({
   token: { active },
   account,
   bookmarks,
-  history,
   bookmarkRemoved,
   bookmarkAdded,
   bookmarkUpdated,
   network,
   t,
 }) => {
+  const history = useHistory();
   const [mode, setMode] = useState(getBookmarkMode(history, bookmarks, active));
   const [fields, setFields] = useState([blankField, blankField]);
   const timeout = useRef(null);

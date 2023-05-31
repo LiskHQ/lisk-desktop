@@ -70,6 +70,7 @@ describe('Validator Registration Status', () => {
         code: 'SIGNATURE_ERROR',
         message: '{"message":"error:test"}',
       },
+      onRetry: expect.any(Function),
       title: 'Transaction failed',
     });
   });
@@ -94,6 +95,7 @@ describe('Validator Registration Status', () => {
         code: 'BROADCAST_ERROR',
         message: '{"message":"error:test"}',
       },
+      onRetry: expect.any(Function),
       title: 'Transaction failed',
     });
   });

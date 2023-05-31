@@ -1,6 +1,6 @@
 /* eslint-disable complexity, max-statements */
 import React, { useRef, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { keyCodes } from 'src/utils/keyCodes';
 import routes from 'src/routes/routes';
@@ -16,7 +16,8 @@ import styles from './SearchBar.css';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useSearch } from '../../hooks/useSearch';
 
-const SearchBar = ({ className, history }) => {
+const SearchBar = ({ className }) => {
+  const history = useHistory();
   const [searchTextValue, setSearchTextValue] = useState('');
   const [rowItemIndex, setRowIndex] = useState(0);
   const searchBarRef = useRef();
@@ -174,4 +175,4 @@ const SearchBar = ({ className, history }) => {
   );
 };
 
-export default withRouter(SearchBar);
+export default SearchBar;

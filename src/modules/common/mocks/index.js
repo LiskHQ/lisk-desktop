@@ -2,7 +2,6 @@ import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
 import {
   mockCustomInfiniteQuery,
-  mockNewsFeed,
   mockPrices,
   mockCcm,
   mockCommandParametersSchemas,
@@ -17,19 +16,6 @@ export const webSocketRPC = rest.get('*/socket.io/', (_, res, ctx) =>
     ctx.body('data: SUCCESS\n\n')
   )
 );
-export const newsFeed = rest.get(`*/api/${API_VERSION}/newsfeed`, async (req, res, ctx) => {
-  const limit = Number(req.url.searchParams.get('limit') || LIMIT);
-  const offset = Number(req.url.searchParams.get('offset') || 0);
-  const response = {
-    data: mockNewsFeed.data.slice(offset, offset + limit),
-    meta: {
-      ...mockNewsFeed.meta,
-      count: limit,
-      offset,
-    },
-  };
-  return res(ctx.delay(20), ctx.json(response));
-});
 
 export const marketPrices = rest.get(`*/api/${API_VERSION}/market/prices`, async (_, res, ctx) => {
   const response = mockPrices;

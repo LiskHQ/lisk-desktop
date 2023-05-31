@@ -13,12 +13,14 @@ import arrowLeftTailed from '@setup/react/assets/images/icons/arrow-left-tailed.
 import arrowLeftTailedDark from '@setup/react/assets/images/icons/arrow-left-tailed-dark.svg';
 import arrowRight from '@setup/react/assets/images/icons/arrow-right.svg';
 import arrowBlueRight from '@setup/react/assets/images/icons/arrow-blue-right.svg';
+import arrowBlueDown from '@setup/react/assets/images/icons/arrow-blue-down.svg';
 import arrowRightActive from '@setup/react/assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '@setup/react/assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '@setup/react/assets/images/icons/arrow-right-with-stroke.svg';
 import arrowRightCircle from '@setup/react/assets/images/icons/arrow-right-circle.svg';
 import arrowRightWithStrokeDark from '@setup/react/assets/images/icons/arrow-right-with-stroke-dark.svg';
 import arrowUpCircle from '@setup/react/assets/images/icons/click-to-update.svg';
+import arrowWhiteDown from '@setup/react/assets/images/icons/arrow-white-down.svg';
 import balance from '@setup/react/assets/images/icons/balance.svg';
 import balanceDark from '@setup/react/assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '@setup/react/assets/images/icons/bookmarks-empty-state.svg';
@@ -245,6 +247,7 @@ export const icons = {
   arrowRightInactive,
   arrowUpCircle,
   arrowRightCircle,
+  arrowWhiteDown,
   balance,
   bookmarksIconEmptyState,
   calendar,
@@ -453,6 +456,7 @@ export const icons = {
   commissionsIcon,
   editActiveIcon,
   arrowBlueRight,
+  arrowBlueDown,
   multisigKeys,
   multisigKeysDark,
   hardwareWalletIcon,

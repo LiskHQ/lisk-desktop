@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import Dialog from '@theme/dialog/dialog';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from 'src/theme/box';
@@ -8,7 +8,8 @@ import BoxContent from 'src/theme/box/content';
 import { PrimaryButton, OutlineButton } from 'src/theme/buttons';
 import styles from './ConfirmationDialog.css';
 
-const ConfirmationDialog = ({ location }) => {
+const ConfirmationDialog = () => {
+  const location = useLocation();
   const { header, content, cancelText, onCancel, confirmText, onConfirm } = location.state ?? {};
   return (
     <Dialog hasClose className={styles.wrapper}>
@@ -38,4 +39,4 @@ const ConfirmationDialog = ({ location }) => {
   );
 };
 
-export default withRouter(ConfirmationDialog);
+export default ConfirmationDialog;

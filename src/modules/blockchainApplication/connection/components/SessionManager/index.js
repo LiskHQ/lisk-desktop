@@ -1,7 +1,7 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import { withRouter } from 'react-router';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -12,7 +12,8 @@ import SessionRow from './SessionRow';
 import header from './tableHeader';
 import styles from './SessionManager.css';
 
-const SessionManager = ({ history }) => {
+const SessionManager = () => {
+  const history = useHistory();
   const { sessions, disconnect, hasLoaded } = useSession();
   const { t } = useTranslation();
 
@@ -53,4 +54,4 @@ const SessionManager = ({ history }) => {
   );
 };
 
-export default withRouter(SessionManager);
+export default SessionManager;

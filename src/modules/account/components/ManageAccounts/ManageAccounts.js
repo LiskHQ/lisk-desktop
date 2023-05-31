@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import Spinner from 'src/theme/Spinner';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -19,17 +19,18 @@ import AccountRow from '../AccountRow';
 
 export const ManageAccountsContent = ({
   isRemoveAvailable,
-  history,
   className,
   truncate,
   title: customTitle,
-  location: { search } = { search: '' },
 }) => {
+  const history = useHistory();
+  const { search } = useLocation();
   const { t } = useTranslation();
   const { accounts } = useAccounts();
-  const [currentAccount, setAccount] = useCurrentAccount(history);
+  const [currentAccount, setAccount] = useCurrentAccount();
   const currentHWDevice = useSelector(selectCurrentHWDevice);
   const [showRemove, setShowRemove] = useState(false);
+  const [showTruncate, setTruncate] = useState(truncate);
   const title = customTitle ?? t('Manage accounts');
   const { accounts: hwAccounts, isLoadingHWAccounts } = useHWAccounts();
   const hwAccountsToShow = currentHWDevice?.path
@@ -69,7 +70,7 @@ export const ManageAccountsContent = ({
               currentAccount={currentAccount}
               onSelect={onSelectAccount}
               onRemove={showRemove && removeAccount}
-              truncate={truncate}
+              truncate={showTruncate}
             />
           ))}
         </>
@@ -83,8 +84,10 @@ export const ManageAccountsContent = ({
       {showRemove ? (
         <OutlineButton
           className={`${styles.button} ${styles.addAccountBtn}`}
-          onClick={() => setShowRemove(false)}
-        >
+          onClick={() => {
+            setShowRemove(false);
+            setTruncate(false);
+          }}>
           {t('Done')}
         </OutlineButton>
       ) : (
@@ -101,6 +104,7 @@ export const ManageAccountsContent = ({
               className={styles.button}
               onClick={() => {
                 setShowRemove(true);
+                setTruncate(true);
               }}
             >
               <Icon name="deleteIcon" />
@@ -138,4 +142,4 @@ ManageAccounts.defaultProps = {
   isDialog: false,
 };
 
-export default withRouter(ManageAccounts);
+export default ManageAccounts;

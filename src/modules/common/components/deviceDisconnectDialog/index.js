@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 
 import { selectSearchParamValue } from 'src/utils/searchParams';
@@ -9,7 +9,8 @@ import { PrimaryButton } from '@theme/buttons';
 
 import styles from './styles.css';
 
-export const DeviceDisconnectDialog = ({ t, history }) => {
+export const DeviceDisconnectDialog = ({ t }) => {
+  const history = useHistory();
   const model = selectSearchParamValue(history.location.search, 'model');
 
   return (
@@ -28,4 +29,4 @@ export const DeviceDisconnectDialog = ({ t, history }) => {
   );
 };
 
-export default withRouter(withTranslation()(DeviceDisconnectDialog));
+export default withTranslation()(DeviceDisconnectDialog);
