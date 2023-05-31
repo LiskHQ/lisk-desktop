@@ -20,7 +20,8 @@ const IconAndText = ({
     <Container disabled={copied} {...containerProps}>
       {copied ? (
         <span className={`${className} copied`}>
-          <Icon name="transactionStatusSuccess" className={`${styles.icon} ${copyClassName}`} /> {t('Copied')}
+          <Icon name="transactionStatusSuccess" className={`${styles.icon} ${copyClassName}`} />{' '}
+          {t('Copied')}
         </span>
       ) : (
         <span className={`${className} ${styles.clickable} default`}>

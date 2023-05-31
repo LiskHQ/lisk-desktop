@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { validateAmountFormat } from 'src/utils/validators';
+import { validateAmount } from 'src/utils/validators';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { selectLSKAddress } from 'src/redux/selectors';
@@ -21,10 +21,10 @@ let loaderTimeout = null;
  * @returns {Object} The boolean error flag and a human readable message.
  */
 const getAmountFeedbackAndError = (value, balance, minValue, inputValue, token) => {
-  const { message: feedback } = validateAmountFormat({
+  const { message: feedback } = validateAmount({
     token,
-    value: +value,
-    funds: parseInt(balance, 10),
+    amount: parseInt(value, 10),
+    accountBalance: parseInt(balance, 10),
     checklist: [
       'NEGATIVE_STAKE',
       'ZERO',

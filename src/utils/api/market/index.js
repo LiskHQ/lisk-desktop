@@ -15,17 +15,3 @@ export const getPrices = ({ network }) =>
     path: httpPaths.prices,
     network,
   });
-
-/**
- * Retrieve the list of announcements by Lisk Foundation.
- *
- * @param {Object} data
- * @param {[String]} data.params.source - News sources
- * @returns {Promise} http call
- */
-export const getNews = ({ params = {}, network }) =>
-  http({
-    path: '/api/v3/newsfeed',
-    params,
-    network,
-  });

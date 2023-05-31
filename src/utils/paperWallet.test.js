@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/dom';
 import renderPaperWallet from './paperWallet';
 
 const JSPDF = jest.fn(() => {
@@ -16,6 +17,13 @@ const JSPDF = jest.fn(() => {
   return doc;
 });
 
+jest.mock('@wallet/utils/account', () => ({
+  ...jest.requireActual('@wallet/utils/account'),
+  extractKeyPair: jest.fn(() => ({
+    publicKey: '0792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e97184',
+  })),
+}));
+
 describe('Paper Wallet', () => {
   const data = {
     t: jest.fn((str) => str),
@@ -29,38 +37,43 @@ describe('Paper Wallet', () => {
     jest.clearAllMocks();
   });
 
-  it('should call JSPDF with right params', () => {
-    renderPaperWallet(JSPDF, data, walletName);
-    expect(JSPDF).toHaveBeenCalledWith({
-      orientation: 'p',
-      unit: 'pt',
-      format: [600, 900],
+  it('should call JSPDF with right params', async () => {
+    await renderPaperWallet(JSPDF, data, walletName);
+
+    await waitFor(() => {
+      expect(JSPDF).toHaveBeenCalledWith({
+        orientation: 'p',
+        unit: 'pt',
+        format: [600, 900],
+      });
     });
   });
 
-  it('should render the information', () => {
-    const doc = renderPaperWallet(JSPDF, data, walletName);
-    expect(doc.setFont).toHaveBeenCalledWith('gilroy', 'normal', 'bold');
-    expect(doc.setFontSize).toHaveBeenCalledWith(16);
-    expect(doc.text).toHaveBeenNthCalledWith(1, 'Paper wallet', 135, 64, {
-      align: 'left',
-      baseline: 'top',
-      charSpace: 0.05,
-      lineHeightFactor: 1.18,
+  it('should render the information', async () => {
+    const doc = await renderPaperWallet(JSPDF, data, walletName);
+    await waitFor(() => {
+      expect(doc.setFont).toHaveBeenCalledWith('gilroy', 'normal', 'bold');
+      expect(doc.setFontSize).toHaveBeenCalledWith(16);
+      expect(doc.text).toHaveBeenNthCalledWith(1, 'Paper wallet', 135, 64, {
+        align: 'left',
+        baseline: 'top',
+        charSpace: 0.05,
+        lineHeightFactor: 1.18,
+      });
+      expect(doc.text).toHaveBeenNthCalledWith(2, 'Store this document in a safe place.', 135, 84, {
+        align: 'left',
+        baseline: 'top',
+        charSpace: 0.05,
+        lineHeightFactor: 1.57,
+      });
+      expect(doc.text).toHaveBeenNthCalledWith(3, '05.04.2018', 568, 75, {
+        align: 'right',
+        baseline: 'top',
+        charSpace: 0.05,
+        lineHeightFactor: 1.18,
+      });
+      expect(doc.setFontSize).toHaveBeenNthCalledWith(1, 16);
+      expect(doc.setFontSize).toHaveBeenNthCalledWith(2, 14);
     });
-    expect(doc.text).toHaveBeenNthCalledWith(2, 'Store this document in a safe place.', 135, 84, {
-      align: 'left',
-      baseline: 'top',
-      charSpace: 0.05,
-      lineHeightFactor: 1.57,
-    });
-    expect(doc.text).toHaveBeenNthCalledWith(3, '05.04.2018', 568, 75, {
-      align: 'right',
-      baseline: 'top',
-      charSpace: 0.05,
-      lineHeightFactor: 1.18,
-    });
-    expect(doc.setFontSize).toHaveBeenNthCalledWith(1, 16);
-    expect(doc.setFontSize).toHaveBeenNthCalledWith(2, 14);
   });
 });
