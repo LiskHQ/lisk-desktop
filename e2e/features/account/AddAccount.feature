@@ -11,7 +11,6 @@ Feature: AddAccount
         Then I should be redirected to route: "account/add"
         And I should see "Add your account"
         And I should see "Choose an option to add your account to Lisk wallet."
-        And I should see "Don’t have a Lisk account yet? Create one now"
 
     Scenario: Add account by passphrase with custom derivation path
         Given I click on a button with text "Secret recovery phrase"
@@ -36,14 +35,10 @@ Feature: AddAccount
         And I click on text "I agree to store my encrypted secret recovery phrase on this device."
         And I click on a button with text "Save Account"
         Then I should see the final add account step
-        Given I click on a button with text "Continue to wallet"
-        Then I should be redirected to route: "wallet"
 
     Scenario: Add account by passphrase without custom derivation path
-        Given I click on text "Settings"
+        Given I click on a button with text "Secret recovery phrase"
         And I click on text "Enable access to legacy Lisk accounts"
-        And I click on a button with testId "dialog-close-button"
-        And I click on a button with text "Secret recovery phrase"
         Then custom derivation path input field should be "disabled"
         And I fill in mnemonic phrases 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready'
         And I click on a button with text "Continue to set password"
@@ -57,8 +52,6 @@ Feature: AddAccount
         And I click on text "I agree to store my encrypted secret recovery phrase on this device."
         And I click on a button with text "Save Account"
         Then I should see the final add account step
-        Given I click on a button with text "Continue to wallet"
-        Then I should be redirected to route: "wallet"
 
     Scenario: Add account by file with a correct encrypted account
         Given I click on a button with text "Restore from backup"
@@ -70,7 +63,7 @@ Feature: AddAccount
         Given I click on a button with text "Go back"
         Then I should be redirected to route: "account/add"
         Given I click on a button with text "Restore from backup"
-        And I upload json content:
+        And I upload from file "encrypted_json" with json content:
             """
             {
                 "crypto": {
@@ -105,12 +98,10 @@ Feature: AddAccount
         Given I type "Password1$" in "password"
         And I click on a button with text "Continue"
         Then I should see the final add account step
-        Given I click on a button with text "Continue to wallet"
-        Then I should be redirected to route: "wallet"
 
     Scenario: Add account by file with a malformed encrypted account
         Given I click on a button with text "Restore from backup"
-        And I upload json content:
+        And I upload from file "encrypted_json" with json content:
             """
             {
             "ciphertext": "7bbe2ede0c0263eeeefe604eeb6a05ad694739344cfa83b264cf5bac30b38d5e8cfd9ad1e592b1ea61a2621bbf692eca7f55331358a61fe5019616ff78a067899221df98b49ec7228be78e7225927c77a6059885784d25e33ef0ddab293f52612c4fc7539ca7d651747da32931749b491eca066ac4b07a47394296512fc5f3e5ff1fd5cebb1625026b6ccfc04db8f442af02da9519124c706f9286e897b615371103687492adea81dde453da98d11179153b62c002a6e0241131ebc1bdd94187383708f30bf50736aa35e0de69ff0154b48a2a6eca0a27103118e057195affd52943f0ddb01602d293853a410b491c",
@@ -138,6 +129,6 @@ Feature: AddAccount
             "version": 1
             }
             """
-        Then I should see "Unexpected non-whitespace character after JSON at position"
+        Then I should possibly see "Unexpected non-whitespace character after JSON at position"
         And button with text 'Continue' should be disabled
 

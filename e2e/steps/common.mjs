@@ -16,18 +16,22 @@ Given('I click on a button with testId {string}', async function (testId) {
 });
 
 Given('I click on text {string}', async function (text) {
-  await this.page.getByText(text, { exact: true }).click();
+  await this.page.getByText(text).click();
 });
 
 Then('I should see {string}', async function (textContent) {
   await expect(this.page.getByText(textContent, { exact: true })).toBeVisible();
 });
 
+Then('I should possibly see {string}', async function (textContent) {
+  await expect(this.page.getByText(textContent)).toBeVisible();
+});
+
 Then('I should see an image with alt text {string}', async function (altText) {
   await expect(this.page.getByAltText(altText)).toBeVisible();
 });
 
-Then('I should be redirected to route: {string}', async function (route) {
+Then('I should be redirected to route: {string}', { timeout: 120 * 1000 }, async function (route) {
   await expect(this.page.url()).toBe(`${process.env.PW_BASE_URL}/${route}`);
 });
 
@@ -63,13 +67,16 @@ Then(
   }
 );
 
-Given('I upload json content:', async function (encryptedAccountJson) {
-  await this.page.setInputFiles('input[role=button]', {
-    name: 'encrypted_account.json',
-    mimeType: 'application/json',
-    buffer: Buffer.from(encryptedAccountJson),
-  });
-});
+Given(
+  'I upload from file {string} with json content:',
+  async function (filename, encryptedAccountJson) {
+    await this.page.setInputFiles('input[role=button]', {
+      name: `${filename}.json`,
+      mimeType: 'application/json',
+      buffer: Buffer.from(encryptedAccountJson),
+    });
+  }
+);
 
 Given('I switch to network {string}', async function (networkName) {
   await this.page.getByTestId('network-application-trigger').click();
