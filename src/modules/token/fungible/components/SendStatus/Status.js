@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
-import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
+import {
+  getTransactionStatus,
+  isTxStatusError,
+  statusMessages,
+} from '@transaction/configuration/statusConfig';
 import { PrimaryButton } from '@theme/buttons';
 import DialogLink from '@theme/dialog/link';
 import { selectModuleCommandSchemas } from 'src/redux/selectors';
@@ -15,6 +19,7 @@ const shouldShowBookmark = (bookmarks, account, transactionJSON, token) => {
   if (account.summary.address === transactionJSON.params.recipientAddress) {
     return false;
   }
+
   return !bookmarks[token].find(
     (bookmark) => bookmark.address === transactionJSON.params.recipientAddress
   );
@@ -25,10 +30,7 @@ const getMessagesDetails = (transactions, status, t) => {
   const code = status.code;
   const messageDetails = messages[code];
 
-  if (
-    status.code === txStatusTypes.broadcastError &&
-    transactions.txBroadcastError?.error?.message
-  ) {
+  if (code === txStatusTypes.broadcastError && transactions.txBroadcastError?.error?.message) {
     messageDetails.message = transactions.txBroadcastError.error.message;
   }
 
@@ -44,6 +46,7 @@ const TransactionStatus = ({
   transactionJSON,
   t,
   formProps,
+  prevStep,
 }) => {
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
@@ -56,9 +59,12 @@ const TransactionStatus = ({
 
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
 
-  const showBookmark = shouldShowBookmark(bookmarks, account, transactionJSON, token);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = getMessagesDetails(transactions, status, t);
+
+  const isBroadcastError = isTxStatusError(status.code);
+  const showBookmark =
+    !isBroadcastError && shouldShowBookmark(bookmarks, account, transactionJSON, token);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
@@ -68,6 +74,7 @@ const TransactionStatus = ({
         message={template.message}
         status={status}
         formProps={formProps}
+        onRetry={isBroadcastError ? () => prevStep({ step: 0 }) : undefined}
       >
         {showBookmark ? (
           <div className={`${styles.bookmarkBtn} bookmark-container`}>
