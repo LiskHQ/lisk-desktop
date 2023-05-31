@@ -1,19 +1,27 @@
 import { cryptography } from '@liskhq/lisk-client';
 import { createEvent, fireEvent, screen, waitFor } from '@testing-library/react';
+import { smartRender } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import * as reactRedux from 'react-redux';
-import { renderWithCustomRouter } from 'src/utils/testHelpers';
 import wallets from '@tests/constants/wallets';
 import AddAccountByFile from './AddAccountByFile';
 
-const props = {
-  history: { push: jest.fn() },
-  login: jest.fn(),
+const mockHistory = {
+  location: {
+    pathname: '',
+  },
+  push: jest.fn(),
+  goBack: jest.fn(),
 };
 const recoveryPhrase =
   'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 
 jest.mock('react-i18next');
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => mockHistory,
+  useLocation: jest.fn().mockReturnValue({ search: '/' }),
+}));
 
 jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
@@ -32,7 +40,7 @@ jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue
 );
 
 beforeEach(() => {
-  renderWithCustomRouter(AddAccountByFile, props);
+  smartRender(AddAccountByFile, null, { history: mockHistory });
 });
 
 describe('Add account by file flow', () => {
@@ -65,7 +73,7 @@ describe('Add account by file flow', () => {
     await waitFor(() => {
       expect(screen.getByText("Perfect! You're all set")).toBeTruthy();
       fireEvent.click(screen.getByText('Continue to wallet'));
-      expect(props.history.push).toBeCalled();
+      expect(mockHistory.push).toBeCalled();
     });
   });
 });

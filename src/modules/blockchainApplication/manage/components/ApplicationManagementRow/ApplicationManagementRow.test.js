@@ -25,15 +25,16 @@ useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplic
 
 describe('ApplicationManangementRow', () => {
   let wrapper;
+  const location = {
+    pathname: '/',
+    search: '',
+  };
+  const history = {
+    push: jest.fn(),
+    location,
+  };
   const props = {
     application: mockManagedApplications[0],
-    history: {
-      push: jest.fn(),
-    },
-    location: {
-      pathname: '/',
-      search: '',
-    },
   };
 
   beforeEach(() => {
@@ -90,12 +91,17 @@ describe('ApplicationManangementRow', () => {
     expect(deleteButton).not.toHaveAttribute('disabled');
 
     fireEvent.click(deleteButton);
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, {
-      modal: `removeApplicationFlow&chainId=${props.application.chainID}`,
-    });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(
+      expect.objectContaining({
+        entries: expect.arrayContaining([expect.objectContaining(history.location)]),
+      }),
+      {
+        modal: `removeApplicationFlow&chainId=${props.application.chainID}`,
+      }
+    );
   });
 
-  it('should toggle applciation as current application for a non terminated application', () => {
+  it('should toggle application as current application for a non terminated application', () => {
     fireEvent.click(screen.getByText(props.application.chainName));
     expect(mockSetApplication).toHaveBeenCalledWith(expect.objectContaining(props.application));
   });
@@ -138,9 +144,14 @@ describe('ApplicationManangementRow', () => {
     expect(deleteButton).not.toHaveAttribute('disabled');
 
     fireEvent.click(deleteButton);
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, {
-      modal: `removeApplicationFlow&chainId=${props.application.chainID}`,
-    });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(
+      expect.objectContaining({
+        entries: expect.arrayContaining([expect.objectContaining(history.location)]),
+      }),
+      {
+        modal: `removeApplicationFlow&chainId=${props.application.chainID}`,
+      }
+    );
   });
 
   it('should render the check mark for current application', () => {

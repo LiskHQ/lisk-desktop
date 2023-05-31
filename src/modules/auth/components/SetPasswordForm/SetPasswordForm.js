@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -156,4 +155,4 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
   );
 }
 
-export default withRouter(SetPasswordForm);
+export default SetPasswordForm;

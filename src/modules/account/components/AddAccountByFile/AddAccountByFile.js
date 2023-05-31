@@ -1,6 +1,5 @@
-/* eslint-disable max-lines */
 import React, { useRef } from 'react';
-import { withRouter } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import routes from 'src/routes/routes';
 import RestoreAccountForm from 'src/modules/auth/components/RestoreAccountForm';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
@@ -9,7 +8,9 @@ import MultiStep from 'src/modules/common/components/OldMultiStep';
 import styles from './AddAccountByFile.css';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 
-const AddAccountByPassFile = ({ history, location: { search } }) => {
+const AddAccountByPassFile = () => {
+  const history = useHistory();
+  const { search } = useLocation();
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
   const { setAccount } = useAccounts();
   const multiStepRef = useRef(null);
@@ -39,4 +40,4 @@ const AddAccountByPassFile = ({ history, location: { search } }) => {
   );
 };
 
-export default withRouter(AddAccountByPassFile);
+export default AddAccountByPassFile;

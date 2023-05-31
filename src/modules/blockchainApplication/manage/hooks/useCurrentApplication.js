@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import client from 'src/utils/api/client';
 import { selectStaking } from 'src/redux/selectors';
 import { stakesReset } from 'src/redux/actions';
@@ -11,9 +12,9 @@ import { createConfirmSwitchState } from '@common/utils/createConfirmSwitchState
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 
-export function useCurrentApplication(history) {
-  // @TODO: Remove history param and use hooks after #4986 is implemented
+export function useCurrentApplication() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const currentApplication = useSelector(selectCurrentApplication);
   const stakingQueue = useSelector(selectStaking);

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import React from 'react';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import MultiStep from '@common/components/OldMultiStep';
@@ -10,7 +10,8 @@ import { ChangeCommissionForm as Form } from '../Form';
 import Summary from '../Summary';
 import Status from '../Status';
 
-export const ChangeCommission = ({ history }) => {
+export const ChangeCommission = () => {
+  const history = useHistory();
   const { t } = useTranslation();
 
   return (
@@ -25,4 +26,4 @@ export const ChangeCommission = ({ history }) => {
   );
 };
 
-export const ChangeCommissionDialog = withRouter(ChangeCommission);
+export const ChangeCommissionDialog = ChangeCommission;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory, useLocation } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Dialog from 'src/theme/dialog/dialog';
@@ -24,10 +25,12 @@ const NodeComponent = ({ node, selectAppNode }) => (
   </div>
 );
 
-const SelectNode = ({ history, location }) => {
+const SelectNode = () => {
+  const history = useHistory();
+  const location = useLocation();
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
-  const [, setApplication] = useCurrentApplication(history);
+  const [, setApplication] = useCurrentApplication();
   const { getApplicationByChainId } = useApplicationManagement();
   const application = getApplicationByChainId(chainId);
 
