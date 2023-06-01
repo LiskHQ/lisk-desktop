@@ -18,6 +18,7 @@ export const networkConfigSet = async (data) => {
     (acc, token, index) => ({ ...acc, [token]: networks[index] }),
     {}
   );
+
   return {
     type: actionTypes.networkConfigSet,
     data: { name: data.name, networks: networksWithNames },

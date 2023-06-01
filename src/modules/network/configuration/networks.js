@@ -22,7 +22,7 @@ const networks = {
     name: networkKeys.alphanet,
     label: 'Alphanet',
     serviceUrl: 'https://alphanet-service.liskdev.net',
-    wsServiceUrl: 'ws://alphanet-service.liskdev.net',
+    wsServiceUrl: 'wss://alphanet-service.liskdev.net',
     isAvailable: false,
   },
   [networkKeys.betanet]: {
@@ -35,8 +35,8 @@ const networks = {
   [networkKeys.devnet]: {
     name: networkKeys.devnet,
     label: 'Devnet',
-    serviceUrl: 'http://devnet-service.liskdev.net:9901',
-    wsServiceUrl: 'ws://devnet-service.liskdev.net:9901',
+    serviceUrl: 'https://devnet-service.liskdev.net:9901',
+    wsServiceUrl: 'wss://devnet-service.liskdev.net:9901',
     isAvailable: true,
   },
   [networkKeys.testnet]: {

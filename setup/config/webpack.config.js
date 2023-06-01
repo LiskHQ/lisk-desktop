@@ -51,6 +51,7 @@ const config = {
     usb: 'commonjs usb',
     bufferutil: 'bufferutil',
     'utf-8-validate': 'utf-8-validate',
+    'headers-polyfill/lib': 'commonjs headers-polyfill/lib/index.js',
   },
   module: {
     rules: [

@@ -22,6 +22,7 @@ const NetworkApplicationDropDownButton = ({ history, location }) => {
   return (
     <div className={styles.container}>
       <TertiaryButton
+        data-testid="network-application-trigger"
         className={`application-management-dropdown ${styles.wrapper}`}
         onClick={handleShowApplications}
       >
