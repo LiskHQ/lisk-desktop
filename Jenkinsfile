@@ -9,7 +9,7 @@ pipeline {
 	}
 	parameters {
 		string(name: 'CORE_VERSION', defaultValue: '4.0.0-beta.1')
-		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'development')
+		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.7.0-beta.1')
 	}
 	stages {
 		stage('install') {
