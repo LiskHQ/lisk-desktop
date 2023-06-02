@@ -9,7 +9,7 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__/mockBlockchainAppMeta';
 import useSettings from '@settings/hooks/useSettings';
 import networks from '@network/configuration/networks';
-import { renderWithQueryClient, smartRender } from 'src/utils/testHelpers';
+import { smartRender } from 'src/utils/testHelpers';
 import ApplicationBootstrap from './ApplicationBootstrap';
 
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
