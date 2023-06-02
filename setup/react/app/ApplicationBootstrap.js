@@ -50,7 +50,7 @@ const ApplicationBootstrap = ({ children }) => {
         ({ chainID }) => chainID === currentApplication?.chainID
       );
       setCurrentApplication(refreshedCurrentApplication || mainChainApplication);
-      setApplications([blockchainAppsMeta?.data?.data[0]]);
+      setApplications([mainChainApplication]);
     }
     if (isFirstTimeLoading && blockchainAppsMeta.isFetched && !blockchainAppsMeta.isError) {
       setIsFirstTimeLoading(false);
