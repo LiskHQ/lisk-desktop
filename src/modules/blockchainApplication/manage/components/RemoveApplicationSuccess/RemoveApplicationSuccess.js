@@ -4,7 +4,7 @@ import Dialog from '@theme/dialog/dialog';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import { PrimaryButton } from 'src/theme/buttons';
-import { addSearchParamsToUrl } from 'src/utils/searchParams';
+import { addSearchParamsToUrl, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import styles from './RemoveApplicationSuccess.css';
 
 const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
@@ -13,6 +13,10 @@ const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
   const handleAddApplication = useCallback(() => {
     addSearchParamsToUrl(history, { modal: 'addApplicationList' });
   }, []);
+  
+  const onRemoveSuccess = () => {
+    removeThenAppendSearchParamsToUrl(history, { modal: 'manageApplications' }, ['modal'])
+  };
 
   return (
     <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
@@ -25,9 +29,7 @@ const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
         </p>
         <PrimaryButton
           className={`${styles.button}`}
-          onClick={() => {
-            history.push('/wallet');
-          }}
+          onClick={onRemoveSuccess}
         >
           {t('Continue to wallet')}
         </PrimaryButton>
