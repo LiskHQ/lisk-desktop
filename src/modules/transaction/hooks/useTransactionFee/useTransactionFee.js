@@ -26,7 +26,8 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, selectedPriori
     options: { enabled: isFormValid && !!transactionJSON },
   });
 
-  const { transactionFeeEstimates, dynamicFeeEstimates } = transactionFee?.data?.data || {};
+  const { transactionFeeEstimates = {}, dynamicFeeEstimates = {} } =
+    transactionFee?.data?.data || {};
   // const {
   //   moduleCommandSchemas,
   //   isLoading: isSchemaLoading,
@@ -64,7 +65,7 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, selectedPriori
   } else {
     txComponentType = 'Registration';
   }
-  const minimumFee = transactionFeeEstimates?.minFee;
+  const minimumFee = transactionFeeEstimates?.minFee || 0;
   const extraCommandFee = transactionFeeEstimates?.messageFee?.amount || 0;
 
   const priorityFee = {
