@@ -32,6 +32,7 @@ const {
   registerMultisignature,
   reportMisbehavior,
   reclaimLSK,
+  claimRewards,
 } = MODULE_COMMANDS_NAME_MAP;
 
 const baseComponents = [Illustration, Sender];
@@ -61,6 +62,14 @@ export const LayoutSchema = {
     className: styles.registerValidator,
   },
   [`${registerValidator}-preview`]: {
+    components: [...previewBaseComponents, ...restComponents],
+    className: styles.registerValidatorPreview,
+  },
+  [claimRewards]: {
+    components: [...baseComponents, ...timeComponents, PrettyJson],
+    className: styles.registerValidator,
+  },
+  [`${claimRewards}-preview`]: {
     components: [...previewBaseComponents, ...restComponents],
     className: styles.registerValidatorPreview,
   },

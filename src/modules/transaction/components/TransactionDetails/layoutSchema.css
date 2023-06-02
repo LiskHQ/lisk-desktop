@@ -99,6 +99,22 @@
   }
 }
 
+.claimRewards {
+  grid-template-areas:
+    "illustration illustration"
+    "sender sender"
+    "transactionId date"
+    "blockId blockHeight"
+    "fee confirmations"
+    "transactionParams transactionParams";
+
+  & > * {
+    &:nth-last-child(2) {
+      border-bottom: none;
+    }
+  }
+}
+
 .transferPreview {
   grid-template-areas:
     "illustration illustration"
@@ -119,6 +135,14 @@
 }
 
 .registerValidatorPreview {
+  grid-template-areas:
+    "illustration illustration"
+    "sender sender"
+    "transactionId fee"
+    "signedAndRemainingMembersList signedAndRemainingMembersList";
+}
+
+.claimRewardsPreview {
   grid-template-areas:
     "illustration illustration"
     "sender sender"
