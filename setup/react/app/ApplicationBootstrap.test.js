@@ -5,13 +5,16 @@ import {
   useApplicationManagement,
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
+import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__/mockBlockchainAppMeta';
 import useSettings from '@settings/hooks/useSettings';
 import networks from '@network/configuration/networks';
 import { smartRender } from 'src/utils/testHelpers';
 import ApplicationBootstrap from './ApplicationBootstrap';
+import { mockNetworkStatus } from 'src/modules/network/__fixtures__';
 
+jest.mock('@network/hooks/queries/useNetworkStatus');
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@settings/hooks/useSettings');
@@ -51,13 +54,14 @@ describe('ApplicationBootstrap', () => {
     isLoading: false,
     isError: undefined,
   });
+  useNetworkStatus.mockReturnValue({ data: mockNetworkStatus });
 
   it('Should set main chain application for the selected network', async () => {
     smartRender(ApplicationBootstrap, props, renderConfig);
 
     await waitFor(() => {
       expect(mockSetApplications).toHaveBeenCalledWith([mockBlockchainAppMeta.data[0]]);
-      expect(mockSetCurrentApplication).toHaveBeenCalledWith(mockBlockchainAppMeta.data[1]);
+      expect(mockSetCurrentApplication).toHaveBeenCalledWith(mockBlockchainAppMeta.data[0]);
     });
   });
 });
