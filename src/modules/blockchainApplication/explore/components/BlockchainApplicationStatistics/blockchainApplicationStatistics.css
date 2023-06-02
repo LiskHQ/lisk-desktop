@@ -1,8 +1,6 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .container {
-  max-width: 350px;
-
   & > header {
     padding-bottom: 22px;
   }
