@@ -38,7 +38,7 @@ const ApplicationBootstrap = ({ children }) => {
     client: queryClient.current,
   });
 
-  const mainChainApplication = blockchainAppsMeta?.data?.data?.find(
+  const mainChainApplication = blockchainAppsMeta.data?.data?.find(
     ({ chainID }) => chainID === networkStatus?.data?.data?.chainID
   );
 
@@ -64,7 +64,7 @@ const ApplicationBootstrap = ({ children }) => {
     }
   }, [
     mainChainNetwork,
-    blockchainAppsMeta?.isFetched,
+    blockchainAppsMeta.isFetched,
     blockchainAppsMeta.isError,
     blockchainAppsMeta.isLoading,
   ]);
