@@ -95,6 +95,11 @@
   grid-area: nonce;
 }
 
+.stakeValue {
+  margin-top: 10px;
+  justify-content: flex-start !important;
+}
+
 .stakes {
   grid-area: stakes;
 
