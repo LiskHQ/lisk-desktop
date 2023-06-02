@@ -150,8 +150,8 @@
   }
 }
 
-.transactionAsset {
-  grid-area: transactionAsset;
+.transactionParams {
+  grid-area: transactionParams;
   padding-top: 40px;
 
   & > div:first-child {

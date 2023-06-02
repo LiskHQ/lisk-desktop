@@ -16,7 +16,7 @@
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 
   & > * {
     width: 100%;
@@ -69,7 +69,7 @@
     "blockId blockHeight"
     "members members"
     "numberOfSignatures numberOfSignatures"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 }
 
 .stakeLayout {
@@ -80,7 +80,7 @@
     "blockId blockHeight"
     "fee confirmations"
     "stakes stakes"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 }
 
 .registerValidator {
@@ -90,7 +90,7 @@
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 
   & > * {
     &:nth-last-child(2) {
@@ -134,7 +134,7 @@
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 
   & > * {
     &:nth-last-child(2) {
@@ -167,7 +167,7 @@
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 
   & > * {
     &:nth-last-child(2) {
@@ -184,5 +184,5 @@
     "blockId blockHeight"
     "fee confirmations"
     "amount amount"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 }
