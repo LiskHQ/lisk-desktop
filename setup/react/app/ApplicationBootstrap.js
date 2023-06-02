@@ -49,13 +49,25 @@ const ApplicationBootstrap = ({ children }) => {
       const refreshedCurrentApplication = blockchainAppsMeta?.data?.data?.find(
         ({ chainID }) => chainID === currentApplication?.chainID
       );
-      setCurrentApplication(refreshedCurrentApplication || mainChainApplication);
+      const networkCode = mainChainApplication.chainID.match(/^\d{4}/g)[0];
+      const currentAppToSet =
+        refreshedCurrentApplication?.chainID?.indexOf(networkCode) === 0
+          ? refreshedCurrentApplication
+          : mainChainApplication;
+
+      setCurrentApplication(currentAppToSet);
       setApplications([mainChainApplication]);
     }
+
     if (isFirstTimeLoading && blockchainAppsMeta.isFetched && !blockchainAppsMeta.isError) {
       setIsFirstTimeLoading(false);
     }
-  }, [mainChainApplication?.chainID, blockchainAppsMeta?.isFetched]);
+  }, [
+    mainChainNetwork,
+    blockchainAppsMeta?.isFetched,
+    blockchainAppsMeta.isError,
+    blockchainAppsMeta.isLoading,
+  ]);
 
   useLedgerDeviceListener();
 
