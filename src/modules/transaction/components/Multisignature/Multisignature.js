@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { cryptography } from '@liskhq/lisk-client';
 import Illustration from 'src/modules/common/components/illustration';
@@ -72,13 +72,16 @@ const Multisignature = ({
   moduleCommandSchemas,
 }) => {
   const [copied, setCopied] = useState(false);
+  const ref = useRef();
   const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
   const paramSchema = moduleCommandSchemas[moduleCommand];
   const transactionJSON = toTransactionJSON(transactions.signedTransaction, paramSchema);
 
   const onCopy = () => {
-    copyToClipboard(JSON.stringify(transactionJSON));
     setCopied(true);
+    copyToClipboard(JSON.stringify(transactionJSON));
+    console.log('Done copying');
+    ref.current = setTimeout(() => setCopied(false), 1000);
   };
 
   const onDownload = () => {
@@ -103,6 +106,8 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
+
+  useEffect(() => () => clearTimeout(ref.current), []);
 
   return (
     <div className={`${styles.wrapper} ${className}`}>

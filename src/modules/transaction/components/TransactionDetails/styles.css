@@ -98,6 +98,7 @@
 .stakeValue {
   margin-top: 10px;
   justify-content: flex-start !important;
+  grid-area: stakes;
 }
 
 .stakes {
@@ -180,6 +181,10 @@
   align-content: flex-start;
   width: 100%;
   flex-wrap: wrap;
+
+  & > span {
+    margin-right: 5px;
+  }
 }
 
 .walletInfo {
