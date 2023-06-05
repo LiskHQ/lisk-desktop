@@ -1,8 +1,6 @@
 /* eslint-disable new-cap */
-import { Then, setDefaultTimeout } from '@cucumber/cucumber';
+import { Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
-
-setDefaultTimeout(15 * 1000);
 
 Then('custom derivation path input field should be {string}', async function (state) {
   if (state === 'enabled') {
