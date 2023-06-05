@@ -43,12 +43,7 @@
   grid-template-areas:
     "illustration illustration"
     "sender sender"
-    "recipient recipient"
-    "transactionId date"
-    "blockId blockHeight"
-    "fee confirmations"
-    "blockId blockHeight"
-    "amount message";
+    "transactionParams transactionParams";
 }
 
 .structuredGeneralLayout {

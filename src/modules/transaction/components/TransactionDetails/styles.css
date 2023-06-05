@@ -158,9 +158,9 @@
 
 .transactionParams {
   grid-area: transactionParams;
-  padding-top: 40px;
+  flex-direction: column;
 
-  & > div:first-child {
+  & > div > div:first-child {
     width: 100%;
     text-align: left;
     overflow-x: auto;

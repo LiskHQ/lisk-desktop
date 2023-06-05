@@ -80,7 +80,6 @@ const Multisignature = ({
   const onCopy = () => {
     setCopied(true);
     copyToClipboard(JSON.stringify(transactionJSON));
-    console.log('Done copying');
     ref.current = setTimeout(() => setCopied(false), 1000);
   };
 
