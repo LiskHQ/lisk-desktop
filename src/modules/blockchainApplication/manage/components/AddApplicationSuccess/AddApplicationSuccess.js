@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
 import { PrimaryButton } from 'src/theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
-import routes from 'src/routes/routes';
+import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import Dialog from 'src/theme/dialog/dialog';
 import styles from './AddApplicationSuccess.css';
 
 const AddApplicationSuccess = ({ history }) => {
   const { t } = useTranslation();
   const onAddSuccess = () => {
-    history.push(routes.wallet.path);
+    removeThenAppendSearchParamsToUrl(history, { modal: 'manageApplications' }, ['modal'])
   };
 
   return (

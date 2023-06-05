@@ -41,7 +41,8 @@
     "copy:files": "cpx \"./setup/react/{index.html,assets/**/*}\" ./app/build/",
     "clean:build": "rm -rf app/build",
     "clean:dist": "rm -rf dist",
-    "postinstall": "patch-package && electron-builder install-app-deps"
+    "postinstall": "patch-package && electron-builder install-app-deps",
+    "cucumber:playwright:open": "cucumber-js test -c cucumber.js"
   },
   "build": {
     "asar": true,
@@ -110,6 +111,7 @@
     "stepDefinitions": "features/"
   },
   "dependencies": {
+    "@cucumber/cucumber": "9.1.0",
     "@hookform/resolvers": "2.8.8",
     "@json-rpc-tools/utils": "1.7.6",
     "@ledgerhq/hw-transport-node-hid": "6.27.12",
@@ -149,6 +151,7 @@
     "node-hid": "2.1.1",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "path-browserify": "^1.0.1",
+    "playwright": "1.32.1",
     "postcss": "8.4.18",
     "prop-types": "15.7.2",
     "qrcode.react": "1.0.1",
@@ -187,6 +190,7 @@
     "@babel/preset-env": "7.13.15",
     "@babel/preset-react": "7.13.13",
     "@electron/universal": "1.1.0",
+    "@playwright/test": "1.32.1",
     "@testing-library/dom": "8.13.0",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "12.1.2",

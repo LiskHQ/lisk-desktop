@@ -21,7 +21,7 @@ const networks = {
   [networkKeys.alphanet]: {
     name: networkKeys.alphanet,
     label: 'Alphanet',
-    serviceUrl: 'https://alphanet-service.liskdev.net',
+    serviceUrl: 'http://alphanet-service.liskdev.net',
     wsServiceUrl: 'ws://alphanet-service.liskdev.net',
     isAvailable: false,
   },
@@ -37,7 +37,7 @@ const networks = {
     label: 'Devnet',
     serviceUrl: 'http://devnet-service.liskdev.net:9901',
     wsServiceUrl: 'ws://devnet-service.liskdev.net:9901',
-    isAvailable: false,
+    isAvailable: true,
   },
   [networkKeys.testnet]: {
     name: networkKeys.testnet,

@@ -30,6 +30,7 @@ export const ManageAccountsContent = ({
   const [currentAccount, setAccount] = useCurrentAccount();
   const currentHWDevice = useSelector(selectCurrentHWDevice);
   const [showRemove, setShowRemove] = useState(false);
+  const [showTruncate, setTruncate] = useState(truncate);
   const title = customTitle ?? t('Manage accounts');
   const { accounts: hwAccounts, isLoadingHWAccounts } = useHWAccounts();
   const hwAccountsToShow = currentHWDevice?.path
@@ -69,7 +70,7 @@ export const ManageAccountsContent = ({
               currentAccount={currentAccount}
               onSelect={onSelectAccount}
               onRemove={showRemove && removeAccount}
-              truncate={truncate}
+              truncate={showTruncate}
             />
           ))}
         </>
@@ -83,8 +84,10 @@ export const ManageAccountsContent = ({
       {showRemove ? (
         <OutlineButton
           className={`${styles.button} ${styles.addAccountBtn}`}
-          onClick={() => setShowRemove(false)}
-        >
+          onClick={() => {
+            setShowRemove(false);
+            setTruncate(false);
+          }}>
           {t('Done')}
         </OutlineButton>
       ) : (
@@ -101,6 +104,7 @@ export const ManageAccountsContent = ({
               className={styles.button}
               onClick={() => {
                 setShowRemove(true);
+                setTruncate(true);
               }}
             >
               <Icon name="deleteIcon" />

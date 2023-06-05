@@ -274,8 +274,6 @@ module.exports = {
     'src/modules/pos/validator/components/ValidatorProfile/PerformanceView.js',
     'src/modules/pos/validator/components/ValidatorProfile/DetailsView.js',
     'src/modules/pos/validator/components/ValidatorProfile/ValidatorProfile.js',
-    'src/modules/common/components/newsFeed/news.js',
-    'src/modules/common/components/newsFeed/newsFeed.js',
     'src/modules/pos/validator/components/ValidatorPerformanceModal/index.js',
     'src/modules/transaction/components/Overview/index.js',
     'src/modules/transaction/components/Transactions/index.js',

@@ -35,6 +35,6 @@ describe('BlockchainApplicationDetails', () => {
 
   it('should navigate to the wallet', () => {
     fireEvent.click(screen.getByText('Continue to wallet'));
-    expect(props.history.push).toHaveBeenCalledWith('/wallet');
+    expect(props.history.push).toHaveBeenCalledWith('?modal=manageApplications');
   });
 });

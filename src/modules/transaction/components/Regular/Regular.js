@@ -2,18 +2,17 @@
 import React, { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { getErrorReportMailto, isEmpty } from 'src/utils/helpers';
-import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import Illustration from 'src/modules/common/components/illustration';
 import { LEGACY } from 'src/const/queries';
 
+import { isTxStatusError } from '@transaction/configuration/statusConfig';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Regular.css';
 import { joinModuleAndCommand } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
-
-const errorTypes = [txStatusTypes.signatureError, txStatusTypes.broadcastError];
 
 const successTypes = [
   txStatusTypes.multisigSignaturePartialSuccess,
@@ -82,7 +81,7 @@ const Regular = ({
           {successButtonText || t('Back to wallet')}
         </PrimaryButton>
       )}
-      {errorTypes.includes(status.code) ? (
+      {isTxStatusError(status.code) ? (
         <>
           {onRetry && (
             <PrimaryButton className={`${styles.retryBtn}`} onClick={onRetry}>
