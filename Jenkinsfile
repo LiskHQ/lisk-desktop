@@ -82,7 +82,8 @@ pipeline {
 									# lisk-service
 									cp -f lisk-service/docker/example.env lisk-service/.env
 									echo LISK_APP_WS=ws://host.docker.internal:7887 >>lisk-service/.env
-									sed -i -e "s/curl=~8.0/curl=~8.1/" lisk-service/services/gateway/Dockerfile
+									sed -i -e "s/curl=~8.0/curl=~8/" lisk-service/services/gateway/Dockerfile
+									sed -i -e "s/alpine-sdk=~1.0 python3=~3.10 cmake=~3.24/alpine-sdk=~1 python3=~3 cmake=~3/" lisk-service/services/blockchain-connector/Dockerfile
 									make -C lisk-service build
 									make -C lisk-service up
 
