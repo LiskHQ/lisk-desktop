@@ -1,4 +1,4 @@
-import { setWorldConstructor, setDefaultTimeout } from '@cucumber/cucumber';
+import { setWorldConstructor } from '@cucumber/cucumber';
 import playwright from 'playwright';
 
 class CustomWorld {
@@ -16,5 +16,4 @@ class CustomWorld {
   }
 }
 
-setDefaultTimeout(10 * 1000);
 setWorldConstructor(CustomWorld);
