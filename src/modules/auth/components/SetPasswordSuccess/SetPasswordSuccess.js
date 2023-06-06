@@ -6,7 +6,6 @@ import { PrimaryButton } from '@theme/buttons';
 import Box from '@theme/box';
 import DownloadJSON from '@common/components/DownloadJSON/DownloadJSON';
 import BoxContent from '@theme/box/content';
-import { truncateAddress } from '@wallet/utils/account';
 import classNames from 'classnames';
 import styles from './SetPasswordSuccess.css';
 
@@ -15,8 +14,8 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, headerText, contentText,
   const onContinue = () => onClose();
   const accountName = encryptedPhrase.metadata.name;
   const appendAccountName = `_${accountName}`;
-  const address = truncateAddress(encryptedPhrase.metadata.address);
-  const fileName = `${address}${accountName ? appendAccountName : ''}_lisk_account`;
+  const address = encryptedPhrase.metadata.address;
+  const fileName = `${address}${accountName ? appendAccountName : ''}-lisk-account`;
   const isHw = encryptedPhrase.metadata.isHW;
 
   return (
