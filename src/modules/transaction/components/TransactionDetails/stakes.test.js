@@ -12,8 +12,8 @@ jest.spyOn(React, 'useContext').mockImplementation(() => ({
     type: 3,
     params: {
       stakes: [
-        { address: 'lsk123', amount: '1000000000' },
-        { address: 'lsk987', amount: '-2000000000' },
+        { validatorAddress: 'lsk123', amount: '1000000000' },
+        { validatorAddress: 'lsk987', amount: '-2000000000' },
       ],
     },
   },
@@ -48,11 +48,11 @@ describe('Transaction stakes', () => {
         data: {
           lsk123: {
             ...accounts.validator_candidate,
-            account: { address: accounts.validator_candidate.address },
+            account: { validatorAddress: accounts.validator_candidate.address },
           },
           lsk987: {
             ...accounts.validator,
-            account: { address: accounts.validator.address },
+            account: { validatorAddress: accounts.validator.address },
           },
         },
       },

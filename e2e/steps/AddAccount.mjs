@@ -22,4 +22,3 @@ Then('I should see the final add account step', async function () {
     )
   ).toBeTruthy();
 });
-

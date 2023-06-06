@@ -13,7 +13,8 @@ import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
 
-const { transfer, stake, reclaimLSK, registerMultisignature } = MODULE_COMMANDS_NAME_MAP;
+const { transfer, transferCrossChain, stake, reclaimLSK, registerMultisignature } =
+  MODULE_COMMANDS_NAME_MAP;
 
 // @todo import the following 4 values from lisk-elements (#4497)
 export const MESSAGE_TAG_MULTISIG_REG = 'LSK_RMSG_';
@@ -86,7 +87,11 @@ const getTotalSpendingAmount = ({ module, command, params = {} }) => {
     return '0';
   }
 
-  if (moduleCommand === transfer || moduleCommand === reclaimLSK) {
+  if (
+    moduleCommand === transfer ||
+    moduleCommand === transferCrossChain ||
+    moduleCommand === reclaimLSK
+  ) {
     return params.amount;
   }
 

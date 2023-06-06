@@ -10,7 +10,7 @@ import styles from './AddApplicationSuccess.css';
 const AddApplicationSuccess = ({ history }) => {
   const { t } = useTranslation();
   const onAddSuccess = () => {
-    removeThenAppendSearchParamsToUrl(history, { modal: 'manageApplications' }, ['modal'])
+    removeThenAppendSearchParamsToUrl(history, { modal: 'manageApplications' }, ['modal']);
   };
 
   return (

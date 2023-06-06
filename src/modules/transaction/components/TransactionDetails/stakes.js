@@ -13,7 +13,7 @@ export const StakesPure = ({ t, stakedValidator }) => {
 
   useEffect(() => {
     if (transaction.params) {
-      const addressList = stakes.map((item) => item.address);
+      const addressList = stakes.map((item) => item.validatorAddress);
       stakedValidator.loadData({ addressList });
     }
   }, []);
@@ -23,16 +23,16 @@ export const StakesPure = ({ t, stakedValidator }) => {
       <div className={styles.detailsWrapper}>
         <span className={styles.label}>{`${t('Stakes')} (${stakes.length})`}</span>
         <div className={`${styles.stakesContainer} ${styles.added} tx-added-stakes`}>
-          {stakes.map((stake) => (
+          {stakes.map(({ validatorAddress, amount }) => (
             <StakeItem
               truncate
-              key={`stake-${stake.address}`}
-              stake={{ confirmed: stake.amount }}
-              address={stake.address}
+              key={`stake-${validatorAddress}`}
+              stake={{ confirmed: amount }}
+              address={validatorAddress}
               token={token}
               title={
-                stakedValidator.data[stake.address] &&
-                stakedValidator.data[stake.address].pos?.validator?.name
+                stakedValidator.data[validatorAddress] &&
+                stakedValidator.data[validatorAddress].pos?.validator?.name
               }
             />
           ))}

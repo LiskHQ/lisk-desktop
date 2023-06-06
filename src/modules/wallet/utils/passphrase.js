@@ -1,4 +1,4 @@
-import { passphrase as LiskPassphrase} from '@liskhq/lisk-client';
+import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import { inDictionary } from 'src/utils/similarWord';
 

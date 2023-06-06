@@ -6,7 +6,7 @@ Feature: AddAccount
         And I switch to network "local_network"
         And I go back to the previous page
         Then I should see "Welcome to Lisk"
-        And I should see "If you are new to Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”."
+        And I should see "If you are new to the Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”."
         Given I click on a button with text "Add account"
         Then I should be redirected to route: "account/add"
         And I should see "Add your account"

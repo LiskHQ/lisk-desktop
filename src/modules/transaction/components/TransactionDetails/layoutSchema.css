@@ -16,7 +16,7 @@
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 
   & > * {
     width: 100%;
@@ -43,12 +43,7 @@
   grid-template-areas:
     "illustration illustration"
     "sender sender"
-    "recipient recipient"
-    "transactionId date"
-    "blockId blockHeight"
-    "fee confirmations"
-    "blockId blockHeight"
-    "amount message";
+    "transactionParams transactionParams";
 }
 
 .structuredGeneralLayout {
@@ -69,7 +64,7 @@
     "blockId blockHeight"
     "members members"
     "numberOfSignatures numberOfSignatures"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 }
 
 .stakeLayout {
@@ -80,7 +75,7 @@
     "blockId blockHeight"
     "fee confirmations"
     "stakes stakes"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 }
 
 .registerValidator {
@@ -90,7 +85,23 @@
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
+
+  & > * {
+    &:nth-last-child(2) {
+      border-bottom: none;
+    }
+  }
+}
+
+.claimRewards {
+  grid-template-areas:
+    "illustration illustration"
+    "sender sender"
+    "transactionId date"
+    "blockId blockHeight"
+    "fee confirmations"
+    "transactionParams transactionParams";
 
   & > * {
     &:nth-last-child(2) {
@@ -106,6 +117,16 @@
     "recipient recipient"
     "amount message"
     "transactionId fee"
+    "signedAndRemainingMembersList signedAndRemainingMembersList";
+}
+
+.transferCrossChainPreview {
+  grid-template-areas:
+    "illustration illustration"
+    "sender sender"
+    "receivingChain recipient"
+    "amount message"
+    "fee messageFee"
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
@@ -126,6 +147,14 @@
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
+.claimRewardsPreview {
+  grid-template-areas:
+    "illustration illustration"
+    "sender sender"
+    "transactionId fee"
+    "signedAndRemainingMembersList signedAndRemainingMembersList";
+}
+
 .unlockToken {
   grid-template-areas:
     "illustration illustration"
@@ -134,7 +163,7 @@
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 
   & > * {
     &:nth-last-child(2) {
@@ -167,7 +196,7 @@
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 
   & > * {
     &:nth-last-child(2) {
@@ -184,5 +213,5 @@
     "blockId blockHeight"
     "fee confirmations"
     "amount amount"
-    "transactionAsset transactionAsset";
+    "transactionParams transactionParams";
 }

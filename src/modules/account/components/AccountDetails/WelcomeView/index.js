@@ -52,7 +52,7 @@ export default function WelcomeView() {
         <h1 className={styles.title}>{t('Welcome to Lisk')}</h1>
         <p className={styles.description}>
           {t(
-            'If you are new to Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”.'
+            'If you are new to the Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”.'
           )}
         </p>
         <div className={styles.actionButtons}>

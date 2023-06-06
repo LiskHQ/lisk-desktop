@@ -75,6 +75,28 @@
   grid-area: fee;
 }
 
+.receivingChainID {
+  display: flex;
+
+  & .chainLogo {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+
+    & ~ span {
+      height: fit-content;
+      font-size: 16px;
+      font-weight: 500;
+      padding-left: 8px;
+      white-space: nowrap;
+      max-width: 228px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--color-maastricht-blue);
+    }
+  }
+}
+
 .confirmations {
   grid-area: confirmations;
 }
@@ -93,6 +115,12 @@
 
 .nonce {
   grid-area: nonce;
+}
+
+.stakeValue {
+  margin-top: 10px;
+  justify-content: flex-start !important;
+  grid-area: stakes;
 }
 
 .stakes {
@@ -150,11 +178,11 @@
   }
 }
 
-.transactionAsset {
-  grid-area: transactionAsset;
-  padding-top: 40px;
+.transactionParams {
+  grid-area: transactionParams;
+  flex-direction: column;
 
-  & > div:first-child {
+  & > div > div:first-child {
     width: 100%;
     text-align: left;
     overflow-x: auto;
@@ -175,6 +203,10 @@
   align-content: flex-start;
   width: 100%;
   flex-wrap: wrap;
+
+  & > span {
+    margin-right: 5px;
+  }
 }
 
 .walletInfo {
