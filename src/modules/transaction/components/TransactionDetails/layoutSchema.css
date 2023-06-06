@@ -120,6 +120,16 @@
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
+.transferCrossChainPreview {
+  grid-template-areas:
+    "illustration illustration"
+    "sender sender"
+    "receivingChain recipient"
+    "amount message"
+    "fee messageFee"
+    "signedAndRemainingMembersList signedAndRemainingMembersList";
+}
+
 .stakePreview {
   grid-template-areas:
     "illustration illustration"

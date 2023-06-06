@@ -75,6 +75,28 @@
   grid-area: fee;
 }
 
+.receivingChainID {
+  display: flex;
+
+  & .chainLogo {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+
+    & ~ span {
+      height: fit-content;
+      font-size: 16px;
+      font-weight: 500;
+      padding-left: 8px;
+      white-space: nowrap;
+      max-width: 228px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--color-maastricht-blue);
+    }
+  }
+}
+
 .confirmations {
   grid-area: confirmations;
 }

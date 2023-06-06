@@ -10,6 +10,8 @@ import {
   TxDate,
   Amount,
   Fee,
+  MessageFee,
+  ReceivingChain,
   NumberOfSignatures,
   Stakes,
   BlockId,
@@ -51,8 +53,16 @@ export const LayoutSchema = {
     className: styles.transferPreview,
   },
   [`${transferCrossChain}-preview`]: {
-    components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],
-    className: styles.transferPreview,
+    components: [
+      ...previewBaseComponents,
+      ReceivingChain,
+      Recipient,
+      Amount,
+      Message,
+      MessageFee,
+      ...restComponents,
+    ],
+    className: styles.transferCrossChainPreview,
   },
   [stake]: {
     components: [...baseComponents, ...timeComponents, Stakes, PrettyJson],
