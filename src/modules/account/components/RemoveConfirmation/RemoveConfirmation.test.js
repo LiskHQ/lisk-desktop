@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
+import * as txUtils from '@transaction/utils/transaction';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import RemoveConfirmationScreen from './RemoveConfirmation';
 
@@ -34,21 +35,19 @@ jest.mock('@account/utils/encryptAccount', () => ({
 let removeScreen;
 
 describe('RemoveConfirmationScreen', () => {
-  beforeEach(() => {
-    removeScreen = renderWithRouter(RemoveConfirmationScreen, props);
-  });
-
   afterEach(() => {
     goBackFn.mockClear();
   });
 
   it('Should abort the removal when cancel', async () => {
+    removeScreen = renderWithRouter(RemoveConfirmationScreen, props);
     expect(screen.getByText('Remove Account?')).toBeTruthy();
     expect(screen.getByText(message)).toBeTruthy();
     fireEvent.click(screen.getByText('Cancel'));
   });
 
   it('Should show label for hwWallet', async () => {
+    removeScreen = renderWithRouter(RemoveConfirmationScreen, props);
     const propsWithHWAccount = {
       ...props,
       account: {
@@ -63,6 +62,7 @@ describe('RemoveConfirmationScreen', () => {
   });
 
   it('Should abort the removal when cancel with go back option', async () => {
+    removeScreen = renderWithRouter(RemoveConfirmationScreen, props);
     const removeProps = {
       ...props,
       location: { hash: '' },
@@ -77,8 +77,24 @@ describe('RemoveConfirmationScreen', () => {
   });
 
   it('Should successfully remove an account', async () => {
+    removeScreen = renderWithRouter(RemoveConfirmationScreen, props);
     expect(removeScreen.getByText('Remove Account?')).toBeTruthy();
     expect(removeScreen.getByText(message)).toBeTruthy();
     fireEvent.click(removeScreen.getByText('Remove now'));
+  });
+
+  it('should download JSON when download button is clicked', () => {
+    props.account.metadata.address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+
+    const spyOnJSONDownload = jest.spyOn(txUtils, 'downloadJSON');
+    const wrapper = renderWithRouter(RemoveConfirmationScreen, props);
+    fireEvent.click(wrapper.getByTestId('download-button'));
+
+    const { address, name } = props.account.metadata;
+
+    expect(spyOnJSONDownload).toHaveBeenCalledWith(
+      props.account,
+      `${address}-${name}-lisk-account`
+    );
   });
 });

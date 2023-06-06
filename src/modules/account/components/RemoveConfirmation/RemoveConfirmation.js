@@ -5,16 +5,15 @@ import WalletVisual from '@wallet/components/walletVisual';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import DownloadJSON from 'src/modules/common/components/DownloadJSON/DownloadJSON';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { truncateAddress } from '@wallet/utils/account';
 import styles from '../RemoveAccount/RemoveAccount.css';
 
 const RemoveConfirmation = ({ history, location, account, onRemoveAccount }) => {
   const { t } = useTranslation();
   const accountName = account?.metadata?.name;
   const isHw = account?.metadata?.isHW;
-  const appendAccountName = `_${accountName}`;
-  const address = truncateAddress(account?.metadata?.address);
-  const fileName = `${address}${accountName ? appendAccountName : ''}_lisk_account`;
+  const appendAccountName = `-${accountName}`;
+  const address = account?.metadata?.address;
+  const fileName = `${address}${accountName ? appendAccountName : ''}-lisk-account`;
 
   const handleCancelDialog = useCallback(() => {
     if (/modal=/g.test(location.hash)) {
