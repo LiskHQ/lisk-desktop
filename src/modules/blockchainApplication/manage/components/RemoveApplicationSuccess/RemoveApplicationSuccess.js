@@ -27,7 +27,7 @@ const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
           {t('You can always add')} <a onClick={handleAddApplication}>{application.chainName}</a>{' '}
           {t('again to your application list.')}
         </p>
-        <PrimaryButton className={`${styles.button}`} onClick={onRemoveSuccess}>
+        <PrimaryButton className={styles.button} onClick={onRemoveSuccess}>
           {t('Continue to wallet')}
         </PrimaryButton>
       </div>
