@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as txUtils from '@transaction/utils/transaction';
-import { truncateAddress } from '@wallet/utils/account';
 import SetPasswordSuccess from './index';
 
 describe('Setup password success and JSON download component', () => {
@@ -33,7 +32,7 @@ describe('Setup password success and JSON download component', () => {
     wrapper.find('.downloadBtn').at(0).simulate('click');
     expect(spyOnJSONDownload).toHaveBeenCalledWith(
       props.encryptedPhrase,
-      `${truncateAddress(address)}_${name}_lisk_account`
+      `${address}-${name}-lisk-account`
     );
   });
 

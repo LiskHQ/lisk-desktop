@@ -13,7 +13,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, headerText, contentText,
   const { t } = useTranslation();
   const onContinue = () => onClose();
   const accountName = encryptedPhrase.metadata.name;
-  const appendAccountName = `_${accountName}`;
+  const appendAccountName = `-${accountName}`;
   const address = encryptedPhrase.metadata.address;
   const fileName = `${address}${accountName ? appendAccountName : ''}-lisk-account`;
   const isHw = encryptedPhrase.metadata.isHW;
