@@ -35,7 +35,7 @@ const moduleCommandMap = {
   },
   [moduleCommandNameMap.claimRewards]: {
     maxFee: 1e7,
-    icon: 'commissionsIcon',
+    icon: 'commissionIcon',
   },
   [moduleCommandNameMap.stake]: {
     maxFee: 1e8,
@@ -59,7 +59,7 @@ const moduleCommandMap = {
   },
   [moduleCommandNameMap.changeCommission]: {
     maxFee: 1e7,
-    icon: 'commissionsIcon',
+    icon: 'commissionIcon',
   },
 };
 

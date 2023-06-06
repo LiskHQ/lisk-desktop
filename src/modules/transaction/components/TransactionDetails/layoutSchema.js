@@ -26,6 +26,7 @@ import styles from './layoutSchema.css';
 
 const {
   transfer,
+  transferCrossChain,
   stake,
   unlock,
   registerValidator,
@@ -46,6 +47,10 @@ export const LayoutSchema = {
     className: styles.transferLayout,
   },
   [`${transfer}-preview`]: {
+    components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],
+    className: styles.transferPreview,
+  },
+  [`${transferCrossChain}-preview`]: {
     components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],
     className: styles.transferPreview,
   },
