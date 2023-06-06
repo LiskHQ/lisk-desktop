@@ -18,9 +18,9 @@ const AccountDetails = () => {
   const [currentAccount] = useCurrentAccount();
   const { accounts } = useAccounts();
   const { t } = useTranslation();
+  const params = parseSearchParams(history.location.search);
 
   useEffect(() => {
-    const params = parseSearchParams(history.location.search);
     if (params.recipient !== undefined) {
       addSearchParamsToUrl(history, { modal: 'send' });
     }
@@ -50,7 +50,7 @@ const AccountDetails = () => {
         </section>
       );
     }
-    return <AccountOverview />;
+    return <AccountOverview address={params?.address} />;
   }
 
   return renderComponent();

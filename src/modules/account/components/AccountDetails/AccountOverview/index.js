@@ -12,7 +12,7 @@ import TransactionEvents from '@transaction/components/TransactionEvents';
 import { selectActiveToken, selectSettings, selectTransactions } from 'src/redux/selectors';
 import styles from './AccountOverview.css';
 
-export default function AccountOverview() {
+export default function AccountOverview({ address: searchAddress }) {
   const { t } = useTranslation();
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
@@ -55,9 +55,9 @@ export default function AccountOverview() {
         </BoxHeader>
         <BoxContent className={styles.content}>
           {activeTab === 'transactions' ? (
-            <Transactions address={currentAddress} />
+            <Transactions address={searchAddress ?? currentAddress} />
           ) : (
-            <TransactionEvents isWallet hasFilter address={currentAddress} />
+            <TransactionEvents isWallet hasFilter address={searchAddress ?? currentAddress} />
           )}
         </BoxContent>
       </Box>

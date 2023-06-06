@@ -99,11 +99,11 @@ const Overview = ({ isWalletRoute, history }) => {
           copy
           size={50}
           address={authData?.meta?.address}
-          accountName={authData?.meta?.name || name}
+          accountName={searchAddress || validator?.name ? validator?.name : name}
           detailsClassName={styles.accountSummary}
           truncate={false}
           isMultisig={authData?.data?.numberOfSignatures > 0}
-          publicKey={authData?.meta?.publicKey || pubkey}
+          publicKey={searchAddress ? authData?.meta?.publicKey : pubkey}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
