@@ -7,7 +7,7 @@ const props = {
     push: jest.fn(),
     location: {
       search: '',
-      pathname: '/'
+      pathname: '/',
     },
   },
 };

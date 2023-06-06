@@ -23,7 +23,11 @@ const Dialog = ({ children, hasClose, hasBack, className, history, size, customB
         />
       )}
       {hasClose && (
-        <span data-testid="dialog-close-button" onClick={onCloseClick} className={`${styles.closeBtn} dialog-close-button`} />
+        <span
+          data-testid="dialog-close-button"
+          onClick={onCloseClick}
+          className={`${styles.closeBtn} dialog-close-button`}
+        />
       )}
       {children}
     </div>

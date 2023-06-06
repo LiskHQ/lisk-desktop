@@ -87,7 +87,8 @@ export const ManageAccountsContent = ({
           onClick={() => {
             setShowRemove(false);
             setTruncate(false);
-          }}>
+          }}
+        >
           {t('Done')}
         </OutlineButton>
       ) : (
