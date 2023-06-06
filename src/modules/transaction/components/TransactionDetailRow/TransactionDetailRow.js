@@ -1,5 +1,7 @@
 import React from 'react';
-import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
+import { Link } from 'react-router-dom';
+import CopyToClipboard from '@common/components/copyToClipboard';
+import routes from 'src/routes/routes';
 import { AddressWithName, ExpandToggle, Text, Title, TransactionStatus } from './components';
 import styles from './TransactionDetailRow.css';
 
@@ -7,7 +9,11 @@ const TransactionEventRow = ({ data, isParamsCollapsed, onToggleJsonView }) => {
   const { type, tooltip, value, label, isCapitalized, canCopy, redirectLink } = data;
 
   const valueToRender = {
-    address: <AddressWithName {...value} />,
+    address: (
+      <Link to={`${routes.wallet.path}?address=${value?.address}`}>
+        <AddressWithName {...value} />
+      </Link>
+    ),
     status: <TransactionStatus status={value} />,
     expand: <ExpandToggle isCollapsed={isParamsCollapsed} onToggle={onToggleJsonView} />,
   };
