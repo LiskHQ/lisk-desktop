@@ -10,7 +10,7 @@ const TransactionEventRow = ({ data, isParamsCollapsed, onToggleJsonView }) => {
 
   const valueToRender = {
     address: (
-      <Link to={`${routes.wallet.path}?address=${value?.address}`}>
+      <Link to={`${routes.explorer.path}?address=${value?.address}`}>
         <AddressWithName {...value} />
       </Link>
     ),
