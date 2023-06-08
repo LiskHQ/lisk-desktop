@@ -27,7 +27,8 @@ const DialogAddNetwork = () => {
 
   function onSubmit(values) {
     setSuccessText('');
-    const customNetwork = { ...values, label: values.name, isAvailable: true };
+    const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1')
+    const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
     const updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
     setValue(updatedCustomNetworks);
     reset();

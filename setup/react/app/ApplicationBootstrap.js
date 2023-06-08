@@ -18,9 +18,11 @@ const ApplicationBootstrap = ({ children }) => {
   const [isFirstTimeLoading, setIsFirstTimeLoading] = useState(true);
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { setApplications } = useApplicationManagement();
-  const queryClient = useRef(new Client({ http: mainChainNetwork?.serviceUrl }));
-  useTransactionUpdate();
+  const queryClient = useRef();
 
+  queryClient.current = new Client({ http: mainChainNetwork?.serviceUrl });
+
+  useTransactionUpdate();
   const networkStatus = useNetworkStatus({
     options: { enabled: !!mainChainNetwork },
     client: queryClient.current,
