@@ -10,7 +10,7 @@ import SearchBar from './SearchBar';
 
 jest.mock('src/modules/search/hooks/useSearch', () => ({
   useSearch: jest.fn().mockReturnValue({
-    addresses: [],
+    addresses: {},
     validators: [],
     transactions: [],
     blocks: [],
@@ -40,7 +40,7 @@ describe('SearchBar', () => {
 
   it('should render empty results when search length is less than 3', () => {
     useSearch.mockReturnValueOnce({
-      addresses: [],
+      addresses: {},
       validators: [],
       transactions: [],
       blocks: [],
@@ -60,7 +60,7 @@ describe('SearchBar', () => {
 
   it('should render accounts data properly based on user data input', () => {
     useSearch.mockReturnValueOnce({
-      addresses: [{ address: '123456L', name: 'lisker' }],
+      addresses: { address: '123456L', name: 'lisker' },
       validators: [],
       transactions: [],
       blocks: [],
@@ -80,7 +80,7 @@ describe('SearchBar', () => {
 
   it('should redirect to a different page if user do a click on selected row for transaction', () => {
     useSearch.mockReturnValue({
-      addresses: [],
+      addresses: {},
       validators: [],
       transactions: [
         {
@@ -112,7 +112,7 @@ describe('SearchBar', () => {
 
   it('should uses keyboard navigation to select search result for validators', () => {
     useSearch.mockReturnValue({
-      addresses: [],
+      addresses: {},
       validators: [
         {
           address: '123456L',
@@ -149,7 +149,7 @@ describe('SearchBar', () => {
 
   it('should uses keyboard navigation to select search result for address', () => {
     useSearch.mockReturnValue({
-      addresses: [{ address: '123456L', name: 'lisker' }],
+      addresses: { address: '123456L', name: 'lisker' },
       validators: [],
       transactions: [],
       blocks: [],
@@ -171,7 +171,7 @@ describe('SearchBar', () => {
 
   it('should uses keyboard navigation to select search result for transactions', () => {
     useSearch.mockReturnValue({
-      addresses: [],
+      addresses: {},
       validators: [],
       transactions: [
         {
@@ -201,7 +201,7 @@ describe('SearchBar', () => {
 
   it('should uses keyboard navigation to select search result for blocks', () => {
     useSearch.mockReturnValue({
-      addresses: [],
+      addresses: {},
       validators: [],
       transactions: [],
       blocks: [{ id: '3144423' }],
@@ -223,7 +223,7 @@ describe('SearchBar', () => {
 
   it('should redirect to a different page if user do a click on selected row for address', () => {
     useSearch.mockReturnValueOnce({
-      addresses: [{ address: '123456L', name: 'lisker' }],
+      addresses: { address: '123456L', name: 'lisker' },
       validators: [],
       transactions: [],
       blocks: [],
@@ -242,7 +242,7 @@ describe('SearchBar', () => {
 
   it('should redirect to a validator page if user do a click on selected row for validators', () => {
     useSearch.mockReturnValueOnce({
-      addresses: [],
+      addresses: {},
       validators: [
         {
           address: '123456L',
@@ -279,7 +279,7 @@ describe('SearchBar', () => {
 
   it('should redirect to a blocks page if user do a click on selected block', () => {
     useSearch.mockReturnValueOnce({
-      addresses: [],
+      addresses: {},
       validators: [],
       transactions: [],
       blocks: [{ id: '3144423' }],

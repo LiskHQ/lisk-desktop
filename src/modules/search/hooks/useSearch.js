@@ -9,7 +9,7 @@ function getIsLoading(queryRes) {
   return queryRes.isLoading && queryRes.isFetching;
 }
 
-// eslint-disable-next-line complexity,max-statements
+// eslint-disable-next-line complexity, max-statements
 export const useSearch = (search = '') => {
   const isAddress = validateAddress(search) === 0;
   const isTxId = regex.transactionId.test(search);
