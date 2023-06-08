@@ -19,6 +19,9 @@ jest.mock('src/modules/search/hooks/useSearch', () => ({
 }));
 jest.mock('@token/fungible/hooks/queries');
 
+const accountAddress = 'lskgtrrftvoxhtknhamjab5wenfauk32z9pzk79uj';
+const secondAccountAddress = 'lskwcumkptb6vk964qcxkb2h9gxsznaa8sqmyeqf6';
+
 describe('SearchBar', () => {
   const config = {
     renderType: 'mount',
@@ -28,6 +31,10 @@ describe('SearchBar', () => {
     },
     queryClient: true,
   };
+
+  beforeEach(() => {
+    useSearch.mockClear();
+  });
 
   useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
 
@@ -60,7 +67,7 @@ describe('SearchBar', () => {
 
   it('should render accounts data properly based on user data input', () => {
     useSearch.mockReturnValueOnce({
-      addresses: { address: '123456L', name: 'lisker' },
+      addresses: { address: accountAddress, name: 'lisker' },
       validators: [],
       transactions: [],
       blocks: [],
@@ -71,7 +78,7 @@ describe('SearchBar', () => {
       wrapper
         .find('.search-input input')
         .at(0)
-        .simulate('change', { target: { value: '123456L' } });
+        .simulate('change', { target: { value: accountAddress } });
       wrapper.update();
       jest.runAllTimers();
     });
@@ -110,19 +117,19 @@ describe('SearchBar', () => {
     );
   });
 
-  it('should uses keyboard navigation to select search result for validators', () => {
+  it('should use keyboard navigation to select search result for validators', () => {
     useSearch.mockReturnValue({
       addresses: {},
       validators: [
         {
-          address: '123456L',
+          address: accountAddress,
           username: 'genesis_10',
           rank: 34,
           rewards: 23423,
           stake: 123,
         },
         {
-          address: '123457L',
+          address: secondAccountAddress,
           username: 'genesis_101',
           rank: 26,
           rewards: 23421,
@@ -144,12 +151,12 @@ describe('SearchBar', () => {
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });
     fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp });
     fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter });
-    expect(config.historyInfo.push).toBeCalledWith('/validators/profile?address=123456L');
+    expect(config.historyInfo.push).toBeCalledWith(`/validators/profile?address=${accountAddress}`);
   });
 
-  it('should uses keyboard navigation to select search result for address', () => {
+  it('should use keyboard navigation to select search result for address', () => {
     useSearch.mockReturnValue({
-      addresses: { address: '123456L', name: 'lisker' },
+      addresses: { address: accountAddress, name: 'lisker' },
       validators: [],
       transactions: [],
       blocks: [],
@@ -159,17 +166,17 @@ describe('SearchBar', () => {
     const { wrapper } = smartRender(SearchBar, null, { ...config, renderType: 'render' });
 
     act(() => {
-      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '123456L' } });
+      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: accountAddress } });
       jest.runAllTimers();
     });
 
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });
     fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp });
     fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter });
-    expect(config.historyInfo.push).toBeCalledWith('/explorer?address=123456L');
+    expect(config.historyInfo.push).toBeCalledWith(`/explorer?address=${accountAddress}`);
   });
 
-  it('should uses keyboard navigation to select search result for transactions', () => {
+  it('should use keyboard navigation to select search result for transactions', () => {
     useSearch.mockReturnValue({
       addresses: {},
       validators: [],
@@ -199,7 +206,7 @@ describe('SearchBar', () => {
     expect(config.historyInfo.push).toBeCalled();
   });
 
-  it('should uses keyboard navigation to select search result for blocks', () => {
+  it('should use keyboard navigation to select search result for blocks', () => {
     useSearch.mockReturnValue({
       addresses: {},
       validators: [],
@@ -223,7 +230,7 @@ describe('SearchBar', () => {
 
   it('should redirect to a different page if user do a click on selected row for address', () => {
     useSearch.mockReturnValueOnce({
-      addresses: { address: '123456L', name: 'lisker' },
+      addresses: { address: accountAddress, name: 'lisker' },
       validators: [],
       transactions: [],
       blocks: [],
@@ -234,10 +241,10 @@ describe('SearchBar', () => {
       wrapper
         .find('.search-input input')
         .at(0)
-        .simulate('change', { target: { value: '123456L' } });
+        .simulate('change', { target: { value: accountAddress } });
     });
     wrapper.find('.account-row').at(0).simulate('click');
-    expect(config.historyInfo.push).toBeCalledWith('/explorer?address=123456L');
+    expect(config.historyInfo.push).toBeCalledWith(`/explorer?address=${accountAddress}`);
   });
 
   it('should redirect to a validator page if user do a click on selected row for validators', () => {
@@ -245,14 +252,14 @@ describe('SearchBar', () => {
       addresses: {},
       validators: [
         {
-          address: '123456L',
+          address: accountAddress,
           username: 'genesis_10',
           rank: 34,
           rewards: 23423,
           stake: 123,
         },
         {
-          address: '123457L',
+          address: secondAccountAddress,
           username: 'genesis_101',
           rank: 26,
           rewards: 23421,
@@ -274,7 +281,7 @@ describe('SearchBar', () => {
     });
 
     wrapper.find('.validators-row').at(0).simulate('click');
-    expect(config.historyInfo.push).toBeCalledWith('/validators/profile?address=123456L');
+    expect(config.historyInfo.push).toBeCalledWith(`/validators/profile?address=${accountAddress}`);
   });
 
   it('should redirect to a blocks page if user do a click on selected block', () => {
