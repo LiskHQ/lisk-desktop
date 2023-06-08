@@ -5,8 +5,18 @@ import { TertiaryButton } from 'src/theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from './NetworkError.css';
 
-const NetworkError = ({ onRetry, errorMessage }) => {
+const NetworkError = ({ onRetry, error }) => {
   const { t } = useTranslation();
+  const errorMessage = {
+    message: error.message,
+    endpoint: `${error.config.baseURL}${error.config.url}`,
+    requestPayload: error.request.data,
+    method: error.config.method,
+    requestHeaders: error.config.headers,
+    responsePayload: error.response.data,
+    responseStatusCode: error.response.status,
+    responseStatusText: error.response.statusText,
+  };
 
   const mailReference = useMemo(() => {
     const recipient = 'desktopdev@lisk.com';

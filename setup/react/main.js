@@ -47,14 +47,16 @@ const renderWithRouter = (Component) => (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistedStore}>
         <ApplicationBootstrap>
-          <>
-            <Router>
-              <I18nextProvider i18n={i18n}>
-                <Component />
-              </I18nextProvider>
-            </Router>
-            <ReactQueryDevtools />
-          </>
+          {(props) => (
+            <>
+              <Router>
+                <I18nextProvider i18n={i18n}>
+                  <Component {...props} />
+                </I18nextProvider>
+              </Router>
+              <ReactQueryDevtools />
+            </>
+          )}
         </ApplicationBootstrap>
       </PersistGate>
     </Provider>

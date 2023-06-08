@@ -18,6 +18,8 @@ import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
 import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
+import NetworkError from 'src/modules/common/components/NetworkError/NetworkError';
+import PageLoader from 'src/modules/common/components/pageLoader';
 import MainRouter from './MainRouter';
 import './variables.css';
 import styles from './app.css';
@@ -29,7 +31,7 @@ if (MOCK_SERVICE_WORKER) {
 }
 
 // eslint-disable-next-line max-statements
-const App = ({ history }) => {
+const App = ({ history, hasNetworkError, refetchNetwork, error, isLoadingNetwork }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
@@ -42,6 +44,16 @@ const App = ({ history }) => {
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);
+
+  const AppContent = () => {
+    if (isLoadingNetwork) return <PageLoader />;
+
+    return hasNetworkError ? (
+      <NetworkError onRetry={refetchNetwork} error={error} />
+    ) : (
+      <MainRouter />
+    );
+  };
 
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
   return (
@@ -67,7 +79,7 @@ const App = ({ history }) => {
           <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
             <section className="scrollContainer">
               <FlashMessageHolder />
-              <MainRouter />
+              <AppContent />
             </section>
           </main>
         </OfflineWrapper>

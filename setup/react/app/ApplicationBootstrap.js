@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable max-statements */
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTransactionUpdate } from '@transaction/hooks';
 import useSettings from '@settings/hooks/useSettings';
 import {
@@ -11,7 +11,6 @@ import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { Client } from 'src/utils/api/client';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
-import NetworkError from 'src/modules/common/components/NetworkError/NetworkError';
 
 const ApplicationBootstrap = ({ children }) => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
@@ -44,7 +43,9 @@ const ApplicationBootstrap = ({ children }) => {
     ({ chainID }) => chainID === networkStatus?.data?.data?.chainID
   );
 
-  const isError = (networkStatus.isError || blockchainAppsMeta.isError) && !!mainChainNetwork;
+  const isError =
+    ((networkStatus.isError && !networkStatus.data) || blockchainAppsMeta.isError) &&
+    !!mainChainNetwork;
 
   useEffect(() => {
     if (mainChainApplication) {
@@ -73,28 +74,12 @@ const ApplicationBootstrap = ({ children }) => {
 
   useLedgerDeviceListener();
 
-  if (isError && !blockchainAppsMeta.isFetching && isFirstTimeLoading) {
-    const error = networkStatus.error || blockchainAppsMeta.error;
-    const errorMessage = {
-      message: error.message,
-      endpoint: `${error.config.baseURL}${error.config.url}`,
-      requestPayload: error.request.data,
-      method: error.config.method,
-      requestHeaders: error.config.headers,
-      responsePayload: error.response.data,
-      responseStatusCode: error.response.status,
-      responseStatusText: error.response.statusText,
-    };
-
-    return (
-      <NetworkError
-        onRetry={blockchainAppsMeta.refetch}
-        errorMessage={JSON.stringify(errorMessage)}
-      />
-    );
-  }
-
-  return isFirstTimeLoading ? null : children;
+  return children({
+    hasNetworkError: isError && !blockchainAppsMeta.isFetching,
+    isLoadingNetwork: blockchainAppsMeta.isFetching || networkStatus.isFetching,
+    error: networkStatus.error || blockchainAppsMeta.error,
+    refetchNetwork: blockchainAppsMeta.refetch,
+  });
 };
 
 export default ApplicationBootstrap;
