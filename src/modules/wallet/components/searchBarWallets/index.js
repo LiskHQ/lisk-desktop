@@ -36,11 +36,11 @@ const Wallets = ({ wallet, onSelectedRow, t }) => {
             )}
           </div>
           <span className={styles.accountBalance}>
-            {isValidator ? (
+            {isValidator && (
               <span className={`${styles.tag} tag`}>
                 {wallet.rank ? t('Validator #{{rank}}', { rank: wallet.rank }) : '-'}
               </span>
-            ) : null}
+            )}
           </span>
         </div>
       </div>
