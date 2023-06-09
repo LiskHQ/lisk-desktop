@@ -75,7 +75,7 @@ const StakeRow = ({
       </span>
       {state === componentState.notEditing ? (
         <>
-          <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
+          <span className={`${styles.amountColumn} ${styles.centerContent}`}>
             {!!confirmed && (
               <span className={`${styles.oldAmountColumn}`}>
                 <TokenAmount val={confirmed} token={token} />
