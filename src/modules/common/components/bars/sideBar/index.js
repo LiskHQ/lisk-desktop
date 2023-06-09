@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { useCurrentAccount } from '@account/hooks';
+import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
 import routes, { modals } from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
 import { selectActiveToken } from 'src/redux/selectors';
@@ -26,13 +27,9 @@ const Inner = ({ data, pathname, sideBarExpanded }) => {
   );
 };
 
-const MenuLink = ({ data, isUserLogout, pathname, sideBarExpanded }) => {
+const MenuLink = ({ data, pathname, sideBarExpanded, disabled }) => {
   if (data.modal) {
-    const className = `${styles.item} ${
-      (isUserLogout && modals[data.id].isPrivate) || pathname === routes.reclaim.path
-        ? `${styles.disabled} disabled`
-        : ''
-    }`;
+    const className = `${styles.item} ${disabled ? `${styles.disabled} disabled` : ''}`;
     return (
       <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${className}`}>
         <Inner data={data} modal={data.id} sideBarExpanded={sideBarExpanded} />
@@ -40,11 +37,8 @@ const MenuLink = ({ data, isUserLogout, pathname, sideBarExpanded }) => {
     );
   }
 
-  const className = `${styles.item} ${
-    (isUserLogout && routes[data.id].isPrivate) || pathname === routes.reclaim.path
-      ? `${styles.disabled} disabled`
-      : ''
-  }`;
+  const className = `${styles.item} ${disabled ? `${styles.disabled} disabled` : ''}`;
+
   return (
     <NavLink
       to={data.path}
@@ -65,7 +59,7 @@ const SideBar = ({ t, location }) => {
   const [currentAccount] = useCurrentAccount();
   const isLoggedOut = Object.keys(currentAccount).length === 0;
   const sideBarExpanded = useSelector((state) => state.settings.sideBarExpanded);
-
+  const { hasNetworkError, isLoadingNetwork } = useContext(ApplicationBootstrapContext);
   return (
     <nav
       className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}
@@ -85,10 +79,15 @@ const SideBar = ({ t, location }) => {
               .map((item) => (
                 <MenuLink
                   key={item.id}
-                  isUserLogout={isLoggedOut}
                   pathname={location.pathname}
                   data={item}
                   sideBarExpanded={sideBarExpanded}
+                  disabled={
+                    (isLoggedOut && modals[item.id]?.isPrivate) ||
+                    location.pathname === routes.reclaim.path ||
+                    hasNetworkError ||
+                    isLoadingNetwork
+                  }
                 />
               ))}
           </div>

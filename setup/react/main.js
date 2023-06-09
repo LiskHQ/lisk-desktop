@@ -13,7 +13,7 @@ import ipcLocale from 'src/utils/ipcLocale';
 import updateApp from '@update/utils/updateApp';
 import i18n from 'src/utils/i18n/i18n';
 import App from './app';
-import ApplicationBootstrap from './app/ApplicationBootstrap';
+import ApplicationBootstrap, { ApplicationBootstrapContext } from './app/ApplicationBootstrap';
 
 // eslint-disable-next-line no-extend-native
 BigInt.prototype.toJSON = function () {
@@ -47,16 +47,18 @@ const renderWithRouter = (Component) => (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistedStore}>
         <ApplicationBootstrap>
-          {(props) => (
-            <>
-              <Router>
-                <I18nextProvider i18n={i18n}>
-                  <Component {...props} />
-                </I18nextProvider>
-              </Router>
-              <ReactQueryDevtools />
-            </>
-          )}
+          <ApplicationBootstrapContext.Consumer>
+            {(networkEventStatus) => (
+              <>
+                <Router>
+                  <I18nextProvider i18n={i18n}>
+                    <Component {...networkEventStatus} />
+                  </I18nextProvider>
+                </Router>
+                <ReactQueryDevtools />
+              </>
+            )}
+          </ApplicationBootstrapContext.Consumer>
         </ApplicationBootstrap>
       </PersistGate>
     </Provider>

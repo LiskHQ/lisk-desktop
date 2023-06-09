@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable max-statements */
-import { useEffect, useRef, useState } from 'react';
+import React, { createContext, useEffect, useRef, useState } from 'react';
 import { useTransactionUpdate } from '@transaction/hooks';
 import useSettings from '@settings/hooks/useSettings';
 import {
@@ -11,6 +11,13 @@ import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { Client } from 'src/utils/api/client';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
+
+export const ApplicationBootstrapContext = createContext({
+  hasNetworkError: false,
+  isLoadingNetwork: false,
+  error: {},
+  refetchNetwork: () => {},
+});
 
 const ApplicationBootstrap = ({ children }) => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
@@ -74,12 +81,18 @@ const ApplicationBootstrap = ({ children }) => {
 
   useLedgerDeviceListener();
 
-  return children({
-    hasNetworkError: isError && !blockchainAppsMeta.isFetching,
-    isLoadingNetwork: blockchainAppsMeta.isFetching || networkStatus.isFetching,
-    error: networkStatus.error || blockchainAppsMeta.error,
-    refetchNetwork: blockchainAppsMeta.refetch,
-  });
+  return (
+    <ApplicationBootstrapContext.Provider
+      value={{
+        hasNetworkError: isError && !blockchainAppsMeta.isFetching,
+        isLoadingNetwork: blockchainAppsMeta.isFetching || networkStatus.isLoading,
+        error: networkStatus.error || blockchainAppsMeta.error,
+        refetchNetwork: blockchainAppsMeta.refetch,
+      }}
+    >
+      {children}
+    </ApplicationBootstrapContext.Provider>
+  );
 };
 
 export default ApplicationBootstrap;

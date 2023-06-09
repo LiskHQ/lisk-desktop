@@ -16,7 +16,7 @@ import styles from './SearchBar.css';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useSearch } from '../../hooks/useSearch';
 
-const SearchBar = ({ className }) => {
+const SearchBar = ({ className, disabled }) => {
   const history = useHistory();
   const [searchTextValue, setSearchTextValue] = useState('');
   const [rowItemIndex, setRowIndex] = useState(0);
@@ -136,6 +136,7 @@ const SearchBar = ({ className }) => {
           placeholder={t('Search within the network...')}
           onKeyDown={onHandleKeyPress}
           isLoading={isLoading}
+          disabled={disabled}
         />
       </div>
       {feedback && (
