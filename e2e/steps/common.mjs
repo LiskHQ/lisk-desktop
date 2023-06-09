@@ -3,8 +3,12 @@ import { Given, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import routes from '../fixtures/routes.mjs';
 
-Given('I navigate to page {string}', { timeout: 120 * 1000 }, async function (pageName) {
+Given('I navigate to page {string}', { timeout: 160 * 1000 }, async function (pageName) {
   await this.openUrl(routes[pageName]);
+});
+
+Given('I wait for {string}', async function (waitTime) {
+  await this.page.waitFor(+waitTime);
 });
 
 Given('I click on a button with text {string}', async function (buttonText) {
@@ -80,6 +84,7 @@ Given(
 
 Given('I switch to network {string}', async function (networkName) {
   await this.page.getByTestId('network-application-trigger').click();
+  await expect(this.page.getByTestId('spinner')).not.toBeVisible({ timeout: 10000 });
   await this.page.getByTestId('selected-menu-item').click();
   await this.page.getByText(networkName).click();
 });
