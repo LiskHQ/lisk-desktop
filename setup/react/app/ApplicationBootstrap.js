@@ -85,7 +85,9 @@ const ApplicationBootstrap = ({ children }) => {
     <ApplicationBootstrapContext.Provider
       value={{
         hasNetworkError: isError && !blockchainAppsMeta.isFetching,
-        isLoadingNetwork: blockchainAppsMeta.isFetching || networkStatus.isLoading,
+        isLoadingNetwork:
+          (blockchainAppsMeta.isFetching && !blockchainAppsMeta.data) ||
+          (networkStatus.isFetching && !networkStatus.data),
         error: networkStatus.error || blockchainAppsMeta.error,
         refetchNetwork: blockchainAppsMeta.refetch,
       }}

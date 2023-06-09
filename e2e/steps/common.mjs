@@ -43,6 +43,7 @@ Then('button with text {string} should be disabled', async function (textContent
   await expect(this.page.getByText(textContent, { exact: true })).toBeDisabled();
 });
 
+// eslint-disable-next-line max-statements
 Given('I fill in mnemonic phrases {string}', async function (passPhrase) {
   const phrases = passPhrase.split(' ');
 
