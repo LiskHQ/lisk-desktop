@@ -46,7 +46,6 @@ const App = ({ history, hasNetworkError, refetchNetwork, error, isLoadingNetwork
   }, []);
 
   const AppContent = () => {
-    console.log('-----', isLoadingNetwork, hasNetworkError);
     if (isLoadingNetwork) return <PageLoader />;
 
     return hasNetworkError ? (

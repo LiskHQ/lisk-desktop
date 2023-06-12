@@ -7,10 +7,6 @@ Given('I navigate to page {string}', { timeout: 160 * 1000 }, async function (pa
   await this.openUrl(routes[pageName]);
 });
 
-Given('I wait for {string}', async function (waitTime) {
-  await this.page.waitFor(+waitTime);
-});
-
 Given('I click on a button with text {string}', async function (buttonText) {
   await this.page.getByText(buttonText, { exact: true }).click();
 });
@@ -21,6 +17,21 @@ Given('I click on a button with testId {string}', async function (testId) {
 
 Given('I click on text {string}', async function (text) {
   await this.page.getByText(text).click();
+});
+
+Given('I wait for {string}', async (timeout) => {
+  const [time, unit] = timeout.match(/(^\d+)|(seconds?|minutes?)/g);
+  const unitMultiplier = {
+    second: 1000,
+    minutes: 3600000,
+  };
+
+  if (!unit) {
+    throw new Error('Invalid timeout unit provided. Unit can be either seconds or minutes');
+  }
+
+  const unitKey = unit.replace(/s$/, '');
+  await new Promise((res) => setTimeout(res, +time * unitMultiplier[unitKey]));
 });
 
 Then('I should see {string}', async function (textContent) {
