@@ -1,8 +1,10 @@
 import { renderHook, act } from '@testing-library/react-hooks';
+import * as authQueries from 'src/modules/auth/hooks/queries/useAuth';
 import * as transactionsQueries from '@transaction/hooks/queries/useTransactions';
 import * as validatorQueries from '@pos/validator/hooks/queries/useValidators';
 import * as blockQueries from '@block/hooks/queries/useBlocks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { useAuth } from 'src/modules/auth/hooks/queries/useAuth';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useTransactions } from '@transaction/hooks/queries';
@@ -11,6 +13,7 @@ import { useSearch } from './useSearch';
 
 jest.useRealTimers();
 jest.spyOn(blockQueries, 'useBlocks');
+jest.spyOn(authQueries, 'useAuth');
 jest.spyOn(transactionsQueries, 'useTransactions');
 jest.spyOn(validatorQueries, 'useValidators');
 
@@ -80,7 +83,7 @@ describe('useSearch hook', () => {
     renderHook(() => useSearch(search), { wrapper });
     expect(useTransactions).toBeCalledWith(expect.objectContaining(defaultOptions));
     expect(useBlocks).toBeCalledWith(expect.objectContaining(defaultOptions));
-    expect(useValidators).toBeCalledWith(expect.objectContaining(addressesOptions(search)));
+    expect(useAuth).toBeCalledWith(expect.objectContaining(addressesOptions(search)));
   });
 
   it('should call fetch transactions api for valid search', async () => {

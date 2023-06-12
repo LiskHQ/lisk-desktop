@@ -392,6 +392,7 @@ const recursiveRender = (Component, props, providers) =>
  * @param {Object} props - Set of props to be passed to the component
  * @param {Object} [config] - Set of configurations for the render process
  * @param {String} [config.renderType] - Render type for the render process based on library. Could be render or mount
+ * @param {Object} [config.historyInfo] - Browser history info for the render process
  * @param {Boolean} [config.queryClient] - QueryClient configuration for the render process
  * @param {Class} [config.queryClientInfo] - QueryClient data for the render process
  * @param {Boolean} [config.store] - Redux store configuration for the render process

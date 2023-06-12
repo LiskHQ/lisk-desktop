@@ -69,7 +69,10 @@ const SendForm = (props) => {
     token
   );
   const [recipient, setRecipientField] = useRecipientField(
-    getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
+    getInitialRecipient(
+      props.prevState?.formProps,
+      props.initialValue?.address ?? props.initialValue?.recipient
+    )
   );
   const { isAccountInitialized, initializationFees } = useGetInitializationFees({
     address: recipient.value,

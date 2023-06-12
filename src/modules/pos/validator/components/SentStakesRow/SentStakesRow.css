@@ -19,6 +19,10 @@
     color: var(--color-content-light);
     font-size: var(--paragraph-font-size-s);
     font-weight: var(--font-weight-normal);
+
+    & a {
+      font-weight: var(--font-weight-normal);
+    }
   }
 
   &:hover .pinWrapper {
