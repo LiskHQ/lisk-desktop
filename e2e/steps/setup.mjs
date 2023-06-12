@@ -11,7 +11,7 @@ class CustomWorld {
     const context = await browser.newContext();
 
     this.page = await context.newPage();
-
+    this.page.waitForTimeout(7000);
     await this.page.goto(`${this.pageBaseUrl}${path}`);
   }
 }

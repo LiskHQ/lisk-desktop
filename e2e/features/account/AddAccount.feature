@@ -101,6 +101,14 @@ Feature: AddAccount
 
     Scenario: Add account by file with a malformed encrypted account
         Given I click on a button with text "Restore from backup"
+        Then I should be redirected to route: "account/add/by-file"
+        And I should see "Add your account"
+        And I should see "Restore your encrypted secret recovery phrase."
+        And I should see "Please drag and drop the JSON file from your device."
+        And button with text 'Continue' should be disabled
+        Given I click on a button with text "Go back"
+        Then I should be redirected to route: "account/add"
+        Given I click on a button with text "Restore from backup"
         And I upload from file "encrypted_json" with json content:
             """
             {

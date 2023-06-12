@@ -49,7 +49,7 @@ Given('I fill in mnemonic phrases {string}', async function (passPhrase) {
 
   for (let index = 0; index < phrases.length; index++) {
     // eslint-disable-next-line no-await-in-loop
-    await this.page.getByTestId(`recovery-${index}`).fill(phrases[index]);
+    await this.page.getByTestId(`recovery-${index}`).type(phrases[index]);
   }
 });
 
