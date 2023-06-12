@@ -20,7 +20,7 @@ Given('I click on text {string}', async function (text) {
 });
 
 Given('I wait for {string}', async (timeout) => {
-  const [time, unit] = timeout.match(/(^\d+)|(seconds?|minutes?)/g);
+  const [time, unit] = timeout.match(/(^\d+)\s|(seconds?|minutes?)/g);
   const unitMultiplier = {
     second: 1000,
     minutes: 3600000,
@@ -29,7 +29,6 @@ Given('I wait for {string}', async (timeout) => {
   if (!unit) {
     throw new Error('Invalid timeout unit provided. Unit can be either seconds or minutes');
   }
-
   const unitKey = unit.replace(/s$/, '');
   await new Promise((res) => setTimeout(res, +time * unitMultiplier[unitKey]));
 });
