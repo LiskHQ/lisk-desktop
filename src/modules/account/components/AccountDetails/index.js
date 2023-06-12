@@ -27,10 +27,10 @@ const AccountDetails = () => {
   }, []);
 
   function renderComponent() {
-    const isFistAccount = isEmpty(currentAccount) && accounts.length === 0;
+    const isFirstAccount = isEmpty(currentAccount) && accounts.length === 0;
     const hasAccount = isEmpty(currentAccount) && accounts.length > 0;
 
-    if (isFistAccount) {
+    if (isFirstAccount) {
       return <WelcomeView />;
     }
     if (hasAccount) {

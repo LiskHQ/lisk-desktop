@@ -40,7 +40,7 @@ export default function AccountOverview({ address: searchAddress }) {
     active: activeTab,
     onClick: ({ value }) => setActiveTab(value),
   };
-  const userAddress = searchAddress ?? currentAddress;
+  const accountAddress = searchAddress ?? currentAddress;
 
   return (
     <section>
@@ -56,9 +56,9 @@ export default function AccountOverview({ address: searchAddress }) {
         </BoxHeader>
         <BoxContent className={styles.content}>
           {activeTab === 'transactions' ? (
-            <Transactions address={userAddress} />
+            <Transactions address={accountAddress} />
           ) : (
-            <TransactionEvents isWallet hasFilter address={userAddress} />
+            <TransactionEvents isWallet hasFilter address={accountAddress} />
           )}
         </BoxContent>
       </Box>

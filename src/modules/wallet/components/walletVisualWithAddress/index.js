@@ -20,7 +20,7 @@ import styles from './walletVisualWithAddress.css';
 const AccountName = ({ isMultisig, address, name }) => (
   <div className={styles.accountName}>
     <p className="accountName">{name}</p>
-    {isMultisig && (
+    {isMultisig && name && (
       <DialogLink component="multisigAccountDetails" data={{ address }}>
         <Icon name="multisigKeys" />
       </DialogLink>
