@@ -67,8 +67,8 @@ const SearchBar = ({ className, disabled }) => {
   const onSelectBlock = (value) => onSelectedRow('block', value);
 
   const onKeyPress = () => {
-    if (addresses.length) {
-      onSelectAccount(addresses[rowItemIndex].address);
+    if (Object.keys(addresses).length) {
+      onSelectAccount(addresses.address);
     }
     if (validators.length) {
       onSelectValidatorAccount(validators[rowItemIndex]?.address);
@@ -82,7 +82,8 @@ const SearchBar = ({ className, disabled }) => {
   };
 
   const onHandleKeyPress = (e) => {
-    const suggestionsLength = addresses.length || validators.length || transactions.length;
+    const suggestionsLength =
+      Object.keys(addresses).length || validators.length || transactions.length;
 
     if (suggestionsLength >= 1) {
       switch (e.keyCode) {
@@ -107,7 +108,7 @@ const SearchBar = ({ className, disabled }) => {
   const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
   const isEmptyResults =
     !isLoading &&
-    !addresses.length &&
+    !Object.keys(addresses).length &&
     !validators.length &&
     !transactions.length &&
     !blocks.length &&
@@ -142,14 +143,8 @@ const SearchBar = ({ className, disabled }) => {
       {feedback && (
         <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span>
       )}
-      {!!addresses.length && (
-        <Wallet
-          wallets={addresses}
-          onSelectedRow={onSelectAccount}
-          rowItemIndex={rowItemIndex}
-          updateRowItemIndex={updateRowItemIndex}
-          t={t}
-        />
+      {!!Object.keys(addresses).length && (
+        <Wallet wallet={addresses} onSelectedRow={onSelectAccount} t={t} />
       )}
       {!!validators.length && (
         <Validators
