@@ -71,7 +71,7 @@ const SendForm = (props) => {
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(
       props.prevState?.formProps,
-      props.initialValue.address ?? props.initialValue?.recipient
+      props.initialValue?.address ?? props.initialValue?.recipient
     )
   );
   const { isAccountInitialized, initializationFees } = useGetInitializationFees({
