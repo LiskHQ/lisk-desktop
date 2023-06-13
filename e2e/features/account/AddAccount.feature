@@ -23,7 +23,7 @@ Feature: AddAccount
         Given I click on a button with text "Go back"
         Then I should be redirected to route: "account/add"
         Given I click on a button with text "Secret recovery phrase"
-        And I wait for "4 seconds"
+        And I wait for "2 seconds"
         And I fill in mnemonic phrases 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready'
         And I click on a button with text "Continue to set password"
         Then I should see "Set up your account password"
@@ -41,7 +41,7 @@ Feature: AddAccount
         Given I click on a button with text "Secret recovery phrase"
         And I click on text "Enable access to legacy Lisk accounts"
         Then custom derivation path input field should be "disabled"
-        And I wait for "4 seconds"
+        And I wait for "2 seconds"
         And I fill in mnemonic phrases 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready'
         And I click on a button with text "Continue to set password"
         Then I should see "Set up your account password"
@@ -65,7 +65,7 @@ Feature: AddAccount
         Given I click on a button with text "Go back"
         Then I should be redirected to route: "account/add"
         Given I click on a button with text "Restore from backup"
-        And I wait for "4 seconds"
+        And I wait for "2 seconds"
         And I upload from file "encrypted_json" with json content:
             """
             {
@@ -104,7 +104,7 @@ Feature: AddAccount
 
     Scenario: Add account by file with a malformed encrypted account
         Given I click on a button with text "Restore from backup"
-        And I wait for "4 seconds"
+        And I wait for "2 seconds"
         And I upload from file "encrypted_json" with json content:
             """
             {
