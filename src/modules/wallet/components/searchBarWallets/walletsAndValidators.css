@@ -63,6 +63,7 @@
 
   & .tag {
     @mixin contentNormal bold;
+    white-space: nowrap;
 
     background: var(--color-white-smoke);
     color: var(--color-ink-blue);
