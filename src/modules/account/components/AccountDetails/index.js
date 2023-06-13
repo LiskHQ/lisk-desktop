@@ -18,19 +18,19 @@ const AccountDetails = () => {
   const [currentAccount] = useCurrentAccount();
   const { accounts } = useAccounts();
   const { t } = useTranslation();
+  const params = parseSearchParams(history.location.search);
 
   useEffect(() => {
-    const params = parseSearchParams(history.location.search);
     if (params.recipient !== undefined) {
       addSearchParamsToUrl(history, { modal: 'send' });
     }
   }, []);
 
   function renderComponent() {
-    const isFistAccount = isEmpty(currentAccount) && accounts.length === 0;
+    const isFirstAccount = isEmpty(currentAccount) && accounts.length === 0;
     const hasAccount = isEmpty(currentAccount) && accounts.length > 0;
 
-    if (isFistAccount) {
+    if (isFirstAccount) {
       return <WelcomeView />;
     }
     if (hasAccount) {
@@ -50,7 +50,7 @@ const AccountDetails = () => {
         </section>
       );
     }
-    return <AccountOverview />;
+    return <AccountOverview address={params?.address} />;
   }
 
   return renderComponent();

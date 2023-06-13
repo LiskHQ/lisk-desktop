@@ -44,7 +44,7 @@ const ExplorerLayout = ({ history }) => {
           {activeTab === 'transactions' ? (
             <Transactions pending={[]} address={address} />
           ) : (
-            <TransactionEvents address={address} />
+            <TransactionEvents isWallet address={address} />
           )}
         </BoxContent>
       </Box>
