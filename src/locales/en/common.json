@@ -799,6 +799,7 @@
   "will be available to unlock in": "will be available to unlock in",
   "will be available to unlock in 1 month.": "will be available to unlock in 1 month.",
   "will be available to unlock in {{unlockTime}}h.": "will be available to unlock in {{unlockTime}}h.",
+  "will be available to unlock once blocks has been certified": "will be available to unlock once blocks has been certified",
   "will be locked for staking.": "will be locked for staking.",
   "with message {{message}}": "with message {{message}}",
   "{{ blocks }} Blocks": "{{ blocks }} Blocks",

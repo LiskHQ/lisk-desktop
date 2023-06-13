@@ -5,7 +5,6 @@ import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleComma
 import { useTokenBalances } from '@token/fungible/hooks/queries';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
-import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import TxComposer from '@transaction/components/TxComposer';
 import getUnlockButtonTitle from '../../utils/getUnlockButtonTitle';
 import useUnlockableCalculator from '../../hooks/useUnlockableCalculator';
@@ -15,7 +14,6 @@ import { usePosConstants } from '../../hooks/queries';
 
 const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
-  const { data: latestBlock } = useLatestBlock();
   const { lockedPendingUnlocks, sentStakesAmount, unlockedAmount } = useUnlockableCalculator();
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
   const { data: tokens } = useTokenBalances({
@@ -62,7 +60,6 @@ const UnlockBalanceForm = ({ nextStep }) => {
             <BalanceTable
               sentStakesAmount={sentStakesAmount}
               unlockedAmount={unlockedAmount}
-              currentBlockHeight={latestBlock?.height ?? 0}
               lockedPendingUnlocks={lockedPendingUnlocks}
               token={posToken}
             />
