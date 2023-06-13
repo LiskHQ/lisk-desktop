@@ -96,9 +96,10 @@ export const transactionBroadcasted =
     const moduleCommand = joinModuleAndCommand(transaction);
     const paramsSchema = moduleCommandSchemas[moduleCommand];
     let broadcastResult;
-    const dryRunResult = await dryRun({ transaction, serviceUrl, paramsSchema });
 
-    if (dryRunResult.data?.result === 1) {
+    const [error, dryRunResult] = await to(dryRun({ transaction, serviceUrl, paramsSchema }));
+
+    if (dryRunResult?.data?.result === 1) {
       broadcastResult = await broadcast({ transaction, serviceUrl, moduleCommandSchemas });
 
       if (!broadcastResult.data?.error) {
@@ -115,27 +116,37 @@ export const transactionBroadcasted =
       // https://github.com/LiskHQ/lisk-desktop/issues/4698 should handle this logic
     }
 
-    if (dryRunResult.data?.result === -1) {
+    if (error) {
       dispatch({
         type: actionTypes.broadcastedTransactionError,
         data: {
-          error: dryRunResult.data?.errorMessage,
+          error: error.message,
           transaction,
         },
       });
-    }
+    } else {
+      if (dryRunResult.data?.result === -1) {
+        dispatch({
+          type: actionTypes.broadcastedTransactionError,
+          data: {
+            error: dryRunResult.data?.errorMessage,
+            transaction,
+          },
+        });
+      }
 
-    if (dryRunResult.data?.result === 0) {
-      // @TODO: Prepare error message by parsing the events based on each transaction type
-      // https://github.com/LiskHQ/lisk-desktop/issues/4698 should resolve all the dry run related logic along with feedback
-      const temporaryError = dryRunResult.data?.events.map((e) => e.name).join(', ');
-      dispatch({
-        type: actionTypes.broadcastedTransactionError,
-        data: {
-          error: temporaryError,
-          transaction,
-        },
-      });
+      if (dryRunResult.data?.result === 0) {
+        // @TODO: Prepare error message by parsing the events based on each transaction type
+        // https://github.com/LiskHQ/lisk-desktop/issues/4698 should resolve all the dry run related logic along with feedback
+        const temporaryError = dryRunResult.data?.events.map((e) => e.name).join(', ');
+        dispatch({
+          type: actionTypes.broadcastedTransactionError,
+          data: {
+            error: temporaryError,
+            transaction,
+          },
+        });
+      }
     }
 
     return false;
