@@ -14,7 +14,7 @@ const UnlockBalanceView = () => {
   }, []);
 
   return (
-    <Dialog hasClose size={isStepTxSignatureCollector && 'sm'}>
+    <Dialog hasClose size={isStepTxSignatureCollector && 'sm'} className={styles.wrapper}>
       <MultiStep key="unlockBalance" onChange={onMultiStepChange} className={styles.wrapper}>
         <Form />
         <Summary />
