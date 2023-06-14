@@ -5,3 +5,9 @@ export const FEE_TYPES = {
   ESCROW_ACCOUNT_INITIALIZATION: 'escrowAccountInitialization',
   VALIDATOR_REGISTRATION: 'validatorRegistration',
 };
+
+export const TransactionExecutionResult = {
+  INVALID: -1,
+  FAIL: 0,
+  OK: 1,
+};
