@@ -22,11 +22,14 @@ const SearchBar = ({ className, disabled }) => {
   const [rowItemIndex, setRowIndex] = useState(0);
   const searchBarRef = useRef();
   const searchBarContainerRef = useRef();
-  const { data: tokens } = useTokenBalances();
+  const { data: tokens } = useTokenBalances({ options: { enabled: !disabled } });
   const token = tokens?.data?.[0] || {};
 
   const debouncedSearchTerm = useDebounce(searchTextValue, 500);
-  const { addresses, validators, transactions, blocks, isLoading } = useSearch(debouncedSearchTerm);
+  const { addresses, validators, transactions, blocks, isLoading } = useSearch(
+    debouncedSearchTerm,
+    { disabled }
+  );
 
   const { t } = useTranslation();
 

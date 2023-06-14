@@ -10,12 +10,12 @@ const NetworkError = ({ onRetry, error }) => {
   const errorMessage = {
     message: error.message,
     endpoint: `${error.config.baseURL}${error.config.url}`,
-    requestPayload: error.request.data,
+    requestPayload: error.request?.data,
     method: error.config.method,
     requestHeaders: error.config.headers,
-    responsePayload: error.response.data,
-    responseStatusCode: error.response.status,
-    responseStatusText: error.response.statusText,
+    responsePayload: error.response?.data,
+    responseStatusCode: error.response?.status,
+    responseStatusText: error.response?.statusText,
   };
 
   const mailReference = useMemo(() => {

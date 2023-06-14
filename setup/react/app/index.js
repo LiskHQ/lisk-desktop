@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 // This is covered by e2e tests
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { settingsRetrieved } from 'src/modules/settings/store/actions';
@@ -23,6 +23,7 @@ import PageLoader from 'src/modules/common/components/pageLoader';
 import MainRouter from './MainRouter';
 import './variables.css';
 import styles from './app.css';
+import { ApplicationBootstrapContext } from './ApplicationBootstrap';
 
 if (MOCK_SERVICE_WORKER) {
   const { worker } = require('src/service/mock/runtime');
@@ -31,7 +32,7 @@ if (MOCK_SERVICE_WORKER) {
 }
 
 // eslint-disable-next-line max-statements
-const App = ({ history, hasNetworkError, refetchNetwork, error, isLoadingNetwork }) => {
+const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
@@ -46,6 +47,10 @@ const App = ({ history, hasNetworkError, refetchNetwork, error, isLoadingNetwork
   }, []);
 
   const AppContent = () => {
+    const { hasNetworkError, refetchNetwork, error, isLoadingNetwork } = useContext(
+      ApplicationBootstrapContext
+    );
+
     if (isLoadingNetwork) return <PageLoader />;
 
     return hasNetworkError ? (

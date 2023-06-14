@@ -10,7 +10,7 @@ function getIsLoading(queryRes) {
 }
 
 // eslint-disable-next-line complexity, max-statements
-export const useSearch = (search = '') => {
+export const useSearch = (search = '', { disabled }) => {
   const isAddress = validateAddress(search) === 0;
   const isTxId = regex.transactionId.test(search);
   const isBlockHeight = regex.blockHeight.test(search);
@@ -18,22 +18,22 @@ export const useSearch = (search = '') => {
 
   const addresses = useAuth({
     config: { params: { address: search } },
-    options: { enabled: isAddress },
+    options: { enabled: isAddress && !disabled },
   });
 
   const validators = useValidators({
     config: { params: { search } },
-    options: { enabled: isValidator },
+    options: { enabled: isValidator && !disabled },
   });
 
   const transactions = useTransactions({
     config: { params: { transactionID: search } },
-    options: { enabled: isTxId },
+    options: { enabled: isTxId && !disabled },
   });
 
   const blocks = useBlocks({
     config: { params: { height: search } },
-    options: { enabled: isBlockHeight },
+    options: { enabled: isBlockHeight && !disabled },
   });
 
   const isLoading =
