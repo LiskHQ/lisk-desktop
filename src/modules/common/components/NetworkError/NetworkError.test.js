@@ -6,7 +6,13 @@ describe('ChangeCommissionDialog', () => {
   const mockHandleRetry = jest.fn();
 
   it('should render properly', () => {
-    render(<NetworkError onRetry={mockHandleRetry} />);
+    const error = {
+      message: '',
+      config: {},
+      request: {},
+      response: {},
+    };
+    render(<NetworkError onRetry={mockHandleRetry} error={error} />);
 
     expect(screen.getByAltText('networkErrorIllustration')).toBeTruthy();
     expect(screen.getByText('Try again')).toBeTruthy();
