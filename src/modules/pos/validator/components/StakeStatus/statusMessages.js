@@ -21,13 +21,13 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
         {regularUnlockable > BigInt(0) ? (
           <>
             <LiskAmountFormatted val={regularUnlockable.toString()} token={token} />{' '}
-            <span>{t('Your tokens will be available to unlock when the locking period ends')}</span>
+            <span>{t('Your tokens will be available to unlock when the locking period ends.')}</span>
           </>
         ) : null}
         {selfUnstakeUnlockable > 0 ? (
           <>
             <LiskAmountFormatted val={selfUnstakeUnlockable} token={token} />{' '}
-            <span>{t('Your tokens will be available to unlock when the locking period ends')}</span>
+            <span>{t('Your tokens will be available to unlock when the locking period ends.')}</span>
           </>
         ) : null}
       </>
@@ -47,7 +47,7 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
         <span>{t('You have now locked')}</span> <LiskAmountFormatted val={locked} token={token} />{' '}
         <span>{t('for staking and may unlock')}</span>{' '}
         <LiskAmountFormatted val={unlockable} token={token} />{' '}
-        <span>{t('when the locking period ends,')}</span>
+        <span>{t('when the locking period ends.')}</span>
       </>
     );
   }
