@@ -27,7 +27,7 @@ const DialogAddNetwork = () => {
 
   function onSubmit(values) {
     setSuccessText('');
-    const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1')
+    const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
     const updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
     setValue(updatedCustomNetworks);
@@ -62,7 +62,9 @@ const DialogAddNetwork = () => {
             <Input
               size="l"
               label="Service URL"
-              placeholder={t('Enter service URL, e.g. https://service.lisk.com or localhost:9901')}
+              placeholder={t(
+                'Enter service URL, e.g. https://service.lisk.com or http://localhost:9901'
+              )}
               feedback={errors.serviceUrl?.message}
               status={errors.serviceUrl?.message ? 'error' : undefined}
               {...register('serviceUrl', {
