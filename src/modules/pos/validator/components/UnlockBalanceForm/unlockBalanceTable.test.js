@@ -4,7 +4,7 @@ import {
   calculateUnlockedAmount,
   getLockedPendingUnlocks,
 } from '@wallet/utils/account';
-import { mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
+import { generateUnlock, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 import { useNetworkStatus } from '@network/hooks/queries';
@@ -56,5 +56,22 @@ describe('unlockBalanceTable', () => {
   it('should not show locked-balance if 0', () => {
     wrapper = mountWithRouter(BalanceTable, { ...props, sentStakesAmount: 0 });
     expect(wrapper.find('.locked-balance')).toHaveLength(0);
+  });
+
+  it('should show unlock date is currently unknown for invalid unlock date', () => {
+    wrapper = mountWithRouter(BalanceTable, {
+      ...props,
+      lockedPendingUnlocks: [generateUnlock(1)],
+    });
+    expect(wrapper.find('.unlocking-balance').text()).toContain('unlock date is currently unknown');
+  });
+
+  it('should show unlock date is currently unknown for invalid unlock date', () => {
+    const futureDate = Math.floor(new Date('2111.08.10').getTime() / 1000);
+    wrapper = mountWithRouter(BalanceTable, {
+      ...props,
+      lockedPendingUnlocks: [generateUnlock(1, futureDate)],
+    });
+    expect(wrapper.find('.unlocking-balance').text()).toContain('will be available to unlock in');
   });
 });
