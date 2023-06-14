@@ -7,11 +7,15 @@ import usePosToken from '../../hooks/usePosToken';
 const getUnlockText = (lockedPendingUnlock, t) => {
   const { expectedUnlockTime } = lockedPendingUnlock;
 
-  const dateString = moment.unix(expectedUnlockTime);
-  if (dateString.isBefore()) {
+  const momentDate = moment.unix(expectedUnlockTime);
+  if (!momentDate.isValid()) {
+    return 'unlock date is currently unknown';
+  }
+
+  if (momentDate.isBefore()) {
     return t('will be available to unlock once blocks has been certified');
   }
-  return `${t('will be available to unlock in')} ${moment().to(dateString, true)}`;
+  return `${t('will be available to unlock in')} ${moment().to(momentDate, true)}`;
 };
 
 const UnlockingListItem = ({ lockedPendingUnlock, t, token }) => (
