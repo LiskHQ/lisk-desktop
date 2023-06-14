@@ -16,17 +16,20 @@ import styles from './SearchBar.css';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useSearch } from '../../hooks/useSearch';
 
-const SearchBar = ({ className }) => {
+const SearchBar = ({ className, disabled }) => {
   const history = useHistory();
   const [searchTextValue, setSearchTextValue] = useState('');
   const [rowItemIndex, setRowIndex] = useState(0);
   const searchBarRef = useRef();
   const searchBarContainerRef = useRef();
-  const { data: tokens } = useTokenBalances();
+  const { data: tokens } = useTokenBalances({ options: { enabled: !disabled } });
   const token = tokens?.data?.[0] || {};
 
   const debouncedSearchTerm = useDebounce(searchTextValue, 500);
-  const { addresses, validators, transactions, blocks, isLoading } = useSearch(debouncedSearchTerm);
+  const { addresses, validators, transactions, blocks, isLoading } = useSearch(
+    debouncedSearchTerm,
+    { disabled }
+  );
 
   const { t } = useTranslation();
 
@@ -137,6 +140,7 @@ const SearchBar = ({ className }) => {
           placeholder={t('Search within the network...')}
           onKeyDown={onHandleKeyPress}
           isLoading={isLoading}
+          disabled={disabled}
         />
       </div>
       {feedback && (

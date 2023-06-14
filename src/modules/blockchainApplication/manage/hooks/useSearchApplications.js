@@ -40,6 +40,7 @@ export const useSearchApplications = () => {
       }));
       // Ensure URL check is up-to-date including while pasting input
       // If URL, ping URL and if successful, then use the URL to get application information
+
       if (isUrl) {
         setUrl({ ...url, isUrl, isSearchLoading: true });
       }

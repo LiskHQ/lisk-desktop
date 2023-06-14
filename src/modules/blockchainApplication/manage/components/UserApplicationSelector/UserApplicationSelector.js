@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useApplicationManagement } from '@blockchainApplication/manage/hooks';
+import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ApplicationManagementRow from '@blockchainApplication/manage/components/ApplicationManagementRow';
 import { OutlineButton } from '@theme/buttons';
@@ -14,30 +15,39 @@ const UserApplicationSelector = ({ className }) => {
   const history = useHistory();
   const { t } = useTranslation();
   const { applications, isLoading } = useApplicationManagement();
+  const { hasNetworkError, isLoadingNetwork } = useContext(ApplicationBootstrapContext);
 
   const handleAddApplication = useCallback(() => {
     addSearchParamsToUrl(history, { modal: 'addApplicationList' });
   }, []);
+
+  const Content = () => {
+    if (hasNetworkError || isLoadingNetwork) return null;
+
+    if (isLoading) {
+      return (
+        <div className={styles.skeletonLoader}>
+          <Skeleton theme="circle" radius={16} />
+          <Skeleton height="15px" width="100px" />
+        </div>
+      );
+    }
+
+    return applications.map((application) => (
+      <ApplicationManagementRow
+        className={styles.applicationManagementRowProp}
+        key={`application-list-${application.chainID}`}
+        application={application}
+      />
+    ));
+  };
 
   return (
     <div className={classNames(styles.UserApplicationSelector, className)}>
       <label className={styles.label}>{t('Switch application')}</label>
       <div className={styles.applicationListContainer}>
         <div className={styles.listWrapper}>
-          {isLoading ? (
-            <div className={styles.skeletonLoader}>
-              <Skeleton theme="circle" radius={16} />
-              <Skeleton height="15px" width="100px" />
-            </div>
-          ) : (
-            applications.map((application) => (
-              <ApplicationManagementRow
-                className={styles.applicationManagementRowProp}
-                key={`application-list-${application.chainID}`}
-                application={application}
-              />
-            ))
-          )}
+          <Content />
         </div>
       </div>
       <OutlineButton
