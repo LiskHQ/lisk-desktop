@@ -10,7 +10,7 @@ function getIsLoading(queryRes) {
 }
 
 // eslint-disable-next-line complexity, max-statements
-export const useSearch = (search = '', { disabled }) => {
+export const useSearch = (search = '', { disabled } = {}) => {
   const isAddress = validateAddress(search) === 0;
   const isTxId = regex.transactionId.test(search);
   const isBlockHeight = regex.blockHeight.test(search);

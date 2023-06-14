@@ -69,6 +69,13 @@ describe('useSearch hook', () => {
     expect(useValidators).toBeCalledWith(expect.objectContaining(defaultOptions));
   });
 
+  it('should not call api for search value if disable option is true', () => {
+    renderHook(() => useSearch(SEARCH.MIN_LENGTH, { disabled: true }), { wrapper });
+    expect(useTransactions).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useBlocks).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useValidators).toBeCalledWith(expect.objectContaining(defaultOptions));
+  });
+
   it('should call fetch validators api for valid search', async () => {
     const search = SEARCH.VALIDATOR;
     const { result } = renderHook(() => useSearch(search), { wrapper });
