@@ -81,8 +81,6 @@ const ApplicationBootstrap = ({ children }) => {
 
   useLedgerDeviceListener();
 
-  if (isFirstTimeLoading && !isError) return null;
-
   return (
     <ApplicationBootstrapContext.Provider
       value={{
