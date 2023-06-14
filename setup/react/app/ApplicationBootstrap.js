@@ -19,7 +19,7 @@ export const ApplicationBootstrapContext = createContext({
   refetchNetwork: () => {},
 });
 
-function ApplicationBootstrap({ children }) {
+const ApplicationBootstrap = ({ children }) => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
   const [isFirstTimeLoading, setIsFirstTimeLoading] = useState(true);
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
@@ -97,6 +97,6 @@ function ApplicationBootstrap({ children }) {
       {children}
     </ApplicationBootstrapContext.Provider>
   );
-}
+};
 
 export default ApplicationBootstrap;

@@ -23,7 +23,7 @@ Given('I wait for {string}', async (timeout) => {
   const [time, unit] = timeout.match(/(^\d+)\s|(seconds?|minutes?)/g);
   const unitMultiplier = {
     second: 1000,
-    minutes: 3600000,
+    minute: 3600000,
   };
 
   if (!unit) {
