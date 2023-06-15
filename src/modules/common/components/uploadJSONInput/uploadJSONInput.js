@@ -42,7 +42,7 @@ const UploadJSONInput = ({
   });
 
   return (
-    <div {...getRootProps()}>
+    <div {...getRootProps({ onClick: (evt) => evt.preventDefault() })}>
       <p className={styles.fileInputLabel}>
         {prefixLabel}
         <label className={styles.fileInputBtn}>
