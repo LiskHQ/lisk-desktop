@@ -1,6 +1,5 @@
 // istanbul ignore file
 import React from 'react';
-import { ROUND_LENGTH } from '@pos/validator/consts';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from 'src/theme/box';
