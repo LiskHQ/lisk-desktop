@@ -9,7 +9,7 @@ import BoxEmptyState from 'src/theme/box/emptyState';
 import { useTransactions } from 'src/modules/transaction/hooks/queries';
 import { DoughnutChart } from 'src/modules/common/components/charts';
 import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
-import { useValidators } from '../../hooks/queries';
+import { useValidators, useGenerators } from '../../hooks/queries';
 import NumericInfo from './NumericInfo';
 import Registrations from './Registrations';
 import styles from './Overview.css';
@@ -17,15 +17,17 @@ import styles from './Overview.css';
 const Overview = ({ totalBlocks, t }) => {
   const colorPalette = getColorPalette(useTheme());
   const { data: validators } = useValidators({ config: { params: { limit: 1 } } });
+  const { data: generatorsData } = useGenerators({ config: { params: { limit: 103 } } });
   const { data: transactions } = useTransactions({ config: { params: { limit: 1 } } });
   const validatorsCount = validators?.meta.total ?? 0;
+  const generatorsCount = generatorsData?.meta.total ?? 0;
   const transactionsCount = transactions?.meta.total ?? 0;
   const doughnutChartData = {
-    labels: [t('Standby validators'), t('Active validators')],
+    labels: [t('Active validators'), t('Standby validators')],
     datasets: [
       {
         label: 'validators',
-        data: [Math.max(0, validatorsCount - ROUND_LENGTH), ROUND_LENGTH],
+        data: [generatorsCount, validatorsCount - generatorsCount],
       },
     ],
   };
@@ -75,8 +77,8 @@ const Overview = ({ totalBlocks, t }) => {
                 </div>
                 <div className="hideOnLargeViewPort">
                   <GuideTooltip>
-                    <GuideTooltipItem color={colorPalette[0]} label={t('Standby validators')} />
-                    <GuideTooltipItem color={colorPalette[1]} label={t('Active validators')} />
+                    <GuideTooltipItem color={colorPalette[0]} label={t('Active validators')} />
+                    <GuideTooltipItem color={colorPalette[1]} label={t('Standby validators')} />
                   </GuideTooltip>
                 </div>
               </div>
