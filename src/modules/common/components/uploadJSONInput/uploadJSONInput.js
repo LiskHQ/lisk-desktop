@@ -39,6 +39,9 @@ const UploadJSONInput = ({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onInputChange,
+    accept: {
+      'application/JSON': ['.json'],
+    },
   });
 
   return (
