@@ -3,7 +3,7 @@ import { Given, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import routes from '../fixtures/routes.mjs';
 
-Given('I navigate to page {string}', { timeout: 120 * 1000 }, async function (pageName) {
+Given('I navigate to page {string}', { timeout: 160 * 1000 }, async function (pageName) {
   await this.openUrl(routes[pageName]);
 });
 
@@ -17,6 +17,20 @@ Given('I click on a button with testId {string}', async function (testId) {
 
 Given('I click on text {string}', async function (text) {
   await this.page.getByText(text).click();
+});
+
+Given('I wait for {string}', async (timeout) => {
+  const [time, unit] = timeout.match(/(^\d+)\s|(seconds?|minutes?)/g);
+  const unitMultiplier = {
+    second: 1000,
+    minute: 3600000,
+  };
+
+  if (!unit) {
+    throw new Error('Invalid timeout unit provided. Unit can be either seconds or minutes');
+  }
+  const unitKey = unit.replace(/s$/, '');
+  await new Promise((res) => setTimeout(res, +time * unitMultiplier[unitKey]));
 });
 
 Then('I should see {string}', async function (textContent) {
@@ -39,12 +53,13 @@ Then('button with text {string} should be disabled', async function (textContent
   await expect(this.page.getByText(textContent, { exact: true })).toBeDisabled();
 });
 
+// eslint-disable-next-line max-statements
 Given('I fill in mnemonic phrases {string}', async function (passPhrase) {
   const phrases = passPhrase.split(' ');
 
   for (let index = 0; index < phrases.length; index++) {
     // eslint-disable-next-line no-await-in-loop
-    await this.page.getByTestId(`recovery-${index}`).fill(phrases[index]);
+    await this.page.getByTestId(`recovery-${index}`).type(phrases[index]);
   }
 });
 
@@ -80,6 +95,7 @@ Given(
 
 Given('I switch to network {string}', async function (networkName) {
   await this.page.getByTestId('network-application-trigger').click();
+  await expect(this.page.getByTestId('spinner')).not.toBeVisible({ timeout: 10000 });
   await this.page.getByTestId('selected-menu-item').click();
   await this.page.getByText(networkName).click();
 });

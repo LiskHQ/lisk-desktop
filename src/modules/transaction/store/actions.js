@@ -4,6 +4,7 @@ import { getTransactionSignatureStatus } from '@wallet/components/signMultisigVi
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
+import { TransactionExecutionResult } from '@transaction/constants';
 import actionTypes from './actionTypes';
 import { getTransactions, broadcast, dryRun, signTransaction } from '../api';
 import { joinModuleAndCommand, signMultisigTransaction } from '../utils';
@@ -96,9 +97,10 @@ export const transactionBroadcasted =
     const moduleCommand = joinModuleAndCommand(transaction);
     const paramsSchema = moduleCommandSchemas[moduleCommand];
     let broadcastResult;
-    const dryRunResult = await dryRun({ transaction, serviceUrl, paramsSchema });
 
-    if (dryRunResult.data?.result === 1) {
+    const [error, dryRunResult] = await to(dryRun({ transaction, serviceUrl, paramsSchema }));
+
+    if (dryRunResult?.data?.result === TransactionExecutionResult.OK) {
       broadcastResult = await broadcast({ transaction, serviceUrl, moduleCommandSchemas });
 
       if (!broadcastResult.data?.error) {
@@ -115,28 +117,19 @@ export const transactionBroadcasted =
       // https://github.com/LiskHQ/lisk-desktop/issues/4698 should handle this logic
     }
 
-    if (dryRunResult.data?.result === -1) {
-      dispatch({
-        type: actionTypes.broadcastedTransactionError,
-        data: {
-          error: dryRunResult.data?.errorMessage,
-          transaction,
-        },
-      });
-    }
+    const transactionErrorMessage =
+      error?.message ||
+      (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
+        ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
+        : dryRunResult?.data?.errorMessage);
 
-    if (dryRunResult.data?.result === 0) {
-      // @TODO: Prepare error message by parsing the events based on each transaction type
-      // https://github.com/LiskHQ/lisk-desktop/issues/4698 should resolve all the dry run related logic along with feedback
-      const temporaryError = dryRunResult.data?.events.map((e) => e.name).join(', ');
-      dispatch({
-        type: actionTypes.broadcastedTransactionError,
-        data: {
-          error: temporaryError,
-          transaction,
-        },
-      });
-    }
+    dispatch({
+      type: actionTypes.broadcastedTransactionError,
+      data: {
+        error: transactionErrorMessage,
+        transaction,
+      },
+    });
 
     return false;
   };
