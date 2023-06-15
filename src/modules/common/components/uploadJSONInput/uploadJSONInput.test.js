@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import UploadJSONInput from './index';
 
 describe('Upload JSON input component', () => {
   const props = {
-    label: '',
+    label: 'Restore from JSON file',
     value: null,
     error: '',
     onChange: jest.fn(),
@@ -82,7 +82,7 @@ describe('Upload JSON input component', () => {
 
     render(<UploadJSONInput {...props} />);
 
-    const inputNode = screen.getByRole('button');
+    const inputNode = screen.getByLabelText('Restore from JSON file');
     fireEvent.change(inputNode, { target: { files: [file] } });
 
     expect(inputNode.files[0].name).toBe(fileName);
@@ -97,12 +97,15 @@ describe('Upload JSON input component', () => {
     render(<UploadJSONInput {...props} />);
 
     const invalidJson = '{"result":true, "count":42';
-    const file = new File([invalidJson], 'file.json', { type: 'test/json' });
-    const inputNode = screen.getByRole('button');
-    fireEvent.change(inputNode, { target: { files: [file] } });
+    const file = new File([invalidJson], 'file.json', { type: 'application/json' });
+    const inputNode = screen.getByLabelText('Restore from JSON file');
 
-    const reader = FileReader.mock.instances[0];
-    reader.onload({ target: { result: invalidJson } });
+    await act(async () => {
+      await fireEvent.change(inputNode, { target: { files: [file] } });
+
+      const reader = FileReader.mock.instances[0];
+      reader.onload({ target: { result: invalidJson } });
+    });
 
     expect(props.onError).toHaveBeenCalled();
   });

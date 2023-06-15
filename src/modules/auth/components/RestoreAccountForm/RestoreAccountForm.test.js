@@ -61,8 +61,8 @@ describe('Restore account form component', () => {
     const invalidJson = '{"crypto": {"notCipher": "something"}}';
     const file = new File([invalidJson], 'file.json', { type: 'test/json' });
 
-    act(() => {
-      inputField.simulate('change', { target: { files: [file] } });
+    await act(async () => {
+      await inputField.simulate('change', { target: { files: [file] } });
       const reader = FileReader.mock.instances[0];
       reader.onload({ target: { result: invalidJson } });
     });
