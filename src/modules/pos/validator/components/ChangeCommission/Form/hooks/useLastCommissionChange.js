@@ -6,7 +6,11 @@ import { useNetworkStatus } from '@network/hooks/queries';
 
 export const useLastCommissionChange = () => {
   const { data: posConstants } = usePosConstants();
-  const [{ metadata: { address } = {} }] = useCurrentAccount();
+  const [
+    {
+      metadata: { address },
+    },
+  ] = useCurrentAccount();
   const { data: transactions } = useTransactions({
     config: {
       params: { address, moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission, limit: 1 },
