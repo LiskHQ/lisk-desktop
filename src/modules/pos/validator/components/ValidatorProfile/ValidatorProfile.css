@@ -2,7 +2,16 @@
 
 .detailsContainer,
 .highlightContainer {
-  overflow: hidden;
+  overflow-y: clip;
+
+  .tooltipClassNameProp {
+    padding: 15px;
+    max-width: 166px;
+    border: 1px solid #E1E3EB;
+    box-shadow: 0 2px 4px rgba(6, 22, 48, 0.06);
+    border-radius: 3px;
+    line-height: 120%;
+  }
 
   & h1.heading {
     @mixin headingNormal;
@@ -445,4 +454,11 @@
   border: solid 1px var(--color-edit-button-border);
   background-color: var(--color-edit-button-background);
   cursor: pointer;
+}
+
+.editDisabledIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: initial;
 }
