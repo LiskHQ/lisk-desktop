@@ -36,7 +36,7 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
   });
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
   const { data: tokens } = useTokenBalances({
-    config: { params: { tokenID: posConstants.data?.posTokenID } },
+    config: { params: { tokenID: posConstants?.data?.posTokenID } },
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
