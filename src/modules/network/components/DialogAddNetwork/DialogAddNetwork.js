@@ -56,7 +56,7 @@ const DialogAddNetwork = () => {
               status={errors.name?.message ? 'error' : undefined}
               {...register('name', {
                 required: 'Name is required',
-                pattern: { value: regex.name, message: t('Invalid Network Name') },
+                pattern: { value: regex.networkName, message: t('Invalid Network Name') },
               })}
             />
             <Input
