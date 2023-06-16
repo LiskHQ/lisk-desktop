@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, createEvent } from '@testing-library/react';
 import UploadJSONInput from './index';
 
 describe('Upload JSON input component', () => {
@@ -108,5 +108,19 @@ describe('Upload JSON input component', () => {
     });
 
     expect(props.onError).toHaveBeenCalled();
+  });
+
+  it('should open the file dialog only once on click', async () => {
+    render(<UploadJSONInput {...props} />);
+
+    const mockPreventDefault = jest.fn();
+    const wrapperNode = screen.getByTestId('upload-json-wrapper');
+    const clickEvent = createEvent.click(wrapperNode);
+    Object.assign(clickEvent, { preventDefault: mockPreventDefault });
+    await act(async () => {
+      fireEvent(wrapperNode, clickEvent);
+    });
+
+    expect(mockPreventDefault).toHaveBeenCalledTimes(1);
   });
 });

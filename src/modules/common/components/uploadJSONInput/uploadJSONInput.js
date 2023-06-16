@@ -45,7 +45,10 @@ const UploadJSONInput = ({
   });
 
   return (
-    <div {...getRootProps({ onClick: (evt) => evt.preventDefault() })}>
+    <div
+      {...getRootProps({ onClick: (evt) => evt.preventDefault() })}
+      data-testid="upload-json-wrapper"
+    >
       <p className={styles.fileInputLabel}>
         {prefixLabel}
         <label className={styles.fileInputBtn}>
