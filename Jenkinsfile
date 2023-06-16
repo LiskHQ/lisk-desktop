@@ -3,10 +3,6 @@
 properties([disableConcurrentBuilds(), pipelineTriggers([])])
 pipeline {
 	agent { node { label 'lisk-desktop' } }
-	tools {
-        // Define the NVM installation
-        nodejs 'NVM-18.16.0'
-    }
 	options {
 		timeout(time: 45, unit: 'MINUTES')
 		ansiColor('xterm')
@@ -20,7 +16,7 @@ pipeline {
 			steps {
 				nvm(getNodejsVersion()) {
 					sh '''
-						nvm use 18.16.0
+						node -v
 						npm i --openssl_fips='' --registry https://npm.lisk.com
 						'''
 				}
