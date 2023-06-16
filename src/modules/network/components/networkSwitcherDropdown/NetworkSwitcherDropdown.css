@@ -32,6 +32,12 @@
       &.selected {
         background-color: var(--color-network-selected-background);
       }
+
+      & .networkIcons {
+        & > :not(:last-child) {
+          margin-right: 10px;
+        }
+      }
     }
   }
 
