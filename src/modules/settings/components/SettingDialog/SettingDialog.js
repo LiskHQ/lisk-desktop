@@ -55,7 +55,12 @@ function SettingDialog() {
                 <p>{t('Help improve Lisk by sending anonymous usage data.')}</p>
               </div>
             </label>
-            <a rel="noopener noreferrer" target="_blank" href={links.privacyPolicy} className={styles.link}>
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href={links.privacyPolicy}
+              className={styles.link}
+            >
               {t('Privacy policy')}
             </a>
           </section>
