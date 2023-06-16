@@ -12,34 +12,10 @@ import {
 } from '@pos/validator/utils';
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
-import { useTransactions } from '@transaction/hooks/queries';
-import { useCurrentAccount } from '@account/hooks';
 import moment from 'moment/moment';
-import { useNetworkStatus } from '@network/hooks/queries';
-import { usePosConstants } from '../../../hooks/queries';
+import { useLastCommissionChange } from '@pos/validator/components/ChangeCommission/Form/hooks/useLastCommissionChange';
+import { usePosConstants } from '@pos/validator/hooks/queries';
 import styles from './ChangeCommissionForm.css';
-
-const useLastCommissionChange = () => {
-  const { data: posConstants } = usePosConstants();
-  const [{ metadata: { address } = {} }] = useCurrentAccount();
-  const { data: transactions } = useTransactions({
-    config: {
-      params: { address, moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission, limit: 1 },
-    },
-  });
-  const lastChangeCommissionTimestamp = transactions?.data[0]?.block?.timestamp;
-  const networkStatus = useNetworkStatus();
-
-  return (
-    lastChangeCommissionTimestamp &&
-    new Date(
-      (lastChangeCommissionTimestamp +
-        posConstants.data?.commissionIncreasePeriod *
-          networkStatus.data?.data?.genesis?.blockTime) *
-        1000
-    )
-  );
-};
 
 // eslint-disable-next-line max-statements
 export const ChangeCommissionForm = ({ prevState, nextStep }) => {
