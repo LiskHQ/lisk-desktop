@@ -57,6 +57,30 @@ describe('ChangeCommissionForm', () => {
       expect(button.closest('button').disabled).toBeTruthy();
     });
 
+    it('should not pass when commission increases more than 5%', async () => {
+      const { getByTestId, getByText } = renderWithRouterAndQueryClient(
+        ChangeCommissionForm,
+        props
+      );
+      const value = '96';
+      const button = getByText(buttonText);
+      const input = getByTestId('newCommission');
+      fireEvent.change(input, { target: { value } });
+      expect(button.closest('button').disabled).toBeTruthy();
+    });
+
+    it('should not pass when new commission have more than 2 decimal places', async () => {
+      const { getByTestId, getByText } = renderWithRouterAndQueryClient(
+        ChangeCommissionForm,
+        props
+      );
+      const value = '89.0101';
+      const button = getByText(buttonText);
+      const input = getByTestId('newCommission');
+      fireEvent.change(input, { target: { value } });
+      expect(button.closest('button').disabled).toBeTruthy();
+    });
+
     it('passes valid parameters on submit', async () => {
       const { getByTestId, getByText } = renderWithRouterAndQueryClient(
         ChangeCommissionForm,
