@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
@@ -6,14 +7,19 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
+import { parseSearchParams } from 'src/utils/searchParams';
 import Input from '@theme/Input';
 import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
-import { immutablePush } from 'src/utils/immutableUtils';
+import { immutablePush, immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
 import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
+  const history = useHistory();
+  const { name: defaultName = '', serviceUrl: defaultServiceUrl = '' } = parseSearchParams(
+    history.location.search
+  );
   const { setValue, customNetworks } = useSettings('customNetworks');
   const [successText, setSuccessText] = useState('');
 
@@ -23,16 +29,31 @@ const DialogAddNetwork = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { name: defaultName, serviceUrl: defaultServiceUrl } });
 
+  // eslint-disable-next-line max-statements
   function onSubmit(values) {
     setSuccessText('');
     const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
-    const updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
+    let updatedCustomNetworks;
+    if (defaultName) {
+      const editedCustomNetworkIndex = customNetworks.findIndex(
+        (network) => network.name === defaultName
+      );
+      updatedCustomNetworks = immutableSetToArray({
+        array: customNetworks,
+        mapToAdd: customNetwork,
+        index: editedCustomNetworkIndex,
+      });
+    } else {
+      updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
+    }
     setValue(updatedCustomNetworks);
     reset();
-    setSuccessText(t('Success: ') + values.name + t(' added'));
+    setSuccessText(
+      `${t('Success: ') + (defaultName ?? values.name)} ${defaultName ? t('edited') : t('added')}`
+    );
   }
 
   return (
