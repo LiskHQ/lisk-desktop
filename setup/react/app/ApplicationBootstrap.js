@@ -64,7 +64,12 @@ const ApplicationBootstrap = ({ children }) => {
         refreshedCurrentApplication?.chainID?.indexOf(networkCode) === 0
           ? refreshedCurrentApplication
           : mainChainApplication;
+      console.log('>>>', currentAppToSet);
 
+      currentAppToSet.serviceURLs[0].http = 'http://localhost:9901';
+      currentAppToSet.serviceURLs[0].ws = 'http://localhost:9901';
+
+      console.log('<<', currentAppToSet);
       setCurrentApplication(currentAppToSet);
       setApplications([mainChainApplication]);
     }

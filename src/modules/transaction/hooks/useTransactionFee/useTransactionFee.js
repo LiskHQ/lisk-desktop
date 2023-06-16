@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 // @Todo: this should be fixed in this issue #4521
 /* istanbul ignore file */
 // import { useCommandSchema } from '@network/hooks/useCommandsSchema';
@@ -5,10 +6,16 @@
 // import usePriorityFee from '../usePriorityFee';
 // import { FEE_TYPES } from '../../constants';
 // import { joinModuleAndCommand } from '../../utils';
-// import { useMinimumFee } from '.';
+import { useMinimumFee } from '.';
+
 import { FEE_TYPES } from '../../constants';
 import { joinModuleAndCommand } from '../../utils';
 import { useTransactionEstimateFees } from '../queries';
+
+const getPriorityValue = (value = '') => {
+  value = value.toLowerCase();
+  return /^normal$/.test(value) ? 'medium' : value;
+};
 
 /**
  *
@@ -20,7 +27,13 @@ import { useTransactionEstimateFees } from '../queries';
  * that contribute in the total value
  */
 // eslint-disable-next-line max-statements
-export const useTransactionFee = ({ isFormValid, transactionJSON, selectedPriority = {} }) => {
+export const useTransactionFee = ({
+  isFormValid,
+  transactionJSON,
+  selectedPriority = {},
+  extraCommandFee,
+  senderAddress,
+}) => {
   const transactionFee = useTransactionEstimateFees({
     config: { data: { transaction: transactionJSON } },
     options: { enabled: isFormValid && !!transactionJSON },
@@ -30,22 +43,16 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, selectedPriori
     transactionFee?.data?.data || {};
   // const {
   //   moduleCommandSchemas,
-  //   isLoading: isSchemaLoading,
-  //   isFetched: isSchemaFetched,
   // } = useCommandSchema();
   // const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
 
-  // const {
-  //   result: minimumFee,
-  //   isLoading: isLoadingByteFee,
-  //   isFetched: isFetchedByteFee,
-  // } = useMinimumFee({
-  //   senderAddress,
-  //   isFormValid,
-  //   transactionJSON,
-  //   extraCommandFee,
-  // });
-
+  const { result } = useMinimumFee({
+    senderAddress,
+    isFormValid,
+    transactionJSON,
+    extraCommandFee,
+  });
+  console.log('---->', transactionJSON, result.value, extraCommandFee);
   // const priorityFee = usePriorityFee({
   //   selectedPriority,
   //   transactionJSON,
@@ -57,37 +64,59 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, selectedPriori
   //   type: FEE_TYPES.BYTES_FEE,
   // };
   // const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
-  let txComponentType = '';
   const moduleCommand = joinModuleAndCommand(transactionJSON);
+  let accountInitializationFee = {};
 
-  if (moduleCommand === 'token:transfer' || moduleCommand === 'token:transferCrossChain') {
-    txComponentType = 'Account Initialization';
-  } else {
-    txComponentType = 'Registration';
+  const initializationFee = transactionFeeEstimates?.accountInitializationFee?.amount || 0;
+  const minimumFee = BigInt(transactionFeeEstimates?.minFee || 0) + BigInt(initializationFee);
+  const messageFee = BigInt(transactionFeeEstimates?.messageFee?.amount || 0);
+
+  if (initializationFee) {
+    accountInitializationFee = {
+      value: BigInt(initializationFee),
+      type: 'Account Initialization',
+    };
   }
-  const minimumFee = transactionFeeEstimates?.minFee || 0;
-  const extraCommandFee = transactionFeeEstimates?.messageFee?.amount || 0;
 
   const priorityFee = {
     type: FEE_TYPES.PRIORITY_FEE,
-    value: dynamicFeeEstimates[selectedPriority.title] || 0,
+    value:
+      (dynamicFeeEstimates[getPriorityValue(selectedPriority.title)] || 0) -
+      (transactionFeeEstimates?.minFee || 0),
   };
   const bytesFee = {
-    value: BigInt(minimumFee) - BigInt(extraCommandFee),
+    value: BigInt(transactionFeeEstimates?.minFee || 0),
     type: FEE_TYPES.BYTES_FEE,
   };
-  const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
+  let components = [bytesFee, accountInitializationFee, priorityFee].filter(
+    (item) => item.value > 0
+  );
 
-  console.log('--->>>', txComponentType, minimumFee, extraCommandFee, priorityFee, bytesFee);
+  if (
+    moduleCommand !== 'token:transfer' &&
+    moduleCommand !== 'token:transferCrossChain' &&
+    extraCommandFee
+  ) {
+    components = [...components, { type: 'Registration', value: BigInt(extraCommandFee) }];
+  }
+
+  console.log(
+    '--->>>',
+    minimumFee,
+    messageFee,
+    initializationFee,
+    priorityFee,
+    bytesFee,
+    accountInitializationFee,
+    components
+  );
 
   return {
-    components:
-      extraCommandFee > 0
-        ? [...components, { type: txComponentType, value: BigInt(extraCommandFee) }]
-        : components,
+    components,
+    minimumFee,
+    messageFee,
     isLoading: transactionFee.isLoading,
     isFetched: transactionFee.isFetched,
     transactionFee: (BigInt(minimumFee) + BigInt(priorityFee.value)).toString(),
-    minimumFee,
   };
 };

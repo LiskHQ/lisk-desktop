@@ -15,7 +15,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
 
 export const useTransactionEstimateFees = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/transaction/estimate-fees`,
+    url: `/api/${API_VERSION}/transactions/estimate-fees`,
     method: 'post',
     event: 'post.transactions.estimate-fees',
     ...customConfig,
