@@ -98,7 +98,7 @@ const DetailsView = ({ data, isMyProfile, address }) => {
                       position="bottom"
                       content={<Icon name="editDisabled" />}
                     >
-                      <p>You cannot edit your commission until 9th Jan, 2023.</p>
+                      <p>You have to wait for your current commission change to finalize before you can edit again.</p>
                     </Tooltip>
                   ) : (
                     <button

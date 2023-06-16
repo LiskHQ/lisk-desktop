@@ -5,11 +5,41 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import TxComposer from '@transaction/components/TxComposer';
-import { convertCommissionToNumber, checkCommissionValidity } from '@pos/validator/utils';
+import {
+  convertCommissionToNumber,
+  checkCommissionValidity,
+  isCommissionIncrease,
+} from '@pos/validator/utils';
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTransactions } from '@transaction/hooks/queries';
+import { useCurrentAccount } from '@account/hooks';
+import moment from 'moment/moment';
+import { useNetworkStatus } from '@network/hooks/queries';
 import { usePosConstants } from '../../../hooks/queries';
 import styles from './ChangeCommissionForm.css';
+
+const useLastCommissionChange = () => {
+  const { data: posConstants } = usePosConstants();
+  const [{ metadata: { address } = {} }] = useCurrentAccount();
+  const { data: transactions } = useTransactions({
+    config: {
+      params: { address, moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission, limit: 1 },
+    },
+  });
+  const lastChangeCommissionTimestamp = transactions?.data[0]?.block?.timestamp;
+  const networkStatus = useNetworkStatus();
+
+  return (
+    lastChangeCommissionTimestamp &&
+    new Date(
+      (lastChangeCommissionTimestamp +
+        posConstants.data?.commissionIncreasePeriod *
+          networkStatus.data?.data?.genesis?.blockTime) *
+        1000
+    )
+  );
+};
 
 // eslint-disable-next-line max-statements
 export const ChangeCommissionForm = ({ prevState, nextStep }) => {
@@ -34,6 +64,7 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+  const lastCommissionChange = useLastCommissionChange();
 
   useEffect(() => {
     if (currentCommission && currentCommission !== newCommission.value) {
@@ -73,6 +104,9 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
       inputFeedback = t('Input decimal places limited to 2');
     } else if (!(newCommissionParam >= 0 && newCommissionParam <= 10000)) {
       inputFeedback = t('Commission range is invalid');
+    } else if (lastCommissionChange && isCommissionIncrease(value, currentCommission)) {
+      const timeCanUpdate = moment().to(lastCommissionChange, true);
+      inputFeedback = t(`You can only increase commission in ${timeCanUpdate}`);
     } else if (!isNewCommissionValid) {
       inputFeedback = t('You cannot increase commission more than 5%');
     }

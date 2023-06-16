@@ -11,3 +11,10 @@ export const checkCommissionValidity = (newCommission, oldCommission) => {
   const commissionIncrease = newCommissionParam - oldCommissionParam;
   return commissionIncrease <= MAX_COMMISSION_INCREASE_RATE;
 };
+
+export const isCommissionIncrease = (newCommission, oldCommission) => {
+  const newCommissionParam = convertCommissionToNumber(newCommission);
+  const oldCommissionParam = convertCommissionToNumber(oldCommission);
+
+  return newCommissionParam > oldCommissionParam;
+};
