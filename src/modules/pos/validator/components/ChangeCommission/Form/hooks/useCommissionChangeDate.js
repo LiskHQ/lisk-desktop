@@ -13,7 +13,12 @@ export const useCommissionChangeDate = () => {
   ] = useCurrentAccount();
   const { data: transactions } = useTransactions({
     config: {
-      params: { address, moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission, limit: 1 },
+      params: {
+        address,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.changeCommission,
+        limit: 1,
+        sort: 'timestamp:desc',
+      },
     },
   });
   const lastChangeCommissionTimestamp = transactions?.data[0]?.block?.timestamp;
