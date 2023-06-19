@@ -16,12 +16,12 @@ export const useTransactionsFromPool = ({ options = {}, address, customConfig = 
       endpoint: 'txpool_getTransactionsFromPool',
       params: { address },
     },
-    ...customConfig
+    ...customConfig,
   };
 
   const result = useInvokeQuery({
     config,
-    options: { ...options },
+    options: { ...options, enabled: !!address && options?.enabled !== false },
   });
 
   return result;

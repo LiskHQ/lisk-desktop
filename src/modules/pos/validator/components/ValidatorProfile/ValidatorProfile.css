@@ -178,6 +178,10 @@
       &.capitalized {
         text-transform: capitalize;
       }
+
+      &.textLineThrough {
+        text-decoration: line-through;
+      }
     }
   }
 }

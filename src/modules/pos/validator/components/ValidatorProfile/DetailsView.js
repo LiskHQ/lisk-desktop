@@ -98,7 +98,10 @@ const DetailsView = ({ data, isMyProfile, address }) => {
                       position="bottom"
                       content={<Icon name="editDisabled" />}
                     >
-                      <p>You have to wait for your current commission change to finalize before you can edit again.</p>
+                      <p>
+                        You have to wait for your current commission change to finalize before you
+                        can edit again.
+                      </p>
                     </Tooltip>
                   ) : (
                     <button
@@ -110,7 +113,18 @@ const DetailsView = ({ data, isMyProfile, address }) => {
                     </button>
                   ))}
               </div>
-              <div className={`${styles.value} ${styles.capitalized}`}>{value}</div>
+              <div
+                className={classNames(
+                  styles.value,
+                  styles.capitalized,
+                  hasChangeCommission &&
+                    onEdit &&
+                    typeof onEdit === 'function' &&
+                    styles.textLineThrough
+                )}
+              >
+                {value}
+              </div>
             </div>
           </div>
         ))}
