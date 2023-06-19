@@ -8,7 +8,7 @@ export const regex = {
   blsKey: /^[0-9a-f]{96}$/,
   proofOfPossession: /^[0-9a-f]{192}$/,
   name: /^[a-z0-9!@$&_.]{3,20}$/,
-  networkName: /^\w[A-Z|a-z|\d|-|_|\s]{1,18}\w$/,
+  networkName: /^\w[a-zA-Z\d-_\s]{1,18}\w$/,
   transactionId: /^[0-9a-z]{64}/,
   blockId: /^[0-9a-z]{64}/,
   blockHeight: /^[0-9]+$/,
