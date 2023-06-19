@@ -13,17 +13,11 @@ let loaderTimeout = null;
 
 /**
  * Returns error and feedback of stake amount field.
- *
- * @param {String} value - The stake amount value difference in Beddows
- * @param {String} balance - The account balance value in Beddows
- * @param {String} minValue - The minimum value checker in Beddows
- * @param {String} inputValue - The input stake amount value in Beddows
- * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value, balance, minValue, inputValue, token) => {
+const getAmountFeedbackAndError = (balance, minValue, inputValue, token) => {
   const { message: feedback } = validateAmount({
     token,
-    amount: parseInt(value, 10),
+    amount: parseInt(inputValue, 10),
     accountBalance: parseInt(balance, 10),
     checklist: [
       'NEGATIVE_STAKE',
@@ -58,10 +52,6 @@ const useStakeAmountField = (initialValue) => {
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');
   const staking = useSelector((state) => state.staking);
   const existingStake = staking[address || host];
-  const totalUnconfirmedStake = Object.values(staking)
-    .filter((stake) => stake.confirmed < stake.unconfirmed)
-    .map((stake) => stake.unconfirmed - stake.confirmed)
-    .reduce((total, amount) => total + amount, 0);
   const previouslyConfirmedStake = existingStake ? existingStake.confirmed : 0;
   const [amountField, setAmountField] = useState({
     value: initialValue,
@@ -92,7 +82,6 @@ const useStakeAmountField = (initialValue) => {
       isLoading: true,
     });
     const feedback = getAmountFeedbackAndError(
-      value - convertFromBaseDenom(previouslyConfirmedStake - totalUnconfirmedStake, token),
       balance,
       -1 * convertFromBaseDenom(previouslyConfirmedStake, token),
       value,

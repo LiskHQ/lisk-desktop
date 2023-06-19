@@ -135,26 +135,39 @@ describe('EditStake', () => {
     });
   });
 
-  it('should render the confirmation modal and go back to the staking form', () => {
-    renderWithRouterAndQueryClient(EditStake, updatedProps);
+  it('should not be able to confirm when stake amount is not changed', () => {
+    renderWithRouterAndQueryClient(EditStake, props);
 
-    fireEvent.click(screen.getByText('Confirm'));
+    expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+  });
+
+  it('should be able to remove entire stake and add to queue', () => {
+    useSentStakes.mockReturnValue({
+      data: {
+        ...mockSentStakes,
+        data: {
+          ...mockSentStakes.data,
+          stakes: mockSentStakes.data.stakes.map((stake, index) =>
+            index === 0 ? { ...stake, address: validatorAddress } : stake
+          ),
+        },
+      },
+    });
+
+    renderWithRouterAndQueryClient(EditStake, props);
+
+    expect(screen.getByText('Edit Stake')).toBeTruthy();
+    expect(
+      screen.getByText('After changing your stake amount, it will be added to the staking queue.')
+    ).toBeTruthy();
+    expect(screen.getByText('Stake amount')).toBeTruthy();
+
+    fireEvent.click(screen.getByText('Remove stake'));
+
     expect(screen.getByText('Stake added to queue')).toBeTruthy();
     expect(screen.getByText('Your stake has been added to your staking queue')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Continue staking'));
-    expect(props.history.push).toHaveBeenCalled();
-  });
-
-  it('should render the confirmation modal and proceed to the staking queue', async () => {
-    renderWithRouterAndQueryClient(EditStake, updatedProps);
-
-    fireEvent.click(screen.getByText('Confirm'));
-
-    await waitFor(() => {
-      fireEvent.click(screen.getByText('Go to the staking queue'));
-    });
-
     expect(props.history.push).toHaveBeenCalled();
   });
 
