@@ -8,7 +8,7 @@ import TxComposer from '@transaction/components/TxComposer';
 import {
   convertCommissionToNumber,
   checkCommissionValidity,
-  isCommissionIncrease,
+  checkCommissionIncreaseLocked,
 } from '@pos/validator/utils';
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
@@ -75,16 +75,12 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
     let inputFeedback;
     const newCommissionParam = convertCommissionToNumber(value);
     const isNewCommissionValid = checkCommissionValidity(value, currentCommission);
-    const isCommissionIncreaseLocked =
-      commissionChangeDate &&
-      moment(commissionChangeDate).isAfter() &&
-      isCommissionIncrease(value, currentCommission);
 
     if (value.split('.')[1]?.length > 2) {
       inputFeedback = t('Input decimal places limited to 2');
     } else if (!(newCommissionParam >= 0 && newCommissionParam <= 10000)) {
       inputFeedback = t('Commission range is invalid');
-    } else if (isCommissionIncreaseLocked) {
+    } else if (checkCommissionIncreaseLocked(commissionChangeDate, value, currentCommission)) {
       const timeCanUpdate = moment().to(commissionChangeDate, true);
       inputFeedback = t(`You can only increase commission in ${timeCanUpdate}`);
     } else if (!isNewCommissionValid) {
