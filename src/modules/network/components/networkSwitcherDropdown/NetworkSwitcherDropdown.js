@@ -84,7 +84,10 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
     [networkStatus]
   );
 
-  const editCustomNetwork = () => {};
+  const editCustomNetwork = (e, data) => {
+    e.stopPropagation();
+    removeThenAppendSearchParamsToUrl(history, { modal: 'dialogAddNetwork', ...data }, ['modal']);
+  };
   const deleteCustomNetwork = () => {};
 
   useEffect(() => {
@@ -124,11 +127,18 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
                   <span className={styles.networkIcons}>
                     {network.isCustom && (
                       <>
-                        <span onClick={editCustomNetwork}>
-                          <Icon name="edit" className={styles.editIcon} />
+                        <span
+                          onClick={(e) =>
+                            editCustomNetwork(e, {
+                              name: network.name,
+                              serviceUrl: network.serviceUrl,
+                            })
+                          }
+                        >
+                          <Icon name="edit" className={styles.modifyIcons} />
                         </span>
                         <span onClick={deleteCustomNetwork}>
-                          <Icon name="deleteIcon" className={styles.editIcon} />
+                          <Icon name="deleteIcon" className={styles.modifyIcons} />
                         </span>
                       </>
                     )}

@@ -20,8 +20,10 @@ const DialogAddNetwork = () => {
   const { name: defaultName = '', serviceUrl: defaultServiceUrl = '' } = parseSearchParams(
     history.location.search
   );
+  const mode = defaultName ? 'edit' : 'add';
   const { setValue, customNetworks } = useSettings('customNetworks');
   const [successText, setSuccessText] = useState('');
+  const [errorText, setErrorText] = useState('');
 
   const { t } = useTranslation();
   const {
@@ -29,14 +31,30 @@ const DialogAddNetwork = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({ defaultValues: { name: defaultName, serviceUrl: defaultServiceUrl } });
+  } = useForm({
+    defaultValues: {
+      name: defaultName,
+      serviceUrl: defaultServiceUrl,
+    },
+  });
 
   // eslint-disable-next-line max-statements
   function onSubmit(values) {
     setSuccessText('');
+    setErrorText('');
     const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
     let updatedCustomNetworks;
+    const existingCustomNetworkName = customNetworks.some(
+      (network) => network.name === values.name
+    );
+    const existingCustomNetworkServiceUrl = customNetworks.some(
+      (network) => network.serviceUrl === values.serviceUrl
+    );
+    if (mode === 'add' && (existingCustomNetworkName || existingCustomNetworkServiceUrl)) {
+      setErrorText('Network name or serviceUrl already exists');
+      return;
+    }
     if (defaultName) {
       const editedCustomNetworkIndex = customNetworks.findIndex(
         (network) => network.name === defaultName
@@ -48,19 +66,20 @@ const DialogAddNetwork = () => {
       });
     } else {
       updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
+      reset();
     }
     setValue(updatedCustomNetworks);
-    reset();
-    setSuccessText(
-      `${t('Success: ') + (defaultName ?? values.name)} ${defaultName ? t('edited') : t('added')}`
-    );
+
+    setSuccessText(`${t('Success: Network')} ${defaultName ? t('edited') : t('added')}`);
   }
 
   return (
     <Dialog className={styles.DialogAddNetwork} hasClose>
       <Box className={styles.boxProp}>
         <BoxHeader className={classNames(styles.header)}>
-          <h3 className={classNames(styles.title)}>{t('Add network')}</h3>
+          <h3 className={classNames(styles.title)}>
+            {t(`${mode === 'add' ? 'Add' : 'Edit'} network`)}
+          </h3>
         </BoxHeader>
         <p className={classNames(styles.description)}>
           {t(
@@ -94,9 +113,10 @@ const DialogAddNetwork = () => {
               })}
             />
             <PrimaryButton type="submit" className={`${styles.button}`}>
-              {t('Add network')}
+              {t(`${mode === 'add' ? 'Add' : 'Save'} network`)}
             </PrimaryButton>
             {successText && <span className={styles.successText}>{successText}</span>}
+            {errorText && <span className={styles.errorText}>{errorText}</span>}
           </form>
         </BoxContent>
       </Box>

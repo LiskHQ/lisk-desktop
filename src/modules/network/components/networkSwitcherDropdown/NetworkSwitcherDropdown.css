@@ -37,6 +37,17 @@
         & > :not(:last-child) {
           margin-right: 10px;
         }
+
+        & .modifyIcons {
+          display: none;
+        }
+      }
+
+      &:hover {
+        & .modifyIcons {
+          display: inline;
+          cursor: pointer;
+        }
       }
     }
   }
