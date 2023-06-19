@@ -13,7 +13,7 @@ import {
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
 import moment from 'moment/moment';
-import { useLastCommissionChange } from '@pos/validator/components/ChangeCommission/Form/hooks/useLastCommissionChange';
+import { useCommissionChangeDate } from '@pos/validator/components/ChangeCommission/Form/hooks/useCommissionChangeDate';
 import { usePosConstants } from '@pos/validator/hooks/queries';
 import styles from './ChangeCommissionForm.css';
 
@@ -40,7 +40,7 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
-  const lastCommissionChange = useLastCommissionChange();
+  const commissionChangeDate = useCommissionChangeDate();
 
   useEffect(() => {
     if (currentCommission && currentCommission !== newCommission.value) {
@@ -75,13 +75,17 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
     let inputFeedback;
     const newCommissionParam = convertCommissionToNumber(value);
     const isNewCommissionValid = checkCommissionValidity(value, currentCommission);
+    const isCommissionIncreaseLocked =
+      commissionChangeDate &&
+      moment(commissionChangeDate).isAfter() &&
+      isCommissionIncrease(value, currentCommission);
 
     if (value.split('.')[1]?.length > 2) {
       inputFeedback = t('Input decimal places limited to 2');
     } else if (!(newCommissionParam >= 0 && newCommissionParam <= 10000)) {
       inputFeedback = t('Commission range is invalid');
-    } else if (lastCommissionChange && isCommissionIncrease(value, currentCommission)) {
-      const timeCanUpdate = moment().to(lastCommissionChange, true);
+    } else if (isCommissionIncreaseLocked) {
+      const timeCanUpdate = moment().to(commissionChangeDate, true);
       inputFeedback = t(`You can only increase commission in ${timeCanUpdate}`);
     } else if (!isNewCommissionValid) {
       inputFeedback = t('You cannot increase commission more than 5%');

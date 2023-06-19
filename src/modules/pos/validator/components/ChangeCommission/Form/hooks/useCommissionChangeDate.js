@@ -4,7 +4,7 @@ import { useTransactions } from '@transaction/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { useNetworkStatus } from '@network/hooks/queries';
 
-export const useLastCommissionChange = () => {
+export const useCommissionChangeDate = () => {
   const { data: posConstants } = usePosConstants();
   const [
     {

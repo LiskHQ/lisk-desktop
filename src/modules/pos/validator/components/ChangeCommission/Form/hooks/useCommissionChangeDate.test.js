@@ -6,7 +6,7 @@ import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleComma
 import { mockTransactions } from '@transaction/__fixtures__';
 import { usePosConstants } from '@pos/validator/hooks/queries';
 import { mockPosConstants } from '@pos/validator/__fixtures__/mockPosConstants';
-import { useLastCommissionChange } from './useLastCommissionChange';
+import { useCommissionChangeDate } from './useCommissionChangeDate';
 
 jest.useRealTimers();
 
@@ -15,11 +15,11 @@ jest.mock('@pos/validator/hooks/queries');
 useTransactions.mockReturnValue([mockSavedAccounts[0]]);
 usePosConstants.mockReturnValue({ data: mockPosConstants });
 
-describe('useLastCommissionChange hook', () => {
+describe('useCommissionChangeDate hook', () => {
   beforeEach(() => jest.clearAllMocks());
 
   it('should not return a date if commission never has been changed', async () => {
-    const { result } = renderHook(() => useLastCommissionChange(), { wrapper });
+    const { result } = renderHook(() => useCommissionChangeDate(), { wrapper });
     expect(result.current).toBeFalsy();
   });
 
@@ -35,7 +35,7 @@ describe('useLastCommissionChange hook', () => {
         data: [transaction],
       },
     });
-    const { result } = renderHook(() => useLastCommissionChange(), { wrapper });
+    const { result } = renderHook(() => useCommissionChangeDate(), { wrapper });
     expect(result.current).toBeTruthy();
   });
 });
