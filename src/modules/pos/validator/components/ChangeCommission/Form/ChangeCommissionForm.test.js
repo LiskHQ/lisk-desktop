@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { ChangeCommissionForm } from './ChangeCommissionForm';
 
@@ -67,6 +67,7 @@ describe('ChangeCommissionForm', () => {
       const input = getByTestId('newCommission');
       fireEvent.change(input, { target: { value } });
       expect(button.closest('button').disabled).toBeTruthy();
+      expect(screen.getByText('You cannot increase commission more than 5%')).toBeTruthy();
     });
 
     it('should not pass when new commission have more than 2 decimal places', async () => {
@@ -78,6 +79,7 @@ describe('ChangeCommissionForm', () => {
       const button = getByText(buttonText);
       const input = getByTestId('newCommission');
       fireEvent.change(input, { target: { value } });
+      expect(screen.getByText('Input decimal places limited to 2')).toBeTruthy();
       expect(button.closest('button').disabled).toBeTruthy();
     });
 
