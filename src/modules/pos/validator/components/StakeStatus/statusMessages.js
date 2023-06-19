@@ -21,13 +21,17 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
         {regularUnlockable > BigInt(0) ? (
           <>
             <LiskAmountFormatted val={regularUnlockable.toString()} token={token} />{' '}
-            <span>{t('Your tokens will be available to unlock when the locking period ends.')}</span>
+            <span>
+              {t('Your tokens will be available to unlock when the locking period ends.')}
+            </span>
           </>
         ) : null}
         {selfUnstakeUnlockable > 0 ? (
           <>
             <LiskAmountFormatted val={selfUnstakeUnlockable} token={token} />{' '}
-            <span>{t('Your tokens will be available to unlock when the locking period ends.')}</span>
+            <span>
+              {t('Your tokens will be available to unlock when the locking period ends.')}
+            </span>
           </>
         ) : null}
       </>

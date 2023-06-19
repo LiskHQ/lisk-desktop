@@ -15,7 +15,7 @@ const ItemList = ({ items, heading }) => {
             key={`stake-item-${address}`}
             address={address}
             stake={items[address]}
-            title={items[address].username}
+            title={items[address].name}
             token={token}
           />
         ))}
