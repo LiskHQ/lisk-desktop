@@ -1,5 +1,5 @@
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
@@ -33,18 +33,7 @@ describe('SentStakesRow', () => {
         `${convertFromBaseDenom(amount, mockAppsTokens.data[0])} ${props.token.symbol}`
       )
     );
-    expect(screen.getByAltText('deleteIcon')).toBeTruthy();
     expect(screen.getByAltText('edit')).toBeTruthy();
-
-    fireEvent.click(screen.getByAltText('deleteIcon'));
-
-    expect(props.stakeEdited).toHaveBeenCalledWith([
-      {
-        name,
-        address,
-        amount: 0,
-      },
-    ]);
   });
 
   it('should display properly when loading validators', async () => {
