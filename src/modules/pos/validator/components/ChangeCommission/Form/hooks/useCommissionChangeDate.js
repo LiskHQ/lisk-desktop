@@ -22,7 +22,7 @@ export const useCommissionChangeDate = () => {
       metadata: { address },
     },
   ] = useCurrentAccount();
-  const { data: transactions } = useTransactions({
+  const { data: transactions, isLoading } = useTransactions({
     config: {
       params: {
         address,
@@ -34,14 +34,16 @@ export const useCommissionChangeDate = () => {
   });
 
   const lastChangeCommissionTimestamp = transactions?.data[0]?.block?.timestamp;
-  const networkStatus = useNetworkStatus();
+  const { data: networkStatus } = useNetworkStatus();
 
-  return (
-    lastChangeCommissionTimestamp &&
-    getDateWhenCommissionCanBeIncreased(
-      lastChangeCommissionTimestamp,
-      posConstants.data?.commissionIncreasePeriod,
-      networkStatus.data?.data?.genesis?.blockTime
-    )
-  );
+  return {
+    date:
+      lastChangeCommissionTimestamp &&
+      getDateWhenCommissionCanBeIncreased(
+        lastChangeCommissionTimestamp,
+        posConstants.data?.commissionIncreasePeriod,
+        networkStatus?.data?.genesis?.blockTime
+      ),
+    isLoading,
+  };
 };

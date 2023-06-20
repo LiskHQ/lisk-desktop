@@ -40,7 +40,7 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
-  const commissionChangeDate = useCommissionChangeDate();
+  const { date: commissionChangeDate } = useCommissionChangeDate();
 
   useEffect(() => {
     if (currentCommission && currentCommission !== newCommission.value) {
