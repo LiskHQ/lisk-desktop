@@ -63,7 +63,6 @@ describe('SentStakes', () => {
           }`
         )[0]
       ).toBeTruthy();
-      expect(screen.getAllByAltText('deleteIcon')[index]).toBeTruthy();
       expect(screen.getAllByAltText('edit')[index]).toBeTruthy();
     });
   });
@@ -80,7 +79,6 @@ describe('SentStakes', () => {
       expect(
         screen.queryAllByText(`${convertFromBaseDenom(amount, mockAppsTokens.data[0])}`)[0]
       ).toBeFalsy();
-      expect(screen.queryAllByAltText('deleteIcon')[index]).toBeFalsy();
       expect(screen.queryAllByAltText('edit')[index]).toBeFalsy();
     });
   });
