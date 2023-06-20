@@ -25,6 +25,12 @@ import './variables.css';
 import styles from './app.css';
 import { ApplicationBootstrapContext } from './ApplicationBootstrap';
 
+if (MOCK_SERVICE_WORKER) {
+  const { worker } = require('src/service/mock/runtime');
+
+  worker.start({ onUnhandledRequest: 'bypass' });
+}
+
 const AppContent = () => {
   const { hasNetworkError, refetchNetwork, error, isLoadingNetwork } = useContext(
     ApplicationBootstrapContext
@@ -34,12 +40,6 @@ const AppContent = () => {
 
   return hasNetworkError ? <NetworkError onRetry={refetchNetwork} error={error} /> : <MainRouter />;
 };
-
-if (MOCK_SERVICE_WORKER) {
-  const { worker } = require('src/service/mock/runtime');
-
-  worker.start({ onUnhandledRequest: 'bypass' });
-}
 
 // eslint-disable-next-line max-statements
 const App = ({ history }) => {
