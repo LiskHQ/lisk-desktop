@@ -25,6 +25,16 @@ import './variables.css';
 import styles from './app.css';
 import { ApplicationBootstrapContext } from './ApplicationBootstrap';
 
+const AppContent = () => {
+  const { hasNetworkError, refetchNetwork, error, isLoadingNetwork } = useContext(
+    ApplicationBootstrapContext
+  );
+
+  if (isLoadingNetwork) return <PageLoader />;
+
+  return hasNetworkError ? <NetworkError onRetry={refetchNetwork} error={error} /> : <MainRouter />;
+};
+
 if (MOCK_SERVICE_WORKER) {
   const { worker } = require('src/service/mock/runtime');
 
@@ -45,20 +55,6 @@ const App = ({ history }) => {
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);
-
-  const AppContent = () => {
-    const { hasNetworkError, refetchNetwork, error, isLoadingNetwork } = useContext(
-      ApplicationBootstrapContext
-    );
-
-    if (isLoadingNetwork) return <PageLoader />;
-
-    return hasNetworkError ? (
-      <NetworkError onRetry={refetchNetwork} error={error} />
-    ) : (
-      <MainRouter />
-    );
-  };
 
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
   return (
