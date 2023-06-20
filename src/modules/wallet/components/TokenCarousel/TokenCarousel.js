@@ -32,15 +32,6 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
   const isPrevVisible = useMemo(() => activeIndex > 0, [activeIndex]);
   const renderData = useMemo(() => (isLoading ? [...new Array(4).keys()] : data), [data]);
 
-  if (error) {
-    return (
-      <div className={styles.errorWrapper}>
-        <p>{error?.message || error}</p>
-        <TertiaryButton onClick={rest.onRetry}>Retry</TertiaryButton>
-      </div>
-    );
-  }
-
   useEffect(() => {
     const onResize = ({ target: { innerWidth, innerHeight } }) => {
       setWindowSize({ innerWidth, innerHeight });
@@ -49,6 +40,15 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
+
+  if (error) {
+    return (
+      <div className={styles.errorWrapper}>
+        <p>{error?.message || error}</p>
+        <TertiaryButton onClick={rest.onRetry}>Retry</TertiaryButton>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.wrapper}>

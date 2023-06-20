@@ -39,6 +39,7 @@ const getInputClass = ({ className, dark, icon, isMasked, status }) =>
 function PasswordTypeToggler({ onClick, isPasswordVisible, hasNotification }) {
   return (
     <button
+      tabIndex={-1}
       type="button"
       onClick={onClick}
       className={`${styles.toggleBtn} ${hasNotification ? styles.rightOffset : ''}`}
@@ -109,14 +110,6 @@ const Input = forwardRef(
               className={`${styles.status} ${secureTextEntry && styles.mgr30}`}
             />
           )}
-
-          {!!secureTextEntry && (
-            <PasswordTypeToggler
-              isPasswordVisible={!isPassword}
-              onClick={toggleFieldType}
-              hasNotification={hasNotification}
-            />
-          )}
           <Component
             {...props}
             data-testid={props.name}
@@ -130,6 +123,13 @@ const Input = forwardRef(
               status,
             })}
           />
+          {!!secureTextEntry && (
+            <PasswordTypeToggler
+              isPasswordVisible={!isPassword}
+              onClick={toggleFieldType}
+              hasNotification={hasNotification}
+            />
+          )}
           <Feedback message={feedback} size={size} status={status} />
         </span>
       </>
