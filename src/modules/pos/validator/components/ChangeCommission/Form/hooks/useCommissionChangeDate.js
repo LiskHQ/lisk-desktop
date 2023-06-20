@@ -4,6 +4,17 @@ import { useTransactions } from '@transaction/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { useNetworkStatus } from '@network/hooks/queries';
 
+const getDateWhenCommissionCanBeIncreased = (
+  timestampCommissionChange,
+  commissionIncreasePeriod,
+  blockTime
+) => {
+  const timestampWhenCommissionCanBeIncreased =
+    (timestampCommissionChange + commissionIncreasePeriod * blockTime) * 1000;
+
+  return new Date(timestampWhenCommissionCanBeIncreased);
+};
+
 export const useCommissionChangeDate = () => {
   const { data: posConstants } = usePosConstants();
   const [
@@ -21,16 +32,16 @@ export const useCommissionChangeDate = () => {
       },
     },
   });
+
   const lastChangeCommissionTimestamp = transactions?.data[0]?.block?.timestamp;
   const networkStatus = useNetworkStatus();
 
   return (
     lastChangeCommissionTimestamp &&
-    new Date(
-      (lastChangeCommissionTimestamp +
-        posConstants.data?.commissionIncreasePeriod *
-          networkStatus.data?.data?.genesis?.blockTime) *
-        1000
+    getDateWhenCommissionCanBeIncreased(
+      lastChangeCommissionTimestamp,
+      posConstants.data?.commissionIncreasePeriod,
+      networkStatus.data?.data?.genesis?.blockTime
     )
   );
 };
