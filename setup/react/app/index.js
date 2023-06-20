@@ -31,6 +31,16 @@ if (MOCK_SERVICE_WORKER) {
   worker.start({ onUnhandledRequest: 'bypass' });
 }
 
+const AppContent = () => {
+  const { hasNetworkError, refetchNetwork, error, isLoadingNetwork } = useContext(
+    ApplicationBootstrapContext
+  );
+
+  if (isLoadingNetwork) return <PageLoader />;
+
+  return hasNetworkError ? <NetworkError onRetry={refetchNetwork} error={error} /> : <MainRouter />;
+};
+
 // eslint-disable-next-line max-statements
 const App = ({ history }) => {
   const dispatch = useDispatch();
@@ -45,20 +55,6 @@ const App = ({ history }) => {
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);
-
-  const AppContent = () => {
-    const { hasNetworkError, refetchNetwork, error, isLoadingNetwork } = useContext(
-      ApplicationBootstrapContext
-    );
-
-    if (isLoadingNetwork) return <PageLoader />;
-
-    return hasNetworkError ? (
-      <NetworkError onRetry={refetchNetwork} error={error} />
-    ) : (
-      <MainRouter />
-    );
-  };
 
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
   return (
