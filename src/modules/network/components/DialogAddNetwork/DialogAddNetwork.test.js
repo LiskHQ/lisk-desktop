@@ -109,7 +109,7 @@ describe('DialogAddNetwork', () => {
       historyInfo: {
         location: {
           search:
-            'address=lsk6pbgwqdmba9ktyxy3k5rzjvyeknxp6wfwk36oa&modal=dialogAddNetwork&name=custom_network_one&serviceUrl=http://custom-network-service.com',
+            'modal=dialogAddNetwork&name=custom_network_one&serviceUrl=http://custom-network-service.com',
         },
       },
     };

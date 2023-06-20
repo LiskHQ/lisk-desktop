@@ -1,12 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Dialog from '@theme/dialog/dialog';
+import { toast } from 'react-toastify';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import { PrimaryButton, OutlineButton } from '@theme/buttons';
-import { toast } from 'react-toastify';
 import useSettings from '@settings/hooks/useSettings';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { immutableDeleteFromArrayById } from 'src/utils/immutableUtils';
@@ -14,7 +14,7 @@ import styles from './DialogRemoveNetwork.css';
 
 const DialogRemoveNetwork = () => {
   const history = useHistory();
-  const { name, serviceUrl } = parseSearchParams(history.location.search) ?? {};
+  const { name, serviceUrl } = parseSearchParams(history.location.search);
   const { customNetworks, setValue } = useSettings('customNetworks');
   const {
     mainChainNetwork: { name: currentNetworkName },
@@ -39,7 +39,7 @@ const DialogRemoveNetwork = () => {
     <Dialog hasClose className={styles.wrapper}>
       <Box className={styles.container}>
         <BoxHeader>
-          <h2>Remove Network</h2>
+          <h2>Remove network?</h2>
         </BoxHeader>
         <BoxContent>
           <div className={`${styles.content}`}>
