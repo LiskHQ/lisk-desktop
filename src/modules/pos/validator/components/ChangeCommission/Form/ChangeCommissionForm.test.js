@@ -57,6 +57,19 @@ describe('ChangeCommissionForm', () => {
       expect(button.closest('button').disabled).toBeTruthy();
     });
 
+    it('should not allow negative commissions to submit', async () => {
+      const { getByTestId, getByText } = renderWithRouterAndQueryClient(
+        ChangeCommissionForm,
+        props
+      );
+      const value = '-1';
+      const button = getByText(buttonText);
+      const input = getByTestId('newCommission');
+      fireEvent.change(input, { target: { value } });
+      expect(button.closest('button').disabled).toBeTruthy();
+      expect(screen.getByText('Commission range is invalid')).toBeTruthy();
+    });
+
     it('should not pass when commission increases more than 5%', async () => {
       const { getByTestId, getByText } = renderWithRouterAndQueryClient(
         ChangeCommissionForm,
