@@ -88,7 +88,12 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
     e.stopPropagation();
     removeThenAppendSearchParamsToUrl(history, { modal: 'dialogAddNetwork', ...data }, ['modal']);
   };
-  const deleteCustomNetwork = () => {};
+  const deleteCustomNetwork = (e, data) => {
+    e.stopPropagation();
+    removeThenAppendSearchParamsToUrl(history, { modal: 'dialogRemoveNetwork', ...data }, [
+      'modal',
+    ]);
+  };
 
   useEffect(() => {
     const isSuccess = networkStatus.isSuccess && !networkStatus.isFetching;
@@ -137,7 +142,14 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
                         >
                           <Icon name="edit" className={styles.modifyIcons} />
                         </span>
-                        <span onClick={deleteCustomNetwork}>
+                        <span
+                          onClick={(e) =>
+                            deleteCustomNetwork(e, {
+                              name: network.name,
+                              serviceUrl: network.serviceUrl,
+                            })
+                          }
+                        >
                           <Icon name="deleteIcon" className={styles.modifyIcons} />
                         </span>
                       </>
