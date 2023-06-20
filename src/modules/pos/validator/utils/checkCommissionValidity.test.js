@@ -1,4 +1,8 @@
-import { checkCommissionValidity } from './checkCommissionValidity';
+import {
+  checkCommissionValidity,
+  isCommissionIncrease,
+  checkCommissionIncreaseLocked,
+} from './checkCommissionValidity';
 
 describe('checkCommissionValidity', () => {
   it('returns true if new commission is less than old commission', () => {
@@ -11,5 +15,17 @@ describe('checkCommissionValidity', () => {
 
   it('returns false if new commission is greater than old commission and difference is more than 5%', () => {
     expect(checkCommissionValidity('70.00', '50.00')).toBe(false);
+  });
+
+  it('should correctly calculate if new commission is greater than old commission', () => {
+    expect(isCommissionIncrease('70.00', '50.00')).toBe(true);
+  });
+
+  it('should correctly calculate if new commission is greater than old commission', () => {
+    expect(isCommissionIncrease('40.00', '50.00')).toBe(false);
+  });
+
+  it('should correctly calculate if commission increase is locked', () => {
+    expect(checkCommissionIncreaseLocked(new Date(2029, 3, 1), '51.00', '50.00')).toBe(true);
   });
 });
