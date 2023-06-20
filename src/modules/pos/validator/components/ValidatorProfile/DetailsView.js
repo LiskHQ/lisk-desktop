@@ -114,14 +114,12 @@ const DetailsView = ({ data, isMyProfile, address }) => {
                   ))}
               </div>
               <div
-                className={classNames(
-                  styles.value,
-                  styles.capitalized,
-                  hasChangeCommission &&
-                    onEdit &&
-                    typeof onEdit === 'function' &&
-                    styles.textLineThrough
-                )}
+                className={classNames({
+                  [styles.value]: true,
+                  [styles.capitalized]: true,
+                  [styles.textLineThrough]:
+                    hasChangeCommission && onEdit && typeof onEdit === 'function',
+                })}
               >
                 {value}
               </div>
