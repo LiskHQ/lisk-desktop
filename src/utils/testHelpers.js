@@ -1,4 +1,4 @@
-/* eslint-disable  max-lines, import/no-extraneous-dependencies */
+/* eslint-disable no-console, max-lines, import/no-extraneous-dependencies */
 import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter, Router } from 'react-router-dom';
