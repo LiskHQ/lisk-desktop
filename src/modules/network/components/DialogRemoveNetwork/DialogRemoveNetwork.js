@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
@@ -14,6 +15,7 @@ import styles from './DialogRemoveNetwork.css';
 
 const DialogRemoveNetwork = () => {
   const history = useHistory();
+  const { t } = useTranslation();
   const { name, serviceUrl } = parseSearchParams(history.location.search);
   const { customNetworks, setValue } = useSettings('customNetworks');
   const {
@@ -39,7 +41,7 @@ const DialogRemoveNetwork = () => {
     <Dialog hasClose className={styles.wrapper}>
       <Box className={styles.container}>
         <BoxHeader>
-          <h2>Remove network?</h2>
+          <h2>{t('Remove network?')}</h2>
         </BoxHeader>
         <BoxContent>
           <div className={`${styles.content}`}>
@@ -47,18 +49,19 @@ const DialogRemoveNetwork = () => {
             <p className={styles.networkUrl}>{serviceUrl}</p>
           </div>
           <div className={`${grid.row} ${styles.details}`}>
-            This network will no longer be stored on this device and will have to be added again to
-            use.
+            {t(
+              'This network will no longer be stored on this device and will have to be added again to use.'
+            )}
           </div>
           <div className={grid.row}>
             <div className={grid['col-xs-6']}>
               <OutlineButton className={styles.confirmBtn} onClick={onConfirm}>
-                Remove network
+                {t('Remove network')}
               </OutlineButton>
             </div>
             <div className={grid['col-xs-6']}>
               <PrimaryButton className={styles.cancelBtn} onClick={onCancel}>
-                Cancel remove
+                {t('Cancel remove')}
               </PrimaryButton>
             </div>
           </div>

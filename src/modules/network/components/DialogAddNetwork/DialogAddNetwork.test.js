@@ -61,7 +61,7 @@ describe('DialogAddNetwork', () => {
     });
     fireEvent.click(screen.getByRole('button'));
     await waitFor(() => {
-      expect(screen.getByText('Invalid Network Name')).toBeInTheDocument();
+      expect(screen.getByText('Invalid network name')).toBeInTheDocument();
       expect(screen.getByText('Invalid URL')).toBeInTheDocument();
     });
   });
