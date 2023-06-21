@@ -304,6 +304,7 @@
   "Invalid address or public key": "Invalid address or public key",
   "Invalid amount": "Invalid amount",
   "Invalid dates": "Invalid dates",
+  "Invalid transaction initiated from another application.": "Invalid transaction initiated from another application.",
   "Is the problem persisting?": "Is the problem persisting?",
   "Keep up-to-date with announcements from the Lisk Foundation. Check what network validators have been up to with dedicated profile pages.": "Keep up-to-date with announcements from the Lisk Foundation. Check what network validators have been up to with dedicated profile pages.",
   "LSK deposited": "LSK deposited",

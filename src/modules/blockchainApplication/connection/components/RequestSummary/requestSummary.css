@@ -107,6 +107,13 @@
   & > div {
     padding: var(--vertical-padding-m) 0;
   }
+
+  & .invalidTransactionText {
+    color: var(--color-tx-fail-status-text);
+    font-weight: var(--font-weight-bold);
+    align-self: center;
+    padding-bottom: 10px;
+  }
 }
 
 .actionBar {
