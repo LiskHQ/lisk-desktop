@@ -23,6 +23,7 @@ import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { validator } from '@liskhq/lisk-client';
 import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
 
@@ -31,7 +32,12 @@ const getTitle = (key, t) =>
 
 const getRequestTransaction = (request) => {
   const { payload, schema } = request.request.params;
-  return decodeTransaction(Buffer.from(payload, 'hex'), schema);
+  try {
+    validator.validator.validateSchema(schema);
+    return decodeTransaction(Buffer.from(payload, 'hex'), schema);
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 const defaultToken = { symbol: 'LSK' };
@@ -44,6 +50,7 @@ const RequestSummary = ({ nextStep, history }) => {
   const [request, setRequest] = useState(null);
   const [transaction, setTransaction] = useState(null);
   const [senderAccount, setSenderAccount] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const { sessionRequest } = useSession();
   const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
@@ -103,16 +110,21 @@ const RequestSummary = ({ nextStep, history }) => {
 
   useEffect(() => {
     if (request && !transaction) {
-      const tx = getRequestTransaction(request);
-      setTransaction(tx);
-      const address = extractAddressFromPublicKey(tx.senderPublicKey);
-      const account = getAccountByAddress(address);
-      // @todo if account doesn't exist, we should inform the user that the tx can't be signed
-      setSenderAccount({
-        pubkey: tx.senderPublicKey,
-        address,
-        name: account?.metadata?.name,
-      });
+      try {
+        const tx = getRequestTransaction(request);
+        setTransaction(tx);
+        const address = extractAddressFromPublicKey(tx.senderPublicKey);
+        const account = getAccountByAddress(address);
+        // @todo if account doesn't exist, we should inform the user that the tx can't be signed
+        setSenderAccount({
+          pubkey: tx.senderPublicKey,
+          address,
+          name: account?.metadata?.name,
+        });
+        setErrorMessage('');
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
     }
   }, [request]);
 
@@ -145,17 +157,29 @@ const RequestSummary = ({ nextStep, history }) => {
       <Box>
         <div className={styles.information}>
           <ValueAndLabel className={styles.labeledValue} label={t('Information')}>
-            <span>
-              {t('This transaction was initiated from another application for signature request.')}
-            </span>
+            {!errorMessage ? (
+              <span>
+                {t(
+                  'This transaction was initiated from another application for signature request.'
+                )}
+              </span>
+            ) : (
+              <span className={styles.invalidTransactionText}>
+                {t('Invalid transaction initiated from another application.')}
+              </span>
+            )}
           </ValueAndLabel>
-          <ValueAndLabel className={styles.labeledValue} label={t('Selected account')}>
-            <AccountRow
-              account={{ metadata: { name: senderAccount?.name, address: senderAccount?.address } }}
-              truncate
-              onSelect={() => {}}
-            />
-          </ValueAndLabel>
+          {!errorMessage && (
+            <ValueAndLabel className={styles.labeledValue} label={t('Selected account')}>
+              <AccountRow
+                account={{
+                  metadata: { name: senderAccount?.name, address: senderAccount?.address },
+                }}
+                truncate
+                onSelect={() => {}}
+              />
+            </ValueAndLabel>
+          )}
         </div>
         <footer className={styles.actionBar}>
           <SecondaryButton
@@ -169,7 +193,7 @@ const RequestSummary = ({ nextStep, history }) => {
             className={styles.button}
             onClick={approveHandler}
             data-testid="approve-button"
-            disabled={!metaData.data}
+            disabled={!metaData.data || errorMessage}
           >
             {t('Continue')}
           </PrimaryButton>
