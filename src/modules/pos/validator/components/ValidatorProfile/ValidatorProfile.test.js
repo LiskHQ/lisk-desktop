@@ -2,19 +2,21 @@ import React from 'react';
 import numeral from 'numeral';
 import { MemoryRouter } from 'react-router';
 import { screen } from '@testing-library/react';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
-import { mockValidators, mockReceivedStakes, mockSentStakes } from '@pos/validator/__fixtures__';
+import { mockReceivedStakes, mockSentStakes, mockValidators } from '@pos/validator/__fixtures__';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import ValidatorProfile from './ValidatorProfile';
-import { useValidators, useReceivedStakes, useSentStakes } from '../../hooks/queries';
+import { useReceivedStakes, useSentStakes, useValidators } from '../../hooks/queries';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@account/hooks', () => ({
@@ -23,6 +25,7 @@ jest.mock('@account/hooks', () => ({
 jest.mock('@token/fungible/hooks/queries/useTokenBalances');
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
+jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('../../hooks/queries', () => ({
   ...jest.requireActual('../../hooks/queries'),
   useValidators: jest.fn(),
@@ -30,6 +33,9 @@ jest.mock('../../hooks/queries', () => ({
   useSentStakes: jest.fn(),
 }));
 jest.mock('@pos/validator/hooks/usePosToken');
+
+const mockSetApplication = jest.fn();
+useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
 
 describe('Validator Profile', () => {
   let wrapper;
@@ -43,7 +49,7 @@ describe('Validator Profile', () => {
   let queryClient;
 
   beforeEach(() => {
-    wrapper = renderWithRouter(ValidatorProfile, props);
+    wrapper = renderWithRouterAndQueryClient(ValidatorProfile, props);
     queryClient = new QueryClient();
   });
 
@@ -64,9 +70,11 @@ describe('Validator Profile', () => {
     });
 
     wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <ValidatorProfile {...props} />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ValidatorProfile {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     expect(screen.getByText('My validator profile')).toBeTruthy();
