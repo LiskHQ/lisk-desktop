@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
@@ -15,12 +15,16 @@ import { HardwareWalletStatus } from '@hardwareWallet/components/HardwareWalletS
 import { isEmpty } from 'src/utils/helpers';
 import NavigationButtons from '@common/components/bars/topBar/navigationButtons';
 import styles from './topBar.css';
+import { ApplicationBootstrapContext } from '../../../../../../setup/react/app/ApplicationBootstrap';
 
 const TopBar = ({ stakeCount, location, history }) => {
-  const disabled = [routes.reclaim.path].includes(location.pathname);
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
   const { t } = useTranslation();
+  const { hasNetworkError, isLoadingNetwork } = useContext(ApplicationBootstrapContext);
+
+  const disabled =
+    [routes.reclaim.path].includes(location.pathname) || hasNetworkError || isLoadingNetwork;
 
   const onMenuClick = (menuOpenStatus) => {
     setMenuOpen(menuOpenStatus);
@@ -36,7 +40,10 @@ const TopBar = ({ stakeCount, location, history }) => {
           ) : null}
         </div>
         <NavigationButtons history={history} />
-        <SearchBar className={styles.searchBarProp} />
+        <SearchBar
+          disabled={hasNetworkError || isLoadingNetwork}
+          className={styles.searchBarProp}
+        />
       </div>
       <div className={styles.group}>
         <HardwareWalletStatus />

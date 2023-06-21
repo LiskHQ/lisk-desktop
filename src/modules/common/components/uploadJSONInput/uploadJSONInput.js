@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDropzone } from 'react-dropzone';
 import Feedback from 'src/theme/feedback/feedback';
 import styles from './uploadJSONInput.css';
 
@@ -22,22 +23,32 @@ const UploadJSONInput = ({
     }
   };
 
-  const onInputChange = ({ target }) => {
-    const file = target.files[0];
+  const onInputChange = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
 
     const reader = new FileReader();
     reader.onload = (event) => {
       onParse(event.target.result);
     };
     reader.readAsText(file);
-  };
+  }, []);
 
   const onPaste = (event) => {
     onParse(event.clipboardData.getData('text'));
   };
 
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: onInputChange,
+    accept: {
+      'application/JSON': ['.json'],
+    },
+  });
+
   return (
-    <div>
+    <div
+      {...getRootProps({ onClick: (evt) => evt.preventDefault() })}
+      data-testid="upload-json-wrapper"
+    >
       <p className={styles.fileInputLabel}>
         {prefixLabel}
         <label className={styles.fileInputBtn}>
@@ -48,6 +59,7 @@ const UploadJSONInput = ({
             type="file"
             accept="application/JSON"
             onChange={onInputChange}
+            {...getInputProps()}
           />
         </label>
       </p>
@@ -65,7 +77,9 @@ const UploadJSONInput = ({
           data-testid="tx-sign-input"
         />
         <span className={styles.fileInputLabel}>
-          {t(placeholderText || 'Please paste the JSON here.')}
+          {isDragActive
+            ? t('Please drop the JSON here')
+            : t(placeholderText || 'Please paste the JSON here.')}
         </span>
         <Feedback message={error} size="m" status={error ? 'error' : 'ok'} />
       </div>

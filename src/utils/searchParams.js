@@ -100,7 +100,7 @@ export const removeSearchParams = (search, paramsToRemove, cleanParamsAfter) => 
  * @param {object} history the search string
  * @param {object} data the key-value dictionary to add
  */
-export const addSearchParamsToUrl = (history, data = {}) => {
+export const addSearchParamsToUrl = (history, data) => {
   const newSearchString = appendSearchParams(history.location.search, data);
   history.push(`${history.location.pathname}${newSearchString}`);
 };

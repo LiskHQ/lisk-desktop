@@ -16,7 +16,7 @@ pipeline {
 			steps {
 				nvm(getNodejsVersion()) {
 					sh '''
-						npm ci --registry https://npm.lisk.com
+						npm i --openssl_fips='' --registry https://npm.lisk.com
 						'''
 				}
 			}
