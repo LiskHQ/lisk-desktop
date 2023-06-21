@@ -17,6 +17,24 @@ describe('Table', () => {
     it('should render a loader if data is loading', () => {
       const wrapper = mount(<Table {...props} />);
       expect(wrapper.find('.skeletonRowWrapper').at(0)).toBeTruthy();
+      expect(wrapper.find('img[alt="emptyWallet"]').at(0)).toBeTruthy();
+    });
+  });
+
+  describe('Error', () => {
+    const props = {
+      data: [],
+      canLoadMore: false,
+      isLoading: true,
+      isFetching: true,
+      row: () => <div />,
+      header: [],
+      error: 'error',
+    };
+
+    it.only('should render an error state', () => {
+      const wrapper = mount(<Table {...props} />);
+      expect(wrapper.find('.error-state').at(0)).toBeTruthy();
     });
   });
 

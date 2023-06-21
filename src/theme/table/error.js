@@ -1,21 +1,16 @@
 import React from 'react';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from '../box/emptyState.css';
+import { TertiaryButton } from '../buttons';
 
-const Error = ({ data, isLoading }) => {
-  const notFoundReg = /not\sfound/gi;
-  if (
-    isLoading ||
-    !data ||
-    data.response?.status === 404 ||
-    (typeof data === 'string' ? notFoundReg.test(data) : notFoundReg.test(data.message))
-  ) {
-    return null;
-  }
+const Error = ({ error, handleRetry, isLoading }) => {
+  if (isLoading || !error) return null;
+
   return (
     <div className={`${styles.wrapper} error-state`}>
       <Illustration name="emptyWallet" />
-      <h3>{typeof data === 'string' ? data : data.message}</h3>
+      <h3>{typeof data === 'string' ? error : error.message}</h3>
+      {handleRetry && <TertiaryButton onClick={handleRetry}>Retry</TertiaryButton>}
     </div>
   );
 };
