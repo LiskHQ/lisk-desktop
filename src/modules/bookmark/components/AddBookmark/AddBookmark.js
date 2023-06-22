@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { validateBookmarkAddress, validateBookmarkLabel, getBookmarkMode } from '@bookmark/utils';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
-import BoxContent from 'src/theme/box/content';
-import BoxFooter from 'src/theme/box/footer';
-import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import Box from '@theme/box';
+import BoxHeader from '@theme/box/header';
+import BoxContent from '@theme/box/content';
+import BoxFooter from '@theme/box/footer';
+import { PrimaryButton, SecondaryButton } from '@theme/buttons';
+import Icon from '@theme/Icon';
 import ModalWrapper from '@bookmark/components/BookmarksListModal/BookmarkModalWrapper';
-import Icon from 'src/theme/Icon';
+import { useAuth } from '@auth/hooks/queries';
 import styles from './AddBookmark.css';
 import BookmarkForm from './BookmarkForm';
 
@@ -18,21 +21,26 @@ const blankField = { value: '', readonly: false, feedback: '' };
 // eslint-disable-next-line max-statements
 const AddBookmark = ({
   token: { active },
-  account,
   bookmarks,
-  history,
   bookmarkRemoved,
   bookmarkAdded,
   bookmarkUpdated,
   network,
-  t,
 }) => {
+  const history = useHistory();
+  const { t } = useTranslation();
   const [mode, setMode] = useState(getBookmarkMode(history, bookmarks, active));
   const [fields, setFields] = useState([blankField, blankField]);
   const timeout = useRef(null);
+  const { formAddress, label, isValidator } = parseSearchParams(history.location.search);
+  const address = formAddress ?? '';
+  const [params, setParams] = useState({ address });
+  const { data: { meta: authMeta } = {} } = useAuth({
+    config: { params },
+    options: { enabled: !!params.address },
+  });
 
   useEffect(() => {
-    const { formAddress, label, isValidator } = parseSearchParams(history.location.search);
     const bookmark = bookmarks[active].find((item) => item.address === formAddress);
     const addressFeedback = validateBookmarkAddress(
       active,
@@ -60,11 +68,11 @@ const AddBookmark = ({
   }, []);
 
   useEffect(() => {
-    if (account.data?.summary) {
-      const username = account.data.pos?.validator?.username ?? '';
+    if (authMeta) {
+      const username = authMeta?.name ?? '';
       setFields([
         {
-          value: account.data.summary.address,
+          value: authMeta.address,
           feedback: '',
           readonly: true,
         },
@@ -77,7 +85,7 @@ const AddBookmark = ({
 
       setMode(getBookmarkMode(history, bookmarks, active));
     }
-  }, [account.data]);
+  }, [authMeta]);
 
   const onClose = (e) => {
     if (e) {
@@ -104,7 +112,7 @@ const AddBookmark = ({
 
     if (!feedback && value !== '') {
       timeout.current = setTimeout(() => {
-        account.loadData({ address: value });
+        setParams({ address: value });
       }, 300);
     }
 
@@ -188,7 +196,6 @@ const AddBookmark = ({
 
 AddBookmark.displayName = 'AddBookmark';
 AddBookmark.propTypes = {
-  t: PropTypes.func.isRequired,
   token: PropTypes.shape({
     active: PropTypes.string.isRequired,
   }).isRequired,

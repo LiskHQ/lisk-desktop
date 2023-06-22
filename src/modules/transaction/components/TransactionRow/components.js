@@ -127,8 +127,8 @@ export const Counterpart = () => {
 export const Date = ({ t }) => {
   const { data } = useContext(TransactionRowContext);
 
-  if (data.isPending || !data.block.timestamp) {
-    return <Spinner completed={!data.isPending || data.block?.timestamp} label={t('Pending...')} />;
+  if (!data.block.timestamp) {
+    return <Spinner completed={data.block.isFinal} label={t('Pending...')} />;
   }
 
   return (
@@ -185,21 +185,20 @@ export const Fee = ({ t }) => {
 };
 
 export const Status = ({ t }) => {
-  const { data, currentBlockHeight } = useContext(TransactionRowContext);
-  const roundSize = 103;
-  const height = currentBlockHeight ? currentBlockHeight - data.block.height : 0;
+  const { data } = useContext(TransactionRowContext);
+  const transactionStatus =
+    data.executionStatus.charAt(0).toUpperCase() + data.executionStatus.slice(1);
+  const transactionStatusIcon = `transactionStatus${transactionStatus}`;
 
   return (
     <span>
       <Tooltip
-        title={data.isPending ? t('Pending') : t('Confirmed')}
+        title={t(transactionStatus)}
         position="left"
         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
-        content={<Icon name={data.isPending ? 'pending' : 'approved'} />}
+        content={<Icon name={transactionStatusIcon} />}
         size="s"
-      >
-        <p>{`${height}/${roundSize} ${t('Confirmations')}`}</p>
-      </Tooltip>
+      />
     </span>
   );
 };

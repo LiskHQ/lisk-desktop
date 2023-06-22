@@ -7,7 +7,7 @@ const header = (t) => [
   },
   {
     title: t('Commission (%)'),
-    classList: styles.amountColumn,
+    classList: `${styles.commissionsColumn} ${styles.commissionsHeader}`,
   },
   {
     title: t('Stake amount'),

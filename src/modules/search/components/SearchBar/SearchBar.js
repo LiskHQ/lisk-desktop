@@ -1,6 +1,6 @@
 /* eslint-disable complexity, max-statements */
 import React, { useRef, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { keyCodes } from 'src/utils/keyCodes';
 import routes from 'src/routes/routes';
@@ -16,16 +16,20 @@ import styles from './SearchBar.css';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useSearch } from '../../hooks/useSearch';
 
-const SearchBar = ({ className, history }) => {
+const SearchBar = ({ className, disabled }) => {
+  const history = useHistory();
   const [searchTextValue, setSearchTextValue] = useState('');
   const [rowItemIndex, setRowIndex] = useState(0);
   const searchBarRef = useRef();
   const searchBarContainerRef = useRef();
-  const { data: tokens } = useTokenBalances();
+  const { data: tokens } = useTokenBalances({ options: { enabled: !disabled } });
   const token = tokens?.data?.[0] || {};
 
   const debouncedSearchTerm = useDebounce(searchTextValue, 500);
-  const { addresses, validators, transactions, blocks, isLoading } = useSearch(debouncedSearchTerm);
+  const { addresses, validators, transactions, blocks, isLoading } = useSearch(
+    debouncedSearchTerm,
+    { disabled }
+  );
 
   const { t } = useTranslation();
 
@@ -66,8 +70,8 @@ const SearchBar = ({ className, history }) => {
   const onSelectBlock = (value) => onSelectedRow('block', value);
 
   const onKeyPress = () => {
-    if (addresses.length) {
-      onSelectAccount(addresses[rowItemIndex].address);
+    if (Object.keys(addresses).length) {
+      onSelectAccount(addresses.address);
     }
     if (validators.length) {
       onSelectValidatorAccount(validators[rowItemIndex]?.address);
@@ -81,7 +85,8 @@ const SearchBar = ({ className, history }) => {
   };
 
   const onHandleKeyPress = (e) => {
-    const suggestionsLength = addresses.length || validators.length || transactions.length;
+    const suggestionsLength =
+      Object.keys(addresses).length || validators.length || transactions.length;
 
     if (suggestionsLength >= 1) {
       switch (e.keyCode) {
@@ -106,7 +111,7 @@ const SearchBar = ({ className, history }) => {
   const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
   const isEmptyResults =
     !isLoading &&
-    !addresses.length &&
+    !Object.keys(addresses).length &&
     !validators.length &&
     !transactions.length &&
     !blocks.length &&
@@ -135,19 +140,14 @@ const SearchBar = ({ className, history }) => {
           placeholder={t('Search within the network...')}
           onKeyDown={onHandleKeyPress}
           isLoading={isLoading}
+          disabled={disabled}
         />
       </div>
       {feedback && (
         <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span>
       )}
-      {!!addresses.length && (
-        <Wallet
-          wallets={addresses}
-          onSelectedRow={onSelectAccount}
-          rowItemIndex={rowItemIndex}
-          updateRowItemIndex={updateRowItemIndex}
-          t={t}
-        />
+      {!!Object.keys(addresses).length && (
+        <Wallet wallet={addresses} onSelectedRow={onSelectAccount} t={t} />
       )}
       {!!validators.length && (
         <Validators
@@ -174,4 +174,4 @@ const SearchBar = ({ className, history }) => {
   );
 };
 
-export default withRouter(SearchBar);
+export default SearchBar;

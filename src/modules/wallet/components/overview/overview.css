@@ -64,9 +64,9 @@
       margin: 12px 0;
 
       & > div:first-child {
-        font-size: var(--font-size-h6);
+        font-size: var(--font-size-h6) !important;
         font-weight: 500;
-        color: var(--color-maastricht-blue);
+        color: var(--color-maastricht-blue) !important;
       }
 
       & > div:last-child {

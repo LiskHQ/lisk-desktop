@@ -10,6 +10,8 @@ import {
   TxDate,
   Amount,
   Fee,
+  MessageFee,
+  ReceivingChain,
   NumberOfSignatures,
   Stakes,
   BlockId,
@@ -26,12 +28,14 @@ import styles from './layoutSchema.css';
 
 const {
   transfer,
-  stakeValidator,
+  transferCrossChain,
+  stake,
   unlock,
   registerValidator,
   registerMultisignature,
   reportMisbehavior,
   reclaimLSK,
+  claimRewards,
 } = MODULE_COMMANDS_NAME_MAP;
 
 const baseComponents = [Illustration, Sender];
@@ -48,11 +52,23 @@ export const LayoutSchema = {
     components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],
     className: styles.transferPreview,
   },
-  [stakeValidator]: {
+  [`${transferCrossChain}-preview`]: {
+    components: [
+      ...previewBaseComponents,
+      ReceivingChain,
+      Recipient,
+      Amount,
+      Message,
+      MessageFee,
+      ...restComponents,
+    ],
+    className: styles.transferCrossChainPreview,
+  },
+  [stake]: {
     components: [...baseComponents, ...timeComponents, Stakes, PrettyJson],
     className: styles.stakeLayout,
   },
-  [`${stakeValidator}-preview`]: {
+  [`${stake}-preview`]: {
     components: [...previewBaseComponents, Stakes, ...restComponents],
     className: styles.stakePreview,
   },
@@ -61,6 +77,14 @@ export const LayoutSchema = {
     className: styles.registerValidator,
   },
   [`${registerValidator}-preview`]: {
+    components: [...previewBaseComponents, ...restComponents],
+    className: styles.registerValidatorPreview,
+  },
+  [claimRewards]: {
+    components: [...baseComponents, ...timeComponents, PrettyJson],
+    className: styles.registerValidator,
+  },
+  [`${claimRewards}-preview`]: {
     components: [...previewBaseComponents, ...restComponents],
     className: styles.registerValidatorPreview,
   },

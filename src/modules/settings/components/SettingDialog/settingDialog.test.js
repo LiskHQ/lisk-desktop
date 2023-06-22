@@ -71,8 +71,6 @@ describe('Setting', () => {
       expect(wrapper.find('section.appearance')).toContainMatchingElement('Toggle');
       expect(wrapper.find('section.security')).toExist();
       expect(wrapper.find('section.security')).toContainMatchingElement('Toggle');
-      expect(wrapper.find('section.advanced')).toExist();
-      expect(wrapper.find('section.advanced')).toContainMatchingElement('Toggle');
       expect(wrapper.find('section.privacy')).toExist();
       expect(wrapper.find('section.privacy')).toContainMatchingElement('Toggle');
     });

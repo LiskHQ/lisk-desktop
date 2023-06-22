@@ -19,7 +19,7 @@ const componentState = Object.freeze({ editing: 1, notEditing: 2 });
 
 const StakeRow = ({
   t = (s) => s,
-  data: { address, commission, username, confirmed, unconfirmed },
+  data: { address, commission, name, confirmed, unconfirmed },
   index,
   history,
   token,
@@ -65,7 +65,7 @@ const StakeRow = ({
         <WalletVisual address={address} disabled={!unconfirmed} />
         <div className={styles.validatorInfo}>
           <span className={`${styles.validatorUsername} ${!unconfirmed ? styles.disabled : ''}`}>
-            {username || ''}
+            {name || ''}
           </span>
           <span className={styles.validatorAddress}>{truncatedAddress}</span>
         </div>
@@ -75,7 +75,7 @@ const StakeRow = ({
       </span>
       {state === componentState.notEditing ? (
         <>
-          <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
+          <span className={`${styles.amountColumn} ${styles.centerContent}`}>
             {!!confirmed && (
               <span className={`${styles.oldAmountColumn}`}>
                 <TokenAmount val={confirmed} token={token} />

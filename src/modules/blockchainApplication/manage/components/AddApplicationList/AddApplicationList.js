@@ -14,6 +14,7 @@ import { useSearchApplications } from '../../hooks/useSearchApplications';
 import AddApplicationSearch from '../AddApplicationSearch/AddApplicationSearch';
 import AddApplicationRow from '../AddApplicationRow/AddApplicationRow';
 import styles from './AddApplicationList.css';
+import { useApplicationManagement } from '../../hooks';
 
 const header = () => [
   {
@@ -27,6 +28,7 @@ const AddApplicationList = () => {
   const { mainChainNetwork } = useSettings('mainChainNetwork');
   const { ...searchApplicationData } = useSearchApplications();
   const { isUrl, urlStatus, debouncedSearchValue } = searchApplicationData;
+  const { applications } = useApplicationManagement();
 
   return (
     <Dialog className={styles.dialog} hasClose>
@@ -45,7 +47,12 @@ const AddApplicationList = () => {
               options: { enabled: (isUrl && urlStatus === 'ok') || !isUrl },
               client: new Client({ http: mainChainNetwork?.serviceUrl }),
             }}
-            transformResponse={(response) => useMergeApplicationExploreAndMetaData(response)}
+            transformResponse={(response) =>
+              useMergeApplicationExploreAndMetaData(response).filter(
+                ({ chainID }) =>
+                  !applications.some((managedApps) => managedApps.chainID === chainID)
+              )
+            }
             row={AddApplicationRow}
             headerClassName={styles.tableHeader}
             header={header()}

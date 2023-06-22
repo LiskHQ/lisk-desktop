@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 // This is covered by e2e tests
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { settingsRetrieved } from 'src/modules/settings/store/actions';
@@ -18,15 +18,28 @@ import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
 import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
+import NetworkError from 'src/modules/common/components/NetworkError/NetworkError';
+import PageLoader from 'src/modules/common/components/pageLoader';
 import MainRouter from './MainRouter';
 import './variables.css';
 import styles from './app.css';
+import { ApplicationBootstrapContext } from './ApplicationBootstrap';
 
 if (MOCK_SERVICE_WORKER) {
   const { worker } = require('src/service/mock/runtime');
 
   worker.start({ onUnhandledRequest: 'bypass' });
 }
+
+const AppContent = () => {
+  const { hasNetworkError, refetchNetwork, error, isLoadingNetwork } = useContext(
+    ApplicationBootstrapContext
+  );
+
+  if (isLoadingNetwork) return <PageLoader />;
+
+  return hasNetworkError ? <NetworkError onRetry={refetchNetwork} error={error} /> : <MainRouter />;
+};
 
 // eslint-disable-next-line max-statements
 const App = ({ history }) => {
@@ -67,7 +80,7 @@ const App = ({ history }) => {
           <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
             <section className="scrollContainer">
               <FlashMessageHolder />
-              <MainRouter />
+              <AppContent />
             </section>
           </main>
         </OfflineWrapper>

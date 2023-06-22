@@ -1,60 +1,59 @@
 import React from 'react';
-import { useFakeTimers } from 'sinon';
-import { mount } from 'enzyme';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import ConfirmPassphrase from './confirmPassphrase';
 
 describe('Register Process - Confirm Passphrase', () => {
-  let wrapper;
-  let clock;
-
   const props = {
     passphrase: 'barely feature filter inmate exotic sister dog boil crush build canvas latin',
     nextStep: jest.fn(),
   };
 
-  const selectWrongWords = (comp) => {
-    comp
-      .find('div.option')
-      .forEach((option) => !props.passphrase.includes(option.text()) && option.simulate('click'));
+  const selectWrongWords = async () => {
+    const [wrong1, wrong2] = screen
+      .getAllByTestId('option')
+      .reduce(
+        (result, element) =>
+          !props.passphrase.includes(element.innerHTML) ? [...result, element] : result,
+        []
+      );
+
+    fireEvent.click(wrong1);
+    fireEvent.click(wrong2);
   };
 
-  const selectRightWords = (comp) => {
-    comp
-      .find('div.option')
-      .forEach((option) => props.passphrase.includes(option.text()) && option.simulate('click'));
+  const selectRightWords = () => {
+    screen
+      .getAllByTestId('option')
+      .forEach(
+        (element) => props.passphrase.includes(element.innerHTML) && fireEvent.click(element)
+      );
   };
 
-  beforeEach(() => {
-    wrapper = mount(<ConfirmPassphrase {...props} />);
-    clock = useFakeTimers({
-      now: new Date(2018, 1, 1),
-      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
-    });
+  it('Should handle selection', async () => {
+    render(<ConfirmPassphrase {...props} />);
+    selectRightWords();
+    selectRightWords();
+    fireEvent.click(screen.getByTestId('confirm-button'));
+
+    await waitFor(() => {
+      expect(props.nextStep).toHaveBeenCalled();
+    }, 5000);
   });
 
-  afterEach(() => {
-    clock.restore();
-  });
+  it('Should update empty values after wrong selection', async () => {
+    render(<ConfirmPassphrase {...props} />);
+    selectWrongWords();
+    fireEvent.click(screen.getByTestId('confirm-button'));
 
-  it('Should handle selection', () => {
-    wrapper.find('.passphraseContainer');
-    selectRightWords(wrapper);
-    expect(wrapper.find('.selected')).toExist();
-    selectRightWords(wrapper);
-    wrapper.find('.confirmPassphraseFooter Button').at(0).simulate('click');
-    expect(wrapper.find('.correct')).toExist();
-    clock.tick(1500);
-    wrapper.update();
-    expect(props.nextStep).toHaveBeenCalled();
-  });
+    await waitFor(() => {
+      const inputFields = screen.getAllByTestId('word');
+      const [missingWord1, missingWord2] = inputFields.reduce((result, { innerHTML }, index) => {
+        if (innerHTML === '_______') return [...result, index];
+        return result;
+      }, []);
 
-  it('Should update empty values after wrong selection', () => {
-    wrapper.find('.passphraseContainer');
-    selectWrongWords(wrapper);
-    selectWrongWords(wrapper);
-    wrapper.find('.confirmPassphraseFooter Button').at(0).simulate('click');
-    clock.tick(1500);
-    wrapper.update();
-    expect(wrapper.find('.emptyWord')).toExist();
+      expect(missingWord1 + 1).toBeTruthy();
+      expect(missingWord2 + 1).toBeTruthy();
+    }, 5000);
   });
 });

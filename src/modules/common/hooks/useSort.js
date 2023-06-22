@@ -9,8 +9,8 @@ export default function useSort({ defaultSort, data = [] } = {}) {
     const [sortParam, sortOrder] = sort.split(':');
 
     return data.sort((a, b) => {
-      if (sortOrder === 'desc') return b[sortParam] > a[sortParam] ? 1 : -1;
-      if (sortOrder === 'asc') return b[sortParam] < a[sortParam] ? 1 : -1;
+      if (sortOrder === 'desc') return (b[sortParam] || 0) > (a[sortParam] || 0) ? 1 : -1;
+      if (sortOrder === 'asc') return (b[sortParam] || 0) < (a[sortParam] || 0) ? 1 : -1;
       return -1;
     });
   }, [data, sort]);

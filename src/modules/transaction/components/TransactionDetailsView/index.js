@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useMemo, useState } from 'react';
-import { withRouter } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import ReactJson from 'react-json-view';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'src/utils/helpers';
@@ -22,8 +22,9 @@ import TransactionDetailRow from '../TransactionDetailRow';
 import header from './headerMap';
 import { splitModuleAndCommand } from '../../utils';
 
-const TransactionDetails = ({ location }) => {
-  const transactionID = parseSearchParams(location.search).transactionID;
+const TransactionDetails = () => {
+  const { search } = useLocation();
+  const transactionID = parseSearchParams(search).transactionID;
   const { t } = useTranslation();
   const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
   const { data: fees } = useFees();
@@ -83,7 +84,7 @@ const TransactionDetails = ({ location }) => {
         value: nonce,
       },
       {
-        label: t('Status'),
+        label: t('Execution status'),
         value: executionStatus,
         type: 'status',
       },
@@ -100,7 +101,7 @@ const TransactionDetails = ({ location }) => {
       },
       {
         label: t('Block status'),
-        value: block.isFinal ? 'Final' : 'Not final',
+        value: block.isFinal ? 'Final' : 'Pending',
       },
       {
         label: t('Block height'),
@@ -159,4 +160,4 @@ const TransactionDetails = ({ location }) => {
   );
 };
 
-export default withRouter(TransactionDetails);
+export default TransactionDetails;

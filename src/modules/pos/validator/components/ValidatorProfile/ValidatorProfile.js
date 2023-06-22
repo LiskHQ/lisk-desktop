@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
-import Heading from 'src/modules/common/components/Heading';
-import { toast } from 'react-toastify';
-import FlashMessageHolder from 'src/theme/flashMessage/holder';
+import Heading from '@common/components/Heading';
+import FlashMessageHolder from '@theme/flashMessage/holder';
+import routes from 'src/routes/routes';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
 import Box from '@theme/box';
 import styles from './ValidatorProfile.css';
@@ -110,6 +111,7 @@ const ValidatorProfile = ({ history }) => {
             />
           )
         }
+        onGoBack={() => history.push(routes.validators.path)}
       >
         <div className={styles.rightHeaderSection}>
           <div className={styles.actionButtons}>
@@ -126,7 +128,7 @@ const ValidatorProfile = ({ history }) => {
         isLoading={isLoadingValidators}
         className={`${grid.row} ${styles.statsContainer} stats-container`}
       >
-        <DetailsView data={validator} isMyProfile={isMyProfile} />
+        <DetailsView data={validator} isMyProfile={isMyProfile} address={address} />
         <PerformanceView data={{ ...validator, producedBlocks: generatedBlocks?.meta?.total }} />
       </Box>
       <ValidatorStakesView address={address} />

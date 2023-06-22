@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -12,16 +13,20 @@ class PassphraseRenderer extends React.Component {
     const initialIndexes = [2, 9];
 
     this.state = {
-      indexes: initialIndexes,
-      fieldSelected: initialIndexes[0],
       chosenWords: {},
-      options: this.assembleWordOptions(this.values, initialIndexes),
       isCorrect: false,
       hasErrors: false,
+      indexes: initialIndexes,
+      fieldSelected: initialIndexes[0],
+      options: this.assembleWordOptions(this.values, initialIndexes),
     };
 
     this.handleConfirm = this.handleConfirm.bind(this);
     this.setRandomIndexesFromPassphrase = this.setRandomIndexesFromPassphrase.bind(this);
+  }
+
+  componentDidMount() {
+    this.setRandomIndexesFromPassphrase();
   }
 
   componentWillUnmount() {
@@ -137,6 +142,11 @@ class PassphraseRenderer extends React.Component {
     const { t, showInfo, isConfirmation, prevStep, footerStyle, subheader, confirmText } =
       this.props;
     const { options, fieldSelected, chosenWords } = this.state;
+    const hasChoosenWords = Object.values(chosenWords).length === 2;
+
+    // eslint-disable-next-line no-restricted-globals
+    if ((isNaN(fieldSelected) && !hasChoosenWords) || !options) return null;
+
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
 
     return (
@@ -157,11 +167,14 @@ class PassphraseRenderer extends React.Component {
           <div className={`${styles.inputsRow} ${grid.row} passphrase`}>
             {this.values.map((value, i) => (
               <div
-                onClick={() => this.handleClick(i)}
+                onClick={() =>
+                  isConfirmation && missingWordsIndexes.includes(i) ? this.handleClick(i) : null
+                }
                 className={`${grid['col-xs-2']} ${styles.inputContainer}`}
                 key={i}
               >
                 <span
+                  data-testid="word"
                   className={`${styles.inputValue} ${this.getStyle(i, missingWordsIndexes)} word`}
                 >
                   {isConfirmation && missingWordsIndexes.includes(i)
@@ -177,6 +190,7 @@ class PassphraseRenderer extends React.Component {
             typeof fieldSelected === 'number' &&
             options[fieldSelected].map((option, i) => (
               <div
+                data-testid="option"
                 className="option"
                 onClick={() => this.chooseWord(fieldSelected, option)}
                 key={i}
@@ -188,6 +202,7 @@ class PassphraseRenderer extends React.Component {
         {isConfirmation && (
           <div className={`${styles.confirmPassphraseFooter} ${footerStyle}`}>
             <PrimaryButton
+              data-testid="confirm-button"
               className={[styles.confirmBtn, 'confirm'].join(' ')}
               onClick={this.handleConfirm}
               disabled={Object.keys(chosenWords).length < 2}

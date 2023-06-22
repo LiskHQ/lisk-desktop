@@ -48,7 +48,7 @@ describe('StakingQueue.Result', () => {
     const element = wrapper.find('StakeSuccessfulModal');
 
     expect(element.text()).toContain(
-      '0.000003 LSK will be available to unlock in {{unlockTime}}h.'
+      '0.000003 LSK Your tokens will be available to unlock when the locking period ends.'
     );
   });
 
@@ -60,7 +60,7 @@ describe('StakingQueue.Result', () => {
     const element = wrapper.find('StakeSuccessfulModal');
 
     expect(element.text()).toContain(
-      'You have now locked 0.000002 LSK for staking and may unlock 0.000003 LSK in {{unlockTime}} hours.'
+      'You have now locked 0.000002 LSK for staking and may unlock 0.000003 LSK when the locking period ends.'
     );
   });
 

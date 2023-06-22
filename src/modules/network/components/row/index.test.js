@@ -11,8 +11,8 @@ describe('Peer Row', () => {
       location: {
         countryCode: 49,
       },
-      version: '3.0',
-      httpPort: 8080,
+      networkVersion: '3.0',
+      port: 8080,
     },
     className: 'customTestClassNames',
   };
@@ -22,6 +22,12 @@ describe('Peer Row', () => {
     expect(wrapper.find('span').at(0)).toHaveText('192.168.0.1');
     expect(wrapper.find('span').at(1)).toHaveText('8080');
     expect(wrapper.find('.network-span')).toHaveText('3.0');
+  });
+
+  it('renders the fallback data if data is unavailable', () => {
+    const wrapper = mount(<Row data={{}} />);
+    expect(wrapper.find('span').at(3)).toHaveText('Unknown');
+    expect(wrapper.find('span').at(4)).toHaveText('Unknown');
   });
 
   it('does not re-render if height or ip do not change', () => {

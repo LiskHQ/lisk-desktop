@@ -18,7 +18,7 @@ export const CopyFooter = ({ t, onCopy, copied, onDownload, prevStep }) => {
       </SecondaryButton>
       <SecondaryButton className={`copy-button ${theme === 'dark' && 'dark'}`} onClick={onCopy}>
         <span className={styles.buttonContent}>
-          <Icon name={copied ? 'checkmark' : 'copy'} />
+          <Icon name={copied ? 'transactionStatusSuccess' : 'copy'} />
           {t(copied ? 'Copied' : 'Copy')}
         </span>
       </SecondaryButton>
@@ -53,7 +53,7 @@ export const CopyAndSendFooter = ({ t, onSend, onCopy, copied, onDownload, histo
         <>
           <SecondaryButton className="copy-button" onClick={onCopy}>
             <span className={styles.buttonContent}>
-              <Icon name={copied ? 'checkmark' : 'copy'} />
+              <Icon name={copied ? 'transactionStatusSuccess' : 'copy'} />
               {t(copied ? 'Copied' : 'Copy')}
             </span>
           </SecondaryButton>

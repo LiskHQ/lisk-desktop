@@ -28,7 +28,7 @@ const getStakeStats = (stakes, account) => {
   const stakesStats = Object.keys(stakes).reduce(
     // eslint-disable-next-line max-statements
     (stats, address) => {
-      const { confirmed, unconfirmed, username } = stakes[address];
+      const { confirmed, unconfirmed, name } = stakes[address];
 
       if (confirmed === 0 && unconfirmed === 0) {
         return stats;
@@ -36,19 +36,19 @@ const getStakeStats = (stakes, account) => {
 
       if (!confirmed && unconfirmed) {
         // new stake
-        stats.added[address] = { unconfirmed, username };
+        stats.added[address] = { unconfirmed, name };
       } else if (confirmed && !unconfirmed) {
         // removed stake
-        stats.removed[address] = { confirmed, username };
+        stats.removed[address] = { confirmed, name };
         if (address === account.summary?.address) {
-          stats.selfUnStake = { confirmed, username };
+          stats.selfUnStake = { confirmed, name };
         }
       } else if (confirmed !== unconfirmed) {
         // edited stake
-        stats.edited[address] = { unconfirmed, confirmed, username };
+        stats.edited[address] = { unconfirmed, confirmed, name };
       } else {
         // untouched
-        stats.untouched[address] = { unconfirmed, confirmed, username };
+        stats.untouched[address] = { unconfirmed, confirmed, name };
       }
       return stats;
     },
@@ -227,7 +227,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
                       token: posToken,
                     }}
                     headerClassName={styles.tableHeader}
-                    empytState={{ illustration: 'emptyStakingQueueIllustration' }}
+                    emptyState={{ illustration: 'emptyStakingQueueIllustration' }}
                   />
                 </div>
               </BoxContent>

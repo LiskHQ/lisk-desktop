@@ -72,7 +72,11 @@ function MenuSelect({
           className={styles.overlay}
         />
       )}
-      <div onClick={handleOnClick} className={`${styles.wrapper} ${className}`}>
+      <div
+        data-testid="dropdown-input"
+        onClick={handleOnClick}
+        className={`${styles.wrapper} ${className}`}
+      >
         <div data-testid="selected-menu-item">{children[selectedIndex]}</div>
         {!disabled && <DropdownIconState isLoading={isLoading} isValid={isValid} />}
       </div>

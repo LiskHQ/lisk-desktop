@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import React, { useCallback, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
@@ -12,7 +12,8 @@ import Summary from '../SendSummary';
 import Status from '../SendStatus';
 import styles from './send.css';
 
-const Send = ({ history }) => {
+const Send = () => {
+  const history = useHistory();
   const [isStepTxSignatureCollector, setIsStepTxSignatureCollector] = useState(false);
   const backToWallet = () => {
     history.push(routes.wallet.path);
@@ -40,4 +41,4 @@ const Send = ({ history }) => {
   );
 };
 
-export default withRouter(Send);
+export default Send;

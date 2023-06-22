@@ -52,7 +52,7 @@ const getInitialToken = (transactionData, initialTokenId, tokens) => {
 
 // eslint-disable-next-line max-statements
 const SendForm = (props) => {
-  const { account = {}, prevState, t, bookmarks, nextStep } = props;
+  const { prevState, t, bookmarks, nextStep } = props;
   const [recipientChain, setRecipientChain] = useState({});
   const [token, setToken] = useState({});
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
@@ -65,11 +65,14 @@ const SendForm = (props) => {
   );
   const [amount, setAmountField] = useAmountField(
     getInitialAmount(props.prevState?.formProps, props.initialValue?.amount, token),
-    account.summary?.balance,
+    token?.availableBalance,
     token
   );
   const [recipient, setRecipientField] = useRecipientField(
-    getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
+    getInitialRecipient(
+      props.prevState?.formProps,
+      props.initialValue?.address ?? props.initialValue?.recipient
+    )
   );
   const { isAccountInitialized, initializationFees } = useGetInitializationFees({
     address: recipient.value,

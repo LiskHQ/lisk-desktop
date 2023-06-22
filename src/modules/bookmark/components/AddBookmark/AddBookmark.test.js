@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { smartRender } from 'src/utils/testHelpers';
 import { tokenMap, tokenKeys } from '@token/fungible/consts/tokens';
 import accounts from '@tests/constants/wallets';
 import AddBookmark from './AddBookmark';
@@ -9,7 +8,6 @@ describe('Add a new bookmark component', () => {
     LSK: [],
   };
   const props = {
-    t: (v) => v,
     token: {
       active: tokenMap.LSK.key,
     },
@@ -22,36 +20,33 @@ describe('Add a new bookmark component', () => {
         },
       },
     },
-    history: {
-      push: jest.fn(),
-      location: {
-        search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isValidator=false`,
-      },
-    },
-    account: {
-      data: {
-        summary: {},
-        pos: {},
-      },
-      loadData: jest.fn(),
-    },
     bookmarkAdded: jest.fn(),
     prevStep: jest.fn(),
+  };
+  const history = {
+    push: jest.fn(),
+    location: {
+      search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isValidator=false`,
+    },
   };
   const addresses = {
     LSK: accounts.genesis.summary.address,
   };
 
   let wrapper;
+  const config = {
+    renderType: 'mount',
+    historyInfo: history,
+    queryClient: true,
+  };
 
   beforeEach(() => {
-    wrapper = mount(<AddBookmark {...props} />);
+    wrapper = smartRender(AddBookmark, props, config).wrapper;
   });
 
   afterEach(() => {
-    props.history.push.mockClear();
+    history.push.mockClear();
     props.bookmarkAdded.mockClear();
-    props.account.loadData.mockReset();
   });
 
   it('Should render properly and with pristine state', () => {
@@ -102,16 +97,20 @@ describe('Add a new bookmark component', () => {
             name: 'address',
           },
         });
-      wrapper.setProps({
+      const updatedProps = {
+        ...props,
         account: { ...props.account, data: accounts.validator },
-        history: {
+      };
+      const updatedConfig = {
+        ...config,
+        historyInfo: {
           push: jest.fn(),
           location: {
             search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isValidator=true`,
           },
         },
-      });
-      wrapper.update();
+      };
+      wrapper = smartRender(AddBookmark, updatedProps, updatedConfig).wrapper;
       expect(wrapper.find('input[name="label"]')).toHaveValue(accountUsername);
       expect(wrapper.find('input[name="label"]')).toHaveProp('readOnly', true);
       expect(wrapper.find('button').at(0)).not.toBeDisabled();
@@ -121,11 +120,13 @@ describe('Add a new bookmark component', () => {
 
   describe('Fail scenarios', () => {
     beforeEach(() => {
-      wrapper.setProps({
+      const updatedProps = {
+        ...props,
         bookmarks: {
           LSK: [{ address: addresses.LSK, title: 'genesis' }],
         },
-      });
+      };
+      wrapper = smartRender(AddBookmark, updatedProps, config).wrapper;
     });
 
     tokenKeys.forEach((token) => {

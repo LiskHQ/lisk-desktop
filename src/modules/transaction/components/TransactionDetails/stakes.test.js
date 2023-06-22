@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
@@ -12,8 +12,8 @@ jest.spyOn(React, 'useContext').mockImplementation(() => ({
     type: 3,
     params: {
       stakes: [
-        { address: 'lsk123', amount: '1000000000' },
-        { address: 'lsk987', amount: '-2000000000' },
+        { validatorAddress: 'lsk123', amount: '1000000000' },
+        { validatorAddress: 'lsk987', amount: '-2000000000' },
       ],
     },
   },
@@ -32,7 +32,7 @@ describe('Transaction stakes', () => {
   usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
 
   it('Should render with added and deleted Stakes', () => {
-    wrapper = mount(<StakesPure {...props} />);
+    wrapper = mountWithRouter(StakesPure, props);
     expect(wrapper).toContainMatchingElements(2, '.stake-item-address');
     expect(wrapper.find('.primaryText').at(0).text()).toEqual('lsk123');
     expect(wrapper.find('.stake-item-value').at(0).text()).toEqual('10 LSK');
@@ -48,16 +48,16 @@ describe('Transaction stakes', () => {
         data: {
           lsk123: {
             ...accounts.validator_candidate,
-            account: { address: accounts.validator_candidate.address },
+            account: { validatorAddress: accounts.validator_candidate.address },
           },
           lsk987: {
             ...accounts.validator,
-            account: { address: accounts.validator.address },
+            account: { validatorAddress: accounts.validator.address },
           },
         },
       },
     };
-    wrapper = mount(<StakesPure {...newProps} />);
+    wrapper = mountWithRouter(StakesPure, newProps);
     expect(newProps.stakedValidator.loadData).toHaveBeenCalled();
     expect(wrapper.find('.primaryText').at(0).text()).toEqual('lsk123');
     expect(wrapper.find('.primaryText').at(1).text()).toEqual('lsk987');

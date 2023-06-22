@@ -1,6 +1,6 @@
-import React from 'react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { smartRender } from 'src/utils/testHelpers';
 import { cryptography } from '@liskhq/lisk-client';
-import { mount } from 'enzyme';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import { mockAuth } from '@auth/__fixtures__';
@@ -28,7 +28,6 @@ jest.mock('@transaction/hooks/useTxInitiatorAccount');
 jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('Sign Multisignature Tx Review component', () => {
-  let wrapper;
   const props = {
     t: (v) => v,
     account: {
@@ -79,10 +78,6 @@ describe('Sign Multisignature Tx Review component', () => {
     usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
   });
 
-  beforeEach(() => {
-    wrapper = mount(<Summary {...props} />);
-  });
-
   useTxInitiatorAccount.mockReturnValue({
     txInitiatorAccount: {
       ...mockAuth.data,
@@ -96,13 +91,15 @@ describe('Sign Multisignature Tx Review component', () => {
     isLoading: false,
   });
 
-  it('Should call props.nextStep passing the signed transaction', () => {
-    wrapper = mount(<Summary {...props} />);
+  it('Should call props.nextStep passing the signed transaction', async () => {
+    smartRender(Summary, props);
     const { transactionJSON, formProps } = props;
     const signatures = props.transactionJSON.signatures;
     signatures[1] = wallets.genesis.summary.publicKey;
 
-    wrapper.find('button.sign').simulate('click');
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Sign'));
+    });
 
     expect(props.nextStep).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -122,9 +119,11 @@ describe('Sign Multisignature Tx Review component', () => {
     );
   });
 
-  it('Should call props.prevStep', () => {
-    wrapper = mount(<Summary {...props} />);
-    wrapper.find('button.reject').simulate('click');
+  it('Should call props.prevStep', async () => {
+    smartRender(Summary, props);
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Reject'));
+    });
     expect(removeSearchParamsFromUrl).toHaveBeenCalledWith(props.history, ['modal']);
   });
 
@@ -153,20 +152,20 @@ describe('Sign Multisignature Tx Review component', () => {
         },
       },
     };
-    wrapper = mount(<Summary {...newProps} />);
+    smartRender(Summary, newProps);
     const { params } = newProps.transactionJSON;
     const expectedLength = params.mandatoryKeys.length + params.optionalKeys.length;
-    const html = wrapper.html();
-    expect(wrapper).toContainMatchingElements(expectedLength, '.member-info');
-    expect(html).toContain('0.00196 LSK');
+    expect(screen.queryAllByTestId('member-info').length).toEqual(expectedLength);
+    expect(screen.getByText('0.00196 LSK')).toBeInTheDocument();
   });
 
   it('Should render properly when senderAccount is empty', () => {
     useTxInitiatorAccount.mockReturnValue({
       txInitiatorAccount: {},
     });
-    wrapper = mount(<Summary {...props} />);
-    const html = wrapper.html();
-    expect(html).toEqual('<div></div>');
+    smartRender(Summary, props);
+    expect(screen.queryAllByTestId('member-info').length).toEqual(0);
+    expect(screen.queryAllByText('Reject').length).toEqual(0);
+    expect(screen.queryAllByText('Sign').length).toEqual(0);
   });
 });

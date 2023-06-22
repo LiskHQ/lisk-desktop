@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '@pos/validator/consts/validators';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
@@ -27,7 +26,7 @@ const Warning = ({ stake, ...props }) => {
 
   const { daysLeft, punishmentStartDate } = getPunishmentDetails(
     blocksAtHeight.timestamp,
-    props.pomHeight,
+    pomHeight,
     currentHeight
   );
 
@@ -51,4 +50,4 @@ export const EditStakeWarning = ({ daysLeft, ...props }) => (
   <StakeWarning {...props} daysLeft={daysLeft} />
 );
 
-export default withRouter(Warning);
+export default Warning;

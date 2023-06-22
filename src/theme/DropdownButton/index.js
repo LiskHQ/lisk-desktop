@@ -19,6 +19,7 @@ const DropdownButton = forwardRef(
       wrapperClassName,
       buttonClassName,
       className,
+      showArrow = false,
     },
     ref
   ) => {
@@ -55,7 +56,7 @@ const DropdownButton = forwardRef(
             {buttonLabel}
           </ButtonComponent>
           <Dropdown
-            showArrow={false}
+            showArrow={showArrow}
             showDropdown={shownDropdown}
             className={`${styles.dropdown} ${className}`}
             align={align}

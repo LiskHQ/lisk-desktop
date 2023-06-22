@@ -1,6 +1,6 @@
 /* eslint-disable complexity, max-statements */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
@@ -21,7 +21,8 @@ import networks from '../../configuration/networks';
 import { useNetworkStatus } from '../../hooks/queries';
 import styles from './NetworkSwitcherDropdown.css';
 
-function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess, history }) {
+function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
+  const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
@@ -137,4 +138,4 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess, history }) {
   );
 }
 
-export default withRouter(NetworkSwitcherDropdown);
+export default NetworkSwitcherDropdown;

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
@@ -20,31 +20,35 @@ const Error = ({ t }) => (
   </BoxContent>
 );
 
-const Success = ({ t, signature, copied, copy, history, onPrev }) => (
-  <>
-    <BoxContent>
-      <AutoResizeTextarea className={`${styles.result} result`} value={signature} readOnly />
-    </BoxContent>
-    <BoxFooter direction="horizontal">
-      <SecondaryButton
-        onClick={() => {
-          onPrev?.();
-          removeSearchParamsFromUrl(history, ['modal'], true);
-        }}
-        className={`${styles.button} close`}
-      >
-        {t('Close')}
-      </SecondaryButton>
-      <CopyToClipboard onCopy={copy} text={signature}>
-        <PrimaryButton disabled={copied} className={`${styles.button} copy-to-clipboard`}>
-          {copied ? t('Copied!') : t('Copy to clipboard')}
-        </PrimaryButton>
-      </CopyToClipboard>
-    </BoxFooter>
-  </>
-);
+const Success = ({ t, signature, copied, copy, onPrev }) => {
+  const history = useHistory();
+  return (
+    <>
+      <BoxContent>
+        <AutoResizeTextarea className={`${styles.result} result`} value={signature} readOnly />
+      </BoxContent>
+      <BoxFooter direction="horizontal">
+        <SecondaryButton
+          onClick={() => {
+            onPrev?.();
+            removeSearchParamsFromUrl(history, ['modal'], true);
+          }}
+          className={`${styles.button} close`}
+        >
+          {t('Close')}
+        </SecondaryButton>
+        <CopyToClipboard onCopy={copy} text={signature}>
+          <PrimaryButton disabled={copied} className={`${styles.button} copy-to-clipboard`}>
+            {copied ? t('Copied!') : t('Copy to clipboard')}
+          </PrimaryButton>
+        </CopyToClipboard>
+      </BoxFooter>
+    </>
+  );
+};
 
-const SignedMessage = ({ history, signature, error, account, onPrev }) => {
+const SignedMessage = ({ signature, error, account, onPrev }) => {
+  const history = useHistory();
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const ref = useRef();
@@ -71,4 +75,4 @@ const SignedMessage = ({ history, signature, error, account, onPrev }) => {
   );
 };
 
-export default withRouter(SignedMessage);
+export default SignedMessage;

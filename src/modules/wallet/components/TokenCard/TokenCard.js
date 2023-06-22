@@ -9,7 +9,7 @@ import styles from './TokenCard.css';
 
 const liskSymbol = 'LSK';
 
-const TokenCard = ({ token }) => {
+const TokenCard = ({ token, searchAddress }) => {
   const { symbol, availableBalance, lockedBalances } = token;
 
   const totalLockedBalance = lockedBalances?.reduce(
@@ -35,12 +35,13 @@ const TokenCard = ({ token }) => {
             tokenSymbol={token.symbol}
           />
         )}
-        {totalLockedBalance > BigInt(0) && (
+        {totalLockedBalance > BigInt(0) && !searchAddress && (
           <Link
             className={styles.lockedBalance}
             to={`${routes.sentStakes.path}/?modal=lockedBalance`}
           >
-            <Icon name="lock" /> <TokenAmount val={totalLockedBalance} token={token} />
+            <Icon name="lock" />
+            <TokenAmount val={totalLockedBalance} token={token} />
           </Link>
         )}
       </div>

@@ -1,6 +1,6 @@
 import routes from 'src/routes/routes';
 
-export const accountMenu = (authData, isHW) => [
+export const accountMenu = (authData, isHW, hasNetworkError, isLoadingNetwork) => [
   {
     component: 'editAccount',
     icon: 'edit',
@@ -15,7 +15,7 @@ export const accountMenu = (authData, isHW) => [
     path: routes.backupRecoveryPhraseFlow.path,
     icon: 'refresh',
     label: 'Backup account',
-    isHidden: isHW,
+    isHidden: isHW || hasNetworkError || isLoadingNetwork,
   },
   {
     path: routes.addAccountOptions.path,
@@ -26,11 +26,12 @@ export const accountMenu = (authData, isHW) => [
     component: 'multiSignature',
     icon: 'multiSignatureOutline',
     label: 'Register multisignature account',
-    isHidden: authData?.data?.numberOfSignatures > 0,
+    isHidden: authData?.data?.numberOfSignatures > 0 || hasNetworkError || isLoadingNetwork,
   },
   {
     component: 'removeSelectedAccount',
     icon: 'removeRed',
     label: 'Remove account',
+    isHidden: hasNetworkError || isLoadingNetwork,
   },
 ];

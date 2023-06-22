@@ -31,5 +31,7 @@
       "@auth/*": ["./src/modules/auth/*"],
       "@message/*": ["./src/modules/message/*"]
     }
-  }
+  },
+  "include": ["src/**/*", "libs"],
+  "exclude": ["node", "webpack"]
 }

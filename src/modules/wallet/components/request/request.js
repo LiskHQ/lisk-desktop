@@ -7,7 +7,7 @@ import {
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
 import { useNetworkSupportedTokens } from '@token/fungible/hooks/queries';
-import { validateAmountFormat } from 'src/utils/validators';
+import { validateAmount } from 'src/utils/validators';
 import { getLogo } from '@token/fungible/utils/helpers';
 import { sizeOfString } from 'src/utils/helpers';
 import { Input } from 'src/theme';
@@ -101,8 +101,8 @@ const Request = () => {
     const byteCount = sizeOfString(target.value);
     const error =
       target.name === 'amount'
-        ? validateAmountFormat({
-            value: target.value,
+        ? validateAmount({
+            amount: target.value,
             locale: i18n.language,
             token: state.token.value,
           }).message

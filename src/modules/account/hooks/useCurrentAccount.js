@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { selectCurrentAccount } from '@account/store/selectors';
 import { selectStaking } from 'src/redux/selectors';
 import { stakesReset } from '@pos/validator/store/actions/staking';
@@ -10,9 +11,9 @@ import { createConfirmSwitchState } from '@common/utils/createConfirmSwitchState
 import routes from 'src/routes/routes';
 import { setCurrentAccount } from '../store/action';
 
-// eslint-disable-next-line
-export function useCurrentAccount(history) {
+export function useCurrentAccount() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const stakingQueue = useSelector(selectStaking);
   const pendingStakes = Object.values(stakingQueue).filter(
     (stake) => stake.confirmed !== stake.unconfirmed

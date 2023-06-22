@@ -50,6 +50,7 @@ jest.mock('src/modules/common/hooks/useFiatRates');
 describe('Form', () => {
   let props;
   let bookmarks;
+  const availableBalance = '200000000'; // 2LSK
 
   useTokenBalances.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
   useTokenSummary.mockReturnValue({
@@ -69,7 +70,7 @@ describe('Form', () => {
   useTransferableTokens.mockReturnValue({
     data: mockAppsTokens.data.map((token) => ({
       ...token,
-      availableBalance: '200000000',
+      availableBalance,
       tokenName: token.chainName,
       logo: { svg: '', png: '' },
     })),
@@ -176,7 +177,9 @@ describe('Form', () => {
     wrapper
       .find('input.recipient')
       .simulate('change', { target: { name: 'recipient', value: address } });
-    wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '1' } });
+    wrapper
+      .find('.amount input')
+      .simulate('change', { target: { name: 'amount', value: '100000' } });
     act(() => {
       jest.advanceTimersByTime(300);
     });
@@ -220,8 +223,8 @@ describe('Form', () => {
 
     it('Should show bookmark title if address is a bookmark', () => {
       const wrapper = mountWithQueryClient(Form, props);
-      const receipientEvt = { target: { name: 'recipient', value: bookmarks.LSK[0].address } };
-      wrapper.find('input.recipient').simulate('change', receipientEvt);
+      const receipentEvt = { target: { name: 'recipient', value: bookmarks.LSK[0].address } };
+      wrapper.find('input.recipient').simulate('change', receipentEvt);
       act(() => {
         jest.advanceTimersByTime(300);
       });
@@ -304,7 +307,7 @@ describe('Form', () => {
 
     it('Should show error if transaction will result on an account with less than the minimum balance', () => {
       const wrapper = mountWithQueryClient(Form, props);
-      const evt = { target: { name: 'amount', value: '2.01' } };
+      const evt = { target: { name: 'amount', value: '2' } };
       const amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);
       act(() => {
@@ -334,10 +337,10 @@ describe('Form', () => {
 
     it('Should allow to send 0 LSK amount', () => {
       const wrapper = mountWithQueryClient(Form, props);
-      const receipientEvt = {
+      const recipient = {
         target: { name: 'recipient', value: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' },
       };
-      wrapper.find('input.recipient').simulate('change', receipientEvt);
+      wrapper.find('input.recipient').simulate('change', recipient);
       const evt = { target: { name: 'amount', value: '0' } };
       const amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);

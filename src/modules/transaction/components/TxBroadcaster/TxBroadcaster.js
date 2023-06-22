@@ -13,6 +13,7 @@ const TxBroadcaster = (props) => {
   useEffect(() => {
     const isMultisig =
       !props.transactions.txSignatureError &&
+      !props.transactions.txBroadcastError &&
       props.status.code !== txStatusTypes.broadcastSuccess &&
       (props.transactions.signedTransaction.signatures.length > 1 ||
         props.status.code === txStatusTypes.multisigSignaturePartialSuccess ||

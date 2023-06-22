@@ -65,7 +65,8 @@ class MultiStep extends React.Component {
       return 0;
     };
     const newState = { ...this.state };
-    newState.step.current = getTarget(this.state.step.current);
+    newState.step.current =
+      config?.step || config?.step === 0 ? config.step : getTarget(this.state.step.current);
     newState.step.data = config?.reset && !config.amount ? [{}] : newState.step.data;
     this.setState(newState);
     this.props.onChange?.(newState);

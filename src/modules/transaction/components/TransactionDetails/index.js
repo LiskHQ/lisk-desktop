@@ -3,6 +3,8 @@ export { default as BlockHeight } from './blockHeight';
 export { default as BlockId } from './blockId';
 export { default as Confirmations } from './confirmations';
 export { default as Fee } from './fee';
+export { default as MessageFee } from './messageFee';
+export { default as ReceivingChain } from './receivingChain';
 export { default as Illustration } from './illustration';
 export { default as Members } from './members';
 export { default as Message } from './message';

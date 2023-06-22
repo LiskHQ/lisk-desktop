@@ -5,8 +5,6 @@ import { statusMessages } from '@transaction/configuration/statusConfig';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './styles.css';
 
-const unlockTime = 5;
-
 const LiskAmountFormatted = ({ val, token }) => (
   <span className={styles.subHeadingBold}>
     <TokenAmount val={val} token={token} />
@@ -23,13 +21,17 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
         {regularUnlockable > BigInt(0) ? (
           <>
             <LiskAmountFormatted val={regularUnlockable.toString()} token={token} />{' '}
-            <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
+            <span>
+              {t('Your tokens will be available to unlock when the locking period ends.')}
+            </span>
           </>
         ) : null}
         {selfUnstakeUnlockable > 0 ? (
           <>
             <LiskAmountFormatted val={selfUnstakeUnlockable} token={token} />{' '}
-            <span>{t('will be available to unlock in 1 month.')}</span>
+            <span>
+              {t('Your tokens will be available to unlock when the locking period ends.')}
+            </span>
           </>
         ) : null}
       </>
@@ -49,7 +51,7 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
         <span>{t('You have now locked')}</span> <LiskAmountFormatted val={locked} token={token} />{' '}
         <span>{t('for staking and may unlock')}</span>{' '}
         <LiskAmountFormatted val={unlockable} token={token} />{' '}
-        <span>{t('in {{unlockTime}} hours.', { unlockTime })}</span>
+        <span>{t('when the locking period ends.')}</span>
       </>
     );
   }

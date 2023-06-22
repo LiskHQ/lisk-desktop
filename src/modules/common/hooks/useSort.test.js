@@ -16,6 +16,12 @@ describe('useSort hook', () => {
       prop1: 'test2',
       prop2: 2,
     },
+    {
+      prop1: 'test3',
+    },
+    {
+      prop2: 3,
+    },
   ];
 
   it('sorts list by the default sort order', async () => {
