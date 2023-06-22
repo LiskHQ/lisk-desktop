@@ -124,7 +124,7 @@ const getValidatorComponent = (status) => {
 const PerformanceView = ({ data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const status = data.status || '';
+  const status = data?.status || '';
   const ValidatorComponent = status.length ? getValidatorComponent(status) : () => null;
   const { token } = usePosToken();
   const rewardValue = convertFromBaseDenom(data?.earnedRewards, token);
