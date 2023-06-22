@@ -25,7 +25,10 @@ export const encryptAccount = async ({
     }
     const address = extractAddressFromPublicKey(publicKey);
     const plainText = JSON.stringify({ privateKey, recoveryPhrase });
-    const crypto = await encrypt.encryptMessageWithPassword(plainText, password);
+    // TODO: Remove the options after resolving it in https://github.com/LiskHQ/lisk-desktop/issues/5107
+    const crypto = await encrypt.encryptMessageWithPassword(plainText, password, {
+      kdfparams: { memorySize: 2048 },
+    });
 
     return {
       error: false,
