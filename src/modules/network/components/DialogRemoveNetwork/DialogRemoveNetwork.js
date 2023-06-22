@@ -18,23 +18,16 @@ const DialogRemoveNetwork = () => {
   const { t } = useTranslation();
   const { name, serviceUrl } = parseSearchParams(history.location.search);
   const { customNetworks, setValue } = useSettings('customNetworks');
-  const {
-    mainChainNetwork: { name: currentNetworkName },
-  } = useSettings('mainChainNetwork');
 
   const onCancel = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
   };
 
   const onConfirm = () => {
-    if (currentNetworkName === name) {
-      toast.error(`Error: Can't delete current network`, { position: 'bottom-right' });
-    } else {
-      const modifiedCustomNetworks = immutableDeleteFromArrayById(customNetworks, 'name', name);
-      setValue(modifiedCustomNetworks);
-      removeSearchParamsFromUrl(history, ['modal'], true);
-      toast.info(`Network removed "${name}"`, { position: 'bottom-right' });
-    }
+    const modifiedCustomNetworks = immutableDeleteFromArrayById(customNetworks, 'name', name);
+    setValue(modifiedCustomNetworks);
+    removeSearchParamsFromUrl(history, ['modal'], true);
+    toast.info(t(`Network removed "${name}"`), { position: 'bottom-right' });
   };
 
   return (

@@ -12,7 +12,7 @@ jest.mock('src/utils/searchParams', () => ({
 }));
 jest.mock('react-toastify', () => ({
   ...jest.requireActual('react-toastify'),
-  toast: { info: jest.fn(), error: jest.fn() },
+  toast: { info: jest.fn() },
 }));
 
 const mockSetValue = jest.fn();
@@ -46,7 +46,6 @@ describe('DialogRemoveNetwork', () => {
   it('renders properly', () => {
     useSettings.mockReturnValue({
       customNetworks,
-      mainChainNetwork: { name: 'betanet' },
       setValue: mockSetValue,
     });
     smartRender(DialogRemoveNetwork, null, config);
@@ -64,7 +63,6 @@ describe('DialogRemoveNetwork', () => {
   it('cancels and closes the modal if the cancel button is clicked', async () => {
     useSettings.mockReturnValue({
       customNetworks,
-      mainChainNetwork: { name: 'betanet' },
       setValue: mockSetValue,
     });
     smartRender(DialogRemoveNetwork, null, config);
@@ -79,7 +77,6 @@ describe('DialogRemoveNetwork', () => {
   it('removes the network if the confirm button is clicked', async () => {
     useSettings.mockReturnValue({
       customNetworks,
-      mainChainNetwork: { name: 'betanet' },
       setValue: mockSetValue,
     });
     const updatedConfig = {
@@ -98,32 +95,6 @@ describe('DialogRemoveNetwork', () => {
     await waitFor(() => {
       expect(removeSearchParamsFromUrl).toBeCalledTimes(1);
       expect(toast.info).toBeCalledWith(`Network removed "custom_beta_network"`, {
-        position: 'bottom-right',
-      });
-    });
-  });
-
-  it('displays an error if user tries to remove the currently connected custom network', async () => {
-    useSettings.mockReturnValue({
-      customNetworks,
-      mainChainNetwork: { name: 'custom_beta_network' },
-      setValue: mockSetValue,
-    });
-    const updatedConfig = {
-      ...config,
-      historyInfo: {
-        location: {
-          search:
-            'modal=dialogRemoveNetwork&name=custom_beta_network&serviceUrl=https://custom-betanet-service.com',
-        },
-      },
-    };
-    smartRender(DialogRemoveNetwork, null, updatedConfig);
-
-    expect(screen.getByText('Remove network')).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Remove network'));
-    await waitFor(() => {
-      expect(toast.error).toBeCalledWith(`Error: Can't delete current network`, {
         position: 'bottom-right',
       });
     });

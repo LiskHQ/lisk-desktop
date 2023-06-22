@@ -28,6 +28,9 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
   const [selectedNetwork, setSelectedNetwork] = useState(mainChainNetwork);
   const { customNetworks } = useSettings('customNetworks');
+  const {
+    mainChainNetwork: { name: currentNetworkName },
+  } = useSettings('mainChainNetwork');
   const flaggedCustomNetworks = customNetworks.map((network) => ({ ...network, isCustom: true }));
   const networksWithCustomNetworks = [...Object.values(networks), ...flaggedCustomNetworks];
   const stakingQueue = useSelector(selectStaking);
@@ -142,16 +145,18 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
                         >
                           <Icon name="edit" className={styles.modifyIcons} />
                         </span>
-                        <span
-                          onClick={(e) =>
-                            deleteCustomNetwork(e, {
-                              name: network.name,
-                              serviceUrl: network.serviceUrl,
-                            })
-                          }
-                        >
-                          <Icon name="deleteIcon" className={styles.modifyIcons} />
-                        </span>
+                        {currentNetworkName !== network.name && (
+                          <span
+                            onClick={(e) =>
+                              deleteCustomNetwork(e, {
+                                name: network.name,
+                                serviceUrl: network.serviceUrl,
+                              })
+                            }
+                          >
+                            <Icon name="deleteIcon" className={styles.modifyIcons} />
+                          </span>
+                        )}
                       </>
                     )}
                     {selectedNetwork.label === network.label && <Icon name="okIcon" />}
