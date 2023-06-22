@@ -9,7 +9,7 @@ const Error = ({ error, handleRetry, isLoading }) => {
   return (
     <div className={`${styles.wrapper} error-state`}>
       <Illustration name="emptyWallet" />
-      <h3>{typeof data === 'string' ? error : error.message}</h3>
+      <h3>{typeof error === 'string' ? error : error.message}</h3>
       {handleRetry && <TertiaryButton onClick={handleRetry}>Retry</TertiaryButton>}
     </div>
   );
