@@ -147,7 +147,7 @@ const PerformanceView = ({ data }) => {
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
           <Item title={t('Last generated block height')} icon="productivity">
-            {data.lastGeneratedHeight ? (
+            {data?.lastGeneratedHeight ? (
               <NavLink
                 to={`${routes.block.path}?height=${data.lastGeneratedHeight}`}
                 className={styles.performanceValue}
@@ -161,7 +161,7 @@ const PerformanceView = ({ data }) => {
             )}
           </Item>
           <Item title={t('Blocks generated')} icon="generatedBlocks">
-            <div className={styles.performanceValue}>{data.producedBlocks ?? '-'}</div>
+            <div className={styles.performanceValue}>{data?.producedBlocks ?? '-'}</div>
           </Item>
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
@@ -204,7 +204,7 @@ const PerformanceView = ({ data }) => {
             </div>
           </BoxContent>
           <Item title={t('Consecutive missed blocks')} icon="consecutiveMissedBlocks">
-            <div className={styles.performanceValue}>{data.consecutiveMissedBlocks}</div>
+            <div className={styles.performanceValue}>{data?.consecutiveMissedBlocks}</div>
           </Item>
         </Box>
       </Box>
