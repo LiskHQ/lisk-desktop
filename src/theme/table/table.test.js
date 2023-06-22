@@ -54,21 +54,32 @@ describe('Table', () => {
     });
 
     it('should render an empty template if data is empty with custom config', () => {
-      const emptyState = {
-        message: 'custom_message',
-        illustration: 'emptyBookmarksList',
+      const customProps = {
+        data: [],
+        canLoadMore: false,
+        isLoading: false,
+        row: () => <div />,
+        header: [],
+        emptyState: {
+          message: 'custom_message',
+          illustration: 'emptyBookmarksList',
+        },
       };
-      const wrapper = mount(
-        <Table {...props} error={{ response: { status: 404 } }} emptyState={emptyState} />
-      );
+      const wrapper = mount(<Table {...customProps} />);
       expect(wrapper).toHaveText('custom_message');
     });
 
     it('should render an empty template if data is empty with custom template', () => {
-      const emptyState = () => <div>custom_empty_template</div>;
-      const wrapper = mount(
-        <Table {...props} emptyState={emptyState} error={{ response: { status: 404 } }} />
-      );
+      const customProps = {
+        data: [],
+        canLoadMore: false,
+        isLoading: false,
+        row: () => <div />,
+        header: [],
+        emptyState: () => <div>custom_empty_template</div>,
+      };
+
+      const wrapper = mount(<Table {...customProps} />);
       expect(wrapper).toHaveText('custom_empty_template');
     });
   });
