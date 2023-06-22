@@ -32,7 +32,7 @@ describe('Table', () => {
       error: 'error',
     };
 
-    it.only('should render an error state', () => {
+    it('should render an error state', () => {
       const wrapper = mount(<Table {...props} />);
       expect(wrapper.find('.error-state').at(0)).toBeTruthy();
     });
