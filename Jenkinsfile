@@ -28,7 +28,7 @@ pipeline {
 					nvm(getNodejsVersion()) {
 						sh '''
 						rm -rf lisk-service/ # linting will fail otherwise
-						yarn run lint
+						yarn lint
 						'''
 					}
 				}
@@ -40,7 +40,7 @@ pipeline {
 					sh '''
 					cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
 					cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-					yarn run build
+					yarn build
 					'''
 				}
 				stash includes: 'app/build/', name: 'build'
@@ -93,7 +93,7 @@ pipeline {
 									curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
 									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
-									yarn run cucumber:playwright:open
+									yarn cucumber:playwright:open
 									'''
 								}
 							}
@@ -102,7 +102,7 @@ pipeline {
 					// jest
 					"unit": {
 						nvm(getNodejsVersion()) {
-							sh 'ON_JENKINS=true yarn run test'
+							sh 'ON_JENKINS=true yarn test'
 						}
 					},
 				)

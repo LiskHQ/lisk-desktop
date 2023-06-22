@@ -15,13 +15,13 @@ pipeline {
 							yarn
 							cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
 							cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-							yarn run build
-							yarn run install:electron:dependencies
-							yarn run dist:linux
+							yarn build
+							yarn install:electron:dependencies
+							yarn dist:linux
 							'''
 							sh '''
 							export DEBUG=electron-builder
-							#yarn run dist:win  # does not work
+							#yarn dist:win  # does not work
 							'''
 						}
 					}
@@ -40,9 +40,9 @@ pipeline {
 							npm ci
 							cp -R /Users/jenkins/fonts/basierCircle setup/react/assets/fonts
 							cp -R /Users/jenkins/fonts/gilroy setup/react/assets/fonts
-							yarn run build
-							yarn run install:electron:dependencies
-							yarn run dist:mac -- --publish never
+							yarn build
+							yarn install:electron:dependencies
+							yarn dist:mac -- --publish never
 							'''
 						}
 					}
