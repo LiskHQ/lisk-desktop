@@ -169,7 +169,7 @@ const PerformanceView = ({ data }) => {
             <div className={`${styles.content} ${styles.reward}`}>
               <div className={`${styles.title} ${theme}`}>
                 <div>
-                  <span>{t('Rewards (LSK)')}</span>
+                  <span>{t(`Rewards (${token?.symbol ?? 'LSK'})`)}</span>
                   <div className={styles.performanceValue}>
                     <FormattedNumber val={Number(rewardValue || 0).toFixed(4)} />
                   </div>
@@ -182,7 +182,7 @@ const PerformanceView = ({ data }) => {
               <div className={styles.details}>
                 <span>Self stake</span>
                 <Tooltip position="top" tooltipClassName={styles.tooltipDetails}>
-                  <span>Total rewards earned based on number of blocks generated.</span>
+                  <span>{t('Total rewards earned based on number of blocks generated.')}</span>
                 </Tooltip>
                 &nbsp;&nbsp;
                 <span className={styles.value}>
@@ -193,7 +193,9 @@ const PerformanceView = ({ data }) => {
                 <span>Commission</span>
                 <Tooltip position="top" tooltipClassName={styles.tooltipDetails}>
                   <span>
-                    Total rewards earned by the validator as commission for generating blocks.
+                    {t(
+                      'Total rewards earned by the validator as commission for generating blocks.'
+                    )}
                   </span>
                 </Tooltip>
                 &nbsp;&nbsp;
