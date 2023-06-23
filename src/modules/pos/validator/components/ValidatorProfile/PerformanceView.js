@@ -168,15 +168,17 @@ const PerformanceView = ({ data }) => {
           <BoxContent className={`${styles.highlight} performance`}>
             <div className={`${styles.content} ${styles.reward}`}>
               <div className={`${styles.title} ${theme}`}>
-                <div>
-                  <span>{t(`Rewards (${token?.symbol ?? 'LSK'})`)}</span>
-                  <div className={styles.performanceValue}>
-                    <FormattedNumber val={Number(rewardValue || 0).toFixed(4)} />
+                <div className={`${grid.row} ${styles.rewardContainer}`}>
+                  <div className={grid['col-md-6']}>
+                    <span>{t(`Rewards (${token?.symbol ?? 'LSK'})`)}</span>
+                    <div className={styles.performanceValue}>
+                      <FormattedNumber val={Number(rewardValue || 0).toFixed(4)} />
+                    </div>
+                    <div className={styles.separator} />
                   </div>
-                  <div className={styles.separator} />
-                </div>
-                <div className={`${styles.highlightIcon}`}>
-                  <Icon name="reward" />
+                  <div className={`${grid['col-md-6']} ${styles.highlightIcon}`}>
+                    <Icon name="reward" />
+                  </div>
                 </div>
               </div>
               <div className={styles.details}>

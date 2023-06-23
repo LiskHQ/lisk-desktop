@@ -217,12 +217,16 @@
         box-sizing: border-box;
         padding-right: 20px;
 
-        & > .title {
+        & .title {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           flex-wrap: wrap;
           margin-bottom: 20px;
+
+          & .rewardContainer {
+            width: 100%;
+          }
 
           & .separator {
             margin-top: 20px;
@@ -235,6 +239,7 @@
 
             margin-top: 10px;
             color: var(--color-maastricht-blue);
+            overflow-wrap: break-word;
           }
 
           & .highlightIcon {
@@ -249,6 +254,8 @@
 
         & > .details {
           font-family: var(--content-font);
+          flex-grow: initial;
+          margin-bottom: 16px;
 
           & > span {
             font-size: 12px;
@@ -257,6 +264,12 @@
 
           & .tooltipDetails {
             width: 9vw; /* stylelint-disable-line unit-whitelist */
+          }
+
+          @media (min-width: 1600px) {
+            & .tooltipDetails {
+              width: 7vw; /* stylelint-disable-line unit-whitelist */
+            }
           }
 
           & .value {
