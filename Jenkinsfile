@@ -17,7 +17,7 @@ pipeline {
 				nvm(getNodejsVersion()) {
 					sh '''
 						npm i -g yarn
-						yarn --registry https://npm.lisk.com
+						yarn
 						'''
 				}
 			}
