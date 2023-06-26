@@ -1,21 +1,10 @@
-const PARSE_ERROR = 'PARSE_ERROR';
-const INVALID_REQUEST = 'INVALID_REQUEST';
-const METHOD_NOT_FOUND = 'METHOD_NOT_FOUND';
-const INVALID_PARAMS = 'INVALID_PARAMS';
-const INTERNAL_ERROR = 'INTERNAL_ERROR';
-const SERVER_ERROR = 'SERVER_ERROR';
-
-const RESERVED_ERROR_CODES = [-32700, -32600, -32601, -32602, -32603];
-const SERVER_ERROR_CODE_RANGE = [-32000, -32099];
-
-const STANDARD_ERROR_MAP = {
-  [PARSE_ERROR]: { code: -32700, message: 'Parse error' },
-  [INVALID_REQUEST]: { code: -32600, message: 'Invalid Request' },
-  [METHOD_NOT_FOUND]: { code: -32601, message: 'Method not found' },
-  [INVALID_PARAMS]: { code: -32602, message: 'Invalid params' },
-  [INTERNAL_ERROR]: { code: -32603, message: 'Internal error' },
-  [SERVER_ERROR]: { code: -32000, message: 'Server error' },
-};
+import {
+  STANDARD_ERROR_MAP,
+  INTERNAL_ERROR,
+  RESERVED_ERROR_CODES,
+  SERVER_ERROR_CODE_RANGE,
+  SERVER_ERROR,
+} from './error';
 
 function getError(type) {
   if (!Object.keys(STANDARD_ERROR_MAP).includes(type)) {
