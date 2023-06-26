@@ -20,7 +20,6 @@ const DialogAddNetwork = () => {
   const { name: defaultName = '', serviceUrl: defaultServiceUrl = '' } = parseSearchParams(
     history.location.search
   );
-  const mode = defaultName ? 'edit' : 'add';
   const { setValue, customNetworks } = useSettings('customNetworks');
   const [successText, setSuccessText] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -51,7 +50,7 @@ const DialogAddNetwork = () => {
     const existingCustomNetworkServiceUrl = customNetworks.some(
       (network) => network.serviceUrl === values.serviceUrl
     );
-    if (mode === 'add' && (existingCustomNetworkName || existingCustomNetworkServiceUrl)) {
+    if (!defaultName && (existingCustomNetworkName || existingCustomNetworkServiceUrl)) {
       setErrorText('Network name or serviceUrl already exists');
       return;
     }
@@ -78,7 +77,7 @@ const DialogAddNetwork = () => {
       <Box className={styles.boxProp}>
         <BoxHeader className={classNames(styles.header)}>
           <h3 className={classNames(styles.title)}>
-            {t(`${mode === 'add' ? 'Add' : 'Edit'} network`)}
+            {t(`${!defaultName ? 'Add' : 'Edit'} network`)}
           </h3>
         </BoxHeader>
         <p className={classNames(styles.description)}>
@@ -113,7 +112,7 @@ const DialogAddNetwork = () => {
               })}
             />
             <PrimaryButton type="submit" className={`${styles.button}`}>
-              {t(`${mode === 'add' ? 'Add' : 'Save'} network`)}
+              {t(`${!defaultName ? 'Add' : 'Save'} network`)}
             </PrimaryButton>
             {successText && <span className={styles.successText}>{successText}</span>}
             {errorText && <span className={styles.errorText}>{errorText}</span>}
