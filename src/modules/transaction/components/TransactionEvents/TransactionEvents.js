@@ -50,6 +50,7 @@ const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet
     error,
     hasNextPage,
     fetchNextPage,
+    refetch,
   } = useTransactionEvents({
     config: { params },
   });
@@ -97,6 +98,7 @@ const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet
             isWallet,
           }}
           error={error}
+          retry={refetch}
           emptyState={{
             message: t('There are no events for this account.'),
             illustration: 'emptyEventsIllustration',

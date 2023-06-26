@@ -12,6 +12,7 @@ export const QueryTable = ({
   onFetched,
   ...props
 }) => {
+  const data = queryHook(queryConfig);
   const {
     data: response,
     error,
@@ -22,7 +23,8 @@ export const QueryTable = ({
     hasUpdate,
     addUpdate,
     isFetched,
-  } = queryHook(queryConfig);
+    refetch,
+  } = data;
 
   const handleClick = () => {
     // When the header is fixed at the top, the position is 50px
@@ -57,6 +59,7 @@ export const QueryTable = ({
       canLoadMore={hasNextPage}
       error={error}
       subHeader={subHeader}
+      retry={refetch}
       {...props}
     />
   );

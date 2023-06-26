@@ -86,17 +86,19 @@ describe('TransactionEvents', () => {
     });
   });
 
-  it('should display empty state text', async () => {
+  it('should display error state', async () => {
     useTransactionEvents.mockReturnValue({
-      isLoading: true,
-      error: { response: { status: 404 } },
+      isLoading: false,
+      error: 'error',
       hasNextPage: false,
       isFetching: false,
       fetchNextPage: mockFetchNextPage,
+      refetch: jest.fn(),
     });
     wrapper.rerender(<TransactionEvents {...props} />);
 
-    expect(wrapper.getByText('There are no events for this account.')).toBeTruthy();
+    expect(wrapper.getByText('error')).toBeTruthy();
+    expect(wrapper.getByText('Retry')).toBeTruthy();
   });
 
   it('should display filter fields', async () => {
