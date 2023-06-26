@@ -39,14 +39,20 @@ const StakeItem = ({ stake, address, title, truncate, token }) => {
             </span>
           </>
         ) : (
-          <span
-            className={
-              Number(stake.confirmed) && !Number(stake.unconfirmed) ? styles.confirmed : ''
-            }
-          >
-            <TokenAmount val={Object.values(stake)[0]} token={token} />
-          </span>
+          <>
+            <span
+              className={
+                Number(stake.confirmed) && !Number(stake.unconfirmed) ? styles.confirmed : ''
+              }
+            >
+              <TokenAmount val={Object.values(stake)[0]} token={token} />
+            </span>
+          </>
         )}
+        <span className={styles.reward}>
+          <span>Reward:&nbsp;&nbsp;</span>
+          <TokenAmount val={2000000000} token={token} />
+        </span>
       </span>
     </span>
   );

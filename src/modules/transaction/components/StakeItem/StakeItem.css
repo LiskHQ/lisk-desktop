@@ -46,3 +46,23 @@
     background-color: var(--color-blue-gray);
   }
 }
+
+.reward {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > span:first-child {
+    color: var(--color-jade-green);
+    font-weight: var(--font-weight-semi-bold);
+  }
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-periwinkle-blue);
+    margin: 0px 12px;
+  }
+}
