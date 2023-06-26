@@ -1,5 +1,6 @@
 import React from 'react';
 import usePosToken from 'src/modules/pos/validator/hooks/usePosToken';
+import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import StakeItem from '../StakeItem';
 import styles from '../TransactionInfo/TransactionInfo.css'; // @todo create dedicated css file for this component
 
@@ -32,6 +33,7 @@ const InfoColumn = ({ title, children, className }) => (
 );
 
 const StakeValidator = ({ t, account, summaryInfo }) => {
+  const { token } = usePosToken();
   const addedLength = Object.keys(summaryInfo.added).length;
   const editedLength = Object.keys(summaryInfo.edited).length;
   const removedLength = Object.keys(summaryInfo.removed).length;
@@ -48,12 +50,12 @@ const StakeValidator = ({ t, account, summaryInfo }) => {
         <InfoColumn title={t('Total stakes after confirmation')}>
           {`${sentStakes + addedLength - removedLength}/10`}
         </InfoColumn>
-      </div>
-      {/* <div className={styles.txFeeContainer}>
-        <InfoColumn title={t('Transaction Fees')} className="stake-fees">
-          {transaction?.composedFees.Transaction}
+        <InfoColumn title={t('Total rewards')}>
+          <span className={styles.totalReward}>
+            <TokenAmount val={200000000} token={token} />
+          </span>
         </InfoColumn>
-      </div> */}
+      </div>
     </>
   );
 };

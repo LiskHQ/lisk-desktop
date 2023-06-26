@@ -4,10 +4,14 @@ import React, { useMemo, useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { convertToBaseDenom } from '@token/fungible/utils/helpers';
-import { normalizeStakesForTx } from '@transaction/utils';
+import { joinModuleAndCommand, normalizeStakesForTx } from '@transaction/utils';
 import BoxContent from '@theme/box/content';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
+import moduleCommandSchemas from '@tests/constants/schemas';
+import to from 'await-to-js';
+import { dryRun } from 'src/modules/transaction/api';
+import useSettings from 'src/modules/settings/hooks/useSettings';
 import routes from 'src/routes/routes';
 import { STAKE_LIMIT } from '../../consts';
 import StakeRow from './StakeRow';
@@ -143,6 +147,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     [stakes, account]
   );
   const { token } = usePosToken();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   const feedback = validateStakes(
     stakes,
@@ -154,8 +159,17 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
   );
   const showEmptyState = !changedStakes.length || isStakingTxPending;
 
-  const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
+  const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     if (!showEmptyState) {
+      const moduleCommand = joinModuleAndCommand(transactionJSON);
+      const paramsSchema = moduleCommandSchemas[moduleCommand];
+
+      const [error, dryRunResult] = await to(
+        dryRun({ transactionJSON, serviceUrl: mainChainNetwork.serviceUrl, paramsSchema })
+      );
+
+      console.log('--->>>', error, dryRunResult, transactionJSON);
+
       nextStep({
         formProps,
         transactionJSON,

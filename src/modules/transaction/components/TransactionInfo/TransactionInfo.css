@@ -242,3 +242,7 @@
     margin-left: 10px;
   }
 }
+
+.totalReward {
+  color: var(--color-ultramarine-blue);
+}
