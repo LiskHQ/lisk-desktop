@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { QueryTable } from '@theme/QueryTable';
-import { useTokenBalances, useTokensTopLskBalance } from '@token/fungible/hooks/queries';
+import { useTokensTopLskBalance } from '@token/fungible/hooks/queries';
 import WalletRow from '../row';
 import header from './tableHeader';
 
-const WalletTable = () => {
-  const [params, setParams] = useState({ sort: 'balance:desc' });
+const WalletTable = ({ token, filters }) => {
   const { t } = useTranslation();
-  const { data: tokens } = useTokenBalances();
-  const token = tokens?.data?.[0];
+  const tokenID = token?.tokenID;
 
   return (
     <QueryTable
       showHeader
       queryHook={useTokensTopLskBalance}
-      queryConfig={{ config: { params } }}
-      setParams={setParams}
+      queryConfig={{ config: { params: filters }, options: { enabled: !!tokenID } }}
+      transformResponse={(res) => res?.[tokenID]}
       row={WalletRow}
       additionalRowProps={{ token }}
       header={header(t)}

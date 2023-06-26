@@ -2,3 +2,8 @@
   padding: 0 !important;
   counter-reset: section;
 }
+
+.filterTopAccounts {
+  border-radius: 30px;
+  min-width: 250px !important;
+}
