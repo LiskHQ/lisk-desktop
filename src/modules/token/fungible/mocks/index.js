@@ -26,7 +26,7 @@ export const tokensBalance = rest.get(
 );
 
 export const tokensTopLskBalance = rest.get(
-  `*/api/${API_VERSION}/tokens/lsk/top`,
+  `*/api/${API_VERSION}/token/balances/top`,
   async (req, res, ctx) => {
     const limit = Number(req.url.searchParams.get('limit'));
     const offset = Number(req.url.searchParams.get('offset') || 0);
