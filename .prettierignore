@@ -7,6 +7,8 @@ LICENSE
 Jenkinsfile*
 patches/@liskhq+lisk-client+6.6.6-alpha.4.patch
 setup/react/public/mockServiceWorker.js
+yarn.lock
+app/yarn.lock
 
 # Folders
 **/dist

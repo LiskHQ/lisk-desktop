@@ -28,7 +28,7 @@ Please see [CONTRIBUTING_GUIDE.md](/docs/CONTRIBUTING_GUIDE.md) for more informa
 
 `Basier Circle` and `Gilroy` used in the production version are commercial fonts. This repository only contains open fonts and uses `Open Sans` as a replacement for the commercial ones.
 
-If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts). If you don't have the fonts, you need to remove lines 25 - 81 of [type.css](./src/components/app/type.css). After that, the `build` and `dev` npm scripts run without any errors.
+If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts). If you don't have the fonts, you need to remove lines 25 - 81 of [type.css](./src/components/app/type.css). After that, the `build` and `dev` yarn scripts run without any errors.
 
 ### Setup environment
 
@@ -44,8 +44,8 @@ For _Windows_ users, make sure to set the correct [msvs_version](https://www.npm
 git clone https://github.com/LiskHQ/lisk-desktop.git
 cd lisk-desktop
 nvm use
-npm ci
-npm run dev
+yarn
+yarn run dev
 ```
 
 Open http://localhost:8080 to access the wallet.
@@ -57,19 +57,19 @@ Open http://localhost:8080 to access the wallet.
 To build the project simply run
 
 ```
-npm run build
+yarn build
 ```
 
 Under the hood, this script runs
 
 ```
-npm run build:prod
+yarn build:prod
 ```
 
 to build the React app under `src/` and
 
 ```
-npm run build:electron
+yarn build:electron
 ```
 
 to build the electron app under `app/` using webpack. You can run the above scripts individually if you're looking to see the changes solely on one of the two said applications.
@@ -79,7 +79,7 @@ to build the electron app under `app/` using webpack. You can run the above scri
 If you have already built the application as described above, you can launch Electron using
 
 ```
-npm run start
+yarn start
 ```
 
 #### Run with parameters
@@ -87,13 +87,13 @@ npm run start
 To launch a version which supports hardware wallets, you can run
 
 ```
-npm run dev:hw
+yarn dev:hw
 ```
 
 or to launch electron and receive live updates from already running `webpack-dev-server` on port `8080` and you can run
 
 ```
-LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true npm run start
+LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true yarn start
 ```
 
 This comes with Redux dev tools.
@@ -109,7 +109,7 @@ Please see [HARDWARE_WALLET_DEVELOPMENT.md](/docs/HARDWARE_WALLET_DEVELOPMENT.md
 Build package for Windows (on Windows in [Git BASH](https://git-for-windows.github.io/)).
 
 ```
-npm run pack:win
+yarn pack:win
 ```
 
 #### macOS
@@ -117,7 +117,7 @@ npm run pack:win
 Build package for macOS (on macOs)
 
 ```
-npm run pack
+yarn pack
 ```
 
 #### Linux
@@ -125,7 +125,7 @@ npm run pack
 Build package for Linux (on Linux).
 
 ```
-npm run pack
+yarn pack
 ```
 
 ## Testing
@@ -135,13 +135,13 @@ npm run pack
 #### Single run
 
 ```
-npm run test
+yarn test
 ```
 
 #### Run each time a file changes
 
 ```
-npm run test:live
+yarn test:live
 ```
 
 ## Directory Layout
