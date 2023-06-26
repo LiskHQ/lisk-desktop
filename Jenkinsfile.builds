@@ -11,16 +11,17 @@ pipeline {
 					    cleanWs(patterns: [[pattern: 'dist/lisk-*-*', type: 'INCLUDE'], [pattern: 'dist/latest-*.yml', type: 'INCLUDE']])
 						nvm(getNodejsVersion()) {
 							sh '''
-							npm ci
+							npm i -g yarn
+							yarn
 							cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
 							cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-							npm run build
-							npm run install:electron:dependencies
-							npm run dist:linux
+							yarn build
+							yarn install:electron:dependencies
+							yarn dist:linux
 							'''
 							sh '''
 							export DEBUG=electron-builder
-							#npm run dist:win  # does not work
+							#yarn dist:win  # does not work
 							'''
 						}
 					}
@@ -36,12 +37,13 @@ pipeline {
 					    cleanWs(patterns: [[pattern: 'dist/lisk-mac-*-*', type: 'INCLUDE'], [pattern: 'dist/latest-mac-*.yml', type: 'INCLUDE']])
 						nvm(getNodejsVersion()) {
 							sh '''
-							npm ci
+							npm i -g yarn
+							yarn
 							cp -R /Users/jenkins/fonts/basierCircle setup/react/assets/fonts
 							cp -R /Users/jenkins/fonts/gilroy setup/react/assets/fonts
-							npm run build
-							npm run install:electron:dependencies
-							npm run dist:mac -- --publish never
+							yarn build
+							yarn install:electron:dependencies
+							yarn dist:mac -- --publish never
 							'''
 						}
 					}

@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 // @todo Add test coverage by #4418
-import { formatJsonRpcError, formatJsonRpcResult } from '@json-rpc-tools/utils';
 import { getSdkError } from '@walletconnect/utils';
 import { transactions, cryptography } from '@liskhq/lisk-client';
 import { ERROR_CASES } from '../constants/lifeCycle';
 import { SIGNING_METHODS } from '../constants/permissions';
+import { formatJsonRpcError, formatJsonRpcResult } from './jsonRPCFormat';
 
 const signMessage = async (message, wallet) => {
   const msgBytes = cryptography.digestMessage(message);
