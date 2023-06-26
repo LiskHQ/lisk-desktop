@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
-import Icon from 'src/theme/Icon';
+import Icon from '@theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
 import { Client } from 'src/utils/api/client';
 import DialogLink from '@theme/dialog/link';
@@ -28,7 +28,11 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
   const [selectedNetwork, setSelectedNetwork] = useState(mainChainNetwork);
   const { customNetworks } = useSettings('customNetworks');
-  const networksWithCustomNetworks = [...Object.values(networks), ...customNetworks];
+  const {
+    mainChainNetwork: { name: currentNetworkName },
+  } = useSettings('mainChainNetwork');
+  const flaggedCustomNetworks = customNetworks.map((network) => ({ ...network, isCustom: true }));
+  const networksWithCustomNetworks = [...Object.values(networks), ...flaggedCustomNetworks];
   const stakingQueue = useSelector(selectStaking);
   const pendingStakes = Object.values(stakingQueue).filter(
     (stake) => stake.confirmed !== stake.unconfirmed
@@ -83,6 +87,17 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
     [networkStatus]
   );
 
+  const editCustomNetwork = (e, data) => {
+    e.stopPropagation();
+    removeThenAppendSearchParamsToUrl(history, { modal: 'dialogAddNetwork', ...data }, ['modal']);
+  };
+  const deleteCustomNetwork = (e, data) => {
+    e.stopPropagation();
+    removeThenAppendSearchParamsToUrl(history, { modal: 'dialogRemoveNetwork', ...data }, [
+      'modal',
+    ]);
+  };
+
   useEffect(() => {
     const isSuccess = networkStatus.isSuccess && !networkStatus.isFetching;
     onNetworkSwitchSuccess?.(isSuccess);
@@ -114,8 +129,38 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
                   value={network}
                   key={network.label}
                 >
-                  <span>{network.label}</span>
-                  {selectedNetwork.label === network.label && <Icon name="okIcon" />}
+                  <span>
+                    <span>{network.label}</span>
+                  </span>
+                  <span className={styles.networkIcons}>
+                    {network.isCustom && (
+                      <>
+                        <span
+                          onClick={(e) =>
+                            editCustomNetwork(e, {
+                              name: network.name,
+                              serviceUrl: network.serviceUrl,
+                            })
+                          }
+                        >
+                          <Icon name="edit" className={styles.modifyIcons} />
+                        </span>
+                        {currentNetworkName !== network.name && (
+                          <span
+                            onClick={(e) =>
+                              deleteCustomNetwork(e, {
+                                name: network.name,
+                                serviceUrl: network.serviceUrl,
+                              })
+                            }
+                          >
+                            <Icon name="deleteIcon" className={styles.modifyIcons} />
+                          </span>
+                        )}
+                      </>
+                    )}
+                    {selectedNetwork.label === network.label && <Icon name="okIcon" />}
+                  </span>
                 </MenuItem>
               );
             })}

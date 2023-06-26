@@ -47,6 +47,7 @@ import AddApplicationList from '@blockchainApplication/manage/components/AddAppl
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
 import NetworkApplicationDropDownButton from '@blockchainApplication/manage/components/DialogNetworkApplicationSelector';
 import DialogAddNetwork from '@network/components/DialogAddNetwork';
+import DialogRemoveNetwork from '@network/components/DialogRemoveNetwork';
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
@@ -121,4 +122,5 @@ export default {
   connectionStatus: ConnectionStatus,
   changeCommission: ChangeCommissionDialog,
   dialogAddNetwork: DialogAddNetwork,
+  dialogRemoveNetwork: DialogRemoveNetwork,
 };

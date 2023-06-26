@@ -1,0 +1,67 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  min-width: 300px;
+  max-width: 420px;
+
+  & .container {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+
+    & header {
+      padding: 20px 20px 0;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+
+      & h2 {
+        @mixin headingNormalIntermediate very-bold;
+
+        font-size: 24px;
+        line-height: 28px;
+      }
+    }
+
+    & .content {
+      text-align: center;
+      font-size: 16px;
+      color: var(--color-slate-gray);
+
+      & p {
+        margin-top: 0;
+        margin-bottom: 8px;
+      }
+
+      & .networkName {
+        font-size: 16px;
+        font-weight: var(--font-weight-semi-bold);
+        color: var(--color-zodiac-blue);
+      }
+
+      & .networkUrl {
+        font-size: 13px;
+        color: var(--color-blue-gray);
+      }
+    }
+
+    & .details {
+      font-size: 16px;
+      line-height: 20px;
+      margin: 20px 0;
+      color: var(--color-slate-gray);
+      text-align: center;
+    }
+
+    & .cancelBtn {
+      width: 100%;
+      color: var(--color-constant-white);
+    }
+
+    & .confirmBtn {
+      width: 100%;
+      border-color: var(--color-red);
+      color: var(--color-red);
+    }
+  }
+}

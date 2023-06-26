@@ -48,6 +48,12 @@
           color: var(--color-success);
           align-self: center;
         }
+
+        & .errorText {
+          margin-top: 8px;
+          color: var(--color-red);
+          align-self: center;
+        }
       }
     }
   }
