@@ -33,4 +33,10 @@
   & img {
     max-width: 245px;
   }
+
+  & > button {
+    color: var(--color-ultramarine-blue);
+    height: fit-content !important;
+    margin-top: 5px;
+  }
 }
