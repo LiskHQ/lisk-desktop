@@ -165,7 +165,7 @@ const PerformanceView = ({ data }) => {
           </Item>
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
-          <BoxContent className={`${styles.highlight} performance`}>
+          <BoxContent className={`${styles.highlight} ${styles.rewardWrapper} performance`}>
             <div className={`${styles.content} ${styles.reward}`}>
               <div className={`${styles.title} ${theme}`}>
                 <div className={`${grid.row} ${styles.rewardContainer}`}>

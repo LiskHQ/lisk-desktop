@@ -201,6 +201,10 @@
       margin: 0;
     }
 
+    &.rewardWrapper {
+      overflow: visible;
+    }
+
     & .content {
       width: max-content;
       display: flex;
