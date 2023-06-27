@@ -81,6 +81,7 @@ const Table = ({
   showHeader,
   isFetching,
   customLoader,
+  retry,
 }) => (
   <>
     <List
@@ -102,7 +103,7 @@ const Table = ({
       isListEmpty={data.length === 0}
       className={styles.emptyState}
     />
-    <Error data={error} isLoading={isLoading} />
+    <Error handleRetry={retry} error={error} isLoading={isLoading} />
     <LoadMoreButton
       onClick={loadData}
       isFetching={isFetching}

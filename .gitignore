@@ -17,6 +17,8 @@ reports
 .history
 .env
 cypress.log
+yarn-error.log
+*.tgz
 
 ## Commercial fonts
 setup/react/assets/fonts/basierCircle/

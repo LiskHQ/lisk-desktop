@@ -90,9 +90,10 @@ describe('Validator Profile', () => {
 
     expect(screen.getByText('Last generated block height')).toBeTruthy();
     expect(screen.getByText('Blocks generated')).toBeTruthy();
-    expect(screen.getByText('Rewards')).toBeTruthy();
+    expect(screen.getByText('Rewards (LSK)')).toBeTruthy();
+    expect(screen.getByText('Self stake')).toBeTruthy();
+    expect(screen.getAllByText('Commission')[1]).toBeTruthy();
     expect(screen.getByText('Consecutive missed blocks')).toBeTruthy();
-    expect(screen.getByText('See breakdown')).toBeTruthy();
 
     expect(
       screen.getByText('This validator is among the first 101 validators by validator weight.')

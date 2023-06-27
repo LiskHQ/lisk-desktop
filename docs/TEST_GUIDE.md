@@ -71,7 +71,7 @@ Configuration is in [jest.config.js](/LiskHQ/lisk-desktop/blob/development/jest.
 Run Jest suites with:
 
 ```
-npm run test
+yarn run test
 ```
 
 Enable suites by uncommenting lines in [jest.config.js](/LiskHQ/lisk-desktop/blob/development/jest.config.js)

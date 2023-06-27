@@ -10,8 +10,10 @@ import { capitalize } from 'src/utils/helpers';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
-import TokenAmount from '@token/fungible/components/tokenAmount';
+import FormattedNumber from '@common/components/FormattedNumber/FormattedNumber';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import DialogLink from '@theme/dialog/link';
+import Tooltip from 'src/theme/Tooltip/tooltip';
 import Icon from '@theme/Icon';
 import styles from './ValidatorProfile.css';
 import usePosToken from '../../hooks/usePosToken';
@@ -32,7 +34,7 @@ const Item = ({ icon, title, children }) => {
         <div className={`${styles.title} ${theme}`}>{title}</div>
         {children}
       </div>
-      <div className={`${styles.highlighIcon} ${styles[icon]}`}>
+      <div className={`${styles.highlightIcon} ${styles[icon]}`}>
         <Icon name={icon} />
       </div>
     </BoxContent>
@@ -45,7 +47,7 @@ const FullItem = ({ status, title, children, theme }) => (
       <div className={`${styles.title} ${theme}`}>{title}</div>
       {children}
     </div>
-    <div className={`${styles.highlighIcon}`}>
+    <div className={`${styles.highlightIcon}`}>
       {status && <Icon name={`validator${capitalize(status) || 'Standby'}`} />}
     </div>
   </BoxContent>
@@ -122,9 +124,12 @@ const getValidatorComponent = (status) => {
 const PerformanceView = ({ data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const status = data.status || '';
+  const status = data?.status || '';
   const ValidatorComponent = status.length ? getValidatorComponent(status) : () => null;
   const { token } = usePosToken();
+  const rewardValue = convertFromBaseDenom(data?.earnedRewards, token);
+  const selfStakeRewardValue = convertFromBaseDenom(data?.totalSelfStakeRewards, token);
+  const commissionRewardValue = convertFromBaseDenom(data?.totalCommission, token);
 
   return (
     <Box
@@ -142,7 +147,7 @@ const PerformanceView = ({ data }) => {
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
           <Item title={t('Last generated block height')} icon="productivity">
-            {data.lastGeneratedHeight ? (
+            {data?.lastGeneratedHeight ? (
               <NavLink
                 to={`${routes.block.path}?height=${data.lastGeneratedHeight}`}
                 className={styles.performanceValue}
@@ -156,28 +161,54 @@ const PerformanceView = ({ data }) => {
             )}
           </Item>
           <Item title={t('Blocks generated')} icon="generatedBlocks">
-            <div className={styles.performanceValue}>{data.producedBlocks ?? '-'}</div>
+            <div className={styles.performanceValue}>{data?.producedBlocks ?? '-'}</div>
           </Item>
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
-          <Item
-            icon="reward"
-            title={
-              <div>
-                <span>{t('Rewards')}</span>
-                <a>
-                  {t('See breakdown')}
-                  <Icon name="arrowBlueRight" />
-                </a>
+          <BoxContent className={`${styles.highlight} ${styles.rewardWrapper} performance`}>
+            <div className={`${styles.content} ${styles.reward}`}>
+              <div className={`${styles.title} ${theme}`}>
+                <div className={`${grid.row} ${styles.rewardContainer}`}>
+                  <div className={grid['col-md-6']}>
+                    <span>{t(`Rewards (${token?.symbol ?? 'LSK'})`)}</span>
+                    <div className={styles.performanceValue}>
+                      <FormattedNumber val={Number(rewardValue || 0).toFixed(4)} />
+                    </div>
+                    <div className={styles.separator} />
+                  </div>
+                  <div className={`${grid['col-md-6']} ${styles.highlightIcon}`}>
+                    <Icon name="reward" />
+                  </div>
+                </div>
               </div>
-            }
-          >
-            <div className={styles.performanceValue}>
-              <TokenAmount val={data.earnedRewards || 0} token={token} />
+              <div className={styles.details}>
+                <span>Self stake</span>
+                <Tooltip position="top" tooltipClassName={styles.tooltipDetails}>
+                  <span>{t('Total rewards earned based on number of blocks generated.')}</span>
+                </Tooltip>
+                &nbsp;&nbsp;
+                <span className={styles.value}>
+                  <FormattedNumber val={Number(selfStakeRewardValue || 0).toFixed(4)} />
+                </span>
+              </div>
+              <div className={styles.details}>
+                <span>Commission</span>
+                <Tooltip position="top" tooltipClassName={styles.tooltipDetails}>
+                  <span>
+                    {t(
+                      'Total rewards earned by the validator as commission for generating blocks.'
+                    )}
+                  </span>
+                </Tooltip>
+                &nbsp;&nbsp;
+                <span className={styles.value}>
+                  <FormattedNumber val={Number(commissionRewardValue || 0).toFixed(4)} />
+                </span>
+              </div>
             </div>
-          </Item>
+          </BoxContent>
           <Item title={t('Consecutive missed blocks')} icon="consecutiveMissedBlocks">
-            <div className={styles.performanceValue}>{data.consecutiveMissedBlocks}</div>
+            <div className={styles.performanceValue}>{data?.consecutiveMissedBlocks}</div>
           </Item>
         </Box>
       </Box>
