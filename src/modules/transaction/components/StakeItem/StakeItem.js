@@ -21,7 +21,7 @@ const StakeItem = ({ stake, address, title, truncate, token, reward }) => {
   const accountPath = routes.explorer.path;
 
   return (
-    <span className={styles.container}>
+    <span className={`${styles.container} stake-item`}>
       <Link to={`${accountPath}?address=${address}`}>
         <span className={`${styles.primaryText} stake-item-address`}>
           {title ?? (truncate ? truncateAddress(address) : address)}
