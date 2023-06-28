@@ -45,7 +45,7 @@ describe('SearchBar', () => {
     expect(wrapper).not.toContainMatchingElement('.loading');
   });
 
-  it.skip('should render empty results when search length is less than 3', () => {
+  it('should render empty results when search length is less than 3', () => {
     useSearch.mockReturnValueOnce({
       addresses: {},
       validators: [],
@@ -60,12 +60,12 @@ describe('SearchBar', () => {
         .at(0)
         .simulate('change', { target: { value: 'HI' } });
       wrapper.update();
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
     expect(wrapper).not.toContainMatchingElement('.accounts');
   });
 
-  it.skip('should render accounts data properly based on user data input', () => {
+  it('should render accounts data properly based on user data input', () => {
     useSearch.mockReturnValueOnce({
       addresses: { address: accountAddress, name: 'lisker' },
       validators: [],
@@ -80,7 +80,7 @@ describe('SearchBar', () => {
         .at(0)
         .simulate('change', { target: { value: accountAddress } });
       wrapper.update();
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
     expect(wrapper).toContainMatchingElement('.accounts');
   });
@@ -117,7 +117,7 @@ describe('SearchBar', () => {
     );
   });
 
-  it.skip('should use keyboard navigation to select search result for validators', () => {
+  it('should use keyboard navigation to select search result for validators', () => {
     useSearch.mockReturnValue({
       addresses: {},
       validators: [
@@ -145,7 +145,7 @@ describe('SearchBar', () => {
 
     act(() => {
       fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: 'genesis' } });
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });
@@ -154,7 +154,7 @@ describe('SearchBar', () => {
     expect(config.historyInfo.push).toBeCalledWith(`/validators/profile?address=${accountAddress}`);
   });
 
-  it.skip('should use keyboard navigation to select search result for address', () => {
+  it('should use keyboard navigation to select search result for address', () => {
     useSearch.mockReturnValue({
       addresses: { address: accountAddress, name: 'lisker' },
       validators: [],
@@ -167,7 +167,7 @@ describe('SearchBar', () => {
 
     act(() => {
       fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: accountAddress } });
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });
@@ -176,7 +176,7 @@ describe('SearchBar', () => {
     expect(config.historyInfo.push).toBeCalledWith(`/explorer?address=${accountAddress}`);
   });
 
-  it.skip('should use keyboard navigation to select search result for transactions', () => {
+  it('should use keyboard navigation to select search result for transactions', () => {
     useSearch.mockReturnValue({
       addresses: {},
       validators: [],
@@ -197,7 +197,7 @@ describe('SearchBar', () => {
 
     act(() => {
       fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '123456123234234' } });
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });
@@ -206,7 +206,7 @@ describe('SearchBar', () => {
     expect(config.historyInfo.push).toBeCalled();
   });
 
-  it.skip('should use keyboard navigation to select search result for blocks', () => {
+  it('should use keyboard navigation to select search result for blocks', () => {
     useSearch.mockReturnValue({
       addresses: {},
       validators: [],
@@ -219,7 +219,7 @@ describe('SearchBar', () => {
 
     act(() => {
       fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '60008' } });
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });

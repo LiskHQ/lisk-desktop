@@ -40,7 +40,7 @@ describe('ConnectionStatus', () => {
     );
   });
 
-  it.skip('Should mount correctly', () => {
+  it('Should mount correctly', () => {
     const specProps = {
       history: {
         ...props.history,
@@ -76,11 +76,11 @@ describe('ConnectionStatus', () => {
       'An error occurred while rejecting the pairing request from web app'
     );
 
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     expect(searchParams.removeSearchParamsFromUrl).toHaveBeenCalled();
   });
 
-  it.skip('Should redirect to wallet', () => {
+  it('Should redirect to wallet', () => {
     const newProps = {
       history: {
         ...props.history,
@@ -91,7 +91,7 @@ describe('ConnectionStatus', () => {
       },
     };
     mountWithRouter(ConnectionStatus, newProps);
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     expect(searchParams.removeSearchParamsFromUrl).toHaveBeenCalled();
     expect(props.history.push).toHaveBeenCalledWith(props.history.location.pathname);
   });

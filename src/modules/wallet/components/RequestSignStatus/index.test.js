@@ -82,7 +82,7 @@ describe('RequestSignStatus', () => {
     expect(screen.getByText('Return to application')).toBeInTheDocument();
   });
 
-  it.skip('copy the signature if clicked on the copy button', () => {
+  it('copy the signature if clicked on the copy button', () => {
     reactRedux.useSelector.mockReturnValue(successTransactions);
     useSession.mockReturnValue({ respond });
     renderWithRouterAndQueryClient(RequestSignStatus, props);
@@ -94,7 +94,7 @@ describe('RequestSignStatus', () => {
     expect(respond).toHaveBeenCalled();
     expect(screen.getByText('Copied')).toBeInTheDocument();
 
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     expect(screen.getByText('Copy signatures')).toBeInTheDocument();
   });
 });

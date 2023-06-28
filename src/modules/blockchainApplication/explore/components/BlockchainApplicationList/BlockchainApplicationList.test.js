@@ -67,7 +67,7 @@ describe('BlockchainApplicationList', () => {
     expect(() => screen.getByAltText('application-filter')).toThrow();
   });
 
-  it.skip('should apply search filter', () => {
+  it('should apply search filter', () => {
     useBlockchainApplicationExplore.mockReturnValue({
       data: {
         data: [...mockBlockchainApp.data, ...mockBlockchainApp.data, ...mockBlockchainApp.data],
@@ -81,7 +81,7 @@ describe('BlockchainApplicationList', () => {
     renderWithRouterAndQueryClient(BlockchainApplicationList);
     const searchField = screen.getByTestId('application-filter');
     fireEvent.change(searchField, { target: { value: 'test' } });
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
 
     expect(mockApplyFilters).toHaveBeenCalledWith(
       expect.objectContaining({

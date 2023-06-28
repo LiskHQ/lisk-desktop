@@ -9,24 +9,24 @@ describe('useDebounce hook', () => {
     expect(useDebounce).toBeDefined();
   });
 
-  it.skip('returns correct debounced value after mounting', async () => {
+  it('returns correct debounced value after mounting', async () => {
     const { result } = renderHook(() => useDebounce('value1', 1000));
 
     act(() => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     expect(result.current).toBe('value1');
   });
 
-  it.skip('returns correct debounced value on change', async () => {
+  it('returns correct debounced value on change', async () => {
     let initialValue = 'value1';
     const initialDelay = 1000;
 
     const { result, rerender } = renderHook(() => useDebounce(initialValue, initialDelay));
 
     act(() => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     initialValue = 'value2';

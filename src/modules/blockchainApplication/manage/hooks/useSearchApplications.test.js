@@ -7,7 +7,7 @@ import { useSearchApplications } from './useSearchApplications';
 jest.mock('@network/hooks/queries');
 
 describe('useSearchApplications', () => {
-  it.skip('returns status ok on successful URL search and node responds successfully', async () => {
+  it('returns status ok on successful URL search and node responds successfully', async () => {
     const searchTerm = 'http://api.coinbase.com';
     useNetworkStatus.mockReturnValue({
       isLoading: false,
@@ -18,7 +18,7 @@ describe('useSearchApplications', () => {
     const { result, rerender } = hookImport;
     const { onSearchApplications } = result.current;
     act(() => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
     rerender();
     act(() => {
@@ -31,7 +31,7 @@ describe('useSearchApplications', () => {
     });
   });
 
-  it.skip('returns status error on URL search and node responds with failure', async () => {
+  it('returns status error on URL search and node responds with failure', async () => {
     const searchTerm = 'http://api.enevti.com';
     useNetworkStatus.mockReturnValue({
       isLoading: false,
@@ -42,7 +42,7 @@ describe('useSearchApplications', () => {
     const { result, rerender } = hookImport;
     const { onSearchApplications } = result.current;
     act(() => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
     rerender();
     act(() => {

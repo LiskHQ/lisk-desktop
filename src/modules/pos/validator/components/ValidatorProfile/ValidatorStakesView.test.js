@@ -33,7 +33,7 @@ describe('Validator stakes view', () => {
     });
   });
 
-  it.skip('Should filter stakers by search value', () => {
+  it('Should filter stakers by search value', () => {
     useFilter.mockReturnValue({
       filters: { address: props.address },
       applyFilters: mockApplyFilters,
@@ -44,7 +44,7 @@ describe('Validator stakes view', () => {
 
     const searchField = screen.getByTestId('addressFilter');
     fireEvent.change(searchField, { target: { value: 'test' } });
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
 
     expect(mockApplyFilters).toHaveBeenCalledWith({ search: 'test' });
   });
