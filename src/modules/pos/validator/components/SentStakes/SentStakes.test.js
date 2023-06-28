@@ -11,6 +11,8 @@ import { mockRewardsClaimable } from '@pos/reward/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 import routes from 'src/routes/routes';
+import { mockTransactions } from '@transaction/__fixtures__';
+import * as useMyTransactionsSpy from '@transaction/hooks/queries/useMyTransactions';
 import SentStakes from './SentStakes';
 import tableHeaderMap from './tableHeaderMap';
 import { usePosConstants, useSentStakes, useUnlocks, useValidators } from '../../hooks/queries';
@@ -27,6 +29,7 @@ jest.mock('@pos/reward/hooks/queries');
 jest.mock('src/modules/common/hooks');
 jest.mock('../../hooks/queries');
 jest.mock('@pos/validator/hooks/usePosToken');
+const mockRefetchSentStakes = jest.fn();
 
 describe('SentStakes', () => {
   const historyPush = jest.fn();
@@ -40,7 +43,7 @@ describe('SentStakes', () => {
   useValidators.mockImplementation(({ config }) => ({
     data: getMockValidators(config.params?.address),
   }));
-  useSentStakes.mockReturnValue({ data: mockSentStakes });
+  useSentStakes.mockReturnValue({ data: mockSentStakes, refetch: mockRefetchSentStakes });
   useUnlocks.mockReturnValue({ data: mockUnlocks });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
 
@@ -89,5 +92,19 @@ describe('SentStakes', () => {
     renderWithRouterAndQueryClient(SentStakes, props);
     fireEvent.click(screen.getByAltText('arrowLeftTailed'));
     expect(historyPush).toHaveBeenCalledWith(routes.validators.path);
+  });
+
+  it('should refetch sentStakes when new transaction occurs', async () => {
+    jest.spyOn(useMyTransactionsSpy, 'useMyTransactions').mockReturnValue({
+      data: {
+        meta: {
+          total: 2,
+        },
+        data: mockTransactions.data.slice(0, 2),
+      },
+    });
+    useSentStakes.mockReturnValue({ data: mockSentStakes, refetch: mockRefetchSentStakes });
+    renderWithRouterAndQueryClient(SentStakes, props);
+    expect(mockRefetchSentStakes).toHaveBeenCalledTimes(1);
   });
 });
