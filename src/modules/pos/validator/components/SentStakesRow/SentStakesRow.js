@@ -1,6 +1,8 @@
 import React from 'react';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import classNames from 'classnames';
 import { useValidators } from '@pos/validator/hooks/queries';
+import { usePrevious } from 'src/utils/usePrevious';
 import { Actions, Balance, ValidatorWalletVisual } from './components';
 import styles from './SentStakesRow.css';
 
@@ -9,6 +11,8 @@ const SentStakesRow = ({ data: stakes, stakeEdited, token }) => {
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address: validatorAddress } },
   });
+
+  const prevAmount = usePrevious(amount);
 
   const { name, rank, validatorWeight, commission } = !isLoadingValidators
     ? validators.data[0]
@@ -21,7 +25,14 @@ const SentStakesRow = ({ data: stakes, stakeEdited, token }) => {
         <Balance colSpanXs={1} value={`#${rank}`} />
         <Balance value={<TokenAmount val={validatorWeight} token={token} />} />
         <Balance value={`${commission / 100}%`} />
-        <Balance className={styles.amountCell} value={<TokenAmount val={amount} token={token} />} />
+        <Balance
+          className={classNames({
+            [styles.amountCell]: true,
+            [styles.animateGreen]: prevAmount && parseInt(prevAmount, 10) < parseInt(amount, 10),
+            [styles.animateRed]: prevAmount && parseInt(prevAmount, 10) > parseInt(amount, 10),
+          })}
+          value={<TokenAmount val={amount} token={token} />}
+        />
         <Actions address={validatorAddress} name={name} stakeEdited={stakeEdited} />
       </div>
     </div>
