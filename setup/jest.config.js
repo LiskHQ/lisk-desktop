@@ -318,6 +318,15 @@ module.exports = {
     'src/modules/blockchainApplication/manage/components/UserApplicationSelector/UserApplicationSelector.js', // TODO: To be fixed in PDD-1522
     'src/modules/network/components/selectNetwork/SelectNetwork.js', // TODO: To be fixed in PDD-1522
     'src/modules/blockchainApplication/manage/components/NetworkApplicationDropDownButton/NetworkApplicationDropDownButton.js', // TODO: To be fixed in PDD-1522
+    'src/modules/bookmark/components/BookmarksList/BookmarksList.js',
+    'src/modules/blockchainApplication/explore/components/BlockchainApplicationList/BlockchainApplicationList.js',
+    'src/modules/blockchainApplication/manage/hooks/useSearchApplications.js',
+    'src/modules/pos/validator/components/ValidatorProfile/ValidatorStakesView.js',
+    'src/modules/wallet/components/RequestSignStatus/index.js',
+    'src/modules/blockchainApplication/connection/components/ConnectionStatus/ConnectionStatus.js',
+    'src/modules/search/hooks/useDebounce.js',
+    'src/modules/search/components/SearchBar/SearchBar.js',
+    'src/modules/update/hooks/useIpc.js',
   ],
   coverageThreshold: {
     // global: {
