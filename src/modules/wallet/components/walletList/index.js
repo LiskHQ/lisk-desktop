@@ -6,9 +6,12 @@ import { useTokensTopLskBalance } from '@token/fungible/hooks/queries';
 import WalletRow from '../row';
 import header from './tableHeader';
 
-const WalletTable = ({ token, filters }) => {
+const WalletTable = ({ token, tokenSummary, filters }) => {
   const { t } = useTranslation();
   const tokenID = token?.tokenID;
+  const tokenSupply = tokenSummary?.data?.totalSupply?.filter(
+    (tokenData) => tokenData.tokenID === tokenID
+  )[0];
 
   return (
     <QueryTable
@@ -17,7 +20,7 @@ const WalletTable = ({ token, filters }) => {
       queryConfig={{ config: { params: filters }, options: { enabled: !!tokenID } }}
       transformResponse={(res) => res?.[tokenID]}
       row={WalletRow}
-      additionalRowProps={{ token }}
+      additionalRowProps={{ token, tokenSupply }}
       header={header(t)}
     />
   );

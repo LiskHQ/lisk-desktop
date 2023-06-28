@@ -8,9 +8,10 @@ import WalletList from '@wallet/components/walletList';
 import { Input } from 'src/theme';
 import Icon from '@theme/Icon';
 import { useFilter } from '@common/hooks';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTokenBalances, useTokenSummary } from '@token/fungible/hooks/queries';
 import styles from './accounts.css';
 
+// eslint-disable-next-line max-statements
 const Accounts = () => {
   const { t } = useTranslation();
   const timeout = useRef();
@@ -18,6 +19,7 @@ const Accounts = () => {
   const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0];
   const tokenID = token?.tokenID;
+  const { data: tokenSummary } = useTokenSummary();
   const { filters, setFilter } = useFilter({ sort: 'balance:desc', tokenID });
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const Accounts = () => {
         </span>
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <WalletList token={token} filters={filters} />
+        <WalletList token={token} tokenSummary={tokenSummary} filters={filters} />
       </BoxContent>
     </Box>
   );

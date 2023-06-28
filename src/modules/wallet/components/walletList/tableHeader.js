@@ -11,10 +11,14 @@ export default (t) => [
   },
   {
     title: t('Balance'),
-    classList: `${grid['col-xs-3']} ${grid['col-md-3']}`,
+    classList: `${grid['col-xs-3']} ${grid['col-md-2']}`,
+  },
+  {
+    title: t('Supply'),
+    classList: `${grid['col-xs-1']} ${grid['col-md-1']}`,
   },
   {
     title: t('Owner'),
-    classList: `${grid['col-xs-5']} ${grid['col-md-3']}`,
+    classList: `${grid['col-xs-4']} ${grid['col-md-3']}`,
   },
 ];
