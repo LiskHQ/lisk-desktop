@@ -162,11 +162,10 @@ TransactionPriority.defaultProps = {
 
 TransactionPriority.propTypes = {
   t: PropTypes.func.isRequired,
-  token: PropTypes.string,
+  token: PropTypes.object,
   priorityOptions: PropTypes.array.isRequired,
   selectedPriority: PropTypes.number,
   setSelectedPriority: PropTypes.func,
-  minFee: PropTypes.number,
   moduleCommand: PropTypes.string,
   className: PropTypes.string,
 };
