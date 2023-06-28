@@ -14,7 +14,7 @@ const Accounts = () => {
   const token = tokens?.data?.[0];
   const tokenID = token?.tokenID;
   const { data: tokenSummary } = useTokenSummary();
-  const { filters, setFilter } = useFilter({ sort: 'balance:desc', tokenID });
+  const { filters, setFilter } = useFilter({ tokenID });
 
   useEffect(() => {
     setFilter('tokenID', tokenID);

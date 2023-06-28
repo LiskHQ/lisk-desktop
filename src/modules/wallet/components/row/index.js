@@ -38,6 +38,7 @@ const AccountRow = ({ data, className, token, tokenSupply }) => (
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
-  prevProps.tokenSupply?.tokenID === nextProps.tokenSupply?.tokenID;
+  prevProps.tokenSupply?.tokenID === nextProps.tokenSupply?.tokenID &&
+  prevProps.data?.address === nextProps.data?.address;
 
 export default React.memo(AccountRow, areEqual);
