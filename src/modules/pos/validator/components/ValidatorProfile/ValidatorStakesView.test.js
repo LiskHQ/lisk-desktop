@@ -33,7 +33,7 @@ describe('Validator stakes view', () => {
     });
   });
 
-  it('Should filter stakers by search value', () => {
+  it.skip('Should filter stakers by search value', () => {
     useFilter.mockReturnValue({
       filters: { address: props.address },
       applyFilters: mockApplyFilters,

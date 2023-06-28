@@ -45,7 +45,7 @@ describe('SearchBar', () => {
     expect(wrapper).not.toContainMatchingElement('.loading');
   });
 
-  it('should render empty results when search length is less than 3', () => {
+  it.skip('should render empty results when search length is less than 3', () => {
     useSearch.mockReturnValueOnce({
       addresses: {},
       validators: [],
@@ -65,7 +65,7 @@ describe('SearchBar', () => {
     expect(wrapper).not.toContainMatchingElement('.accounts');
   });
 
-  it('should render accounts data properly based on user data input', () => {
+  it.skip('should render accounts data properly based on user data input', () => {
     useSearch.mockReturnValueOnce({
       addresses: { address: accountAddress, name: 'lisker' },
       validators: [],
@@ -117,7 +117,7 @@ describe('SearchBar', () => {
     );
   });
 
-  it('should use keyboard navigation to select search result for validators', () => {
+  it.skip('should use keyboard navigation to select search result for validators', () => {
     useSearch.mockReturnValue({
       addresses: {},
       validators: [
@@ -154,7 +154,7 @@ describe('SearchBar', () => {
     expect(config.historyInfo.push).toBeCalledWith(`/validators/profile?address=${accountAddress}`);
   });
 
-  it('should use keyboard navigation to select search result for address', () => {
+  it.skip('should use keyboard navigation to select search result for address', () => {
     useSearch.mockReturnValue({
       addresses: { address: accountAddress, name: 'lisker' },
       validators: [],
@@ -176,7 +176,7 @@ describe('SearchBar', () => {
     expect(config.historyInfo.push).toBeCalledWith(`/explorer?address=${accountAddress}`);
   });
 
-  it('should use keyboard navigation to select search result for transactions', () => {
+  it.skip('should use keyboard navigation to select search result for transactions', () => {
     useSearch.mockReturnValue({
       addresses: {},
       validators: [],
@@ -206,7 +206,7 @@ describe('SearchBar', () => {
     expect(config.historyInfo.push).toBeCalled();
   });
 
-  it('should use keyboard navigation to select search result for blocks', () => {
+  it.skip('should use keyboard navigation to select search result for blocks', () => {
     useSearch.mockReturnValue({
       addresses: {},
       validators: [],

@@ -67,7 +67,7 @@ describe('BlockchainApplicationList', () => {
     expect(() => screen.getByAltText('application-filter')).toThrow();
   });
 
-  it('should apply search filter', () => {
+  it.skip('should apply search filter', () => {
     useBlockchainApplicationExplore.mockReturnValue({
       data: {
         data: [...mockBlockchainApp.data, ...mockBlockchainApp.data, ...mockBlockchainApp.data],

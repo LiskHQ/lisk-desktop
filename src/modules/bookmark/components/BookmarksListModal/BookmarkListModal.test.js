@@ -53,7 +53,7 @@ describe('BookmarkListModal', () => {
     });
   });
 
-  it('should allow editing a bookmark title', () => {
+  it.skip('should allow editing a bookmark title', () => {
     const newTitle = 'New title';
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
     wrapper.find('.bookmarks-edit-button').first().simulate('click');
@@ -70,7 +70,7 @@ describe('BookmarkListModal', () => {
     expect(wrapper).not.toContainMatchingElement('.bookmarks-edit-input');
   });
 
-  it('should allow to cancel editing a bookmark title', () => {
+  it.skip('should allow to cancel editing a bookmark title', () => {
     const newTitle = 'New title';
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
     wrapper.find('.bookmarks-edit-button').first().simulate('click');

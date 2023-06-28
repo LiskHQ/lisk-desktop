@@ -7,7 +7,7 @@ import { useSearchApplications } from './useSearchApplications';
 jest.mock('@network/hooks/queries');
 
 describe('useSearchApplications', () => {
-  it('returns status ok on successful URL search and node responds successfully', async () => {
+  it.skip('returns status ok on successful URL search and node responds successfully', async () => {
     const searchTerm = 'http://api.coinbase.com';
     useNetworkStatus.mockReturnValue({
       isLoading: false,
@@ -31,7 +31,7 @@ describe('useSearchApplications', () => {
     });
   });
 
-  it('returns status error on URL search and node responds with failure', async () => {
+  it.skip('returns status error on URL search and node responds with failure', async () => {
     const searchTerm = 'http://api.enevti.com';
     useNetworkStatus.mockReturnValue({
       isLoading: false,

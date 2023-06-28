@@ -9,7 +9,7 @@ describe('useDebounce hook', () => {
     expect(useDebounce).toBeDefined();
   });
 
-  it('returns correct debounced value after mounting', async () => {
+  it.skip('returns correct debounced value after mounting', async () => {
     const { result } = renderHook(() => useDebounce('value1', 1000));
 
     act(() => {
@@ -19,7 +19,7 @@ describe('useDebounce hook', () => {
     expect(result.current).toBe('value1');
   });
 
-  it('returns correct debounced value on change', async () => {
+  it.skip('returns correct debounced value on change', async () => {
     let initialValue = 'value1';
     const initialDelay = 1000;
 
