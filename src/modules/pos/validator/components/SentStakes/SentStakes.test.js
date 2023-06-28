@@ -1,15 +1,16 @@
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
-import { renderWithRouterAndQueryClient} from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { mockRewardsClaimable } from '@pos/reward/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
+import routes from 'src/routes/routes';
 import SentStakes from './SentStakes';
 import tableHeaderMap from './tableHeaderMap';
 import { usePosConstants, useSentStakes, useUnlocks, useValidators } from '../../hooks/queries';
@@ -28,8 +29,9 @@ jest.mock('../../hooks/queries');
 jest.mock('@pos/validator/hooks/usePosToken');
 
 describe('SentStakes', () => {
+  const historyPush = jest.fn();
   const props = {
-    history: { location: { search: '' } },
+    history: { location: { search: '' }, push: historyPush },
   };
 
   useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimable });
@@ -81,5 +83,11 @@ describe('SentStakes', () => {
       ).toBeFalsy();
       expect(screen.queryAllByAltText('edit')[index]).toBeFalsy();
     });
+  });
+
+  it('should navigate to /validators when arrow left is clicked', async () => {
+    renderWithRouterAndQueryClient(SentStakes, props);
+    fireEvent.click(screen.getByAltText('arrowLeftTailed'));
+    expect(historyPush).toHaveBeenCalledWith(routes.validators.path);
   });
 });
