@@ -1,21 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect } from 'react';
 
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import WalletList from '@wallet/components/walletList';
-import { Input } from 'src/theme';
-import Icon from '@theme/Icon';
 import { useFilter } from '@common/hooks';
 import { useTokenBalances, useTokenSummary } from '@token/fungible/hooks/queries';
+import Overview from '../Overview/overview';
 import styles from './accounts.css';
 
-// eslint-disable-next-line max-statements
 const Accounts = () => {
-  const { t } = useTranslation();
-  const timeout = useRef();
-  const [search, setSearch] = useState('');
   const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0];
   const tokenID = token?.tokenID;
@@ -26,29 +20,10 @@ const Accounts = () => {
     setFilter('tokenID', tokenID);
   }, [token?.tokenID]);
 
-  const handleFilter = ({ target: { value } }) => {
-    setSearch(value);
-    clearTimeout(timeout.current);
-
-    timeout.current = setTimeout(() => {
-      setFilter('address', value);
-    }, 500);
-  };
-
   return (
     <Box main className="accounts-box">
       <BoxHeader>
-        <h1>{t('All accounts')}</h1>
-        <span>
-          <Input
-            icon={<Icon className={styles.searchIcon} name="searchActive" />}
-            onChange={handleFilter}
-            value={search}
-            className={`${styles.filterTopAccounts} filter-by-name`}
-            size="m"
-            placeholder={t('Search by name')}
-          />
-        </span>
+        <Overview setFilter={setFilter} />
       </BoxHeader>
       <BoxContent className={styles.content}>
         <WalletList token={token} tokenSummary={tokenSummary} filters={filters} />

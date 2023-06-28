@@ -31,9 +31,7 @@ const AccountRow = ({ data, className, token, tokenSupply }) => (
       {tokenSupply ? calculateSupply(data.balance, tokenSupply?.amount) : 0}%
     </span>
     <span className={`${grid['col-xs-4']} ${grid['col-md-3']}`}>
-      {data.knowledge.description
-        ? `${data.knowledge.owner} ${data.knowledge.description}`
-        : data.knowledge.owner}
+      {data.knowledge.description ? `${data.knowledge.owner} ${data.knowledge.description}` : '-'}
     </span>
   </Link>
 );
