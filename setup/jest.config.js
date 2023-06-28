@@ -345,11 +345,14 @@ module.exports = {
   },
   setupFiles: ['<rootDir>/setup/config/setupJest.js', 'jest-canvas-mock'],
   transform: {
-    '^.+\\.js$': 'babel-jest',
+    '\\.[jt]sx?$': 'babel-jest',
     '^.+\\.svg|png|jpg|jpeg$': '<rootDir>/tests/__mocks__/imageTransform.js',
   },
-  transformIgnorePatterns: ['node_modules/(?!(swiper|ssr-window|dom7)/)'],
-  testURL: 'http://localhost',
+  transformIgnorePatterns: ['node_modules/(?!(yup|@hookform/resolvers|swiper|ssr-window|dom7)/)'],
+  testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    url: 'http://localhost',
+  },
   globals: {
     PRODUCTION: true,
     TEST: true,
@@ -365,7 +368,6 @@ module.exports = {
     './node_modules/@testing-library/jest-dom/extend-expect',
     './node_modules/jest-enzyme/lib/index.js',
   ],
-  testEnvironment: 'enzyme',
   watchPlugins: [
     ['jest-watch-toggle-config', { setting: 'verbose' }],
     ['jest-watch-toggle-config', { setting: 'collectCoverage' }],
