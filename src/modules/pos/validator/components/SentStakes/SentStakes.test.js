@@ -5,7 +5,7 @@ import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient} from 'src/utils/testHelpers';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { mockRewardsClaimable } from '@pos/reward/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
@@ -43,7 +43,7 @@ describe('SentStakes', () => {
   usePosConstants.mockReturnValue({ data: mockPosConstants });
 
   it('should display properly', async () => {
-    renderWithRouter(SentStakes, props);
+    renderWithRouterAndQueryClient(SentStakes, props);
 
     expect(screen.getByText('Stakes')).toBeTruthy();
     expect(screen.getByText(10 - mockSentStakes.meta.count)).toBeTruthy();
@@ -71,7 +71,7 @@ describe('SentStakes', () => {
     useSentStakes.mockReturnValue({});
     useTokenBalances.mockReturnValue({});
 
-    renderWithRouter(SentStakes, props);
+    renderWithRouterAndQueryClient(SentStakes, props);
 
     mockSentStakes.data.stakes.forEach(({ address, amount, name }, index) => {
       expect(screen.queryAllByText(name)[0]).toBeFalsy();
