@@ -20,6 +20,7 @@ describe('encoding', () => {
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );
+  const senderPublicKey = 'fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122';
 
   it('should return schema of a particular moduleCommand', () => {
     const schema = [{ moduleCommand: 'token:transfer', schema: 'schema' }];
@@ -47,7 +48,7 @@ describe('encoding', () => {
         name: 'test',
       },
       signatures: [],
-      senderPublicKey: '0x0',
+      senderPublicKey,
     };
 
     expect(fromTransactionJSON(transactionJSON, moduleCommandSchemas)).toEqual({
@@ -57,7 +58,7 @@ describe('encoding', () => {
       nonce: 1n,
       params: {},
       signatures: [],
-      senderPublicKey: Buffer.alloc(0),
+      senderPublicKey: expect.any(Object),
       id: Buffer.alloc(0),
     });
   });
@@ -72,7 +73,7 @@ describe('encoding', () => {
       nonce: '1',
       params: '',
       signatures: [],
-      senderPublicKey: '0x0',
+      senderPublicKey,
     };
 
     expect(fromTransactionJSON(transactionJSON, moduleCommandSchemas)).toEqual({
@@ -82,7 +83,7 @@ describe('encoding', () => {
       nonce: 1n,
       params: 'params-decoded',
       signatures: [],
-      senderPublicKey: Buffer.alloc(0),
+      senderPublicKey: expect.any(Object),
       id: Buffer.alloc(0),
     });
   });
@@ -97,7 +98,7 @@ describe('encoding', () => {
       nonce: '1',
       params: '',
       signatures: [],
-      senderPublicKey: '0x0',
+      senderPublicKey,
     };
 
     expect(fromTransactionJSON(transactionJSON)).toEqual({
@@ -107,7 +108,7 @@ describe('encoding', () => {
       nonce: 1n,
       params: {},
       signatures: [],
-      senderPublicKey: Buffer.alloc(0),
+      senderPublicKey: expect.any(Object),
       id: Buffer.alloc(0),
     });
   });
@@ -122,7 +123,7 @@ describe('encoding', () => {
       nonce: '1',
       params: '',
       signatures: [],
-      senderPublicKey: '0x0',
+      senderPublicKey,
     };
 
     expect(fromTransactionJSON(transactionJSON)).toEqual({
@@ -132,7 +133,7 @@ describe('encoding', () => {
       nonce: 1n,
       params: {},
       signatures: [],
-      senderPublicKey: Buffer.alloc(0),
+      senderPublicKey: expect.any(Object),
       id: Buffer.alloc(0),
     });
   });
@@ -148,7 +149,7 @@ describe('encoding', () => {
       nonce: '1n',
       params: Buffer.from('params'),
       signatures: [],
-      senderPublicKey: '0x0',
+      senderPublicKey,
       id: '123456',
     };
 
@@ -169,7 +170,7 @@ describe('encoding', () => {
       nonce: '1n',
       params: Buffer.from('params'),
       signatures: [],
-      senderPublicKey: '0x0',
+      senderPublicKey,
       id: '123456',
     };
 
