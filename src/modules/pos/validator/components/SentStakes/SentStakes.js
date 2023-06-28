@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Heading from 'src/modules/common/components/Heading';
 import DialogLink from 'src/theme/dialog/link';
@@ -12,6 +12,8 @@ import { useCurrentAccount } from '@account/hooks';
 import routes from 'src/routes/routes';
 import StakesCount from '@pos/validator/components/StakesCount';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
+import { useMyTransactions } from '@transaction/hooks/queries';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
@@ -55,6 +57,26 @@ const SentStakes = ({ history }) => {
   const { t } = useTranslation();
   const stakerAddress = useStakerAddress(history.location.search);
   const { token } = usePosToken({ address: stakerAddress });
+  const { refetch } = useSentStakes({
+    config: { params: { address: stakerAddress } },
+  });
+
+  const { data: pooledTransactionsData } = useMyTransactions({
+    config: {
+      params: {
+        address: stakerAddress,
+        sort: 'timestamp:desc',
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
+        limit: 1,
+      },
+    },
+  });
+
+  useEffect(() => {
+    if (pooledTransactionsData?.meta?.total > 1) {
+      refetch();
+    }
+  }, [pooledTransactionsData?.meta?.total]);
 
   const handleGoToValidators = () => {
     history.push(routes.validators.path);
