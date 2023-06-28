@@ -175,7 +175,6 @@ module.exports = {
     'src/modules/settings/components/customNode/editMode.js',
     'src/modules/settings/components/customNode/customNode.js',
     'src/modules/auth/components/RecoveryPhrase/index.js',
-    'src/modules/auth/components/Signin/login.js',
     'src/modules/transaction/components/TransactionMonitor/TransactionMonitorList.js',
     'src/modules/transaction/store/transactionPriorityReducer.js',
     'src/modules/bookmark/components/BookmarksListModal/BookmarkListModal.js',
