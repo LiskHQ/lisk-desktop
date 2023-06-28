@@ -18,6 +18,10 @@ describe('convertCommissionToPercentage', () => {
     expect(convertCommissionToNumber()).not.toEqual('0');
   });
 
+  it('Should convert 16.40 to 1640', () => {
+    expect(convertCommissionToNumber('16.40')).toEqual(1640);
+  });
+
   it('Should convert any number to percentage', () => {
     expect(convertCommissionToNumber('100.00')).toEqual(10000);
     expect(convertCommissionToNumber('100.00')).not.toEqual('10000');
