@@ -2,12 +2,8 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 export default (t, changeSort) => [
   {
-    title: t('Rank'),
-    classList: `${grid['col-xs-1']} ${grid['col-md-1']}`,
-  },
-  {
     title: t('Address'),
-    classList: `${grid['col-xs-3']} ${grid['col-md-5']}`,
+    classList: `${grid['col-xs-4']} ${grid['col-md-6']}`,
   },
   {
     title: t('Balance'),

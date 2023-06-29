@@ -15,14 +15,14 @@ const WalletRow = ({ data, className, token, tokenSupply }) => (
     data-testid="wallets-row"
     to={`${routes.explorer.path}?address=${data.address}`}
   >
-    <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>{data.rank}</span>
-    <span className={`${grid['col-xs-3']} ${grid['col-md-5']}`}>
+    <span className={`${grid['col-xs-4']} ${grid['col-md-6']}`}>
       <WalletVisualWithAddress
         address={data.address}
         transactionSubject="address"
         showBookmarkedAddress
         detailsClassName={styles.walletSummary}
         truncate={false}
+        accountName={data.name}
       />
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-2']}`}>

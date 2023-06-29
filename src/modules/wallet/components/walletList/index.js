@@ -7,14 +7,15 @@ import { useTokensBalanceTop } from '@token/fungible/hooks/queries';
 import WalletRow from '../row';
 import header from './tableHeader';
 
-const WalletTable = ({ token, tokenSummary, filters }) => {
+const WalletTable = ({ tokenData, tokenSummary, filters }) => {
   const { t } = useTranslation();
   const { sort, toggleSort } = useSort({ defaultSort: 'balance:desc' });
-  const tokenID = token?.tokenID;
+  const token = tokenData?.data?.[0];
   const tokenSupply = tokenSummary?.data?.totalSupply?.filter(
-    (tokenData) => tokenData.tokenID === tokenID
+    (tokenInfo) => tokenInfo.tokenID === token?.tokenID
   )[0];
 
+  /* istanbul ignore next */
   const fetchNextPage = (data) =>
     data.pages.reduce((prevPages, page) => {
       const dataKeys = Object.keys(page?.data ?? {});
@@ -40,9 +41,9 @@ const WalletTable = ({ token, tokenSummary, filters }) => {
       queryHook={useTokensBalanceTop}
       queryConfig={{
         config: { params: { ...filters, ...(sort && { sort }) } },
-        options: { enabled: !!tokenID, select: fetchNextPage },
+        options: { enabled: !!token?.tokenID, select: fetchNextPage },
       }}
-      transformResponse={(res) => res?.[tokenID]}
+      transformResponse={(res) => res?.[token?.tokenID]}
       row={WalletRow}
       additionalRowProps={{ token, tokenSupply }}
       header={header(t, toggleSort)}
