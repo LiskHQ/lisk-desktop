@@ -64,16 +64,18 @@ const StakeValidator = ({ t, account, summaryInfo, formProps }) => {
         <InfoColumn title={t('Total stakes after confirmation')}>
           {`${sentStakes + addedLength - removedLength}/10`}
         </InfoColumn>
-        <InfoColumn
-          title={t('Total rewards')}
-          toolTipText={t(
-            'Total rewards credited to your account in effective to changes in stakes.'
-          )}
-        >
-          <span className={styles.totalReward}>
-            <TokenAmount val={rewards.total.toString()} token={token} />
-          </span>
-        </InfoColumn>
+        {!!rewards.total && (
+          <InfoColumn
+            title={t('Total rewards')}
+            toolTipText={t(
+              'Total rewards credited to your account in effective to changes in stakes.'
+            )}
+          >
+            <span className={styles.totalReward}>
+              <TokenAmount val={rewards.total.toString()} token={token} />
+            </span>
+          </InfoColumn>
+        )}
       </div>
     </>
   );
