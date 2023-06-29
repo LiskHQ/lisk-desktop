@@ -28,7 +28,7 @@ describe('Overview', () => {
     expect(screen.getByText('All accounts')).toBeInTheDocument();
     expect(screen.getByTestId('selected-menu-item')).toHaveTextContent('LSK');
     expect(screen.getAllByTestId('dropdown-options')).toHaveLength(6);
-    expect(screen.getByPlaceholderText('Search by name')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search by address')).toBeInTheDocument();
   });
 
   it('updates the filter when a different token is selected', async () => {
@@ -42,13 +42,13 @@ describe('Overview', () => {
   it('updates the filter when the search input is changed', async () => {
     smartRender(Overview, props, config);
 
-    fireEvent.change(screen.getByPlaceholderText('Search by name'), {
+    fireEvent.change(screen.getByPlaceholderText('Search by address'), {
       target: { value: 'lsk3szyz' },
     });
 
     await waitFor(() => {
       expect(mockSetFilter).toHaveBeenCalledTimes(1);
-      expect(mockSetFilter).toHaveBeenCalledWith('address', 'lsk3szyz');
+      expect(mockSetFilter).toHaveBeenCalledWith('search', 'lsk3szyz');
     });
   });
 });
