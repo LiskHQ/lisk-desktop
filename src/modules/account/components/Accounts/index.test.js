@@ -4,7 +4,7 @@ import {
   useTokensBalanceTop,
   useTokenSummary,
 } from '@token/fungible/hooks/queries';
-import { mockAppsTokens, mockTokensTopLskBalance } from '@token/fungible/__fixtures__';
+import { mockAppsTokens, mockTokenBalancesTop } from '@token/fungible/__fixtures__';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import WalletsMonitor from './Accounts';
 
@@ -27,7 +27,7 @@ describe('Top Accounts Monitor Page', () => {
     isSuccess: true,
     data: {
       data: {
-        '0000000100000000': mockTokensTopLskBalance.data,
+        '0000000100000000': mockTokenBalancesTop.data,
       },
     },
   });

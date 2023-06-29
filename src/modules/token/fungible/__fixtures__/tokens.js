@@ -92,7 +92,7 @@ export const totalSupply = [
   { tokenID: '00000005', amount: '27000000', name: 'Kalipo', symbol: 'KAL' },
 ];
 
-export const tokensTopLskBalance = [
+export const tokenBalancesTop = [
   {
     address: 'lskckzngagcs4d5gvsgxmgnabyfyj8pz266gv8s8t',
     balance: 8361964487361193,

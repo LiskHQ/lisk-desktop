@@ -3,7 +3,7 @@ import { API_VERSION } from 'src/const/config';
 import {
   mockTokensBalance,
   mockTokenSummary,
-  mockTokensTopLskBalance,
+  mockTokenBalancesTop,
   mockAppsTokens,
   mockTokensAccountExists,
 } from '@token/fungible/__fixtures__';
@@ -31,9 +31,9 @@ export const tokensTopLskBalance = rest.get(
     const limit = Number(req.url.searchParams.get('limit'));
     const offset = Number(req.url.searchParams.get('offset') || 0);
     const response = {
-      data: mockTokensTopLskBalance.data.slice(offset, offset + limit),
+      data: mockTokenBalancesTop.data.slice(offset, offset + limit),
       meta: {
-        ...mockTokensTopLskBalance.meta,
+        ...mockTokenBalancesTop.meta,
         count: limit,
         offset,
       },
