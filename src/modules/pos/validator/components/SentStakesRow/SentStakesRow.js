@@ -28,8 +28,8 @@ const SentStakesRow = ({ data: stakes, stakeEdited, token }) => {
         <Balance
           className={classNames({
             [styles.amountCell]: true,
-            [styles.animateGreen]: prevAmount && parseInt(prevAmount, 10) < parseInt(amount, 10),
-            [styles.animateRed]: prevAmount && parseInt(prevAmount, 10) > parseInt(amount, 10),
+            [styles.animateGreen]: prevAmount && BigInt(prevAmount) < BigInt(amount),
+            [styles.animateRed]: prevAmount && BigInt(prevAmount) > BigInt(amount),
           })}
           value={<TokenAmount val={amount} token={token} />}
         />
