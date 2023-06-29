@@ -25,7 +25,7 @@ const Overview = ({ setFilter }) => {
     clearTimeout(timeout.current);
 
     timeout.current = setTimeout(() => {
-      setFilter('address', value);
+      setFilter('search', value);
     }, 500);
   };
 
@@ -70,7 +70,7 @@ const Overview = ({ setFilter }) => {
             value={search}
             className={`${styles.filterTopAccounts} filter-by-name`}
             size="m"
-            placeholder={t('Search by name')}
+            placeholder={t('Search by address')}
           />
         </span>
       </div>
