@@ -25,7 +25,7 @@ export const tokensBalance = rest.get(
   }
 );
 
-export const tokensTopLskBalance = rest.get(
+export const tokenBalancesTop = rest.get(
   `*/api/${API_VERSION}/token/balances/top`,
   async (req, res, ctx) => {
     const limit = Number(req.url.searchParams.get('limit'));
