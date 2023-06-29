@@ -17,13 +17,13 @@ const WalletTable = ({ token, tokenSummary, filters }) => {
 
   const fetchNextPage = (data) =>
     data.pages.reduce((prevPages, page) => {
-      const dataKeys = Object.keys(page?.data);
+      const dataKeys = Object.keys(page?.data ?? {});
       const newData = page?.data || [];
       const merge = prevPages.data
         ? dataKeys.reduce(
             (acc, key) => ({
               ...acc,
-              [key]: [...prevPages?.data[key], ...newData[key]],
+              [key]: [...prevPages.data[key], ...newData[key]],
             }),
             {}
           )
