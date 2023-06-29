@@ -1,12 +1,10 @@
 import { regex } from 'src/const/regex';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { API_VERSION } from 'src/const/config';
-import { HTTP_CODES, HTTP_PREFIX } from 'src/const/httpCodes';
+import { HTTP_PREFIX } from 'src/const/httpCodes';
 import http from 'src/utils/api/http';
 import ws from 'src/utils/api/ws';
 import client from 'src/utils/api/client';
-import { isEmpty } from 'src/utils/helpers';
-import { extractAddressFromPublicKey, extractPublicKey } from '@wallet/utils/account';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 const httpPaths = {
   account: `${HTTP_PREFIX}/auth`,
@@ -16,93 +14,6 @@ const httpPaths = {
 const wsMethods = {
   accounts: 'get.accounts',
   account: 'get.accounts',
-};
-
-/**
- * Prioritizes the API params and if passed, converts
- * publicKey and passphrase to address.
- *
- * @param {Object} params
- * @param {String?} params.username Valid validator username
- * @param {String?} params.address Valid Lisk Address
- * @param {String?} params.passphrase Valid Mnemonic passphrase
- * @param {String?} params.publicKey Valid Lisk PublicKey
- *
- * @returns {Object} Params containing either address or username
- */
-const getAccountParams = async (params) => {
-  if (!params || isEmpty(params)) return {};
-  const { username, address, passphrase, publicKey, derivationPath } = params;
-
-  if (username) return { username };
-  if (publicKey) return { publicKey };
-  if (address) return { address };
-  if (passphrase) {
-    return { publicKey: await extractPublicKey(passphrase, undefined, derivationPath) };
-  }
-
-  return {};
-};
-
-/**
- * Retrieves details of an account with given params
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- * @param {String?} data.baseUrl Custom API URL
- * @param {Object} data.params
- * @param {String?} data.params.username Valid validator username
- * @param {String?} data.params.address Valid Lisk Address
- * @param {String?} data.params.passphrase Valid Mnemonic passphrase
- * @param {String?} data.params.publicKey Valid Lisk PublicKey
- *
- * @returns {Promise}
- */
-// eslint-disable-next-line complexity, max-statements
-export const getAccount = async ({ network, params, baseUrl }) => {
-  const normParams = await getAccountParams(params);
-
-  try {
-    const response = await http({
-      baseUrl,
-      path: httpPaths.account,
-      network,
-      params: normParams,
-    });
-
-    if (response.data) {
-      const account = {
-        keys: { ...response.data },
-        publicKey: response.meta?.publicKey ?? '',
-      };
-      return account;
-    }
-  } catch (e) {
-    if (e.code === HTTP_CODES.NOT_FOUND) {
-      // eslint-disable-next-line no-console
-      console.log('Lisk account not found.');
-
-      if (params.publicKey) {
-        const address = extractAddressFromPublicKey(params.publicKey);
-        const account = {
-          summary: {
-            publicKey: params.publicKey,
-            privateKey: params.privateKey,
-            balance: 0,
-            address,
-            token: tokenMap.LSK.key,
-          },
-          sequence: {
-            nonce: 0,
-          },
-        };
-        return account;
-      }
-    } else {
-      throw Error(e);
-    }
-  }
-  throw Error('Error retrieving account');
 };
 
 const accountFilters = {

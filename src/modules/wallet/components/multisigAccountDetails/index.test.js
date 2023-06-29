@@ -1,7 +1,11 @@
 import { cryptography } from '@liskhq/lisk-client';
 import routes from 'src/routes/routes';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuthMultiSig } from '@auth/__fixtures__';
 import MultisigAccountDetails from './index';
+
+jest.mock('@auth/hooks/queries');
 
 describe('Multisignature account details', () => {
   const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
@@ -31,6 +35,7 @@ describe('Multisignature account details', () => {
     },
   };
   jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
+  useAuth.mockReturnValue({ data: mockAuthMultiSig });
 
   describe('Ordinary account', () => {
     const store = {

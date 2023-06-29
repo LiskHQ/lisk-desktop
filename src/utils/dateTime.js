@@ -21,7 +21,7 @@ export const getDateTimestampFromFirstBlock = (value, format) =>
  * Function to format an input to Date format 99.99.99
  * @param {String} value - Value to format to Date
  * @param {String} separator - Character to use as separator, default: .
- * @returns {String} - Value formated as 99.99.99
+ * @returns {String} - Value formatted as 99.99.99
  */
 export const formatInputToDate = (value, separator = '.') => {
   const suffix = /\d{2}[./-]$/.test(value) ? '.' : '';
@@ -45,7 +45,7 @@ export const formatInputToDate = (value, separator = '.') => {
 /**
  * Converts Unix timestamp (seconds since Jan 01 1970 UTC)
  * to Lisk Epoch timestamp (seconds since May 24 2016, 17:00 UTC).
- * @param {Number} timmestamp - Unix timestamp in seconds
+ * @param {Number} timestamp - Unix timestamp in seconds
  * @returns {Number} - Timestamp in seconds from first block
  */
 export const convertUnixSecondsToLiskEpochSeconds = (timestamp) =>
