@@ -48,10 +48,10 @@ describe('StakingQueue.Result', () => {
       ...props,
       statusInfo: { unlockable: 300 },
     });
-    const element = wrapper.find('StakeSuccessfulModal');
+    const element = wrapper.find('BoxContent');
 
     expect(element.text()).toContain(
-      'Staking confirmed0.000003 LSK will be available to unlock when the locking period ends.'
+      ' 0.000003 LSK will be available to unlock when the locking period ends.'
     );
   });
 
@@ -63,10 +63,10 @@ describe('StakingQueue.Result', () => {
       },
       statusInfo: { unlockable: 300 },
     });
-    const element = wrapper.find('StakeSuccessfulModal');
+    const element = wrapper.find('BoxContent');
 
     expect(element.text()).toContain(
-      'Staking confirmed0.000003 LSK will be available to unlock when the locking period ends.0.2 LSK will be credited to your account due to changes in stakes.Show all your stakes'
+      ' 0.000003 LSK will be available to unlock when the locking period ends.0.2 LSK will be credited to your account due to changes in stakes.'
     );
   });
 
@@ -75,10 +75,10 @@ describe('StakingQueue.Result', () => {
       ...props,
       statusInfo: { locked: 200, unlockable: 300 },
     });
-    const element = wrapper.find('StakeSuccessfulModal');
+    const element = wrapper.find('BoxContent');
 
     expect(element.text()).toContain(
-      'Staking confirmedYou have now locked 0.000002 LSK for staking and may unlock0.000003 LSK when the locking period ends.Show all your stakes'
+      'You have now locked 0.000002 LSK for staking and may unlock 0.000003 LSK when the locking period ends.'
     );
   });
 
