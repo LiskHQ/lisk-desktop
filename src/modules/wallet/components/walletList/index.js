@@ -15,13 +15,32 @@ const WalletTable = ({ token, tokenSummary, filters }) => {
     (tokenData) => tokenData.tokenID === tokenID
   )[0];
 
+  const fetchNextPage = (data) =>
+    data.pages.reduce((prevPages, page) => {
+      const dataKeys = Object.keys(page?.data);
+      const newData = page?.data || [];
+      const merge = prevPages.data
+        ? dataKeys.reduce(
+            (acc, key) => ({
+              ...acc,
+              [key]: [...prevPages?.data[key], ...newData[key]],
+            }),
+            {}
+          )
+        : newData;
+      return {
+        ...page,
+        data: merge,
+      };
+    }, {});
+
   return (
     <QueryTable
       showHeader
       queryHook={useTokensTopLskBalance}
       queryConfig={{
         config: { params: { ...filters, ...(sort && { sort }) } },
-        options: { enabled: !!tokenID },
+        options: { enabled: !!tokenID, select: fetchNextPage },
       }}
       transformResponse={(res) => res?.[tokenID]}
       row={WalletRow}
