@@ -7,9 +7,6 @@ export const networkKeys = {
   customNode: 'customNode',
 };
 
-// eslint-disable-next-line no-unused-vars
-export const initialSupply = 10000000000000000;
-
 const networks = {
   [networkKeys.mainnet]: {
     name: networkKeys.mainnet,

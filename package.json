@@ -137,7 +137,6 @@
     "get-port": "4.1.0",
     "html-entities": "1.4.0",
     "i18next": "17.0.16",
-    "is-electron": "2.2.0",
     "js-sha256": "0.9.0",
     "jspdf": "2.3.1",
     "jsx-to-string": "1.4.0",

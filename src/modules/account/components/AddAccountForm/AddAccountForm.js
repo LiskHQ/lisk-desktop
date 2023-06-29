@@ -10,11 +10,11 @@ import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput'
 import DiscreetModeToggle from '@settings/components/discreetModeToggle';
 import NetworkSelector from '@settings/components/networkSelector';
 import { getDerivationPathErrorMessage } from '@wallet/utils/account';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import Toggle from '@settings/components/toggle';
 import Tooltip from '@theme/Tooltip/tooltip';
 import settingsConst from '@settings/const/settingConstants';
 import styles from './AddAccountForm.css';
+import { defaultDerivationPath } from '../../const';
 
 const AddAccountForm = ({ settings, onAddAccount }) => {
   const [passphrase, setPass] = useState({ value: '', isValid: false });

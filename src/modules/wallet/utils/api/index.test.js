@@ -2,7 +2,7 @@ import { HTTP_CODES } from 'src/const/httpCodes';
 import http from 'src/utils/api/http';
 import ws from 'src/utils/api/ws';
 import accounts from '@tests/constants/wallets';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
+import { defaultDerivationPath } from '@account/const';
 import { getAccount, getAccounts } from './index';
 
 jest.mock('src/utils/api/http', () => jest.fn().mockReturnValue([]));

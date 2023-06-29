@@ -44,7 +44,7 @@ const getAttributionLinks = () => {
   const mapBox = '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a>';
   const improveThisMap =
     '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
-  const watermark = `<a href="http://mapbox.com/about/maps" target="_blank"><img src="${mapboxWatermarkImage}" class="mapboxWatermark" /></a>`;
+  const watermark = `<a href="https://www.mapbox.com/about/maps" target="_blank"><img src="${mapboxWatermarkImage}" class="mapboxWatermark"  alt=""/></a>`;
 
   return `${openStreetMap} ${mapBox} ${improveThisMap} ${watermark}`;
 };

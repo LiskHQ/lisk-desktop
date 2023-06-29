@@ -4,7 +4,7 @@ import { client } from '@libs/wcm/utils/connectionCreator';
 import { STATUS, ERROR_CASES } from '../constants/lifeCycle';
 
 /**
- * The approve handler for connection proposal
+ * The approval handler for connection proposal
  *
  * @param {object} proposal The proposal object as received via the event
  * @param {array} selectedAccounts List of lisk addresses selected by the user

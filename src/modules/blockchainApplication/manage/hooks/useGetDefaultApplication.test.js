@@ -14,7 +14,7 @@ const mockState = {
   },
 };
 const refetchBlockchainApplicationMeta = jest.fn();
-const refetchApplicationExpore = jest.fn();
+const refetchApplicationExplore = jest.fn();
 
 jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
@@ -42,7 +42,7 @@ describe('useCurrentApplication hook', () => {
       isFetched: true,
       isLoading: false,
       error: null,
-      refetch: refetchApplicationExpore,
+      refetch: refetchApplicationExplore,
       data: { data: mockApplicationsExplore },
     }));
 
@@ -75,7 +75,7 @@ describe('useCurrentApplication hook', () => {
       isFetched: true,
       isLoading: false,
       error: null,
-      refetch: refetchApplicationExpore,
+      refetch: refetchApplicationExplore,
       data: { data: [] },
     }));
 
@@ -102,7 +102,7 @@ describe('useCurrentApplication hook', () => {
       isFetched: true,
       isLoading: false,
       error: null,
-      refetch: refetchApplicationExpore,
+      refetch: refetchApplicationExplore,
       data: { data: [] },
     }));
 
@@ -117,7 +117,7 @@ describe('useCurrentApplication hook', () => {
     );
   });
 
-  it('should return empty applications list if appliation explore returns a server error', async () => {
+  it('should return empty applications list if application explore returns a server error', async () => {
     useBlockchainApplicationMeta.mockImplementation(() => ({
       isFetched: true,
       isLoading: false,
@@ -129,7 +129,7 @@ describe('useCurrentApplication hook', () => {
       isFetched: false,
       isLoading: false,
       error: 'error',
-      refetch: refetchApplicationExpore,
+      refetch: refetchApplicationExplore,
       data: { data: undefined },
     }));
 
@@ -144,7 +144,7 @@ describe('useCurrentApplication hook', () => {
     );
   });
 
-  it('should return empty applications list if appliation explore returns a server error', async () => {
+  it('should return empty applications list if application explore returns a server error', async () => {
     useBlockchainApplicationMeta.mockImplementation(() => ({
       isFetched: true,
       isLoading: false,
@@ -156,7 +156,7 @@ describe('useCurrentApplication hook', () => {
       isFetched: false,
       isLoading: false,
       error: 'error',
-      refetch: refetchApplicationExpore,
+      refetch: refetchApplicationExplore,
       data: { data: undefined },
     }));
 
@@ -171,7 +171,7 @@ describe('useCurrentApplication hook', () => {
     );
   });
 
-  it('should re-invoke meta and exploration quries if only there is an error', async () => {
+  it('should re-invoke meta and exploration queries if only there is an error', async () => {
     useBlockchainApplicationMeta.mockImplementation(() => ({
       isFetched: true,
       isLoading: false,
@@ -183,17 +183,17 @@ describe('useCurrentApplication hook', () => {
       isFetched: false,
       isLoading: false,
       error: 'error',
-      refetch: refetchApplicationExpore,
+      refetch: refetchApplicationExplore,
       data: { data: undefined },
     }));
 
     const { result } = renderHook(() => useGetDefaultApplication());
     result.current.retry();
     expect(refetchBlockchainApplicationMeta).toHaveBeenCalled();
-    expect(refetchApplicationExpore).toHaveBeenCalled();
+    expect(refetchApplicationExplore).toHaveBeenCalled();
   });
 
-  it('should not re-invoke meta and exploration quries if there is no error', async () => {
+  it('should not re-invoke meta and exploration queries if there is no error', async () => {
     useBlockchainApplicationMeta.mockImplementation(() => ({
       isFetched: true,
       isLoading: false,
@@ -205,14 +205,14 @@ describe('useCurrentApplication hook', () => {
       isFetched: true,
       isLoading: false,
       error: null,
-      refetch: refetchApplicationExpore,
+      refetch: refetchApplicationExplore,
       data: { data: undefined },
     }));
 
     const { result } = renderHook(() => useGetDefaultApplication());
     result.current.retry();
     expect(refetchBlockchainApplicationMeta).not.toHaveBeenCalled();
-    expect(refetchApplicationExpore).not.toHaveBeenCalled();
+    expect(refetchApplicationExplore).not.toHaveBeenCalled();
   });
 
   it('should be in loading state', async () => {
@@ -227,7 +227,7 @@ describe('useCurrentApplication hook', () => {
       isFetched: false,
       isLoading: false,
       error: null,
-      refetch: refetchApplicationExpore,
+      refetch: refetchApplicationExplore,
       data: {},
     }));
 

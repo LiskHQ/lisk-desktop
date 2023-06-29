@@ -1,9 +1,22 @@
 import React from 'react';
 import { truncateAddress } from '@wallet/utils/account';
 import Icon from 'src/theme/Icon';
-import { getTxConfig } from '@search/utils';
+import { MODULE_COMMANDS_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './TransactionResultList.css';
+
+const getTxConfig = (t, transactions) => {
+  const { params, fee } = transactions[0];
+
+  return {
+    icon:
+      transactions[0].moduleCommand === 'token:transfer'
+        ? undefined
+        : MODULE_COMMANDS_MAP['token:transfer'].icon,
+    subTitle: transactions[0].moduleCommand === 'token:transfer' ? t('Amount') : t('Fee'),
+    value: transactions[0].moduleCommand === 'token:transfer' ? params.amount : fee,
+  };
+};
 
 const Transactions = ({
   t,

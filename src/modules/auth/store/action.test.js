@@ -24,7 +24,6 @@ jest.mock('@network/store/action', () => ({
 }));
 jest.mock('@wallet/utils/account', () => ({
   extractKeyPair: jest.fn(),
-  getUnlockableUnlockObjects: () => [{}],
 }));
 
 describe('actions: account', () => {
