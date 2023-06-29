@@ -11,8 +11,8 @@ const calculateSupply = (balance, totalSupply) => Number((balance * 100) / total
 
 const WalletRow = ({ data, className, token, tokenSupply }) => (
   <Link
-    className={`${grid.row} ${className} accounts-row`}
-    data-testid="accounts-row"
+    className={`${grid.row} ${className} wallets-row`}
+    data-testid="wallets-row"
     to={`${routes.explorer.path}?address=${data.address}`}
   >
     <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>{data.rank}</span>
@@ -21,7 +21,7 @@ const WalletRow = ({ data, className, token, tokenSupply }) => (
         address={data.address}
         transactionSubject="address"
         showBookmarkedAddress
-        detailsClassName={styles.accountSummary}
+        detailsClassName={styles.walletSummary}
         truncate={false}
       />
     </span>

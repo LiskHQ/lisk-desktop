@@ -7,7 +7,7 @@
   white-space: nowrap;
 }
 
-.accountSummary {
+.walletSummary {
   justify-content: center;
 
   & p {
