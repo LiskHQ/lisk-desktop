@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { mockLegacy } from '@legacy/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useTokensBalanceTop } from './useTokensTopLskBalance';
+import { useTokensBalanceTop } from './useTokensBalanceTop';
 
 jest.useRealTimers();
 
