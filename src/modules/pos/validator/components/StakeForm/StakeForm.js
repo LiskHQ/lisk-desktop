@@ -109,7 +109,6 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
   if (areStakesInValid) {
     messages.push(t('Please enter the stake amounts for the validators you wish to stake for'));
   }
-
   if (resultingNumOfStakes > STAKE_LIMIT) {
     messages.push(
       t(
@@ -168,7 +167,6 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     posToken
   );
   const showEmptyState = !changedStakes.length || isStakingTxPending;
-
   const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     if (!showEmptyState && moduleCommandSchemas && !isLoading) {
       const moduleCommand = joinModuleAndCommand(transactionJSON);
@@ -184,26 +182,28 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
           serviceUrl: mainChainNetwork.serviceUrl,
         })
       );
-
       setIsLoading(true);
       setDryrunError(error);
-      const rewards = dryRunResult.data.events.reduce((result, event) => {
-        const { name, data, module } = event;
+      const rewards = dryRunResult.data.events.reduce(
+        (result, event) => {
+          const { name, data, module } = event;
 
-        if (
-          name === 'rewardsAssigned' &&
-          module === 'pos' &&
-          data.stakerAddress === currentAccount.metadata.address
-        ) {
-          return {
-            ...result,
-            [data.validatorAddress]: data,
-            total: BigInt(result.total || 0) + BigInt(data.amount),
-          };
-        }
+          if (
+            name === 'rewardsAssigned' &&
+            module === 'pos' &&
+            data.stakerAddress === currentAccount.metadata.address
+          ) {
+            return {
+              ...result,
+              [data.validatorAddress]: data,
+              total: BigInt(result.total || 0) + BigInt(data.amount),
+            };
+          }
 
-        return result;
-      }, {});
+          return result;
+        },
+        { total: 0n }
+      );
 
       nextStep({
         formProps: { ...formProps, rewards },

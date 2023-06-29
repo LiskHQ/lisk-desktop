@@ -8,6 +8,7 @@
   border-radius: 3px;
   white-space: nowrap;
   display: flex;
+  width: fit-content;
 
   & a {
     text-decoration: none;
