@@ -8,7 +8,7 @@ import WalletVisualWithAddress from '../walletVisualWithAddress';
 import { calculateSupply } from '../../utils/helpers';
 import styles from './wallet.css';
 
-const AccountRow = ({ data, className, token, tokenSupply }) => (
+const WalletRow = ({ data, className, token, tokenSupply }) => (
   <Link
     className={`${grid.row} ${className} accounts-row`}
     data-testid="accounts-row"
@@ -41,4 +41,4 @@ const areEqual = (prevProps, nextProps) =>
   prevProps.tokenSupply?.tokenID === nextProps.tokenSupply?.tokenID &&
   prevProps.data?.address === nextProps.data?.address;
 
-export default React.memo(AccountRow, areEqual);
+export default React.memo(WalletRow, areEqual);
