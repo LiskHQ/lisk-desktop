@@ -72,8 +72,8 @@ describe('SideBar', () => {
         'Applications',
         'Transactions',
         'Blocks',
-        'Accounts',
         'Validators',
+        'Accounts',
         'Network',
       ];
 
