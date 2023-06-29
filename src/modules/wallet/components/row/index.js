@@ -5,8 +5,9 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from 'src/routes/routes';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '../walletVisualWithAddress';
-import { calculateSupply } from '../../utils/helpers';
 import styles from './wallet.css';
+
+const calculateSupply = (balance, totalSupply) => Number((balance * 100) / totalSupply).toFixed(2);
 
 const WalletRow = ({ data, className, token, tokenSupply }) => (
   <Link
