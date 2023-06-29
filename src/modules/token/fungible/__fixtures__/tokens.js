@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 export const tokensBalance = [
   {
     tokenID: '0000000100000000',

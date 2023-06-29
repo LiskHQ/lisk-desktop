@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import {
   useTokenBalances,
-  useTokensTopLskBalance,
+  useTokensBalanceTop,
   useTokenSummary,
 } from '@token/fungible/hooks/queries';
 import { mockAppsTokens, mockTokensTopLskBalance } from '@token/fungible/__fixtures__';
@@ -9,7 +9,7 @@ import { renderWithQueryClient } from 'src/utils/testHelpers';
 import WalletsMonitor from './Accounts';
 
 jest.mock('@token/fungible/hooks/queries/useTokenBalances');
-jest.mock('@token/fungible/hooks/queries/useTokensTopLskBalance');
+jest.mock('@token/fungible/hooks/queries/useTokensBalanceTop');
 jest.mock('@token/fungible/hooks/queries/useTokenSummary');
 
 describe('Top Accounts Monitor Page', () => {
@@ -22,7 +22,7 @@ describe('Top Accounts Monitor Page', () => {
   });
 
   useTokenBalances.mockReturnValue({ data: mockAppsTokens });
-  useTokensTopLskBalance.mockReturnValue({
+  useTokensBalanceTop.mockReturnValue({
     isLoading: false,
     isSuccess: true,
     data: {

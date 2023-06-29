@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { mockLegacy } from '@legacy/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useTokensTopLskBalance } from './useTokensTopLskBalance';
+import { useTokensBalanceTop } from './useTokensTopLskBalance';
 
 jest.useRealTimers();
 
-describe('useTokensTopLskBalance hook', () => {
+describe('useTokensBalanceTop hook', () => {
   const limit = 5;
   const config = {
     params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' },
@@ -13,7 +13,7 @@ describe('useTokensTopLskBalance hook', () => {
   let hookResult;
 
   beforeEach(() => {
-    hookResult = renderHook(() => useTokensTopLskBalance({ config }), { wrapper });
+    hookResult = renderHook(() => useTokensBalanceTop({ config }), { wrapper });
   });
 
   it.skip('fetches data correctly', async () => {
@@ -57,7 +57,7 @@ describe('useTokensTopLskBalance hook', () => {
     const errorConfig = {
       params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' },
     };
-    hookResult = renderHook(() => useTokensTopLskBalance({ config: errorConfig }), { wrapper });
+    hookResult = renderHook(() => useTokensBalanceTop({ config: errorConfig }), { wrapper });
     const { result, waitFor } = hookResult;
 
     expect(result.current.isLoading).toBeTruthy();

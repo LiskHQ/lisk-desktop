@@ -29,16 +29,16 @@ const menuLinks = (t) => [
       path: routes.blocks.path,
     },
     {
-      icon: 'walletsMonitor',
-      id: 'wallets',
-      label: t('Accounts'),
-      path: routes.wallets.path,
-    },
-    {
       icon: 'validatorsMonitor',
       id: 'validators',
       label: t('Validators'),
       path: routes.validators.path,
+    },
+    {
+      icon: 'walletsMonitor',
+      id: 'wallets',
+      label: t('Accounts'),
+      path: routes.wallets.path,
     },
     {
       icon: 'networkMonitor',

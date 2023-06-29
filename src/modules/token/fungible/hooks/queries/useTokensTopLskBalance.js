@@ -16,7 +16,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useTokensTopLskBalance = ({ config: customConfig = {}, options } = {}) => {
+export const useTokensBalanceTop = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/token/balances/top`,
     method: 'get',

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { QueryTable } from '@theme/QueryTable';
 import { useSort } from 'src/modules/common/hooks';
-import { useTokensTopLskBalance } from '@token/fungible/hooks/queries';
+import { useTokensBalanceTop } from '@token/fungible/hooks/queries';
 import WalletRow from '../row';
 import header from './tableHeader';
 
@@ -37,7 +37,7 @@ const WalletTable = ({ token, tokenSummary, filters }) => {
   return (
     <QueryTable
       showHeader
-      queryHook={useTokensTopLskBalance}
+      queryHook={useTokensBalanceTop}
       queryConfig={{
         config: { params: { ...filters, ...(sort && { sort }) } },
         options: { enabled: !!tokenID, select: fetchNextPage },
