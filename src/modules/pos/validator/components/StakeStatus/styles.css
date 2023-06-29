@@ -13,8 +13,39 @@
   }
 }
 
-.subHeadingBold {
-  @mixin contentLarge semi-bold;
+.rewardAmount > div:first-child {
+  color: var(--color-jade-green);
+}
 
+.subHeadingBold > div:first-child {
   color: #4463a7;
+}
+
+.rewardAmount,
+.subHeadingBold {
+  font-weight: unset;
+  text-align: center;
+  color: var(--color-slate-gray);
+  width: 75%;
+
+  & > div:first-child {
+    @mixin contentLarge semi-bold;
+
+    display: inline;
+  }
+}
+
+.rewardsSection {
+  display: flex;
+  flex-direction: row;
+  column-gap: 2px;
+  justify-content: center;
+  padding-top: 5px;
+}
+
+.stakeSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
 }

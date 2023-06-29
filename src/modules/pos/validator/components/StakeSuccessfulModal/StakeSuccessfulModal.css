@@ -22,6 +22,8 @@
     color: var(--color-maastricht-blue);
     margin-top: 25px;
     text-align: center;
+    column-gap: 2px;
+    width: 100%;
   }
 
   & .stakedHeader {
