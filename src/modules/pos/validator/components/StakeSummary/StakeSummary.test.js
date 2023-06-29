@@ -196,9 +196,9 @@ describe('StakingQueue.Summary', () => {
 
   it('should render rewards', () => {
     const wrapper = mountWithRouter(Summary, { ...props, edited, removed, added });
-    const addedItemList = wrapper.find('.stake-item').at(0);
-    const editedItemList = wrapper.find('.stake-item').at(4);
-    const removedItemList = wrapper.find('.stake-item').at(9);
+    const addedItemList = wrapper.find('[data-testid="stake-item"]').at(0);
+    const editedItemList = wrapper.find('[data-testid="stake-item"]').at(4);
+    const removedItemList = wrapper.find('[data-testid="stake-item"]').at(9);
     expect(addedItemList).toHaveText('test110 LSKReward:  0.001 LSK');
     expect(editedItemList).toHaveText('test310.0000001 LSK0.0000002 LSKReward:  0.002 LSK');
     expect(removedItemList).toHaveText('test220 LSKReward:  0.003 LSK');

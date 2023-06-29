@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable complexity */
 /* istanbul ignore file */
 /* eslint-disable max-statements */
@@ -140,6 +141,49 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
   return { messages, error: !!messages.length };
 };
 
+const getRewards = async ({
+  moduleCommandSchemas,
+  transactionJSON,
+  mainChainNetwork,
+  currentAccount,
+}) => {
+  const moduleCommand = joinModuleAndCommand(transactionJSON);
+  const paramsSchema = moduleCommandSchemas[moduleCommand];
+  const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
+
+  const [error, dryRunResult] = await to(
+    dryRun({
+      paramsSchema,
+      transaction,
+      skipVerify: true,
+      serviceUrl: mainChainNetwork.serviceUrl,
+    })
+  );
+
+  if (error) return { error };
+
+  const rewards = dryRunResult.data.events.reduce(
+    (result, event) => {
+      const { name, data, module } = event;
+      if (
+        name === 'rewardsAssigned' &&
+        module === 'pos' &&
+        data.stakerAddress === currentAccount.metadata.address
+      ) {
+        return {
+          ...result,
+          [data.validatorAddress]: data,
+          total: BigInt(result.total || 0) + BigInt(data.amount),
+        };
+      }
+      return result;
+    },
+    { total: 0n }
+  );
+
+  return { rewards };
+};
+
 const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, posToken }) => {
   const [fee, setFee] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -168,42 +212,19 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
   );
   const showEmptyState = !changedStakes.length || isStakingTxPending;
   const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
-    if (!showEmptyState && moduleCommandSchemas && !isLoading) {
-      const moduleCommand = joinModuleAndCommand(transactionJSON);
-      const paramsSchema = moduleCommandSchemas[moduleCommand];
-      const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
+    if (!showEmptyState && moduleCommandSchemas) {
+      setIsLoading(true);
 
-      setIsLoading(true);
-      const [error, dryRunResult] = await to(
-        dryRun({
-          skipVerify: true,
-          paramsSchema,
-          transaction,
-          serviceUrl: mainChainNetwork.serviceUrl,
-        })
-      );
-      setIsLoading(true);
+      const { rewards, error } = await getRewards({
+        transactionJSON,
+        moduleCommandSchemas,
+        currentAccount,
+        mainChainNetwork,
+      });
+      setIsLoading(false);
       setDryrunError(error);
-      const rewards = dryRunResult.data.events.reduce(
-        (result, event) => {
-          const { name, data, module } = event;
 
-          if (
-            name === 'rewardsAssigned' &&
-            module === 'pos' &&
-            data.stakerAddress === currentAccount.metadata.address
-          ) {
-            return {
-              ...result,
-              [data.validatorAddress]: data,
-              total: BigInt(result.total || 0) + BigInt(data.amount),
-            };
-          }
-
-          return result;
-        },
-        { total: 0n }
-      );
+      if (error) return;
 
       nextStep({
         formProps: { ...formProps, rewards },
@@ -237,9 +258,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
       token: posToken,
     },
   };
-  const commandParams = {
-    stakes: normalizedStakes,
-  };
+  const commandParams = { stakes: normalizedStakes };
 
   return (
     <div className={styles.wrapper}>
