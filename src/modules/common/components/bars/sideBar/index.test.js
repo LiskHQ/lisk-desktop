@@ -56,13 +56,13 @@ describe('SideBar', () => {
     wrapper = mountWithRouter(SideBar, myProps);
   });
 
-  it('renders 6 menu items elements', () => {
-    expect(wrapper).toContainMatchingElements(6, 'a');
+  it('renders 7 menu items elements', () => {
+    expect(wrapper).toContainMatchingElements(7, 'a');
   });
 
-  describe('renders 6 menu items', () => {
+  describe('renders 7 menu items', () => {
     it('without labels if sideBarExpanded is false', () => {
-      expect(wrapper).toContainMatchingElements(6, 'a');
+      expect(wrapper).toContainMatchingElements(7, 'a');
       wrapper.find('a').forEach((link) => expect(link).not.toContain(/\w*/));
     });
 
@@ -72,6 +72,7 @@ describe('SideBar', () => {
         'Applications',
         'Transactions',
         'Blocks',
+        'Accounts',
         'Validators',
         'Network',
       ];
@@ -82,7 +83,7 @@ describe('SideBar', () => {
     });
   });
 
-  it('renders 6 disabled menu items on Initialization screen', () => {
+  it('renders 7 disabled menu items on Initialization screen', () => {
     wrapper = mountWithRouter(SideBar, {
       ...myProps,
       isUserLogout: false,
@@ -90,12 +91,13 @@ describe('SideBar', () => {
         pathname: routes.reclaim.path,
       },
     });
-    expect(wrapper).toContainMatchingElements(6, 'a');
+    expect(wrapper).toContainMatchingElements(7, 'a');
     expect(wrapper.find('a').at(0)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(2)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(3)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(4)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(5)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(6)).toHaveClassName('disabled');
   });
 });
