@@ -72,7 +72,6 @@ export const useTransactionUpdate = (isLoading) => {
 
       const token = tokens?.data.length ? tokens?.data[0] : {};
       showNotificationsForIncomingTransactions(newTransactions.data, currentAccount, token);
-      client.socket.off('new.transactions');
     });
   }, [chainID, isLoading, currentAccount, tokens]);
 
