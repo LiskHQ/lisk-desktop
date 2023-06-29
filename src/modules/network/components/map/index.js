@@ -60,7 +60,7 @@ const getTiles = () =>
   );
 
 const FullMap = () => {
-  const ref = useRef();
+  const mapInstanceRef = useRef();
   const [peersCount, setPeersCount] = useState(0);
   const { data, isLoading, error } = usePeers();
 
@@ -69,20 +69,20 @@ const FullMap = () => {
   useEffect(() => {
     // eslint-disable-next-line no-constant-condition
     if (peers.length) {
-      if (!ref.current) {
+      if (!mapInstanceRef.current) {
         const networkMap = L.map('mapContainer', mapOptions).setView([36.414203, 11.25], 2);
         const tiles = getTiles();
         tiles.addTo(networkMap);
-        ref.current = networkMap;
+        mapInstanceRef.current = networkMap;
       }
 
-      ref.current.addLayer(createMarkers(peers.slice(peersCount)));
-      ref.current.attributionControl.addAttribution(getAttributionLinks());
+      mapInstanceRef.current.addLayer(createMarkers(peers.slice(peersCount)));
+      mapInstanceRef.current.attributionControl.addAttribution(getAttributionLinks());
       setPeersCount(peers.length);
     }
   }, [peers]);
 
-  useEffect(() => ref.current?.remove, []);
+  useEffect(() => () => mapInstanceRef?.current?.remove?.(), []);
 
   return (
     <Box className="map-box">
