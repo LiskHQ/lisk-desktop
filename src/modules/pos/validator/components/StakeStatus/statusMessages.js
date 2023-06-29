@@ -6,9 +6,9 @@ import { statusMessages } from '@transaction/configuration/statusConfig';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './styles.css';
 
-const LiskAmountFormatted = ({ val, token, message }) => (
+const LiskAmountFormatted = ({ val, token, message, prefixMessage }) => (
   <span className={styles.subHeadingBold}>
-    <TokenAmount val={val} token={token} /> {message}
+    {prefixMessage} <TokenAmount val={val} token={token} /> {message}
   </span>
 );
 
@@ -100,8 +100,12 @@ const getSuccessMessage = (
   if (locked && unlockable) {
     return (
       <>
-        <span>{t('You have now locked')}</span>{' '}
-        <LiskAmountFormatted val={locked} token={token} message={t('for staking and may unlock')} />
+        <LiskAmountFormatted
+          val={locked}
+          token={token}
+          prefixMessage={t('You have now locked')}
+          message={t('for staking and may unlock')}
+        />
         <div className={styles.stakeSection}>
           <LiskAmountFormatted
             val={unlockable}
