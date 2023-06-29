@@ -8,7 +8,7 @@ import { getLogo } from '@token/fungible/utils/helpers';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import styles from '../Accounts/accounts.css';
 
-const Overview = (setFilter) => {
+const Overview = ({ setFilter }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const [search, setSearch] = useState('');
@@ -33,6 +33,7 @@ const Overview = (setFilter) => {
     setSelectedToken(tokenData);
     setFilter('tokenID', tokenData.tokenID);
   };
+
   return (
     <>
       <div>

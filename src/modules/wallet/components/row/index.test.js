@@ -1,5 +1,5 @@
-import { smartRender } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
+import { smartRender } from 'src/utils/testHelpers';
 import WalletRow from './index';
 
 const config = {
