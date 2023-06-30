@@ -47,6 +47,7 @@ const WalletTable = ({ tokenData, tokenSummary, filters }) => {
       row={WalletRow}
       additionalRowProps={{ token, tokenSupply }}
       header={header(t, toggleSort)}
+      currentSort={sort}
     />
   );
 };

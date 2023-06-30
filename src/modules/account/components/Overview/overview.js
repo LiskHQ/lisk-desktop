@@ -40,7 +40,7 @@ const Overview = ({ setFilter }) => {
         <h1>{t('All accounts')}</h1>
       </div>
       <div className={styles.filterWrapper}>
-        <span>Filter by:</span>
+        <span>Filter by :</span>
         <MenuSelect
           value={selectedToken}
           onChange={onChange}
@@ -48,27 +48,24 @@ const Overview = ({ setFilter }) => {
           className={styles.menuWrapper}
           popupClassName={styles.popupWrapper}
         >
-          {applicationTokens.map((tokenValue) => (
-            <MenuItem
-              className={styles.tokenOptionWrapper}
-              value={tokenValue}
-              key={tokenValue.tokenName}
-            >
+          {applicationTokens.map((token) => (
+            <MenuItem className={styles.tokenOptionWrapper} value={token} key={token.tokenName}>
               <img
                 className={styles.tokenLogo}
-                src={getLogo(tokenValue)}
-                alt={`${tokenValue.tokenName} logo`}
+                src={getLogo(token)}
+                alt={`${token.tokenName} logo`}
               />
-              <span>{tokenValue.symbol}</span>
+              <span>{token.symbol}</span>
             </MenuItem>
           ))}
         </MenuSelect>
         <span>
           <Input
-            icon={<Icon className={styles.searchIcon} name="searchActive" />}
+            icon={<Icon name="searchActive" />}
             onChange={handleFilter}
             value={search}
             className={`${styles.filterTopAccounts} filter-by-name`}
+            iconClassName={styles.searchIcon}
             size="m"
             placeholder={t('Search by address')}
           />

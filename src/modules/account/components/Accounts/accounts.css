@@ -3,7 +3,7 @@
   align-items: center;
   position: relative;
 
-  & > span {
+  & > span:first-child {
     margin-right: 10px;
     white-space: nowrap;
   }
@@ -53,4 +53,10 @@
 .filterTopAccounts {
   border-radius: 30px;
   min-width: 250px !important;
+  padding-top: 22px !important;
+  padding-bottom: 22px !important;
+}
+
+.searchIcon {
+  top: 50% !important;
 }
