@@ -1,7 +1,7 @@
 import { regex } from 'src/const/regex';
 import client from 'src/utils/api/client';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
-import ws, { subscribe, unsubscribe } from 'src/utils/api/ws';
+import ws from 'src/utils/api/ws';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 export const httpPaths = {
@@ -23,27 +23,6 @@ const getValidatorProps = ({ address, publicKey, username }) => {
   if (publicKey) return { address: extractAddressFromPublicKey(publicKey) };
   return {};
 };
-
-/**
- * Retrieves data of a given validator.
- *
- * @param {Object} data
- * @param {String?} data.params.address - Validator address
- * @param {String?} data.params.publicKey - Validator public key
- * @param {String?} data.params.username - Validator username
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call
- */
-export const getValidator = ({ params = {}, network, baseUrl }) =>
-  client.rest({
-    url: httpPaths.validators,
-    params: { ...getValidatorProps(params), isValidator: true },
-    network,
-    baseUrl,
-  });
 
 const txFilters = {
   limit: { key: 'limit', test: (num) => typeof num === 'number' },
@@ -195,47 +174,4 @@ export const getStakers = ({ network, params = {}, baseUrl }) => {
     network,
     baseUrl,
   });
-};
-
-/**
- * Retrieves list of active validators.
- *
- * @param {Number?} data.params.offset - Index of the first result
- * @param {Number?} data.params.limit - Maximum number of results
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call
- */
-export const getGenerators = ({ network, params = {}, baseUrl }) =>
-  client.rest({
-    url: httpPaths.generators,
-    params,
-    network,
-    baseUrl,
-  });
-
-/**
- * Connects to block change event via websocket and set function to be called when it fires
- *
- * @param {Object} network - Redux network state
- * @param {Function} callback - Function to be called when event fires
- * @param {Function} onDisconnect - Function to be called when disconnect event fires
- * @param {Function} onReconnect - Function to be called when reconnect event fires
- */
-export const generatorsSubscribe = (network, callback, onDisconnect, onReconnect) => {
-  const node = network?.networks?.LSK?.serviceUrl;
-  if (node) {
-    subscribe(`${node}/blockchain`, wsMethods.generatorsRound, callback, onDisconnect, onReconnect);
-  }
-};
-
-/**
- * Disconnects from block change websocket event and deletes socket connection
- *
- * @param {Object} network - Redux network state
- */
-export const generatorsUnsubscribe = () => {
-  unsubscribe(wsMethods.generatorsRound);
 };
