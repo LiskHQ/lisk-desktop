@@ -14,19 +14,25 @@ let loaderTimeout = null;
 /**
  * Returns error and feedback of stake amount field.
  */
-const getAmountFeedbackAndError = (balance, minValue, inputValue, token) => {
+const getAmountFeedbackAndError = (balance, minValue, inputValue, token, unConfirmedAmount) => {
+  console.log('----', { balance, minValue, inputValue, token, unConfirmedAmount });
+
+  const checklist = [
+    'NEGATIVE_STAKE',
+    'ZERO',
+    'STAKE_10X',
+    // 'INSUFFICIENT_STAKE_FUNDS',
+    'MIN_BALANCE',
+    'FORMAT',
+  ];
+
+  if(unConfirmedAmount > 0)
+
   const { message: feedback } = validateAmount({
     token,
     amount: parseInt(inputValue, 10),
     accountBalance: parseInt(balance, 10),
-    checklist: [
-      'NEGATIVE_STAKE',
-      'ZERO',
-      'STAKE_10X',
-      'INSUFFICIENT_STAKE_FUNDS',
-      'MIN_BALANCE',
-      'FORMAT',
-    ],
+    checklist,
     minValue,
     inputValue,
   });
@@ -84,8 +90,9 @@ const useStakeAmountField = (initialValue) => {
     const feedback = getAmountFeedbackAndError(
       balance,
       -1 * convertFromBaseDenom(previouslyConfirmedStake, token),
-      value,
-      token
+      BigInt(value),
+      token,
+      BigInt(convertFromBaseDenom(previouslyConfirmedStake, token))
     );
     loaderTimeout = setTimeout(() => {
       setAmountField({
