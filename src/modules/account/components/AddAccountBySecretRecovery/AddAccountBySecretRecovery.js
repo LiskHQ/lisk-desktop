@@ -7,9 +7,9 @@ import MultiStep from 'src/modules/common/components/MultiStep';
 import SetPasswordSuccess from 'src/modules/auth/components/SetPasswordSuccess';
 import routes from 'src/routes/routes';
 import { useCurrentAccount, useAccounts } from '@account/hooks';
+import { defaultDerivationPath } from '@account/const';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
-import { defaultDerivationPath } from '../../const';
 
 const AddAccountBySecretRecovery = () => {
   const history = useHistory();
