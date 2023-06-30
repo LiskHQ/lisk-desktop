@@ -1,15 +1,18 @@
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { mockRewardsClaimable } from '@pos/reward/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
+import routes from 'src/routes/routes';
+import { mockTransactions } from '@transaction/__fixtures__';
+import * as useMyTransactionsSpy from '@transaction/hooks/queries/useMyTransactions';
 import SentStakes from './SentStakes';
 import tableHeaderMap from './tableHeaderMap';
 import { usePosConstants, useSentStakes, useUnlocks, useValidators } from '../../hooks/queries';
@@ -26,10 +29,12 @@ jest.mock('@pos/reward/hooks/queries');
 jest.mock('src/modules/common/hooks');
 jest.mock('../../hooks/queries');
 jest.mock('@pos/validator/hooks/usePosToken');
+const mockRefetchSentStakes = jest.fn();
 
 describe('SentStakes', () => {
+  const historyPush = jest.fn();
   const props = {
-    history: { location: { search: '' } },
+    history: { location: { search: '' }, push: historyPush },
   };
 
   useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimable });
@@ -38,12 +43,12 @@ describe('SentStakes', () => {
   useValidators.mockImplementation(({ config }) => ({
     data: getMockValidators(config.params?.address),
   }));
-  useSentStakes.mockReturnValue({ data: mockSentStakes });
+  useSentStakes.mockReturnValue({ data: mockSentStakes, refetch: mockRefetchSentStakes });
   useUnlocks.mockReturnValue({ data: mockUnlocks });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
 
   it('should display properly', async () => {
-    renderWithRouter(SentStakes, props);
+    renderWithRouterAndQueryClient(SentStakes, props);
 
     expect(screen.getByText('Stakes')).toBeTruthy();
     expect(screen.getByText(10 - mockSentStakes.meta.count)).toBeTruthy();
@@ -71,7 +76,7 @@ describe('SentStakes', () => {
     useSentStakes.mockReturnValue({});
     useTokenBalances.mockReturnValue({});
 
-    renderWithRouter(SentStakes, props);
+    renderWithRouterAndQueryClient(SentStakes, props);
 
     mockSentStakes.data.stakes.forEach(({ address, amount, name }, index) => {
       expect(screen.queryAllByText(name)[0]).toBeFalsy();
@@ -81,5 +86,25 @@ describe('SentStakes', () => {
       ).toBeFalsy();
       expect(screen.queryAllByAltText('edit')[index]).toBeFalsy();
     });
+  });
+
+  it('should navigate to /validators when arrow left is clicked', async () => {
+    renderWithRouterAndQueryClient(SentStakes, props);
+    fireEvent.click(screen.getByAltText('arrowLeftTailed'));
+    expect(historyPush).toHaveBeenCalledWith(routes.validators.path);
+  });
+
+  it('should refetch sentStakes when new transaction occurs', async () => {
+    jest.spyOn(useMyTransactionsSpy, 'useMyTransactions').mockReturnValue({
+      data: {
+        meta: {
+          total: 2,
+        },
+        data: mockTransactions.data.slice(0, 2),
+      },
+    });
+    useSentStakes.mockReturnValue({ data: mockSentStakes, refetch: mockRefetchSentStakes });
+    renderWithRouterAndQueryClient(SentStakes, props);
+    expect(mockRefetchSentStakes).toHaveBeenCalledTimes(1);
   });
 });

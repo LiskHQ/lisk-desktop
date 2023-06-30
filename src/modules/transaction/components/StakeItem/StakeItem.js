@@ -17,11 +17,11 @@ import styles from './StakeItem.css';
  * @param {String} title text to use instead of the address e.g. validator username
  * @param {Boolean} truncate text to use instead of the address e.g. validator username
  */
-const StakeItem = ({ stake, address, title, truncate, token }) => {
+const StakeItem = ({ stake, address, title, truncate, token, reward }) => {
   const accountPath = routes.explorer.path;
 
   return (
-    <span className={styles.container}>
+    <span data-testid="stake-item" className={`${styles.container}`}>
       <Link to={`${accountPath}?address=${address}`}>
         <span className={`${styles.primaryText} stake-item-address`}>
           {title ?? (truncate ? truncateAddress(address) : address)}
@@ -39,12 +39,20 @@ const StakeItem = ({ stake, address, title, truncate, token }) => {
             </span>
           </>
         ) : (
-          <span
-            className={
-              Number(stake.confirmed) && !Number(stake.unconfirmed) ? styles.confirmed : ''
-            }
-          >
-            <TokenAmount val={Object.values(stake)[0]} token={token} />
+          <>
+            <span
+              className={
+                Number(stake.confirmed) && !Number(stake.unconfirmed) ? styles.confirmed : ''
+              }
+            >
+              <TokenAmount val={Object.values(stake)[0]} token={token} />
+            </span>
+          </>
+        )}
+        {!!reward && (
+          <span className={styles.reward}>
+            <span>Reward:&nbsp;&nbsp;</span>
+            <TokenAmount val={reward} token={token} />
           </span>
         )}
       </span>
