@@ -7,7 +7,6 @@
 
   & p {
     font-weight: var(--font-weight-semi-bold);
-    font-size: var(--font-size-h5);
     line-height: var(--font-size-h5);
     margin-top: 0;
     margin-bottom: 5px;
