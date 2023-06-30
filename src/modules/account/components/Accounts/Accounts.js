@@ -15,9 +15,7 @@ const Accounts = () => {
   const tokenID = fees?.data?.feeTokenID;
   const { data: tokenSummary } = useTokenSummary();
   const { filters, setFilter } = useFilter({ tokenID });
-  const { data: tokenData } = useAppsMetaTokens({
-    config: { params: { tokenID }, options: { enable: !tokenID } },
-  });
+  const { data: tokenData } = useAppsMetaTokens();
 
   useEffect(() => {
     setFilter('tokenID', tokenID);
@@ -26,7 +24,7 @@ const Accounts = () => {
   return (
     <Box main className="accounts-box">
       <BoxHeader>
-        <Overview setFilter={setFilter} />
+        <Overview tokenData={tokenData} setFilter={setFilter} />
       </BoxHeader>
       <BoxContent className={styles.content}>
         <WalletList tokenData={tokenData} tokenSummary={tokenSummary} filters={filters} />

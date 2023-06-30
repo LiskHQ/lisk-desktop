@@ -1,6 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { smartRender } from 'src/utils/testHelpers';
-import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { mockAppsTokens } from 'src/modules/token/fungible/__fixtures__';
 import Overview from './overview';
 
@@ -11,17 +10,11 @@ const config = {
 
 const mockSetFilter = jest.fn();
 
-jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication', () => ({
-  useCurrentApplication: () => [mockManagedApplications[0]],
-}));
-jest.mock('@token/fungible/hooks', () => ({
-  useTransferableTokens: () => ({ data: mockAppsTokens.data }),
-}));
-
-const props = { setFilter: mockSetFilter };
+const props = { setFilter: mockSetFilter, tokenData: mockAppsTokens };
 
 describe('Overview', () => {
   beforeEach(() => mockSetFilter.mockClear());
+
   it('renders properly', () => {
     smartRender(Overview, props, config);
 
@@ -29,6 +22,14 @@ describe('Overview', () => {
     expect(screen.getByTestId('selected-menu-item')).toHaveTextContent('LSK');
     expect(screen.getAllByTestId('dropdown-options')).toHaveLength(6);
     expect(screen.getByPlaceholderText('Search by address')).toBeInTheDocument();
+  });
+
+  it('does not render dropdown options if data is unavailable', () => {
+    const updatedProps = { ...props, tokenData: undefined };
+    smartRender(Overview, updatedProps, config);
+
+    expect(screen.getByTestId('selected-menu-item')).not.toHaveTextContent('LSK');
+    expect(screen.queryByTestId('dropdown-options')).not.toBeInTheDocument();
   });
 
   it('updates the filter when a different token is selected', async () => {

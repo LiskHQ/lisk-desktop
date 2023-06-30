@@ -3,22 +3,19 @@ import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import { Input } from 'src/theme';
 import Icon from '@theme/Icon';
-import { useTransferableTokens } from '@token/fungible/hooks';
 import { getLogo } from '@token/fungible/utils/helpers';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import styles from '../Accounts/accounts.css';
 
-const Overview = ({ setFilter }) => {
+const Overview = ({ tokenData, setFilter }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const [search, setSearch] = useState('');
-  const [application] = useCurrentApplication();
-  const { data: applicationTokens } = useTransferableTokens(application);
-  const [selectedToken, setSelectedToken] = useState(applicationTokens);
+  const tokens = tokenData?.data ?? [];
+  const [selectedToken, setSelectedToken] = useState(tokens[0]);
 
   useEffect(() => {
-    setSelectedToken(applicationTokens[0]);
-  }, [applicationTokens]);
+    setSelectedToken(tokens[0]);
+  }, [tokenData]);
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -29,9 +26,9 @@ const Overview = ({ setFilter }) => {
     }, 500);
   };
 
-  const onChange = (tokenData) => {
-    setSelectedToken(tokenData);
-    setFilter('tokenID', tokenData.tokenID);
+  const onChange = (tokenInfo) => {
+    setSelectedToken(tokenInfo);
+    setFilter('tokenID', tokenInfo.tokenID);
   };
 
   return (
@@ -48,14 +45,18 @@ const Overview = ({ setFilter }) => {
           className={styles.menuWrapper}
           popupClassName={styles.popupWrapper}
         >
-          {applicationTokens.map((token) => (
-            <MenuItem className={styles.tokenOptionWrapper} value={token} key={token.tokenName}>
+          {tokens.map((tokenInfo) => (
+            <MenuItem
+              className={styles.tokenOptionWrapper}
+              value={tokenInfo}
+              key={tokenInfo.tokenName}
+            >
               <img
                 className={styles.tokenLogo}
-                src={getLogo(token)}
-                alt={`${token.tokenName} logo`}
+                src={getLogo(tokenInfo)}
+                alt={`${tokenInfo.tokenName} logo`}
               />
-              <span>{token.symbol}</span>
+              <span>{tokenInfo.symbol}</span>
             </MenuItem>
           ))}
         </MenuSelect>
