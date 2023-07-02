@@ -57,7 +57,7 @@ describe('BookmarkListModal', () => {
     const newTitle = 'New title';
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
     wrapper.find('.bookmarks-edit-button').first().simulate('click');
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     wrapper.find('input.bookmarks-edit-input').simulate('change', { target: { value: newTitle } });
     wrapper.find('.bookmarks-save-changes-button').first().simulate('click');
     expect(props.bookmarkUpdated).toHaveBeenCalledWith({
@@ -74,7 +74,7 @@ describe('BookmarkListModal', () => {
     const newTitle = 'New title';
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
     wrapper.find('.bookmarks-edit-button').first().simulate('click');
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     wrapper.find('input.bookmarks-edit-input').simulate('change', { target: { value: newTitle } });
     wrapper.find('.bookmarks-cancel-button').first().simulate('click');
     expect(props.bookmarkUpdated).not.toHaveBeenCalledWith({

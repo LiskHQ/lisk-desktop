@@ -93,8 +93,6 @@ const config = {
   },
   devtool: 'source-map',
   devServer: {
-    contentBase: 'src',
-    inline: true,
     port: 8080,
     historyApiFallback: true,
   },

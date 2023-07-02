@@ -23,8 +23,7 @@ describe('Converter', () => {
   it('should render Converter component 1', () => {
     wrapper = mountWithRouter(Converter, props);
     expect(wrapper.find('.wrapper').first().hasClass(props.className)).toBe(true);
-    expect(wrapper.find('.price').text()).toContain(props.priceTicker.LSK.EUR);
-    expect(wrapper.find('.price').text()).toContain(props.currency);
+    expect(wrapper.find('.price').text()).toContain('~12.00 EUR');
   });
 
   it('should render 0.00 if value is NaN and has error', () => {

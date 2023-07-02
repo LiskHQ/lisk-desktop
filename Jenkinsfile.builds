@@ -12,16 +12,16 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							sh '''
 							npm i -g yarn
-							yarn
+							yarn --cwd app && yarn
 							cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
 							cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-							yarn build
-							yarn install:electron:dependencies
-							yarn dist:linux
+							yarn run build
+							yarn run install:electron:dependencies
+							yarn run dist:linux
 							'''
 							sh '''
 							export DEBUG=electron-builder
-							#yarn dist:win  # does not work
+							#yarn run dist:win  # does not work
 							'''
 						}
 					}
@@ -38,12 +38,12 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							sh '''
 							npm i -g yarn
-							yarn
+							yarn --cwd app && yarn
 							cp -R /Users/jenkins/fonts/basierCircle setup/react/assets/fonts
 							cp -R /Users/jenkins/fonts/gilroy setup/react/assets/fonts
-							yarn build
-							yarn install:electron:dependencies
-							yarn dist:mac -- --publish never
+							yarn run build
+							yarn run install:electron:dependencies
+							yarn run dist:mac -- --publish never
 							'''
 						}
 					}
