@@ -17,7 +17,7 @@
   },
   "scripts": {
     "install:all": "yarn --cwd app && yarn",
-    "dev": "cross-env DEBUG=true NACL_FAST=disable && NODE_OPTIONS='--openssl-legacy-provider' webpack serve --config ./setup/config/webpack.config.dev",
+    "dev": "cross-env DEBUG=true NACL_FAST=disable NODE_OPTIONS='--openssl-legacy-provider' webpack serve --config ./setup/config/webpack.config.dev",
     "dev:hw": "cross-env DEBUG=true webpack serve --config ./setup/config/webpack.config.dev --https",
     "start": "cross-env DEBUG=true yarn rebuild && electron ./app/",
     "rebuild": "electron-rebuild -m app/node_modules/node-hid && electron-rebuild -m app/node_modules/usb",

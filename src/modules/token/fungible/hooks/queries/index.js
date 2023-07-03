@@ -1,6 +1,6 @@
 export * from './useTokenBalances';
 export * from './useTokenSummary';
-export * from './useTokensTopLskBalance';
+export * from './useTokensBalanceTop';
 export * from './useTokenAccountExists';
 export * from './useGetInitializationFees';
 export * from './useGetHasUserAccount';

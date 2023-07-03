@@ -2,7 +2,7 @@ import {
   escrowedAmounts,
   tokensBalance,
   tokensSupported,
-  tokensTopLskBalance,
+  tokenBalancesTop,
   totalSupply,
 } from '@token/fungible/__fixtures__/tokens';
 
@@ -16,8 +16,8 @@ export const mockTokensBalance = {
   },
 };
 
-export const mockTokensTopLskBalance = {
-  data: tokensTopLskBalance,
+export const mockTokenBalancesTop = {
+  data: tokenBalancesTop,
   meta: {
     address: 'lsk6757819470afeb131',
     count: 20,

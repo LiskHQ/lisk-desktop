@@ -47,14 +47,17 @@ export const transactionBroadcasted =
     const serviceUrl = network.networks[activeToken].serviceUrl;
     const moduleCommand = joinModuleAndCommand(transaction);
     const paramsSchema = moduleCommandSchemas[moduleCommand];
-    let broadcastResult;
+    let broadcastErrorMessage;
 
     const [error, dryRunResult] = await to(dryRun({ transaction, serviceUrl, paramsSchema }));
 
     if (dryRunResult?.data?.result === TransactionExecutionResult.OK) {
-      broadcastResult = await broadcast({ transaction, serviceUrl, moduleCommandSchemas });
+      const [broadcastError, broadcastResult] = await to(
+        broadcast({ transaction, serviceUrl, moduleCommandSchemas })
+      );
+      broadcastErrorMessage = broadcastError?.message;
 
-      if (!broadcastResult.data?.error) {
+      if (!broadcastResult?.data?.error && !broadcastError) {
         const transactionJSON = toTransactionJSON(transaction, paramsSchema);
         dispatch({
           type: actionTypes.broadcastedTransactionSuccess,
@@ -70,6 +73,7 @@ export const transactionBroadcasted =
 
     const transactionErrorMessage =
       error?.message ||
+      broadcastErrorMessage ||
       (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
         ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
         : dryRunResult?.data?.errorMessage);

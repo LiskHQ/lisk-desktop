@@ -16,7 +16,6 @@ describe('SearchBarWallets', () => {
   });
 
   it('should render properly empty accounts', () => {
-    wrapper.debug();
     expect(wrapper).toContainMatchingElement('.accounts');
     expect(wrapper).toContainMatchingElement('.accounts-header');
     expect(wrapper).toContainMatchingElement('.account-content');

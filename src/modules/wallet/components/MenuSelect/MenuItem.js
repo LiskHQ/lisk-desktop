@@ -8,6 +8,7 @@ function MenuItem({ value, children, className }) {
     <div
       className={`${styles.menuItemWrapper} ${className} dropdown-option`}
       onClick={() => onChange(value)}
+      data-testid="dropdown-options"
     >
       {children}
     </div>
