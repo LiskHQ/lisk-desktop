@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { TOKENS_TOP_LSK_BALANCE } from 'src/const/queries';
+import { TOKEN_BALANCES_TOP } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
@@ -16,16 +16,16 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useTokensTopLskBalance = ({ config: customConfig = {}, options } = {}) => {
+export const useTokensBalanceTop = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/tokens/lsk/top`,
+    url: `/api/${API_VERSION}/token/balances/top`,
     method: 'get',
-    event: 'get.tokens.lsk.top',
+    event: 'get.token.balances.top',
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
   return useCustomInfiniteQuery({
-    keys: [TOKENS_TOP_LSK_BALANCE],
+    keys: [TOKEN_BALANCES_TOP],
     config,
     options,
   });

@@ -1,21 +1,33 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect } from 'react';
 
-import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
-import BoxContent from 'src/theme/box/content';
+import Box from '@theme/box';
+import BoxHeader from '@theme/box/header';
+import BoxContent from '@theme/box/content';
 import WalletList from '@wallet/components/walletList';
+import { useFilter } from '@common/hooks';
+import { useAppsMetaTokens, useTokenSummary } from '@token/fungible/hooks/queries';
+import { useFees } from '@transaction/hooks/queries';
+import Overview from '../Overview/overview';
 import styles from './accounts.css';
 
 const Accounts = () => {
-  const { t } = useTranslation();
+  const { data: fees } = useFees();
+  const tokenID = fees?.data?.feeTokenID;
+  const { data: tokenSummary } = useTokenSummary();
+  const { filters, setFilter } = useFilter({ tokenID });
+  const { data: tokenData } = useAppsMetaTokens();
+
+  useEffect(() => {
+    setFilter('tokenID', tokenID);
+  }, [fees?.data?.feeTokenID]);
+
   return (
     <Box main className="accounts-box">
       <BoxHeader>
-        <h1>{t('All accounts')}</h1>
+        <Overview tokenData={tokenData} setFilter={setFilter} />
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <WalletList />
+        <WalletList tokenData={tokenData} tokenSummary={tokenSummary} filters={filters} />
       </BoxContent>
     </Box>
   );
