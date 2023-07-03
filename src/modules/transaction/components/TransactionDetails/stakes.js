@@ -1,22 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import withData from 'src/utils/withData';
-import { getValidators } from '@pos/validator/api';
+import { useValidators } from '@pos/validator/hooks/queries';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import StakeItem from '../StakeItem';
 
-export const StakesPure = ({ t, stakedValidator }) => {
+export const StakesPure = ({ t }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
   const { stakes } = transaction.params;
   const { token } = usePosToken();
-
-  useEffect(() => {
-    if (transaction.params) {
-      const addressList = stakes.map((item) => item.validatorAddress);
-      stakedValidator.loadData({ addressList });
-    }
-  }, []);
+  const addressList = stakes.map((item) => item.validatorAddress);
+  const { data: validatorsData } = useValidators({
+    config: { params: { address: addressList.join() } },
+  });
 
   return (
     <div className={`${styles.stakeValue}`}>
@@ -30,10 +27,7 @@ export const StakesPure = ({ t, stakedValidator }) => {
               stake={{ confirmed: amount }}
               address={validatorAddress}
               token={token}
-              title={
-                stakedValidator.data[validatorAddress] &&
-                stakedValidator.data[validatorAddress].pos?.validator?.name
-              }
+              title={validatorsData?.data?.find((v) => v.address === validatorAddress)?.name}
             />
           ))}
         </div>
@@ -42,14 +36,4 @@ export const StakesPure = ({ t, stakedValidator }) => {
   );
 };
 
-export default withData({
-  stakedValidator: {
-    apiUtil: ({ networks }, params) => getValidators({ network: networks.LSK, params }),
-    defaultData: {},
-    transformResponse: (response) =>
-      response.data.reduce((acc, validator) => {
-        acc[validator.summary?.address] = validator;
-        return acc;
-      }, {}),
-  },
-})(StakesPure);
+export default withData()(StakesPure);

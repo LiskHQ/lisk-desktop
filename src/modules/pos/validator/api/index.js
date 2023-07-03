@@ -1,7 +1,5 @@
-import { regex } from 'src/const/regex';
 import client from 'src/utils/api/client';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
-import ws from 'src/utils/api/ws';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 export const httpPaths = {
@@ -42,65 +40,6 @@ const txFilters = {
         'missedBlocks:desc',
       ].includes(str),
   },
-};
-
-const getRequests = (values) => {
-  const paramList = values.find((item) => Array.isArray(item.list) && item.list.length);
-  if (paramList) {
-    return paramList.list
-      .filter((item) => regex[paramList.name].test(item))
-      .map((item) => ({
-        method: wsMethods.validators,
-        params: { [paramList.name]: item, isValidator: true },
-      }));
-  }
-  return false;
-};
-
-/**
- * Retrieves data of a list of validators.
- *
- * @param {Object} data
- * @param {String?} data.params.addressList - Validators' address list
- * @param {String?} data.params.publicKeyList - Validators' public key list
- * @param {String?} data.params.usernameList - Validators' username list
- * @param {String?} data.params.search - A string to search for usernames
- * @param {Number?} data.params.offset - Index of the first result
- * @param {Number?} data.params.limit - Maximum number of results
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call or websocket call
- */
-export const getValidators = ({ network, params = {}, baseUrl }) => {
-  // Use websocket to retrieve accounts with a given array of addresses
-  const requests = getRequests([
-    { name: 'address', list: params.addressList },
-    { name: 'publicKey', list: params.publicKeyList },
-    { name: 'username', list: params.usernameList },
-  ]);
-  if (requests) {
-    return ws({
-      requests,
-      baseUrl: baseUrl || network.serviceUrl,
-    });
-  }
-
-  // Use HTTP to retrieve accounts with given sorting and pagination parameters
-  const normParams = { isValidator: true };
-  Object.keys(params).forEach((key) => {
-    if (txFilters[key].test(params[key])) {
-      normParams[txFilters[key].key] = params[key];
-    }
-  });
-
-  return client.rest({
-    url: httpPaths.validators,
-    params: normParams,
-    network,
-    baseUrl,
-  });
 };
 
 /**

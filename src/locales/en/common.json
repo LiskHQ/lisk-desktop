@@ -641,7 +641,6 @@
   "There was an error signing your transaction. please close this dialog and try again.": "There was an error signing your transaction. please close this dialog and try again.",
   "This account does not have any staker for the given address.": "This account does not have any staker for the given address.",
   "This account does not have any stakers.": "This account does not have any stakers.",
-  "This account does not have any transactions.": "This account does not have any transactions.",
   "This account doesn’t have any stakes matching the searched username.": "This account doesn’t have any stakes matching the searched username.",
   "This account doesn’t have any stakes.": "This account doesn’t have any stakes.",
   "This account is a multisignature account.": "This account is a multisignature account.",
