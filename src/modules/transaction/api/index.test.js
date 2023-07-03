@@ -13,6 +13,15 @@ import { getTransactions, getTransactionStats, getTransactionFee, dryRun } from 
 const { stake } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
 const mockToken = mockAppsTokens.data[0];
+const encodedTransactionHex =
+  '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f32230a04040000001080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200';
+jest.mock('@liskhq/lisk-client', () => ({
+  ...jest.requireActual('@liskhq/lisk-client'),
+  transactions: {
+    computeMinFee: jest.fn().mockReturnValue(10000000000n),
+    getBytes: jest.fn().mockReturnValue(Buffer.from(encodedTransactionHex, 'hex')),
+  },
+}));
 
 jest.mock('src/utils/api/http', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
@@ -375,8 +384,7 @@ describe('API: LSK Transactions', () => {
         method: 'POST',
         path: '/api/v3/transactions/dryrun',
         data: {
-          transaction:
-            '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f32230a04040000001080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+          transaction: encodedTransactionHex,
           skipVerify: false,
         },
       });

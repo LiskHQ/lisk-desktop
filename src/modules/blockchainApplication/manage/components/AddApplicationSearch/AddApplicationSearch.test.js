@@ -23,7 +23,7 @@ describe('AddApplicationSearch', () => {
     fireEvent.change(screen.getByPlaceholderText('Search by name'), {
       target: { value: 'test' },
     });
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     expect(mockSearchApplication).toHaveBeenCalledTimes(1);
     expect(mockSearchApplication).toHaveBeenCalledWith('test');
   });

@@ -13,7 +13,7 @@ describe('useDebounce hook', () => {
     const { result } = renderHook(() => useDebounce('value1', 1000));
 
     act(() => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     expect(result.current).toBe('value1');
@@ -26,7 +26,7 @@ describe('useDebounce hook', () => {
     const { result, rerender } = renderHook(() => useDebounce(initialValue, initialDelay));
 
     act(() => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     initialValue = 'value2';

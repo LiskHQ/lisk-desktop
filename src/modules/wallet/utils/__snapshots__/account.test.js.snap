@@ -1,64 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Utils: Account calculateRemainingAndSignedMembers should return signed and remaining members 1`] = `
-Object {
-  "remaining": Array [
-    Object {
+{
+  "remaining": [
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": true,
       "publicKey": "c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": true,
       "publicKey": "a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": false,
       "publicKey": "35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": false,
       "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": false,
       "publicKey": "86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19",
     },
   ],
-  "signed": Array [],
+  "signed": [],
 }
 `;
 
 exports[`Utils: Account calculateRemainingAndSignedMembers should return signed and remaining members 2`] = `
-Object {
-  "remaining": Array [
-    Object {
+{
+  "remaining": [
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": true,
       "publicKey": "a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": false,
       "publicKey": "35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": false,
       "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": false,
       "publicKey": "86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19",
     },
   ],
-  "signed": Array [
-    Object {
+  "signed": [
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": true,
       "publicKey": "c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4",
@@ -68,31 +68,31 @@ Object {
 `;
 
 exports[`Utils: Account calculateRemainingAndSignedMembers should return signed and remaining members 3`] = `
-Object {
-  "remaining": Array [
-    Object {
+{
+  "remaining": [
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": false,
       "publicKey": "35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": false,
       "publicKey": "86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19",
     },
   ],
-  "signed": Array [
-    Object {
+  "signed": [
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": true,
       "publicKey": "c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": true,
       "publicKey": "a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494",
     },
-    Object {
+    {
       "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
       "mandatory": false,
       "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",

@@ -5,13 +5,15 @@ import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { context } from 'src/modules/blockchainApplication/connection/__fixtures__/requestSummary';
 import accounts from '@tests/constants/wallets';
-import { toTransactionJSON } from '../../utils/encoding';
 import RequestedTxStatus from '.';
+import { encodeTransaction, toTransactionJSON } from '../../utils/encoding';
 
 jest.mock('copy-to-clipboard');
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   useSession: () => ({ respond: jest.fn() }),
 }));
+
+jest.mock('../../utils/encoding');
 
 describe('TransactionResult RequestedTxStatus', () => {
   const props = {
@@ -31,7 +33,7 @@ describe('TransactionResult RequestedTxStatus', () => {
         params: {
           amount: BigInt('1000000000000'),
           data: '',
-          recipientAddress: Buffer.from('eec12d128b880ffd3deb18b62dc023a31d396c5a', 'hex'),
+          recipientAddress: Buffer.from('lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', 'hex'),
           tokenID: Buffer.from('0000000000000000', 'hex'),
         },
         id: Buffer.from('3d49adde25a12ca34c5893f645ceed395220d1a936e46b9412a2bb77b68e3583', 'hex'),
@@ -48,6 +50,25 @@ describe('TransactionResult RequestedTxStatus', () => {
     resetTransactionResult: jest.fn(),
     account: accounts.multiSig,
   };
+  const transaction = {
+    module: 'token',
+    command: 'transfer',
+    fee: '100000000',
+    nonce: '1',
+    senderPublicKey: 'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535',
+    signatures: [],
+    params: {
+      amount: '1000000000000',
+      data: '',
+      recipientAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
+      tokenID: '0000000000000000',
+    },
+  };
+
+  encodeTransaction.mockReturnValue(
+    'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535'
+  );
+  toTransactionJSON.mockReturnValue(transaction);
 
   it('should render properly', async () => {
     render(<RequestedTxStatus {...props} />);
@@ -69,14 +90,7 @@ describe('TransactionResult RequestedTxStatus', () => {
     );
 
     fireEvent.click(screen.getByText('Copy and return to application'));
-    expect(copyToClipboard).toHaveBeenCalledWith(
-      JSON.stringify(
-        toTransactionJSON(
-          props.transactions.signedTransaction,
-          context.events[0].meta.params.request.params.schema
-        )
-      )
-    );
+    expect(copyToClipboard).toHaveBeenCalledWith(JSON.stringify(transaction));
   });
 
   it('should render an error message if the signature was not successful', () => {
@@ -87,10 +101,13 @@ describe('TransactionResult RequestedTxStatus', () => {
     };
     const errorProps = {
       ...props,
+      status: {
+        code: txStatusTypes.signatureError,
+      },
       transactions: signatureError,
       message: 'Signature error message',
     };
     render(<RequestedTxStatus {...errorProps} />);
-    expect(screen.findByText('Report the error via email')).toBeTruthy();
+    expect(screen.getByText('Report the error via email')).toBeTruthy();
   });
 });

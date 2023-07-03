@@ -1,5 +1,4 @@
 import { getNetworkConfig } from 'src/modules/network/utils/api';
-import { getState } from '@fixtures/transactions';
 import actionTypes from './actionTypes';
 import {
   networkSelected,
@@ -22,28 +21,9 @@ jest.mock('@network/utils/api', () => ({
   ),
 }));
 
-const state = getState();
-
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    json: () =>
-      Promise.resolve({
-        data: [
-          {
-            moduleCommand: 'pos:stake',
-            schema: state.network.networks.LSK.moduleCommandSchemas['pos:stake'],
-          },
-        ],
-        meta: { total: 0 },
-      }),
-    ok: true,
-  })
-);
-
 describe('actions: network', () => {
   beforeEach(() => {
     jest.resetModules();
-    fetch.mockClear();
   });
 
   afterEach(() => {

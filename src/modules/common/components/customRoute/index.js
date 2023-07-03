@@ -5,7 +5,6 @@ import { Redirect, Route } from 'react-router-dom';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import Piwik from 'src/utils/piwik';
 import routes from 'src/routes/routes';
-import Login from '@auth/components/Signin';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import { useCheckLegacyAccount } from '@legacy/hooks/queries';
 import useSettings from '@settings/hooks/useSettings';
@@ -74,7 +73,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
           path={isNetworkSet ? path : routes.manageAccounts.path}
           exact={exact}
           key={isNetworkSet ? path : routes.manageAccounts.path}
-          component={isNetworkSet ? component : Login}
+          component={component}
         />
       </ErrorBoundary>
     </main>

@@ -1,10 +1,7 @@
-import { TextDecoder } from 'util';
 import { server } from 'src/service/mock/server';
 import client from 'src/utils/api/client';
 
-// Remove this polyfill once we update jest
-global.TextDecoder = TextDecoder;
-
+jest.useFakeTimers('legacy');
 // Establish API mocking before all tests.
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' });
