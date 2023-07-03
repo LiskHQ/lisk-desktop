@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { firstBlockTime } from '@block/utils/firstBlockTime';
+import { liskGenesisBlockTime } from '@block/const';
 
 /**
  * Returns unix timestamp from value
@@ -15,7 +15,8 @@ export const getUnixTimestampFromValue = (value) => +moment(value).format('x') *
  * @returns {Number} - Timestamp from first block
  */
 export const getDateTimestampFromFirstBlock = (value, format) =>
-  (moment(value, format).format('x') - moment(firstBlockTime).startOf('day').format('x')) / 1000;
+  (moment(value, format).format('x') - moment(liskGenesisBlockTime).startOf('day').format('x')) /
+  1000;
 
 /**
  * Function to format an input to Date format 99.99.99
@@ -49,7 +50,7 @@ export const formatInputToDate = (value, separator = '.') => {
  * @returns {Number} - Timestamp in seconds from first block
  */
 export const convertUnixSecondsToLiskEpochSeconds = (timestamp) =>
-  moment(timestamp * 1000).unix() - moment(firstBlockTime).unix();
+  moment(timestamp * 1000).unix() - moment(liskGenesisBlockTime).unix();
 
 /**
  * Converts a date in DD-MM-YYYY format to timestamp
@@ -63,6 +64,6 @@ export default {
   convertUnixSecondsToLiskEpochSeconds,
   getDateTimestampFromFirstBlock,
   formatInputToDate,
-  firstBlockTime,
+  liskGenesisBlockTime,
   transformStringDateToUnixTimestamp,
 };
