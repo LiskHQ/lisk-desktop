@@ -84,7 +84,7 @@ function MenuSelect({
         {!disabled && (
           <Dropdown
             showArrow={!disabled}
-            className={`${styles.optionListWrapper} ${popupClassName}`}
+            className={`${styles.optionListWrapper} ${popupClassName ?? ''}`}
             showDropdown={showDropdown}
           >
             {children}

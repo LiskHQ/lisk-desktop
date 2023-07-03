@@ -1,4 +1,63 @@
+.filterWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  & > span:first-child {
+    margin-right: 10px;
+    white-space: nowrap;
+  }
+
+  & .menuWrapper {
+    margin-right: 8px;
+    border-radius: 40px;
+    background-color: white;
+  }
+
+  .popupWrapper {
+    right: 60%;
+    width: 110px;
+  }
+}
+
+& .tokenOptionWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+
+.tokenLogo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+
+  & ~ span {
+    height: fit-content;
+    font-size: 15px;
+    font-weight: 500;
+    padding-left: 8px;
+    white-space: nowrap;
+    max-width: 228px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-zodiac-blue);
+  }
+}
+
 .content {
   padding: 0 !important;
   counter-reset: section;
+}
+
+.filterTopAccounts {
+  border-radius: 30px;
+  min-width: 250px !important;
+  padding-top: 22px !important;
+  padding-bottom: 22px !important;
+}
+
+.searchIcon {
+  display: flex;
+  top: 50% !important;
 }

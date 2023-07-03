@@ -1,8 +1,14 @@
-.counter::before {
-  counter-increment: section;
-  content: "#" counter(section);
-}
-
 .balanceShare {
   white-space: nowrap;
+}
+
+.walletSummary {
+  justify-content: center;
+
+  & p {
+    font-weight: var(--font-weight-semi-bold);
+    line-height: var(--font-size-h5);
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
 }
