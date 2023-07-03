@@ -44,7 +44,7 @@ describe('Validator stakes view', () => {
 
     const searchField = screen.getByTestId('addressFilter');
     fireEvent.change(searchField, { target: { value: 'test' } });
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
 
     expect(mockApplyFilters).toHaveBeenCalledWith({ search: 'test' });
   });

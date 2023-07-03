@@ -44,7 +44,7 @@ For _Windows_ users, make sure to set the correct [msvs_version](https://www.npm
 git clone https://github.com/LiskHQ/lisk-desktop.git
 cd lisk-desktop
 nvm use
-yarn
+yarn --cwd app && yarn
 yarn run dev
 ```
 
@@ -57,19 +57,19 @@ Open http://localhost:8080 to access the wallet.
 To build the project simply run
 
 ```
-yarn build
+yarn run build
 ```
 
 Under the hood, this script runs
 
 ```
-yarn build:prod
+yarn run build:prod
 ```
 
 to build the React app under `src/` and
 
 ```
-yarn build:electron
+yarn run build:electron
 ```
 
 to build the electron app under `app/` using webpack. You can run the above scripts individually if you're looking to see the changes solely on one of the two said applications.
@@ -79,7 +79,7 @@ to build the electron app under `app/` using webpack. You can run the above scri
 If you have already built the application as described above, you can launch Electron using
 
 ```
-yarn start
+yarn run start
 ```
 
 #### Run with parameters
@@ -87,13 +87,13 @@ yarn start
 To launch a version which supports hardware wallets, you can run
 
 ```
-yarn dev:hw
+yarn run dev:hw
 ```
 
 or to launch electron and receive live updates from already running `webpack-dev-server` on port `8080` and you can run
 
 ```
-LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true yarn start
+LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true yarn run start
 ```
 
 This comes with Redux dev tools.
@@ -109,7 +109,7 @@ Please see [HARDWARE_WALLET_DEVELOPMENT.md](/docs/HARDWARE_WALLET_DEVELOPMENT.md
 Build package for Windows (on Windows in [Git BASH](https://git-for-windows.github.io/)).
 
 ```
-yarn pack:win
+yarn run pack:win
 ```
 
 #### macOS
@@ -117,7 +117,7 @@ yarn pack:win
 Build package for macOS (on macOs)
 
 ```
-yarn pack
+yarn run pack
 ```
 
 #### Linux
@@ -125,7 +125,7 @@ yarn pack
 Build package for Linux (on Linux).
 
 ```
-yarn pack
+yarn run pack
 ```
 
 ## Testing
@@ -135,13 +135,13 @@ yarn pack
 #### Single run
 
 ```
-yarn test
+yarn run test
 ```
 
 #### Run each time a file changes
 
 ```
-yarn test:live
+yarn run test:live
 ```
 
 ## Directory Layout

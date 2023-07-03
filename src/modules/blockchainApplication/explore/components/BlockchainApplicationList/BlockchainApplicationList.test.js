@@ -81,7 +81,7 @@ describe('BlockchainApplicationList', () => {
     renderWithRouterAndQueryClient(BlockchainApplicationList);
     const searchField = screen.getByTestId('application-filter');
     fireEvent.change(searchField, { target: { value: 'test' } });
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
 
     expect(mockApplyFilters).toHaveBeenCalledWith(
       expect.objectContaining({
