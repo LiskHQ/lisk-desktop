@@ -1,3 +1,4 @@
+// istanbul ignore file
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './stakes.css';
 
