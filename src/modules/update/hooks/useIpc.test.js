@@ -124,7 +124,7 @@ describe('useIpc', () => {
     callbacks['update:available']({}, { version, releaseNotes });
     wrapper.update();
     wrapper.find('button.update-now').simulate('click');
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
 
     expect(ipc.send).toHaveBeenCalledWith('update:started');
     expect(spy).toHaveBeenCalledWith('NewRelease');

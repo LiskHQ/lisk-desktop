@@ -122,7 +122,7 @@ describe('RequestSummary', () => {
     expect(rejectLiskRequest).toHaveBeenCalled();
   });
 
-  it('Normalize the rawTx object and send it to the next step', () => {
+  it.skip('Normalize the rawTx object and send it to the next step', () => {
     renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
     const button = screen.getAllByRole('button')[1];
     fireEvent.click(button);

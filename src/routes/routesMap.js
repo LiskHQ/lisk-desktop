@@ -4,7 +4,6 @@ import Blocks from '@block/components/blocks';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import ValidatorsMonitor from '@pos/validator/components/ValidatorsMonitorView';
 import ValidatorPerformanceModal from '@pos/validator/components/ValidatorPerformanceModal';
-import Login from '@auth/components/Signin';
 import MonitorWallets from '@account/components/Accounts';
 import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@transaction/components/Transactions';
@@ -62,11 +61,9 @@ import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardware
 
 export default {
   wallet: AccountDetails,
-  addAccount: Login,
   editAccount: EditAccount,
   explorer: Explorer,
   register: Register,
-  login: Login,
   termsOfUse: TermsOfUse,
   transactions: MonitorTransactions,
   blocks: Blocks,

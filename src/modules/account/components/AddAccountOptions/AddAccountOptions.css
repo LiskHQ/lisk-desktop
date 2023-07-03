@@ -43,7 +43,7 @@
     margin: 0 0 10px;
   }
 
-  & > p {
+  & > div {
     @mixin contentLargest;
 
     color: var(--color-slate-gray);
