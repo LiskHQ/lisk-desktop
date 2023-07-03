@@ -26,7 +26,6 @@ const getAmountFeedbackAndError = (
 
   const stakeAmountChecklist = stakedValue > 0 ? ['INSUFFICIENT_STAKE_FUNDS', 'MIN_BALANCE'] : [];
   const inputAmountChecklist = ['NEGATIVE_STAKE', 'STAKE_10X', 'FORMAT'];
-
   const { message } = validateAmount({
     token,
     minValue,
