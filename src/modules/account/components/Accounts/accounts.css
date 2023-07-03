@@ -58,5 +58,6 @@
 }
 
 .searchIcon {
+  display: flex;
   top: 50% !important;
 }
