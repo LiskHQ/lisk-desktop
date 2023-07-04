@@ -3,8 +3,8 @@ import { extractAddressFromPublicKey, extractKeyPair } from '@wallet/utils/accou
 import logo from '@setup/react/assets/images/paperWallet/lisk-logo-blue-on-white-rgb.png';
 import usbStick from '@setup/react/assets/images/paperWallet/usb-stick.png';
 import printer from '@setup/react/assets/images/paperWallet/print.png';
+import { defaultDerivationPath } from '@account/const';
 import fonts from './paperWalletFonts';
-import { defaultDerivationPath } from './explicitBipKeyDerivation';
 
 class PaperWallet {
   constructor(JSPDF, props, publicKey) {

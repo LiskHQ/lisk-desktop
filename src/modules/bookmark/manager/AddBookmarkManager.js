@@ -1,9 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from 'src/redux/actions';
-import { getAccount } from '@wallet/utils/api';
-import withData from 'src/utils/withData';
+import { bookmarkAdded, bookmarkRemoved, bookmarkUpdated } from 'src/redux/actions';
 import AddBookmark from '../components/AddBookmark';
 
 const mapStateToProps = (state) => ({
@@ -18,12 +15,4 @@ const mapDispatchToProps = {
   bookmarkRemoved,
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withData({
-    account: {
-      apiUtil: (network, params) => getAccount({ network, params }),
-      defaultData: {},
-    },
-  })
-)(AddBookmark);
+export default connect(mapStateToProps, mapDispatchToProps)(AddBookmark);

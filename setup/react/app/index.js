@@ -28,7 +28,9 @@ import { ApplicationBootstrapContext } from './ApplicationBootstrap';
 if (MOCK_SERVICE_WORKER) {
   const { worker } = require('src/service/mock/runtime');
 
-  worker.start({ onUnhandledRequest: 'bypass' });
+  (async () => {
+    await worker.start({ onUnhandledRequest: 'bypass' });
+  })();
 }
 
 const AppContent = () => {

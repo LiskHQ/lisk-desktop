@@ -13,22 +13,6 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 const history = createMemoryHistory();
 
 /**
- * Mounts components that require to access Redux store
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {Object} store - A fake Redux store object
- *
- * @returns {Object} Mounted component
- */
-export const mountWithProps = (Component, props, store) =>
-  mount(
-    <Provider store={configureStore()(store)}>
-      <Component {...props} />
-    </Provider>
-  );
-
-/**
  * Mounts components that are wrapped in WithRouter
  *
  * @param {Class|Function} Component - A React component to be tested

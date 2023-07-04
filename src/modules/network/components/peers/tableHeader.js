@@ -20,7 +20,7 @@ export default (changeSort, t) => [
         <p>
           <span>Lisk Desktop determines the country names using GeoLite2 data created by</span>
           &nbsp;
-          <a href="http://www.maxmind.com">Maxmind</a>.
+          <a href="https://www.maxmind.com">Maxmind</a>.
         </p>
       ),
       position: 'bottom',

@@ -24,7 +24,9 @@ const ConnectionProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    createSignClient();
+    (async () => {
+      await createSignClient();
+    })();
   }, []);
 
   return (

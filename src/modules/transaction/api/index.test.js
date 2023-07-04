@@ -8,7 +8,7 @@ import { fromTransactionJSON } from '@transaction/utils/encoding';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
-import { getTransactions, getTransactionStats, getTransactionFee, dryRun } from './index';
+import { getTransactionFee, dryRun } from './index';
 
 const { stake } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
@@ -32,7 +32,6 @@ jest.mock('src/utils/api/ws', () =>
 );
 
 describe('API: LSK Transactions', () => {
-  const sampleId = 'sample_id';
   const moduleCommandSchemas = mockCommandParametersSchemas.data.commands.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
@@ -43,85 +42,6 @@ describe('API: LSK Transactions', () => {
     signatures: [],
     fee: '0',
   };
-
-  describe('getTransactions', () => {
-    beforeEach(() => {
-      jest.clearAllMocks();
-    });
-
-    it('should call http with block id', async () => {
-      await getTransactions({
-        network,
-        params: { blockId: sampleId },
-      });
-
-      expect(http).toHaveBeenCalledWith({
-        path: '/api/v3/transactions',
-        params: { blockId: sampleId },
-        network,
-        baseUrl: undefined,
-      });
-    });
-
-    it('should call http with filters', async () => {
-      await getTransactions({
-        network,
-        params: {
-          timestamp: '1607446547094:1607446547094',
-          amount: '123445:123445',
-          sort: 'amount:asc',
-        },
-      });
-
-      expect(http).toHaveBeenCalledWith({
-        network,
-        path: '/api/v3/transactions',
-        baseUrl: undefined,
-        params: {
-          timestamp: '1607446547094:1607446547094',
-          amount: '123445:123445',
-          sort: 'amount:asc',
-        },
-      });
-    });
-
-    it('should call http and ignore wrong filters', async () => {
-      await getTransactions({
-        network,
-        params: {
-          timestamp: 'wrong_date:1607446547094',
-          amount: 'wrong_amount:123445',
-          sort: 'wrong_sort',
-          limit: 0,
-          offset: -1,
-          message: {},
-          address: 'invalid_address',
-        },
-      });
-
-      expect(http).toHaveBeenCalledWith({
-        network,
-        path: '/api/v3/transactions',
-        baseUrl: undefined,
-        params: {},
-      });
-    });
-  });
-
-  describe('getTransactionStats', () => {
-    it('Should call http with given params', () => {
-      getTransactionStats({
-        network,
-        params: { period: 'week' },
-      });
-
-      expect(http).toHaveBeenCalledWith({
-        path: '/api/v3/transactions/statistics/day',
-        params: { limit: 7 },
-        network,
-      });
-    });
-  });
 
   describe('getTotalSpendingAmount', () => {
     it('should return amount of transfer in Beddows', () => {
