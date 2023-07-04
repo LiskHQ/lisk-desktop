@@ -29,7 +29,7 @@ describe('updateApp', () => {
     expect(ipc.on).toHaveBeenCalled();
   });
 
-  it('should create toast when downloadUpdateStart', () => {
+  it('should create toast when IPC_DOWNLOAD_UPDATE_START', () => {
     const callbacks = {};
     window.ipc = {
       on: (event, callback) => {
@@ -42,7 +42,7 @@ describe('updateApp', () => {
     expect(toast.info).toHaveBeenCalled();
   });
 
-  it('should when toast when downloadUpdateProgress', () => {
+  it('should when toast when IPC_DOWNLOAD_UPDATE_PROGRESS', () => {
     const callbacks = {};
     window.ipc = {
       on: (event, callback) => {
@@ -55,7 +55,7 @@ describe('updateApp', () => {
     expect(toast.update).toHaveBeenCalled();
   });
 
-  it('should when toast when downloadUpdateCompleted', () => {
+  it('should when toast when IPC_DOWNLOAD_UPDATE_COMPLETED', () => {
     const callbacks = {};
     window.ipc = {
       on: (event, callback) => {

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { appUpdateAvailable } from 'src/redux/actions';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { IPC_UPDATE_AVAILABLE, IPC_UPDATE_STARTED } from 'src/const/ipcGlobal';
 import useIpc from './useIpc';
 
 jest.mock('@walletconnect/utils', () => ({
@@ -80,7 +81,7 @@ describe('useIpc', () => {
     expect(result.current).toBe(undefined);
   });
 
-  it('Should call render FlashMessage correctly and dispatch appUpdateAvailable when ipc receives update:available', () => {
+  it('Should call render FlashMessage correctly and dispatch appUpdateAvailable when ipc receives IPC_UPDATE_AVAILABLE', () => {
     renderHook(() => useIpc(mockHistory));
     const spy = jest.spyOn(FlashMessageHolder, 'addMessage');
     const wrapper = mountWithRouter(FlashMessageHolder);
@@ -88,7 +89,7 @@ describe('useIpc', () => {
     expect(wrapper).toBeEmptyRender();
     expect(ipc.on).toHaveBeenCalled();
 
-    callbacks['update:available']({}, { version, releaseNotes });
+    callbacks[IPC_UPDATE_AVAILABLE]({}, { version, releaseNotes });
     wrapper.update();
 
     expect(spy).toHaveBeenCalledWith(expect.anything(), 'NewRelease');
@@ -109,24 +110,24 @@ describe('useIpc', () => {
     renderHook(() => useIpc(mockHistory));
     const wrapper = mountWithRouter(FlashMessageHolder);
 
-    callbacks['update:available']({}, { version, releaseNotes });
+    callbacks[IPC_UPDATE_AVAILABLE]({}, { version, releaseNotes });
     wrapper.update();
 
     wrapper.find('button.read-more').simulate('click');
     expect(mockHistory.push).toBeCalledWith('?modal=newRelease');
   });
 
-  it('Should call FlashMessageHolder.deleteMessage and send update:started through ipc on updateNow click', () => {
+  it('Should call FlashMessageHolder.deleteMessage and send IPC_UPDATE_STARTED through ipc on updateNow click', () => {
     renderHook(() => useIpc(mockHistory));
     const spy = jest.spyOn(FlashMessageHolder, 'deleteMessage');
     const wrapper = mountWithRouter(FlashMessageHolder);
 
-    callbacks['update:available']({}, { version, releaseNotes });
+    callbacks[IPC_UPDATE_AVAILABLE]({}, { version, releaseNotes });
     wrapper.update();
     wrapper.find('button.update-now').simulate('click');
     jest.runOnlyPendingTimers();
 
-    expect(ipc.send).toHaveBeenCalledWith('update:started');
+    expect(ipc.send).toHaveBeenCalledWith(IPC_UPDATE_STARTED);
     expect(spy).toHaveBeenCalledWith('NewRelease');
   });
 
@@ -135,7 +136,7 @@ describe('useIpc', () => {
     const spy = jest.spyOn(FlashMessageHolder, 'deleteMessage');
     const wrapper = mountWithRouter(FlashMessageHolder);
 
-    callbacks['update:available']({}, { version, releaseNotes });
+    callbacks[IPC_UPDATE_AVAILABLE]({}, { version, releaseNotes });
     wrapper.update();
     mockDispatch.mock.calls[0][0].data.remindMeLater();
 

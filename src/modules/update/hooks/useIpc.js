@@ -5,6 +5,7 @@ import { regex } from 'src/const/regex';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { appUpdateAvailable } from 'src/redux/actions';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
+import { IPC_UPDATE_AVAILABLE, IPC_UPDATE_STARTED } from 'src/const/ipcGlobal';
 import NewReleaseMessage from '../detail/info/newReleaseMessage/newReleaseMessage';
 
 const useIpc = (history) => {
@@ -15,7 +16,7 @@ const useIpc = (history) => {
   if (!ipc) return;
 
   useEffect(() => {
-    ipc.on('update:available', (action, { version, releaseNotes }) => {
+    ipc[IPC_UPDATE_AVAILABLE]((action, { version, releaseNotes }) => {
       const readMore = () => {
         addSearchParamsToUrl(history, { modal: 'newRelease' });
       };
@@ -26,7 +27,7 @@ const useIpc = (history) => {
       };
 
       const updateNow = () => {
-        ipc.send('update:started');
+        ipc[IPC_UPDATE_STARTED]();
         setTimeout(() => {
           FlashMessageHolder.deleteMessage('NewRelease');
         }, 500);

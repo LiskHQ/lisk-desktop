@@ -4,6 +4,8 @@ import win from './win';
 import process from './process';
 import menu from '../menu';
 import server from '../../server';
+import {IPC_OPEN_URL} from "../../../src/const/ipcGlobal";
+import {IPC_DETECT_LOCALE} from "../ipc";
 
 describe('Electron Browser Window Wrapper', () => {
   const callbacks = {};
@@ -88,7 +90,7 @@ describe('Electron Browser Window Wrapper', () => {
   describe('Sending events', () => {
     it('Saves events in event stack', () => {
       expect(win.eventStack.length).to.equal(0);
-      win.send({ event: 'openUrl', value: 'someurl' });
+      win.send({ event: IPC_OPEN_URL, value: 'someurl' });
       expect(win.browser).to.equal(null);
       expect(win.eventStack.length).to.equal(1);
     });
@@ -96,7 +98,7 @@ describe('Electron Browser Window Wrapper', () => {
     it('Sends events', () => {
       win.init({ electron, path, electronLocalshortcut });
       win.isUILoaded = true;
-      win.send({ event: 'openUrl', value: 'someurl' });
+      win.send({ event: IPC_OPEN_URL, value: 'someurl' });
       expect(win.eventStack.length).to.equal(0);
     });
   });
@@ -139,9 +141,9 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser).to.not.equal(null);
 
       // detect the locale
-      win.send({ event: 'detectedLocale', value: 'de' });
+      win.send({ event: IPC_DETECT_LOCALE, value: 'de' });
       expect(win.eventStack.length).to.equal(1);
-      expect(win.eventStack[0].event).to.equal('detectedLocale');
+      expect(win.eventStack[0].event).to.equal(IPC_DETECT_LOCALE);
       expect(win.eventStack[0].value).to.equal('de');
 
       // check the menu gets build
@@ -157,7 +159,7 @@ describe('Electron Browser Window Wrapper', () => {
       callbacks['did-finish-load']();
       expect(win.eventStack.length).to.equal(0);
       expect(events.length).to.equal(1);
-      expect(events[0].event).to.equal('detectedLocale');
+      expect(events[0].event).to.equal(IPC_DETECT_LOCALE);
       expect(events[0].value).to.equal('de');
 
       callbacks.closed();
@@ -182,11 +184,11 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser).to.not.equal(null);
 
       // detect the locale
-      win.send({ event: 'detectedLocale', value: 'de' });
+      win.send({ event: IPC_DETECT_LOCALE, value: 'de' });
       expect(win.eventStack.length).to.equal(2);
-      expect(win.eventStack[0].event).to.equal('openUrl');
+      expect(win.eventStack[0].event).to.equal(IPC_OPEN_URL);
       expect(win.eventStack[0].value).to.equal('/');
-      expect(win.eventStack[1].event).to.equal('detectedLocale');
+      expect(win.eventStack[1].event).to.equal(IPC_DETECT_LOCALE);
       expect(win.eventStack[1].value).to.equal('de');
 
       // check the menu gets build
@@ -202,9 +204,9 @@ describe('Electron Browser Window Wrapper', () => {
       callbacks['did-finish-load']();
       expect(win.eventStack.length).to.equal(0);
       expect(events.length).to.equal(2);
-      expect(events[0].event).to.equal('openUrl');
+      expect(events[0].event).to.equal(IPC_OPEN_URL);
       expect(events[0].value).to.equal('/');
-      expect(events[1].event).to.equal('detectedLocale');
+      expect(events[1].event).to.equal(IPC_DETECT_LOCALE);
       expect(events[1].value).to.equal('de');
 
       callbacks.closed();

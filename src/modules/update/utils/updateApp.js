@@ -1,6 +1,12 @@
 /* istanbul ignore file */
 import React from 'react';
 import { toast } from 'react-toastify';
+import {
+  IPC_DOWNLOAD_UPDATE_COMPLETED,
+  IPC_DOWNLOAD_UPDATE_PROGRESS,
+  IPC_DOWNLOAD_UPDATE_START,
+  IPC_UPDATE_QUIT_AND_INSTALL,
+} from 'src/const/ipcGlobal';
 import UpdateIndicator from '../detail/info/updateIndicator';
 
 export default {
@@ -10,7 +16,7 @@ export default {
     let state = 'not-started';
 
     if (ipc) {
-      ipc.on('downloadUpdateStart', () => {
+      ipc[IPC_DOWNLOAD_UPDATE_START](() => {
         if (state === 'not-started') {
           state = 'started';
           toast.info(<UpdateIndicator />, {
@@ -21,19 +27,19 @@ export default {
         }
       });
 
-      ipc.on('downloadUpdateProgress', (action, { transferred, total }) => {
+      ipc[IPC_DOWNLOAD_UPDATE_PROGRESS]((action, { transferred, total }) => {
         toast.update(toastId, {
           render: () => <UpdateIndicator transferred={transferred} total={total} />,
         });
       });
 
-      ipc.on('downloadUpdateCompleted', () => {
+      ipc[IPC_DOWNLOAD_UPDATE_COMPLETED](() => {
         if (state === 'not-started') {
           state = 'completed';
           toast.info(
             <UpdateIndicator
               quitAndInstall={() => {
-                ipc.send('updateQuitAndInstall');
+                ipc[IPC_UPDATE_QUIT_AND_INSTALL]();
               }}
               completed
             />,
@@ -49,7 +55,7 @@ export default {
             render: () => (
               <UpdateIndicator
                 quitAndInstall={() => {
-                  ipc.send('updateQuitAndInstall');
+                  ipc[IPC_UPDATE_QUIT_AND_INSTALL]();
                 }}
                 completed
               />

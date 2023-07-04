@@ -3,5 +3,5 @@ import { LEDGER_HW_HID_EVENT } from '@libs/hardwareWallet/ledger/constants';
 const IPC = window.ipc;
 
 export const subscribeToLedgerDeviceEvents = (fn) => {
-  IPC.on(LEDGER_HW_HID_EVENT, (action, data) => fn(data));
+  IPC[LEDGER_HW_HID_EVENT]((action, data) => fn(data));
 };
