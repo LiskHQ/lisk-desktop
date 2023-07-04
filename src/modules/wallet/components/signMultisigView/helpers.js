@@ -19,18 +19,6 @@ const getNonEmptySignatures = (transaction, isRegisterMultisignature) => {
   return transaction.signatures.filter((signature) => signature !== null && signature.length);
 };
 
-export const findNonEmptySignatureIndices = (signatures) => {
-  const indices = [];
-
-  signatures.forEach((signature, index) => {
-    if (signature === null || signature.length === 0) {
-      indices.push(index);
-    }
-  });
-
-  return indices;
-};
-
 // eslint-disable-next-line max-statements, complexity
 export const getTransactionSignatureStatus = (senderAccount, transaction) => {
   const moduleCommand = joinModuleAndCommand(transaction);

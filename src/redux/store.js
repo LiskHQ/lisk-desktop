@@ -14,7 +14,6 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...middl
 store.dispatch({ type: actionTypes.storeCreated });
 const persistedStore = persistStore(store);
 
-// ignore this in coverage as it is hard to test andk does not run in production
 if (module.hot) {
   module.hot.accept('src/redux/rootReducer', () => {
     const nextReducer = combineReducers(require('src/redux/rootReducer'));

@@ -7,7 +7,7 @@ import useCreateAccounts from '@auth/hooks/useCreateAccounts';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import MultiStepProgressBar from 'src/theme/ProgressBarMultiStep';
 import MultiStep from 'src/modules/common/components/MultiStep';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
+import { defaultDerivationPath } from '@account/const';
 import ChooseAvatar from '../ChooseAvatar/chooseAvatar';
 import SavePassphrase from '../SavePassphrase/SavePassphrase';
 import ConfirmPassphrase from '../ConfirmPassphrase/confirmPassphrase';

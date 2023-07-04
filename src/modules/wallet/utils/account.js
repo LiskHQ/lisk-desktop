@@ -123,22 +123,6 @@ export const extractAddressFromPassphrase = (data) => {
   throw Error('Invalid passphrase');
 };
 
-/**
- * Extracts Lisk address from given passphrase or publicKey
- *
- * @param {String} data - passphrase or public key
- * @returns {String?} - Extracted address for a given valid passphrase or publicKey
- */
-export const getBase32AddressFromAddress = (data) => {
-  try {
-    return cryptography.address.getLisk32AddressFromAddress(data);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    throw Error('Invalid address');
-  }
-};
-
 export const getAddressFromBase32Address = (data) => {
   try {
     return cryptography.address.getAddressFromLisk32Address(data);
@@ -267,24 +251,6 @@ export const calculateRemainingAndSignedMembers = (
   });
 
   return { signed, remaining };
-};
-
-export const validate2ndPass = async (account, passphrase, error) => {
-  const messages = [];
-  if (error) {
-    messages.push(messages);
-    return messages;
-  }
-
-  const secondPublicKey = account.keys.mandatoryKeys.filter(
-    (item) => item !== account.summary.publicKey
-  );
-  const publicKey = await extractPublicKey(passphrase);
-  // compare them
-  if (!secondPublicKey.length || publicKey !== secondPublicKey[0]) {
-    messages.push('This passphrase does not belong to your account.');
-  }
-  return messages;
 };
 
 /**

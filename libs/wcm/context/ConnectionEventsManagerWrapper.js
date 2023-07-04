@@ -17,13 +17,13 @@ export const ConnectionEventsManagerWrapper = ({ children }) => {
     setSessions((prevSessions) => prevSessions.filter((session) => session.topic !== event.topic));
   }, []);
 
-  const eventHandler = useCallback((name, meta) => {
+  const eventHandler = useCallback(async (name, meta) => {
     pushEvent({ name, meta });
 
     if (name === EVENTS.SESSION_DELETE) {
       onSessionDelete(meta);
     } else if (name === EVENTS.SESSION_REQUEST) {
-      onSessionRequest(meta);
+      await onSessionRequest(meta);
     }
   }, []);
 

@@ -56,11 +56,14 @@ const useHWAccounts = () => {
         }
       })();
     }
+
     return () => {
       setIsLoadingHWAccounts(false);
       isMounted = false;
       if (ipc) {
-        resetLedgerIPCQueue();
+        (async () => {
+          await resetLedgerIPCQueue();
+        })();
       }
     };
   }, [ipc, dispatch, currentHWDevice]);

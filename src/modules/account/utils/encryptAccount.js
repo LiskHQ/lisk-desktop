@@ -51,7 +51,7 @@ export const encryptAccount = async ({
 
 export const decryptAccount = async (crypto, password) => {
   try {
-    const plainText = await encrypt.decryptMessageWithPassword(crypto, password);
+    const plainText = await encrypt.decryptMessageWithPassword(crypto, password, 'utf-8');
     return {
       error: null,
       result: JSON.parse(plainText),
