@@ -10,7 +10,7 @@
         <meta property="og:description" name="description" content="Lisk is an all-in-one solution to manage your Lisk ID, access and send LSK tokens, as well as stake for validators.">
         <meta property="og:image" content="https://lisk.com/hub/assets/images/og-logo.png">
         <title>Lisk</title>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
         <style>
           <%= compilation.assets['head.css'].source() %>
         </style>
@@ -20,7 +20,7 @@
         ).join('\n') %>
         <link rel="icon" type="image/png" href="./assets/images/LISK.png" />
         <script>
-          /* Following comment is a placeholder used by `npm run build:testnet`, do not remove */
+          /* Following comment is a placeholder used by `yarn run build:testnet`, do not remove */
           var defaultNet = "mainnet";//defaultNetwork
           (function(targetNet) {
             if (window.localStorage && !window.localStorage.getItem('defaultNetwork')){

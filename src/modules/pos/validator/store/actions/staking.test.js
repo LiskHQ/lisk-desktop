@@ -9,24 +9,16 @@ import txActionTypes from '@transaction/store/actionTypes';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import * as validatorApi from '../../api';
 import actionTypes from './actionTypes';
 import {
   stakeEdited,
   stakesCleared,
   stakesSubmitted,
   stakesConfirmed,
-  stakesRetrieved,
   balanceUnlocked,
 } from './staking';
-import { mockValidators } from '../../__fixtures__';
 
 jest.mock('@transaction/api');
-
-jest.mock('../../api', () => ({
-  getStakes: jest.fn(),
-  getValidatorList: jest.fn(),
-}));
 
 jest.mock('@wallet/utils/api', () => ({
   getAccount: jest.fn(),
@@ -249,25 +241,6 @@ describe('actions: staking', () => {
       };
 
       expect(stakesCleared()).toEqual(expectedAction);
-    });
-  });
-
-  describe('stakesRetrieved', () => {
-    it('should call getStakes and dispatch stake results', async () => {
-      const stakes = [
-        { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: 'genesis', amount: 1e8 },
-      ];
-      const expectedAction = {
-        type: actionTypes.stakesRetrieved,
-        data: stakes,
-      };
-      validatorApi.getStakes.mockImplementation(() => Promise.resolve({ data: stakes }));
-      validatorApi.getValidatorList.mockImplementation(() =>
-        Promise.resolve({ data: mockValidators.data })
-      );
-      await stakesRetrieved()(dispatch, getState);
-
-      expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });
 

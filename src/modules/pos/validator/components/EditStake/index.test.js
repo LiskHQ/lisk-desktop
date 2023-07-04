@@ -1,7 +1,11 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { convertToBaseDenom, convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import numeral from 'numeral';
-import { renderWithRouterAndQueryClient, renderWithRouterAndStore } from 'src/utils/testHelpers';
+import {
+  renderWithRouterAndQueryClient,
+  renderWithRouterAndStore,
+  renderWithRouterAndStoreAndQueryClient,
+} from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
@@ -213,5 +217,110 @@ describe('EditStake', () => {
 
     fireEvent.click(screen.getByText('Continue staking'));
     expect(props.history.push).toHaveBeenCalled();
+  });
+
+  describe('Staking validation', () => {
+    const stakedValidatorAddress = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
+    const stakingValues = {
+      [stakedValidatorAddress]: {
+        confirmed: 4000000000,
+        name: 'genesis_8',
+        unconfirmed: 4000000000,
+      },
+    };
+    const customProps = {
+      ...props,
+      history: { ...props.history, location: { search: `?address=${stakedValidatorAddress}` } },
+      staking: stakingValues,
+    };
+
+    delete window.location;
+    window.location = new URL(`http://localhost/?address=${stakedValidatorAddress}`);
+
+    usePosToken.mockReturnValue({
+      token: { ...mockAppsTokens.data[0], availableBalance: '500000000' },
+    });
+
+    it('should not return an error when un-staked value is greater than the token balance', async () => {
+      renderWithRouterAndQueryClient(EditStake, customProps);
+
+      expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+
+      const stakingField = screen.getByTestId('stake');
+      fireEvent.change(stakingField, { target: { value: 20 } });
+
+      await waitFor(() => {
+        expect(screen.queryByText('Confirm')).not.toHaveAttribute('disabled');
+      });
+    });
+
+    it('should return an error when (unconfirmed - confirmed) value is greater than the token balance', async () => {
+      renderWithRouterAndStoreAndQueryClient(EditStake, customProps, { staking: stakingValues });
+      expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+
+      const stakingField = screen.getByTestId('stake');
+      fireEvent.change(stakingField, { target: { value: 100 } });
+
+      await waitFor(() => {
+        expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+        expect(
+          screen.queryByText('The provided amount is higher than your available staking balance.')
+        ).toBeTruthy();
+      });
+    });
+
+    it('should return an error if inputted amount is negative', async () => {
+      renderWithRouterAndStoreAndQueryClient(EditStake, customProps, { staking: stakingValues });
+
+      expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+
+      const stakingField = screen.getByTestId('stake');
+      fireEvent.change(stakingField, { target: { value: -20 } });
+
+      await waitFor(() => {
+        expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+        expect(screen.queryByText(`Stake amount can't be zero or negative.`)).toBeTruthy();
+      });
+    });
+
+    it('should not return an error if inputted amount is 0', async () => {
+      renderWithRouterAndStoreAndQueryClient(EditStake, customProps, { staking: stakingValues });
+
+      expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+
+      const stakingField = screen.getByTestId('stake');
+      fireEvent.change(stakingField, { target: { value: 0 } });
+
+      await waitFor(() => {
+        expect(screen.queryByText('Confirm')).not.toHaveAttribute('disabled');
+      });
+    });
+
+    it('should return an error if inputted amount is not a multiple of 10', async () => {
+      renderWithRouterAndStoreAndQueryClient(EditStake, customProps, { staking: stakingValues });
+
+      expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+
+      const stakingField = screen.getByTestId('stake');
+      fireEvent.change(stakingField, { target: { value: 10.11 } });
+
+      await waitFor(() => {
+        expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+        expect(screen.queryByText(`You can only stake in multiplies of 10 LSK.`)).toBeTruthy();
+      });
+
+      fireEvent.change(stakingField, { target: { value: 15 } });
+
+      await waitFor(() => {
+        expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
+        expect(screen.queryByText(`You can only stake in multiplies of 10 LSK.`)).toBeTruthy();
+      });
+
+      fireEvent.change(stakingField, { target: { value: 20 } });
+
+      await waitFor(() => {
+        expect(screen.queryByText('Confirm')).not.toHaveAttribute('disabled');
+      });
+    });
   });
 });

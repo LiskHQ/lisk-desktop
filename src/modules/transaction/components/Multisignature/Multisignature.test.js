@@ -7,9 +7,20 @@ import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Multisignature, { FullySignedActions, PartiallySignedActions } from '.';
-import { toTransactionJSON } from '../../utils';
+import { toTransactionJSON } from '../../utils/encoding';
 
 jest.mock('copy-to-clipboard');
+jest.mock('../../utils/encoding');
+
+jest.mock('@liskhq/lisk-client', () => ({
+  ...jest.requireActual('@liskhq/lisk-client'),
+  cryptography: {
+    ...jest.requireActual('@liskhq/lisk-client').cryptography,
+    address: {
+      getLisk32AddressFromPublicKey: jest.fn(() => 'lskdgtenb76rf93bzd56cqn6ova46wfvoesbk4hnd'),
+    },
+  },
+}));
 
 describe('TransactionResult Multisignature', () => {
   const props = {
@@ -51,6 +62,24 @@ describe('TransactionResult Multisignature', () => {
       {}
     ),
   };
+
+  const transaction = {
+    module: 'token',
+    command: 'transfer',
+    fee: '100000000',
+    nonce: '1',
+    senderPublicKey: 'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535',
+    signatures: [],
+    params: {
+      amount: '1000000000000',
+      data: '',
+      recipientAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
+      tokenID: '0000000000000000',
+    },
+    id: '94aa29aa94c55323c3e4b8a1409b879f1766477a84bb028143ac10aa7f44b217',
+  };
+
+  toTransactionJSON.mockReturnValue(transaction);
 
   it('should render properly', () => {
     const wrapper = mount(<Multisignature {...props} />);

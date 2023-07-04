@@ -10,76 +10,10 @@ import {
 } from 'src/modules/transaction/configuration/moduleCommand';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
-import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';
-
-const filters = {
-  address: { key: 'address', test: (address) => !validateAddress(address) },
-  senderAddress: { key: 'senderAddress', test: (address) => !validateAddress(address) },
-  recipientAddress: { key: 'recipientAddress', test: (address) => !validateAddress(address) },
-  timestamp: { key: 'timestamp', test: (str) => /^(\d+)?:(\d+)?$/.test(str) },
-  amount: { key: 'amount', test: (str) => /^(\d+)?:(\d+)?$/.test(str) },
-  limit: { key: 'limit', test: (num) => parseInt(num, 10) > 0 },
-  offset: { key: 'offset', test: (num) => parseInt(num, 10) >= 0 },
-  moduleCommand: { key: 'moduleCommand', test: (str) => /\d:\d/.test(str) },
-  height: { key: 'height', test: (num) => parseInt(num, 10) > 0 },
-  blockId: { key: 'blockId', test: (str) => typeof str === 'string' },
-  sort: {
-    key: 'sort',
-    test: (str) =>
-      [
-        'amount:asc',
-        'amount:desc',
-        'fee:asc',
-        'fee:desc',
-        'timestamp:asc',
-        'timestamp:desc',
-      ].includes(str),
-  },
-};
-
-/**
- * Retrieves the list of transactions for given parameters
- */
-export const getTransactions = ({ network, params, baseUrl }) => {
-  const normParams = {};
-  // Validate params and fix keys
-  Object.keys(params).forEach((key) => {
-    if (filters[key] && filters[key].test(params[key])) {
-      normParams[filters[key].key] = params[key];
-    } else {
-      // eslint-disable-next-line no-console
-      console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`, params[key]);
-    }
-  });
-
-  return http({
-    network,
-    path: httpPaths.transactions,
-    params: normParams,
-    baseUrl,
-  });
-};
-
-/**
- * Retrieves the overall statistics of network transactions.
- */
-export const getTransactionStats = ({ network, params: { period } }) => {
-  const normParams = {
-    week: { path: 'day', limit: 7 },
-    month: { path: 'month', limit: 6 },
-    year: { path: 'month', limit: 12 },
-  };
-
-  return http({
-    path: `${httpPaths.transactionStats}/${normParams[period].path}`,
-    params: { limit: normParams[period].limit },
-    network,
-  });
-};
 
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds

@@ -10,11 +10,11 @@ import TransactionPriority from '@transaction/components/TransactionPriority';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
 import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
+import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
 import { splitModuleAndCommand } from '../../utils';
-import { useTransactionFee } from '../../hooks/useTransactionFee/useTransactionFee';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({

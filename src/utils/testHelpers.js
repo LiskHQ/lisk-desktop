@@ -1,4 +1,4 @@
-/* eslint-disable  max-lines, import/no-extraneous-dependencies */
+/* eslint-disable no-console, max-lines, import/no-extraneous-dependencies */
 import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter, Router } from 'react-router-dom';
@@ -11,22 +11,6 @@ import { context as wsContext } from '@blockchainApplication/connection/__fixtur
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 const history = createMemoryHistory();
-
-/**
- * Mounts components that require to access Redux store
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {Object} store - A fake Redux store object
- *
- * @returns {Object} Mounted component
- */
-export const mountWithProps = (Component, props, store) =>
-  mount(
-    <Provider store={configureStore()(store)}>
-      <Component {...props} />
-    </Provider>
-  );
 
 /**
  * Mounts components that are wrapped in WithRouter

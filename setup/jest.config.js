@@ -134,7 +134,6 @@ module.exports = {
     'src/utils/analytics.js',
     'src/modules/bookmark/utils.js',
     'src/theme/Theme.js',
-    'src/utils/platform.js',
     'src/modules/wallet/utils/hwManager.js',
     'src/modules/wallet/utils/account.js',
     'src/utils/dateTime.js',
@@ -145,7 +144,6 @@ module.exports = {
     'src/modules/settings/components/toggle.js',
     'src/modules/common/components/bars/topBar/tokenSelector.js',
     'src/modules/network/utils/getNetwork.js',
-    'src/modules/block/utils/api/getBlocks.js',
     'src/modules/transaction/api/index.js',
     'src/modules/transaction/utils/transaction.js',
     'src/modules/common/components/filterDropdownButton/addressFilter.js',
@@ -160,9 +158,6 @@ module.exports = {
     'src/modules/wallet/utils/api/index.js',
     'src/modules/transaction/utils/hwManager/index.js',
     'src/modules/transaction/utils/transactionDetailsHelper.js',
-    'src/modules/transaction/utils/removeDuplicateTransactions.js',
-    'src/modules/block/map/blocksFiltersMap.js',
-    'src/modules/block/utils/blockSubscribe.js',
     'src/modules/wallet/components/signMultisigView/helpers.js',
     'src/modules/pos/validator/store/actions/staking.js',
     'src/modules/transaction/components/transactionAddress/index.js',
@@ -175,7 +170,6 @@ module.exports = {
     'src/modules/settings/components/customNode/editMode.js',
     'src/modules/settings/components/customNode/customNode.js',
     'src/modules/auth/components/RecoveryPhrase/index.js',
-    'src/modules/auth/components/Signin/login.js',
     'src/modules/transaction/components/TransactionMonitor/TransactionMonitorList.js',
     'src/modules/transaction/store/transactionPriorityReducer.js',
     'src/modules/bookmark/components/BookmarksListModal/BookmarkListModal.js',
@@ -319,7 +313,7 @@ module.exports = {
     'src/modules/blockchainApplication/manage/components/UserApplicationSelector/UserApplicationSelector.js', // TODO: To be fixed in PDD-1522
     'src/modules/network/components/selectNetwork/SelectNetwork.js', // TODO: To be fixed in PDD-1522
     'src/modules/blockchainApplication/manage/components/NetworkApplicationDropDownButton/NetworkApplicationDropDownButton.js', // TODO: To be fixed in PDD-1522
-    'src/modules/network/components/DialogAddNetwork/DialogAddNetwork.js', // TODO: To be fixed in PDD-1522
+    'src/modules/wallet/components/walletList/tableHeader.js',
   ],
   coverageThreshold: {
     // global: {
@@ -346,11 +340,14 @@ module.exports = {
   },
   setupFiles: ['<rootDir>/setup/config/setupJest.js', 'jest-canvas-mock'],
   transform: {
-    '^.+\\.js$': 'babel-jest',
+    '\\.[jt]sx?$': 'babel-jest',
     '^.+\\.svg|png|jpg|jpeg$': '<rootDir>/tests/__mocks__/imageTransform.js',
   },
-  transformIgnorePatterns: ['node_modules/(?!(swiper|ssr-window|dom7)/)'],
-  testURL: 'http://localhost',
+  transformIgnorePatterns: ['node_modules/(?!(yup|@hookform/resolvers|swiper|ssr-window|dom7)/)'],
+  testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    url: 'http://localhost',
+  },
   globals: {
     PRODUCTION: true,
     TEST: true,
@@ -366,7 +363,6 @@ module.exports = {
     './node_modules/@testing-library/jest-dom/extend-expect',
     './node_modules/jest-enzyme/lib/index.js',
   ],
-  testEnvironment: 'enzyme',
   watchPlugins: [
     ['jest-watch-toggle-config', { setting: 'verbose' }],
     ['jest-watch-toggle-config', { setting: 'collectCoverage' }],

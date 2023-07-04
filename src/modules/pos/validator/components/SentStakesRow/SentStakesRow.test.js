@@ -1,11 +1,13 @@
+import React from 'react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
 import { useValidators } from '@pos/validator/hooks/queries';
-import SentStakesRow from './SentStakesRow';
+import { MemoryRouter } from 'react-router';
 import { getMockValidators, mockSentStakes } from '../../__fixtures__';
+import SentStakesRow from './SentStakesRow';
 
 jest.mock('@pos/validator/hooks/queries');
 
@@ -34,6 +36,22 @@ describe('SentStakesRow', () => {
       )
     );
     expect(screen.getByAltText('edit')).toBeTruthy();
+  });
+
+  it('should rerender with new value', async () => {
+    const container = renderWithRouter(SentStakesRow, props);
+    const updatedProps = { ...props, data: mockSentStakes.data.stakes[2] };
+    container.rerender(
+      <MemoryRouter initialEntries={[]}>
+        <SentStakesRow {...updatedProps} />
+      </MemoryRouter>
+    );
+    const { amount } = updatedProps.data;
+    expect(
+      screen.queryByText(
+        `${convertFromBaseDenom(amount, mockAppsTokens.data[0])} ${props.token.symbol}`
+      )
+    );
   });
 
   it('should display properly when loading validators', async () => {

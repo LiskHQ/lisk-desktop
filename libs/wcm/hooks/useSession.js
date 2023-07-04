@@ -1,7 +1,7 @@
 import { useContext, useEffect, useCallback, useState } from 'react';
 import { getSdkError } from '@walletconnect/utils';
-import { formatJsonRpcResult } from '@json-rpc-tools/utils';
 import { client } from '@libs/wcm/utils/connectionCreator';
+import { formatJsonRpcResult } from '../utils/jsonRPCFormat';
 import ConnectionContext from '../context/connectionContext';
 import { onApprove, onReject } from '../utils/sessionHandlers';
 import { EVENTS, STATUS, ERROR_CASES } from '../constants/lifeCycle';
@@ -25,8 +25,7 @@ export const useSession = () => {
 
     await Promise.all(
       client.session.keys.map(async (key, index) => {
-        const session = client.session.get(key);
-        loadedSessions[index] = session;
+        loadedSessions[index] = client.session.get(key);
       })
     );
 
@@ -122,7 +121,9 @@ export const useSession = () => {
 
   useEffect(() => {
     if (client?.session && !hasLoaded) {
-      loadSessions();
+      (async () => {
+        await loadSessions();
+      })();
     }
   }, [client, sessions]);
 
