@@ -4,8 +4,7 @@ import win from './win';
 import process from './process';
 import menu from '../menu';
 import server from '../../server';
-import {IPC_OPEN_URL} from "../../../src/const/ipcGlobal";
-import {IPC_DETECT_LOCALE} from "../ipc";
+import { IPC_DETECT_LOCALE, IPC_OPEN_URL } from '../../../src/const/ipcGlobal';
 
 describe('Electron Browser Window Wrapper', () => {
   const callbacks = {};
