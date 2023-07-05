@@ -500,7 +500,7 @@
           e = e || window.event;
           var name =
             e.target.getAttribute('data-name') || e.target.parentNode.getAttribute('data-name');
-          document.getElementById('name').innerHTML = name;
+          document.getElementById('name').innerText = name;
         };
       })();
     </script>
