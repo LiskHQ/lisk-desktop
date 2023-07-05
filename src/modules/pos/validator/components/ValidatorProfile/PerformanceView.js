@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { DEFAULT_STANDBY_THRESHOLD } from '@pos/validator/consts';
 import routes from 'src/routes/routes';
 import { useTheme } from '@theme/Theme';
 import { capitalize } from 'src/utils/helpers';
@@ -17,13 +16,6 @@ import Tooltip from 'src/theme/Tooltip/tooltip';
 import Icon from '@theme/Icon';
 import styles from './ValidatorProfile.css';
 import usePosToken from '../../hooks/usePosToken';
-
-export const getStatus = (data) => {
-  if (data.validatorWeight >= DEFAULT_STANDBY_THRESHOLD) {
-    return 'standby';
-  }
-  return 'ineligible';
-};
 
 const Item = ({ icon, title, children }) => {
   const theme = useTheme();

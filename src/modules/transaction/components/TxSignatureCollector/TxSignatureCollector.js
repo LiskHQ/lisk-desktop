@@ -74,7 +74,7 @@ const TxSignatureCollector = ({
       /**
        * The action function must be wrapped in dispatch
        * and passed via the tx Summary screen.
-       * It's called in this step so we can display the
+       * It's called in this step, so we can display the
        * HW pending screen. For ordinary login we don't display
        * the illustration.
        */

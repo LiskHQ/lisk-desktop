@@ -1,12 +1,10 @@
 import { to } from 'await-to-js';
-import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 import { TransactionExecutionResult } from '@transaction/constants';
 import actionTypes from './actionTypes';
-import { getTransactions, broadcast, dryRun, signTransaction } from '../api';
+import { broadcast, dryRun, signTransaction } from '../api';
 import { joinModuleAndCommand, signMultisigTransaction } from '../utils';
 import { fromTransactionJSON, toTransactionJSON } from '../utils/encoding';
 
@@ -27,53 +25,6 @@ export const pendingTransactionAdded = (data) => ({
   type: actionTypes.pendingTransactionAdded,
   data,
 });
-
-/**
- * Action trigger for retrieving any amount of transactions
- * for Dashboard and Wallet components
- *
- * @param {Object} params - Object with all params.
- * @param {String} params.address - address of the wallet to fetch the transactions for
- * @param {Number} params.limit - amount of transactions to fetch
- * @param {Number} params.offset - index of the first transaction
- * @param {Object} params.filters - object with filters for the filer dropdown
- *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
- */
-export const transactionsRetrieved =
-  ({ address, limit = DEFAULT_LIMIT, offset = 0, filters = {} }) =>
-  async (dispatch, getState) => {
-    dispatch(loadingStarted(actionTypes.transactionsRetrieved));
-
-    const { network } = getState();
-
-    const params = {
-      address,
-      ...filters,
-      limit,
-      offset,
-    };
-
-    try {
-      const { data, meta } = await getTransactions({ network, params });
-      dispatch({
-        type: actionTypes.transactionsRetrieved,
-        data: {
-          offset,
-          address,
-          filters,
-          confirmed: data,
-          count: meta.total,
-        },
-      });
-    } catch (error) {
-      dispatch({
-        type: actionTypes.transactionLoadFailed,
-        data: { error },
-      });
-    } finally {
-      dispatch(loadingFinished(actionTypes.transactionsRetrieved));
-    }
-  };
 
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,

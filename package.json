@@ -16,6 +16,7 @@
     "node": ">=v18.12.0"
   },
   "scripts": {
+    "install:all": "yarn --cwd app && yarn",
     "dev": "cross-env DEBUG=true NACL_FAST=disable NODE_OPTIONS='--openssl-legacy-provider' webpack serve --config ./setup/config/webpack.config.dev",
     "dev:hw": "cross-env DEBUG=true webpack serve --config ./setup/config/webpack.config.dev --https",
     "start": "cross-env DEBUG=true yarn rebuild && electron ./app/",
@@ -139,8 +140,8 @@
     "js-sha256": "0.9.0",
     "jspdf": "2.3.1",
     "jsx-to-string": "1.4.0",
-    "leaflet": "1.6.0",
-    "leaflet.markercluster": "1.5.0",
+    "leaflet": "1.9.4",
+    "leaflet.markercluster": "1.5.3",
     "lodash.debounce": "4.0.8",
     "lodash.merge": "4.6.2",
     "moment": "2.29.4",

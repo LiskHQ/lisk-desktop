@@ -1,13 +1,9 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import * as validatorAPI from '@pos/validator/api';
 import { useValidators } from './queries';
 import useValidatorName from './useValidatorName';
 
-jest.mock('../api', () => ({
-  getValidator: jest.fn(),
-}));
 jest.mock('./queries/useValidators');
 
 describe('useValidatorName', () => {
@@ -71,7 +67,6 @@ describe('useValidatorName', () => {
   });
 
   it('should return no errors if the value is unique', async () => {
-    validatorAPI.getValidator.mockRejectedValue({ message: 'Data not found.' });
     useValidators.mockReturnValue({
       loading: false,
       error: {},

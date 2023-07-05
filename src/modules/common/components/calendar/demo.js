@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { firstBlockTime } from '@block/utils/firstBlockTime';
+import { liskGenesisBlockTime } from '@block/const';
 import DemoRenderer from 'src/theme/demo/demoRenderer';
 import Calendar from './calendar';
 
@@ -15,7 +15,7 @@ const CalendarDemo = () => (
       <Calendar
         onDateSelected={onDateSelected}
         dateFormat={dateFormat}
-        minDate={moment(firstBlockTime).format(dateFormat)}
+        minDate={moment(liskGenesisBlockTime).format(dateFormat)}
         maxDate={moment().format(dateFormat)}
         date={moment().format(dateFormat)}
       />

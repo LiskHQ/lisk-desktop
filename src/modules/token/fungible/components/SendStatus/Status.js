@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { txStatusTypes } from '@transaction/configuration/txStatus';
@@ -10,9 +10,8 @@ import {
 } from '@transaction/configuration/statusConfig';
 import { PrimaryButton } from '@theme/buttons';
 import DialogLink from '@theme/dialog/link';
+import { useValidators } from '@pos/validator/hooks/queries';
 import { selectModuleCommandSchemas } from 'src/redux/selectors';
-import { isEmpty } from 'src/utils/helpers';
-
 import styles from './status.css';
 
 const shouldShowBookmark = (bookmarks, account, transactionJSON, token) => {
@@ -38,7 +37,6 @@ const getMessagesDetails = (transactions, status, t) => {
 };
 
 const TransactionStatus = ({
-  recipientAccount,
   transactions,
   bookmarks,
   account,
@@ -48,19 +46,13 @@ const TransactionStatus = ({
   formProps,
   prevStep,
 }) => {
-  useEffect(() => {
-    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
-      /**
-       * Retrieve recipient info to use for bookmarking
-       */
-      recipientAccount.loadData({ address: transactionJSON.params.recipientAddress });
-    }
-  }, []);
-
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
-
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = getMessagesDetails(transactions, status, t);
+  const { data: validators } = useValidators({
+    config: { params: { address: transactionJSON.params.recipientAddress } },
+  });
+  const validator = validators?.data?.[0];
 
   const isBroadcastError = isTxStatusError(status.code);
   const showBookmark =
@@ -82,8 +74,8 @@ const TransactionStatus = ({
               component="addBookmark"
               data={{
                 formAddress: transactionJSON.params.recipientAddress,
-                label: recipientAccount.data.pos?.validator?.username ?? '',
-                isValidator: !!recipientAccount.data.summary?.isValidator,
+                label: validator?.name ?? '',
+                isValidator: !!validator,
               }}
             >
               <PrimaryButton className={`${styles.btn} bookmark-btn`}>

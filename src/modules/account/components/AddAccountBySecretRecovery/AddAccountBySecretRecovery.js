@@ -7,7 +7,7 @@ import MultiStep from 'src/modules/common/components/MultiStep';
 import SetPasswordSuccess from 'src/modules/auth/components/SetPasswordSuccess';
 import routes from 'src/routes/routes';
 import { useCurrentAccount, useAccounts } from '@account/hooks';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
+import { defaultDerivationPath } from '@account/const';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
 
@@ -26,13 +26,13 @@ const AddAccountBySecretRecovery = () => {
   const onAddAccount = (recoveryPhraseData, derivationPath) => {
     setRecoveryPhrase(recoveryPhraseData);
     setCustomDerivationPath(derivationPath);
-    multiStepRef.current.next();
+    multiStepRef?.current?.next();
   };
 
   const onSetPassword = (account) => {
     setCurrentAccount(account);
     setAccount(account);
-    multiStepRef.current.next();
+    multiStepRef?.current?.next();
   };
 
   const onPasswordSetComplete = () => {

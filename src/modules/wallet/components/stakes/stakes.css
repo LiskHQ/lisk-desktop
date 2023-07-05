@@ -1,55 +1,5 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-.wrapper {
-  margin-bottom: 40px;
-  overflow: initial;
-
-  & header {
-    justify-content: space-between;
-  }
-
-  & .filterHolder {
-    display: flex;
-
-    & .registerValidator {
-      margin-right: 10px;
-    }
-  }
-
-  & .flexRightAlign {
-    display: flex;
-    direction: revert;
-    justify-content: flex-end;
-  }
-
-  & .flexLeftAlign {
-    display: flex;
-    justify-content: flex-start;
-  }
-}
-
-.empty {
-  @mixin contentSmall;
-
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-  text-align: center;
-  color: var(--color-slate-gray);
-}
-
-.results {
-  border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin: 0;
-  min-height: 600px;
-  position: relative;
-  padding: 0 !important;
-}
-
 .row {
   cursor: pointer;
 

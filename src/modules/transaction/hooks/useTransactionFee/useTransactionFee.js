@@ -6,6 +6,7 @@ import usePriorityFee from '../usePriorityFee';
 import { FEE_TYPES } from '../../constants';
 import { joinModuleAndCommand } from '../../utils';
 import { useMinimumFee } from '.';
+import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
 /**
  *
@@ -55,7 +56,10 @@ export const useTransactionFee = ({
   const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   let txComponentType = '';
-  if (moduleCommand === 'token:transfer' || moduleCommand === 'token:transferCrossChain') {
+  if (
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer ||
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.transferCrossChain
+  ) {
     txComponentType = 'Account Initialization';
   } else {
     txComponentType = 'Registration';
