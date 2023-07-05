@@ -20,7 +20,7 @@ const server = {
       err.status = 404;
       next(err);
     });
-    app.listen(port);
+    app.listen(port, '127.0.0.1');
     return `http://localhost:${port}/`;
   },
 };
