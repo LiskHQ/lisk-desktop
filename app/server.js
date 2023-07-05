@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const server = {
-  init: (port) => {
+  init: (host, port) => {
     if (process.env.LISK_DESKTOP_URL) {
       return process.env.LISK_DESKTOP_URL;
     }
@@ -20,8 +20,9 @@ const server = {
       err.status = 404;
       next(err);
     });
-    app.listen(port);
-    return `http://localhost:${port}/`;
+    app.listen(port, host);
+
+    return `http://${host}:${port}/`;
   },
 };
 

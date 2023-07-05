@@ -17,11 +17,13 @@ import { storage, setConfig, readConfig } from './modules/storage';
 
 i18nSetup();
 
-const defaultServerPort = 5659;
+const DESKTOP_HOST = process.env.LISK_DESKTOP_HOST || '127.0.0.1';
+const DESKTOP_PORT = process.env.LISK_DESKTOP_PORT || 5659;
+
 let serverUrl;
 const startServer = () =>
-  getPort({ port: defaultServerPort }).then((port) => {
-    serverUrl = server.init(port);
+  getPort({ port: DESKTOP_PORT }).then((port) => {
+    serverUrl = server.init(DESKTOP_HOST, port);
   });
 
 startServer();
