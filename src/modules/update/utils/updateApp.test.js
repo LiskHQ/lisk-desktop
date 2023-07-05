@@ -15,15 +15,10 @@ jest.mock('react-toastify', () => ({
 
 describe('updateApp', () => {
   const ipc = {
-    on: jest.fn(),
     [IPC_DOWNLOAD_UPDATE_START]: jest.fn(),
     [IPC_DOWNLOAD_UPDATE_PROGRESS]: jest.fn(),
     [IPC_DOWNLOAD_UPDATE_COMPLETED]: jest.fn(),
   };
-
-  beforeEach(() => {
-    ipc.on.mockClear();
-  });
 
   it('calling init when ipc is not on window should do nothing', () => {
     window.ipc = null;
