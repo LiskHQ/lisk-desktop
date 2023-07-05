@@ -77,7 +77,7 @@ pipeline {
 									npm i -g lisk-core
 									rm -rf ~/.lisk/
 									lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
-									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 >lisk-core.out 2>lisk-core.err &
+									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 --config ./e2e/artifacts/config.json --overwrite-config >lisk-core.out 2>lisk-core.err &
 									echo $! >lisk-core.pid
 
 									# lisk-service
