@@ -1,10 +1,10 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { appUpdateAvailable } from 'src/redux/actions';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import {IPC_DOWNLOAD_UPDATE_START, IPC_UPDATE_AVAILABLE, IPC_UPDATE_STARTED} from 'src/const/ipcGlobal';
+import { IPC_UPDATE_AVAILABLE, IPC_UPDATE_STARTED } from 'src/const/ipcGlobal';
 import useIpc from './useIpc';
 
 jest.mock('@walletconnect/utils', () => ({
