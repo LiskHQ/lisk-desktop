@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { appUpdateAvailable } from 'src/redux/actions';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { IPC_UPDATE_AVAILABLE, IPC_UPDATE_STARTED } from 'src/const/ipcGlobal';
+import {IPC_DOWNLOAD_UPDATE_START, IPC_UPDATE_AVAILABLE, IPC_UPDATE_STARTED} from 'src/const/ipcGlobal';
 import useIpc from './useIpc';
 
 jest.mock('@walletconnect/utils', () => ({
@@ -33,10 +33,10 @@ jest.mock('react-redux', () => ({
 describe('useIpc', () => {
   const callbacks = {};
   const ipc = {
-    on: jest.fn((event, callback) => {
-      callbacks[event] = callback;
-    }),
-    send: jest.fn(),
+    [IPC_UPDATE_AVAILABLE]: (callback) => {
+      callbacks[IPC_UPDATE_AVAILABLE] = callback;
+    },
+    [IPC_UPDATE_STARTED]: jest.fn(),
   };
   const version = '1.20.1';
   const releaseNotes = '<h4>dummy text</h4><h3>Fixed bugs</h3>';
@@ -60,7 +60,7 @@ describe('useIpc', () => {
   };
 
   beforeEach(() => {
-    ipc.send.mockClear();
+    ipc[IPC_UPDATE_STARTED].mockClear();
     mockHistory.push.mockClear();
     mockDispatch.mockClear();
     window.ipc = ipc;
@@ -87,7 +87,6 @@ describe('useIpc', () => {
     const wrapper = mountWithRouter(FlashMessageHolder);
 
     expect(wrapper).toBeEmptyRender();
-    expect(ipc.on).toHaveBeenCalled();
 
     callbacks[IPC_UPDATE_AVAILABLE]({}, { version, releaseNotes });
     wrapper.update();
@@ -127,7 +126,7 @@ describe('useIpc', () => {
     wrapper.find('button.update-now').simulate('click');
     jest.runOnlyPendingTimers();
 
-    expect(ipc.send).toHaveBeenCalledWith(IPC_UPDATE_STARTED);
+    expect(ipc[IPC_UPDATE_STARTED]).toHaveBeenCalledWith();
     expect(spy).toHaveBeenCalledWith('NewRelease');
   });
 
