@@ -1,4 +1,11 @@
 import i18n from 'i18next';
+import {
+  IPC_DOWNLOAD_UPDATE_COMPLETED,
+  IPC_DOWNLOAD_UPDATE_PROGRESS,
+  IPC_DOWNLOAD_UPDATE_START,
+  IPC_UPDATE_AVAILABLE,
+  IPC_UPDATE_STARTED
+} from "../../../src/const/ipcGlobal";
 
 const getErrorMessage = (error) => {
   if (error.indexOf('404 Not Found') > -1 || error.indexOf('command is disabled') > -1) {
@@ -43,7 +50,7 @@ export default ({ autoUpdater, dialog, win, electron }) => {
     // eslint-disable-next-line no-console
     console.log(logMessage);
     if (win?.send) {
-      win.send({ event: 'downloadUpdateProgress', value: progressObj });
+      win.send({ event: IPC_DOWNLOAD_UPDATE_PROGRESS, value: progressObj });
     }
   });
 
@@ -51,18 +58,18 @@ export default ({ autoUpdater, dialog, win, electron }) => {
     updater.error = undefined;
     const { ipcMain } = electron;
 
-    ipcMain.removeAllListeners('update:started');
-    ipcMain.on('update:started', () => {
+    ipcMain.removeAllListeners(IPC_UPDATE_STARTED);
+    ipcMain.on(IPC_UPDATE_STARTED, () => {
       autoUpdater.downloadUpdate();
       setTimeout(() => {
         if (!updater.error) {
-          win.send({ event: 'downloadUpdateStart' });
+          win.send({ event: IPC_DOWNLOAD_UPDATE_START });
         }
       }, 500);
     });
 
     win.send({
-      event: 'update:available',
+      event: IPC_UPDATE_AVAILABLE,
       value: { releaseNotes, version },
     });
   });
@@ -78,7 +85,7 @@ export default ({ autoUpdater, dialog, win, electron }) => {
   });
 
   autoUpdater.on('update-downloaded', () => {
-    win.send({ event: 'downloadUpdateCompleted' });
+    win.send({ event: IPC_DOWNLOAD_UPDATE_COMPLETED });
   });
 
   // export this to MenuItem click callback

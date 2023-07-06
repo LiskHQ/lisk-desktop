@@ -1,5 +1,6 @@
 import Storage from 'electron-store';
 import win from './win';
+import { IPC_CONFIG_RETRIEVED } from '../../../src/const/ipcGlobal';
 
 export const storage = new Storage();
 
@@ -11,5 +12,5 @@ export const setConfig = ({ value, key }) => {
 export const readConfig = () => {
   // Ensure to return empty config if storage does not hold any value
   const value = storage.get('config') || {};
-  win.send({ event: 'configRetrieved', value });
+  win.send({ event: IPC_CONFIG_RETRIEVED, value });
 };

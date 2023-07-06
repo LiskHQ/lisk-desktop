@@ -1,6 +1,7 @@
 import localeHandler from './localeHandler';
 import menu from '../menu';
 import process from './process';
+import { IPC_OPEN_URL } from '../../../src/const/ipcGlobal';
 
 const win = {
   browser: null,
@@ -51,7 +52,7 @@ const win = {
     win.browser.on('focus', () => win.browser.webContents.send('focus'));
 
     if (!process.isPlatform('darwin')) {
-      win.send({ event: 'openUrl', value: process.getArgv()[1] || '/' });
+      win.send({ event: IPC_OPEN_URL, value: process.getArgv()[1] || '/' });
     }
 
     Menu.setApplicationMenu(menu.build(electron, checkForUpdates));
