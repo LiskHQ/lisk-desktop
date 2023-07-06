@@ -29,7 +29,7 @@ const ConnectionSummary = () => {
 
   const { proposer, requiredNamespaces, pairingTopic } = events[events.length - 1].meta.params;
   const nameSpaceKeys = Object.keys(requiredNamespaces);
-  const nameSpaceError = nameSpaceKeys?.length > 1 || !nameSpaceKeys.includes('lisk');
+  const nameSpaceError = nameSpaceKeys.length > 1 || !nameSpaceKeys.includes('lisk');
 
   const application = {
     data: {
