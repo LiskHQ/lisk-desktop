@@ -1,6 +1,8 @@
 import { ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 
+const PERMISSION_WHITE_LIST = ['clipboard-read', 'notifications', 'openExternal'];
+
 export const createCommand = (command, fn) => {
   ipcMain.on(`${command}.request`, (event, ...args) => {
     fn(...args)
@@ -16,3 +18,9 @@ export const isValidAddress = (address) =>
 export const getBufferToHex = (buffer) => cryptography.utils.bufferToHex(buffer);
 
 export const getTransactionBytes = (transaction) => transaction.getBytes(transaction);
+
+export const setRendererPermissions = (win) => {
+  win.browser.webContents.session.setPermissionRequestHandler((_, permission, callback) => {
+    callback(PERMISSION_WHITE_LIST.includes(permission));
+  });
+};

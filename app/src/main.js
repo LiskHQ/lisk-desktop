@@ -14,6 +14,7 @@ import updateChecker from './modules/autoUpdater';
 import server from '../server';
 import i18nSetup from '../../src/utils/i18n/i18n-setup';
 import { storage, setConfig, readConfig } from './modules/storage';
+import { setRendererPermissions } from './utils';
 
 i18nSetup();
 
@@ -71,6 +72,7 @@ const handleProtocol = () => {
 app.on('ready', () => {
   appIsReady = true;
   createWindow();
+  setRendererPermissions(win);
   if (process.platform === 'win32') {
     app.setAppUserModelId('io.lisk.hub');
   }
