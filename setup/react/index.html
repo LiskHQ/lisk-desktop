@@ -19,15 +19,6 @@
           '<link href="' + href + '" rel="stylesheet">'
         ).join('\n') %>
         <link rel="icon" type="image/png" href="./assets/images/LISK.png" />
-        <script>
-          /* Following comment is a placeholder used by `yarn run build:testnet`, do not remove */
-          var defaultNet = "mainnet";//defaultNetwork
-          (function(targetNet) {
-            if (window.localStorage && !window.localStorage.getItem('defaultNetwork')){
-              window.localStorage.setItem('defaultNetwork', defaultNet);
-            }
-          })(defaultNet);
-        </script>
     </head>
     <body>
         <div id="app"></div>
