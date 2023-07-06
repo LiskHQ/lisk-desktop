@@ -498,7 +498,7 @@
       (function () {
         document.getElementById('icons').onclick = function (e) {
           e = e || window.event;
-          var name =
+          const name =
             e.target.getAttribute('data-name') || e.target.parentNode.getAttribute('data-name');
           document.getElementById('name').innerText = name;
         };
