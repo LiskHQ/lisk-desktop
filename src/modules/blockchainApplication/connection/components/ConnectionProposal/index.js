@@ -11,6 +11,7 @@ import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS, STATUS } from '@libs/wcm/constants/lifeCycle';
 import styles from './ConnectionProposal.css';
 
+// eslint-disable-next-line max-statements
 const ConnectionProposal = () => {
   const history = useHistory();
   const [value, setValue] = useState('');

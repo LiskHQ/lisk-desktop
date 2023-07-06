@@ -27,9 +27,10 @@
   }
 
   & .feedback {
+    @mixin contentSmall;
+
     display: block;
     padding: 5px;
-    @mixin contentSmall;
     box-sizing: border-box;
     text-align: left;
   }
