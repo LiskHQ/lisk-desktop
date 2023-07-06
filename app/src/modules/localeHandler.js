@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import menu from '../menu';
 import win from './win';
+import { IPC_DETECT_LOCALE } from '../../../src/const/ipcGlobal';
 
 const handler = {
   update: ({ electron, event, langCode, storage, checkForUpdates }) => {
@@ -17,7 +18,7 @@ const handler = {
 
   send: ({ storage }) => {
     storage.get('config.lang', 'en', (value) => {
-      win.send({ event: 'detectedLocale', value });
+      win.send({ event: IPC_DETECT_LOCALE, value });
     });
   },
 };
