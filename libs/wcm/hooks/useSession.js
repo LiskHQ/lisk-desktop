@@ -57,6 +57,7 @@ export const useSession = () => {
     const proposalEvents = events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
     try {
       await onReject(proposalEvents.meta);
+      removeEvent(proposalEvents);
       setSessionProposal(null);
       setSessionRequest(null);
       return {
