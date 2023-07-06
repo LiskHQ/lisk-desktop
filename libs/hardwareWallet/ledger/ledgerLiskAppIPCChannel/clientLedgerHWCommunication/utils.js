@@ -35,7 +35,7 @@ const getHWTxStatusType = (code) => {
 export const executeIPCCommand = (action, data) =>
   new Promise((resolve, reject) => {
     // Listening for response
-    IPC.once(`${action}.${RESPONSE}`, (_event, response) => {
+    IPC[`${action}.${RESPONSE}`]((_, response) => {
       if (response.success) return resolve(response.data);
       const errorCode = response.error;
       return reject(
@@ -46,5 +46,5 @@ export const executeIPCCommand = (action, data) =>
       );
     });
     // Requesting data
-    IPC.send(`${action}.${REQUEST}`, data);
+    IPC[`${action}.${REQUEST}`](data);
   });
