@@ -13,7 +13,7 @@ export const getFromStorage = (key, backup, cb) => {
   let info = null;
   const { ipc } = window;
   if (ipc) {
-    ipc[IPC_CONFIG_RETRIEVED]((action, data) => {
+    ipc[IPC_CONFIG_RETRIEVED]((_, data) => {
       info = data[key];
       cb(info || backup);
     });

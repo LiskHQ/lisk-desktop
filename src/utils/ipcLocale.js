@@ -12,7 +12,7 @@ export default {
         i18n.changeLanguage('en');
       }
 
-      ipc[IPC_DETECT_LOCALE]((action, locale) => {
+      ipc[IPC_DETECT_LOCALE]((_, locale) => {
         i18n.changeLanguage(locale);
         localeInit = true;
       });

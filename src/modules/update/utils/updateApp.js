@@ -27,7 +27,7 @@ export default {
         }
       });
 
-      ipc[IPC_DOWNLOAD_UPDATE_PROGRESS]((action, { transferred, total }) => {
+      ipc[IPC_DOWNLOAD_UPDATE_PROGRESS]((_, { transferred, total }) => {
         toast.update(toastId, {
           render: () => <UpdateIndicator transferred={transferred} total={total} />,
         });

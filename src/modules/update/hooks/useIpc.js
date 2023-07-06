@@ -16,7 +16,7 @@ const useIpc = (history) => {
   if (!ipc) return;
 
   useEffect(() => {
-    ipc[IPC_UPDATE_AVAILABLE]((action, { version, releaseNotes }) => {
+    ipc[IPC_UPDATE_AVAILABLE]((_, { version, releaseNotes }) => {
       const readMore = () => {
         addSearchParamsToUrl(history, { modal: 'newRelease' });
       };
