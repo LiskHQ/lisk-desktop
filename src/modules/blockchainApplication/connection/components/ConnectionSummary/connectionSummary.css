@@ -7,24 +7,6 @@
   & > span {
     color: white !important;
   }
-
-  &.dialogError {
-    max-width: 480px;
-  }
-}
-
-.errorWrapper {
-  & .unsupportedDAppTitle {
-    background-color: var(--color-red);
-    color: white;
-    margin: 0;
-    padding: 20px 0;
-  }
-
-  & .text {
-    font-size: 16px;
-    color: var(--color-maastricht-blue);
-  }
 }
 
 .wrapper {

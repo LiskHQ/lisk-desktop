@@ -27,20 +27,19 @@
   }
 
   & .feedback {
-    @mixin contentSmall;
-
-    height: 30px;
     display: block;
-    text-align: left;
-    color: var(--color-red);
     padding: 5px;
+    @mixin contentSmall;
     box-sizing: border-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    text-align: left;
+  }
+
+  & .feedbackErrorColor {
+    color: var(--color-red);
   }
 
   & button {
+    margin-top: 24px;
     width: 100%;
   }
 }
