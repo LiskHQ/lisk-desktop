@@ -14,6 +14,14 @@ import updateChecker from './modules/autoUpdater';
 import server from '../server';
 import i18nSetup from '../../src/utils/i18n/i18n-setup';
 import { storage, setConfig, readConfig } from './modules/storage';
+import { setRendererPermissions } from './utils';
+import {
+  IPC_OPEN_URL,
+  IPC_RETRIEVE_CONFIG,
+  IPC_SET_LOCALE,
+  IPC_STORE_CONFIG,
+  IPC_UPDATE_QUIT_AND_INSTALL,
+} from '../../src/const/ipcGlobal';
 
 i18nSetup();
 
@@ -64,13 +72,14 @@ const handleProtocol = () => {
   app.on('open-url', (event, url) => {
     event.preventDefault();
     win.browser?.show();
-    win.send({ event: 'openUrl', value: url });
+    win.send({ event: IPC_OPEN_URL, value: url });
   });
 };
 
 app.on('ready', () => {
   appIsReady = true;
   createWindow();
+  setRendererPermissions(win);
   if (process.platform === 'win32') {
     app.setAppUserModelId('io.lisk.hub');
   }
@@ -106,7 +115,7 @@ if (!isSingleLock) {
 } else {
   app.on('second-instance', (argv) => {
     if (process.platform !== 'darwin') {
-      win.send({ event: 'openUrl', value: argv[1] || '/' });
+      win.send({ event: IPC_OPEN_URL, value: argv[1] || '/' });
     }
     if (win.browser) {
       if (win.browser.isMinimized()) win.browser.restore();
@@ -119,7 +128,7 @@ app.on('will-finish-launching', () => {
   handleProtocol();
 });
 
-ipcMain.on('set-locale', (event, locale) => {
+ipcMain.on(IPC_SET_LOCALE, (event, locale) => {
   const langCode = locale.substr(0, 2);
   if (langCode) {
     localeHandler.update({
@@ -136,14 +145,14 @@ ipcMain.on('request-locale', () => {
   localeHandler.send({ storage });
 });
 
-ipcMain.on('storeConfig', (event, data) => {
+ipcMain.on(IPC_STORE_CONFIG, (event, data) => {
   setConfig(data);
 });
 
-ipcMain.on('retrieveConfig', () => {
+ipcMain.on(IPC_RETRIEVE_CONFIG, () => {
   readConfig();
 });
 
-ipcMain.on('updateQuitAndInstall', () => {
+ipcMain.on(IPC_UPDATE_QUIT_AND_INSTALL, () => {
   autoUpdater.quitAndInstall();
 });
