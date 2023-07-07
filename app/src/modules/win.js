@@ -2,6 +2,7 @@ import localeHandler from './localeHandler';
 import menu from '../menu';
 import process from './process';
 import { IPC_OPEN_URL } from '../../../src/const/ipcGlobal';
+import { WHITE_LISTED_DOMAIN } from '../utils';
 
 const win = {
   browser: null,
@@ -28,10 +29,14 @@ const win = {
     });
 
     // Enables DevTools
-    win.browser.devtools = true;
-    electronLocalshortcut.register(win.browser, 'CmdOrCtrl+Shift+I', () => {
-      win.browser.webContents.toggleDevTools();
-    });
+    const { LISK_ENABLE_DEV_TOOL, DEBUG } = process.env();
+
+    if (LISK_ENABLE_DEV_TOOL || DEBUG) {
+      win.browser.devtools = true;
+      electronLocalshortcut.register(win.browser, 'CmdOrCtrl+Shift+I', () => {
+        win.browser.webContents.toggleDevTools();
+      });
+    }
 
     win.browser.loadURL(serverUrl);
   },
@@ -84,10 +89,16 @@ const win = {
     });
 
     const handleRedirect = (e, url) => {
+      const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(new URL(url).hostname);
+
+      if (!isAllowedUrl) return e.preventDefault();
+
       if (url !== win.browser.webContents.getURL()) {
         e.preventDefault();
         electron.shell.openExternal(url);
       }
+
+      return null;
     };
     win.browser.webContents.on('will-navigate', handleRedirect);
     win.browser.webContents.on('new-window', handleRedirect);

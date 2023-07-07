@@ -30,7 +30,7 @@ const DESKTOP_PORT = process.env.LISK_DESKTOP_PORT || 5659;
 
 let serverUrl;
 const startServer = () =>
-  getPort({ port: DESKTOP_PORT }).then((port) => {
+  getPort({ port: +DESKTOP_PORT }).then((port) => {
     serverUrl = server.init(DESKTOP_HOST, port);
   });
 
