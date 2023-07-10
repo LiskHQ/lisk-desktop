@@ -27,6 +27,7 @@ const ConnectionProposal = () => {
 
     const result = await setUri(value);
     if (result.status === STATUS.FAILURE) {
+      setStatus({ ...status, isPending: false });
       setNameSpaceError('Connection failed');
     } else {
       setStatus(result);
