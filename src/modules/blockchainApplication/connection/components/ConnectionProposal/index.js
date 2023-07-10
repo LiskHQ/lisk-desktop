@@ -9,6 +9,7 @@ import { Input } from 'src/theme';
 import { usePairings } from '@libs/wcm/hooks/usePairings';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS, STATUS } from '@libs/wcm/constants/lifeCycle';
+import { isValidWCURI } from '@libs/wcm/utils/validator';
 import styles from './ConnectionProposal.css';
 
 // eslint-disable-next-line max-statements
