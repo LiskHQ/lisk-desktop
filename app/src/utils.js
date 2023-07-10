@@ -1,8 +1,12 @@
+/* eslint-disable max-statements */
+import { validator } from '@liskhq/lisk-client';
+import { requestTokenSchema } from './validationSchema';
+
 const PERMISSION_WHITE_LIST = ['clipboard-read', 'notifications', 'openExternal'];
 const WHITE_LISTED_DEEP_LINKS = [
   {
     pathRegex: /^\/\/wallet\/?$/,
-    allowedSearchParams: ['modal', 'recipient', 'amount', 'token', 'recipientChain', 'reference'],
+    validationSchema: requestTokenSchema,
   },
 ];
 
@@ -20,12 +24,22 @@ export const canExecuteDeepLinking = (url) => {
   const foundLink = WHITE_LISTED_DEEP_LINKS.find(({ pathRegex }) => pathRegex.test(pathname));
   if (!foundLink) return false;
 
-  const urlSearchParams = [...searchParams.keys()];
-  const isSearchParamsAllowed = urlSearchParams.reduce((result, search) => {
-    if (!result) return false;
-    return foundLink.allowedSearchParams.includes(search);
-  }, true);
+  const searchParamObject = [...searchParams.entries()].reduce(
+    (result, [key, value]) => ({ ...result, [key]: value }),
+    {}
+  );
 
+  let isSearchParamsAllowed;
+    console.log('>>>', searchParamObject)
+  try {
+    isSearchParamsAllowed = validator.validator.validate(
+      foundLink.validationSchema,
+      searchParamObject
+    );
+  } catch (exp) {
+    return false;
+  }
+  console.log('--- here ooo', isSearchParamsAllowed)
   if (!isSearchParamsAllowed) return false;
 
   return true;
