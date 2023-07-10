@@ -20,12 +20,7 @@ export const isCommissionIncrease = (newCommission, oldCommission) => {
   return newCommissionParam > oldCommissionParam;
 };
 
-export const checkCommissionIncreaseLocked = (
-  commissionChangeDate,
-  newCommission,
-  oldCommission
-) => (
-    commissionChangeDate &&
-    moment(commissionChangeDate).isAfter() &&
-    isCommissionIncrease(newCommission, oldCommission)
-  );
+export const checkCommissionIncreaseLocked = (commissionChangeDate, newCommission, oldCommission) =>
+  commissionChangeDate &&
+  moment(commissionChangeDate).isAfter() &&
+  isCommissionIncrease(newCommission, oldCommission);
