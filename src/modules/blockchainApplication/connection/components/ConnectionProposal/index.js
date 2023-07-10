@@ -37,10 +37,9 @@ const ConnectionProposal = () => {
 
     const result = await setUri(wcUri);
     if (result.status === STATUS.FAILURE) {
+      const errorMessage = result.message?.split(':');
       setStatus({ ...status, isPending: false });
-      setNameSpaceError(
-        result.message?.split(':').length ? result.message?.split(':')[0] : 'Connection failed'
-      );
+      setNameSpaceError(errorMessage?.length ? `${errorMessage[0]}.` : 'Connection failed.');
     } else {
       setStatus(result);
     }
