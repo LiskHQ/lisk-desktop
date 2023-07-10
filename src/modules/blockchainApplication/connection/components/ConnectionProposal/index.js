@@ -45,7 +45,7 @@ const ConnectionProposal = () => {
 
     if (isSesssionProposal && hasNameSpaceError) {
       setValue(`wc:${event?.meta?.params?.pairingTopic}`);
-      setNameSpaceError(t('You are trying to connect to an unsupported dApp.'));
+      setNameSpaceError(t('You are trying to connect to an unsupported blockchain app.'));
     } else if (isSesssionProposal) {
       addSearchParamsToUrl(history, { modal: 'connectionSummary' });
     }
@@ -75,7 +75,7 @@ const ConnectionProposal = () => {
             {nameSpaceError && (
               <span className={styles.feedback}>
                 <span className={styles.feedbackErrorColor}>{nameSpaceError}</span>
-                <span> {t('Please enter a supported dApp URI')}</span>
+                <span> {t('Please enter a supported blockchain app URI.')}</span>
               </span>
             )}
             <PrimaryButton
