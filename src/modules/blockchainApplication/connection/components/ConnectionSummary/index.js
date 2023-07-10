@@ -59,7 +59,11 @@ const ConnectionSummary = () => {
   };
 
   return (
-    <Dialog hasClose className={classNames(styles.dialogWrapper, grid.row, grid['center-xs'])}>
+    <Dialog
+      hasClose
+      onCloseIcon={rejectHandler}
+      className={classNames(styles.dialogWrapper, grid.row, grid['center-xs'])}
+    >
       <BlockchainAppDetailsHeader application={application} />
       <div className={styles.wrapper}>
         <section className={styles.section}>
