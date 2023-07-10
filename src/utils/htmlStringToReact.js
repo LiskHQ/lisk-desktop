@@ -1,34 +1,27 @@
-import React, { Fragment, createElement } from 'react';
 import DOMPurify from 'dompurify';
-import { regex } from 'src/const/regex';
+import parse from 'html-react-parser';
 
 const htmlStringToReact = (html = '') => {
   const trimmedHtml = html.trim();
-  const cleanHtml = DOMPurify.sanitize(trimmedHtml);
-  const elements = cleanHtml.match(new RegExp(regex.htmlElements, 'g'));
-  if (!elements) return cleanHtml;
-  const before = cleanHtml.slice(0, cleanHtml.indexOf(elements[0]));
-  return (
-    <>
-      {elements.map((element, index) => {
-        const [tag, content, after] = element.match(regex.htmlElements).slice(1);
-        const props =
-          tag === 'a' && /#\d+$/.test(content)
-            ? {
-                href: `https://github.com/LiskHQ/lisk-desktop/issues/${content.replace(/\D/g, '')}`,
-              }
-            : {};
-        return (
-          <Fragment key={`${tag}-${index}`}>
-            {!!before && before}
-            {createElement(tag, { ...props, key: `${tag}-${index}` }, htmlStringToReact(content))}
-            {!!after && ' '}
-            {!!after && htmlStringToReact(after)}
-          </Fragment>
-        );
-      })}
-    </>
-  );
+  const cleanHtml = DOMPurify.sanitize(trimmedHtml, { USE_PROFILES: { html: true } });
+  return parse(cleanHtml, {
+    replace: (domNode) => {
+      const content = domNode.firstChild?.data;
+      // Update link if issue number is added without related link
+      if (
+        domNode.name === 'a' &&
+        domNode.firstChild?.type === 'text' &&
+        !domNode.attribs.href &&
+        /#\d+$/.test(content)
+      ) {
+        domNode.attribs.href = `https://github.com/LiskHQ/lisk-desktop/issues/${content.replace(
+          /\D/g,
+          ''
+        )}`;
+      }
+      return domNode;
+    },
+  });
 };
 
 export default htmlStringToReact;
