@@ -21,7 +21,6 @@ export const usePairings = () => {
         data,
       };
     } catch (e) {
-      // signClient.core.relayer.subscriber.pending = new Map();
       return {
         status: STATUS.FAILURE,
         message: e.message,

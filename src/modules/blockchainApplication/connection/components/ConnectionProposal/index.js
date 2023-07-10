@@ -14,21 +14,32 @@ import styles from './ConnectionProposal.css';
 // eslint-disable-next-line max-statements
 const ConnectionProposal = () => {
   const history = useHistory();
-  const [value, setValue] = useState('');
+  const [wcUri, setWCUri] = useState('');
   const [nameSpaceError, setNameSpaceError] = useState('');
   const [status, setStatus] = useState({});
   const { events } = useEvents();
   const { setUri } = usePairings();
   const { t } = useTranslation();
 
+  // eslint-disable-next-line max-statements
   const clickHandler = async () => {
     setNameSpaceError('');
     setStatus({ ...status, isPending: true });
 
-    const result = await setUri(value);
+    const isValidWCUri = isValidWCURI(wcUri);
+
+    if (!isValidWCUri) {
+      setStatus({ ...status, isPending: false });
+      setNameSpaceError('Invalid connection URI.');
+      return;
+    }
+
+    const result = await setUri(wcUri);
     if (result.status === STATUS.FAILURE) {
       setStatus({ ...status, isPending: false });
-      setNameSpaceError(result.message ? result.message : 'Connection failed');
+      setNameSpaceError(
+        result.message?.split(':').length ? result.message?.split(':')[0] : 'Connection failed'
+      );
     } else {
       setStatus(result);
     }
@@ -44,7 +55,7 @@ const ConnectionProposal = () => {
     const isSessionProposal = event?.name === EVENTS.SESSION_PROPOSAL;
 
     if (isSessionProposal && hasNameSpaceError) {
-      setValue(`wc:${event?.meta?.params?.pairingTopic}`);
+      setWCUri(`wc:${event?.meta?.params?.pairingTopic}`);
       setNameSpaceError(t('You are trying to connect to an unsupported blockchain app.'));
     } else if (isSessionProposal) {
       addSearchParamsToUrl(history, { modal: 'connectionSummary' });
@@ -53,7 +64,7 @@ const ConnectionProposal = () => {
 
   const onInputChange = (event) => {
     setNameSpaceError('');
-    setValue(event.target.value);
+    setWCUri(event.target.value);
   };
 
   return (
@@ -68,19 +79,19 @@ const ConnectionProposal = () => {
             <Input
               type="text"
               onChange={onInputChange}
-              value={value}
+              value={wcUri}
               className={styles.input}
               placeholder={t('Enter connection URI')}
             />
             {nameSpaceError && (
               <span className={styles.feedback}>
                 <span className={styles.feedbackErrorColor}>{nameSpaceError}</span>
-                <span> {t('Please enter a supported blockchain app URI.')}</span>
+                <span> {t('Please enter a valid blockchain app URI.')}</span>
               </span>
             )}
             <PrimaryButton
               onClick={clickHandler}
-              disabled={nameSpaceError || value.length === 0 || status.isPending}
+              disabled={nameSpaceError || wcUri.length === 0 || status.isPending}
             >
               {t('Connect')}
             </PrimaryButton>

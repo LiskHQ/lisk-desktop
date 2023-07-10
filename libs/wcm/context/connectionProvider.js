@@ -28,16 +28,12 @@ const ConnectionProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       if (!signClient) {
-        // eslint-disable-next-line no-console
-        console.log('creating sign client....');
         const client = await createSignClient();
         setSignClient(client);
       }
     })();
   }, [signClient]);
 
-  // eslint-disable-next-line no-console
-  console.log('using sign client....', { signClient });
   return (
     <ConnectionContext.Provider value={value}>
       {!signClient ? null : (
