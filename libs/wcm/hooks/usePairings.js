@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
-import { client } from '@libs/wcm/utils/connectionCreator';
 import { STATUS } from '../constants/lifeCycle';
 
 export const usePairings = () => {
-  const { pairings, setPairings } = useContext(ConnectionContext);
+  const { pairings, setPairings, signClient } = useContext(ConnectionContext);
   const [hasLoaded, setHasLoaded] = useState(false);
 
   /**
@@ -16,13 +15,13 @@ export const usePairings = () => {
    */
   const setUri = async (uri) => {
     try {
-      const data = await client.pair({ uri });
+      const data = await signClient.core.pairing.pair({ uri });
       return {
         status: STATUS.SUCCESS,
         data,
       };
     } catch (e) {
-      client.core.relayer.subscriber.pending = new Map();
+      // signClient.core.relayer.subscriber.pending = new Map();
       return {
         status: STATUS.FAILURE,
         message: e.message,
@@ -48,17 +47,17 @@ export const usePairings = () => {
    * Retrieves the active parings and refreshes the list.
    */
   const refreshPairings = useCallback(() => {
-    const activePairings = client.pairing.getAll({ active: true });
+    const activePairings = signClient.pairing.getAll({ active: true });
     setPairings([...activePairings]);
-  }, [client]);
+  }, [signClient]);
 
   useEffect(() => {
-    if (client?.pairing?.getAll && !pairings?.length && setPairings) {
-      const activePairings = client.pairing.getAll({ active: true });
+    if (signClient?.pairing?.getAll && !pairings?.length && setPairings) {
+      const activePairings = signClient.pairing.getAll({ active: true });
       setPairings([...activePairings]);
       setHasLoaded(true);
     }
-  }, [client, setPairings]);
+  }, [signClient, setPairings]);
 
   return {
     hasLoaded,

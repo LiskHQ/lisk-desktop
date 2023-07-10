@@ -28,7 +28,7 @@ const ConnectionProposal = () => {
     const result = await setUri(value);
     if (result.status === STATUS.FAILURE) {
       setStatus({ ...status, isPending: false });
-      setNameSpaceError('Connection failed');
+      setNameSpaceError(result.message ? result.message : 'Connection failed');
     } else {
       setStatus(result);
     }
@@ -41,12 +41,12 @@ const ConnectionProposal = () => {
     const nameSpaceKeys = requiredNamespaces && Object.keys(requiredNamespaces);
     const hasNameSpaceError =
       !nameSpaceKeys || nameSpaceKeys.length > 1 || !nameSpaceKeys.includes('lisk');
-    const isSesssionProposal = event?.name === EVENTS.SESSION_PROPOSAL;
+    const isSessionProposal = event?.name === EVENTS.SESSION_PROPOSAL;
 
-    if (isSesssionProposal && hasNameSpaceError) {
+    if (isSessionProposal && hasNameSpaceError) {
       setValue(`wc:${event?.meta?.params?.pairingTopic}`);
       setNameSpaceError(t('You are trying to connect to an unsupported blockchain app.'));
-    } else if (isSesssionProposal) {
+    } else if (isSessionProposal) {
       addSearchParamsToUrl(history, { modal: 'connectionSummary' });
     }
   }, [events]);
