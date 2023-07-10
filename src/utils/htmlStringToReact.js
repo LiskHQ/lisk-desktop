@@ -1,11 +1,13 @@
 import React, { Fragment, createElement } from 'react';
+import DOMPurify from 'dompurify';
 import { regex } from 'src/const/regex';
 
 const htmlStringToReact = (html = '') => {
   const trimmedHtml = html.trim();
-  const elements = trimmedHtml.match(new RegExp(regex.htmlElements, 'g'));
-  if (!elements) return trimmedHtml;
-  const before = trimmedHtml.slice(0, trimmedHtml.indexOf(elements[0]));
+  const cleanHtml = DOMPurify.sanitize(trimmedHtml);
+  const elements = cleanHtml.match(new RegExp(regex.htmlElements, 'g'));
+  if (!elements) return cleanHtml;
+  const before = cleanHtml.slice(0, cleanHtml.indexOf(elements[0]));
   return (
     <>
       {elements.map((element, index) => {
