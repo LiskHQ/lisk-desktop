@@ -29,18 +29,11 @@ export const canExecuteDeepLinking = (url) => {
     {}
   );
 
-  let isSearchParamsAllowed;
-    console.log('>>>', searchParamObject)
   try {
-    isSearchParamsAllowed = validator.validator.validate(
-      foundLink.validationSchema,
-      searchParamObject
-    );
+    validator.validator.validate(foundLink.validationSchema, searchParamObject);
   } catch (exp) {
     return false;
   }
-  console.log('--- here ooo', isSearchParamsAllowed)
-  if (!isSearchParamsAllowed) return false;
 
   return true;
 };
