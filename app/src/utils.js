@@ -31,7 +31,7 @@ export const canExecuteDeepLinking = (url) => {
 
   try {
     validator.validator.validate(foundLink.validationSchema, searchParamObject);
-  } catch (exp) {
+  } catch {
     return false;
   }
 
