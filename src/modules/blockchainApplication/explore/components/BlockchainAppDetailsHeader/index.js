@@ -61,7 +61,12 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading }) => {
               </Box>
             )}
             <div className={styles.addressRow}>
-              <a className={`${styles.appLink}`} target="_blank" href={projectPage}>
+              <a
+                rel="noopener noreferrer"
+                className={`${styles.appLink}`}
+                target="_blank"
+                href={projectPage}
+              >
                 <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
                 {t(projectPage)}
               </a>
