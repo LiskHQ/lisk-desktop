@@ -70,7 +70,7 @@ const ConnectionSummary = () => {
     >
       <BlockchainAppDetailsHeader
         application={application}
-        clipboardCopyItems={[...clipboardCopyItems, { label: 'Chain ID:', value: '02000000' }]}
+        clipboardCopyItems={clipboardCopyItems}
       />
       <div className={styles.wrapper}>
         <section className={styles.section}>
