@@ -35,6 +35,35 @@
   align-items: center;
   justify-content: center;
   margin-top: 51px;
+
+  & .addressRow {
+    margin-top: 14px;
+    align-items: initial;
+    width: initial;
+
+    & .skeleton:last-of-type {
+      margin-bottom: 0;
+    }
+
+    & .addressRowContent {
+      display: flex;
+      align-items: baseline;
+      margin-top: 4px;
+
+      & span {
+        font-size: 14px;
+        color: var(--color-maastricht-blue);
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      & .addressRowContentLabel {
+        margin-right: 6px;
+      }
+    }
+  }
 }
 
 .loadingDetailsWrapper {
@@ -60,16 +89,6 @@
 
   & img {
     width: 17px;
-  }
-}
-
-.addressRow {
-  & span {
-    font-size: 14px;
-  }
-
-  & .skeleton:last-of-type {
-    margin-bottom: 0;
   }
 }
 

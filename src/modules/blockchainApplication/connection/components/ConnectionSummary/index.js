@@ -34,9 +34,13 @@ const ConnectionSummary = () => {
       name: proposer.metadata.name,
       projectPage: proposer.metadata.url.replace(/\/$/, ''),
       icon: proposer.metadata.icons[0],
-      address: `Chain ID: ${requiredNamespaces.lisk.chains[0].replace('lisk:', '')}`,
     },
   };
+
+  const clipboardCopyItems = requiredNamespaces.lisk.chains.map((chain) => ({
+    label: 'Chain ID:',
+    value: chain.replace(/\D+/g, ''),
+  }));
 
   const connectHandler = async () => {
     const result = await approve(addresses);
@@ -64,7 +68,10 @@ const ConnectionSummary = () => {
       onCloseIcon={rejectHandler}
       className={classNames(styles.dialogWrapper, grid.row, grid['center-xs'])}
     >
-      <BlockchainAppDetailsHeader application={application} />
+      <BlockchainAppDetailsHeader
+        application={application}
+        clipboardCopyItems={[...clipboardCopyItems, { label: 'Chain ID:', value: '02000000' }]}
+      />
       <div className={styles.wrapper}>
         <section className={styles.section}>
           <ValueAndLabel
