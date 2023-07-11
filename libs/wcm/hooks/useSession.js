@@ -53,10 +53,11 @@ export const useSession = () => {
     }
   }, []);
 
-  const reject = useCallback(async () => {
-    const proposalEvents = events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
+  const reject = useCallback(async (event) => {
+    const proposalEvents = event || events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
     try {
       await onReject(proposalEvents.meta);
+      removeEvent(proposalEvents);
       setSessionProposal(null);
       setSessionRequest(null);
       return {

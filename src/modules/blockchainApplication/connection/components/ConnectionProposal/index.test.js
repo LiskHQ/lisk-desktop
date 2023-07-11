@@ -7,7 +7,17 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionProposal from './index';
 
 jest.spyOn(React, 'useContext').mockImplementation(() => ({
-  events: [{ name: EVENTS.SESSION_PROPOSAL, meta: { id: '1' } }],
+  events: [
+    {
+      name: EVENTS.SESSION_PROPOSAL,
+      meta: {
+        id: '1',
+        params: {
+          requiredNamespaces: { lisk: {} },
+        },
+      },
+    },
+  ],
 }));
 jest.mock('@libs/wcm/hooks/usePairings');
 jest.mock('@walletconnect/utils', () => ({
