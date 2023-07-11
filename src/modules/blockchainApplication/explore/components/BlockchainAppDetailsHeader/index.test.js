@@ -9,7 +9,6 @@ const appUrl = 'https://enevti.com';
 const application = {
   data: {
     name: appName,
-    address: appAddress,
     projectPage: appUrl,
     icon: '',
     bg: '',
@@ -28,6 +27,7 @@ describe('BlockchainAppDetailsHeader', () => {
           </div>
         }
         loading={false}
+        clipboardCopyItems={[{ value: appAddress }]}
       />
     );
     expect(screen.getByText(appName)).toBeInTheDocument();
