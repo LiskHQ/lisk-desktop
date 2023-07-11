@@ -14,23 +14,21 @@ export const usePairings = () => {
    *
    * @param {string} uri - The URI received from the web app.
    */
-  const setUri = useCallback(
-    async (uri) => {
-      try {
-        const data = await client.pair({ uri });
-        return {
-          status: STATUS.SUCCESS,
-          data,
-        };
-      } catch (e) {
-        return {
-          status: STATUS.FAILURE,
-          message: e.message,
-        };
-      }
-    },
-    [client]
-  );
+  const setUri = async (uri) => {
+    try {
+      const data = await client.pair({ uri });
+      return {
+        status: STATUS.SUCCESS,
+        data,
+      };
+    } catch (e) {
+      client.core.relayer.subscriber.pending = new Map();
+      return {
+        status: STATUS.FAILURE,
+        message: e.message,
+      };
+    }
+  };
 
   const removePairing = useCallback(
     (topic) => {
