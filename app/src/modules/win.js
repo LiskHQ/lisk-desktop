@@ -89,16 +89,20 @@ const win = {
     });
 
     const handleRedirect = (e, url) => {
-      const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(new URL(url).hostname);
+      try {
+        const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(new URL(url).hostname);
 
-      if (!isAllowedUrl) return e.preventDefault();
+        if (!isAllowedUrl) return e.preventDefault();
 
-      if (url !== win.browser.webContents.getURL()) {
-        e.preventDefault();
-        electron.shell.openExternal(url);
+        if (url !== win.browser.webContents.getURL()) {
+          e.preventDefault();
+          electron.shell.openExternal(url);
+        }
+
+        return null;
+      } catch {
+        return null;
       }
-
-      return null;
     };
     win.browser.webContents.on('will-navigate', handleRedirect);
     win.browser.webContents.on('new-window', handleRedirect);
