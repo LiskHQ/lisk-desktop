@@ -42,6 +42,22 @@ describe('htmlStringToReact util', () => {
     expect(wrapper.html()).toEqual(cleanDummyHtml);
   });
 
+  it('Should update anchor tag link if case number is the content', () => {
+    const dummyHtml = `<div>
+      <h1>Dummy title</h1>
+      <p>
+        <span>before <strong>Nested</strong> tags</span>
+        <a>#5923</a>
+      </p>
+    </div>`;
+
+    const wrapper = mount(htmlStringToReact(dummyHtml));
+
+    expect(wrapper.find('a').prop('href')).toBe(
+      'https://github.com/LiskHQ/lisk-desktop/issues/5923'
+    );
+  });
+
   it('Should return empty node if no html string provided', () => {
     expect(htmlStringToReact()).toEqual([]);
   });
