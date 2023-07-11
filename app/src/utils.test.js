@@ -21,7 +21,7 @@ describe('utils', () => {
     it('Should return invalid if url path is whitelisted and does not have required search params', () => {
       const invalidUrls = {
         invalidExtraParamUrl:
-          'lisk://test?modal=send&recipient=lskdb3ja5dhr25jhwm6onstawj33yk74g8q2549oc&amount=1&token=0200000000000000&recipientChain=02000000&test=test',
+          'lisk://wallet?modal=send&recipient=lskdb3ja5dhr25jhwm6onstawj33yk74g8q2549oc&amount=1&token=0200000000000000&recipientChain=02000000&test=test',
         invalidAmountUrl:
           'lisk://test?modal=send&recipient=lskdb3ja5dhr25jhwm6onstawj33yk74g8q2549oc&amount=test&token=0200000000000000&recipientChain=02000000',
         invalidChainIDUrl:

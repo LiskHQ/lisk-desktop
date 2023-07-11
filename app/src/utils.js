@@ -29,6 +29,14 @@ export const canExecuteDeepLinking = (url) => {
     {}
   );
 
+  const isSearchParamsValid = Object.keys(searchParamObject).reduce((result, key) => {
+    const schemaValue = !!foundLink.validationSchema.properties[key];
+    if (!schemaValue || !result) return false;
+    return true;
+  }, true);
+
+  if (!isSearchParamsValid) return false;
+
   try {
     validator.validator.validate(foundLink.validationSchema, searchParamObject);
   } catch {
