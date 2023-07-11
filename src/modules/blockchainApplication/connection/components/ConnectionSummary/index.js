@@ -5,10 +5,11 @@ import Dialog from '@theme/dialog/dialog';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { EVENTS, ACTIONS } from '@libs/wcm/constants/lifeCycle';
+import { ACTIONS, EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSession } from '@libs/wcm/hooks/useSession';
+import classNames from 'classnames';
 import BlockchainAppDetailsHeader from '../../../explore/components/BlockchainAppDetailsHeader';
 import AccountsSelector from './AccountsSelector';
 import styles from './connectionSummary.css';
@@ -20,6 +21,22 @@ const ConnectionSummary = () => {
   const { t } = useTranslation();
   const { events } = useEvents();
   const { approve, reject } = useSession();
+
+  // istanbul ignore next
+  if (!events.length || events[events.length - 1].name !== EVENTS.SESSION_PROPOSAL) {
+    return <div>{t('Connection summary is not ready yet.')}</div>;
+  }
+
+  const { proposer, requiredNamespaces, pairingTopic } = events[events.length - 1].meta.params;
+
+  const application = {
+    data: {
+      name: proposer.metadata.name,
+      projectPage: proposer.metadata.url.replace(/\/$/, ''),
+      icon: proposer.metadata.icons[0],
+      address: `Chain ID: ${requiredNamespaces.lisk.chains[0].replace('lisk:', '')}`,
+    },
+  };
 
   const connectHandler = async () => {
     const result = await approve(addresses);
@@ -41,23 +58,12 @@ const ConnectionSummary = () => {
     });
   };
 
-  // istanbul ignore next
-  if (!events.length || events[events.length - 1].name !== EVENTS.SESSION_PROPOSAL) {
-    return <div>{t('Connection summary is not ready yet.')}</div>;
-  }
-
-  const { proposer, requiredNamespaces, pairingTopic } = events[events.length - 1].meta.params;
-  const application = {
-    data: {
-      name: proposer.metadata.name,
-      projectPage: proposer.metadata.url.replace(/\/$/, ''),
-      icon: proposer.metadata.icons[0],
-      address: `Chain ID: ${requiredNamespaces.lisk.chains[0].replace('lisk:', '')}`,
-    },
-  };
-
   return (
-    <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
+    <Dialog
+      hasClose
+      onCloseIcon={rejectHandler}
+      className={classNames(styles.dialogWrapper, grid.row, grid['center-xs'])}
+    >
       <BlockchainAppDetailsHeader application={application} />
       <div className={styles.wrapper}>
         <section className={styles.section}>

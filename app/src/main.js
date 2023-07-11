@@ -14,7 +14,7 @@ import updateChecker from './modules/autoUpdater';
 import server from '../server';
 import i18nSetup from '../../src/utils/i18n/i18n-setup';
 import { storage, setConfig, readConfig } from './modules/storage';
-import { setRendererPermissions } from './utils';
+import { canExecuteDeepLinking, setRendererPermissions } from './utils';
 import {
   IPC_OPEN_URL,
   IPC_RETRIEVE_CONFIG,
@@ -71,8 +71,11 @@ const handleProtocol = () => {
   // Protocol handler for MacOS
   app.on('open-url', (event, url) => {
     event.preventDefault();
-    win.browser?.show();
-    win.send({ event: IPC_OPEN_URL, value: url });
+
+    if (canExecuteDeepLinking(url)) {
+      win.browser?.show();
+      win.send({ event: IPC_OPEN_URL, value: url });
+    }
   });
 };
 
