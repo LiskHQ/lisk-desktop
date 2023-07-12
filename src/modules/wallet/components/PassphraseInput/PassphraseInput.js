@@ -93,15 +93,7 @@ class passphraseInput extends React.Component {
         inputsLength
       );
       errorState.passphraseIsInvalid = true;
-      if (validationErrors[0].code === 'INVALID_AMOUNT_OF_WORDS') {
-        errorState.validationError = this.props.t(
-          `Passphrase contains ${
-            values.filter((p) => p.trim() !== '').length
-          } words instead of expected ${inputsLength}. Please check the passphrase.`
-        );
-      } else {
-        errorState.validationError = this.props.t(validationErrors[0].message);
-      }
+      errorState.validationError = this.props.t(validationErrors[0].message);
     }
 
     if (!passphrase.length) {
