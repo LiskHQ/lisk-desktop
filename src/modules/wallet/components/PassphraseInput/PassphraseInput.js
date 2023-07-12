@@ -1,10 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { keyCodes } from 'src/utils/keyCodes';
-import {
-  isValidPassphrase,
-  getPassphraseValidationErrors,
-} from 'src/modules/wallet/utils/passphrase';
+import { passphrase as LiskClientPassphrase } from '@liskhq/lisk-client';
 import Icon from 'src/theme/Icon';
 import Input from 'src/theme/Input';
 import Feedback from 'src/theme/feedback/feedback';
@@ -80,6 +77,7 @@ class passphraseInput extends React.Component {
     this.validatePassphrase({ values, focus: index });
   }
 
+  // eslint-disable-next-line max-statements
   validatePassphrase({ values, inputsLength = this.state.inputsLength, focus = 0 }) {
     let errorState = {
       validationError: '',
@@ -88,10 +86,22 @@ class passphraseInput extends React.Component {
     };
 
     const passphrase = values.join(' ').trim();
-    if (!isValidPassphrase(passphrase)) {
-      errorState = getPassphraseValidationErrors(values);
-      errorState.passphraseIsInvalid =
-        errorState.validationError === this.props.t('Passphrase is not valid');
+    if (!LiskClientPassphrase.Mnemonic.validateMnemonic(passphrase)) {
+      const validationErrors = LiskClientPassphrase.validation.getPassphraseValidationErrors(
+        passphrase,
+        LiskClientPassphrase.Mnemonic.wordlists.ENGLISH,
+        inputsLength
+      );
+      errorState.passphraseIsInvalid = true;
+      if (validationErrors[0].code === 'INVALID_AMOUNT_OF_WORDS') {
+        errorState.validationError = this.props.t(
+          `Passphrase contains ${
+            values.filter((p) => p.trim() !== '').length
+          } words instead of expected ${inputsLength}. Please check the passphrase.`
+        );
+      } else {
+        errorState.validationError = this.props.t(validationErrors[0].message);
+      }
     }
 
     if (!passphrase.length) {

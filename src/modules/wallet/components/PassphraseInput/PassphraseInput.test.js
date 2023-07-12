@@ -4,6 +4,20 @@ import { keyCodes } from 'src/utils/keyCodes';
 import accounts from '@tests/constants/wallets';
 import PassphraseInput from './PassphraseInput';
 
+// jest.mock('@liskhq/lisk-client', () => ({
+//   ...jest.requireActual('@liskhq/lisk-client'),
+//   passphrase: {
+//     Mnemonic: {
+//       validateMnemonic
+//     },
+//     validation:{
+//       getPassphraseValidationErrors
+//     }
+//       jest.fn().mockReturnValue(10000000000n),
+//     getBytes: jest.fn().mockReturnValue({ length: 50 }),
+//   },
+// }));
+
 describe('passphraseInput', () => {
   let wrapper;
 
@@ -112,8 +126,7 @@ describe('passphraseInput', () => {
 
     const NOT_VALID_ERROR = 'Passphrase is not valid';
     it(`should call props.onFill with error="${NOT_VALID_ERROR}" if an otherwise invalid passphrase is entered`, () => {
-      const passphrase =
-        'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
+      const passphrase = 'stock wagon';
       const clipboardData = {
         getData: () => passphrase,
       };
@@ -122,7 +135,7 @@ describe('passphraseInput', () => {
     });
   });
 
-  describe('Change focus with keypresses', () => {
+  describe('Change focus with key presses', () => {
     it('Should remove selected class from inputs on blur', () => {
       wrapper.find('input').first().simulate('click');
       expect(wrapper.find('input').first()).toHaveClassName('selected');

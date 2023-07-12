@@ -173,7 +173,6 @@
     "react-router-dom": "5.3.4",
     "react-string-replace": "0.4.4",
     "react-toastify": "5.5.0",
-    "react-waypoint": "9.0.3",
     "redux": "4.0.1",
     "redux-persist": "6.0.0",
     "redux-thunk": "2.3.0",
