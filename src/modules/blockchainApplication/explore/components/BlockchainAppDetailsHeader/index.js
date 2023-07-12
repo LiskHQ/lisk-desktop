@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import Box from 'src/theme/box';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Skeleton from 'src/modules/common/components/skeleton/Skeleton';
@@ -66,10 +65,15 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading, clipboa
               </Box>
             )}
             <div className={styles.addressRow}>
-              <Link className={`${styles.appLink}`} target="_blank" to={projectPage}>
+              <a
+                rel="noopener noreferrer"
+                className={`${styles.appLink}`}
+                target="_blank"
+                href={projectPage}
+              >
                 <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
                 {t(projectPage)}
-              </Link>
+              </a>
             </div>
           </Box>
         </>
