@@ -60,16 +60,3 @@ export const validateBookmarkAddress = (token, value = '', network, bookmarks, t
   }
   return '';
 };
-
-/**
- * Define edit/add mode
- *
- * @param {Object} history - History object from withRouter
- * @param {Object} bookmarks - Lisk of bookmarks from Redux store
- * @param {String} active - LSK, etc
- * @returns {String} - edit or add
- */
-export const getBookmarkMode = (history, bookmarks, active) => {
-  const { address } = parseSearchParams(history.location.search);
-  return bookmarks[active].some((bookmark) => bookmark.address === address) ? 'edit' : 'add';
-};
