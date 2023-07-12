@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 import { validateBookmarkAddress, validateBookmarkLabel, getBookmarkMode } from '@bookmark/utils';
@@ -39,6 +40,8 @@ const AddBookmark = ({
     config: { params },
     options: { enabled: !!params.address },
   });
+  // eslint-disable-next-line no-console
+  console.log({ bookmarks });
 
   useEffect(() => {
     const bookmark = bookmarks[active].find((item) => item.address === formAddress);
@@ -137,15 +140,21 @@ const AddBookmark = ({
 
   const handleAddBookmark = (e) => {
     e.preventDefault();
+    const [accountAddress, title] = fields;
 
     const func = mode === 'edit' ? bookmarkUpdated : bookmarkAdded;
+    const existingBookmark = bookmarks[active].find((item) => item.title === fields[1].value);
+    if (mode === 'add' && existingBookmark) {
+      toast.error(`Bookmark with name "${title.value}" already exists`);
+      return;
+    }
 
     func({
       token: active,
       wallet: {
-        address: fields[0].value,
-        title: fields[1].value,
-        isValidator: fields[1].readonly,
+        address: accountAddress.value,
+        title: title.value,
+        isValidator: title.readonly,
       },
     });
     onClose();

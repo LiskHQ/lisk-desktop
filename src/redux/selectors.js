@@ -19,6 +19,7 @@ const selectNetwork = (state) => state.network;
 const selectNetworkName = (state) => state.network.name;
 const selectStaking = (state) => state.staking;
 const selectModuleCommandSchemas = (state) => state.network.networks?.LSK?.moduleCommandSchemas;
+const selectBookmarks = (state) => state.bookmarks?.LSK;
 
 export {
   selectStaking,
@@ -31,4 +32,5 @@ export {
   selectAccountBalance,
   selectNetworkName,
   selectModuleCommandSchemas,
+  selectBookmarks,
 };
