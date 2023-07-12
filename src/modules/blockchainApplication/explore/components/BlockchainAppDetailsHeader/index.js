@@ -8,7 +8,13 @@ import loadingBackgroundImage from '../../../../../../setup/react/assets/images/
 import loadingChainLogo from '../../../../../../setup/react/assets/images/loading-chain-logo.png';
 import styles from './blockchainAppDetailsHeader.css';
 
-const BlockchainAppDetailsHeader = ({ application, chainAction, loading, clipboardCopyItems }) => {
+const BlockchainAppDetailsHeader = ({
+  headerText,
+  application,
+  chainAction,
+  loading,
+  clipboardCopyItems,
+}) => {
   const { t } = useTranslation();
   const { name, projectPage, icon, bg } = application.data;
 
@@ -34,6 +40,7 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading, clipboa
       ) : (
         <>
           <div className={styles.avatarContainer}>
+            {headerText && <h2 className={styles.headerText}>{headerText}</h2>}
             <img src={icon} className={styles.logo} />
             <img src={bg} className={styles.bg} />
           </div>
@@ -43,12 +50,12 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading, clipboa
               {chainAction}
             </div>
             {clipboardCopyItems?.length > 0 && (
-              <Box className={styles.addressRow}>
+              <Box className={styles.clipboardCopyItems}>
                 {clipboardCopyItems.map((clipboardCopyItem) => {
                   const { label, value } = clipboardCopyItem;
 
                   return (
-                    <div className={styles.addressRowContent} key={clipboardCopyItem.value}>
+                    <div className={styles.clipboardCopyItem} key={clipboardCopyItem.value}>
                       {label && <span className={styles.addressRowContentLabel}>{label}</span>}
                       <CopyToClipboard
                         text={value}
@@ -64,17 +71,15 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading, clipboa
                 })}
               </Box>
             )}
-            <div className={styles.addressRow}>
-              <a
-                rel="noopener noreferrer"
-                className={`${styles.appLink}`}
-                target="_blank"
-                href={projectPage}
-              >
-                <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-                {t(projectPage)}
-              </a>
-            </div>
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href={projectPage}
+              className={styles.appLink}
+            >
+              <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
+              {t(projectPage)}
+            </a>
           </Box>
         </>
       )}

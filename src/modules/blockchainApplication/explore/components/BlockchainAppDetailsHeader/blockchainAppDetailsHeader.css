@@ -9,6 +9,14 @@
   align-items: center;
   justify-content: flex-start;
 
+  & .headerText {
+    margin: 0;
+    color: var(--color-constant-white);
+    font-weight: var(--font-weight-bold);
+    position: absolute;
+    top: 34px;
+  }
+
   & > img.logo {
     position: absolute;
     display: flex;
@@ -35,9 +43,10 @@
   align-items: center;
   justify-content: center;
   margin-top: 51px;
+  padding-bottom: 24px;
 
-  & .addressRow {
-    margin-top: 14px;
+  & .clipboardCopyItems {
+    margin-top: 16px;
     align-items: initial;
     width: initial;
 
@@ -45,7 +54,7 @@
       margin-bottom: 0;
     }
 
-    & .addressRowContent {
+    & .clipboardCopyItem {
       display: flex;
       align-items: baseline;
       margin-top: 4px;
@@ -71,6 +80,8 @@
 }
 
 .chainNameWrapper {
+  margin-top: 16px;
+
   & .skeleton:first-of-type {
     margin: 20px auto 15px;
   }
@@ -93,12 +104,12 @@
 }
 
 .appLink {
-  margin-top: 14px;
+  margin-top: 16px;
   display: flex;
   font-size: 14px;
   font-weight: 400;
 
-  & > img {
+  & .hwWalletIcon {
     width: 16px;
     height: 16px;
     margin-right: 8px;

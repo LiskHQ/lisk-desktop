@@ -94,7 +94,6 @@
   "Caution! You are about to stake for the punished validator, this will result in your LSK tokens being locked for a period of {{daysLeft}} days. In addition, please note that your stake will not be counted until the {{daysLeft}} day period has expired. ": "Caution! You are about to stake for the punished validator, this will result in your LSK tokens being locked for a period of {{daysLeft}} days. In addition, please note that your stake will not be counted until the {{daysLeft}} day period has expired. ",
   "Certificate": "Certificate",
   "Chain ID": "Chain ID",
-  "Chain ID:": "Chain ID:",
   "Changed stakes": "Changed stakes",
   "Check for Updates...": "Check for Updates...",
   "Choose a hardware wallet to perform your transactions on add to your Lisk Desktop": "Choose a hardware wallet to perform your transactions on add to your Lisk Desktop",
