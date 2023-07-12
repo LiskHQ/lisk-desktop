@@ -348,7 +348,7 @@
   "Message fee: ": "Message fee: ",
   "Message fees are the incentive given to relayer for collecting messages to be transported from sending network to recipient network.": "Message fees are the incentive given to relayer for collecting messages to be transported from sending network to recipient network.",
   "Message recovery": "Message recovery",
-  "Method not found": "Method not found",
+  "Method not found.": "Method not found.",
   "Methods": "Methods",
   "Min": "Min",
   "Minimize": "Minimize",

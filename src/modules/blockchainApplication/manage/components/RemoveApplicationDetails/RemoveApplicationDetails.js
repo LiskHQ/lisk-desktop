@@ -157,7 +157,12 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
             </div>
           ) : (
             <div className={styles.addressRow}>
-              <a className={`${styles.appLink}`} target="_blank" href={projectPage}>
+              <a
+                className={`${styles.appLink}`}
+                rel="noopener noreferrer"
+                target="_blank"
+                href={projectPage}
+              >
                 <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
                 {t(projectPage)}
               </a>
