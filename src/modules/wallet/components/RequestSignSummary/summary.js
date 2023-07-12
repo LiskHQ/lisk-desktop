@@ -7,6 +7,7 @@ import Footer from '@transaction/components/TxSummarizer/footer';
 import { LayoutSchema } from '@transaction/components/TransactionDetails/layoutSchema';
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
 import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
+import { joinModuleAndCommand } from 'src/modules/transaction/utils';
 import styles from './styles.css';
 
 const RequestSignSummary = ({
@@ -49,7 +50,7 @@ const RequestSignSummary = ({
               value={{
                 transaction: {
                   ...transactionJSON,
-                  moduleCommand: 'token:transfer',
+                  moduleCommand: joinModuleAndCommand(transactionJSON),
                 },
               }}
             >
