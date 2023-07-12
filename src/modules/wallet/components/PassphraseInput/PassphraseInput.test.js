@@ -4,20 +4,6 @@ import { keyCodes } from 'src/utils/keyCodes';
 import accounts from '@tests/constants/wallets';
 import PassphraseInput from './PassphraseInput';
 
-// jest.mock('@liskhq/lisk-client', () => ({
-//   ...jest.requireActual('@liskhq/lisk-client'),
-//   passphrase: {
-//     Mnemonic: {
-//       validateMnemonic
-//     },
-//     validation:{
-//       getPassphraseValidationErrors
-//     }
-//       jest.fn().mockReturnValue(10000000000n),
-//     getBytes: jest.fn().mockReturnValue({ length: 50 }),
-//   },
-// }));
-
 describe('passphraseInput', () => {
   let wrapper;
 
@@ -113,7 +99,8 @@ describe('passphraseInput', () => {
       expect(props.onFill).toBeCalledWith(passphrase, 'Required');
     });
 
-    const ONLY_ONE_WORD_ERROR = 'Passphrase should have 12 words, entered passphrase has 1';
+    const ONLY_ONE_WORD_ERROR =
+      'Passphrase contains 1 words instead of expected 12. Please check the passphrase.';
     it(`should call props.onFill with error="${ONLY_ONE_WORD_ERROR}" if an "test" passphrase is entered`, () => {
       const passphrase = 'test';
       const target = {
@@ -124,9 +111,11 @@ describe('passphraseInput', () => {
       expect(props.onFill).toBeCalledWith(passphrase, ONLY_ONE_WORD_ERROR);
     });
 
-    const NOT_VALID_ERROR = 'Passphrase is not valid';
+    const NOT_VALID_ERROR =
+      'Passphrase contains 7 uppercase character instead of expected 0. Please check the passphrase.';
     it(`should call props.onFill with error="${NOT_VALID_ERROR}" if an otherwise invalid passphrase is entered`, () => {
-      const passphrase = 'stock wagon';
+      const passphrase =
+        'STOMACH bunker border grace wool amazing settle sugar journey sleep pole boat';
       const clipboardData = {
         getData: () => passphrase,
       };
