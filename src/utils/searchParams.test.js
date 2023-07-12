@@ -115,4 +115,27 @@ describe('Search Params', () => {
       expect(selectSearchParamValue(TEST_URLS[3], 'unknown')).toBeUndefined();
     });
   });
+
+  describe('fuzzy test', () => {
+    function fuzzier(data) {
+      const fuzzierData = data.toString();
+      const originalParams = `?x= ${encodeURIComponent(fuzzierData)} `;
+      const originalParamsParsed = parseSearchParams(originalParams);
+      const originalParamsStringified = stringifySearchParams(originalParamsParsed);
+      const newParamsParsed = parseSearchParams(originalParamsStringified);
+      if (Object.keys(originalParamsParsed).length !== Object.keys(newParamsParsed).length) {
+        expect(originalParamsParsed).toEqual(newParamsParsed);
+      }
+    }
+
+    const testData = [
+      '2&b=2&c=3,4,5',
+      '2&&&b=2&,&&c=3,4,5',
+      'send&recipient=lskdb3ja5dhr25jhwm6onstawj33yk74g8q2549oc&amount=1&token=0200000000000000&recipientChain=02000000',
+      '=se&nd&recipient=lskdb3ja5dhr25jhwm6onstawj33yk74g8q2549oc&amount=1&token=0200000000000000&recipientChain=020&00000',
+      '61a4ec71b0b630006a08ca81&b=61a4ec71b0b630006a08ca81&c=lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt,lskdxc4ta5j4kip9ro3f8zqbxta9fn6jwzjucw7yt,lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+    ];
+
+    it.each(testData)('should pass the fuzzy test', fuzzier);
+  });
 });

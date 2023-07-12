@@ -4,7 +4,7 @@
  */
 
 export const parseSearchParams = (search) => {
-  const searchParams = new URLSearchParams(search);
+  const searchParams = new URLSearchParams(decodeURIComponent(search));
   const parsedParams = {};
 
   // eslint-disable-next-line no-restricted-syntax, no-unused-vars
