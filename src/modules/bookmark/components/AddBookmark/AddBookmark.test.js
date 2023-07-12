@@ -1,14 +1,11 @@
 import { smartRender } from 'src/utils/testHelpers';
-import { toast } from 'react-toastify';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuth } from '@auth/__fixtures__';
 import { tokenMap, tokenKeys } from '@token/fungible/consts/tokens';
 import accounts from '@tests/constants/wallets';
 import AddBookmark from './AddBookmark';
 
-jest.mock('react-toastify', () => ({
-  toast: {
-    error: jest.fn(),
-  },
-}));
+jest.mock('@auth/hooks/queries');
 
 describe('Add a new bookmark component', () => {
   const bookmarks = {
@@ -28,13 +25,12 @@ describe('Add a new bookmark component', () => {
       },
     },
     bookmarkAdded: jest.fn(),
-    bookmarkRemoved: jest.fn(),
     prevStep: jest.fn(),
   };
   const history = {
     push: jest.fn(),
     location: {
-      search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isValidator=false`,
+      search: `?address=${accounts.genesis.summary.address}&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isValidator=false`,
     },
   };
   const bookmarkDetails = {
@@ -49,13 +45,13 @@ describe('Add a new bookmark component', () => {
   };
 
   beforeEach(() => {
+    useAuth.mockReturnValue({ data: undefined });
     wrapper = smartRender(AddBookmark, props, config).wrapper;
   });
 
   afterEach(() => {
     history.push.mockClear();
     props.bookmarkAdded.mockClear();
-    props.bookmarkRemoved.mockClear();
   });
 
   it('Should render properly and with pristine state', () => {
@@ -115,15 +111,33 @@ describe('Add a new bookmark component', () => {
         historyInfo: {
           push: jest.fn(),
           location: {
-            search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isValidator=true`,
+            search: `?address=${accountAddress}&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isValidator=true`,
           },
         },
       };
       wrapper = smartRender(AddBookmark, updatedProps, updatedConfig).wrapper;
       expect(wrapper.find('input[name="label"]')).toHaveValue(accountUsername);
       expect(wrapper.find('input[name="label"]')).toHaveProp('readOnly', true);
-      expect(wrapper.find('button').at(0)).not.toBeDisabled();
-      wrapper.find('button').at(0).simulate('click');
+      expect(wrapper.find('button').at(1)).not.toBeDisabled();
+    });
+
+    it('should not be possible to change validator label and address if auth endpoint returns data', () => {
+      useAuth.mockReturnValue({ data: { meta: mockAuth.meta } });
+      const accountAddress = mockAuth.meta.address;
+      const accountUsername = mockAuth.meta.name;
+      wrapper
+        .find('input[name="address"]')
+        .first()
+        .simulate('change', {
+          target: {
+            value: accountAddress,
+            name: 'address',
+          },
+        });
+      wrapper = smartRender(AddBookmark, props, config).wrapper;
+      expect(wrapper.find('input[name="label"]')).toHaveValue(accountUsername);
+      expect(wrapper.find('input[name="label"]')).toHaveProp('readOnly', true);
+      expect(wrapper.find('button').at(1)).not.toBeDisabled();
     });
   });
 
@@ -173,9 +187,9 @@ describe('Add a new bookmark component', () => {
               name: 'address',
             },
           });
-        wrapper.find('button.save-button').simulate('click');
-        expect(toast.error).toHaveBeenCalledTimes(1);
-        expect(toast.error).toHaveBeenCalledWith(
+        expect(wrapper.find('input[name="label"]')).toHaveClassName('error');
+        expect(wrapper).toContainMatchingElement('.error');
+        expect(wrapper.find('.feedback.error')).toHaveText(
           `Bookmark with name "${bookmarkTitle}" already exists`
         );
       });

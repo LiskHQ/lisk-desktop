@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 import { validateBookmarkAddress, validateBookmarkLabel } from '@bookmark/utils';
@@ -20,7 +19,7 @@ import BookmarkForm from './BookmarkForm';
 const blankField = { value: '', readonly: false, feedback: '' };
 
 // eslint-disable-next-line max-statements
-const AddBookmark = ({ token: { active }, bookmarks, bookmarkAdded, network }) => {
+const AddBookmark = ({ token: { active }, bookmarks, bookmarkAdded }) => {
   const history = useHistory();
   const { t } = useTranslation();
   const [fields, setFields] = useState([blankField, blankField]);
@@ -35,16 +34,9 @@ const AddBookmark = ({ token: { active }, bookmarks, bookmarkAdded, network }) =
 
   useEffect(() => {
     const bookmark = bookmarks[active].find((item) => item.address === formAddress);
-    const addressFeedback = validateBookmarkAddress(
-      active,
-      formAddress,
-      network,
-      bookmarks,
-      t,
-      false
-    );
+    const addressFeedback = validateBookmarkAddress(active, formAddress, bookmarks, t, false);
     const usernameValue = bookmark?.title || label || '';
-    const usernameFeedback = validateBookmarkLabel(usernameValue, t);
+    const usernameFeedback = validateBookmarkLabel(active, usernameValue, bookmarks, t);
 
     setFields([
       {
@@ -86,7 +78,7 @@ const AddBookmark = ({ token: { active }, bookmarks, bookmarkAdded, network }) =
   };
 
   const onLabelChange = ({ target: { value } }) => {
-    const feedback = validateBookmarkLabel(value, t);
+    const feedback = validateBookmarkLabel(active, value, bookmarks, t);
     setFields([
       fields[0],
       {
@@ -98,7 +90,7 @@ const AddBookmark = ({ token: { active }, bookmarks, bookmarkAdded, network }) =
   };
 
   const onAddressChange = ({ target: { value } }) => {
-    const feedback = validateBookmarkAddress(active, value, network, bookmarks, t, true);
+    const feedback = validateBookmarkAddress(active, value, bookmarks, t, true);
     clearTimeout(timeout.current);
 
     if (!feedback && value !== '') {
@@ -120,12 +112,6 @@ const AddBookmark = ({ token: { active }, bookmarks, bookmarkAdded, network }) =
   const handleAddBookmark = (e) => {
     e.preventDefault();
     const [accountAddress, title] = fields;
-
-    const existingBookmark = bookmarks[active].find((item) => item.title === fields[1].value);
-    if (existingBookmark) {
-      toast.error(`Bookmark with name "${title.value}" already exists`);
-      return;
-    }
 
     bookmarkAdded({
       token: active,
@@ -185,9 +171,6 @@ AddBookmark.propTypes = {
         title: PropTypes.string.isRequired,
       })
     ),
-  }).isRequired,
-  network: PropTypes.shape({
-    name: PropTypes.string.isRequired,
   }).isRequired,
 };
 

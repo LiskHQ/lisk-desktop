@@ -25,6 +25,9 @@ export const validateBookmarks = (data) => {
 export const getIndexOfBookmark = (bookmarks, { address, token = tokenMap.LSK.key }) =>
   bookmarks[token].findIndex((bookmark) => bookmark.address === address);
 
+export const getIndexOfLabel = (bookmarks, { label, token = tokenMap.LSK.key }) =>
+  bookmarks[token].findIndex((item) => item.title === label);
+
 /**
  *  Checks the label and returns feedback
  *
@@ -32,9 +35,12 @@ export const getIndexOfBookmark = (bookmarks, { address, token = tokenMap.LSK.ke
  * @param {Function} t - i18n function
  * @returns {String} - Feedback string. Empty string if the label is valid
  */
-export const validateBookmarkLabel = (value = '', t) => {
+export const validateBookmarkLabel = (token, value = '', bookmarks, t) => {
   if (value.length > 20) {
     return t('Label is too long, Max. 20 characters');
+  }
+  if (getIndexOfLabel(bookmarks, { label: value, token }) !== -1) {
+    return t(`Bookmark with name "${value}" already exists`);
   }
   return '';
 };
@@ -44,13 +50,12 @@ export const validateBookmarkLabel = (value = '', t) => {
  *
  * @param {String} token - LSK or any other token
  * @param {String} value - Address string
- * @param {Object} network - The network object from Redux store
  * @param {Object} bookmarks - Lisk of bookmarks from Redux store
  * @param {Function} t - i18n function
  * @param {Boolean} isUnique - Should check if the account is already a bookmark
  * @returns {String} - Feedback string. Empty string if the address is valid (and unique)
  */
-export const validateBookmarkAddress = (token, value = '', network, bookmarks, t, isUnique) => {
+export const validateBookmarkAddress = (token, value = '', bookmarks, t, isUnique) => {
   if (validateAddress(value) === 1) {
     return t('Invalid address');
   }
