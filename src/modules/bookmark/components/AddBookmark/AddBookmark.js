@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
-import { validateBookmarkAddress, validateBookmarkLabel, getBookmarkMode } from '@bookmark/utils';
+import { validateBookmarkAddress, validateBookmarkLabel } from '@bookmark/utils';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
@@ -20,17 +20,9 @@ import BookmarkForm from './BookmarkForm';
 const blankField = { value: '', readonly: false, feedback: '' };
 
 // eslint-disable-next-line max-statements
-const AddBookmark = ({
-  token: { active },
-  bookmarks,
-  bookmarkRemoved,
-  bookmarkAdded,
-  bookmarkUpdated,
-  network,
-}) => {
+const AddBookmark = ({ token: { active }, bookmarks, bookmarkAdded, network }) => {
   const history = useHistory();
   const { t } = useTranslation();
-  const [mode, setMode] = useState(getBookmarkMode(history, bookmarks, active));
   const [fields, setFields] = useState([blankField, blankField]);
   const timeout = useRef(null);
   const { formAddress, label, isValidator } = parseSearchParams(history.location.search);
@@ -40,8 +32,6 @@ const AddBookmark = ({
     config: { params },
     options: { enabled: !!params.address },
   });
-  // eslint-disable-next-line no-console
-  console.log({ bookmarks });
 
   useEffect(() => {
     const bookmark = bookmarks[active].find((item) => item.address === formAddress);
@@ -85,8 +75,6 @@ const AddBookmark = ({
           readonly: username !== '',
         },
       ]);
-
-      setMode(getBookmarkMode(history, bookmarks, active));
     }
   }, [authMeta]);
 
@@ -129,27 +117,17 @@ const AddBookmark = ({
     ]);
   };
 
-  const handleRemoveBookmark = (e) => {
-    e.preventDefault();
-    bookmarkRemoved({
-      address: fields[0].value,
-      token: active,
-    });
-    onClose();
-  };
-
   const handleAddBookmark = (e) => {
     e.preventDefault();
     const [accountAddress, title] = fields;
 
-    const func = mode === 'edit' ? bookmarkUpdated : bookmarkAdded;
     const existingBookmark = bookmarks[active].find((item) => item.title === fields[1].value);
-    if (mode === 'add' && existingBookmark) {
+    if (existingBookmark) {
       toast.error(`Bookmark with name "${title.value}" already exists`);
       return;
     }
 
-    func({
+    bookmarkAdded({
       token: active,
       wallet: {
         address: accountAddress.value,
@@ -171,7 +149,7 @@ const AddBookmark = ({
           </header>
           <Box className={styles.box}>
             <BoxHeader>
-              <h2>{mode === 'edit' ? t('Edit bookmark') : t('New bookmark')}</h2>
+              <h2>{t('New bookmark')}</h2>
             </BoxHeader>
             <BoxContent>
               <BookmarkForm t={t} status={fields} handlers={[onAddressChange, onLabelChange]} />
@@ -180,14 +158,6 @@ const AddBookmark = ({
               <SecondaryButton className="cancel-button" onClick={onClose}>
                 {t('Cancel')}
               </SecondaryButton>
-              {mode === 'edit' && (
-                <SecondaryButton className="remove-button" onClick={handleRemoveBookmark}>
-                  <div className={styles.removeBtn}>
-                    <Icon name="remove" />
-                    {t('Remove')}
-                  </div>
-                </SecondaryButton>
-              )}
               <PrimaryButton
                 disabled={isDisabled}
                 onClick={handleAddBookmark}

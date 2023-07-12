@@ -1,7 +1,14 @@
 import { smartRender } from 'src/utils/testHelpers';
+import { toast } from 'react-toastify';
 import { tokenMap, tokenKeys } from '@token/fungible/consts/tokens';
 import accounts from '@tests/constants/wallets';
 import AddBookmark from './AddBookmark';
+
+jest.mock('react-toastify', () => ({
+  toast: {
+    error: jest.fn(),
+  },
+}));
 
 describe('Add a new bookmark component', () => {
   const bookmarks = {
@@ -21,6 +28,7 @@ describe('Add a new bookmark component', () => {
       },
     },
     bookmarkAdded: jest.fn(),
+    bookmarkRemoved: jest.fn(),
     prevStep: jest.fn(),
   };
   const history = {
@@ -29,8 +37,8 @@ describe('Add a new bookmark component', () => {
       search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isValidator=false`,
     },
   };
-  const addresses = {
-    LSK: accounts.genesis.summary.address,
+  const bookmarkDetails = {
+    LSK: { address: accounts.genesis.summary.address, title: 'genesis' },
   };
 
   let wrapper;
@@ -47,6 +55,7 @@ describe('Add a new bookmark component', () => {
   afterEach(() => {
     history.push.mockClear();
     props.bookmarkAdded.mockClear();
+    props.bookmarkRemoved.mockClear();
   });
 
   it('Should render properly and with pristine state', () => {
@@ -65,7 +74,7 @@ describe('Add a new bookmark component', () => {
           .first()
           .simulate('change', {
             target: {
-              value: addresses[token],
+              value: bookmarkDetails[token].address,
               name: 'address',
             },
           });
@@ -123,7 +132,7 @@ describe('Add a new bookmark component', () => {
       const updatedProps = {
         ...props,
         bookmarks: {
-          LSK: [{ address: addresses.LSK, title: 'genesis' }],
+          LSK: [bookmarkDetails.LSK],
         },
       };
       wrapper = smartRender(AddBookmark, updatedProps, config).wrapper;
@@ -136,12 +145,39 @@ describe('Add a new bookmark component', () => {
           .first()
           .simulate('change', {
             target: {
-              value: addresses[token],
+              value: bookmarkDetails[token].address,
               name: 'address',
             },
           });
         expect(wrapper.find('input[name="address"]')).toHaveClassName('error');
         expect(wrapper).toContainMatchingElement('.error');
+      });
+
+      it(`should not be possible to add already bookmarked name - ${token}`, () => {
+        const bookmarkTitle = bookmarkDetails[token].title;
+        wrapper
+          .find('input[name="label"]')
+          .first()
+          .simulate('change', {
+            target: {
+              value: bookmarkTitle,
+              name: 'label',
+            },
+          });
+        wrapper
+          .find('input[name="address"]')
+          .first()
+          .simulate('change', {
+            target: {
+              value: accounts.validator.summary.address,
+              name: 'address',
+            },
+          });
+        wrapper.find('button.save-button').simulate('click');
+        expect(toast.error).toHaveBeenCalledTimes(1);
+        expect(toast.error).toHaveBeenCalledWith(
+          `Bookmark with name "${bookmarkTitle}" already exists`
+        );
       });
 
       it(`should show error on invalid address - ${token}`, () => {
