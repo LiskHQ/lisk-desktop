@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { keyCodes } from 'src/utils/keyCodes';
-import { passphrase as LiskClientPassphrase } from '@liskhq/lisk-client';
+import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
 import Icon from 'src/theme/Icon';
 import Input from 'src/theme/Input';
 import Feedback from 'src/theme/feedback/feedback';
@@ -86,10 +86,10 @@ class passphraseInput extends React.Component {
     };
 
     const passphrase = values.join(' ').trim();
-    if (!LiskClientPassphrase.Mnemonic.validateMnemonic(passphrase)) {
-      const validationErrors = LiskClientPassphrase.validation.getPassphraseValidationErrors(
+    if (!LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
+      const validationErrors = LiskPassphrase.validation.getPassphraseValidationErrors(
         passphrase,
-        LiskClientPassphrase.Mnemonic.wordlists.ENGLISH,
+        LiskPassphrase.Mnemonic.wordlists.english,
         inputsLength
       );
       errorState.passphraseIsInvalid = true;

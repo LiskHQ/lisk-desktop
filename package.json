@@ -124,7 +124,6 @@
     "await-to-js": "2.1.1",
     "axios": "0.27.2",
     "bignumber.js": "8.0.1",
-    "bitcore-mnemonic": "8.25.25",
     "browser-or-node": "1.1.0",
     "chart.js": "2.9.4",
     "classnames": "2.3.2",
