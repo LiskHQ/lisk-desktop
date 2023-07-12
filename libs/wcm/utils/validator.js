@@ -27,6 +27,10 @@ const parseWalletConnectUri = (uri) => {
 };
 
 export const isValidWCURI = (uri) => {
+  const [protocol, ...rest] = uri.split(':');
+  if (protocol !== 'wc' || rest.length > 1) {
+    return false;
+  }
   const result = parseWalletConnectUri(uri);
 
   return !(!result.topic || !result.symKey || !result.relay);
