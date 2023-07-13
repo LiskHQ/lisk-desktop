@@ -5,11 +5,11 @@ import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLa
 import AccountRow from '@account/components/AccountRow';
 import { useAccounts } from '@account/hooks/useAccounts';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
-import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
+import { getRequestTransaction, rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
-import { decodeTransaction, toTransactionJSON } from '@transaction/utils/encoding';
+import { toTransactionJSON } from '@transaction/utils/encoding';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
@@ -23,22 +23,11 @@ import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { validator } from '@liskhq/lisk-client';
 import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
 
 const getTitle = (key, t) =>
-  Object.values(SIGNING_METHODS).find((item) => item.key === key)?.title ?? t('Method not found');
-
-const getRequestTransaction = (request) => {
-  const { payload, schema } = request.request.params;
-  try {
-    validator.validator.validateSchema(schema);
-    return decodeTransaction(Buffer.from(payload, 'hex'), schema);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+  Object.values(SIGNING_METHODS).find((item) => item.key === key)?.title ?? t('Method not found.');
 
 const defaultToken = { symbol: 'LSK' };
 

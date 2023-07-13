@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import Box from 'src/theme/box';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
@@ -62,10 +61,15 @@ const BlockchainAppDetailsHeader = ({ application, chainAction, loading }) => {
               </Box>
             )}
             <div className={styles.addressRow}>
-              <Link className={`${styles.appLink}`} target="_blank" to={projectPage}>
+              <a
+                rel="noopener noreferrer"
+                className={`${styles.appLink}`}
+                target="_blank"
+                href={projectPage}
+              >
                 <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
                 {t(projectPage)}
-              </Link>
+              </a>
             </div>
           </Box>
         </>

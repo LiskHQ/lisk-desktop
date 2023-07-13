@@ -13,6 +13,7 @@ describe('Electron Browser Window Wrapper', () => {
   const electronLocalshortcut = {
     register: () => {},
   };
+  const url = 'http://localhost:8080/';
 
   const electron = {
     screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
@@ -32,6 +33,7 @@ describe('Electron Browser Window Wrapper', () => {
         send: (event, value) => {
           events.push({ event, value });
         },
+        getURL: () => url,
       },
     }),
     Menu: {
@@ -40,8 +42,15 @@ describe('Electron Browser Window Wrapper', () => {
       popup: spy(),
     },
     app: { getName: () => 'Lisk', getVersion: () => 'some version' },
+    shell: {
+      openExternal: spy(),
+    },
   };
-  const url = 'http://localhost:8080/';
+  const storage = {
+    get: (item, callback) => {
+      callbacks[item] = callback;
+    },
+  };
 
   let processMock;
   let serverMock;
@@ -69,7 +78,6 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser.webPreferences.backgroundThrottling).to.equal(false);
       expect(win.browser.webPreferences.preload).to.equal('test');
       expect(win.browser.center).to.equal(true);
-      expect(win.browser.devtools).to.equal(true);
     });
 
     it('Creates the window of maximum size possible size on < 1680X1050 display', () => {
@@ -83,6 +91,32 @@ describe('Electron Browser Window Wrapper', () => {
       win.init({ electron, path, electronLocalshortcut });
       expect(win.browser.height).to.equal(1050);
       expect(win.browser.width).to.equal(1680);
+    });
+
+    it('Should validate urls on navigation to an external link', () => {
+      const mockEvent = { preventDefault: spy() };
+      win.create({ electron, path, electronLocalshortcut, storage });
+      let mockUrl = 'https://lisk.com';
+
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
+
+      mockUrl = 'https://lisk.com/path/test';
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
+
+      mockUrl = 'http://localhost:9000'
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
+      
+      mockUrl = 'https://www.testing.com'
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
+      
+      mockUrl = 'testing'
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
+
     });
   });
 
@@ -103,12 +137,6 @@ describe('Electron Browser Window Wrapper', () => {
   });
 
   describe('Create', () => {
-    const storage = {
-      get: (item, callback) => {
-        callbacks[item] = callback;
-      },
-    };
-
     it('Sends blur and focus events', () => {
       win.create({
         electron,
