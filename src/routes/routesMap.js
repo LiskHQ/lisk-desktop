@@ -22,7 +22,6 @@ import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
 import ClaimRewardsView from '@pos/validator/components/ClaimRewardsView';
 import editStakeManager from '@pos/validator/manager/editStakeManager';
 import StakingQueue from '@pos/validator/manager/stakingQueueManager';
-import DeviceDisconnect from '@common/components/deviceDisconnectDialog';
 import ConfirmationDialog from '@common/components/ConfirmationDialog';
 import { ChangeCommissionDialog } from '@pos/validator/components/ChangeCommission/Dialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
@@ -89,7 +88,6 @@ export default {
   editStake: editStakeManager,
   selectHardwareDeviceModal: SelectHardwareDeviceModal,
   stakingQueue: StakingQueue,
-  deviceDisconnectDialog: DeviceDisconnect,
   confirmationDialog: ConfirmationDialog,
   reclaimBalance: ReclaimBalanceModal,
   multiSignature: RegisterMultisig,
