@@ -51,7 +51,7 @@ const ConnectionSummary = () => {
   const rejectHandler = async () => {
     const result = await reject();
     addSearchParamsToUrl(history, {
-      modal: 'connectionSuccess',
+      modal: 'connectionStatus',
       action: ACTIONS.REJECT,
       status: result.status,
       name: result.data?.params?.proposer.metadata.name ?? '',
