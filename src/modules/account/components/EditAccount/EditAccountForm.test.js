@@ -17,6 +17,11 @@ const mockSelector = {
 
 jest.mock('react-i18next');
 jest.mock('@account/hooks/useCurrentAccount');
+jest.mock('@account/hooks/useAccounts', () => ({
+  useAccounts: jest.fn(() => ({
+    accounts: mockSavedAccounts,
+  })),
+}));
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
   useSelector: jest.fn((fn) => fn(mockSelector)),
@@ -33,6 +38,7 @@ describe('Edit account', () => {
     const currentAccount = mockSavedAccounts[0];
     useCurrentAccount.mockReturnValue([currentAccount, jest.fn()]);
     renderWithRouter(EditAccountForm, props);
+
     const defaultAccountName = currentAccount.metadata.name;
     const updatedAccountName = 'updated_lisk_account';
 
@@ -58,6 +64,7 @@ describe('Edit account', () => {
   it('should throw errors if account name is empty', async () => {
     useCurrentAccount.mockReturnValue([mockSavedAccounts[0], jest.fn()]);
     renderWithRouter(EditAccountForm, props);
+
     expect(screen.getByText('Account name')).toBeInTheDocument();
     fireEvent.change(screen.getByTestId('accountName'), {
       target: { value: 'ac' },
@@ -76,6 +83,7 @@ describe('Edit account', () => {
   it('should display errors if account name is invalid', async () => {
     useCurrentAccount.mockReturnValue([mockSavedAccounts[0], jest.fn()]);
     renderWithRouter(EditAccountForm, props);
+
     const invalidAccountName = 'invalid account name';
     expect(screen.getByText('Account name')).toBeInTheDocument();
     fireEvent.change(screen.getByTestId('accountName'), {
@@ -87,6 +95,25 @@ describe('Edit account', () => {
     await waitFor(() => {
       expect(
         screen.getByText('Can be alphanumeric with either !,@,$,&,_,. as special characters')
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('should display errors if account name already exists', async () => {
+    useCurrentAccount.mockReturnValue([mockSavedAccounts[0], jest.fn()]);
+    renderWithRouter(EditAccountForm, props);
+
+    const duplicateAccountName = 'account_2';
+    expect(screen.getByText('Account name')).toBeInTheDocument();
+    fireEvent.change(screen.getByTestId('accountName'), {
+      target: { value: duplicateAccountName },
+    });
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Save'));
+    });
+    await waitFor(() => {
+      expect(
+        screen.getByText(`Account with name "${duplicateAccountName}" already exists`)
       ).toBeInTheDocument();
     });
   });
