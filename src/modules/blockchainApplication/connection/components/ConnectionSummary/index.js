@@ -69,6 +69,7 @@ const ConnectionSummary = () => {
       className={classNames(styles.dialogWrapper, grid.row, grid['center-xs'])}
     >
       <BlockchainAppDetailsHeader
+        className={styles.blockchainAppDetailsHeaderProp}
         application={application}
         clipboardCopyItems={clipboardCopyItems}
       />

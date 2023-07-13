@@ -7,12 +7,16 @@
   & > span {
     color: white !important;
   }
+
+  & .blockchainAppDetailsHeaderProp {
+    padding-bottom: 24px;
+  }
 }
 
 .wrapper {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 24px 24px 24px;
+  padding: 24px;
   overflow-y: scroll;
 
   & .twoColumn {

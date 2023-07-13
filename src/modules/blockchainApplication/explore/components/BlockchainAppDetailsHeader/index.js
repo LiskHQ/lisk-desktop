@@ -9,6 +9,7 @@ import loadingChainLogo from '../../../../../../setup/react/assets/images/loadin
 import styles from './blockchainAppDetailsHeader.css';
 
 const BlockchainAppDetailsHeader = ({
+  className,
   headerText,
   application,
   chainAction,
@@ -19,7 +20,7 @@ const BlockchainAppDetailsHeader = ({
   const { name, projectPage, icon, bg } = application.data;
 
   return (
-    <header>
+    <header className={className}>
       {loading ? (
         <>
           <div className={styles.avatarContainer}>

@@ -10,19 +10,22 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px 20px 0 20px;
-    height: auto;
-    overflow-y: auto;
+    width: 100%;
 
     & > p {
       margin-bottom: 0;
       color: var(--color-maastricht-blue);
     }
   }
+
+  & .description {
+    margin: 16px 0 0 0;
+    font-weight: var(--font-weight-bold);
+  }
 }
 
 .txDetails {
-  max-height: calc(100vh - 80px - 290px) !important; /* stylelint-disable-line unit-whitelist */
+  max-height: calc(100vh - 80px - 424px) !important; /* stylelint-disable-line unit-whitelist */
   margin-bottom: 20px;
 
   &.small {
