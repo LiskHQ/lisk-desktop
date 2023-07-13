@@ -38,13 +38,13 @@ const RequestSignSummary = ({
   };
   const Layout = LayoutSchema.structuredGeneralLayout;
 
-  const { chainName, chainID, projectPage, logo } = formProps.fields.recipientChain;
+  const { chainName, chainID, projectPage, logo } = formProps.fields?.recipientChain || {};
 
   const application = {
     data: {
       name: chainName,
       projectPage,
-      icon: logo.png,
+      icon: logo?.png,
     },
   };
 
