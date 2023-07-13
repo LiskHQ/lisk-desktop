@@ -49,9 +49,9 @@ const DialogAddNetwork = () => {
     const existingCustomNetworkName = fullNetworkList.some(
       (network) => network.name.toLowerCase() === values.name.toLowerCase()
     );
-    const existingCustomNetworkServiceUrl = fullNetworkList.some(
-      (network) => network.serviceUrl === values.serviceUrl
-    );
+    const existingCustomNetworkServiceUrl = fullNetworkList
+      .filter((network) => network.serviceUrl !== 'http://localhost:9901')
+      .some((network) => network.serviceUrl === values.serviceUrl);
     if (!defaultName && (existingCustomNetworkName || existingCustomNetworkServiceUrl)) {
       setErrorText('Network name or serviceUrl already exists');
       return;
