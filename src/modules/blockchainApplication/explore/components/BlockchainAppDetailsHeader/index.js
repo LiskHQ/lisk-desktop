@@ -42,8 +42,8 @@ const BlockchainAppDetailsHeader = ({
         <>
           <div className={styles.avatarContainer}>
             {headerText && <h2 className={styles.headerText}>{headerText}</h2>}
-            <img src={icon} className={styles.logo} />
-            <img src={bg} className={styles.bg} />
+            <img src={icon} className={styles.logo} alt='logo' />
+            <img src={bg} className={styles.bg} alt='backgroun-color' />
           </div>
           <Box className={styles.detailsWrapper}>
             <div className={styles.chainNameWrapper}>
