@@ -132,7 +132,6 @@ module.exports = {
     'src/modules/common/components/timestamp/index.js',
     'src/utils/localJSONStorage.js',
     'src/utils/analytics.js',
-    'src/modules/bookmark/utils.js',
     'src/theme/Theme.js',
     'src/modules/wallet/utils/hwManager.js',
     'src/modules/wallet/utils/account.js',

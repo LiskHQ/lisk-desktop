@@ -31,7 +31,9 @@ export const getIndexOfLabel = (bookmarks, { label, token = tokenMap.LSK.key }) 
 /**
  *  Checks the label and returns feedback
  *
+ * @param {String} token - LSK or any other token
  * @param {String} value - The label string to check
+ * @param {Object} bookmarks - List of bookmarks from Redux store
  * @param {Function} t - i18n function
  * @returns {String} - Feedback string. Empty string if the label is valid
  */
@@ -50,7 +52,7 @@ export const validateBookmarkLabel = (token, value = '', bookmarks, t) => {
  *
  * @param {String} token - LSK or any other token
  * @param {String} value - Address string
- * @param {Object} bookmarks - Lisk of bookmarks from Redux store
+ * @param {Object} bookmarks - List of bookmarks from Redux store
  * @param {Function} t - i18n function
  * @param {Boolean} isUnique - Should check if the account is already a bookmark
  * @returns {String} - Feedback string. Empty string if the address is valid (and unique)
