@@ -13,6 +13,7 @@ import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
 import { immutablePush, immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
+import networks from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
@@ -44,10 +45,11 @@ const DialogAddNetwork = () => {
     const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
     let updatedCustomNetworks;
-    const existingCustomNetworkName = customNetworks.some(
-      (network) => network.name === values.name
+    const fullNetworkList = [...Object.values(networks), ...customNetworks];
+    const existingCustomNetworkName = fullNetworkList.some(
+      (network) => network.name.toLowerCase() === values.name.toLowerCase()
     );
-    const existingCustomNetworkServiceUrl = customNetworks.some(
+    const existingCustomNetworkServiceUrl = fullNetworkList.some(
       (network) => network.serviceUrl === values.serviceUrl
     );
     if (!defaultName && (existingCustomNetworkName || existingCustomNetworkServiceUrl)) {
@@ -55,7 +57,7 @@ const DialogAddNetwork = () => {
       return;
     }
     if (defaultName) {
-      const editedCustomNetworkIndex = customNetworks.findIndex(
+      const editedCustomNetworkIndex = fullNetworkList.findIndex(
         (network) => network.name === defaultName
       );
       updatedCustomNetworks = immutableSetToArray({
