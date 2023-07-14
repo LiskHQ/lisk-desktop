@@ -3,16 +3,15 @@ export function sanitizeTextFromDomains(text) {
     return '';
   }
   const trimmedText = text.slice(0, 30);
-  const httpRegexG =
-    /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_+.~#?&/=]*/g;
+  const httpRegexG = /[-\w@:%.+~#=]{1,64}\.\w{1,6}\b[-\w()@:%+.~#?&/=]*/gi;
   const urls = trimmedText.match(httpRegexG);
 
   if (!urls) {
     return trimmedText;
   }
 
-  const urlRegexPattern = new RegExp(`\\b${urls.join('|')}\\b`, 'gi');
-  const textWithoutDomains = trimmedText.replace(urlRegexPattern, '');
+  const escapedUrls = urls.map(url => url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const urlRegexPattern = new RegExp(`\\b(${escapedUrls.join('|')})\\b`, 'gi');
 
-  return textWithoutDomains;
+  return trimmedText.replace(urlRegexPattern, '');
 }

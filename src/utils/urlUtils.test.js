@@ -22,6 +22,12 @@ describe('sanitizeTextFromDomains', () => {
     expect(sanitizeTextFromDomains(text)).toEqual(expected);
   });
 
+  it('Should remove a domain with param from a string', () => {
+    const text = 'Web app scam.io?name=scam Web';
+    const expected = 'Web app  Web';
+    expect(sanitizeTextFromDomains(text)).toEqual(expected);
+  });
+
   it('Should remove multiple domains from a string', () => {
     const text = 'Web scam.io phish.com';
     const expected = 'Web  ';
