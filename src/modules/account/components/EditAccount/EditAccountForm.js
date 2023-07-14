@@ -48,7 +48,7 @@ const EditAccountForm = ({ nextStep }) => {
       (acc) => acc.metadata.name.toLowerCase() === accountName.toLowerCase()
     );
     if (existingAccountName) {
-      setError('accountName', { message: `Account with name "${accountName}" already exists` });
+      setError('accountName', { message: t(`Account with name "${accountName}" already exists.`) });
       return;
     }
     dispatch(updateCurrentAccount({ name: accountName }));

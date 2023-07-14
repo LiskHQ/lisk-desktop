@@ -10,7 +10,6 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import BoxFooter from '@theme/box/footer';
 import { PrimaryButton, SecondaryButton } from '@theme/buttons';
-import Icon from '@theme/Icon';
 import ModalWrapper from '@bookmark/components/BookmarksListModal/BookmarkModalWrapper';
 import { useAuth } from '@auth/hooks/queries';
 import styles from './AddBookmark.css';
@@ -130,9 +129,6 @@ const AddBookmark = ({ token: { active }, bookmarks, bookmarkAdded }) => {
     <ModalWrapper>
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <header className={styles.header}>
-            <Icon name="bookmarkActive" />
-          </header>
           <Box className={styles.box}>
             <BoxHeader>
               <h2>{t('New bookmark')}</h2>

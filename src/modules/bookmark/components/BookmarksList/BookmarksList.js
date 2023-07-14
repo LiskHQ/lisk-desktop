@@ -117,24 +117,26 @@ export class BookmarksList extends React.Component {
 
     return (
       <section className={` ${styles.wrapper} ${className} bookmarks-list`}>
-        {enableFilter ? (
-          <header className={styles.header}>
-            <span>
-              <Input
-                className={`${styles.searchInput} bookmarks-filter-input`}
-                icon="bookmarkActive"
-                iconClassName={styles.icon}
-                size="l"
-                onChange={this.onFilterChange}
-                value={filter}
-                placeholder={t('Search by name or address')}
-              />
-            </span>
-          </header>
-        ) : null}
+        <Box className={styles.container}>
+          <BoxHeader className={styles.heading}>
+            <h2>{t('Bookmarks')}</h2>
+          </BoxHeader>
+        </Box>
         <Box className={styles.box}>
-          <BoxHeader>
-            <h2 className={styles.heading}>{t('Bookmarks')}</h2>
+          <BoxHeader className={styles.header}>
+            {enableFilter ? (
+              <span className={styles.searchWrapper}>
+                <Input
+                  className={`${styles.searchInput} bookmarks-filter-input`}
+                  icon="bookmarkActive"
+                  iconClassName={styles.icon}
+                  size="l"
+                  onChange={this.onFilterChange}
+                  value={filter}
+                  placeholder={t('Search by name or address')}
+                />
+              </span>
+            ) : null}
             {isEditable && selectedBookmarks.length ? (
               <PrimaryButton className={styles.addButton} onClick={onAddBookmark} size="s">
                 <Icon name="plus" className={styles.plusIcon} />
@@ -185,7 +187,7 @@ export class BookmarksList extends React.Component {
                         <>
                           <TertiaryButton
                             onClick={(e) => this.updateBookmark(e, {})}
-                            className="bookmarks-cancel-button"
+                            className={`bookmarks-cancel-button ${styles.cancelBtn}`}
                             size="m"
                           >
                             {t('Cancel')}

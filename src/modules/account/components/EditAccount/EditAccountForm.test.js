@@ -113,7 +113,7 @@ describe('Edit account', () => {
     });
     await waitFor(() => {
       expect(
-        screen.getByText(`Account with name "${duplicateAccountName}" already exists`)
+        screen.getByText(`Account with name "${duplicateAccountName}" already exists.`)
       ).toBeInTheDocument();
     });
   });
