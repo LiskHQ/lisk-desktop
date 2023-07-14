@@ -5,9 +5,9 @@ import BoxEmptyState from 'src/theme/box/emptyState';
 import Icon from 'src/theme/Icon';
 import styles from '../BookmarksList/BookmarksList.css'; // @todo split the css
 
-const EmptyState = ({ bookmarks, token, emptyStateClassName, t, onAddBookmark }) => (
+const EmptyState = ({ bookmarks, activeToken, emptyStateClassName, t, onAddBookmark }) => (
   <>
-    {bookmarks[token.active].length ? (
+    {bookmarks[activeToken].length ? (
       <BoxEmptyState className={emptyStateClassName}>
         <Illustration name="emptyBookmarkFiler" className="bookmark-empty-filter-illustration" />
         <p>{t('There are no results matching your search term.')}</p>
