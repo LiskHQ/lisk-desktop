@@ -99,7 +99,8 @@ describe('passphraseInput', () => {
       expect(props.onFill).toBeCalledWith(passphrase, 'Required');
     });
 
-    const ONLY_ONE_WORD_ERROR = 'Passphrase should have 12 words, entered passphrase has 1';
+    const ONLY_ONE_WORD_ERROR =
+      'Passphrase contains 1 words instead of expected 12. Please check the passphrase.';
     it(`should call props.onFill with error="${ONLY_ONE_WORD_ERROR}" if an "test" passphrase is entered`, () => {
       const passphrase = 'test';
       const target = {
@@ -110,10 +111,11 @@ describe('passphraseInput', () => {
       expect(props.onFill).toBeCalledWith(passphrase, ONLY_ONE_WORD_ERROR);
     });
 
-    const NOT_VALID_ERROR = 'Passphrase is not valid';
+    const NOT_VALID_ERROR =
+      'Passphrase contains 7 uppercase character instead of expected 0. Please check the passphrase.';
     it(`should call props.onFill with error="${NOT_VALID_ERROR}" if an otherwise invalid passphrase is entered`, () => {
       const passphrase =
-        'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
+        'STOMACH bunker border grace wool amazing settle sugar journey sleep pole boat';
       const clipboardData = {
         getData: () => passphrase,
       };
@@ -122,7 +124,7 @@ describe('passphraseInput', () => {
     });
   });
 
-  describe('Change focus with keypresses', () => {
+  describe('Change focus with key presses', () => {
     it('Should remove selected class from inputs on blur', () => {
       wrapper.find('input').first().simulate('click');
       expect(wrapper.find('input').first()).toHaveClassName('selected');
