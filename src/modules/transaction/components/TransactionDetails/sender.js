@@ -14,7 +14,7 @@ const Sender = () => {
   const { activeToken, transaction, network } = React.useContext(TransactionDetailsContext);
   const validatorName = getValidatorName(transaction, activeToken);
   const moduleCommand = joinModuleAndCommand(transaction);
-  const senderLabel = getModuleCommandSenderLabel()[moduleCommand];
+  const senderLabel = getModuleCommandSenderLabel()[moduleCommand] || 'Sender';
   const address = extractAddressFromPublicKey(transaction.senderPublicKey);
 
   return (

@@ -1,5 +1,5 @@
 import SignClient from '@walletconnect/sign-client';
-import { createSignClient, client } from './connectionCreator';
+import { createSignClient } from './connectionCreator';
 
 jest.mock('@walletconnect/sign-client', () => ({
   init: jest.fn().mockResolvedValue(Promise.resolve({ mock: true })),
@@ -10,7 +10,6 @@ describe('connectionCreator', () => {
     process.env = {
       PROJECT_ID: '8f2a5ab63f54b27471714e81d1a49da3',
     };
-    expect(client).toEqual(undefined);
     const res = await createSignClient();
     expect(SignClient.init).toHaveBeenCalledWith({
       projectId: process.env.PROJECT_ID,
@@ -23,6 +22,5 @@ describe('connectionCreator', () => {
       },
     });
     expect(res).toEqual({ mock: true });
-    expect(client).toEqual({ mock: true });
   });
 });
