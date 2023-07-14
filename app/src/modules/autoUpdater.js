@@ -4,8 +4,8 @@ import {
   IPC_DOWNLOAD_UPDATE_PROGRESS,
   IPC_DOWNLOAD_UPDATE_START,
   IPC_UPDATE_AVAILABLE,
-  IPC_UPDATE_STARTED
-} from "../../../src/const/ipcGlobal";
+  IPC_UPDATE_STARTED,
+} from '../../../src/const/ipcGlobal';
 
 const getErrorMessage = (error) => {
   if (error.indexOf('404 Not Found') > -1 || error.indexOf('command is disabled') > -1) {

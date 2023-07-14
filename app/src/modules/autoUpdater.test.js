@@ -7,8 +7,8 @@ import {
   IPC_DOWNLOAD_UPDATE_PROGRESS,
   IPC_DOWNLOAD_UPDATE_START,
   IPC_UPDATE_STARTED,
-  IPC_UPDATE_AVAILABLE
-} from "../../../src/const/ipcGlobal";
+  IPC_UPDATE_AVAILABLE,
+} from '../../../src/const/ipcGlobal';
 
 describe('autoUpdater', () => {
   const version = '1.2.3';

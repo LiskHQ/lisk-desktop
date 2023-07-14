@@ -7,6 +7,7 @@ const ConnectionContext = createContext({
   sessions: [],
   sessionProposal: null,
   sessionRequest: null,
+  signClient: null,
 });
 
 export default ConnectionContext;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { client } from '@libs/wcm/utils/connectionCreator';
 import { usePairings } from './usePairings';
 
 const setPairings = jest.fn();
@@ -10,31 +9,35 @@ jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
 }));
 
-jest.mock('../utils/connectionCreator', () => ({
-  client: {
+jest.spyOn(React, 'useContext');
+
+describe('usePairings', () => {
+  const signClient = {
     approve: jest.fn().mockImplementation(() =>
       Promise.resolve({
         acknowledged: jest.fn(),
       })
     ),
-    pair: jest.fn(),
+    core: {
+      pairing: {
+        pair: jest.fn(),
+      },
+    },
     pairing: {
       getAll: jest.fn().mockReturnValue(defaultPairings),
     },
-  },
-}));
+  };
 
-jest.spyOn(React, 'useContext');
-
-describe('usePairings', () => {
   describe('On mount time', () => {
     React.useContext.mockReturnValue({
       pairings: [],
       setPairings: (...rest) => setPairings(...rest),
+      signClient,
     });
+
     it('Should get all active pairings once mounted', () => {
       renderHook(() => usePairings());
-      expect(client.pairing.getAll).toHaveBeenCalledWith({ active: true });
+      expect(signClient.pairing.getAll).toHaveBeenCalledWith({ active: true });
     });
   });
 
@@ -44,6 +47,7 @@ describe('usePairings', () => {
       React.useContext.mockReturnValue({
         pairings: defaultPairings,
         setPairings: (...rest) => setPairings(...rest),
+        signClient,
       });
     });
 
@@ -57,12 +61,12 @@ describe('usePairings', () => {
       expect(setPairings).toHaveBeenCalled();
     });
 
-    it('Should call client.pair if a URI is provided with setUri method', () => {
+    it('Should call signClient.pair if a URI is provided with setUri method', () => {
       const { result } = renderHook(() => usePairings());
       const { setUri } = result.current;
       const uri = 'wc:0x123';
       setUri(uri);
-      expect(client.pair).toHaveBeenCalledWith({ uri });
+      expect(signClient.core.pairing.pair).toHaveBeenCalledWith({ uri });
     });
 
     it('Should push new pairing if addPairing is called', () => {
@@ -80,7 +84,7 @@ describe('usePairings', () => {
       act(() => {
         refreshPairings();
       });
-      expect(client.pairing.getAll).toHaveBeenCalledWith({ active: true });
+      expect(signClient.pairing.getAll).toHaveBeenCalledWith({ active: true });
       expect(result.current.pairings).toEqual(defaultPairings);
     });
   });
