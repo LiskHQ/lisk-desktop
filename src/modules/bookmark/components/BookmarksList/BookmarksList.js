@@ -161,14 +161,14 @@ export const BookmarksList = ({
                     {editedAddress === bookmark.address ? (
                       <>
                         <TertiaryButton
-                          onClick={(e) => updateBookmark(e, {})}
+                          onClick={updateBookmark({})}
                           className={`bookmarks-cancel-button ${styles.cancelBtn}`}
                           size="m"
                         >
                           {t('Cancel')}
                         </TertiaryButton>
                         <TertiaryButton
-                          onClick={(e) => saveChanges(e)}
+                          onClick={saveChanges}
                           className="bookmarks-save-changes-button"
                           size="m"
                           disabled={!!feedback}
