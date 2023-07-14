@@ -35,7 +35,7 @@
 
   & .box {
     max-height: 370px;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-bottom: 0;
     height: 100%;
 
