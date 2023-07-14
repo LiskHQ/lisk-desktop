@@ -114,7 +114,7 @@
   "dependencies": {
     "@hookform/resolvers": "2.8.8",
     "@ledgerhq/hw-transport-node-hid": "6.27.17-next.0",
-    "@liskhq/lisk-client": "6.0.0-beta.2",
+    "@liskhq/lisk-client": "6.0.0-beta.3",
     "@tanstack/react-query": "4.0.10",
     "@tanstack/react-query-devtools": "4.2.1",
     "@walletconnect/sign-client": "2.9.0",
@@ -124,7 +124,6 @@
     "await-to-js": "2.1.1",
     "axios": "0.27.2",
     "bignumber.js": "8.0.1",
-    "bitcore-mnemonic": "8.25.25",
     "browser-or-node": "1.1.0",
     "chart.js": "2.9.4",
     "classnames": "2.3.2",
@@ -173,7 +172,6 @@
     "react-router-dom": "5.3.4",
     "react-string-replace": "0.4.4",
     "react-toastify": "5.5.0",
-    "react-waypoint": "9.0.3",
     "redux": "4.0.1",
     "redux-persist": "6.0.0",
     "redux-thunk": "2.3.0",
@@ -292,9 +290,5 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
-  },
-  "resolutions": {
-    "**/semver": "7.5.3",
-    "**/glob-parent": "5.1.2"
   }
 }
