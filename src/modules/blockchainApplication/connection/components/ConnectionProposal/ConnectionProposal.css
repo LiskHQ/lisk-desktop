@@ -39,6 +39,10 @@
     color: var(--color-red);
   }
 
+  & .feedbackCorrectionColor {
+    color: var(--color-zodiac-blue);
+  }
+
   & button {
     margin-top: 24px;
     width: 100%;

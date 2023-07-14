@@ -86,7 +86,10 @@ const ConnectionProposal = () => {
             {nameSpaceError && (
               <span className={styles.feedback}>
                 <span className={styles.feedbackErrorColor}>{nameSpaceError}</span>
-                <span> {t('Please enter a valid blockchain app URI.')}</span>
+                <span className={styles.feedbackCorrectionColor}>
+                  {' '}
+                  {t('Please enter a valid blockchain app URI.')}
+                </span>
               </span>
             )}
             <PrimaryButton
