@@ -49,7 +49,7 @@ export const BookmarksList = ({
     setFilter(target.value);
   };
 
-  const updateBookmark = ({ address, title }) => {
+  const updateBookmark = ({ address = '', title = '' }) => {
     setEditedAddress(address);
     setEditedTitle(title);
     setFeedback('');
@@ -161,7 +161,7 @@ export const BookmarksList = ({
                     {editedAddress === bookmark.address ? (
                       <>
                         <TertiaryButton
-                          onClick={updateBookmark({})}
+                          onClick={() => updateBookmark({})}
                           className={`bookmarks-cancel-button ${styles.cancelBtn}`}
                           size="m"
                         >
