@@ -62,7 +62,7 @@ const DialogAddNetwork = () => {
       return;
     }
     if (defaultName) {
-      const editedCustomNetworkIndex = fullNetworkList.findIndex(
+      const editedCustomNetworkIndex = customNetworks.findIndex(
         (network) => network.name === defaultName
       );
       updatedCustomNetworks = immutableSetToArray({
