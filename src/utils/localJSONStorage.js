@@ -1,4 +1,4 @@
-import {IPC_CONFIG_RETRIEVED, IPC_RETRIEVE_CONFIG, IPC_STORE_CONFIG} from 'src/const/ipcGlobal';
+import { IPC_CONFIG_RETRIEVED, IPC_RETRIEVE_CONFIG, IPC_STORE_CONFIG } from 'src/const/ipcGlobal';
 
 export const setInStorage = (key, value) => {
   const { ipc } = window;

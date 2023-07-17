@@ -9,26 +9,37 @@ import { Input } from 'src/theme';
 import { usePairings } from '@libs/wcm/hooks/usePairings';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS, STATUS } from '@libs/wcm/constants/lifeCycle';
+import { isValidWCURI } from '@libs/wcm/utils/validator';
 import styles from './ConnectionProposal.css';
 
 // eslint-disable-next-line max-statements
 const ConnectionProposal = () => {
   const history = useHistory();
-  const [value, setValue] = useState('');
+  const [wcUri, setWCUri] = useState('');
   const [nameSpaceError, setNameSpaceError] = useState('');
   const [status, setStatus] = useState({});
   const { events } = useEvents();
   const { setUri } = usePairings();
   const { t } = useTranslation();
 
+  // eslint-disable-next-line max-statements
   const clickHandler = async () => {
     setNameSpaceError('');
     setStatus({ ...status, isPending: true });
 
-    const result = await setUri(value);
-    if (result.status === STATUS.FAILURE) {
+    const isValidWCUri = isValidWCURI(wcUri);
+
+    if (!isValidWCUri) {
       setStatus({ ...status, isPending: false });
-      setNameSpaceError('Connection failed');
+      setNameSpaceError('Invalid connection URI.');
+      return;
+    }
+
+    const result = await setUri(wcUri);
+    if (result.status === STATUS.FAILURE) {
+      const errorMessage = result.message?.split(':');
+      setStatus({ ...status, isPending: false });
+      setNameSpaceError(errorMessage?.length ? `${errorMessage[0]}.` : 'Connection failed.');
     } else {
       setStatus(result);
     }
@@ -41,19 +52,19 @@ const ConnectionProposal = () => {
     const nameSpaceKeys = requiredNamespaces && Object.keys(requiredNamespaces);
     const hasNameSpaceError =
       !nameSpaceKeys || nameSpaceKeys.length > 1 || !nameSpaceKeys.includes('lisk');
-    const isSesssionProposal = event?.name === EVENTS.SESSION_PROPOSAL;
+    const isSessionProposal = event?.name === EVENTS.SESSION_PROPOSAL;
 
-    if (isSesssionProposal && hasNameSpaceError) {
-      setValue(`wc:${event?.meta?.params?.pairingTopic}`);
+    if (isSessionProposal && hasNameSpaceError) {
+      setWCUri(`wc:${event?.meta?.params?.pairingTopic}`);
       setNameSpaceError(t('You are trying to connect to an unsupported blockchain app.'));
-    } else if (isSesssionProposal) {
+    } else if (isSessionProposal) {
       addSearchParamsToUrl(history, { modal: 'connectionSummary' });
     }
   }, [events]);
 
   const onInputChange = (event) => {
     setNameSpaceError('');
-    setValue(event.target.value);
+    setWCUri(event.target.value);
   };
 
   return (
@@ -68,19 +79,22 @@ const ConnectionProposal = () => {
             <Input
               type="text"
               onChange={onInputChange}
-              value={value}
+              value={wcUri}
               className={styles.input}
               placeholder={t('Enter connection URI')}
             />
             {nameSpaceError && (
               <span className={styles.feedback}>
                 <span className={styles.feedbackErrorColor}>{nameSpaceError}</span>
-                <span> {t('Please enter a supported blockchain app URI.')}</span>
+                <span className={styles.feedbackCorrectionColor}>
+                  {' '}
+                  {t('Please enter a valid blockchain app URI.')}
+                </span>
               </span>
             )}
             <PrimaryButton
               onClick={clickHandler}
-              disabled={nameSpaceError || value.length === 0 || status.isPending}
+              disabled={nameSpaceError || wcUri.length === 0 || status.isPending}
             >
               {t('Connect')}
             </PrimaryButton>
