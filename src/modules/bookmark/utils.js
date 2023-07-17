@@ -39,6 +39,7 @@ export const getIndexOfLabel = (bookmarks, { label, token = tokenMap.LSK.key }) 
  * @returns {String} - Feedback string. Empty string if the label is valid
  */
 export const validateBookmarkLabel = (token, value = '', bookmarks, t) => {
+  if (!value) return '';
   if (!value.match(regex.accountName)) {
     return t('Label can be alphanumeric with either !,@,$,&,_,. as special characters');
   }

@@ -16,14 +16,6 @@ describe('Add a new bookmark component', () => {
       active: tokenMap.LSK.key,
     },
     bookmarks,
-    network: {
-      name: 'testnet',
-      networks: {
-        LSK: {
-          serviceUrl: 'https://service.lisk.com',
-        },
-      },
-    },
     bookmarkAdded: jest.fn(),
     prevStep: jest.fn(),
   };
@@ -79,7 +71,7 @@ describe('Add a new bookmark component', () => {
           .at(0)
           .simulate('change', {
             target: {
-              value: `label-${token}`,
+              value: `label_${token}`,
               name: 'label',
             },
           });

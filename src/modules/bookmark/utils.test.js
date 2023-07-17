@@ -80,8 +80,22 @@ describe('Bookmarks', () => {
   });
 
   describe('validateBookmarkLabel', () => {
+    it('returns feedback on invalid labels', () => {
+      const value = 'an invalid bookmark name';
+      expect(validateBookmarkLabel('LSK', value, accounts, t)).to.equal(
+        'Label can be alphanumeric with either !,@,$,&,_,. as special characters'
+      );
+    });
+
+    it('returns feedback on very short labels', () => {
+      const value = 'bk';
+      expect(validateBookmarkLabel('LSK', value, accounts, t)).to.equal(
+        'Label is too short, Min. 3 characters'
+      );
+    });
+
     it('returns feedback on very long labels', () => {
-      const value = 'really long bookmark name';
+      const value = 'really_long_bookmark_name';
       expect(validateBookmarkLabel('LSK', value, accounts, t)).to.equal(
         'Label is too long, Max. 20 characters'
       );

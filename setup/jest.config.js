@@ -170,7 +170,6 @@ module.exports = {
     'src/modules/auth/components/RecoveryPhrase/index.js',
     'src/modules/transaction/components/TransactionMonitor/TransactionMonitorList.js',
     'src/modules/transaction/store/transactionPriorityReducer.js',
-    'src/modules/bookmark/components/BookmarksListModal/BookmarkListModal.js',
     'src/modules/transaction/components/BlockDetailsTransactions/BlockDetailsTransactions.js',
     'src/modules/search/utils/searchUtils.js',
     'src/modules/transaction/components/TransactionDetails/stakes.js',
