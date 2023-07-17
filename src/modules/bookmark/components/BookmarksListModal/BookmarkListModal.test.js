@@ -1,11 +1,18 @@
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import bookmarks from '@tests/constants/bookmarks';
 import BookmarkListModal from './BookmarkListModal';
 
 describe('BookmarkListModal', () => {
   let wrapper;
   let props;
+
+  const store = {
+    token: {
+      active: tokenMap.LSK.key,
+    },
+    bookmarks,
+  };
 
   beforeEach(() => {
     props = {
@@ -15,12 +22,8 @@ describe('BookmarkListModal', () => {
       },
       bookmarkRemoved: jest.fn(),
       bookmarkUpdated: jest.fn(),
-      token: {
-        active: tokenMap.LSK.key,
-      },
-      bookmarks,
     };
-    wrapper = mountWithRouter(BookmarkListModal, props);
+    wrapper = mountWithRouterAndStore(BookmarkListModal, props, {}, store);
   });
 
   it('should render bookmarks list', () => {
@@ -49,7 +52,7 @@ describe('BookmarkListModal', () => {
     wrapper.find('.bookmarks-delete-button').first().simulate('click');
     expect(props.bookmarkRemoved).toHaveBeenCalledWith({
       address: bookmarks.LSK[0].address,
-      token: props.token.active,
+      token: store.token.active,
     });
   });
 
@@ -65,7 +68,7 @@ describe('BookmarkListModal', () => {
         address: bookmarks.LSK[0].address,
         title: newTitle,
       },
-      token: props.token.active,
+      token: store.token.active,
     });
     expect(wrapper).not.toContainMatchingElement('.bookmarks-edit-input');
   });
@@ -82,7 +85,7 @@ describe('BookmarkListModal', () => {
         address: bookmarks.LSK[0].address,
         title: newTitle,
       },
-      token: props.token.active,
+      token: store.token.active,
     });
     expect(wrapper).not.toContainMatchingElement('.bookmarks-edit-input');
   });
