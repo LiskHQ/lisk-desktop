@@ -13,6 +13,7 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import Icon from '@theme/Icon';
 import EmptyState from '../EmptyState/EmptyState';
+import { validateBookmarkLabel } from '../../utils';
 import styles from './BookmarksList.css';
 
 // eslint-disable-next-line max-statements
@@ -81,7 +82,7 @@ export const BookmarksList = ({
 
   const onTitleChange = ({ target: { value } }) => {
     setEditedTitle(value);
-    setFeedback(value.length > 20 ? t('Label is too long.') : '');
+    setFeedback(validateBookmarkLabel(activeToken, value, bookmarks, t));
   };
 
   const onRowClick = (e, bookmark) => {

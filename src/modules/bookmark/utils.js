@@ -1,5 +1,6 @@
 import { tokenKeys, tokenMap } from '@token/fungible/consts/tokens';
 import { validateAddress } from 'src/utils/validators';
+import { regex } from 'src/const/regex';
 
 export const emptyBookmarks = tokenKeys.reduce((acc, token) => ({ ...acc, [token]: [] }), {});
 
@@ -26,7 +27,7 @@ export const getIndexOfBookmark = (bookmarks, { address, token = tokenMap.LSK.ke
   bookmarks[token].findIndex((bookmark) => bookmark.address === address);
 
 export const getIndexOfLabel = (bookmarks, { label, token = tokenMap.LSK.key }) =>
-  bookmarks[token].findIndex((item) => item.title === label);
+  bookmarks[token].findIndex((item) => item.title.toLowerCase() === label.toLowerCase());
 
 /**
  *  Checks the label and returns feedback
@@ -38,6 +39,12 @@ export const getIndexOfLabel = (bookmarks, { label, token = tokenMap.LSK.key }) 
  * @returns {String} - Feedback string. Empty string if the label is valid
  */
 export const validateBookmarkLabel = (token, value = '', bookmarks, t) => {
+  if (!value.match(regex.accountName)) {
+    return t('Label can be alphanumeric with either !,@,$,&,_,. as special characters');
+  }
+  if (value.length < 3) {
+    return t('Label is too short, Min. 3 characters');
+  }
   if (value.length > 20) {
     return t('Label is too long, Max. 20 characters');
   }
