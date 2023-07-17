@@ -172,7 +172,7 @@ export const BookmarksList = ({
                           onClick={saveChanges}
                           className="bookmarks-save-changes-button"
                           size="m"
-                          disabled={!!feedback}
+                          disabled={!!feedback || !editedTitle}
                         >
                           {t('Save changes')}
                         </TertiaryButton>
