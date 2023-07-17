@@ -13,7 +13,7 @@ import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
 import { immutablePush, immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
-import networks from '../../configuration/networks';
+import networks, { networkKeys } from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
@@ -49,10 +49,15 @@ const DialogAddNetwork = () => {
     const existingCustomNetworkName = fullNetworkList.some(
       (network) => network.name.toLowerCase() === values.name.toLowerCase()
     );
+    // Since the localhost address exists in the default networks list
+    // ensure that it can still be added as a custom network
     const existingCustomNetworkServiceUrl = fullNetworkList
-      .filter((network) => network.serviceUrl !== 'http://localhost:9901')
+      .filter((network) => network.name !== networkKeys.customNode)
       .some((network) => network.serviceUrl === values.serviceUrl);
-    if (!defaultName && (existingCustomNetworkName || existingCustomNetworkServiceUrl)) {
+    if (
+      (!defaultName || (defaultName && defaultName !== values.name)) &&
+      (existingCustomNetworkName || existingCustomNetworkServiceUrl)
+    ) {
       setErrorText('Network name or serviceUrl already exists');
       return;
     }
