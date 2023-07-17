@@ -10,9 +10,49 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import classNames from 'classnames';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { getLogo } from '@token/fungible/utils/helpers';
 import BlockchainAppDetailsHeader from '../../../explore/components/BlockchainAppDetailsHeader';
 import AccountsSelector from './AccountsSelector';
 import styles from './connectionSummary.css';
+
+function ChainListingItem({ app }) {
+  const { t } = useTranslation();
+  const { chainName, networkType, chainID, logo } = app;
+  const name = `${chainName}-${networkType}`;
+  const logoUrl = getLogo({ logo });
+
+  return (
+    <div className={styles.ChainListingItem}>
+      <img
+        className={styles.chainLogo}
+        height={40}
+        width={40}
+        src={logoUrl}
+        alt={`${chainName}-logo`}
+      />
+      <div className={styles.textContainer}>
+        <h4 className={styles.name}>{name}</h4>
+        <span className={styles.chainId}>{t('Chain ID: ') + chainID}</span>
+      </div>
+    </div>
+  );
+}
+function ChainListing({ chainIds }) {
+  const chainIDs = chainIds?.join(',');
+  const { data: { data: appMetaData = [] } = {} } = useBlockchainApplicationMeta({
+    config: { params: { chainID: chainIDs } },
+    options: { enabled: !!chainIDs?.length },
+  });
+
+  return (
+    <div className={styles.ChainListing}>
+      {appMetaData.map((app) => (
+        <ChainListingItem key={app.chainID} app={app} />
+      ))}
+    </div>
+  );
+}
 
 // eslint-disable-next-line max-statements
 const ConnectionSummary = () => {
@@ -37,10 +77,7 @@ const ConnectionSummary = () => {
     },
   };
 
-  const clipboardCopyItems = requiredNamespaces.lisk.chains.map((chain) => ({
-    label: 'Chain ID:',
-    value: chain.replace(/\D+/g, ''),
-  }));
+  const liskChainIds = requiredNamespaces.lisk.chains.map((chain) => chain.replace(/\D+/g, ''));
 
   const connectHandler = async () => {
     const result = await approve(addresses);
@@ -69,11 +106,22 @@ const ConnectionSummary = () => {
       className={classNames(styles.dialogWrapper, grid.row, grid['center-xs'])}
     >
       <BlockchainAppDetailsHeader
+        headerText={t('Connect Wallet')}
         className={styles.blockchainAppDetailsHeaderProp}
         application={application}
-        clipboardCopyItems={clipboardCopyItems}
+        clipboardCopyItems={[{ label: t('Connection ID'), value: pairingTopic }]}
       />
       <div className={styles.wrapper}>
+        <p className={styles.connectionDescription}>
+          {t(
+            'This is a request from wallet connect to establish session with Lisk Desktop, please review the following information carefully before approving.'
+          )}
+        </p>
+        <section className={styles.section}>
+          <ValueAndLabel className={styles.labeledValue} label={t('Chains connecting')}>
+            <ChainListing chainIds={liskChainIds} />
+          </ValueAndLabel>
+        </section>
         <section className={styles.section}>
           <ValueAndLabel
             className={styles.labeledValue}
@@ -82,18 +130,13 @@ const ConnectionSummary = () => {
             <AccountsSelector setAddresses={setAddresses} addresses={addresses} />
           </ValueAndLabel>
         </section>
-        <section className={styles.section}>
-          <ValueAndLabel className={styles.labeledValue} label={t('Connection ID')}>
-            <span className="pairing-topic">{pairingTopic}</span>
-          </ValueAndLabel>
-        </section>
         <section className={`${styles.section} ${styles.permissions}`}>
           <span className={styles.label}>{t('Site permissions')}</span>
           <div className={styles.twoColumn}>
             <ValueAndLabel label={t('Methods')}>
               <div className={`${styles.items} methods`}>
                 {requiredNamespaces.lisk.methods.map((method) => (
-                  <span key={method} className={styles.label}>
+                  <span key={method} className={classNames(styles.label, styles.colorSlateGray)}>
                     {method}
                   </span>
                 ))}

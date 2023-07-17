@@ -27,7 +27,6 @@ const BlockchainAppDetailsHeader = ({
             <img src={loadingChainLogo} className={styles.logo} />
             <img src={loadingBackgroundImage} className={styles.bg} />
           </div>
-
           <Box className={`${styles.detailsWrapper} ${styles.loadingDetailsWrapper}`}>
             <div className={styles.chainNameWrapper}>
               <Skeleton className={styles.skeleton} width="25%" />
@@ -42,14 +41,23 @@ const BlockchainAppDetailsHeader = ({
         <>
           <div className={styles.avatarContainer}>
             {headerText && <h2 className={styles.headerText}>{headerText}</h2>}
-            <img src={icon} className={styles.logo} alt='logo' />
-            <img src={bg} className={styles.bg} alt='backgroun-color' />
+            <img src={icon} className={styles.logo} alt="logo" />
+            <img src={bg} className={styles.bg} alt="backgroun-color" />
           </div>
           <Box className={styles.detailsWrapper}>
             <div className={styles.chainNameWrapper}>
               <span className="chain-name-text">{name}</span>
               {chainAction}
             </div>
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href={projectPage}
+              className={styles.appLink}
+            >
+              <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
+              {t(projectPage)}
+            </a>
             {clipboardCopyItems?.length > 0 && (
               <Box className={styles.clipboardCopyItems}>
                 {clipboardCopyItems.map((clipboardCopyItem) => {
@@ -59,7 +67,7 @@ const BlockchainAppDetailsHeader = ({
                     <div className={styles.clipboardCopyItem} key={clipboardCopyItem.value}>
                       {label && <span className={styles.addressRowContentLabel}>{label}</span>}
                       <CopyToClipboard
-                        text={value}
+                        text={value?.replace(/^(.{6})(.+)?(.{4})$/, '$1...$3')}
                         value={value}
                         className="tx-id"
                         containerProps={{
@@ -72,15 +80,6 @@ const BlockchainAppDetailsHeader = ({
                 })}
               </Box>
             )}
-            <a
-              rel="noopener noreferrer"
-              target="_blank"
-              href={projectPage}
-              className={styles.appLink}
-            >
-              <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-              {t(projectPage)}
-            </a>
           </Box>
         </>
       )}

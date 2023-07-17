@@ -1,6 +1,43 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
+.ChainListing {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* stylelint-disable-line unit-whitelist */
+  width: 100%;
+  gap: 16px;
+}
+
+.ChainListingItem {
+  display: flex;
+
+  & .chainLogo {
+    border-radius: 50%;
+  }
+
+  & .textContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+
+    & .name {
+      margin: 0;
+      text-align: left;
+      font-size: var(--font-size-title);
+      color: var(--color-zodiac-blue);
+      font-weight: var(--font-weight-bold);
+    }
+
+    & .chainId {
+      margin-top: 2px;
+      font-size: var(--paragraph-font-size-s);
+      color: var(--color-slate-gray);
+      font-weight: var(--font-weight-normal);
+    }
+  }
+}
+
 .dialogWrapper {
+  max-width: 616px;
   border: none;
   flex-flow: column nowrap;
 
@@ -16,8 +53,15 @@
 .wrapper {
   width: 100%;
   box-sizing: border-box;
-  padding: 24px;
+  padding: 0 24px 24px 24px;
   overflow-y: scroll;
+
+  & .connectionDescription {
+    margin-top: 0;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-zodiac-blue);
+  }
 
   & .twoColumn {
     display: flex;
@@ -35,15 +79,20 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 16.1px;
+    color: var(--color-zodiac-blue);
+  }
+
+  & .colorSlateGray {
     color: var(--color-slate-gray);
   }
 
   & .labeledValue {
     & > span:first-child {
+      margin-bottom: 16px;
       font-weight: 400;
       font-size: 14px;
       line-height: 16.1px;
-      color: var(--color-slate-gray);
+      color: var(--color-zodiac-blue);
     }
   }
 

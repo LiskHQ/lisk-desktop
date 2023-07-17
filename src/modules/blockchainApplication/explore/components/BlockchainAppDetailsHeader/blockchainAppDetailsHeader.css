@@ -69,6 +69,7 @@
 
       & .addressRowContentLabel {
         margin-right: 6px;
+        color: var(--color-slate-gray);
       }
     }
   }
