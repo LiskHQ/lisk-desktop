@@ -12,7 +12,7 @@ import { useSession } from '@libs/wcm/hooks/useSession';
 import classNames from 'classnames';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { getLogo } from '@token/fungible/utils/helpers';
-import { ArrowTransformationIcon } from '@transaction/components/TransactionEventsRow/components';
+import Icon from '@theme/Icon';
 import BlockchainAppDetailsHeader from '../../../explore/components/BlockchainAppDetailsHeader';
 import AccountsSelector from './AccountsSelector';
 import styles from './connectionSummary.css';
@@ -65,7 +65,10 @@ function CollapsableRow({ label, children }) {
         onClick={() => toggleShowChildren(!showChildren)}
       >
         <span>{label}</span>
-        <ArrowTransformationIcon isDownArrow={showChildren} />
+        <Icon
+          name="arrowRightInactive"
+          className={classNames(styles.arrowIcon, showChildren && styles.showArrowDown)}
+        />
       </TertiaryButton>
       {showChildren && children}
     </div>

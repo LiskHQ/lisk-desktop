@@ -37,6 +37,16 @@
 }
 
 .CollapsableRow {
+  & .arrowIcon {
+    width: 10px;
+    transition: all 250ms linear;
+
+    &.showArrowDown {
+      transform: rotate(90deg);
+      transition: all 250ms linear;
+    }
+  }
+
   & .rowHeaderButton {
     height: initial;
     display: flex;

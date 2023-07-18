@@ -1,11 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
-import {truncateTransactionID} from 'src/modules/wallet/utils/account';
+import { truncateTransactionID } from 'src/modules/wallet/utils/account';
 
-import {TertiaryButton} from 'src/theme/buttons';
-import classNames from 'classnames';
+import { TertiaryButton } from 'src/theme/buttons';
 import styles from './TransactionEventsRow.css';
 
 export const TransactionID = ({ id }) => (
@@ -44,11 +43,4 @@ export const CollapseToggle = ({ isCollapsed, onToggle }) => (
       <Icon name="arrowRightInactive" className={isCollapsed ? styles.collapsed : ''} />
     </TertiaryButton>
   </div>
-);
-
-export const ArrowTransformationIcon = ({ isDownArrow }) => (
-  <Icon
-    name="arrowRightInactive"
-    className={classNames(styles.CollapseIcon, isDownArrow && styles.showArrowDown)}
-  />
 );
