@@ -71,7 +71,7 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
     );
     if (values.accountName && existingAccountName) {
       setError('accountName', {
-        message: t(`Account with name "${values.accountName}" already exists`),
+        message: t(`Account with name "${values.accountName}" already exists.`),
       });
       return null;
     }

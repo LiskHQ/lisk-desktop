@@ -163,7 +163,7 @@ describe('Set Password Form validation should work', () => {
     fireEvent.click(screen.getByText('Save Account'));
 
     await waitFor(() => {
-      expect(screen.getByText(`Account with name "account_1" already exists`)).toBeTruthy();
+      expect(screen.getByText(`Account with name "account_1" already exists.`)).toBeTruthy();
     });
   });
 
