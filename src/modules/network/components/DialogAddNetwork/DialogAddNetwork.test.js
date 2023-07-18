@@ -87,7 +87,7 @@ describe('DialogAddNetwork', () => {
     });
     fireEvent.click(screen.getByRole('button'));
     await waitFor(() => {
-      expect(screen.getByText('Network name or serviceUrl already exists')).toBeInTheDocument();
+      expect(screen.getByText('Network name or serviceUrl already exists.')).toBeInTheDocument();
     });
   });
 
