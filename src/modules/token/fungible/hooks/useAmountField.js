@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import numeral from 'numeral';
 
 import { regex } from 'src/const/regex';
 import { validateAmount } from 'src/utils/validators';
@@ -18,14 +17,14 @@ const baseState = {
 const getAmountFieldState = (initialValue, getAmountFeedbackAndError) =>
   initialValue
     ? {
-        ...baseState,
-        ...getAmountFeedbackAndError(initialValue),
-        value: initialValue,
-      }
+      ...baseState,
+      ...getAmountFeedbackAndError(initialValue),
+      value: initialValue,
+    }
     : {
-        ...baseState,
-        value: '',
-      };
+      ...baseState,
+      value: '',
+    };
 
 const useAmountField = (initialValue, balance = '0', token) => {
   const { t, i18n } = useTranslation();
@@ -45,9 +44,11 @@ const useAmountField = (initialValue, balance = '0', token) => {
       checklist: [...checklist, 'MIN_BALANCE'],
     });
 
+    console.log('---->', value, maxAmount, balance, feedback, BigInt(maxAmount), BigInt(convertToBaseDenom(value, token)))
+
     if (
       !feedback &&
-      BigInt(maxAmount) < BigInt(convertToBaseDenom(numeral(value).value(), token))
+      BigInt(maxAmount) < BigInt(convertToBaseDenom(value, token))
     ) {
       feedback = t('Provided amount is higher than your current balance.');
     }
