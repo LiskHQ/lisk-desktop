@@ -94,6 +94,7 @@
   "Caution! You are about to stake for the punished validator, this will result in your LSK tokens being locked for a period of {{daysLeft}} days. In addition, please note that your stake will not be counted until the {{daysLeft}} day period has expired. ": "Caution! You are about to stake for the punished validator, this will result in your LSK tokens being locked for a period of {{daysLeft}} days. In addition, please note that your stake will not be counted until the {{daysLeft}} day period has expired. ",
   "Certificate": "Certificate",
   "Chain ID": "Chain ID",
+  "Chain ID:": "Chain ID:",
   "Chain ID: ": "Chain ID: ",
   "Chains connecting": "Chains connecting",
   "Changed stakes": "Changed stakes",

@@ -53,7 +53,7 @@ const RequestSignSummary = ({
       <BlockchainAppDetailsHeader
         headerText={t('Transaction summary')}
         application={application}
-        clipboardCopyItems={[{ label: 'Chain ID:', value: chainID }]}
+        clipboardCopyItems={[{ label: t('Chain ID:'), value: chainID }]}
       />
       <BoxContent>
         <Box className={`${styles.container} ${styles.txDetails}`}>
