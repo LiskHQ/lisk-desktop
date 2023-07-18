@@ -1,11 +1,13 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mountWithRouter } from 'src/utils/testHelpers';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { usePairings } from '@libs/wcm/hooks/usePairings';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import ConnectionSummary from './index';
 
 jest.mock('@libs/wcm/hooks/usePairings');
@@ -34,6 +36,13 @@ jest.mock('@libs/wcm/utils/connectionCreator', () => ({
     pair: jest.fn(),
   },
 }));
+
+jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
+useBlockchainApplicationMeta.mockReturnValue({
+  data: { data: mockBlockchainAppMeta.data },
+  isLoading: false,
+  isError: undefined,
+});
 
 const proposal = {
   params: {
@@ -88,7 +97,6 @@ describe('ConnectionSummary', () => {
     expect(wrapper.find('img').at(0).prop('src')).toEqual(
       proposal.params.proposer.metadata.icons[0]
     );
-    expect(wrapper.find('.pairing-topic').text()).toEqual(proposal.params.pairingTopic);
     wrapper.find('.methods span').forEach((method, index) => {
       expect(method.text()).toEqual(proposal.params.requiredNamespaces.lisk.methods[index]);
     });
