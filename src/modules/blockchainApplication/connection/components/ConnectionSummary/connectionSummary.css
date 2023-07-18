@@ -18,10 +18,10 @@
     display: flex;
     flex-direction: column;
     margin-left: 8px;
+    text-align: left;
 
     & .name {
       margin: 0;
-      text-align: left;
       font-size: var(--font-size-title);
       color: var(--color-zodiac-blue);
       font-weight: var(--font-weight-bold);
