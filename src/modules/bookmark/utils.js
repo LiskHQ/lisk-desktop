@@ -50,7 +50,7 @@ export const validateBookmarkLabel = (token, value = '', bookmarks, t) => {
     return t('Label is too long, Max. 20 characters');
   }
   if (getIndexOfLabel(bookmarks, { label: value, token }) !== -1) {
-    return t(`Bookmark with name "${value}" already exists`);
+    return t(`Bookmark with name "${value}" already exists.`);
   }
   return '';
 };

@@ -182,7 +182,7 @@ describe('Add a new bookmark component', () => {
         expect(wrapper.find('input[name="label"]')).toHaveClassName('error');
         expect(wrapper).toContainMatchingElement('.error');
         expect(wrapper.find('.feedback.error')).toHaveText(
-          `Bookmark with name "${bookmarkTitle}" already exists`
+          `Bookmark with name "${bookmarkTitle}" already exists.`
         );
       });
 

@@ -38,7 +38,7 @@ const DialogAddNetwork = () => {
     },
   });
 
-  // eslint-disable-next-line max-statements
+  // eslint-disable-next-line max-statements, complexity
   function onSubmit(values) {
     setSuccessText('');
     setErrorText('');
@@ -54,13 +54,27 @@ const DialogAddNetwork = () => {
     const existingCustomNetworkServiceUrl = fullNetworkList
       .filter((network) => network.name !== networkKeys.customNode)
       .some((network) => network.serviceUrl === values.serviceUrl);
-    if (
-      (!defaultName || (defaultName && defaultName !== values.name)) &&
-      (existingCustomNetworkName || existingCustomNetworkServiceUrl)
-    ) {
+    const isNetworkNameChanged = !!defaultName && defaultName !== values.name;
+    const isNetworkServiceUrlChanged =
+      !!defaultServiceUrl && defaultServiceUrl !== values.serviceUrl;
+    const isValidInAddMode = !(existingCustomNetworkName || existingCustomNetworkServiceUrl);
+    const isValidNetworkNameInEditMode =
+      (isNetworkNameChanged && !existingCustomNetworkName) || !isNetworkNameChanged;
+    const isValidNetworkServiceUrlChangeInEditMode =
+      (isNetworkServiceUrlChanged && !existingCustomNetworkServiceUrl) ||
+      !isNetworkServiceUrlChanged;
+    const isValidInEditMode =
+      isValidNetworkNameInEditMode && isValidNetworkServiceUrlChangeInEditMode;
+
+    if (!defaultName && !isValidInAddMode) {
       setErrorText('Network name or serviceUrl already exists');
       return;
     }
+    if (!!defaultName && !isValidInEditMode) {
+      setErrorText('Network name or serviceUrl already exists');
+      return;
+    }
+
     if (defaultName) {
       const editedCustomNetworkIndex = customNetworks.findIndex(
         (network) => network.name === defaultName

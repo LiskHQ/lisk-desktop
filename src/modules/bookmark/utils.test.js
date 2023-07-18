@@ -104,7 +104,7 @@ describe('Bookmarks', () => {
     it('returns feedback for duplicate labels', () => {
       const value = 'lisker';
       expect(validateBookmarkLabel('LSK', value, accounts, t)).to.equal(
-        `Bookmark with name "${value}" already exists`
+        `Bookmark with name "${value}" already exists.`
       );
     });
 
