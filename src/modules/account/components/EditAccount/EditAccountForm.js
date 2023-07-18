@@ -45,7 +45,9 @@ const EditAccountForm = ({ nextStep }) => {
 
   const onSubmit = async ({ accountName }) => {
     const existingAccountName = accounts.some(
-      (acc) => acc.metadata.name.toLowerCase() === accountName.toLowerCase()
+      (acc) =>
+        acc.metadata.name.toLowerCase() === accountName.toLowerCase() &&
+        acc.metadata.address !== currentAccount.metadata.address
     );
     if (existingAccountName) {
       setError('accountName', { message: t(`Account with name "${accountName}" already exists.`) });
