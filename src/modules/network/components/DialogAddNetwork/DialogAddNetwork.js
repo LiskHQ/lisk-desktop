@@ -13,7 +13,6 @@ import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
 import { immutablePush, immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
-import networks, { networkKeys } from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
@@ -45,44 +44,34 @@ const DialogAddNetwork = () => {
     const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
     let updatedCustomNetworks;
-    const fullNetworkList = [...Object.values(networks), ...customNetworks];
-    const existingCustomNetworkName = fullNetworkList.some(
-      (network) => network.name.toLowerCase() === values.name.toLowerCase()
-    );
-    // Since the localhost address exists in the default networks list
-    // ensure that it can still be added as a custom network
-    const existingCustomNetworkServiceUrl = fullNetworkList
-      .filter((network) => network.name !== networkKeys.customNode)
-      .some((network) => network.serviceUrl === values.serviceUrl);
-    const isNetworkNameChanged = !!defaultName && defaultName !== values.name;
-    const isNetworkServiceUrlChanged =
-      !!defaultServiceUrl && defaultServiceUrl !== values.serviceUrl;
-    const isValidInAddMode = !(existingCustomNetworkName || existingCustomNetworkServiceUrl);
-    const isValidNetworkNameInEditMode =
-      (isNetworkNameChanged && !existingCustomNetworkName) || !isNetworkNameChanged;
-    const isValidNetworkServiceUrlChangeInEditMode =
-      (isNetworkServiceUrlChanged && !existingCustomNetworkServiceUrl) ||
-      !isNetworkServiceUrlChanged;
-    const isValidInEditMode =
-      isValidNetworkNameInEditMode && isValidNetworkServiceUrlChangeInEditMode;
+    let networkItemIndex;
 
-    if (!defaultName && !isValidInAddMode) {
-      setErrorText('Network name or serviceUrl already exists.');
-      return;
+    if (!defaultName) {
+      // Add mode
+      networkItemIndex = customNetworks.some(
+        (network) => network.name === defaultName && network.serviceUrl === values.serviceUrl
+      );
+    } else {
+      // Edit mode
+      networkItemIndex = customNetworks.some(
+        (network) =>
+          network.name === defaultName &&
+          network.serviceUrl === values.serviceUrl &&
+          network.name !== defaultName &&
+          network.serviceUrl === defaultServiceUrl
+      );
     }
-    if (!!defaultName && !isValidInEditMode) {
+
+    if (networkItemIndex) {
       setErrorText('Network name or serviceUrl already exists.');
       return;
     }
 
     if (defaultName) {
-      const editedCustomNetworkIndex = customNetworks.findIndex(
-        (network) => network.name === defaultName
-      );
       updatedCustomNetworks = immutableSetToArray({
         array: customNetworks,
         mapToAdd: customNetwork,
-        index: editedCustomNetworkIndex,
+        index: networkItemIndex,
       });
     } else {
       updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
