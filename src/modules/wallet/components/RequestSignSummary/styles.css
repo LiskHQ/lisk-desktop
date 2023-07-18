@@ -19,8 +19,12 @@
   }
 
   & .description {
-    margin: 16px 0 0 0;
-    font-weight: var(--font-weight-bold);
+    border-top: 1px solid var(--color-very-light-gray);
+    margin: 0 0 24px 0;
+    padding-top: 16px;
+    font-weight: var(--font-weight-normal);
+    color: var(--color-slate-gray);
+    font-size: 14px;
   }
 }
 
