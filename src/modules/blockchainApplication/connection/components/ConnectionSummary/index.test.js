@@ -133,7 +133,7 @@ describe('ConnectionSummary', () => {
         .simulate('change', { target: { checked: true } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).not.toBeDisabled();
+    expect(wrapper.find('button').at(3)).not.toBeDisabled();
     act(() => {
       wrapper
         .find('.select-all input')
@@ -141,7 +141,7 @@ describe('ConnectionSummary', () => {
         .simulate('change', { target: { checked: false } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).toBeDisabled();
+    expect(wrapper.find('button').at(3)).toBeDisabled();
     act(() => {
       wrapper
         .find('.select-all input')
@@ -149,29 +149,29 @@ describe('ConnectionSummary', () => {
         .simulate('change', { target: { checked: true } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).not.toBeDisabled();
-    wrapper.find('button').at(1).simulate('click');
+    expect(wrapper.find('button').at(3)).not.toBeDisabled();
+    wrapper.find('button').at(3).simulate('click');
     expect(approve).toHaveBeenCalled();
   });
 
   it('Select accounts on a random basis', () => {
     const wrapper = setup();
-    expect(wrapper.find('button').at(1)).toBeDisabled();
+    expect(wrapper.find('button').at(3)).toBeDisabled();
     act(() => {
       wrapper.find('.accounts-list input').simulate('change', { target: { checked: true } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).not.toBeDisabled();
+    expect(wrapper.find('button').at(3)).not.toBeDisabled();
     act(() => {
       wrapper.find('.accounts-list input').simulate('change', { target: { checked: false } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).toBeDisabled();
+    expect(wrapper.find('button').at(3)).toBeDisabled();
   });
 
   it('Reject the connection if the reject button is clicked', () => {
     const wrapper = setup();
-    wrapper.find('button').at(0).simulate('click');
+    wrapper.find('button').at(2).simulate('click');
     expect(reject).toHaveBeenCalled();
   });
 
@@ -182,7 +182,7 @@ describe('ConnectionSummary', () => {
     delete wongProposal.params.proposer.metadata.name;
     useEvents.mockReturnValue({ events: [{ name: EVENTS.SESSION_PROPOSAL, meta: wongProposal }] });
     const wrapper = setup();
-    wrapper.find('button').at(0).simulate('click');
+    wrapper.find('button').at(2).simulate('click');
     expect(reject).toHaveBeenCalled();
   });
 });
