@@ -10,7 +10,7 @@ export function sanitizeTextFromDomains(text) {
     return trimmedText;
   }
 
-  const escapedUrls = urls.map(url => url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const escapedUrls = urls.map((url) => url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const urlRegexPattern = new RegExp(`\\b(${escapedUrls.join('|')})\\b`, 'gi');
 
   return trimmedText.replace(urlRegexPattern, '');
