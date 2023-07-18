@@ -18,7 +18,7 @@ const EmptyState = ({ bookmarks, activeToken, emptyStateClassName, t, onAddBookm
           <Illustration name="emptyBookmarksList" className="bookmarks-empty-illustration" />
           <p>{t('You do not have any bookmarks yet.')}</p>
           <PrimaryButton className={styles.addButton} onClick={onAddBookmark} size="l">
-            <Icon name="plus" className={styles.plusIcon} />
+            <Icon name="plusWhiteIcon" className={styles.plusIcon} />
             {t('Add bookmark')}
           </PrimaryButton>
         </>

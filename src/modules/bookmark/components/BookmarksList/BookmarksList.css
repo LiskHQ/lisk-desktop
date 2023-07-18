@@ -92,6 +92,22 @@
     align-items: flex-start;
     padding: 0;
 
+    & .addButton {
+      min-width: 130px;
+      height: 44px;
+
+      & .icon {
+        left: 14px;
+        top: 25px;
+      }
+
+      & .plusIcon {
+        filter: brightness(100);
+        vertical-align: middle;
+        margin-right: 7px;
+      }
+    }
+
     & > .row {
       width: 100%;
       height: auto;

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -82,7 +83,12 @@ export const BookmarksList = ({
 
   const onTitleChange = ({ target: { value } }) => {
     setEditedTitle(value);
-    setFeedback(validateBookmarkLabel(activeToken, value, bookmarks, t));
+    const bookmarkEditing = bookmarks[activeToken].filter(
+      ({ address }) => editedAddress === address
+    );
+    if (bookmarkEditing[0]?.title !== value) {
+      setFeedback(validateBookmarkLabel(activeToken, value, bookmarks, t));
+    }
   };
 
   const onRowClick = (e, bookmark) => {
