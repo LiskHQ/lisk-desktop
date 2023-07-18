@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Dialog from '@theme/dialog/dialog';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
-import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import { ACTIONS, EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
@@ -12,6 +12,7 @@ import { useSession } from '@libs/wcm/hooks/useSession';
 import classNames from 'classnames';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { getLogo } from '@token/fungible/utils/helpers';
+import { ArrowTransformationIcon } from '@transaction/components/TransactionEventsRow/components';
 import BlockchainAppDetailsHeader from '../../../explore/components/BlockchainAppDetailsHeader';
 import AccountsSelector from './AccountsSelector';
 import styles from './connectionSummary.css';
@@ -50,6 +51,23 @@ function ChainListing({ chainIds }) {
       {appMetaData.map((app) => (
         <ChainListingItem key={app.chainID} app={app} />
       ))}
+    </div>
+  );
+}
+
+function CollapsableRow({ label, children }) {
+  const [showChildren, toggleShowChildren] = useState(true);
+
+  return (
+    <div className={styles.CollapsableRow}>
+      <TertiaryButton
+        className={classNames(styles.rowHeaderButton, showChildren && styles.marginBottom)}
+        onClick={() => toggleShowChildren(!showChildren)}
+      >
+        <span>{label}</span>
+        <ArrowTransformationIcon isDownArrow={showChildren} />
+      </TertiaryButton>
+      {showChildren && children}
     </div>
   );
 }
@@ -118,17 +136,14 @@ const ConnectionSummary = () => {
           )}
         </p>
         <section className={styles.section}>
-          <ValueAndLabel className={styles.labeledValue} label={t('Chains connecting')}>
+          <CollapsableRow label={t('Chains connecting')}>
             <ChainListing chainIds={liskChainIds} />
-          </ValueAndLabel>
+          </CollapsableRow>
         </section>
         <section className={styles.section}>
-          <ValueAndLabel
-            className={styles.labeledValue}
-            label={t('Account(s) to use on this application')}
-          >
+          <CollapsableRow label={t('Account(s) to use on this application')}>
             <AccountsSelector setAddresses={setAddresses} addresses={addresses} />
-          </ValueAndLabel>
+          </CollapsableRow>
         </section>
         <section className={`${styles.section} ${styles.permissions}`}>
           <span className={styles.label}>{t('Site permissions')}</span>

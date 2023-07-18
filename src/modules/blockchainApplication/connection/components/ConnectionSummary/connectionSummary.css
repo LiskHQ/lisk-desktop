@@ -36,6 +36,31 @@
   }
 }
 
+.CollapsableRow {
+  & .rowHeaderButton {
+    height: initial;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--color-zodiac-blue);
+
+    &.marginBottom {
+      margin-bottom: 18px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      text-decoration: initial;
+    }
+  }
+}
+
 .dialogWrapper {
   max-width: 616px;
   border: none;
@@ -91,8 +116,8 @@
       margin-bottom: 16px;
       font-weight: 400;
       font-size: 14px;
-      line-height: 16.1px;
       color: var(--color-zodiac-blue);
+      line-height: 16.1px;
     }
   }
 
@@ -122,7 +147,7 @@
 
   & .section {
     border-top: solid 1px var(--color-platinum);
-    padding: 24px 0;
+    padding: 18px 0;
   }
 
   & .permissions {

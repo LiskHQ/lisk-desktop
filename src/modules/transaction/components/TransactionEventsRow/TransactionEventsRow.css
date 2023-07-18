@@ -29,6 +29,16 @@
   }
 }
 
+.CollapseIcon {
+  width: 10px;
+  transition: all 250ms linear;
+
+  &.showArrowDown {
+    transform: rotate(90deg);
+    transition: all 250ms linear;
+  }
+}
+
 .toggleButton {
   display: flex;
   flex-direction: column;

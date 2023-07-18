@@ -31,7 +31,9 @@ describe('BlockchainAppDetailsHeader', () => {
       />
     );
     expect(screen.getByText(appName)).toBeInTheDocument();
-    expect(screen.getByText(appAddress)).toBeInTheDocument();
+    expect(
+      screen.getByText(appAddress?.replace(/^(.{6})(.+)?(.{4})$/, '$1...$3'))
+    ).toBeInTheDocument();
     expect(screen.getByText(appUrl)).toBeInTheDocument();
   });
 
