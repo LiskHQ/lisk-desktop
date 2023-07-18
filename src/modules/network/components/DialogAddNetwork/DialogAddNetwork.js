@@ -50,7 +50,9 @@ const DialogAddNetwork = () => {
     );
     const editingExistingNetwork =
       fullNetworkList.filter(
-        (network) => network.name === defaultName || network.serviceUrl === defaultServiceUrl
+        (network) =>
+          network.name.toLowerCase() === defaultName.toLowerCase() ||
+          network.serviceUrl.toLowerCase() === defaultServiceUrl.toLowerCase()
       ).length > 1;
 
     if (addOrEditNetworkIndex >= 0) {

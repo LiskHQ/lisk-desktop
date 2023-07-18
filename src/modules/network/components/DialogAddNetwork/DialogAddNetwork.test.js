@@ -40,7 +40,7 @@ describe('DialogAddNetwork', () => {
 
     fireEvent.change(screen.getByTestId('name'), { target: { value: 'custom_network' } });
     fireEvent.change(screen.getByTestId('serviceUrl'), {
-      target: { value: 'http://localhost:9901' },
+      target: { value: 'http://localhost:8080' },
     });
     fireEvent.click(screen.getByRole('button'));
     await waitFor(() => {
