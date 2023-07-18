@@ -42,14 +42,14 @@ function ChainListingItem({ app }) {
 
 function ChainListing({ chainIds }) {
   const chainIDs = chainIds?.join(',');
-  const { data: { data: appMetaData = [] } = {} } = useBlockchainApplicationMeta({
+  const blockchainApplicationMeta = useBlockchainApplicationMeta({
     config: { params: { chainID: chainIDs } },
     options: { enabled: !!chainIDs?.length },
   });
 
   return (
     <div className={styles.ChainListing}>
-      {appMetaData.map((app) => (
+      {blockchainApplicationMeta?.data?.data?.map((app) => (
         <ChainListingItem key={app.chainID} app={app} />
       ))}
     </div>
