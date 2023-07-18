@@ -41,13 +41,13 @@ export const getIndexOfLabel = (bookmarks, { label, token = tokenMap.LSK.key }) 
 export const validateBookmarkLabel = (token, value = '', bookmarks, t) => {
   if (!value) return '';
   if (!value.match(regex.accountName)) {
-    return t('Label can be alphanumeric with either !,@,$,&,_,. as special characters');
+    return t('Label can be alphanumeric with either !,@,$,&,_,. as special characters.');
   }
   if (value.length < 3) {
-    return t('Label is too short, Min. 3 characters');
+    return t('Label is too short, Min. 3 characters.');
   }
   if (value.length > 20) {
-    return t('Label is too long, Max. 20 characters');
+    return t('Label is too long, Max. 20 characters.');
   }
   if (getIndexOfLabel(bookmarks, { label: value, token }) !== -1) {
     return t(`Bookmark with name "${value}" already exists.`);
