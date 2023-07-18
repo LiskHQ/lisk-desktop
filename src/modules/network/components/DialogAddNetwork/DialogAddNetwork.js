@@ -67,11 +67,11 @@ const DialogAddNetwork = () => {
       isValidNetworkNameInEditMode && isValidNetworkServiceUrlChangeInEditMode;
 
     if (!defaultName && !isValidInAddMode) {
-      setErrorText('Network name or serviceUrl already exists');
+      setErrorText('Network name or serviceUrl already exists.');
       return;
     }
     if (!!defaultName && !isValidInEditMode) {
-      setErrorText('Network name or serviceUrl already exists');
+      setErrorText('Network name or serviceUrl already exists.');
       return;
     }
 
