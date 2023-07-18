@@ -13,6 +13,7 @@ import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
 import { immutablePush, immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
+import networks from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
@@ -43,35 +44,27 @@ const DialogAddNetwork = () => {
     setErrorText('');
     const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
+    const fullNetworkList = [...Object.values(networks), ...customNetworks];
+    const addOrEditNetworkIndex = fullNetworkList.findIndex(
+      (network) => network.serviceUrl === values.name || network.serviceUrl === values.serviceUrl
+    );
+    const editingExistingNetwork =
+      fullNetworkList.filter(
+        (network) => network.name === defaultName || network.serviceUrl === defaultServiceUrl
+      ).length > 1;
+
+    if (addOrEditNetworkIndex >= 0) {
+      if (defaultName === '' || editingExistingNetwork) {
+        setErrorText('Network name or serviceUrl already exists.');
+        return;
+      }
+    }
+
     let updatedCustomNetworks;
-    let networkItemIndex;
-
-    if (!defaultName) {
-      // Add mode
-      networkItemIndex = customNetworks.some(
-        (network) => network.name === defaultName && network.serviceUrl === values.serviceUrl
-      );
-    } else {
-      // Edit mode
-      networkItemIndex = customNetworks.some(
-        (network) =>
-          network.name === defaultName &&
-          network.serviceUrl === values.serviceUrl &&
-          network.name !== defaultName &&
-          network.serviceUrl === defaultServiceUrl
-      );
-    }
-
-    if (networkItemIndex) {
-      setErrorText('Network name or serviceUrl already exists.');
-      return;
-    }
-
     if (defaultName) {
       updatedCustomNetworks = immutableSetToArray({
         array: customNetworks,
         mapToAdd: customNetwork,
-        index: networkItemIndex,
       });
     } else {
       updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
