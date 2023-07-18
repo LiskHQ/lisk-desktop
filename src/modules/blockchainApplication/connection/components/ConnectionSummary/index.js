@@ -39,6 +39,7 @@ function ChainListingItem({ app }) {
     </div>
   );
 }
+
 function ChainListing({ chainIds }) {
   const chainIDs = chainIds?.join(',');
   const { data: { data: appMetaData = [] } = {} } = useBlockchainApplicationMeta({
