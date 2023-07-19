@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
@@ -64,8 +64,11 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
     () => !password?.length || !cPassword?.length || !hasAgreed,
     [formValues.password, formValues.cPassword, formValues.hasAgreed]
   );
+  const [isLoading, setIsLoading] = useState(false);
 
+  // eslint-disable-next-line max-statements
   const onFormSubmit = async (values) => {
+    setIsLoading(true);
     const existingAccountName = accounts.some(
       (acc) => acc.metadata.name.toLowerCase() === values.accountName.toLowerCase()
     );
@@ -86,7 +89,8 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
       return null;
     }
 
-    return onSubmit?.(result);
+    onSubmit?.(result);
+    return setIsLoading(false);
   };
 
   return (
@@ -157,7 +161,12 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
           <span>{t('I agree to store my encrypted secret recovery phrase on this device.')}</span>
         </label>
         <div className={[styles.fieldWrapper, styles.submitWrapper].join(' ')}>
-          <PrimaryButton type="submit" style={{ width: '100%' }} disabled={isButtonDisabled}>
+          <PrimaryButton
+            isLoading={isLoading}
+            type="submit"
+            style={{ width: '100%' }}
+            disabled={isButtonDisabled}
+          >
             {t('Save Account')}
           </PrimaryButton>
         </div>
