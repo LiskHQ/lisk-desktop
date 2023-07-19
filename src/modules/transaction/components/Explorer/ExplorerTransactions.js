@@ -54,6 +54,7 @@ const Transactions = ({ activeToken, address }) => {
           showHeader
           button={{
             label: t('New transactions'),
+            wrapperClassName: styles.loadLatestBtnWrapper,
           }}
           queryHook={useMyTransactions}
           queryConfig={{ config: { params: { ...params, address } } }}
