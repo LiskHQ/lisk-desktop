@@ -20,7 +20,7 @@ import styles from './connectionSummary.css';
 function ChainListingItem({ app }) {
   const { t } = useTranslation();
   const { chainName, networkType, chainID, logo } = app;
-  const name = `${chainName}-${networkType}`;
+  const name = `${chainName} (${networkType})`;
   const logoUrl = getLogo({ logo });
 
   return (
@@ -68,7 +68,7 @@ function CollapsableRow({ label, children }) {
         <span>{label}</span>
         <Icon
           name="arrowRightInactive"
-          className={classNames(styles.arrowIcon, showChildren && styles.showArrowDown)}
+          className={classNames(styles.arrowIcon, { [styles.showArrowDown]: showChildren })}
         />
       </TertiaryButton>
       {showChildren && children}
