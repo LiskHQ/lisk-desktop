@@ -17,7 +17,7 @@ const BlockchainAppDetailsHeader = ({
   clipboardCopyItems,
 }) => {
   const { t } = useTranslation();
-  const { name, projectPage, icon, bg } = application.data;
+  const { name, projectPage, icon } = application.data;
 
   return (
     <header className={className}>
