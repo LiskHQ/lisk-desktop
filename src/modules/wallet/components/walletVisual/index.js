@@ -142,7 +142,7 @@ const getShape = (chunk, size, gradient, sizeScale = 1) => {
       }),
     },
   };
-  
+
   return {
     component: shapes[shapeNames[chunk.substr(0, 2) % shapeNames.length]].component,
     props: {
@@ -166,7 +166,7 @@ const getBackgroundCircle = (size, gradient) => ({
 const pickTwo = (chunk, options) => [
   options[chunk.substr(0, 2) % options.length],
   options[
-  (chunk.substr(0, 2) - 0 + 1 + (chunk.substr(2, 2) % (options.length - 1))) % options.length
+    (chunk.substr(0, 2) - 0 + 1 + (chunk.substr(2, 2) % (options.length - 1))) % options.length
   ],
 ];
 
