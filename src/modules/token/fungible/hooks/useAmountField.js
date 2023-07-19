@@ -17,14 +17,14 @@ const baseState = {
 const getAmountFieldState = (initialValue, getAmountFeedbackAndError) =>
   initialValue
     ? {
-      ...baseState,
-      ...getAmountFeedbackAndError(initialValue),
-      value: initialValue,
-    }
+        ...baseState,
+        ...getAmountFeedbackAndError(initialValue),
+        value: initialValue,
+      }
     : {
-      ...baseState,
-      value: '',
-    };
+        ...baseState,
+        value: '',
+      };
 
 const useAmountField = (initialValue, balance = '0', token) => {
   const { t, i18n } = useTranslation();
@@ -44,12 +44,7 @@ const useAmountField = (initialValue, balance = '0', token) => {
       checklist: [...checklist, 'MIN_BALANCE'],
     });
 
-    console.log('---->', value, maxAmount, balance, feedback, BigInt(maxAmount), BigInt(convertToBaseDenom(value, token)))
-
-    if (
-      !feedback &&
-      BigInt(maxAmount) < BigInt(convertToBaseDenom(value, token))
-    ) {
+    if (!feedback && BigInt(maxAmount) < BigInt(convertToBaseDenom(value, token))) {
       feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };
