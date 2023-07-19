@@ -75,3 +75,10 @@
 .header {
   background-color: var(--color-body-bg);
 }
+
+.loadLatestBtnWrapper {
+  position: absolute;
+  top: 10px;
+  z-index: 4;
+  left: 50%;
+}

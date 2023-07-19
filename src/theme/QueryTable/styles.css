@@ -11,10 +11,6 @@
 .button {
   animation: slideDown var(--animation-speed-fast) ease-in;
   animation-fill-mode: forwards;
-  position: absolute;
-  top: -70px;
-  z-index: 4;
-  left: 50%;
   transform: translateX(-50%);
   background: var(--color-white);
   color: var(--color-ultramarine-blue);
