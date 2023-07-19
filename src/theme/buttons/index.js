@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ReactComponent as CircularLoader } from '@setup/react/assets/images/icons/loading-rounded.svg';
 import primaryButtonTheme from './css/primaryButton.css';
 import secondaryButtonTheme from './css/secondaryButton.css';
 import styles from './css/size.css';
@@ -8,6 +7,7 @@ import tertiaryButtonTheme from './css/tertiaryButton.css';
 import warningButtonTheme from './css/warningButton.css';
 import baseStyles from './css/base.css';
 import outlineButtonTheme from './css/outlineButton.css';
+import { ReactComponent as CircularLoader } from '../../../setup/react/assets/images/icons/loading-rounded.svg';
 
 const getButtonWithTheme = (theme) => {
   const Button = ({ className, size, isLoading, ...props }) => (
