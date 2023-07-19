@@ -39,7 +39,8 @@ export const QueryTable = ({
   };
 
   const subHeader =
-    hasUpdate && button.wrapperClassName ? (
+    hasUpdate &&
+    (button.wrapperClassName ? (
       <div className={button.wrapperClassName || ''}>
         <LoadNewButton buttonClassName={`${button.className || ''}`} handleClick={handleClick}>
           {button.label}
@@ -49,7 +50,7 @@ export const QueryTable = ({
       <LoadNewButton buttonClassName={`${button.className || ''}`} handleClick={handleClick}>
         {button.label}
       </LoadNewButton>
-    );
+    ));
 
   useEffect(() => {
     if (isFetched && typeof onFetched === 'function') {
