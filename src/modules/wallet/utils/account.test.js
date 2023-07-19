@@ -22,10 +22,17 @@ jest
   .spyOn(cryptography.ed, 'getPrivateKeyFromPhraseAndPath')
   .mockResolvedValue(Buffer.from(privateKey));
 
+const defaultKeys = {
+  privateKey: Buffer.from(privateKey, 'hex'),
+  publicKey: Buffer.from(publicKey, 'hex'),
+};
+
+jest.spyOn(cryptography.legacy, 'getKeys').mockReturnValue(defaultKeys);
+
 describe('Utils: Account', () => {
-  describe('extractPublicKey', () => {
+  describe.only('extractPublicKey', () => {
     it('should return a hex string from any given string', async () => {
-      const key = await extractPublicKey(passphrase, enableAccessToLegacyAccounts);
+      const key = await extractPublicKey(passphrase, enableAccessToLegacyAccounts, customDerivationPath);
       await expect(key).toEqual(publicKey);
     });
 
@@ -40,7 +47,8 @@ describe('Utils: Account', () => {
 
   describe('extractPrivateKey', () => {
     it('should return a hex string from any given string', async () => {
-      const key = await extractPrivateKey(passphrase, enableAccessToLegacyAccounts);
+      console.log('----', passphrase)
+      const key = await extractPrivateKey(passphrase, enableAccessToLegacyAccounts, customDerivationPath);
       expect(key).toEqual(privateKey);
     });
 

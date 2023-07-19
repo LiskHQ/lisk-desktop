@@ -142,7 +142,7 @@ const getShape = (chunk, size, gradient, sizeScale = 1) => {
       }),
     },
   };
-
+  
   return {
     component: shapes[shapeNames[chunk.substr(0, 2) % shapeNames.length]].component,
     props: {

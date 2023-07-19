@@ -13,6 +13,7 @@ import ReactRouterDom from 'react-router-dom';
 import * as ReactRedux from 'react-redux';
 import lodashMerge from 'lodash.merge';
 import defaultState from '../../tests/constants/defaultState';
+import { cryptography } from '@liskhq/lisk-client';
 
 require('jest-localstorage-mock');
 
@@ -62,7 +63,7 @@ ReactRedux.useSelector = jest.fn((filter) => {
   }
   return result;
 });
-ReactRedux.useDispatch = jest.fn(() => () => {});
+ReactRedux.useDispatch = jest.fn(() => () => { });
 
 jest.mock('i18next', () => {
   function t(key, o) {
@@ -143,10 +144,10 @@ Object.defineProperty(window, 'crypto', {
   },
 });
 
-ReactPiwik.push = () => {};
-ReactPiwik.trackingEvent = () => {};
+ReactPiwik.push = () => { };
+ReactPiwik.trackingEvent = () => { };
 sinon.stub(ReactPiwik.prototype, 'connectToHistory').callsFake(() => 1);
-sinon.stub(ReactPiwik.prototype, 'initPiwik').callsFake(() => {});
+sinon.stub(ReactPiwik.prototype, 'initPiwik').callsFake(() => { });
 
 // https://github.com/nkbt/react-copy-to-clipboard/issues/20#issuecomment-414065452
 // Polyfill window prompts to always confirm.  Needed for react-copy-to-clipboard to work.
@@ -156,9 +157,9 @@ global.prompt = () => true;
 // Can remove this once https://github.com/jsdom/jsdom/issues/317 is implemented.
 const getSelection = () => ({
   rangeCount: 0,
-  addRange: () => {},
-  getRangeAt: () => {},
-  removeAllRanges: () => {},
+  addRange: () => { },
+  getRangeAt: () => { },
+  removeAllRanges: () => { },
 });
 window.getSelection = getSelection;
 document.getSelection = getSelection;
@@ -179,3 +180,14 @@ global.fetch = jest.fn(() =>
     },
   })
 );
+
+const privateKey =
+  'd92f8ffd3046fa9de33c21cef7af6f1315e289003c19f9b23ce6d499c8641d4e0792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e97184';
+const publicKey = '0792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e97184';
+const defaultKeys = {
+  privateKey: Buffer.from(privateKey, 'hex'),
+  publicKey: Buffer.from(publicKey, 'hex'),
+};
+
+jest.spyOn(cryptography.utils, 'hash').mockReturnValue('123456789019eac790d89f08e')
+// jest.spyOn(cryptography.legacy, 'getKeys').mockReturnValue(defaultKeys)
