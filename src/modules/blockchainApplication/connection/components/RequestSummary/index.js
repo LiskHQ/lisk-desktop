@@ -168,7 +168,7 @@ const RequestSummary = ({ nextStep, history }) => {
                   metadata: { name: senderAccount?.name, address: senderAccount?.address },
                 }}
                 truncate
-                onSelect={() => { }}
+                onSelect={() => {}}
               />
             </ValueAndLabel>
           )}

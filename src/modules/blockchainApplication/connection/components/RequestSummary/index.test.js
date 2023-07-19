@@ -41,10 +41,6 @@ jest.mock('@transaction/utils/transaction', () => ({
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
 }));
-// jest.mock('@libs/wcm/utils/requestHandlers', () => ({
-//   rejectLiskRequest: jest.fn(),
-// }));
-
 jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   createSignClient: jest.fn(() => Promise.resolve()),
   client: {

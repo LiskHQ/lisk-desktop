@@ -40,52 +40,52 @@ export const resetTransactionResult = () => ({
  */
 export const transactionBroadcasted =
   (transaction, moduleCommandSchemas) =>
-    // eslint-disable-next-line max-statements
-    async (dispatch, getState) => {
-      const { network, token } = getState();
-      const activeToken = token.active;
-      const serviceUrl = network.networks[activeToken].serviceUrl;
-      const moduleCommand = joinModuleAndCommand(transaction);
-      const paramsSchema = moduleCommandSchemas[moduleCommand];
-      let broadcastErrorMessage;
+  // eslint-disable-next-line max-statements
+  async (dispatch, getState) => {
+    const { network, token } = getState();
+    const activeToken = token.active;
+    const serviceUrl = network.networks[activeToken].serviceUrl;
+    const moduleCommand = joinModuleAndCommand(transaction);
+    const paramsSchema = moduleCommandSchemas[moduleCommand];
+    let broadcastErrorMessage;
 
-      const [error, dryRunResult] = await to(dryRun({ transaction, serviceUrl, paramsSchema }));
+    const [error, dryRunResult] = await to(dryRun({ transaction, serviceUrl, paramsSchema }));
 
-      if (dryRunResult?.data?.result === TransactionExecutionResult.OK) {
-        const [broadcastError, broadcastResult] = await to(
-          broadcast({ transaction, serviceUrl, moduleCommandSchemas })
-        );
-        broadcastErrorMessage = broadcastError?.message;
+    if (dryRunResult?.data?.result === TransactionExecutionResult.OK) {
+      const [broadcastError, broadcastResult] = await to(
+        broadcast({ transaction, serviceUrl, moduleCommandSchemas })
+      );
+      broadcastErrorMessage = broadcastError?.message;
 
-        if (!broadcastResult?.data?.error && !broadcastError) {
-          const transactionJSON = toTransactionJSON(transaction, paramsSchema);
-          dispatch({
-            type: actionTypes.broadcastedTransactionSuccess,
-            data: transaction,
-          });
-          dispatch(pendingTransactionAdded({ ...transactionJSON, isPending: true }));
+      if (!broadcastResult?.data?.error && !broadcastError) {
+        const transactionJSON = toTransactionJSON(transaction, paramsSchema);
+        dispatch({
+          type: actionTypes.broadcastedTransactionSuccess,
+          data: transaction,
+        });
+        dispatch(pendingTransactionAdded({ ...transactionJSON, isPending: true }));
 
-          return true;
-        }
+        return true;
       }
+    }
 
-      const transactionErrorMessage =
-        error?.message ||
-        broadcastErrorMessage ||
-        (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
-          ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
-          : dryRunResult?.data?.errorMessage);
+    const transactionErrorMessage =
+      error?.message ||
+      broadcastErrorMessage ||
+      (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
+        ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
+        : dryRunResult?.data?.errorMessage);
 
-      dispatch({
-        type: actionTypes.broadcastedTransactionError,
-        data: {
-          error: transactionErrorMessage,
-          transaction,
-        },
-      });
+    dispatch({
+      type: actionTypes.broadcastedTransactionError,
+      data: {
+        error: transactionErrorMessage,
+        transaction,
+      },
+    });
 
-      return false;
-    };
+    return false;
+  };
 
 /**
  * Signs a given multisignature transaction using passphrase
@@ -101,40 +101,40 @@ export const multisigTransactionSigned =
     moduleCommandSchemas,
     messagesSchemas,
   }) =>
-    async (dispatch, getState) => {
-      const state = getState();
-      const wallet = state.account?.current?.hw
-        ? state.account.current
-        : selectActiveTokenAccount(state);
-      const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
-      const options = {
-        messageSchema: messagesSchemas[formProps.moduleCommand],
-        txInitiatorAccount,
-      };
-      const [tx, error] = await signMultisigTransaction(
-        wallet,
-        sender,
-        transactionJSON,
-        txStatus,
-        moduleCommandSchemas[formProps.moduleCommand],
-        selectCurrentApplicationChainID(state),
-        privateKey,
-        txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
-        options
-      );
-
-      if (!error) {
-        dispatch({
-          type: actionTypes.transactionSigned,
-          data: tx,
-        });
-      } else {
-        dispatch({
-          type: actionTypes.transactionSignError,
-          data: error,
-        });
-      }
+  async (dispatch, getState) => {
+    const state = getState();
+    const wallet = state.account?.current?.hw
+      ? state.account.current
+      : selectActiveTokenAccount(state);
+    const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
+    const options = {
+      messageSchema: messagesSchemas[formProps.moduleCommand],
+      txInitiatorAccount,
     };
+    const [tx, error] = await signMultisigTransaction(
+      wallet,
+      sender,
+      transactionJSON,
+      txStatus,
+      moduleCommandSchemas[formProps.moduleCommand],
+      selectCurrentApplicationChainID(state),
+      privateKey,
+      txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
+      options
+    );
+
+    if (!error) {
+      dispatch({
+        type: actionTypes.transactionSigned,
+        data: tx,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    }
+  };
 
 /**
  * Used when a fully signed transaction is imported, this action
@@ -146,16 +146,16 @@ export const multisigTransactionSigned =
  */
 export const signatureSkipped =
   ({ formProps, transactionJSON }) =>
-    (dispatch, getState) => {
-      const { network } = getState();
-      const schema = network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand];
-      const transactionObject = fromTransactionJSON(transactionJSON, schema);
+  (dispatch, getState) => {
+    const { network } = getState();
+    const schema = network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand];
+    const transactionObject = fromTransactionJSON(transactionJSON, schema);
 
-      dispatch({
-        type: actionTypes.signatureSkipped,
-        data: transactionObject,
-      });
-    };
+    dispatch({
+      type: actionTypes.signatureSkipped,
+      data: transactionObject,
+    });
+  };
 
 export const transactionSigned =
   (formProps, transactionJSON, privateKey, _, senderAccount) => async (dispatch) => {
