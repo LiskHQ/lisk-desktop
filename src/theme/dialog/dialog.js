@@ -8,10 +8,19 @@ import Description from './description';
 import Options from './options';
 import styles from './dialog.css';
 
-const Dialog = ({ children, hasClose, onCloseIcon, hasBack, className, history, size, customBackBtn }) => {
+const Dialog = ({
+  children,
+  hasClose,
+  onCloseIcon,
+  hasBack,
+  className,
+  history,
+  size,
+  customBackBtn,
+}) => {
   const onCloseClick = () => {
     onCloseIcon?.();
-    removeSearchParamsFromUrl(history, ['modal'], true)
+    removeSearchParamsFromUrl(history, ['modal'], true);
   };
   const onBackClick = () => history.goBack();
 

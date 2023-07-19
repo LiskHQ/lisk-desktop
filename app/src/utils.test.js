@@ -17,7 +17,7 @@ describe('utils', () => {
         'lisk://test?modal=send&recipient=lskdb3ja5dhr25jhwm6onstawj33yk74g8q2549oc&amount=1&token=0200000000000000&recipientChain=02000000';
       expect(canExecuteDeepLinking(url)).toBeFalsy();
     });
-    
+
     it('Should return invalid if launch protocol is not lisk', () => {
       const url =
         'colecti://test?modal=send&recipient=lskdb3ja5dhr25jhwm6onstawj33yk74g8q2549oc&amount=1&token=0200000000000000&recipientChain=02000000';

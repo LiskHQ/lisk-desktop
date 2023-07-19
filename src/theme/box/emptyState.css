@@ -34,7 +34,7 @@
     max-width: 245px;
   }
 
-  & > button {
+  & .retryBtn {
     color: var(--color-ultramarine-blue);
     height: fit-content !important;
     margin-top: 5px;
