@@ -41,7 +41,7 @@ export const QueryTable = ({
   const subHeader =
     hasUpdate &&
     (button.wrapperClassName ? (
-      <div className={button.wrapperClassName || ''}>
+      <div className={button.wrapperClassName}>
         <LoadNewButton buttonClassName={`${button.className || ''}`} handleClick={handleClick}>
           {button.label}
         </LoadNewButton>
