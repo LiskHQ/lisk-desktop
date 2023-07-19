@@ -17,7 +17,7 @@
     top: 34px;
   }
 
-  & > img.logo {
+  & > .logoContainer {
     position: absolute;
     display: flex;
     align-items: center;
@@ -27,6 +27,12 @@
     height: 77px;
     background-color: white;
     border-radius: 40px;
+    overflow: hidden;
+
+    & .logo {
+      display: flex;
+      max-width: 70%;
+    }
   }
 
   & .bg {

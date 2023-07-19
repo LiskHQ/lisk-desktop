@@ -4,8 +4,9 @@ import Box from 'src/theme/box';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Skeleton from 'src/modules/common/components/skeleton/Skeleton';
 import Icon from 'src/theme/Icon';
-import loadingBackgroundImage from '../../../../../../setup/react/assets/images/loading-chain-background.png';
-import loadingChainLogo from '../../../../../../setup/react/assets/images/loading-chain-logo.png';
+import walletConnectFallback from '@setup/react/assets/images/wallet-connect-fallback.svg';
+import loadingBackgroundImage from '@setup/react/assets/images/loading-chain-background.png';
+import loadingChainLogo from '@setup/react/assets/images/loading-chain-logo.png';
 import styles from './blockchainAppDetailsHeader.css';
 
 const BlockchainAppDetailsHeader = ({
@@ -41,7 +42,17 @@ const BlockchainAppDetailsHeader = ({
         <>
           <div className={styles.avatarContainer}>
             {headerText && <h2 className={styles.headerText}>{headerText}</h2>}
-            <img src={icon} className={styles.logo} alt="logo" />
+            <div className={styles.logoContainer}>
+              <img
+                className={styles.logo}
+                src={icon}
+                alt="logo"
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null;
+                  currentTarget.src = walletConnectFallback;
+                }}
+              />
+            </div>
             <div className={styles.bg} />
           </div>
           <Box className={styles.detailsWrapper}>
