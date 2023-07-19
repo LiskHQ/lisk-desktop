@@ -8,6 +8,7 @@ import { LayoutSchema } from '@transaction/components/TransactionDetails/layoutS
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
 import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils';
+import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
 import styles from './styles.css';
 
 const RequestSignSummary = ({
@@ -37,14 +38,28 @@ const RequestSignSummary = ({
   };
   const Layout = LayoutSchema.structuredGeneralLayout;
 
+  const { chainName, chainID, projectPage, logo } = formProps.fields?.recipientChain || {};
+
+  const application = {
+    data: {
+      name: chainName,
+      projectPage,
+      icon: logo?.png,
+    },
+  };
+
   return (
     <Box className={styles.boxContainer}>
-      <header>
-        <h1>{t('Transaction summary')}</h1>
-        <p>{t('Please review and verify the transaction details before signing.')}</p>
-      </header>
+      <BlockchainAppDetailsHeader
+        headerText={t('Transaction summary')}
+        application={application}
+        clipboardCopyItems={[{ label: t('Chain ID:'), value: chainID }]}
+      />
       <BoxContent>
         <Box className={`${styles.container} ${styles.txDetails}`}>
+          <p className={styles.description}>
+            {t('Please review and verify the transaction details before signing.')}
+          </p>
           <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
             <TransactionDetailsContext.Provider
               value={{
