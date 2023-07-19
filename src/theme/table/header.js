@@ -44,27 +44,29 @@ const Header = ({ data, currentSort, headerClassName, subHeader }) => {
   if (Array.isArray(data)) {
     const defaultSize = Math.floor(12 / data.length);
     return (
-      <header className={`${grid.row} ${styles.row} ${styles.header} ${headerClassName || ''}`}>
-        {data.map((item, index) => (
-          <div
-            className={item.classList ? item.classList : grid[`col-md-${defaultSize}`]}
-            key={`table-header-${index}`}
-          >
-            {typeof item === 'object' ? (
-              <Sort data={item.sort} currentSort={currentSort}>
-                <span>{item.title}</span>
-                {item.tooltip && <Tip data={item.tooltip} />}
-              </Sort>
-            ) : (
-              <>
-                <span>{item}</span>
-                {item.tooltip && <Tip data={item.tooltip} />}
-              </>
-            )}
-          </div>
-        ))}
+      <>
+        <header className={`${grid.row} ${styles.row} ${styles.header} ${headerClassName || ''}`}>
+          {data.map((item, index) => (
+            <div
+              className={item.classList ? item.classList : grid[`col-md-${defaultSize}`]}
+              key={`table-header-${index}`}
+            >
+              {typeof item === 'object' ? (
+                <Sort data={item.sort} currentSort={currentSort}>
+                  <span>{item.title}</span>
+                  {item.tooltip && <Tip data={item.tooltip} />}
+                </Sort>
+              ) : (
+                <>
+                  <span>{item}</span>
+                  {item.tooltip && <Tip data={item.tooltip} />}
+                </>
+              )}
+            </div>
+          ))}
+        </header>
         {subHeader}
-      </header>
+      </>
     );
   }
 
