@@ -5,9 +5,9 @@ import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLa
 import AccountRow from '@account/components/AccountRow';
 import { useAccounts } from '@account/hooks/useAccounts';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
-import { getRequestTransaction, rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
-import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { EVENTS, ERROR_CASES } from '@libs/wcm/constants/lifeCycle';
+import { formatJsonRpcError } from '@libs/wcm/utils/jsonRPCFormat';
 import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 import { toTransactionJSON } from '@transaction/utils/encoding';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
@@ -15,12 +15,16 @@ import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { Link } from 'react-router-dom';
+import { validator } from '@liskhq/lisk-client';
 import Icon from 'src/theme/Icon';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { getSdkError } from '@walletconnect/utils';
+import { decodeTransaction } from '@transaction/utils';
+
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import EmptyState from './EmptyState';
@@ -30,6 +34,12 @@ const getTitle = (key, t) =>
   Object.values(SIGNING_METHODS).find((item) => item.key === key)?.title ?? t('Method not found.');
 
 const defaultToken = { symbol: 'LSK' };
+
+const rejectLiskRequest = (request) => {
+  const { id } = request;
+
+  return formatJsonRpcError(id, getSdkError(ERROR_CASES.USER_REJECTED_METHODS).message);
+};
 
 // eslint-disable-next-line max-statements
 const RequestSummary = ({ nextStep, history }) => {
@@ -87,16 +97,19 @@ const RequestSummary = ({ nextStep, history }) => {
     }
   }, []);
 
+  // eslint-disable-next-line max-statements
   useEffect(() => {
     if (request && !transaction) {
       try {
-        const tx = getRequestTransaction(request);
-        setTransaction(tx);
-        const address = extractAddressFromPublicKey(tx.senderPublicKey);
+        const { payload, schema } = request.request.params;
+        validator.validator.validateSchema(schema);
+        const transactionObj = decodeTransaction(Buffer.from(payload, 'hex'), schema);
+        setTransaction(transactionObj);
+        const address = extractAddressFromPublicKey(transactionObj.senderPublicKey);
         const account = getAccountByAddress(address);
         // @todo if account doesn't exist, we should inform the user that the tx can't be signed
         setSenderAccount({
-          pubkey: tx.senderPublicKey,
+          pubkey: transactionObj.senderPublicKey,
           address,
           name: account?.metadata?.name,
         });
@@ -155,7 +168,7 @@ const RequestSummary = ({ nextStep, history }) => {
                   metadata: { name: senderAccount?.name, address: senderAccount?.address },
                 }}
                 truncate
-                onSelect={() => {}}
+                onSelect={() => { }}
               />
             </ValueAndLabel>
           )}
