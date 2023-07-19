@@ -11,7 +11,7 @@ import CheckBox from '@theme/CheckBox';
 import Tooltip from '@theme/Tooltip';
 import Icon from '@theme/Icon';
 import { regex } from 'src/const/regex';
-import { useEncryptAccount } from '@account/hooks';
+import { useEncryptAccount, useAccounts } from '@account/hooks';
 import styles from './SetPasswordForm.css';
 
 const setPasswordFormSchema = yup
@@ -47,11 +47,13 @@ const setPasswordFormSchema = yup
 function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationPath }) {
   const { t } = useTranslation();
   const { encryptAccount } = useEncryptAccount(customDerivationPath);
+  const { accounts } = useAccounts();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    setError,
   } = useForm({
     resolver: yupResolver(setPasswordFormSchema),
   });
@@ -64,6 +66,15 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
   );
 
   const onFormSubmit = async (values) => {
+    const existingAccountName = accounts.some(
+      (acc) => acc.metadata.name.toLowerCase() === values.accountName.toLowerCase()
+    );
+    if (values.accountName && existingAccountName) {
+      setError('accountName', {
+        message: t(`Account with name "${values.accountName}" already exists.`),
+      });
+      return null;
+    }
     const { error, result } = await encryptAccount({
       recoveryPhrase: recoveryPhrase.value,
       password: values.password,

@@ -7,9 +7,6 @@
   height: 423px;
   background: var(--color-white);
   border-radius: var(--border-radius-box);
-  position: absolute;
-  top: 0;
-  left: 168px;
 
   & .content {
     width: 100%;
