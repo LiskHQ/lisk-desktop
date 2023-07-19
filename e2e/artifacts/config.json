@@ -6,16 +6,10 @@
     "keepEventsForHeights": -1
   },
   "rpc": {
-    "modes": [
-      "ipc",
-      "ws",
-      "http"
-    ],
+    "modes": ["ipc", "ws", "http"],
     "port": 7887,
     "host": "127.0.0.1",
-    "allowedMethods": [
-      "*"
-    ]
+    "allowedMethods": ["*"]
   },
   "genesis": {
     "block": {
@@ -49,13 +43,7 @@
       "tokenID": "0400000000000000",
       "offset": 360,
       "distance": 1000,
-      "brackets": [
-        "500000000",
-        "400000000",
-        "300000000",
-        "200000000",
-        "100000000"
-      ]
+      "brackets": ["500000000", "400000000", "300000000", "200000000", "100000000"]
     },
     "fee": {
       "feeTokenID": "0400000000000000"

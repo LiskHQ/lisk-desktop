@@ -49,11 +49,6 @@ const RequestSummary = ({ nextStep, history }) => {
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
     const transactionJSON = toTransactionJSON(transaction, request?.request?.params.schema);
-    const { recipientChainID } = request?.request?.params ?? {};
-    const sendingChain = metaData.data.data.find(({ chainID }) => chainID === sendingChainID);
-    sendingChain.chainID = sendingChainID;
-    const recipientChain = metaData.data.data.find(({ chainID }) => chainID === recipientChainID);
-    recipientChain.chainID = recipientChainID;
     const token = tokenData.data.data.length > 0 ? tokenData.data.data[0] : defaultToken;
 
     nextStep({
@@ -66,11 +61,6 @@ const RequestSummary = ({ nextStep, history }) => {
             components: [],
           },
         ],
-        fields: {
-          sendingChain,
-          recipientChain,
-          token,
-        },
         moduleCommand,
         chainID: sendingChainID,
         schema: request?.request?.params.schema,

@@ -1,21 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { client } from '@libs/wcm/utils/connectionCreator';
 import { EVENTS } from '../constants/lifeCycle';
 import { useSession } from '../hooks/useSession';
 import { useEvents } from '../hooks/useEvents';
 import { ConnectionEventsManagerWrapper } from './ConnectionEventsManagerWrapper';
 
-const listeners = {};
-jest.mock('@libs/wcm/utils/connectionCreator', () => ({
-  client: {
-    listeners,
-    on: jest.fn().mockImplementation((name, listener) => {
-      listeners[name] = listener;
-    }),
-    session: { get: jest.fn((topic) => ({ topic })) },
-  },
-}));
+jest.spyOn(React, 'useContext');
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
 }));
@@ -34,6 +24,19 @@ useSession.mockReturnValue({
 });
 
 describe('useConnectionEventsManager', () => {
+  const listeners = {};
+  const signClient = {
+    listeners,
+    on: jest.fn().mockImplementation((name, listener) => {
+      listeners[name] = listener;
+    }),
+    session: { get: jest.fn((topic) => ({ topic })) },
+  };
+
+  React.useContext.mockReturnValue({
+    signClient,
+  });
+
   it('Binds listeners to wc events', () => {
     render(
       <ConnectionEventsManagerWrapper>
@@ -42,7 +45,7 @@ describe('useConnectionEventsManager', () => {
     );
 
     Object.keys(EVENTS).forEach((eventName) => {
-      expect(client.on).toHaveBeenCalledWith(EVENTS[eventName], expect.any(Function));
+      expect(signClient.on).toHaveBeenCalledWith(EVENTS[eventName], expect.any(Function));
     });
   });
 
@@ -57,7 +60,7 @@ describe('useConnectionEventsManager', () => {
       const event = {
         topic: '0x123',
       };
-      client.listeners[EVENTS[eventName]](event);
+      signClient.listeners[EVENTS[eventName]](event);
       expect(pushEvent).toHaveBeenCalledWith({
         name: EVENTS[eventName],
         meta: event,
@@ -79,7 +82,7 @@ describe('useConnectionEventsManager', () => {
     };
 
     // Trigger the event
-    client.listeners[EVENTS.SESSION_REQUEST](event.meta);
+    signClient.listeners[EVENTS.SESSION_REQUEST](event.meta);
 
     expect(setSessions).toHaveBeenCalled();
   });
@@ -98,7 +101,7 @@ describe('useConnectionEventsManager', () => {
     };
 
     // Trigger the event
-    client.listeners[EVENTS.SESSION_DELETE](event.meta);
+    signClient.listeners[EVENTS.SESSION_DELETE](event.meta);
 
     expect(setSessions).toHaveBeenCalled();
   });

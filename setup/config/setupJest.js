@@ -12,6 +12,7 @@ import crypto from 'crypto';
 import ReactRouterDom from 'react-router-dom';
 import * as ReactRedux from 'react-redux';
 import lodashMerge from 'lodash.merge';
+import { cryptography } from '@liskhq/lisk-client';
 import defaultState from '../../tests/constants/defaultState';
 
 require('jest-localstorage-mock');
@@ -179,3 +180,5 @@ global.fetch = jest.fn(() =>
     },
   })
 );
+
+jest.spyOn(cryptography.utils, 'hash').mockReturnValue('123456789019eac790d89f08e');

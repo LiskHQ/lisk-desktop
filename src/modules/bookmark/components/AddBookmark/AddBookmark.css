@@ -7,25 +7,15 @@
 
   & .content {
     width: 100%;
-  }
 
-  & .header {
-    border-bottom: solid 1px var(--color-very-light-gray);
-    padding: 15px 20px 11px 15px;
-  }
+    & .box {
+      & header {
+        padding: 20px var(--horizontal-padding-l) 30px;
+      }
 
-  & .fullWidth {
-    width: 100%;
-  }
-
-  & .box {
-    & header {
-      padding-right: var(--horizontal-padding-l);
-      padding-left: var(--horizontal-padding-l);
-    }
-
-    & > div {
-      padding-top: 0;
+      & > div {
+        padding-top: 0;
+      }
     }
   }
 
@@ -58,15 +48,5 @@
     & .input[name="address"] {
       padding-left: 48px;
     }
-  }
-}
-
-.removeBtn {
-  display: flex;
-  align-items: center;
-
-  & > img {
-    margin-right: 6px;
-    margin-bottom: 4px;
   }
 }
