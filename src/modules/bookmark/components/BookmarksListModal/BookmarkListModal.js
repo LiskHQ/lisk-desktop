@@ -6,6 +6,7 @@ import ModalWrapper from '@bookmark/components/BookmarksListModal/BookmarkModalW
 import styles from '@bookmark/components/BookmarksListModal/BookmarkListModal.css';
 
 const Bookmarks = ({ bookmarks, token, t, bookmarkRemoved, bookmarkUpdated }) => {
+  // TODO: Refactor manager component for bookmark list
   const history = useHistory();
   return (
     <ModalWrapper>

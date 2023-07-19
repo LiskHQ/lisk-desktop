@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { regex } from 'src/const/regex';
-import { useCurrentAccount } from '@account/hooks';
+import { useCurrentAccount, useAccounts } from '@account/hooks';
 import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
@@ -37,11 +37,22 @@ const EditAccountForm = ({ nextStep }) => {
     watch,
     handleSubmit,
     formState: { errors, isDirty },
+    setError,
   } = useForm({ resolver: yupResolver(editAccountFormSchema) });
   const formValues = watch();
   const [currentAccount] = useCurrentAccount();
+  const { accounts } = useAccounts();
 
   const onSubmit = async ({ accountName }) => {
+    const existingAccountName = accounts.some(
+      (acc) =>
+        acc.metadata.name.toLowerCase() === accountName.toLowerCase() &&
+        acc.metadata.address !== currentAccount.metadata.address
+    );
+    if (existingAccountName) {
+      setError('accountName', { message: t(`Account with name "${accountName}" already exists.`) });
+      return;
+    }
     dispatch(updateCurrentAccount({ name: accountName }));
     if (currentAccount.metadata.isHW) {
       const updatedAccount = {
