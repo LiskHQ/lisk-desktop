@@ -100,9 +100,15 @@ const config = {
         loader: 'file-loader',
       },
       {
-        test: /\.(png|svg)$/,
+        test: /\.(png)$/,
         exclude: [/fonts/],
         loader: 'url-loader',
+      },
+      {
+        test: /\.(svg)$/i,
+        issuer: /\.([jt]sx?|css)$/,
+        exclude: [/fonts/],
+        use: ['@svgr/webpack', 'url-loader'],
       },
     ],
   },
