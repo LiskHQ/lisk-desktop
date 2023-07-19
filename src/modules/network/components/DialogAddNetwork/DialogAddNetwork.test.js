@@ -119,7 +119,7 @@ describe('DialogAddNetwork', () => {
     expect(screen.getByText('Save network')).toBeInTheDocument();
     fireEvent.change(screen.getByTestId('name'), { target: { value: 'custom_network_new' } });
     fireEvent.change(screen.getByTestId('serviceUrl'), {
-      target: { value: 'http://localhost:9901' },
+      target: { value: 'http://localhost:7878' },
     });
     fireEvent.click(screen.getByRole('button'));
     await waitFor(() => {
