@@ -52,7 +52,9 @@ const DialogAddNetwork = () => {
       fullNetworkList.filter(
         (network) =>
           network.name.toLowerCase() === defaultName.toLowerCase() ||
-          network.serviceUrl.toLowerCase() === defaultServiceUrl.toLowerCase()
+          network.serviceUrl.toLowerCase() === defaultServiceUrl.toLowerCase() ||
+          network.name.toLowerCase() === values.name.toLowerCase() ||
+          network.serviceUrl.toLowerCase() === values.serviceUrl.toLowerCase()
       ).length > 1;
 
     if (addOrEditNetworkIndex >= 0) {
@@ -67,6 +69,7 @@ const DialogAddNetwork = () => {
       updatedCustomNetworks = immutableSetToArray({
         array: customNetworks,
         mapToAdd: customNetwork,
+        index: customNetworks.findIndex((network) => network.name === defaultName),
       });
     } else {
       updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
