@@ -35,7 +35,7 @@ const getTitle = (key, t) =>
 
 const defaultToken = { symbol: 'LSK' };
 
-const rejectLiskRequest = (request) => {
+export const rejectLiskRequest = (request) => {
   const { id } = request;
 
   return formatJsonRpcError(id, getSdkError(ERROR_CASES.USER_REJECTED_METHODS).message);

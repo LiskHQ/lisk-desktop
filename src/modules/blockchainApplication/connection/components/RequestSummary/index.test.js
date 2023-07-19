@@ -9,11 +9,10 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 import mockApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
 import { mockAppTokens } from '@tests/fixtures/token';
-import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { context as defaultContext } from '../../__fixtures__/requestSummary';
-import RequestSummary from './index';
+import RequestSummary, { rejectLiskRequest } from './index';
 
 const nextStep = jest.fn();
 const history = {
