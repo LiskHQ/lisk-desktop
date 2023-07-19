@@ -7,6 +7,7 @@ describe('Button wrapper', () => {
     const button = render(<Button>test</Button>);
     expect(button.getAllByText('test').length).toEqual(1);
   });
+
   it('renders loading state', () => {
     const button = render(<Button isLoading />, {});
     expect(button.getByTestId('circular-loader')).toBeTruthy();
