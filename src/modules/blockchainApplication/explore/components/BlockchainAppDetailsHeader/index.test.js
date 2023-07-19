@@ -10,7 +10,6 @@ const application = {
   data: {
     name: appName,
     projectPage: appUrl,
-    icon: '',
     bg: '',
   },
 };
