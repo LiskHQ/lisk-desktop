@@ -32,7 +32,11 @@ jest.spyOn(cryptography.legacy, 'getKeys').mockReturnValue(defaultKeys);
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
     it('should return a hex string from any given string', async () => {
-      const key = await extractPublicKey(passphrase, enableAccessToLegacyAccounts, customDerivationPath);
+      const key = await extractPublicKey(
+        passphrase,
+        enableAccessToLegacyAccounts,
+        customDerivationPath
+      );
       await expect(key).toEqual(publicKey);
     });
 
@@ -47,7 +51,11 @@ describe('Utils: Account', () => {
 
   describe('extractPrivateKey', () => {
     it('should return a hex string from any given string', async () => {
-      const key = await extractPrivateKey(passphrase, enableAccessToLegacyAccounts, customDerivationPath);
+      const key = await extractPrivateKey(
+        passphrase,
+        enableAccessToLegacyAccounts,
+        customDerivationPath
+      );
       expect(key).toEqual(privateKey);
     });
 
