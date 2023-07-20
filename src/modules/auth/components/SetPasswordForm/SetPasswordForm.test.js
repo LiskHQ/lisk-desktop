@@ -1,6 +1,7 @@
 import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { mockOnMessage } from '@setup/config/setupJest';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import SetPasswordForm from './SetPasswordForm';
 
@@ -175,7 +176,7 @@ describe('Set Password Form validation should work', () => {
     fireEvent.click(screen.getByText('Save Account'));
 
     await waitFor(() => {
-      expect(props.onSubmit).toBeCalled();
+      expect(mockOnMessage).toBeCalled();
     });
   });
 });

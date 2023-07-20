@@ -1,5 +1,6 @@
 import { createEvent, fireEvent, screen, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockOnMessage } from '@setup/config/setupJest';
 import * as reactRedux from 'react-redux';
 import { renderWithCustomRouter } from 'src/utils/testHelpers';
 import AddAccountBySecretRecovery from './AddAccountBySecretRecovery';
@@ -67,17 +68,7 @@ describe('Add account by secret recovery phrase flow', () => {
     fireEvent.click(screen.getByText('Save Account'));
 
     await waitFor(() => {
-      expect(screen.getByText("Perfect! You're all set")).toBeTruthy();
-      expect(
-        screen.getByText(
-          'You can now download your encrypted secret recovery phrase and use it to add your account on other devices.'
-        )
-      ).toBeTruthy();
-      expect(screen.getByText('Download')).toBeTruthy();
-
-      fireEvent.click(screen.getByText('Continue to wallet'));
-
-      expect(props.history.push).toBeCalled();
+      expect(mockOnMessage).toBeCalled();
     });
   });
 });

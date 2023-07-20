@@ -203,6 +203,7 @@
     "babel-plugin-import-glob": "=2.0.0",
     "babel-plugin-syntax-trailing-function-commas": "=6.22.0",
     "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-import-meta": "2.2.0",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-enzyme": "1.0.0-beta.1",
