@@ -43,7 +43,9 @@ const RequestSignSummary = ({
     options: { enabled: !!chainID },
   });
 
-  const { chainName, networkType, logo, projectPage } = blockchainApplicationMeta?.data?.data?.[0];
+  const { chainName, networkType, logo, projectPage } =
+    blockchainApplicationMeta?.data?.data?.[0] || {};
+
   const name = `${chainName} (${networkType})`;
 
   const Layout = LayoutSchema.structuredGeneralLayout;
