@@ -15,8 +15,16 @@ const MainRouter = ({ history }) => {
   const routesList = Object.keys(routes);
 
   useEffect(() => {
-    if (events.length && events[events.length - 1].name === EVENTS.SESSION_REQUEST) {
-      addSearchParamsToUrl(history, { modal: 'requestView' });
+    const event = events.length && events[events.length - 1];
+
+    if (event.name === EVENTS.SESSION_REQUEST) {
+      const method = event.meta?.params?.request?.method;
+
+      if (method === 'sign_message') {
+        addSearchParamsToUrl(history, { modal: 'requestSignMessageDialog' });
+      } else {
+        addSearchParamsToUrl(history, { modal: 'requestView' });
+      }
     }
   }, [events]);
 
