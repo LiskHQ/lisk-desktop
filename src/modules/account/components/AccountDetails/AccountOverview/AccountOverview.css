@@ -1,3 +1,11 @@
+.banner {
+  background-color: var(--color-ultramarine-blue);
+
+  & p {
+    font-size: 16px !important;
+  }
+}
+
 .content {
   padding-left: 0 !important;
   padding-right: 0 !important;

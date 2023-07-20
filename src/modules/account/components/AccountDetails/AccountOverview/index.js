@@ -10,6 +10,7 @@ import BoxContent from '@theme/box/content';
 import Transactions from '@transaction/components/Explorer';
 import TransactionEvents from '@transaction/components/TransactionEvents';
 import { selectActiveToken, selectSettings, selectTransactions } from 'src/redux/selectors';
+import InfoBanner from '@common/components/infoBanner/infoBanner';
 import styles from './AccountOverview.css';
 
 export default function AccountOverview({ address: searchAddress }) {
@@ -44,6 +45,18 @@ export default function AccountOverview({ address: searchAddress }) {
 
   return (
     <section>
+      <InfoBanner
+        className={styles.banner}
+        t={t}
+        name="blockchainApplicationsPageBanner"
+        infoLabel={t('New')}
+        infoMessage={t('Introducing account management')}
+        infoDescription={t(
+          'Effortlessly manage multiple accounts in one interface with enhanced privacy and security. Seamlessly switch between accounts, allocate funds, and monitor balances.'
+        )}
+        illustrationName="accountManagement"
+        show
+      />
       <Overview
         isWalletRoute
         activeToken={activeToken}

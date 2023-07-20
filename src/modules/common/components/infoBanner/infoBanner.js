@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { withTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import Icon from '@theme/Icon';
+import Illustration from '@common/components/illustration';
 import styles from './infoBanner.css';
 
 const InfoBanner = ({
@@ -10,12 +11,14 @@ const InfoBanner = ({
   infoMessage,
   infoDescription,
   infoLink,
+  illustrationName,
   className,
   show,
-  t,
 }) => {
+  const { t } = useTranslation();
   const [visibility, setVisibility] = useState(!localStorage.getItem(name) && show);
-  const isLoggedIn = useSelector((state) => state.wallet && state.wallet.passphrase);
+  const [currentAccount] = useCurrentAccount();
+  const isLoggedIn = !!currentAccount;
 
   const handleClose = () => {
     localStorage.setItem(name, true);
@@ -41,20 +44,25 @@ const InfoBanner = ({
           <section className={`${className || ''} ${styles.active}`}>
             <h1 className={styles.infoMessage}>{infoMessage}</h1>
             <p>{infoDescription}</p>
-            <p
-              className={`${styles.infoLink} link`}
-              onClick={() => {
-                window.open(`${infoLink}`);
-              }}
-            >
-              {t('Read more ')}
-              <Icon name="whiteLinkIcon" />
-            </p>
+            {infoLink && (
+              <p
+                className={`${styles.infoLink} link`}
+                onClick={() => {
+                  window.open(`${infoLink}`);
+                }}
+              >
+                {t('Read more ')}
+                <Icon name="whiteLinkIcon" />
+              </p>
+            )}
           </section>
         </div>
+      </div>
+      <div>
+        <Illustration name={illustrationName} />
       </div>
     </div>
   );
 };
 
-export default withTranslation()(InfoBanner);
+export default InfoBanner;
