@@ -70,7 +70,7 @@ describe('BlockchainAppDetailsHeader', () => {
     render(<BlockchainAppDetailsHeader application={application} />);
     const image = screen.getByAltText('logo');
     fireEvent.error(image);
-    const imgSrc = image.getAttribute("src");
-    expect(typeof imgSrc).toBe("string")
+    const imgSrc = image.getAttribute('src');
+    expect(typeof imgSrc).toBe('string');
   });
 });
