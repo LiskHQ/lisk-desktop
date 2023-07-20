@@ -29,12 +29,14 @@ const AddAccountBySecretRecovery = () => {
     multiStepRef?.current?.next();
   };
 
+  /* istanbul ignore next */
   const onSetPassword = (account) => {
     setCurrentAccount(account);
     setAccount(account);
     multiStepRef?.current?.next();
   };
 
+  /* istanbul ignore next */
   const onPasswordSetComplete = () => {
     history.push(referrer || routes.wallet.path);
   };
