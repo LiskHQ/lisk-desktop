@@ -49,6 +49,8 @@
   align-items: center;
   justify-content: center;
   margin-top: 51px;
+  padding: 0 20px;
+  box-sizing: border-box;
 
   & .clipboardCopyItems {
     margin-top: 16px;
@@ -78,6 +80,13 @@
         color: var(--color-slate-gray);
       }
     }
+  }
+
+  & .description {
+    margin: 24px 0 0 0;
+    font-weight: var(--font-weight-normal);
+    color: var(--color-slate-gray);
+    font-size: 14px;
   }
 }
 

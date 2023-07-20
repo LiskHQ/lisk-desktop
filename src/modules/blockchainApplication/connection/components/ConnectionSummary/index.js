@@ -132,13 +132,10 @@ const ConnectionSummary = () => {
         className={styles.blockchainAppDetailsHeaderProp}
         application={application}
         clipboardCopyItems={[{ label: t('Connection ID'), value: pairingTopic }]}
+        description={t('This is a request from wallet connect to establish session with Lisk Desktop, please review the following information carefully before approving.')}
+        classNameDescription={styles.description}
       />
       <div className={styles.wrapper}>
-        <p className={styles.connectionDescription}>
-          {t(
-            'This is a request from wallet connect to establish session with Lisk Desktop, please review the following information carefully before approving.'
-          )}
-        </p>
         <section className={styles.section}>
           <CollapsableRow label={t('Chains connecting')}>
             <ChainListing chainIds={liskChainIds} />

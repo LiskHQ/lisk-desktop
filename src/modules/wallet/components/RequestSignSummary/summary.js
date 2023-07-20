@@ -62,12 +62,11 @@ const RequestSignSummary = ({
         headerText={t('Transaction summary')}
         application={application}
         clipboardCopyItems={[{ label: t('Chain ID:'), value: chainID }]}
+        description={t('Please review and verify the transaction details before signing.')}
+        classNameDescription={styles.description}
       />
       <BoxContent>
         <Box className={`${styles.container} ${styles.txDetails}`}>
-          <p className={styles.description}>
-            {t('Please review and verify the transaction details before signing.')}
-          </p>
           <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
             <TransactionDetailsContext.Provider
               value={{

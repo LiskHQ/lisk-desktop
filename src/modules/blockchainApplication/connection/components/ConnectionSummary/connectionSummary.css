@@ -81,7 +81,11 @@
   }
 
   & .blockchainAppDetailsHeaderProp {
-    padding-bottom: 24px;
+    padding-bottom: 16px;
+
+    & .description {
+      line-height: 20px;
+    }
   }
 }
 
@@ -90,13 +94,6 @@
   box-sizing: border-box;
   padding: 0 24px 24px 24px;
   overflow-y: scroll;
-
-  & .connectionDescription {
-    margin-top: 0;
-    font-size: 14px;
-    line-height: 20px;
-    color: var(--color-zodiac-blue);
-  }
 
   & .twoColumn {
     display: flex;

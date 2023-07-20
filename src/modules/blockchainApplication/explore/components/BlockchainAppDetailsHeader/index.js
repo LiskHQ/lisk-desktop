@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import Box from 'src/theme/box';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Skeleton from 'src/modules/common/components/skeleton/Skeleton';
@@ -12,6 +13,8 @@ import styles from './blockchainAppDetailsHeader.css';
 const BlockchainAppDetailsHeader = ({
   className,
   headerText,
+  description,
+  classNameDescription,
   application,
   chainAction,
   loading,
@@ -90,6 +93,9 @@ const BlockchainAppDetailsHeader = ({
                   );
                 })}
               </Box>
+            )}
+            {description && (
+              <p className={classNames(styles.description, classNameDescription)}>{description}</p>
             )}
           </Box>
         </>
