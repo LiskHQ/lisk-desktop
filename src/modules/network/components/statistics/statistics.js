@@ -261,9 +261,7 @@ const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
 };
 
 const ChartsWithData = ({ networkVersion, height, basic, t }) => {
-  if (!networkVersion) {
-    return null; // @todo Create placeholder
-  }
+  if (!networkVersion) return null;
 
   const versionData = createChartData(networkVersion, t);
   const heightData = createChartData(height, t);

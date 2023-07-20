@@ -1,7 +1,6 @@
 import { IPC_SET_LOCALE, IPC_DETECT_LOCALE } from 'src/const/ipcGlobal';
 
 export default {
-  // @TODO
   // eslint-disable-next-line max-statements
   init: (i18n) => {
     const { ipc } = window;

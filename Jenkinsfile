@@ -8,8 +8,8 @@ pipeline {
 		ansiColor('xterm')
 	}
 	parameters {
-		string(name: 'CORE_VERSION', defaultValue: '4.0.0-beta.2')
-		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.7.0-beta.2')
+		string(name: 'CORE_VERSION', defaultValue: '4.0.0-beta.4')
+		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.7.0-beta.3')
 	}
 	stages {
 		stage('install') {

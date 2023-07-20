@@ -277,37 +277,37 @@ module.exports = {
     'src/modules/account/hooks/useCurrentAccount.js',
     'src/modules/transaction/store/actions.js',
     'src/modules/transaction/hooks/useCreateTransaction.js',
-    'src/modules/transaction/components/TransactionDetails', // @Todo: would resolve this when all transation implementations are finallized
-    'libs/hwManager/manufacturers/ledger/index.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/wallet/utils/hwManager.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/auth/components/hwWalletLogin/selectAccount/selectAccount.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/auth/components/hwWalletLogin/selectAccount/accountCard.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/wallet/store/action.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/hardwareWallet/manager/HWClient.js', // TODO: To be fixed when HW Manager is refactored
-    'src/utils/immutableUtils.js', // TODO: To be fixed in PDD-1482
+    'src/modules/transaction/components/TransactionDetails',
+    'libs/hwManager/manufacturers/ledger/index.js',
+    'src/modules/wallet/utils/hwManager.js',
+    'src/modules/auth/components/hwWalletLogin/selectAccount/selectAccount.js',
+    'src/modules/auth/components/hwWalletLogin/selectAccount/accountCard.js',
+    'src/modules/wallet/store/action.js',
+    'src/modules/hardwareWallet/manager/HWClient.js',
+    'src/utils/immutableUtils.js',
     'src/utils/useOutsideClickListener.js',
-    'src/utils/usePrevious.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/store/actions/devicesActions.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/utils/getHWAccounts.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/hooks/useHWAccounts.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/components/SelectHardwareDeviceModal/components/HwDeviceItem.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/store/reducers/devicesReducer.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/components/DeviceToast/DeviceToast.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/components/HardwareWalletStatus/HardwareWalletStatus.js', // TODO: To be fixed in PDD-1482
-    'src/modules/account/components/AccountRow/AccountRow.js', // TODO: To be fixed in PDD-1482
-    'src/modules/account/components/ManageAccounts/ManageAccounts.js', // TODO: To be fixed in PDD-1482
-    'src/modules/account/components/SwitchAccount/SwitchAccount.js', // TODO: To be fixed in PDD-1482
+    'src/utils/usePrevious.js',
+    'src/modules/hardwareWallet/store/actions/devicesActions.js',
+    'src/modules/hardwareWallet/utils/getHWAccounts.js',
+    'src/modules/hardwareWallet/hooks/useHWAccounts.js',
+    'src/modules/hardwareWallet/components/SelectHardwareDeviceModal/components/HwDeviceItem.js',
+    'src/modules/hardwareWallet/store/reducers/devicesReducer.js',
+    'src/modules/hardwareWallet/components/DeviceToast/DeviceToast.js',
+    'src/modules/hardwareWallet/components/HardwareWalletStatus/HardwareWalletStatus.js',
+    'src/modules/account/components/AccountRow/AccountRow.js',
+    'src/modules/account/components/ManageAccounts/ManageAccounts.js',
+    'src/modules/account/components/SwitchAccount/SwitchAccount.js',
     'src/modules/account/components/RemoveSelectedAccountFlow/RemoveSelectedAccountFlow.js',
-    'src/modules/blockchainApplication/connection/components/RequestView/RequestView.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/store/actions/devicesActions.js', // TODO: To be fixed in PDD-1482
-    '/src/modules/hardwareWallet/store/reducers/devicesReducer.js', // TODO: To be fixed in PDD-1482
+    'src/modules/blockchainApplication/connection/components/RequestView/RequestView.js',
+    'src/modules/hardwareWallet/store/actions/devicesActions.js',
+    '/src/modules/hardwareWallet/store/reducers/devicesReducer.js',
     'src/modules/pos/validator/components/ClaimRewardsView/index.js',
-    'src/modules/blockchainApplication/manage/hooks/useApplicationManagement.js', // TODO: To be fixed in PDD-1522
-    'src/modules/wallet/components/MenuSelect/MenuSelect.js', // TODO: To be fixed in PDD-1522
-    'src/modules/network/components/networkSwitcherDropdown/NetworkSwitcherDropdown.js', // TODO: To be fixed in PDD-1522
-    'src/modules/blockchainApplication/manage/components/UserApplicationSelector/UserApplicationSelector.js', // TODO: To be fixed in PDD-1522
-    'src/modules/network/components/selectNetwork/SelectNetwork.js', // TODO: To be fixed in PDD-1522
-    'src/modules/blockchainApplication/manage/components/NetworkApplicationDropDownButton/NetworkApplicationDropDownButton.js', // TODO: To be fixed in PDD-1522
+    'src/modules/blockchainApplication/manage/hooks/useApplicationManagement.js',
+    'src/modules/wallet/components/MenuSelect/MenuSelect.js',
+    'src/modules/network/components/networkSwitcherDropdown/NetworkSwitcherDropdown.js',
+    'src/modules/blockchainApplication/manage/components/UserApplicationSelector/UserApplicationSelector.js',
+    'src/modules/network/components/selectNetwork/SelectNetwork.js',
+    'src/modules/blockchainApplication/manage/components/NetworkApplicationDropDownButton/NetworkApplicationDropDownButton.js',
     'src/modules/wallet/components/walletList/tableHeader.js',
   ],
   coverageThreshold: {

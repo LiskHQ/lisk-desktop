@@ -10,8 +10,6 @@ export const getNetworksList = () => {
   }));
 };
 
-// Return mainnet as back off network name when cache/local storage does not exists
-// @TODO: incase the network name is customNode, this needs to be properly handled here
 export const getNetworkName = (network = {}) => network?.name || DEFAULT_NETWORK;
 
 /**

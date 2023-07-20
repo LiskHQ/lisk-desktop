@@ -4,11 +4,6 @@ import { MIN_ACCOUNT_BALANCE, STAKE_AMOUNT_STEP } from '@transaction/configurati
  * Calculates the maximum stake amount possible. It
  * Takes the current stakes, minimum account balance and
  * transaction fee into account.
- *
- * @param {object} account - Lisk account info from the Redux store
- * @param {object} address - Raw transaction object @todo fix description
- * @param {object} staking - List of stakes from the Redux store
- * @returns {Number} - Maximum possible stake amount
  */
 const getMaxAmount = async ({
   balance,

@@ -98,7 +98,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     },
   ];
 
-  const app = {
+  const application = {
     data: {
       ...aggregatedApplicationData,
       icon: getLogo({ logo }),
@@ -128,13 +128,14 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     >
       <div className={styles.wrapper}>
         <BlockchainAppDetailsHeader
-          application={app}
+          application={application}
           chainAction={
             <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
           }
           loading={onChainLoading || offChainLoading}
+          clipboardCopyItems={[{ value: aggregatedApplicationData.address }]}
         />
         <div className={styles.balanceRow}>
           {onChainLoading || offChainLoading ? (

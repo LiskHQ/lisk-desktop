@@ -3,7 +3,7 @@ import Illustration from 'src/modules/common/components/illustration';
 import { PrimaryButton } from 'src/theme/buttons';
 import BoxEmptyState from 'src/theme/box/emptyState';
 import Icon from 'src/theme/Icon';
-import styles from '../BookmarksList/BookmarksList.css'; // @todo split the css
+import styles from '../BookmarksList/BookmarksList.css';
 
 const EmptyState = ({ bookmarks, activeToken, emptyStateClassName, t, onAddBookmark }) => (
   <>
