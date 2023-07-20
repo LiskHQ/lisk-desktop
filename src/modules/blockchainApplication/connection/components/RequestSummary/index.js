@@ -14,15 +14,13 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import { Link } from 'react-router-dom';
-import Icon from 'src/theme/Icon';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
 import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
 
@@ -112,27 +110,27 @@ const RequestSummary = ({ nextStep, history }) => {
   }
 
   const { icons, name, url } = sessionRequest.peer.metadata;
-  const { chainId } = request;
+
+  const application = {
+    data: {
+      name,
+      projectPage: url.replace(/\/$/, ''),
+      icon: icons[0],
+    },
+  };
+
+  const clipboardCopyItems = sessionRequest?.requiredNamespaces?.lisk?.chains?.map((chain) => ({
+    label: 'Chain ID:',
+    value: chain.replace(/\D+/g, ''),
+  }));
 
   return (
-    <div className={`${styles.wrapper} ${grid.row} ${grid['center-xs']}`}>
-      <div className={styles.avatarContainer}>
-        <h2>{getTitle(request.request.method, t)}</h2>
-        <img data-testid="logo" src={icons[0]} className={styles.logo} />
-      </div>
-      <div className={styles.chainNameWrapper}>
-        <h3 className="chain-name-text">{name}</h3>
-      </div>
-      <div className={styles.addressRow}>
-        <Link target="_blank" to={url}>
-          <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-          {t(url)}
-        </Link>
-      </div>
-      <div className={styles.chainId}>
-        <span>{t('Chain ID:')}</span>
-        <span>{chainId.replace('lisk:', '')}</span>
-      </div>
+    <div className={`${styles.wrapper}`}>
+      <BlockchainAppDetailsHeader
+        headerText={getTitle(request.request.method, t)}
+        application={application}
+        clipboardCopyItems={clipboardCopyItems}
+      />
       <Box>
         <div className={styles.information}>
           <ValueAndLabel className={styles.labeledValue} label={t('Information')}>
