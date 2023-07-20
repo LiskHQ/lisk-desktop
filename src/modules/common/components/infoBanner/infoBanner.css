@@ -1,7 +1,7 @@
 @import '../../../../../setup/react/app/mixins.css';
 
 .infoBanner {
-  background-color: var(--color-strong-ink-blue);
+  background-color: var(--color-ultramarine-blue);
   border-radius: var(--border-radius-standard);
   color: var(--color-white);
   display: flex;
@@ -143,6 +143,7 @@
       line-height: 25px;
       margin: 0;
       color: var(--color-strong-white);
+      font-size: 16px;
 
       &.infoLink {
         margin-top: 16px;

@@ -16,9 +16,11 @@ const BlockchainApplications = ({ applications, statistics, applyFilters, filter
         t={t}
         name="blockchainApplicationsPageBanner"
         infoLabel={t('New')}
-        infoMessage={t('Explore decentralized applications')}
-        infoDescription={t('Description')}
-        infoLink="https://lisk.io"
+        infoMessage={t('Introducing blockchain application exploring and management')}
+        infoDescription={t(
+          'A new management feature allows you to seamlessly add and switch between applications. The dedicated application tab provides a comprehensive overview of registered, active, and terminated blockchain applications, and statistics.'
+        )}
+        illustrationName="applicationManagement"
         show
       />
       <div className={styles.contentWrapper}>

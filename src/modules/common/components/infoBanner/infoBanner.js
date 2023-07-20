@@ -34,7 +34,7 @@ const InfoBanner = ({
   if (!visibility || !isLoggedIn) return null;
 
   return (
-    <div className={`${styles.infoBanner} ${className}`}>
+    <div className={`${styles.infoBanner} ${className || ''}`}>
       <span className={`closeBanner ${styles.closeBtn}`} onClick={handleClose} />
       <div className={styles.content}>
         <div className={styles.label}>

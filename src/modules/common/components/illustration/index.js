@@ -57,6 +57,7 @@ import validatorRegistrationSuccess from '@setup/react/assets/images/illustratio
 import validatorRegistrationError from '@setup/react/assets/images/illustrations/validator-registration-error.svg';
 import applicationDetailsError from '@setup/react/assets/images/illustrations/application-details-error.svg';
 import accountManagement from '@setup/react/assets/images/illustrations/account-management.svg';
+import applicationManagement from '@setup/react/assets/images/illustrations/application-management.svg';
 import networkErrorIllustration from '@setup/react/assets/images/illustrations/networkError.svg';
 
 import emptyEventsIllustration from '@setup/react/assets/images/illustrations/emptyStates/events-empty-illustration.svg';
@@ -128,6 +129,7 @@ export const illustrations = {
   validatorRegistrationError,
   applicationDetailsError,
   accountManagement,
+  applicationManagement,
   networkErrorIllustration,
 
   emptyEventsIllustration,

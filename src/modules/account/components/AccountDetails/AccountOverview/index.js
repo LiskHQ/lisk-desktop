@@ -46,7 +46,6 @@ export default function AccountOverview({ address: searchAddress }) {
   return (
     <section>
       <InfoBanner
-        className={styles.banner}
         t={t}
         name="blockchainApplicationsPageBanner"
         infoLabel={t('New')}
