@@ -84,6 +84,7 @@ const Blocks = ({ filters, applyFilters, clearFilter, clearAllFilters, sort, cha
             button={{
               label: t('New blocks'),
               onClick: loadLastBlocks,
+              className: styles.loadLatestBtn,
             }}
             queryHook={useBlocks}
             queryConfig={{ config: { params } }}

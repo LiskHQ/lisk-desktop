@@ -2,12 +2,20 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
+import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import { extractAddressFromPassphrase } from '@wallet/utils/account';
+import wallets from '@tests/constants/wallets';
 import ChooseAvatar from './chooseAvatar';
 
 describe('Register Process - Choose Avatar', () => {
   let wrapper;
+
+  const { privateKey, publicKey } = wallets.genesis.summary;
+  const defaultKeys = {
+    privateKey: Buffer.from(privateKey, 'hex'),
+    publicKey: Buffer.from(publicKey, 'hex'),
+  };
+  jest.spyOn(cryptography.legacy, 'getKeys').mockReturnValue(defaultKeys);
 
   const passphrases = [...Array(5)].map(() => LiskPassphrase.Mnemonic.generateMnemonic());
   const accounts = passphrases.map((pass) => ({
