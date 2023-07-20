@@ -9,6 +9,7 @@ import TransactionDetailsContext from '@transaction/context/transactionDetailsCo
 import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils';
 import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import styles from './styles.css';
 
 const RequestSignSummary = ({
@@ -36,13 +37,20 @@ const RequestSignSummary = ({
       prevStep({ formProps });
     },
   };
-  const Layout = LayoutSchema.structuredGeneralLayout;
+  const chainID = formProps.chainID;
+  const blockchainApplicationMeta = useBlockchainApplicationMeta({
+    config: { params: { chainID } },
+    options: { enabled: !!chainID },
+  });
 
-  const { chainName, chainID, projectPage, logo } = formProps.fields?.recipientChain || {};
+  const { chainName, networkType, logo, projectPage } = blockchainApplicationMeta?.data?.data?.[0];
+  const name = `${chainName} (${networkType})`;
+
+  const Layout = LayoutSchema.structuredGeneralLayout;
 
   const application = {
     data: {
-      name: chainName,
+      name,
       projectPage,
       icon: logo?.png,
     },
