@@ -47,7 +47,7 @@ export default function AccountOverview({ address: searchAddress }) {
     <section>
       <InfoBanner
         t={t}
-        name="blockchainApplicationsPageBanner"
+        name="accountManagementPageBanner"
         infoLabel={t('New')}
         infoMessage={t('Introducing account management')}
         infoDescription={t(

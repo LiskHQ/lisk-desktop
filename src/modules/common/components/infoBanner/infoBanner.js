@@ -58,7 +58,7 @@ const InfoBanner = ({
           </section>
         </div>
       </div>
-      <div>
+      <div className={styles.bannerImg}>
         <Illustration name={illustrationName} />
       </div>
     </div>
