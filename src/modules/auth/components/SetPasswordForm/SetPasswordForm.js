@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { selectSettings } from 'src/redux/selectors';
 import { yupResolver } from '@hookform/resolvers/yup';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from '@theme/Input';
@@ -11,7 +13,7 @@ import CheckBox from '@theme/CheckBox';
 import Tooltip from '@theme/Tooltip';
 import Icon from '@theme/Icon';
 import { regex } from 'src/const/regex';
-import { useEncryptAccount, useAccounts } from '@account/hooks';
+import { useAccounts } from '@account/hooks';
 import styles from './SetPasswordForm.css';
 
 const setPasswordFormSchema = yup
@@ -46,7 +48,7 @@ const setPasswordFormSchema = yup
 
 function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationPath }) {
   const { t } = useTranslation();
-  const { encryptAccount } = useEncryptAccount(customDerivationPath);
+  const { enableAccessToLegacyAccounts } = useSelector(selectSettings);
   const { accounts } = useAccounts();
   const {
     register,
@@ -78,19 +80,27 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
       });
       return null;
     }
-    const { error, result } = await encryptAccount({
-      recoveryPhrase: recoveryPhrase.value,
-      password: values.password,
-      name: values.accountName,
+
+    const encryptWorker = new Worker(new URL('./encryptAccount.worker.js', import.meta.url));
+
+    encryptWorker.postMessage({
+      customDerivationPath,
+      recoveryPhrase,
+      enableAccessToLegacyAccounts,
+      ...values,
     });
 
-    if (error) {
-      toast.error(t('Failed to setup password'));
-      return null;
-    }
+    encryptWorker.onmessage = ({ data: { error, result } }) => {
+      if (error) {
+        toast.error(t('Failed to setup password'));
+        return null;
+      }
 
-    onSubmit?.(result);
-    return setIsLoading(false);
+      onSubmit?.(result);
+      return setIsLoading(false);
+    };
+
+    return null;
   };
 
   return (
