@@ -14,9 +14,7 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import { Link } from 'react-router-dom';
 import { validator } from '@liskhq/lisk-client';
-import Icon from 'src/theme/Icon';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
