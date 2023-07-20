@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import Heading from 'src/modules/common/components/Heading';
 import { useFilter } from 'src/modules/common/hooks';
@@ -29,10 +30,13 @@ const AllTokens = ({ history }) => {
   const { t } = useTranslation();
   const timeout = useRef();
 
-  const [search, setSearch] = useState('');
+  const [searchToken, setSearch] = useState('');
+  const { search = '' } = useLocation();
   const { filters, setFilter } = useFilter({});
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const params = useMemo(() => ({ address, ...filters }), [address, filters]);
+  const queryParams = new URLSearchParams(search);
+  const disableSend = Boolean(queryParams.get('disableSend'));
 
   const handleFilter = useCallback(({ target: { value } }) => {
     setSearch(value);
@@ -53,7 +57,7 @@ const AllTokens = ({ history }) => {
             <Input
               icon={<Icon className={styles.searchIcon} name="searchActive" />}
               onChange={handleFilter}
-              value={search}
+              value={searchToken}
               className={styles.filterTokens}
               size="l"
               name="search-token"
@@ -64,7 +68,7 @@ const AllTokens = ({ history }) => {
                 <SecondaryButton>{t('Request')}</SecondaryButton>
               </DialogLink>
               <DialogLink component="send">
-                <PrimaryButton>{t('Send')}</PrimaryButton>
+                <PrimaryButton disabled={disableSend}>{t('Send')}</PrimaryButton>
               </DialogLink>
             </div>
           </div>
