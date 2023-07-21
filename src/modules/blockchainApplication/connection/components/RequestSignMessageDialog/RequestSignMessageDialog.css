@@ -1,6 +1,14 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .RequestSignMessageDialog {
-  width: 400px;
-  text-align: center;
+  width: 620px;
+  border: none;
+
+  &.passwordStep {
+    max-width: 503px;
+  }
+
+  & .blockchainAppDetailsHeaderProp {
+    padding-bottom: 12px;
+  }
 }

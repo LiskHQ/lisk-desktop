@@ -1,0 +1,35 @@
+.RequestSignMessageConfirmation {
+  text-align: center;
+
+  .description {
+    margin: 18px 0 0 0;
+  }
+
+  & .content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px 20px;
+    text-align: left;
+
+    & .label {
+      font-family: var(--content-font);
+      font-size: 13px;
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.2px;
+      margin: 18px 0 10px 0;
+      color: var(--color-maastricht-blue);
+    }
+
+    & .messageBox {
+      background: #08223c;
+      color: #9bf436;
+      word-wrap: break-word;
+      padding: 12px;
+    }
+
+    & .btnContinue {
+      margin-top: 18px;
+      align-self: center;
+    }
+  }
+}
