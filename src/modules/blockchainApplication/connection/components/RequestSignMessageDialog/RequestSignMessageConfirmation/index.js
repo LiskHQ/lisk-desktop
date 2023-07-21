@@ -26,7 +26,7 @@ export function RequestSignMessageConfirmation({ nextStep, address, message }) {
         {t('This request was initiated from another application.')}
       </p>
       <div className={styles.content}>
-        <p className={styles.label}>Address: </p>
+        <p className={styles.label}>{t('Address: ')}</p>
         <CopyToClipboard
           text={address}
           value={address}
@@ -36,7 +36,7 @@ export function RequestSignMessageConfirmation({ nextStep, address, message }) {
             className: 'copy-address',
           }}
         />
-        <p className={styles.label}>Message</p>
+        <p className={styles.label}>{t('Message')}</p>
         <div className={styles.messageBox}>{message}</div>
         <PrimaryButton className={styles.btnContinue} onClick={onClick}>
           {t('Continue')}
