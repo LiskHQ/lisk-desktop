@@ -142,7 +142,6 @@ const ValidatorsMonitor = ({ watchList }) => {
   return (
     <Box>
       <InfoBanner
-        className={styles.banner}
         t={t}
         name="validatorsPageBanner"
         infoLabel={t('New')}

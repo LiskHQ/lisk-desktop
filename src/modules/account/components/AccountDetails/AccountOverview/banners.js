@@ -1,6 +1,5 @@
 const banners = [
   {
-    name: 'accountManagementPageBanner',
     infoMessage: (t) => t('Introducing account management'),
     infoDescription: (t) =>
       t(
@@ -9,7 +8,6 @@ const banners = [
     illustrationName: 'accountManagement',
   },
   {
-    name: 'blockchainApplicationsPageBanner',
     infoMessage: (t) => t('Introducing blockchain application exploring and management'),
     infoDescription: (t) =>
       t(
@@ -18,7 +16,6 @@ const banners = [
     illustrationName: 'applicationManagement',
   },
   {
-    name: 'hardwareWalletManagementPageBanner',
     infoMessage: (t) => t('Introducing hardware wallet management'),
     infoDescription: (t) =>
       t(
@@ -27,7 +24,6 @@ const banners = [
     illustrationName: 'hardwareWalletManagement',
   },
   {
-    name: 'walletConnectPageBanner',
     infoMessage: (t) => t('Introducing wallet connect management and exploring'),
     infoDescription: (t) =>
       t(
@@ -36,7 +32,6 @@ const banners = [
     illustrationName: 'walletConnect',
   },
   {
-    name: 'transactionEventsPageBanner',
     infoMessage: (t) => t('Introducing events'),
     infoDescription: (t) =>
       t(
@@ -45,7 +40,6 @@ const banners = [
     illustrationName: 'transactionEvents',
   },
   {
-    name: 'multiTokenBalancesPageBanner',
     infoMessage: (t) => t('Introducing Multi-tokens'),
     infoDescription: (t) =>
       t(
@@ -54,7 +48,6 @@ const banners = [
     illustrationName: 'multiTokenBalances',
   },
   {
-    name: 'crossApplicationsSendRequestTokensPageBanner',
     infoMessage: (t) => t('Introducing sending and requesting token within an application'),
     infoDescription: (t) =>
       t(
@@ -63,7 +56,6 @@ const banners = [
     illustrationName: 'crossApplicationsSendRequestTokens',
   },
   {
-    name: 'withinAndCrossApplicationsSendRequestTokensPageBanner',
     infoMessage: (t) => t('Introducing sending and requesting token across applications'),
     infoDescription: (t) =>
       t(
@@ -72,7 +64,6 @@ const banners = [
     illustrationName: 'withinAndCrossApplicationsSendRequestTokens',
   },
   {
-    name: 'networkManagementPageBanner',
     infoMessage: (t) => t('Introducing Network and Application management'),
     infoDescription: (t) =>
       t(
@@ -81,7 +72,6 @@ const banners = [
     illustrationName: 'networkManagement',
   },
   {
-    name: 'validatorsPageBanner',
     infoMessage: (t) => t('Introducing sending and requesting token within an application'),
     infoDescription: (t) =>
       t(
