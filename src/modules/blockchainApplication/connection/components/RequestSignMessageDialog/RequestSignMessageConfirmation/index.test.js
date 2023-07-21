@@ -23,6 +23,9 @@ describe('RequestSignMessageConfirmation', () => {
 
   it('should call nextStep when button is clicked', async () => {
     fireEvent.click(screen.getByRole('button'));
-    expect(props.nextStep).toHaveBeenCalled();
+    expect(props.nextStep).toHaveBeenCalledWith({
+      message: props.message,
+      actionFunction: expect.any(Function),
+    });
   });
 });
