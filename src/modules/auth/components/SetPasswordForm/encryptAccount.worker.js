@@ -16,5 +16,7 @@ self.onmessage = (message) => {
     name: accountName,
     recoveryPhrase: recoveryPhrase?.value,
     derivationPath: customDerivationPath,
-  }).then(self.postMessage);
+  })
+    .then(self.postMessage)
+    .catch(() => self.postMessage({ error: true }));
 };

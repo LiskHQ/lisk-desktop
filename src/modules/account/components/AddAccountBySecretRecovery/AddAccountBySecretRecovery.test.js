@@ -68,7 +68,18 @@ describe('Add account by secret recovery phrase flow', () => {
     fireEvent.click(screen.getByText('Save Account'));
 
     await waitFor(() => {
-      expect(mockOnMessage).toBeCalled();
+      expect(mockOnMessage).toHaveBeenCalledWith({
+        accountName: 'user1',
+        cPassword: 'Password1$',
+        customDerivationPath: "m/44'/134'/0'",
+        enableAccessToLegacyAccounts: undefined,
+        hasAgreed: true,
+        password: 'Password1$',
+        recoveryPhrase: {
+          isValid: true,
+          value: 'below record evolve eye youth post control consider spice swamp hidden easily',
+        },
+      });
     });
   });
 });

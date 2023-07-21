@@ -97,6 +97,7 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
       }
 
       onSubmit?.(result);
+      encryptWorker.terminate();
       return setIsLoading(false);
     };
 
