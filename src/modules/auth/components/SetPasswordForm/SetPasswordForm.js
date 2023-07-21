@@ -74,6 +74,7 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
     const existingAccountName = accounts.some(
       (acc) => acc.metadata.name.toLowerCase() === values.accountName.toLowerCase()
     );
+
     if (values.accountName && existingAccountName) {
       setError('accountName', {
         message: t(`Account with name "${values.accountName}" already exists.`),
@@ -81,25 +82,28 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
       return null;
     }
 
-    const encryptWorker = new Worker(new URL('./encryptAccount.worker.js', import.meta.url));
+    const encryptAccountWorker = new Worker(new URL('./encryptAccount.worker.js', import.meta.url));
+    const showEncryptAccountError = () => {
+      toast.error(t('Failed to setup password'));
+      setIsLoading(false);
+    };
 
-    encryptWorker.postMessage({
+    encryptAccountWorker.postMessage({
       customDerivationPath,
       recoveryPhrase,
       enableAccessToLegacyAccounts,
       ...values,
     });
 
-    encryptWorker.onmessage = ({ data: { error, result } }) => {
-      if (error) {
-        toast.error(t('Failed to setup password'));
-        return null;
-      }
+    encryptAccountWorker.onmessage = ({ data: { error, result } }) => {
+      if (error) return showEncryptAccountError();
 
       onSubmit?.(result);
-      encryptWorker.terminate();
+      encryptAccountWorker.terminate();
       return setIsLoading(false);
     };
+
+    encryptAccountWorker.onerror = showEncryptAccountError
 
     return null;
   };
