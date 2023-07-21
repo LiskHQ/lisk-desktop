@@ -1,15 +1,6 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
-import {
-  MIN_FEE_PER_BYTE,
-  DEFAULT_NUMBER_OF_SIGNATURES,
-} from '@transaction/configuration/transactions';
-import {
-  MODULE_COMMANDS_MAP,
-  MODULE_COMMANDS_NAME_MAP,
-} from 'src/modules/transaction/configuration/moduleCommand';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
-import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import http from 'src/utils/api/http';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
@@ -34,75 +25,6 @@ export const getTransactionBaseFees = (network) =>
       High: feeEstimatePerByte.high,
     };
   });
-
-/**
- * Returns the actual tx fee based on given tx details
- * and selected processing speed
- */
-// eslint-disable-next-line max-statements
-export const getTransactionFee = async ({
-  transactionJSON,
-  selectedPriority,
-  numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
-  moduleCommandSchemas,
-  senderAccount = { numberOfSignatures: 0, optionalKeys: [], mandatoryKeys: [] },
-  token,
-}) => {
-  const feePerByte = selectedPriority.value;
-  const moduleCommand = joinModuleAndCommand(transactionJSON);
-  const paramsSchema = moduleCommandSchemas[moduleCommand];
-
-  const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
-  const transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
-
-  if (transactionJSON.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
-    const { optionalKeys, mandatoryKeys } = transactionJSON.params;
-    numberOfSignatures = optionalKeys.length + mandatoryKeys.length;
-  }
-
-  const allocateEmptySignaturesWithEmptyBuffer = (signatureCount) =>
-    new Array(signatureCount).fill(Buffer.alloc(64));
-
-  // @TODO: implement transaction fee calculation based on domain fee constants
-  const { mandatoryKeys, optionalKeys } = senderAccount;
-  const minFee = transactions.computeMinFee(
-    {
-      ...transactionObject,
-      params: {
-        ...transactionObject.params,
-        ...(numberOfSignatures &&
-          !transactionObject.params.signatures?.length && {
-            signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
-          }),
-      },
-    },
-    paramsSchema,
-    senderAccount.numberOfSignatures
-      ? {
-          numberOfSignatures: senderAccount.numberOfSignatures,
-          numberOfEmptySignatures:
-            mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
-        }
-      : {}
-  );
-
-  // tie breaker is only meant for medium and high processing speeds
-  const tieBreaker =
-    selectedPriority.selectedIndex === 0 ? 0 : MIN_FEE_PER_BYTE * feePerByte * Math.random();
-  const size = transactions.getBytes(transactionObject, paramsSchema).length;
-
-  const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
-  const cappedFee = Math.min(calculatedFee, maxCommandFee);
-  const fee = convertFromBaseDenom(cappedFee, token);
-  const roundedValue = Number(fee).toFixed(7).toString();
-  const feedback = transactionJSON.amount === '' ? '-' : `${roundedValue ? '' : 'Invalid amount'}`;
-
-  return {
-    value: roundedValue,
-    error: !!feedback,
-    feedback,
-  };
-};
 
 /**
  * creates a new transaction
