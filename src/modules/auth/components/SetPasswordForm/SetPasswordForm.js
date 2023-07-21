@@ -82,7 +82,8 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
       return null;
     }
 
-    const encryptAccountWorker = new Worker(new URL('./encryptAccount.worker.js', import.meta.url));
+    const encryptAccountWorker = new Worker(new URL('./encryptAccountWorker.js', import.meta.url));
+    /* istanbul ignore next */
     const showEncryptAccountError = () => {
       toast.error(t('Failed to setup password'));
       setIsLoading(false);
@@ -103,7 +104,7 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
       return setIsLoading(false);
     };
 
-    encryptAccountWorker.onerror = showEncryptAccountError
+    encryptAccountWorker.onerror = showEncryptAccountError;
 
     return null;
   };
