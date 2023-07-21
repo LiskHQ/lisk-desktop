@@ -160,7 +160,7 @@ const RequestSummary = ({ nextStep, history }) => {
             )}
           </ValueAndLabel>
           {!errorMessage && (
-            <ValueAndLabel className={styles.labeledValue} label={t('Selected account')}>
+            <ValueAndLabel className={styles.labeledValue} label={t('Sender account')}>
               <AccountRow
                 account={{
                   metadata: { name: senderAccount?.name, address: senderAccount?.address },

@@ -26,7 +26,7 @@ export function RequestSignMessageConfirmation({ nextStep, address, message }) {
         {t('This request was initiated from another application.')}
       </p>
       <div className={styles.content}>
-        <p className={styles.label}>{t('Address: ')}</p>
+        <p className={styles.label}>{t('Sender account: ')}</p>
         <CopyToClipboard
           text={address}
           value={address}
