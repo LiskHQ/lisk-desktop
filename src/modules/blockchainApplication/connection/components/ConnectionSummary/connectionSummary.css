@@ -1,18 +1,98 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
+.ChainListing {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* stylelint-disable-line unit-whitelist */
+  width: 100%;
+  gap: 16px;
+}
+
+.ChainListingItem {
+  display: flex;
+
+  & .chainLogo {
+    border-radius: 50%;
+  }
+
+  & .textContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+    text-align: left;
+
+    & .name {
+      margin: 0;
+      font-size: var(--font-size-title);
+      color: var(--color-zodiac-blue);
+      font-weight: var(--font-weight-bold);
+    }
+
+    & .chainId {
+      margin-top: 2px;
+      font-size: var(--paragraph-font-size-s);
+      color: var(--color-slate-gray);
+      font-weight: var(--font-weight-normal);
+    }
+  }
+}
+
+.CollapsableRow {
+  & .arrowIcon {
+    width: 10px;
+    transition: all 250ms linear;
+
+    &.showArrowDown {
+      transform: rotate(90deg);
+      transition: all 250ms linear;
+    }
+  }
+
+  & .rowHeaderButton {
+    height: initial;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--color-zodiac-blue);
+
+    &.marginBottom {
+      margin-bottom: 18px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      text-decoration: initial;
+    }
+  }
+}
+
 .dialogWrapper {
+  max-width: 616px;
   border: none;
   flex-flow: column nowrap;
 
   & > span {
     color: white !important;
   }
+
+  & .blockchainAppDetailsHeaderProp {
+    padding-bottom: 16px;
+
+    & .description {
+      line-height: 20px;
+    }
+  }
 }
 
 .wrapper {
   width: 100%;
   box-sizing: border-box;
-  padding: 24px;
+  padding: 0 24px 24px 24px;
   overflow-y: scroll;
 
   & .twoColumn {
@@ -31,15 +111,20 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 16.1px;
+    color: var(--color-zodiac-blue);
+  }
+
+  & .colorSlateGray {
     color: var(--color-slate-gray);
   }
 
   & .labeledValue {
     & > span:first-child {
+      margin-bottom: 16px;
       font-weight: 400;
       font-size: 14px;
+      color: var(--color-zodiac-blue);
       line-height: 16.1px;
-      color: var(--color-slate-gray);
     }
   }
 
@@ -69,7 +154,7 @@
 
   & .section {
     border-top: solid 1px var(--color-platinum);
-    padding: 24px 0;
+    padding: 18px 0;
   }
 
   & .permissions {

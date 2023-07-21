@@ -219,6 +219,7 @@ import chainLinkIcon from '@setup/react/assets/images/icons/chain-link.svg';
 import successCheckMark from '@setup/react/assets/images/icons/success-check-mark.svg';
 import dropdownArrowIcon from '@setup/react/assets/images/icons/dropdown-arrow.svg';
 import plusBlueIcon from '@setup/react/assets/images/icons/plus-blue.svg';
+import plusWhiteIcon from '@setup/react/assets/images/icons/plus-white.svg';
 import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-filled.svg';
 import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon-filled-dark.svg';
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
@@ -367,6 +368,7 @@ export const icons = {
   signOut,
   plus,
   plusActive,
+  plusWhiteIcon,
   remove,
   totalBlocks,
   totalBlocksDark,

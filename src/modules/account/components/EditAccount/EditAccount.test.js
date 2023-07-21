@@ -7,6 +7,9 @@ import EditAccount from './EditAccount';
 jest.mock('react-i18next');
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], jest.fn()]),
+  useAccounts: jest.fn(() => ({
+    accounts: mockSavedAccounts,
+  })),
 }));
 
 const props = { history: { push: jest.fn() } };

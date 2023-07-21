@@ -1,6 +1,5 @@
 import { useContext, useEffect, useCallback, useState } from 'react';
 import { getSdkError } from '@walletconnect/utils';
-import { client } from '@libs/wcm/utils/connectionCreator';
 import { formatJsonRpcResult } from '../utils/jsonRPCFormat';
 import ConnectionContext from '../context/connectionContext';
 import { onApprove, onReject } from '../utils/sessionHandlers';
@@ -17,6 +16,7 @@ export const useSession = () => {
     setSessions,
     setSessionProposal,
     setSessionRequest,
+    signClient,
   } = useContext(ConnectionContext);
   const { removeEvent } = useEvents();
 
@@ -24,8 +24,8 @@ export const useSession = () => {
     const loadedSessions = [];
 
     await Promise.all(
-      client.session.keys.map(async (key, index) => {
-        loadedSessions[index] = client.session.get(key);
+      signClient.session.keys.map(async (key, index) => {
+        loadedSessions[index] = signClient.session.get(key);
       })
     );
 
@@ -36,7 +36,7 @@ export const useSession = () => {
   const approve = useCallback(async (selectedAccounts) => {
     const proposalEvents = events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
     try {
-      const status = await onApprove(proposalEvents.meta, selectedAccounts);
+      const status = await onApprove(proposalEvents.meta, selectedAccounts, signClient);
       removeEvent(proposalEvents);
       setSessionProposal(null);
       setSessionRequest(null);
@@ -53,10 +53,11 @@ export const useSession = () => {
     }
   }, []);
 
-  const reject = useCallback(async () => {
-    const proposalEvents = events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
+  const reject = useCallback(async (event) => {
+    const proposalEvents = event || events.find((e) => e.name === EVENTS.SESSION_PROPOSAL);
     try {
-      await onReject(proposalEvents.meta);
+      await onReject(proposalEvents.meta, signClient);
+      removeEvent(proposalEvents);
       setSessionProposal(null);
       setSessionRequest(null);
       return {
@@ -77,7 +78,7 @@ export const useSession = () => {
     const response = formatJsonRpcResult(requestEvent.meta.id, payload);
 
     try {
-      const data = await client.respond({
+      const data = await signClient.respond({
         topic,
         response,
       });
@@ -102,7 +103,7 @@ export const useSession = () => {
     async (topic) => {
       setSessions((prevSessions) => prevSessions.filter((session) => session.topic !== topic));
       try {
-        await client.disconnect({
+        await signClient.disconnect({
           topic,
           reason: getSdkError(ERROR_CASES.USER_DISCONNECTED),
         });
@@ -116,16 +117,16 @@ export const useSession = () => {
         };
       }
     },
-    [client]
+    [signClient]
   );
 
   useEffect(() => {
-    if (client?.session && !hasLoaded) {
+    if (signClient?.session && !hasLoaded) {
       (async () => {
         await loadSessions();
       })();
     }
-  }, [client, sessions]);
+  }, [signClient, sessions]);
 
   return {
     hasLoaded,

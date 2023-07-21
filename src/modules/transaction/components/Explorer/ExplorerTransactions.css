@@ -93,3 +93,10 @@
     transform: scale(1);
   }
 }
+
+.loadLatestBtnWrapper {
+  position: absolute;
+  top: -80px;
+  z-index: 4;
+  left: 50%;
+}

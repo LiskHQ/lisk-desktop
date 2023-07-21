@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import sha256 from 'js-sha256';
+import { cryptography } from '@liskhq/lisk-client';
 import generateUniqueId from 'src/utils/generateUniqueId';
 import { validateAddress } from 'src/utils/validators';
 import { Gradients, gradientSchemes } from './gradients';
@@ -171,8 +171,9 @@ const pickTwo = (chunk, options) => [
 ];
 
 const getHashChunks = (address) => {
-  const addressHash = new BigNumber(`0x${sha256(address)}`).toString().substr(3);
-  return addressHash.match(/\d{5}/g);
+  const addressHashHex = cryptography.utils.hash(Buffer.from(address, 'utf-8')).toString('hex');
+  const addressHashChunks = new BigNumber(`0x${addressHashHex}`).toString().substring(3);
+  return addressHashChunks.match(/\d{5}/g);
 };
 
 function replaceUrlByHashOnScheme(uniqueSvgUrlHash, gradientScheme) {
@@ -203,7 +204,7 @@ class WalletVisual extends React.Component {
 
     const addressHashChunks = getHashChunks(address);
     const gradientScheme =
-      gradientSchemes[addressHashChunks[0].substr(1, 2) % gradientSchemes.length];
+      gradientSchemes[addressHashChunks[0].substring(1, 3) % gradientSchemes.length];
 
     const gradientsSchemesUrlsHashed = {
       primary: pickTwo(addressHashChunks[1], gradientScheme.primary).map(

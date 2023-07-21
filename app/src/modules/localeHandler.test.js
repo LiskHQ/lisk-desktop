@@ -3,6 +3,7 @@ import { spy, mock } from 'sinon';
 import i18n from 'i18next';
 import win from './win';
 import localeHandler from './localeHandler';
+import { IPC_DETECT_LOCALE } from '../../../src/const/ipcGlobal';
 
 describe('localeHandler', () => {
   const callbacks = {};
@@ -62,9 +63,9 @@ describe('localeHandler', () => {
     });
     localeHandler.send({ storage });
 
-    expect(sendSpy).to.have.been.calledWith({ event: 'detectedLocale', value: 'de' });
+    expect(sendSpy).to.have.been.calledWith({ event: IPC_DETECT_LOCALE, value: 'de' });
     expect(win.eventStack.length).to.equal(1);
-    expect(win.eventStack[0].event).to.equal('detectedLocale');
+    expect(win.eventStack[0].event).to.equal(IPC_DETECT_LOCALE);
     expect(win.eventStack[0].value).to.equal('de');
 
     sendSpy.restore();
@@ -80,7 +81,7 @@ describe('localeHandler', () => {
 
     callbacks.config(null, {});
     expect(win.eventStack.length).to.equal(1);
-    expect(win.eventStack[0].event).to.equal('detectedLocale');
+    expect(win.eventStack[0].event).to.equal(IPC_DETECT_LOCALE);
     expect(win.eventStack[0].value).to.equal('en');
     sendSpy.restore();
   });

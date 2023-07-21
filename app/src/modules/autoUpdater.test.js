@@ -2,6 +2,13 @@ import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-depen
 import sinon, { spy, stub } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import ipcMock from 'electron-ipc-mock'; // eslint-disable-line import/no-extraneous-dependencies
 import autoUpdater from './autoUpdater';
+import {
+  IPC_DOWNLOAD_UPDATE_COMPLETED,
+  IPC_DOWNLOAD_UPDATE_PROGRESS,
+  IPC_DOWNLOAD_UPDATE_START,
+  IPC_UPDATE_STARTED,
+  IPC_UPDATE_AVAILABLE,
+} from '../../../src/const/ipcGlobal';
 
 describe('autoUpdater', () => {
   const version = '1.2.3';
@@ -111,7 +118,7 @@ describe('autoUpdater', () => {
     autoUpdater(params);
     callbacks['update-downloaded']({ version });
 
-    expect(params.win.send).to.have.been.calledWith({ event: 'downloadUpdateCompleted' });
+    expect(params.win.send).to.have.been.calledWith({ event: IPC_DOWNLOAD_UPDATE_COMPLETED });
   });
 
   it('should show info box if update was requested but not available', () => {
@@ -136,20 +143,20 @@ describe('autoUpdater', () => {
     autoUpdater(newPrams);
     callbacks['update-available']({ version });
     expect(params.win.send).to.have.been.calledWith();
-    ipcRenderer.send('update:started');
+    ipcRenderer.send(IPC_UPDATE_STARTED);
     clock.tick(1001);
     ipcRenderer.send('update', { text: 'update' });
     clock.tick(100);
     expect(params.autoUpdater.downloadUpdate).to.have.been.calledWithExactly();
-    expect(params.win.send).to.have.been.calledWith({ event: 'downloadUpdateStart' });
+    expect(params.win.send).to.have.been.calledWith({ event: IPC_DOWNLOAD_UPDATE_START });
   });
 
-  it('should send update:available event when update is available', () => {
+  it('should send IPC_UPDATE_AVAILABLE event when update is available', () => {
     const newPrams = { ...params, electron };
     autoUpdater(newPrams);
     callbacks['update-available']({ version });
     expect(params.win.send).to.have.been.calledWith({
-      event: 'update:available',
+      event: IPC_UPDATE_AVAILABLE,
       value: { releaseNotes: undefined, version },
     });
 
@@ -160,7 +167,7 @@ describe('autoUpdater', () => {
     autoUpdater(params);
     callbacks['download-progress']({ transferred: 50, total: 100 });
     expect(params.win.send).to.have.been.calledWith({
-      event: 'downloadUpdateProgress',
+      event: IPC_DOWNLOAD_UPDATE_PROGRESS,
       value: { transferred: 50, total: 100 },
     });
   });

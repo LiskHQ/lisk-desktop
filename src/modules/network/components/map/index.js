@@ -40,11 +40,12 @@ const createMarkers = (peers) => {
 
 const getAttributionLinks = () => {
   const openStreetMap =
-    '<span>© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</span>';
-  const mapBox = '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a>';
+    '<span>© <a href="https://www.openstreetmap.org/copyright" rel="noopener noreferrer" target="_blank">OpenStreetMap</a> contributors</span>';
+  const mapBox =
+    '<a href="https://www.mapbox.com/about/maps/" rel="noopener noreferrer" target="_blank">© Mapbox</a>';
   const improveThisMap =
-    '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
-  const watermark = `<a href="https://www.mapbox.com/about/maps" target="_blank"><img src="${mapboxWatermarkImage}" class="mapboxWatermark"  alt=""/></a>`;
+    '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" rel="noopener noreferrer" target="_blank">Improve this map</a>';
+  const watermark = `<a href="https://www.mapbox.com/about/maps" rel="noopener noreferrer" target="_blank"><img src="${mapboxWatermarkImage}" class="mapboxWatermark"  alt=""/></a>`;
 
   return `${openStreetMap} ${mapBox} ${improveThisMap} ${watermark}`;
 };

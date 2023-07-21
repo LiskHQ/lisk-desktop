@@ -140,6 +140,7 @@ const Transactions = () => {
           showHeader
           button={{
             label: t('New transactions'),
+            wrapperClassName: styles.loadLatestBtnWrapper,
           }}
           queryHook={({ ...options }) => useTransactions({ ...options, getUpdate: true })}
           queryConfig={{ config: { params } }}

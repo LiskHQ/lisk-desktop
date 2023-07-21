@@ -9,7 +9,6 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 import mockApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
 import { mockAppTokens } from '@tests/fixtures/token';
-import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { context as defaultContext } from '../../__fixtures__/requestSummary';
@@ -41,9 +40,6 @@ jest.mock('@transaction/utils/transaction', () => ({
 }));
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
-}));
-jest.mock('@libs/wcm/utils/requestHandlers', () => ({
-  rejectLiskRequest: jest.fn(),
 }));
 jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   createSignClient: jest.fn(() => Promise.resolve()),
@@ -109,7 +105,7 @@ describe('RequestSummary', () => {
 
   it('Display the requesting app information', () => {
     renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
-    expect(screen.getByTestId('logo')).toHaveAttribute('src', 'http://example.com/icon.png');
+    expect(screen.getByAltText('logo')).toHaveAttribute('src', 'http://example.com/icon.png');
     expect(screen.getByText('Signature request')).toBeTruthy();
     expect(screen.getByText('test app')).toBeTruthy();
     expect(screen.getByRole('link')).toHaveAttribute('href', 'http://example.com');
@@ -119,7 +115,7 @@ describe('RequestSummary', () => {
     renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
     const button = screen.getAllByRole('button')[0];
     fireEvent.click(button);
-    expect(rejectLiskRequest).toHaveBeenCalled();
+    expect(history.push).toHaveBeenCalled();
   });
 
   it.skip('Normalize the rawTx object and send it to the next step', () => {

@@ -1,13 +1,14 @@
+import { cryptography } from '@liskhq/lisk-client';
 import { mountWithRouter } from 'src/utils/testHelpers';
-import accounts from '@tests/constants/wallets';
 import VerifyMessage from './index';
 
 describe('VerifyMessage Component', () => {
   let wrapper;
+  const publicKey = 'cfb08903c2fc487fcd8785b4db6532e05cdf7b2c16669e6140b79bcb837d7298';
   const props = {
     history: {
       location: {
-        search: `?message=Hello&publicKey=${accounts.genesis.summary.publicKey}&signature=c68adc131`,
+        search: `?message=Hello&publicKey=${publicKey}&signature=c68adc131`,
       },
       goBack: jest.fn(),
       push: jest.fn(),
@@ -15,9 +16,8 @@ describe('VerifyMessage Component', () => {
     t: (v) => v,
   };
   const message = 'Hello world';
-  const publicKey = accounts.genesis.summary.publicKey;
   const signature =
-    '2240598a4d7700010d82a60b066c5daf1f45fe673dbbd0e4b368ac8d07f78710e7685a598395784066f2e474db8095b7cb2ba503bcc3f1bb06c528cf048fc201';
+    '41667f16421452e721245519579b2c2d87085df787721ccd88de81b7713f305172895e9427b0c1b7fec212af52eb87507b4996b639abb19482ce00be9cadc505';
   const signedMessage = `-----MESSAGE-----
 ${message}
 -----PUBLIC KEY-----
@@ -49,21 +49,8 @@ ${signature}
   });
 
   it('should allow to verify valid inputs', () => {
-    wrapper.find('img.inputs-view-icon').simulate('click');
-    wrapper
-      .find('.message input')
-      .simulate('change', { target: { value: message, name: 'message' } });
-    wrapper
-      .find('.publicKey input')
-      .simulate('change', { target: { value: publicKey, name: 'publicKey' } });
-    wrapper
-      .find('.signature input')
-      .simulate('change', { target: { value: signature, name: 'signature' } });
-    wrapper.find('.continue button').simulate('click');
-    expect(wrapper.find('h1')).toIncludeText('Signature is correct');
-  });
+    jest.spyOn(cryptography.ed, 'verifyMessageWithPublicKey').mockReturnValueOnce(true);
 
-  it('should allow to go back and keep value of all inputs', () => {
     wrapper.find('img.inputs-view-icon').simulate('click');
     wrapper
       .find('.message input')
@@ -110,6 +97,7 @@ ${signature}
   });
 
   it('should allow to verify a valid message with the textarea view', () => {
+    jest.spyOn(cryptography.ed, 'verifyMessageWithPublicKey').mockReturnValueOnce(true);
     wrapper
       .find('.signedMessage textarea')
       .simulate('change', { target: { value: signedMessage, name: 'signedMessage' } });

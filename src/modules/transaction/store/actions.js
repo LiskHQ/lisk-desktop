@@ -67,8 +67,6 @@ export const transactionBroadcasted =
 
         return true;
       }
-      // @todo we need to push pending transaction to the query cache
-      // https://github.com/LiskHQ/lisk-desktop/issues/4698 should handle this logic
     }
 
     const transactionErrorMessage =

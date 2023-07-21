@@ -5,42 +5,39 @@ import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLa
 import AccountRow from '@account/components/AccountRow';
 import { useAccounts } from '@account/hooks/useAccounts';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
-import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
-import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { EVENTS, ERROR_CASES } from '@libs/wcm/constants/lifeCycle';
+import { formatJsonRpcError } from '@libs/wcm/utils/jsonRPCFormat';
 import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
-import { decodeTransaction, toTransactionJSON } from '@transaction/utils/encoding';
+import { toTransactionJSON } from '@transaction/utils/encoding';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import { Link } from 'react-router-dom';
-import Icon from 'src/theme/Icon';
+import { validator } from '@liskhq/lisk-client';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { getSdkError } from '@walletconnect/utils';
+import { decodeTransaction } from '@transaction/utils';
+
 import Box from 'src/theme/box';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { validator } from '@liskhq/lisk-client';
+import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
 import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
 
 const getTitle = (key, t) =>
-  Object.values(SIGNING_METHODS).find((item) => item.key === key)?.title ?? t('Method not found');
-
-const getRequestTransaction = (request) => {
-  const { payload, schema } = request.request.params;
-  try {
-    validator.validator.validateSchema(schema);
-    return decodeTransaction(Buffer.from(payload, 'hex'), schema);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+  Object.values(SIGNING_METHODS).find((item) => item.key === key)?.title ?? t('Method not found.');
 
 const defaultToken = { symbol: 'LSK' };
+
+export const rejectLiskRequest = (request) => {
+  const { id } = request;
+
+  return formatJsonRpcError(id, getSdkError(ERROR_CASES.USER_REJECTED_METHODS).message);
+};
 
 // eslint-disable-next-line max-statements
 const RequestSummary = ({ nextStep, history }) => {
@@ -62,11 +59,6 @@ const RequestSummary = ({ nextStep, history }) => {
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
     const transactionJSON = toTransactionJSON(transaction, request?.request?.params.schema);
-    const { recipientChainID } = request?.request?.params ?? {};
-    const sendingChain = metaData.data.data.find(({ chainID }) => chainID === sendingChainID);
-    sendingChain.chainID = sendingChainID;
-    const recipientChain = metaData.data.data.find(({ chainID }) => chainID === recipientChainID);
-    recipientChain.chainID = recipientChainID;
     const token = tokenData.data.data.length > 0 ? tokenData.data.data[0] : defaultToken;
 
     nextStep({
@@ -79,11 +71,6 @@ const RequestSummary = ({ nextStep, history }) => {
             components: [],
           },
         ],
-        fields: {
-          sendingChain,
-          recipientChain,
-          token,
-        },
         moduleCommand,
         chainID: sendingChainID,
         schema: request?.request?.params.schema,
@@ -108,16 +95,19 @@ const RequestSummary = ({ nextStep, history }) => {
     }
   }, []);
 
+  // eslint-disable-next-line max-statements
   useEffect(() => {
     if (request && !transaction) {
       try {
-        const tx = getRequestTransaction(request);
-        setTransaction(tx);
-        const address = extractAddressFromPublicKey(tx.senderPublicKey);
+        const { payload, schema } = request.request.params;
+        validator.validator.validateSchema(schema);
+        const transactionObj = decodeTransaction(Buffer.from(payload, 'hex'), schema);
+        setTransaction(transactionObj);
+        const address = extractAddressFromPublicKey(transactionObj.senderPublicKey);
         const account = getAccountByAddress(address);
         // @todo if account doesn't exist, we should inform the user that the tx can't be signed
         setSenderAccount({
-          pubkey: tx.senderPublicKey,
+          pubkey: transactionObj.senderPublicKey,
           address,
           name: account?.metadata?.name,
         });
@@ -133,27 +123,27 @@ const RequestSummary = ({ nextStep, history }) => {
   }
 
   const { icons, name, url } = sessionRequest.peer.metadata;
-  const { chainId } = request;
+
+  const application = {
+    data: {
+      name,
+      projectPage: url.replace(/\/$/, ''),
+      icon: icons[0],
+    },
+  };
+
+  const clipboardCopyItems = sessionRequest?.requiredNamespaces?.lisk?.chains?.map((chain) => ({
+    label: 'Chain ID:',
+    value: chain.replace(/\D+/g, ''),
+  }));
 
   return (
-    <div className={`${styles.wrapper} ${grid.row} ${grid['center-xs']}`}>
-      <div className={styles.avatarContainer}>
-        <h2>{getTitle(request.request.method, t)}</h2>
-        <img data-testid="logo" src={icons[0]} className={styles.logo} />
-      </div>
-      <div className={styles.chainNameWrapper}>
-        <h3 className="chain-name-text">{name}</h3>
-      </div>
-      <div className={styles.addressRow}>
-        <Link target="_blank" to={url}>
-          <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-          {t(url)}
-        </Link>
-      </div>
-      <div className={styles.chainId}>
-        <span>{t('Chain ID:')}</span>
-        <span>{chainId.replace('lisk:', '')}</span>
-      </div>
+    <div className={`${styles.wrapper}`}>
+      <BlockchainAppDetailsHeader
+        headerText={getTitle(request.request.method, t)}
+        application={application}
+        clipboardCopyItems={clipboardCopyItems}
+      />
       <Box>
         <div className={styles.information}>
           <ValueAndLabel className={styles.labeledValue} label={t('Information')}>
