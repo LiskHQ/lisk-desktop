@@ -23,7 +23,7 @@ module.exports = {
     '^.+\\.css$': 'identity-obj-proxy',
     '^src(.*)$': resolve(__dirname, '../src/$1'),
     '^@scripts(.*)$': resolve(__dirname, '../scripts/$1'),
-    '^swiper/css$': resolve(__dirname, '../node_modules/swiper/swiper-bundle.js'),
+    '^swiper/css(/(.*))?$': resolve(__dirname, '../node_modules/swiper/swiper-bundle.js'),
     '^@setup(.*)$': resolve(__dirname, '../setup/$1'),
     '^@tests(.*)$': resolve(__dirname, '../tests/$1'),
     '^@fixtures(.*)$': resolve(__dirname, '../tests/fixtures/$1'),

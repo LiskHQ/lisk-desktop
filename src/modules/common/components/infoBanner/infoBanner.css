@@ -8,6 +8,7 @@
   margin-top: 32px;
   overflow: hidden;
   position: relative;
+  min-height: 282px;
 
   & .illustrations {
     min-height: 257px;
