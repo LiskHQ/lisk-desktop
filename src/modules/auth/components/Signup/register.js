@@ -31,7 +31,7 @@ const Register = ({ account, token }) => {
   const onSetPassword = (encryptedAccount) => {
     setCurrentAccount(encryptedAccount);
     setAccount(encryptedAccount);
-    multiStepRef.current.next();
+    multiStepRef.current?.next();
   };
 
   useEffect(() => {
