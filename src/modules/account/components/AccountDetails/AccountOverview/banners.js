@@ -1,3 +1,4 @@
+// istanbul ignore file
 const banners = [
   {
     infoMessage: (t) => t('Introducing account management'),
