@@ -13,7 +13,6 @@ import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import BoxContent from 'src/theme/box/content';
 import { QueryTable } from 'src/theme/QueryTable';
 import BoxHeader from 'src/theme/box/header';
-import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
 import Icon from 'src/theme/Icon';
 import styles from './AllTokens.css';
@@ -21,7 +20,6 @@ import header from './tableHeaderMap';
 import TokenRow from '../TokenRow';
 
 const AllTokens = ({ history }) => {
-  const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const [
     {
       metadata: { address: currentAddress },
@@ -31,12 +29,14 @@ const AllTokens = ({ history }) => {
   const timeout = useRef();
 
   const [searchToken, setSearch] = useState('');
-  const { search = '' } = useLocation();
   const { filters, setFilter } = useFilter({});
-  const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
-  const params = useMemo(() => ({ address, ...filters }), [address, filters]);
+  const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   const disableSend = Boolean(queryParams.get('disableSend'));
+  const searchAddress = Boolean(queryParams.get('address'));
+
+  const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
+  const params = useMemo(() => ({ address, ...filters }), [address, filters]);
 
   const handleFilter = useCallback(({ target: { value } }) => {
     setSearch(value);
