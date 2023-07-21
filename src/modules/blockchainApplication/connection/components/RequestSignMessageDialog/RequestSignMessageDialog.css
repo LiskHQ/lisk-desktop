@@ -11,4 +11,8 @@
   & .blockchainAppDetailsHeaderProp {
     padding-bottom: 12px;
   }
+
+  & .multiStepProp {
+    padding: 0 20px 20px;
+  }
 }

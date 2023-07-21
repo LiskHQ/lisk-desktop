@@ -8,7 +8,6 @@
   & .content {
     display: flex;
     flex-direction: column;
-    padding: 0 20px 20px;
     text-align: left;
 
     & .label {
@@ -21,6 +20,7 @@
     }
 
     & .messageBox {
+      border-radius: 10px;
       background: #08223c;
       color: #9bf436;
       word-wrap: break-word;

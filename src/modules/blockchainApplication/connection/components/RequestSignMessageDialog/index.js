@@ -62,7 +62,12 @@ const RequestSignMessageDialog = () => {
           }))}
         />
       )}
-      <MultiStep onChange={onMultiStepChange}>
+      <MultiStep
+        className={classNames({
+          [styles.multiStepProp]: !isPasswordStep,
+        })}
+        onChange={onMultiStepChange}
+      >
         <RequestSignMessageConfirmation message={message} address={address} />
         <TxSignatureCollector
           type="message"
