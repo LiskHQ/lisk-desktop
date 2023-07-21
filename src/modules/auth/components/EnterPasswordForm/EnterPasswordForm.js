@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import Icon from 'src/theme/Icon';
@@ -34,6 +34,7 @@ const EnterPasswordForm = ({
     formState: { errors },
   } = useForm();
   const apiError = errors[API_ERROR_NAME];
+  const [isLoading, setIsLoading] = useState(false);
   const { getAccountByAddress } = useAccounts();
   const [currentAccount] = useCurrentAccount();
   const requestedAccount = getAccountByAddress(currentAccount?.metadata?.address);
@@ -44,6 +45,7 @@ const EnterPasswordForm = ({
   const formValues = watch();
 
   const onSubmit = async ({ password }) => {
+    setIsLoading(true);
     const { error, result } = await decryptAccount(account.crypto, password);
 
     if (error) {
@@ -58,6 +60,8 @@ const EnterPasswordForm = ({
         privateKey: result.privateKey,
       });
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -88,6 +92,7 @@ const EnterPasswordForm = ({
           />
           <PrimaryButton
             type="submit"
+            isLoading={isLoading}
             disabled={isDisabled || !formValues.password}
             className={`${styles.button} continue-btn`}
           >

@@ -20,7 +20,7 @@ const AddAccountByPassFile = () => {
   const onEnterPasswordSuccess = ({ encryptedAccount }) => {
     setAccount(encryptedAccount);
     setCurrentAccount(encryptedAccount);
-    multiStepRef.current.next();
+    multiStepRef.current?.next();
   };
 
   return (
