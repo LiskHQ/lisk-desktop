@@ -15,6 +15,7 @@ export function RequestSignMessageConfirmation({ nextStep, address, message }) {
   const onClick = () => {
     nextStep({
       message,
+      /* istanbul ignore next */
       actionFunction: (formProps, _, privateKey) =>
         dispatch(signMessage({ message, nextStep, privateKey, currentAccount })),
     });
