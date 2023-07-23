@@ -9,6 +9,8 @@ import { useSession } from '@libs/wcm/hooks/useSession';
 import { context as defaultContext } from '@blockchainApplication/connection/__fixtures__/requestSummary';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import RequestSignMessageDialog from './index';
 
 jest.mock('@libs/wcm/hooks/usePairings');
@@ -41,13 +43,37 @@ useEvents.mockReturnValue({
 });
 
 describe('RequestSignMessageDialog', () => {
-  it('should render properly getting data from URL', () => {
+  it('should render properly', () => {
     const wrapper = shallow(<RequestSignMessageDialog history={{}} />);
 
     expect(wrapper).toContainMatchingElement(Dialog);
+    expect(wrapper).toContainMatchingElement(BlockchainAppDetailsHeader);
     expect(wrapper).toContainMatchingElement(MultiStep);
     expect(wrapper).toContainMatchingElement(RequestSignMessageConfirmation);
     expect(wrapper).toContainMatchingElement(TxSignatureCollector);
     expect(wrapper).toContainMatchingElement(SignedMessage);
+  });
+
+  it('should not crash when session or events are undefined', () => {
+    useSession.mockReturnValue({});
+    useEvents.mockReturnValue({});
+
+    const wrapper = shallow(<RequestSignMessageDialog history={{}} />);
+    expect(wrapper).toContainMatchingElement(Dialog);
+    expect(wrapper).toContainMatchingElement(BlockchainAppDetailsHeader);
+    expect(wrapper).toContainMatchingElement(MultiStep);
+    expect(wrapper).toContainMatchingElement(RequestSignMessageConfirmation);
+    expect(wrapper).toContainMatchingElement(TxSignatureCollector);
+    expect(wrapper).toContainMatchingElement(SignedMessage);
+  });
+
+  it('should hide header on password step', () => {
+    useSession.mockReturnValue({});
+    useEvents.mockReturnValue({});
+
+    const props = { history: {} };
+    const wrapper = mountWithRouterAndQueryClient(RequestSignMessageDialog, { props });
+    wrapper.find('button').simulate('click');
+    expect(wrapper).not.toContainMatchingElement(BlockchainAppDetailsHeader);
   });
 });

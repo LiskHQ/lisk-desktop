@@ -21,8 +21,8 @@ const RequestSignMessageDialog = () => {
   const { events } = useEvents();
   const { sessionRequest } = useSession();
   const [currentAccount] = useCurrentAccount();
-
   const history = useHistory();
+
   const { peer, requiredNamespaces } = sessionRequest || {};
   const {
     metadata: { pubkey },
