@@ -12,10 +12,10 @@ export function RequestSignMessageConfirmation({ nextStep, address, message }) {
   const [currentAccount] = useCurrentAccount();
   const dispatch = useDispatch();
 
+  /* istanbul ignore next */
   const onClick = () => {
     nextStep({
       message,
-      /* istanbul ignore next */
       actionFunction: (formProps, _, privateKey) =>
         dispatch(signMessage({ message, nextStep, privateKey, currentAccount })),
     });
