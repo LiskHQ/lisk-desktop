@@ -98,7 +98,3 @@ export const validations = {
   canGoToNext,
   shouldBeDisabled,
 };
-
-export default {
-  validations,
-};
