@@ -1,9 +1,16 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Client } from 'src/utils/api/client';
-import { removeTrailingSlash } from 'src/modules/settings/components/customNode/editMode';
 import { regex } from 'src/const/regex';
 import { addHttp } from 'src/utils/login';
 import { useNetworkStatus } from '@network/hooks/queries';
+
+const removeTrailingSlash = (url) => {
+  if (url.charAt(url.length - 1) !== '/' || /http(s?):(\/){1,2}$/.test(url)) {
+    return url;
+  }
+
+  return url.substring(0, url.length - 1);
+};
 
 export const useSearchApplications = () => {
   const [url, setUrl] = useState({

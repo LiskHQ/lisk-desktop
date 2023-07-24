@@ -37,18 +37,17 @@ const getServiceUrl = ({ name, address = networks[networkKeys.mainnet].serviceUr
  * @param {String} network.nodeUrl - a valid URL pointing to a running node
  * @returns {Promise}
  */
-export const getNetworkConfig = ({ name, address }) => {
+export const getNetworkConfig = async ({ name, address }) => {
   const serviceUrl = getServiceUrl({ name, address });
-  return getNetworkStatus({ baseUrl: serviceUrl })
-    .then((response) => ({
+  try {
+    const response = await getNetworkStatus({ baseUrl: serviceUrl });
+    return {
       ...response.data,
       serviceUrl,
-    }))
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      // throw Error(`Can not connect to ${address}`);
-    });
+    };
+  } catch (err) {
+    return err;
+  }
 };
 
 /**
