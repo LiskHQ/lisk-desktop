@@ -14,6 +14,7 @@ import { selectActiveToken } from 'src/redux/selectors';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { ACTIONS, EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
+import useSettings from '@settings/hooks/useSettings';
 import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements
@@ -27,7 +28,7 @@ const DialogHolder = ({ history }) => {
   const activeToken = useSelector(selectActiveToken);
   const { reject } = useSession();
   const { events } = useEvents();
-  const networkIsSet = useSelector((state) => !!state.network.name);
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);
@@ -51,7 +52,7 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  if (!networkIsSet && modals[modalName].isPrivate) {
+  if (!mainChainNetwork.isAvailable && modals[modalName].isPrivate) {
     return null;
   }
 

@@ -1,53 +1,9 @@
-import networks, { networkKeys } from '@network/configuration/networks';
 import http from 'src/utils/api/http';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 
 const httpPaths = {
   peers: `${HTTP_PREFIX}/network/peers`,
-  networkStatus: `${HTTP_PREFIX}/network/status`,
   networkStatistics: `${HTTP_PREFIX}/network/statistics`,
-};
-
-/**
- * Retrieves status information of the network
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- *
- * @returns {Promise}
- */
-export const getNetworkStatus = ({ baseUrl }) =>
-  http({
-    baseUrl,
-    path: httpPaths.networkStatus,
-  });
-
-const getServiceUrl = ({ name, address = networks[networkKeys.mainnet].serviceUrl }) => {
-  if ([networkKeys.mainnet, networkKeys.testNet].includes(name)) {
-    return networks[name].serviceUrl;
-  }
-  return address;
-};
-
-/**
- * Returns network config to use for future API calls.
- *
- * @param {Object} network
- * @param {String} network.name - Mainnet, or Testnet, Custom node
- * @param {String} network.nodeUrl - a valid URL pointing to a running node
- * @returns {Promise}
- */
-export const getNetworkConfig = async ({ name, address }) => {
-  const serviceUrl = getServiceUrl({ name, address });
-  try {
-    const response = await getNetworkStatus({ baseUrl: serviceUrl });
-    return {
-      ...response.data,
-      serviceUrl,
-    };
-  } catch (err) {
-    return err;
-  }
 };
 
 /**

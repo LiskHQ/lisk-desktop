@@ -1,10 +1,7 @@
 const config = {
-  currencies: ['USD', 'EUR', 'CHF'],
+  currencies: ['USD', 'EUR', 'CHF', 'BTC', 'GBP'],
   keys: {
-    loginKey: 'loginKey',
     showNetwork: 'showNetwork',
-    channels: 'channels',
-    hardwareAccounts: 'hardwareAccounts',
     isRequestHowItWorksDisable: 'isRequestHowItWorksDisable',
     statistics: 'statistics',
     areTermsOfUseAccepted: 'areTermsOfUseAccepted',

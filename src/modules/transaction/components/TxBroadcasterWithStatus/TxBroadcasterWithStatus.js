@@ -1,12 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import {
   getTransactionStatus,
   isTxStatusError,
   statusMessages,
 } from '@transaction/configuration/statusConfig';
-import { selectModuleCommandSchemas } from 'src/redux/selectors';
+import { useCommandSchema } from '@network/hooks';
 
 import classNames from 'classnames';
 import styles from './TxBroadcasterWithStatus.css';
@@ -19,7 +18,7 @@ const TxBroadcasterWithStatus = ({
   t,
   prevStep,
 }) => {
-  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
+  const moduleCommandSchemas = useCommandSchema();
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
   const isBroadcastError = isTxStatusError(status.code);

@@ -1,5 +1,4 @@
 export * from '@bookmark/store/action';
-export * from '@network/store/action';
 export * from '@settings/store/actions';
 export * from '@transaction/store/actions';
 export * from '@pos/validator/store/actions/staking';

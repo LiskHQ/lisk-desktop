@@ -1,14 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useCommandSchema } from '@network/hooks';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
-import { selectModuleCommandSchemas } from 'src/redux/selectors';
 
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
 
 const Status = ({ account, transactions, t }) => {
-  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
+  const moduleCommandSchemas = useCommandSchema();
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
 

@@ -11,7 +11,6 @@ const mapStateToProps = (state) => ({
   activeToken: selectActiveToken(state),
   transactions: state.transactions,
   account: selectActiveTokenAccount(state),
-  network: state.network.networks[state.token.active], // @todo normalize this
 });
 
 const mapDispatchToProps = {

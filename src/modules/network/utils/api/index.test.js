@@ -1,5 +1,5 @@
 import http from 'src/utils/api/http';
-import { getPeers, getNetworkStatistics, getNetworkStatus } from './index';
+import { getPeers, getNetworkStatistics } from './index';
 
 jest.mock('src/utils/api/http');
 
@@ -83,55 +83,6 @@ describe('API: LSK Network', () => {
       const expectedResponse = new Error('API call could not be completed');
       setApiRejection(expectedResponse.message, http);
       await expect(getNetworkStatistics({ network })).rejects.toEqual(expectedResponse);
-    });
-  });
-
-  describe('getNetworkStatus', () => {
-    beforeEach(() => {
-      resetApiMock();
-    });
-
-    it('should return network status info', async () => {
-      const expectedResponse = {
-        data: {
-          height: '449520',
-          blockTime: 10,
-          communityIdentifier: 'LISK',
-          finalizedHeight: 20533,
-          currentReward: 500000000,
-          maxPayloadLength: 15360,
-          minRemainingBalance: '5000000',
-          moduleAssets: [
-            { id: 'token:transfer', name: 'token:transfer' },
-            { id: 'auth:registerMultisignature', name: 'keys:registerMultisignature' },
-            { id: 'pos:registerValidator', name: 'pos:registerValidator' },
-            { id: 'pos:stake', name: 'pos:stake' },
-            { id: 'pos:unlock', name: 'pos:unlockToken' },
-            { id: 'pos:reportMisbehavior', name: 'pos:reportMisbehavior' },
-            { id: 'legacy:reclaimLSK', name: 'legacyAccount:reclaimLSK' },
-          ],
-          milestone: ['500000000', '400000000', '300000000', '200000000', '100000000'],
-          rewards: {
-            distance: 3000000,
-            milestones: ['500000000', '400000000', '300000000', '200000000', '100000000'],
-            offset: 2160,
-          },
-          registeredModules: ['token', 'sequence', 'keys', 'pos', 'legacyAccount'],
-        },
-      };
-      setApiResponseData(expectedResponse, http);
-      await expect(getNetworkStatus({ network })).resolves.toEqual(expectedResponse);
-      expect(http).toHaveBeenCalledWith(
-        expect.objectContaining({
-          path: '/api/v3/network/status',
-        })
-      );
-    });
-
-    it('should throw when api fails', async () => {
-      const expectedResponse = new Error('API call could not be completed');
-      setApiRejection(expectedResponse.message, http);
-      await expect(getNetworkStatus({ network })).rejects.toEqual(expectedResponse);
     });
   });
 });

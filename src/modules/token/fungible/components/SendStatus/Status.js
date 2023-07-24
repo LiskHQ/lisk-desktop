@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-
+import { useCommandSchema } from '@network/hooks';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import {
@@ -11,7 +10,6 @@ import {
 import { PrimaryButton } from '@theme/buttons';
 import DialogLink from '@theme/dialog/link';
 import { useValidators } from '@pos/validator/hooks/queries';
-import { selectModuleCommandSchemas } from 'src/redux/selectors';
 import styles from './status.css';
 
 const shouldShowBookmark = (bookmarks, account, transactionJSON, token) => {
@@ -46,7 +44,7 @@ const TransactionStatus = ({
   formProps,
   prevStep,
 }) => {
-  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
+  const { moduleCommandSchemas } = useCommandSchema();
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = getMessagesDetails(transactions, status, t);
   const { data: validators } = useValidators({

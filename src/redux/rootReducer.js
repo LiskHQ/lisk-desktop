@@ -1,6 +1,5 @@
 export { default as wallet } from '@wallet/store/reducers/reducer';
 export { default as bookmarks } from '@bookmark/store/reducer';
-export { default as network } from '@network/store/reducer';
 export { default as settings } from 'src/modules/settings/store/reducer';
 export { default as token } from '@token/fungible/store/reducer';
 export { default as transactions } from '@transaction/store/reducer';

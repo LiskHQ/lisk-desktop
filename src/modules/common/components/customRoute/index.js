@@ -13,7 +13,6 @@ import ErrorBoundary from './errorBoundary';
 // eslint-disable-next-line max-statements
 const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, history }) => {
   const token = useSelector((state) => state.token);
-  const isNetworkSet = useSelector(({ network }) => !!network.name);
   const [currentAccount] = useCurrentAccount();
   const { pubkey, address, isHW } = currentAccount?.metadata || {};
   const isAuthenticated = !!address;
@@ -69,12 +68,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   return (
     <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occurred while rendering this page')}>
-        <Route
-          path={isNetworkSet ? path : routes.manageAccounts.path}
-          exact={exact}
-          key={isNetworkSet ? path : routes.manageAccounts.path}
-          component={component}
-        />
+        <Route path={path} exact={exact} key={path} component={component} />
       </ErrorBoundary>
     </main>
   );

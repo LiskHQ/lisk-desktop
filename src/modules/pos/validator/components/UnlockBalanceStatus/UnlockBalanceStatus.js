@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-
+import { useCommandSchema } from '@network/hooks';
 import { PrimaryButton } from 'src/theme/buttons';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import {
@@ -8,10 +7,9 @@ import {
   isTxStatusError,
   statusMessages,
 } from '@transaction/configuration/statusConfig';
-import { selectModuleCommandSchemas } from 'src/redux/selectors';
 
 const TransactionStatus = ({ account, transactions, t, prevStep }) => {
-  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
+  const { moduleCommandSchemas } = useCommandSchema();
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
   const isBroadcastError = isTxStatusError(status.code);

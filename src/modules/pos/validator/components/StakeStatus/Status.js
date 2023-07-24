@@ -1,17 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { selectModuleCommandSchemas } from 'src/redux/selectors';
+import { useCommandSchema } from '@network/hooks';
 
 import statusMessages from './statusMessages';
 import styles from './styles.css';
 import StakeSuccessfulModal from '../StakeSuccessfulModal';
 
 const Status = ({ account, transactions, statusInfo, t, posToken, formProps }) => {
-  const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
+  const { moduleCommandSchemas } = useCommandSchema();
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t, statusInfo, posToken, formProps)[status.code];
 
