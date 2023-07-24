@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from "classnames";
 import { useTranslation } from 'react-i18next';
 import { useCurrentAccount } from '@account/hooks';
 import { useDispatch } from 'react-redux';
@@ -6,7 +7,6 @@ import { signMessage } from '@message/store/action';
 import CopyToClipboard from '@common/components/copyToClipboard';
 import { PrimaryButton } from '@theme/buttons';
 import styles from './RequestSignMessageConfirmation.css';
-import classNames from "classnames";
 
 export function RequestSignMessageConfirmation({ nextStep, address, message }) {
   const { t } = useTranslation();
