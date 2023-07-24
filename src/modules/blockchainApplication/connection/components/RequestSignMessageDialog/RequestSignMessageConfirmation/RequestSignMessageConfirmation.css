@@ -11,6 +11,10 @@
     flex-direction: column;
     text-align: left;
 
+    & .copyToClipboardProp {
+      font-size: 15px;
+    }
+
     & .label {
       font-family: var(--content-font);
       font-size: 13px;

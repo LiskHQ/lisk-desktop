@@ -6,6 +6,7 @@ import { signMessage } from '@message/store/action';
 import CopyToClipboard from '@common/components/copyToClipboard';
 import { PrimaryButton } from '@theme/buttons';
 import styles from './RequestSignMessageConfirmation.css';
+import classNames from "classnames";
 
 export function RequestSignMessageConfirmation({ nextStep, address, message }) {
   const { t } = useTranslation();
@@ -31,7 +32,7 @@ export function RequestSignMessageConfirmation({ nextStep, address, message }) {
         <CopyToClipboard
           text={address}
           value={address}
-          className="tx-id"
+          className={classNames('tx-id', styles.copyToClipboardProp)}
           containerProps={{
             size: 'xs',
             className: 'copy-address',
