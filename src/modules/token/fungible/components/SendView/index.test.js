@@ -1,4 +1,4 @@
-import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
+import { getTransactionBaseFees } from '@transaction/api';
 import { mockTokensBalance, mockTokenSummary } from '@token/fungible/__fixtures__/mockTokens';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
@@ -65,12 +65,6 @@ getTransactionBaseFees.mockResolvedValue({
   Low: 0,
   Medium: 1000,
   High: 2000,
-});
-
-getTransactionFee.mockResolvedValue({
-  value: 0.1,
-  error: false,
-  feedback: '',
 });
 
 const props = {

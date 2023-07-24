@@ -50,8 +50,9 @@ module.exports = {
     '^@packages(.*)$': resolve(__dirname, '../packages/$1'),
     '^@screens(.*)$': resolve(__dirname, '../packages/views/screens/$1'),
     '^@libs(.*)$': resolve(__dirname, '../libs/$1'),
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/tests/__mocks__/fileMock.js',
+    '\\.svg$': '<rootDir>/tests/__mocks__/svg.js',
   },
   collectCoverage: true,
   resetModules: true,
