@@ -18,6 +18,7 @@ import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
+import routes from 'src/routes/routes';
 import styles from './overview.css';
 
 // @Todo: this should be remove as sdk would provide this data
@@ -55,11 +56,12 @@ const Overview = ({ isWalletRoute, history }) => {
   const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
   const {
-    data: tokens,
+    data: tokenBalances,
     isLoading,
     error,
     refetch,
   } = useTokenBalances({ config: { params: { address } } });
+  const isZeroBalance = BigInt(tokenBalances?.data[0]?.availableBalance || 0) === BigInt(0);
   const host = wallet.summary?.address ?? '';
 
   const showWarning = () => {
@@ -120,7 +122,7 @@ const Overview = ({ isWalletRoute, history }) => {
           </div>
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
             <DialogLink component="send">
-              <PrimaryButton>{t('Send')}</PrimaryButton>
+              <PrimaryButton disabled={isZeroBalance}>{t('Send')}</PrimaryButton>
             </DialogLink>
           </div>
         </div>
@@ -131,12 +133,14 @@ const Overview = ({ isWalletRoute, history }) => {
             <div>{t('Tokens')}</div>
             {!searchAddress && (
               <div>
-                <Link to="/wallet/tokens/all">{t('View all tokens')}</Link>
+                <Link to={`${routes.allTokens.path}?disableSend=${isZeroBalance}`}>
+                  {t('View all tokens')}
+                </Link>
               </div>
             )}
           </div>
           <TokenCarousel
-            data={tokens?.data ?? []}
+            data={tokenBalances?.data ?? []}
             error={error}
             isLoading={isLoading}
             renderItem={renderTokenCard}
