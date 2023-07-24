@@ -268,6 +268,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  requestSignMessageDialog: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   connectionStatus: {
     isPrivate: false,
     forbiddenTokens: [],
