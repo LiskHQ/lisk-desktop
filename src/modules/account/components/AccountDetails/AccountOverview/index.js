@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper';
+import { Pagination, Autoplay } from 'swiper';
 import { useCurrentAccount } from '@account/hooks';
 import Overview from '@wallet/components/overview/overviewManager';
 import Box from '@theme/box';
@@ -52,8 +52,9 @@ export default function AccountOverview({ address: searchAddress }) {
     <section>
       <Swiper
         pagination={{ clickable: true }}
-        modules={[Pagination]}
+        modules={[Pagination, Autoplay]}
         slidesPerView="auto"
+        autoplay
         spaceBetween={20}
         className={styles.bannerSwiper}
       >
