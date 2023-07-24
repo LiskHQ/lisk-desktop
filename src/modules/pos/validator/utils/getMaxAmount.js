@@ -5,11 +5,7 @@ import { MIN_ACCOUNT_BALANCE, STAKE_AMOUNT_STEP } from '@transaction/configurati
  * Takes the current stakes, minimum account balance and
  * transaction fee into account.
  */
-const getMaxAmount = async ({
-  balance,
-  staking,
-  address,
-}) => {
+const getMaxAmount = async ({ balance, staking, address }) => {
   const totalUnconfirmedStakes = Object.values(staking)
     .filter((stake) => stake.confirmed < stake.unconfirmed)
     .map((stake) => stake.unconfirmed - stake.confirmed)
