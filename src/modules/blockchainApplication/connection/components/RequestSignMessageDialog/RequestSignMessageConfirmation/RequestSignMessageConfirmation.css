@@ -1,5 +1,6 @@
 .RequestSignMessageConfirmation {
   text-align: center;
+  color: var(--color-maastricht-blue);
 
   .description {
     margin: 18px 0 0 0;
@@ -16,7 +17,6 @@
       font-weight: var(--font-weight-bold);
       letter-spacing: 0.2px;
       margin: 18px 0 10px 0;
-      color: var(--color-maastricht-blue);
     }
 
     & .messageBox {
