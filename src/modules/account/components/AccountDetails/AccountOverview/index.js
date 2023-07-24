@@ -18,6 +18,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import styles from './AccountOverview.css';
 
+// eslint-disable-next-line max-statements
 export default function AccountOverview({ address: searchAddress }) {
   const { t } = useTranslation();
   const activeToken = useSelector(selectActiveToken);
@@ -29,6 +30,10 @@ export default function AccountOverview({ address: searchAddress }) {
       metadata: { address: currentAddress },
     },
   ] = useCurrentAccount();
+  const [sliderVisibility, setSliderVisibility] = useState(
+    !localStorage.getItem('walletPageBanner')
+  );
+  const handleSliderBannerClose = () => setSliderVisibility(!sliderVisibility);
 
   const tabs = {
     tabs: [
@@ -50,31 +55,34 @@ export default function AccountOverview({ address: searchAddress }) {
 
   return (
     <section>
-      <Swiper
-        pagination={{ clickable: true }}
-        modules={[Pagination, Autoplay]}
-        slidesPerView="auto"
-        autoplay
-        spaceBetween={20}
-        className={styles.bannerSwiper}
-      >
-        {banners.map((bannerInfo, index) => {
-          const { infoMessage, infoDescription, illustrationName } = bannerInfo;
-          return (
-            <SwiperSlide key={index}>
-              <InfoBanner
-                t={t}
-                name="walletPageBanner"
-                infoLabel={t('New')}
-                infoMessage={infoMessage(t)}
-                infoDescription={infoDescription(t)}
-                illustrationName={illustrationName}
-                show
-              />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+      {sliderVisibility && (
+        <Swiper
+          pagination={{ clickable: true }}
+          modules={[Pagination, Autoplay]}
+          slidesPerView="auto"
+          autoplay
+          spaceBetween={20}
+          className={styles.bannerSwiper}
+        >
+          {banners.map((bannerInfo, index) => {
+            const { infoMessage, infoDescription, illustrationName } = bannerInfo;
+            return (
+              <SwiperSlide key={index}>
+                <InfoBanner
+                  t={t}
+                  name="walletPageBanner"
+                  infoLabel={t('New')}
+                  infoMessage={infoMessage(t)}
+                  infoDescription={infoDescription(t)}
+                  illustrationName={illustrationName}
+                  handleSliderBannerClose={handleSliderBannerClose}
+                  show
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      )}
       <Overview
         isWalletRoute
         activeToken={activeToken}

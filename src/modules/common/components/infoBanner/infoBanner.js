@@ -13,6 +13,7 @@ const InfoBanner = ({
   infoLink,
   illustrationName,
   className,
+  handleSliderBannerClose,
   show,
 }) => {
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ const InfoBanner = ({
   const handleClose = () => {
     localStorage.setItem(name, true);
     setVisibility(false);
+    handleSliderBannerClose?.();
   };
 
   useEffect(() => {
