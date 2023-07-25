@@ -9,6 +9,9 @@ const props = {
   transactions: { txSignatureError: null, signedTransaction: {} },
   statusInfo: { locked: 200, unlockable: 100, selfUnstake: undefined },
   posToken: mockAppsTokens.data[0],
+  formProps: {
+    rewards: { total: 0n },
+  },
 };
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
@@ -45,10 +48,25 @@ describe('StakingQueue.Result', () => {
       ...props,
       statusInfo: { unlockable: 300 },
     });
-    const element = wrapper.find('StakeSuccessfulModal');
+    const element = wrapper.find('BoxContent');
 
     expect(element.text()).toContain(
-      '0.000003 LSK Your tokens will be available to unlock when the locking period ends.'
+      ' 0.000003 LSK will be available to unlock when the locking period ends.'
+    );
+  });
+
+  it('displays the unlocked message and rewards properly', () => {
+    const wrapper = mountWithRouterAndQueryClient(Result, {
+      ...props,
+      formProps: {
+        rewards: { total: 20000000n },
+      },
+      statusInfo: { unlockable: 300 },
+    });
+    const element = wrapper.find('BoxContent');
+
+    expect(element.text()).toContain(
+      ' 0.000003 LSK will be available to unlock when the locking period ends.0.2 LSK will be credited to your account due to changes in stakes.'
     );
   });
 
@@ -57,7 +75,7 @@ describe('StakingQueue.Result', () => {
       ...props,
       statusInfo: { locked: 200, unlockable: 300 },
     });
-    const element = wrapper.find('StakeSuccessfulModal');
+    const element = wrapper.find('BoxContent');
 
     expect(element.text()).toContain(
       'You have now locked 0.000002 LSK for staking and may unlock 0.000003 LSK when the locking period ends.'

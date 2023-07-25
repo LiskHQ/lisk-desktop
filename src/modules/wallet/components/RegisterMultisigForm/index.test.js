@@ -1,10 +1,8 @@
 import { act } from 'react-dom/test-utils';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 
-import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
+import { getTransactionBaseFees } from '@transaction/api';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import wallets from '@tests/constants/wallets';
 import Form, { validateState } from './index';
 
@@ -28,20 +26,7 @@ const transactionBaseFees = {
   High: 51,
 };
 
-const mockFeeFactor = 100;
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
-getTransactionFee.mockImplementation((params) => {
-  const selectedTransactionPriority = params.selectedPriority.selectedIndex;
-  const fees = convertFromBaseDenom(
-    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
-    mockAppsTokens.data[0]
-  );
-  return {
-    value: fees,
-    feedback: '',
-    error: false,
-  };
-});
 
 describe('Multisignature editor component', () => {
   let wrapper;

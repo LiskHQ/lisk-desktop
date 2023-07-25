@@ -76,7 +76,7 @@ describe('ConnectionStatus', () => {
       'An error occurred while rejecting the pairing request from web app'
     );
 
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     expect(searchParams.removeSearchParamsFromUrl).toHaveBeenCalled();
   });
 
@@ -91,7 +91,7 @@ describe('ConnectionStatus', () => {
       },
     };
     mountWithRouter(ConnectionStatus, newProps);
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     expect(searchParams.removeSearchParamsFromUrl).toHaveBeenCalled();
     expect(props.history.push).toHaveBeenCalledWith(props.history.location.pathname);
   });

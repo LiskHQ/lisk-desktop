@@ -98,11 +98,11 @@ export const validateAmount = ({
     },
     INSUFFICIENT_FUNDS: {
       message: i18n.t('Provided amount is higher than your current balance.'),
-      fn: () => accountBalance < convertToBaseDenom(numeral(amount).value(), token),
+      fn: () => BigInt(accountBalance) < BigInt(convertToBaseDenom(numeral(amount).value(), token)),
     },
     INSUFFICIENT_STAKE_FUNDS: {
       message: i18n.t('The provided amount is higher than your available staking balance.'),
-      fn: () => accountBalance < convertToBaseDenom(numeral(amount).value(), token),
+      fn: () => BigInt(accountBalance) < BigInt(convertToBaseDenom(numeral(amount).value(), token)),
     },
     MIN_BALANCE: {
       message: i18n.t(
@@ -111,7 +111,7 @@ export const validateAmount = ({
       fn: () => {
         const amountInBase = convertToBaseDenom(numeral(amount).value(), token);
         // TODO: this minimum balance logic should be replaced by actual fee (transaction + cross chain transfer) as one can make 0 balance for an account in Lisk v4
-        return MIN_ACCOUNT_BALANCE > accountBalance - amountInBase;
+        return MIN_ACCOUNT_BALANCE > BigInt(accountBalance) - BigInt(amountInBase);
       },
     },
   };

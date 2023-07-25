@@ -219,6 +219,7 @@ import chainLinkIcon from '@setup/react/assets/images/icons/chain-link.svg';
 import successCheckMark from '@setup/react/assets/images/icons/success-check-mark.svg';
 import dropdownArrowIcon from '@setup/react/assets/images/icons/dropdown-arrow.svg';
 import plusBlueIcon from '@setup/react/assets/images/icons/plus-blue.svg';
+import plusWhiteIcon from '@setup/react/assets/images/icons/plus-white.svg';
 import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-filled.svg';
 import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon-filled-dark.svg';
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
@@ -229,6 +230,7 @@ import receivedTransactionIcon from '@setup/react/assets/images/icons/received_t
 import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
 import commissionIcon from '@setup/react/assets/images/icons/commission.svg';
 import editActiveIcon from '@setup/react/assets/images/icons/editActive.svg';
+import editDisabled from '@setup/react/assets/images/icons/edit-disabled.svg';
 import hardwareWalletIcon from '@setup/react/assets/images/icons/hardware-wallet-icon.svg';
 
 export const icons = {
@@ -366,6 +368,7 @@ export const icons = {
   signOut,
   plus,
   plusActive,
+  plusWhiteIcon,
   remove,
   totalBlocks,
   totalBlocksDark,
@@ -455,6 +458,7 @@ export const icons = {
   sentTransactionIcon,
   commissionIcon,
   editActiveIcon,
+  editDisabled,
   arrowBlueRight,
   arrowBlueDown,
   multisigKeys,

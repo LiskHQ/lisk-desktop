@@ -12,10 +12,10 @@ import { FEE_TYPES } from '../../constants';
 import { joinModuleAndCommand } from '../../utils';
 import { useTransactionEstimateFees } from '../queries';
 
-const getPriorityValue = (value = '') => {
-  value = value.toLowerCase();
-  return /^normal$/.test(value) ? 'medium' : value;
-};
+// const getPriorityValue = (value = '') => {
+//   value = value.toLowerCase();
+//   return /^normal$/.test(value) ? 'medium' : value;
+// };
 
 /**
  *
@@ -30,8 +30,8 @@ const getPriorityValue = (value = '') => {
 export const useTransactionFee = ({
   isFormValid,
   transactionJSON,
-  selectedPriority = {},
-  extraCommandFee,
+  // selectedPriority = {},
+  extraCommandFee = 0,
   senderAddress,
 }) => {
   const transactionFee = useTransactionEstimateFees({
@@ -39,8 +39,7 @@ export const useTransactionFee = ({
     options: { enabled: isFormValid && !!transactionJSON },
   });
 
-  const { transactionFeeEstimates = {}, dynamicFeeEstimates = {} } =
-    transactionFee?.data?.data || {};
+  const { data: { transaction } = {}, meta = {} } = transactionFee?.data || {};
   // const {
   //   moduleCommandSchemas,
   // } = useCommandSchema();
@@ -52,7 +51,7 @@ export const useTransactionFee = ({
     transactionJSON,
     extraCommandFee,
   });
-  console.log('---->', transactionJSON, result.value, extraCommandFee);
+  console.log('FROM CALC::', transactionJSON, result.value, extraCommandFee);
   // const priorityFee = usePriorityFee({
   //   selectedPriority,
   //   transactionJSON,
@@ -64,12 +63,16 @@ export const useTransactionFee = ({
   //   type: FEE_TYPES.BYTES_FEE,
   // };
   // const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
+
+  // @todo: remove offset when service is fixed
+  const offset = transaction?.fee?.minimum ? 0 : 0;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   let accountInitializationFee = {};
 
-  const initializationFee = transactionFeeEstimates?.accountInitializationFee?.amount || 0;
-  const minimumFee = BigInt(transactionFeeEstimates?.minFee || 0) + BigInt(initializationFee);
-  const messageFee = BigInt(transactionFeeEstimates?.messageFee?.amount || 0);
+  const initializationFee =
+    meta.breakdown?.fee?.minimum?.additionalFees?.userAccountInitializationFee || 0;
+  const minimumFee = BigInt(transaction?.fee?.minimum || 0) + BigInt(offset);
+  const messageFee = BigInt(0);
 
   if (initializationFee) {
     accountInitializationFee = {
@@ -80,12 +83,10 @@ export const useTransactionFee = ({
 
   const priorityFee = {
     type: FEE_TYPES.PRIORITY_FEE,
-    value:
-      (dynamicFeeEstimates[getPriorityValue(selectedPriority.title)] || 0) -
-      (transactionFeeEstimates?.minFee || 0),
+    value: 0,
   };
   const bytesFee = {
-    value: BigInt(transactionFeeEstimates?.minFee || 0),
+    value: BigInt(meta.breakdown?.fee?.minimum?.byteFee || 0),
     type: FEE_TYPES.BYTES_FEE,
   };
   let components = [bytesFee, accountInitializationFee, priorityFee].filter(
@@ -100,16 +101,16 @@ export const useTransactionFee = ({
     components = [...components, { type: 'Registration', value: BigInt(extraCommandFee) }];
   }
 
-  console.log(
-    '--->>>',
-    minimumFee,
-    messageFee,
-    initializationFee,
-    priorityFee,
-    bytesFee,
-    accountInitializationFee,
-    components
-  );
+  // console.log(
+  //   'FROM API::',
+  //   minimumFee,
+  //   messageFee,
+  //   initializationFee,
+  //   priorityFee,
+  //   bytesFee,
+  //   accountInitializationFee,
+  //   components
+  // );
 
   return {
     components,

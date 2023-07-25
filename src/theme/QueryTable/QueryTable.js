@@ -12,6 +12,7 @@ export const QueryTable = ({
   onFetched,
   ...props
 }) => {
+  const data = queryHook(queryConfig);
   const {
     data: response,
     error,
@@ -22,7 +23,8 @@ export const QueryTable = ({
     hasUpdate,
     addUpdate,
     isFetched,
-  } = queryHook(queryConfig);
+    refetch,
+  } = data;
 
   const handleClick = () => {
     // When the header is fixed at the top, the position is 50px
@@ -36,11 +38,19 @@ export const QueryTable = ({
     addUpdate();
   };
 
-  const subHeader = hasUpdate && (
-    <LoadNewButton buttonClassName={`${button.className || ''}`} handleClick={handleClick}>
-      {button.label}
-    </LoadNewButton>
-  );
+  const subHeader =
+    hasUpdate &&
+    (button.wrapperClassName ? (
+      <div className={button.wrapperClassName}>
+        <LoadNewButton buttonClassName={`${button.className || ''}`} handleClick={handleClick}>
+          {button.label}
+        </LoadNewButton>
+      </div>
+    ) : (
+      <LoadNewButton buttonClassName={`${button.className || ''}`} handleClick={handleClick}>
+        {button.label}
+      </LoadNewButton>
+    ));
 
   useEffect(() => {
     if (isFetched && typeof onFetched === 'function') {
@@ -57,6 +67,7 @@ export const QueryTable = ({
       canLoadMore={hasNextPage}
       error={error}
       subHeader={subHeader}
+      retry={refetch}
       {...props}
     />
   );

@@ -1,11 +1,13 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mountWithRouter } from 'src/utils/testHelpers';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { usePairings } from '@libs/wcm/hooks/usePairings';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import ConnectionSummary from './index';
 
 jest.mock('@libs/wcm/hooks/usePairings');
@@ -34,6 +36,13 @@ jest.mock('@libs/wcm/utils/connectionCreator', () => ({
     pair: jest.fn(),
   },
 }));
+
+jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
+useBlockchainApplicationMeta.mockReturnValue({
+  data: { data: mockBlockchainAppMeta.data },
+  isLoading: false,
+  isError: undefined,
+});
 
 const proposal = {
   params: {
@@ -88,7 +97,6 @@ describe('ConnectionSummary', () => {
     expect(wrapper.find('img').at(0).prop('src')).toEqual(
       proposal.params.proposer.metadata.icons[0]
     );
-    expect(wrapper.find('.pairing-topic').text()).toEqual(proposal.params.pairingTopic);
     wrapper.find('.methods span').forEach((method, index) => {
       expect(method.text()).toEqual(proposal.params.requiredNamespaces.lisk.methods[index]);
     });
@@ -125,7 +133,7 @@ describe('ConnectionSummary', () => {
         .simulate('change', { target: { checked: true } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).not.toBeDisabled();
+    expect(wrapper.find('button').at(3)).not.toBeDisabled();
     act(() => {
       wrapper
         .find('.select-all input')
@@ -133,7 +141,7 @@ describe('ConnectionSummary', () => {
         .simulate('change', { target: { checked: false } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).toBeDisabled();
+    expect(wrapper.find('button').at(3)).toBeDisabled();
     act(() => {
       wrapper
         .find('.select-all input')
@@ -141,29 +149,29 @@ describe('ConnectionSummary', () => {
         .simulate('change', { target: { checked: true } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).not.toBeDisabled();
-    wrapper.find('button').at(1).simulate('click');
+    expect(wrapper.find('button').at(3)).not.toBeDisabled();
+    wrapper.find('button').at(3).simulate('click');
     expect(approve).toHaveBeenCalled();
   });
 
   it('Select accounts on a random basis', () => {
     const wrapper = setup();
-    expect(wrapper.find('button').at(1)).toBeDisabled();
+    expect(wrapper.find('button').at(3)).toBeDisabled();
     act(() => {
       wrapper.find('.accounts-list input').simulate('change', { target: { checked: true } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).not.toBeDisabled();
+    expect(wrapper.find('button').at(3)).not.toBeDisabled();
     act(() => {
       wrapper.find('.accounts-list input').simulate('change', { target: { checked: false } });
     });
     wrapper.update();
-    expect(wrapper.find('button').at(1)).toBeDisabled();
+    expect(wrapper.find('button').at(3)).toBeDisabled();
   });
 
   it('Reject the connection if the reject button is clicked', () => {
     const wrapper = setup();
-    wrapper.find('button').at(0).simulate('click');
+    wrapper.find('button').at(2).simulate('click');
     expect(reject).toHaveBeenCalled();
   });
 
@@ -174,7 +182,7 @@ describe('ConnectionSummary', () => {
     delete wongProposal.params.proposer.metadata.name;
     useEvents.mockReturnValue({ events: [{ name: EVENTS.SESSION_PROPOSAL, meta: wongProposal }] });
     const wrapper = setup();
-    wrapper.find('button').at(0).simulate('click');
+    wrapper.find('button').at(2).simulate('click');
     expect(reject).toHaveBeenCalled();
   });
 });

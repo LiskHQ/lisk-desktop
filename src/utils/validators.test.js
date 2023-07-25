@@ -84,3 +84,70 @@ describe('isNumeric', () => {
     expect(isNumeric('123456789')).toBe(true);
   });
 });
+
+describe('Insufficient funds', () => {
+  it('should return true for amounts greater than balance', () => {
+    ['1.1', '3', '1000', '111111.11111111'].forEach((amount) => {
+      expect(
+        validateAmount({
+          amount,
+          accountBalance: '100000000',
+          token: mockToken,
+          checklist: ['INSUFFICIENT_FUNDS'],
+        })
+      ).toEqual({
+        error: true,
+        message: 'Provided amount is higher than your current balance.',
+      });
+    });
+  });
+  it('should return false for (amount + fee) >= balance', () => {
+    ['0.9', '0.99', '0.00001'].forEach((amount) => {
+      expect(
+        validateAmount({
+          amount,
+          accountBalance: '100000000',
+          token: mockToken,
+          checklist: ['INSUFFICIENT_FUNDS'],
+        })
+      ).toEqual({
+        error: false,
+        message: '',
+      });
+    });
+  });
+});
+
+describe('minimum balance', () => {
+  it('should return true for amounts whose value after (fee + transaction) amount is < minimum amount', () => {
+    ['0.9999', '1'].forEach((amount) => {
+      expect(
+        validateAmount({
+          amount,
+          accountBalance: '100000000',
+          token: mockToken,
+          checklist: ['MIN_BALANCE'],
+        })
+      ).toEqual({
+        error: true,
+        message: 'Provided amount will result in a wallet with less than the minimum balance.',
+      });
+    });
+  });
+
+  it('should return false for amounts whose value after (fee + transaction) amount is >= minimum amount', () => {
+    ['0.9', '0'].forEach((amount) => {
+      expect(
+        validateAmount({
+          amount,
+          accountBalance: '100000000',
+          token: mockToken,
+          checklist: ['MIN_BALANCE'],
+        })
+      ).toEqual({
+        error: false,
+        message: '',
+      });
+    });
+  });
+});

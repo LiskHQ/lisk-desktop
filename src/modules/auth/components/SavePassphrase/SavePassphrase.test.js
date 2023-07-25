@@ -2,13 +2,13 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import { generatePassphrase } from '@wallet/utils/passphrase';
+import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
 import BackupPassphrase from './SavePassphrase';
 
 describe('Register Process - Backup Passphrase', () => {
   let wrapper;
 
-  const passphrase = generatePassphrase();
+  const passphrase = LiskPassphrase.Mnemonic.generateMnemonic();
 
   const props = {
     passphrase,

@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import to from 'await-to-js';
-// import { tokenMap } from '@token/fungible/consts/tokens';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { signTransaction } from '@transaction/api';
 import txActionTypes from '@transaction/store/actionTypes';
 import { joinModuleAndCommand } from '@transaction/utils';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
-import { getStakes, getValidatorList } from '../../api';
 import actionTypes from './actionTypes';
 import { useSentStakes } from '../../hooks/queries';
 
@@ -104,39 +102,6 @@ export const stakesSubmitted =
       });
     }
   };
-
-/**
- * Fetches the list of stakes of the host wallet.
- */
-export const stakesRetrieved = () => async (dispatch, getState) => {
-  const { network, account } = getState();
-  const currentAddress = account.current?.metadata?.address;
-  try {
-    const stakes = await getStakes({ network, params: { address: currentAddress } });
-    const validators = await getValidatorList({
-      addresses: stakes.data.map(({ address }) => address),
-    });
-    const mapValidatorToAddress = validators.data.reduce(
-      (result, validator) => ({ ...result, [validator.address]: validator.commission }),
-      {}
-    );
-
-    dispatch({
-      type: actionTypes.stakesRetrieved,
-      data: stakes.data.map((stake) => ({
-        ...stake,
-        commission: mapValidatorToAddress[stake.validatorAddress],
-      })),
-    });
-  } catch (exp) {
-    dispatch({
-      type: actionTypes.stakesRetrieved,
-      data: {
-        account: {},
-      },
-    });
-  }
-};
 
 export const useStakesRetrieved = (address) => {
   const dispatch = useDispatch();

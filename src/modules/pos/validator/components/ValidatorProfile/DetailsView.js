@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import classNames from 'classnames';
 import { useTheme } from '@theme/Theme';
 import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
@@ -11,11 +12,22 @@ import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import Tooltip from '@theme/Tooltip';
+import { useTransactionsFromPool } from '@transaction/hooks/queries';
 import styles from './ValidatorProfile.css';
 import { convertCommissionToPercentage } from '../../utils';
 import usePosToken from '../../hooks/usePosToken';
 
-const DetailsView = ({ data, isMyProfile }) => {
+// eslint-disable-next-line max-statements
+const DetailsView = ({ data, isMyProfile, address }) => {
+  const { data: pooledTransactionsData } = useTransactionsFromPool({
+    address,
+    customConfig: { commission: data.commission },
+  });
+  const hasChangeCommission = pooledTransactionsData?.data?.some(
+    (pooledTransaction) => pooledTransaction.command === 'changeCommission'
+  );
+
   const history = useHistory();
   const theme = useTheme();
   const { t } = useTranslation();
@@ -76,13 +88,41 @@ const DetailsView = ({ data, isMyProfile }) => {
             <div className={`${grid.col} ${styles.item}`}>
               <div className={`${styles.title} ${theme}`}>
                 <span>{label} </span>
-                {onEdit && typeof onEdit === 'function' && (
-                  <button onClick={onEdit} className={styles.editBtn}>
-                    <Icon name="editActiveIcon" />
-                  </button>
-                )}
+                {onEdit &&
+                  typeof onEdit === 'function' &&
+                  (hasChangeCommission ? (
+                    <Tooltip
+                      className={classNames(styles.editDisabledIcon, styles.editBtn)}
+                      tooltipClassName={`${styles.tooltipClassNameProp}`}
+                      size="maxContent"
+                      position="bottom"
+                      content={<Icon name="editDisabled" />}
+                    >
+                      <p>
+                        You have to wait for your current commission change to finalize before you
+                        can edit again.
+                      </p>
+                    </Tooltip>
+                  ) : (
+                    <button
+                      onClick={onEdit}
+                      className={styles.editBtn}
+                      disabled={hasChangeCommission}
+                    >
+                      <Icon name="editActiveIcon" />
+                    </button>
+                  ))}
               </div>
-              <div className={`${styles.value} ${styles.capitalized}`}>{value}</div>
+              <div
+                className={classNames({
+                  [styles.value]: true,
+                  [styles.capitalized]: true,
+                  [styles.textLineThrough]:
+                    hasChangeCommission && onEdit && typeof onEdit === 'function',
+                })}
+              >
+                {value}
+              </div>
             </div>
           </div>
         ))}

@@ -28,6 +28,16 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
 }));
 
+jest.mock('@libs/wcm/utils/connectionCreator', () => ({
+  createSignClient: jest.fn(() => Promise.resolve()),
+  client: {
+    pair: jest.fn(),
+  },
+}));
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn((str) => str),
+}));
+
 describe('Dialog Holder Component', () => {
   const mockAppState = {
     account: {

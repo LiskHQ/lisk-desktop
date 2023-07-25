@@ -1,8 +1,15 @@
 const express = require('express');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 5,
+  message: 'You can only make 5 requests per minute',
+});
 
 const server = {
-  init: (port) => {
+  init: (host, port) => {
     if (process.env.LISK_DESKTOP_URL) {
       return process.env.LISK_DESKTOP_URL;
     }
@@ -20,8 +27,10 @@ const server = {
       err.status = 404;
       next(err);
     });
-    app.listen(port);
-    return `http://localhost:${port}/`;
+    app.use(limiter);
+    app.listen(port, host);
+
+    return `http://${host}:${port}/`;
   },
 };
 

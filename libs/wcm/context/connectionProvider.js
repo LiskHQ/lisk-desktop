@@ -9,6 +9,7 @@ const ConnectionProvider = ({ children }) => {
   const [pairings, setPairings] = useState([]);
   const [sessionProposal, setSessionProposal] = useState();
   const [sessionRequest, setSessionRequest] = useState();
+  const [signClient, setSignClient] = useState();
 
   const value = {
     events,
@@ -21,15 +22,23 @@ const ConnectionProvider = ({ children }) => {
     setPairings,
     setSessionProposal,
     setSessionRequest,
+    signClient,
   };
 
   useEffect(() => {
-    createSignClient();
-  }, []);
+    (async () => {
+      if (!signClient) {
+        const client = await createSignClient();
+        setSignClient(client);
+      }
+    })();
+  }, [signClient]);
 
   return (
     <ConnectionContext.Provider value={value}>
-      <ConnectionEventsManagerWrapper>{children}</ConnectionEventsManagerWrapper>
+      {!signClient ? null : (
+        <ConnectionEventsManagerWrapper>{children}</ConnectionEventsManagerWrapper>
+      )}
     </ConnectionContext.Provider>
   );
 };

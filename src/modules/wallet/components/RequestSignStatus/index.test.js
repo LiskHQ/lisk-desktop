@@ -94,7 +94,7 @@ describe('RequestSignStatus', () => {
     expect(respond).toHaveBeenCalled();
     expect(screen.getByText('Copied')).toBeInTheDocument();
 
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     expect(screen.getByText('Copy signatures')).toBeInTheDocument();
   });
 });

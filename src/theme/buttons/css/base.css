@@ -123,7 +123,31 @@
 
   &:focus,
   &:hover {
-    /* background: color(var(--color-burnt-sienna) l(+4%)); */
     box-shadow: 3px 3px 10px 0 rgba(236, 104, 104, 0.36);
+  }
+}
+
+.loadingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > svg {
+    transform: scale(1.3);
+    animation: loadingAnimation;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transition: all 0.5s ease-in;
+  }
+}
+
+@keyframes loadingAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

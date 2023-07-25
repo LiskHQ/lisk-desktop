@@ -4,7 +4,6 @@ import Blocks from '@block/components/blocks';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import ValidatorsMonitor from '@pos/validator/components/ValidatorsMonitorView';
 import ValidatorPerformanceModal from '@pos/validator/components/ValidatorPerformanceModal';
-import Login from '@auth/components/Signin';
 import MonitorWallets from '@account/components/Accounts';
 import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@transaction/components/Transactions';
@@ -23,7 +22,6 @@ import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
 import ClaimRewardsView from '@pos/validator/components/ClaimRewardsView';
 import editStakeManager from '@pos/validator/manager/editStakeManager';
 import StakingQueue from '@pos/validator/manager/stakingQueueManager';
-import DeviceDisconnect from '@common/components/deviceDisconnectDialog';
 import ConfirmationDialog from '@common/components/ConfirmationDialog';
 import { ChangeCommissionDialog } from '@pos/validator/components/ChangeCommission/Dialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
@@ -47,6 +45,7 @@ import AddApplicationList from '@blockchainApplication/manage/components/AddAppl
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
 import NetworkApplicationDropDownButton from '@blockchainApplication/manage/components/DialogNetworkApplicationSelector';
 import DialogAddNetwork from '@network/components/DialogAddNetwork';
+import DialogRemoveNetwork from '@network/components/DialogRemoveNetwork';
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
@@ -61,11 +60,9 @@ import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardware
 
 export default {
   wallet: AccountDetails,
-  addAccount: Login,
   editAccount: EditAccount,
   explorer: Explorer,
   register: Register,
-  login: Login,
   termsOfUse: TermsOfUse,
   transactions: MonitorTransactions,
   blocks: Blocks,
@@ -91,7 +88,6 @@ export default {
   editStake: editStakeManager,
   selectHardwareDeviceModal: SelectHardwareDeviceModal,
   stakingQueue: StakingQueue,
-  deviceDisconnectDialog: DeviceDisconnect,
   confirmationDialog: ConfirmationDialog,
   reclaimBalance: ReclaimBalanceModal,
   multiSignature: RegisterMultisig,
@@ -121,4 +117,5 @@ export default {
   connectionStatus: ConnectionStatus,
   changeCommission: ChangeCommissionDialog,
   dialogAddNetwork: DialogAddNetwork,
+  dialogRemoveNetwork: DialogRemoveNetwork,
 };

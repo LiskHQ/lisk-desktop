@@ -184,11 +184,11 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  deviceDisconnectDialog: {
+  dialogAddNetwork: {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  dialogAddNetwork: {
+  dialogRemoveNetwork: {
     isPrivate: false,
     forbiddenTokens: [],
   },

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
@@ -6,16 +7,23 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
+import { parseSearchParams } from 'src/utils/searchParams';
 import Input from '@theme/Input';
 import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
-import { immutablePush } from 'src/utils/immutableUtils';
+import { immutablePush, immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
+import networks from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
+  const history = useHistory();
+  const { name: defaultName = '', serviceUrl: defaultServiceUrl = '' } = parseSearchParams(
+    history.location.search
+  );
   const { setValue, customNetworks } = useSettings('customNetworks');
   const [successText, setSuccessText] = useState('');
+  const [errorText, setErrorText] = useState('');
 
   const { t } = useTranslation();
   const {
@@ -23,23 +31,62 @@ const DialogAddNetwork = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: defaultName,
+      serviceUrl: defaultServiceUrl,
+    },
+  });
 
+  // eslint-disable-next-line max-statements, complexity
   function onSubmit(values) {
     setSuccessText('');
+    setErrorText('');
     const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
-    const updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
+    const fullNetworkList = [...Object.values(networks), ...customNetworks];
+    const addOrEditNetworkIndex = fullNetworkList.findIndex(
+      (network) => network.serviceUrl === values.name || network.serviceUrl === values.serviceUrl
+    );
+    const editingExistingNetwork =
+      fullNetworkList.filter(
+        (network) =>
+          network.name.toLowerCase() === defaultName.toLowerCase() ||
+          network.serviceUrl.toLowerCase() === defaultServiceUrl.toLowerCase() ||
+          network.name.toLowerCase() === values.name.toLowerCase() ||
+          network.serviceUrl.toLowerCase() === values.serviceUrl.toLowerCase()
+      ).length > 1;
+
+    if (addOrEditNetworkIndex >= 0) {
+      if (defaultName === '' || editingExistingNetwork) {
+        setErrorText('Network name or serviceUrl already exists.');
+        return;
+      }
+    }
+
+    let updatedCustomNetworks;
+    if (defaultName) {
+      updatedCustomNetworks = immutableSetToArray({
+        array: customNetworks,
+        mapToAdd: customNetwork,
+        index: customNetworks.findIndex((network) => network.name === defaultName),
+      });
+    } else {
+      updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
+      reset();
+    }
     setValue(updatedCustomNetworks);
-    reset();
-    setSuccessText(t('Success: ') + values.name + t(' added'));
+
+    setSuccessText(`${t('Success: Network')} ${defaultName ? t('edited') : t('added')}`);
   }
 
   return (
     <Dialog className={styles.DialogAddNetwork} hasClose>
       <Box className={styles.boxProp}>
         <BoxHeader className={classNames(styles.header)}>
-          <h3 className={classNames(styles.title)}>{t('Add network')}</h3>
+          <h3 className={classNames(styles.title)}>
+            {t(`${!defaultName ? 'Add' : 'Edit'} network`)}
+          </h3>
         </BoxHeader>
         <p className={classNames(styles.description)}>
           {t(
@@ -56,7 +103,7 @@ const DialogAddNetwork = () => {
               status={errors.name?.message ? 'error' : undefined}
               {...register('name', {
                 required: 'Name is required',
-                pattern: { value: regex.name, message: t('Invalid Network Name') },
+                pattern: { value: regex.networkName, message: t('Invalid network name') },
               })}
             />
             <Input
@@ -73,9 +120,10 @@ const DialogAddNetwork = () => {
               })}
             />
             <PrimaryButton type="submit" className={`${styles.button}`}>
-              {t('Add network')}
+              {t(`${!defaultName ? 'Add' : 'Save'} network`)}
             </PrimaryButton>
             {successText && <span className={styles.successText}>{successText}</span>}
+            {errorText && <span className={styles.errorText}>{errorText}</span>}
           </form>
         </BoxContent>
       </Box>

@@ -6,11 +6,14 @@ import accounts from '@tests/constants/wallets';
 import { act } from 'react-dom/test-utils';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
+import { useValidators } from '@pos/validator/hooks/queries';
+import { mockValidators } from '@pos/validator/__fixtures__';
 import Status from './Status';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
+jest.mock('@pos/validator/hooks/queries');
 
 describe('Sent token Status', () => {
   const props = {
@@ -55,6 +58,8 @@ describe('Sent token Status', () => {
     ],
   };
 
+  useValidators.mockReturnValue({ data: mockValidators });
+
   it('passes correct props to TxBroadcaster when signed transaction and display add bookmark link', () => {
     const propsWithSignedTx = {
       ...props,
@@ -77,7 +82,7 @@ describe('Sent token Status', () => {
       data: {
         formAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
         isValidator: true,
-        label: 'genesis_17',
+        label: 'gr33ndrag0n_0',
       },
     });
   });
@@ -155,7 +160,7 @@ describe('Sent token Status', () => {
       data: {
         formAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
         isValidator: true,
-        label: 'genesis_17',
+        label: 'gr33ndrag0n_0',
       },
     });
   });

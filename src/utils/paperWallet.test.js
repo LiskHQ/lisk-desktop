@@ -24,6 +24,16 @@ jest.mock('@wallet/utils/account', () => ({
   })),
 }));
 
+jest.mock('@liskhq/lisk-client', () => ({
+  ...jest.requireActual('@liskhq/lisk-client'),
+  cryptography: {
+    ...jest.requireActual('@liskhq/lisk-client').cryptography,
+    address: {
+      getLisk32AddressFromPublicKey: jest.fn(() => 'lskdgtenb76rf93bzd56cqn6ova46wfvoesbk4hnd'),
+    },
+  },
+}));
+
 describe('Paper Wallet', () => {
   const data = {
     t: jest.fn((str) => str),

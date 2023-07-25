@@ -59,26 +59,26 @@ describe('WalletVisual', () => {
 
   it('should be able to create account visual that contains a rectangle', () => {
     const wrapper = mount(<WalletVisual address={accounts.genesis.summary.address} />);
-    expect(wrapper.find('rect').getDOMNode().getAttribute('x')).toEqual('10');
-    expect(wrapper.find('rect').getDOMNode().getAttribute('y')).toEqual('10');
-    expect(wrapper.find('rect').getDOMNode().getAttribute('height')).toEqual('80');
-    expect(wrapper.find('rect').getDOMNode().getAttribute('width')).toEqual('80');
+    expect(wrapper.find('rect').at(0).getDOMNode().getAttribute('x')).toEqual('11');
+    expect(wrapper.find('rect').at(0).getDOMNode().getAttribute('y')).toEqual('12');
+    expect(wrapper.find('rect').at(0).getDOMNode().getAttribute('height')).toEqual('48');
+    expect(wrapper.find('rect').at(0).getDOMNode().getAttribute('width')).toEqual('48');
     expect(
-      /url\(#schiaparelli-\w{2}-\d{13}-\w{5}\)/.test(
-        wrapper.find('rect').getDOMNode().getAttribute('fill')
+      /url\(#hub-\w{2}-\d{13}-\w{5}\)/.test(
+        wrapper.find('rect').at(0).getDOMNode().getAttribute('fill')
       )
     ).toEqual(true);
   });
 
   it('should be able to render in disabled mode', () => {
     const wrapper = mount(<WalletVisual address={accounts.genesis.summary.address} disabled />);
-    expect(wrapper.find('rect').getDOMNode().getAttribute('x')).toEqual('10');
-    expect(wrapper.find('rect').getDOMNode().getAttribute('y')).toEqual('10');
-    expect(wrapper.find('rect').getDOMNode().getAttribute('height')).toEqual('80');
-    expect(wrapper.find('rect').getDOMNode().getAttribute('width')).toEqual('80');
+    expect(wrapper.find('rect').at(0).getDOMNode().getAttribute('x')).toEqual('11');
+    expect(wrapper.find('rect').at(0).getDOMNode().getAttribute('y')).toEqual('12');
+    expect(wrapper.find('rect').at(0).getDOMNode().getAttribute('height')).toEqual('48');
+    expect(wrapper.find('rect').at(0).getDOMNode().getAttribute('width')).toEqual('48');
     expect(
-      /url\(#schiaparelli-\w{2}-\d{13}-\w{5}\)/.test(
-        wrapper.find('rect').getDOMNode().getAttribute('fill')
+      /url\(#hub-\w{2}-\d{13}-\w{5}\)/.test(
+        wrapper.find('rect').at(0).getDOMNode().getAttribute('fill')
       )
     ).toEqual(true);
   });

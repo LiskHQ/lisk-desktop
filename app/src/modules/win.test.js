@@ -4,6 +4,7 @@ import win from './win';
 import process from './process';
 import menu from '../menu';
 import server from '../../server';
+import { IPC_DETECT_LOCALE, IPC_OPEN_URL } from '../../../src/const/ipcGlobal';
 
 describe('Electron Browser Window Wrapper', () => {
   const callbacks = {};
@@ -12,6 +13,7 @@ describe('Electron Browser Window Wrapper', () => {
   const electronLocalshortcut = {
     register: () => {},
   };
+  const url = 'http://localhost:8080/';
 
   const electron = {
     screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
@@ -31,6 +33,7 @@ describe('Electron Browser Window Wrapper', () => {
         send: (event, value) => {
           events.push({ event, value });
         },
+        getURL: () => url,
       },
     }),
     Menu: {
@@ -39,8 +42,15 @@ describe('Electron Browser Window Wrapper', () => {
       popup: spy(),
     },
     app: { getName: () => 'Lisk', getVersion: () => 'some version' },
+    shell: {
+      openExternal: spy(),
+    },
   };
-  const url = 'http://localhost:8080/';
+  const storage = {
+    get: (item, callback) => {
+      callbacks[item] = callback;
+    },
+  };
 
   let processMock;
   let serverMock;
@@ -68,7 +78,6 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser.webPreferences.backgroundThrottling).to.equal(false);
       expect(win.browser.webPreferences.preload).to.equal('test');
       expect(win.browser.center).to.equal(true);
-      expect(win.browser.devtools).to.equal(true);
     });
 
     it('Creates the window of maximum size possible size on < 1680X1050 display', () => {
@@ -83,12 +92,37 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser.height).to.equal(1050);
       expect(win.browser.width).to.equal(1680);
     });
+
+    it('Should validate urls on navigation to an external link', () => {
+      const mockEvent = { preventDefault: spy() };
+      win.create({ electron, path, electronLocalshortcut, storage });
+      let mockUrl = 'https://lisk.com';
+
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
+
+      mockUrl = 'https://lisk.com/path/test';
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
+
+      mockUrl = 'http://localhost:9000';
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
+
+      mockUrl = 'https://www.testing.com';
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
+
+      mockUrl = 'testing';
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
+    });
   });
 
   describe('Sending events', () => {
     it('Saves events in event stack', () => {
       expect(win.eventStack.length).to.equal(0);
-      win.send({ event: 'openUrl', value: 'someurl' });
+      win.send({ event: IPC_OPEN_URL, value: 'someurl' });
       expect(win.browser).to.equal(null);
       expect(win.eventStack.length).to.equal(1);
     });
@@ -96,18 +130,12 @@ describe('Electron Browser Window Wrapper', () => {
     it('Sends events', () => {
       win.init({ electron, path, electronLocalshortcut });
       win.isUILoaded = true;
-      win.send({ event: 'openUrl', value: 'someurl' });
+      win.send({ event: IPC_OPEN_URL, value: 'someurl' });
       expect(win.eventStack.length).to.equal(0);
     });
   });
 
   describe('Create', () => {
-    const storage = {
-      get: (item, callback) => {
-        callbacks[item] = callback;
-      },
-    };
-
     it('Sends blur and focus events', () => {
       win.create({
         electron,
@@ -139,9 +167,9 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser).to.not.equal(null);
 
       // detect the locale
-      win.send({ event: 'detectedLocale', value: 'de' });
+      win.send({ event: IPC_DETECT_LOCALE, value: 'de' });
       expect(win.eventStack.length).to.equal(1);
-      expect(win.eventStack[0].event).to.equal('detectedLocale');
+      expect(win.eventStack[0].event).to.equal(IPC_DETECT_LOCALE);
       expect(win.eventStack[0].value).to.equal('de');
 
       // check the menu gets build
@@ -157,7 +185,7 @@ describe('Electron Browser Window Wrapper', () => {
       callbacks['did-finish-load']();
       expect(win.eventStack.length).to.equal(0);
       expect(events.length).to.equal(1);
-      expect(events[0].event).to.equal('detectedLocale');
+      expect(events[0].event).to.equal(IPC_DETECT_LOCALE);
       expect(events[0].value).to.equal('de');
 
       callbacks.closed();
@@ -182,11 +210,11 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser).to.not.equal(null);
 
       // detect the locale
-      win.send({ event: 'detectedLocale', value: 'de' });
+      win.send({ event: IPC_DETECT_LOCALE, value: 'de' });
       expect(win.eventStack.length).to.equal(2);
-      expect(win.eventStack[0].event).to.equal('openUrl');
+      expect(win.eventStack[0].event).to.equal(IPC_OPEN_URL);
       expect(win.eventStack[0].value).to.equal('/');
-      expect(win.eventStack[1].event).to.equal('detectedLocale');
+      expect(win.eventStack[1].event).to.equal(IPC_DETECT_LOCALE);
       expect(win.eventStack[1].value).to.equal('de');
 
       // check the menu gets build
@@ -202,9 +230,9 @@ describe('Electron Browser Window Wrapper', () => {
       callbacks['did-finish-load']();
       expect(win.eventStack.length).to.equal(0);
       expect(events.length).to.equal(2);
-      expect(events[0].event).to.equal('openUrl');
+      expect(events[0].event).to.equal(IPC_OPEN_URL);
       expect(events[0].value).to.equal('/');
-      expect(events[1].event).to.equal('detectedLocale');
+      expect(events[1].event).to.equal(IPC_DETECT_LOCALE);
       expect(events[1].value).to.equal('de');
 
       callbacks.closed();

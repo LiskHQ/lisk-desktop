@@ -33,7 +33,7 @@ const AddAccountOptionButton = ({ iconName, text, onClick }) => (
 
 const AddAccountOptions = () => {
   const history = useHistory();
-  const { search } = useLocation();
+  const { search } = useLocation
   const { t } = useTranslation();
 
   return (
@@ -55,7 +55,7 @@ const AddAccountOptions = () => {
                 />
               ))}
             </div>
-            <p>
+            <div>
               {t('Don’t have a Lisk account yet?')}{' '}
               <DropdownButton
                 className={`${styles.dropdownWrapper} input-with-dropdown-dropdown`}
@@ -73,7 +73,7 @@ const AddAccountOptions = () => {
                 <Link to={`${routes.register.path}?strength=${128}`}>12 word passphrase</Link>
                 <Link to={`${routes.register.path}?strength=${256}`}>24 word passphrase</Link>
               </DropdownButton>
-            </p>
+            </div>
           </div>
         </div>
       </div>

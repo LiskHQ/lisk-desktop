@@ -1,14 +1,23 @@
+/* eslint-disable max-lines, max-statements, complexity */
 /* istanbul ignore file */
-/* eslint-disable max-statements */
 import React, { useMemo, useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { convertToBaseDenom } from '@token/fungible/utils/helpers';
-import { normalizeStakesForTx } from '@transaction/utils';
+import {
+  fromTransactionJSON,
+  joinModuleAndCommand,
+  normalizeStakesForTx,
+} from '@transaction/utils';
 import BoxContent from '@theme/box/content';
 import TxComposer from '@transaction/components/TxComposer';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import Table from '@theme/table';
+import to from 'await-to-js';
+import { dryRun } from 'src/modules/transaction/api';
+import useSettings from 'src/modules/settings/hooks/useSettings';
 import routes from 'src/routes/routes';
+import { useCommandSchema } from 'src/modules/network/hooks';
 import { STAKE_LIMIT } from '../../consts';
 import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';
@@ -28,7 +37,7 @@ const getStakeStats = (stakes, account) => {
   const stakesStats = Object.keys(stakes).reduce(
     // eslint-disable-next-line max-statements
     (stats, address) => {
-      const { confirmed, unconfirmed, username } = stakes[address];
+      const { confirmed, unconfirmed, name } = stakes[address];
 
       if (confirmed === 0 && unconfirmed === 0) {
         return stats;
@@ -36,19 +45,19 @@ const getStakeStats = (stakes, account) => {
 
       if (!confirmed && unconfirmed) {
         // new stake
-        stats.added[address] = { unconfirmed, username };
+        stats.added[address] = { unconfirmed, name };
       } else if (confirmed && !unconfirmed) {
         // removed stake
-        stats.removed[address] = { confirmed, username };
+        stats.removed[address] = { confirmed, name };
         if (address === account.summary?.address) {
-          stats.selfUnStake = { confirmed, username };
+          stats.selfUnStake = { confirmed, name };
         }
       } else if (confirmed !== unconfirmed) {
         // edited stake
-        stats.edited[address] = { unconfirmed, confirmed, username };
+        stats.edited[address] = { unconfirmed, confirmed, name };
       } else {
         // untouched
-        stats.untouched[address] = { unconfirmed, confirmed, username };
+        stats.untouched[address] = { unconfirmed, confirmed, name };
       }
       return stats;
     },
@@ -99,7 +108,6 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
   if (areStakesInValid) {
     messages.push(t('Please enter the stake amounts for the validators you wish to stake for'));
   }
-
   if (resultingNumOfStakes > STAKE_LIMIT) {
     messages.push(
       t(
@@ -131,8 +139,53 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
   return { messages, error: !!messages.length };
 };
 
+const getRewards = async ({
+  moduleCommandSchemas,
+  transactionJSON,
+  mainChainNetwork,
+  currentAccount,
+}) => {
+  const moduleCommand = joinModuleAndCommand(transactionJSON);
+  const paramsSchema = moduleCommandSchemas[moduleCommand];
+  const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
+
+  const [error, dryRunResult] = await to(
+    dryRun({
+      paramsSchema,
+      transaction,
+      skipVerify: true,
+      serviceUrl: mainChainNetwork.serviceUrl,
+    })
+  );
+
+  if (error) return { error };
+
+  const rewards = dryRunResult.data.events.reduce(
+    (result, event) => {
+      const { name, data, module } = event;
+      if (
+        name === 'rewardsAssigned' &&
+        module === 'pos' &&
+        data.stakerAddress === currentAccount.metadata.address
+      ) {
+        return {
+          ...result,
+          [data.validatorAddress]: data,
+          total: BigInt(result.total || 0) + BigInt(data.amount),
+        };
+      }
+      return result;
+    },
+    { total: 0n }
+  );
+
+  return { rewards };
+};
+
 const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, posToken }) => {
   const [fee, setFee] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [dryRunError, setDryrunError] = useState();
   const changedStakes = Object.keys(stakes)
     .filter((address) => stakes[address].unconfirmed !== stakes[address].confirmed)
     .map((address) => ({ address, ...stakes[address] }));
@@ -143,6 +196,9 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     [stakes, account]
   );
   const { token } = usePosToken();
+  const [currentAccount] = useCurrentAccount();
+  const { moduleCommandSchemas } = useCommandSchema();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   const feedback = validateStakes(
     stakes,
@@ -153,11 +209,23 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     posToken
   );
   const showEmptyState = !changedStakes.length || isStakingTxPending;
+  const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
+    if (!showEmptyState && moduleCommandSchemas) {
+      setIsLoading(true);
 
-  const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
-    if (!showEmptyState) {
+      const { rewards, error } = await getRewards({
+        transactionJSON,
+        moduleCommandSchemas,
+        currentAccount,
+        mainChainNetwork,
+      });
+      setIsLoading(false);
+      setDryrunError(error);
+
+      if (error) return;
+
       nextStep({
-        formProps,
+        formProps: { ...formProps, rewards },
         transactionJSON,
         added,
         edited,
@@ -178,15 +246,17 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
   const stakeFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
     isFormValid:
-      (!feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending) ||
+      (!feedback.error &&
+        Object.keys(changedStakes).length > 0 &&
+        !isStakingTxPending &&
+        !dryRunError &&
+        !isLoading) ||
       showEmptyState,
     fields: {
       token: posToken,
     },
   };
-  const commandParams = {
-    stakes: normalizedStakes,
-  };
+  const commandParams = { stakes: normalizedStakes };
 
   return (
     <div className={styles.wrapper}>
@@ -231,9 +301,9 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
                   />
                 </div>
               </BoxContent>
-              {feedback.error && (
+              {(feedback.error || dryRunError) && (
                 <div className={`${styles.feedback} feedback`}>
-                  <span>{feedback.messages[0]}</span>
+                  <span>{feedback.messages[0] || dryRunError.message}</span>
                 </div>
               )}
             </>

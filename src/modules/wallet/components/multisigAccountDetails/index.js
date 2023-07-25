@@ -1,9 +1,7 @@
-import React, { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useMemo } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { selectNetwork } from 'src/redux/selectors';
 import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
@@ -15,8 +13,8 @@ import Dialog from 'src/theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import defaultBackgroundImage from '@setup/react/assets/images/default-chain-background.png';
+import { useAuth } from '@auth/hooks/queries';
 import Members from '../multisignatureMembers';
-
 import styles from './styles.css';
 
 const emptyKeys = {
@@ -25,13 +23,14 @@ const emptyKeys = {
   mandatoryKeys: [],
 };
 
-const MultisigAccountDetails = ({ t, wallet, history }) => {
+const MultisigAccountDetails = ({ t, history }) => {
   const [currentAccount] = useCurrentAccount();
-  const network = useSelector(selectNetwork);
   const queryAddress = selectSearchParamValue(history.location.search, 'address');
   const address = queryAddress || currentAccount.metadata.address;
-  const { numberOfSignatures, optionalKeys, mandatoryKeys } = wallet.data.keys || emptyKeys;
-  const groupPublicKey = wallet.data.publicKey || currentAccount.metadata.pubkey;
+  const { data: authData } = useAuth({
+    config: { params: { address } },
+  });
+  const { numberOfSignatures, optionalKeys, mandatoryKeys } = authData?.data || emptyKeys;
 
   const members = useMemo(
     () =>
@@ -50,10 +49,6 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
         ),
     [numberOfSignatures, optionalKeys, mandatoryKeys]
   );
-
-  useEffect(() => {
-    wallet.loadData({ address });
-  }, [network]);
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
@@ -79,9 +74,9 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
             <div className={styles.row}>
               <span className={styles.title}>{t('Public key')}:</span>
               <CopyToClipboard
-                value={groupPublicKey}
+                value={authData?.meta.publicKey}
                 className={styles.rowValue}
-                text={truncateAddress(groupPublicKey)}
+                text={truncateAddress(authData?.meta.publicKey)}
               />
             </div>
           </BoxInfoText>

@@ -8,15 +8,16 @@ pipeline {
 		ansiColor('xterm')
 	}
 	parameters {
-		string(name: 'CORE_VERSION', defaultValue: '4.0.0-beta.1')
-		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'release/0.7.0')
+		string(name: 'CORE_VERSION', defaultValue: '4.0.0-beta.4')
+		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.7.0-beta.3')
 	}
 	stages {
 		stage('install') {
 			steps {
 				nvm(getNodejsVersion()) {
 					sh '''
-						npm ci --registry https://npm.lisk.com
+						npm i -g yarn
+						yarn --cwd app && yarn
 						'''
 				}
 			}
@@ -27,7 +28,7 @@ pipeline {
 					nvm(getNodejsVersion()) {
 						sh '''
 						rm -rf lisk-service/ # linting will fail otherwise
-						npm run lint
+						yarn run lint
 						'''
 					}
 				}
@@ -39,7 +40,7 @@ pipeline {
 					sh '''
 					cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
 					cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-					npm run build
+					yarn run build
 					'''
 				}
 				stash includes: 'app/build/', name: 'build'
@@ -76,7 +77,7 @@ pipeline {
 									npm i -g lisk-core
 									rm -rf ~/.lisk/
 									lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
-									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 >lisk-core.out 2>lisk-core.err &
+									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 --config ./e2e/artifacts/config.json --overwrite-config >lisk-core.out 2>lisk-core.err &
 									echo $! >lisk-core.pid
 
 									# lisk-service
@@ -92,7 +93,7 @@ pipeline {
 									curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
 									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
-									npm run cucumber:playwright:open
+									yarn run cucumber:playwright:open
 									'''
 								}
 							}
@@ -101,7 +102,7 @@ pipeline {
 					// jest
 					"unit": {
 						nvm(getNodejsVersion()) {
-							sh 'ON_JENKINS=true npm run test'
+							sh 'ON_JENKINS=true yarn run test'
 						}
 					},
 				)

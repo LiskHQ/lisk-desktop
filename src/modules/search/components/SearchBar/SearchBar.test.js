@@ -60,7 +60,7 @@ describe('SearchBar', () => {
         .at(0)
         .simulate('change', { target: { value: 'HI' } });
       wrapper.update();
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
     expect(wrapper).not.toContainMatchingElement('.accounts');
   });
@@ -80,7 +80,7 @@ describe('SearchBar', () => {
         .at(0)
         .simulate('change', { target: { value: accountAddress } });
       wrapper.update();
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
     expect(wrapper).toContainMatchingElement('.accounts');
   });
@@ -145,7 +145,7 @@ describe('SearchBar', () => {
 
     act(() => {
       fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: 'genesis' } });
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });
@@ -167,7 +167,7 @@ describe('SearchBar', () => {
 
     act(() => {
       fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: accountAddress } });
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });
@@ -197,7 +197,7 @@ describe('SearchBar', () => {
 
     act(() => {
       fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '123456123234234' } });
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });
@@ -219,7 +219,7 @@ describe('SearchBar', () => {
 
     act(() => {
       fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '60008' } });
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
 
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });

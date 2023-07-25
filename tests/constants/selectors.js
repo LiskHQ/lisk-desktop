@@ -273,7 +273,7 @@ const ss = {
   feeValue: '.fee-value',
   nodeConnectionLoadingSpinner: '.node-connection-loading-spinner',
   backToWalletButton: '.back-to-wallet-button',
-  walletsRow: '.accounts-row',
+  walletsRow: '.wallets-row',
   showMoreAccountsBtn: '.accounts-box .load-more',
   signMultiSignTransactionToggle: '.signMultiSignTransaction-toggle',
   walletInfoMsign: '.account-info-msign',

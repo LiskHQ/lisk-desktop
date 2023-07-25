@@ -50,8 +50,9 @@ module.exports = {
     '^@packages(.*)$': resolve(__dirname, '../packages/$1'),
     '^@screens(.*)$': resolve(__dirname, '../packages/views/screens/$1'),
     '^@libs(.*)$': resolve(__dirname, '../libs/$1'),
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/tests/__mocks__/fileMock.js',
+    '\\.svg$': '<rootDir>/tests/__mocks__/svg.js',
   },
   collectCoverage: true,
   resetModules: true,
@@ -132,9 +133,7 @@ module.exports = {
     'src/modules/common/components/timestamp/index.js',
     'src/utils/localJSONStorage.js',
     'src/utils/analytics.js',
-    'src/modules/bookmark/utils.js',
     'src/theme/Theme.js',
-    'src/utils/platform.js',
     'src/modules/wallet/utils/hwManager.js',
     'src/modules/wallet/utils/account.js',
     'src/utils/dateTime.js',
@@ -145,7 +144,6 @@ module.exports = {
     'src/modules/settings/components/toggle.js',
     'src/modules/common/components/bars/topBar/tokenSelector.js',
     'src/modules/network/utils/getNetwork.js',
-    'src/modules/block/utils/api/getBlocks.js',
     'src/modules/transaction/api/index.js',
     'src/modules/transaction/utils/transaction.js',
     'src/modules/common/components/filterDropdownButton/addressFilter.js',
@@ -156,13 +154,9 @@ module.exports = {
     'src/modules/transaction/components/Regular/Regular.js',
     'src/utils/withFilters.js',
     'src/modules/token/fungible/components/BalanceInfo/EmptyBalanceTooltipWrapper.js',
-    'src/modules/bookmark/components/AddBookmark/AddBookmark.js',
     'src/modules/wallet/utils/api/index.js',
     'src/modules/transaction/utils/hwManager/index.js',
     'src/modules/transaction/utils/transactionDetailsHelper.js',
-    'src/modules/transaction/utils/removeDuplicateTransactions.js',
-    'src/modules/block/map/blocksFiltersMap.js',
-    'src/modules/block/utils/blockSubscribe.js',
     'src/modules/wallet/components/signMultisigView/helpers.js',
     'src/modules/pos/validator/store/actions/staking.js',
     'src/modules/transaction/components/transactionAddress/index.js',
@@ -175,10 +169,8 @@ module.exports = {
     'src/modules/settings/components/customNode/editMode.js',
     'src/modules/settings/components/customNode/customNode.js',
     'src/modules/auth/components/RecoveryPhrase/index.js',
-    'src/modules/auth/components/Signin/login.js',
     'src/modules/transaction/components/TransactionMonitor/TransactionMonitorList.js',
     'src/modules/transaction/store/transactionPriorityReducer.js',
-    'src/modules/bookmark/components/BookmarksListModal/BookmarkListModal.js',
     'src/modules/transaction/components/BlockDetailsTransactions/BlockDetailsTransactions.js',
     'src/modules/search/utils/searchUtils.js',
     'src/modules/transaction/components/TransactionDetails/stakes.js',
@@ -226,9 +218,6 @@ module.exports = {
     'src/modules/transaction/components/Explorer/ExplorerTransactions.js',
     'src/modules/transaction/manager/explorerManager.js',
     'src/modules/token/fungible/components/SendStatus/Status.js',
-    'src/modules/wallet/components/walletInfo/identity.js',
-    'src/modules/wallet/components/walletInfo/actionBar.js',
-    'src/modules/wallet/components/walletInfo/index.js',
     'src/modules/token/fungible/components/BalanceInfo/index.js',
     'src/modules/transaction/components/WalletTransactions/TransactionHeader.js',
     'src/modules/transaction/components/WalletTransactions/TransactionList.js',
@@ -288,38 +277,38 @@ module.exports = {
     'src/modules/account/hooks/useCurrentAccount.js',
     'src/modules/transaction/store/actions.js',
     'src/modules/transaction/hooks/useCreateTransaction.js',
-    'src/modules/transaction/components/TransactionDetails', // @Todo: would resolve this when all transation implementations are finallized
-    'libs/hwManager/manufacturers/ledger/index.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/wallet/utils/hwManager.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/auth/components/hwWalletLogin/selectAccount/selectAccount.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/auth/components/hwWalletLogin/selectAccount/accountCard.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/wallet/store/action.js', // TODO: To be fixed when HW Manager is refactored
-    'src/modules/hardwareWallet/manager/HWClient.js', // TODO: To be fixed when HW Manager is refactored
-    'src/utils/immutableUtils.js', // TODO: To be fixed in PDD-1482
+    'src/modules/transaction/components/TransactionDetails',
+    'libs/hwManager/manufacturers/ledger/index.js',
+    'src/modules/wallet/utils/hwManager.js',
+    'src/modules/auth/components/hwWalletLogin/selectAccount/selectAccount.js',
+    'src/modules/auth/components/hwWalletLogin/selectAccount/accountCard.js',
+    'src/modules/wallet/store/action.js',
+    'src/modules/hardwareWallet/manager/HWClient.js',
+    'src/utils/immutableUtils.js',
     'src/utils/useOutsideClickListener.js',
-    'src/utils/usePrevious.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/store/actions/devicesActions.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/utils/getHWAccounts.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/hooks/useHWAccounts.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/components/SelectHardwareDeviceModal/components/HwDeviceItem.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/store/reducers/devicesReducer.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/components/DeviceToast/DeviceToast.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/components/HardwareWalletStatus/HardwareWalletStatus.js', // TODO: To be fixed in PDD-1482
-    'src/modules/account/components/AccountRow/AccountRow.js', // TODO: To be fixed in PDD-1482
-    'src/modules/account/components/ManageAccounts/ManageAccounts.js', // TODO: To be fixed in PDD-1482
-    'src/modules/account/components/SwitchAccount/SwitchAccount.js', // TODO: To be fixed in PDD-1482
+    'src/utils/usePrevious.js',
+    'src/modules/hardwareWallet/store/actions/devicesActions.js',
+    'src/modules/hardwareWallet/utils/getHWAccounts.js',
+    'src/modules/hardwareWallet/hooks/useHWAccounts.js',
+    'src/modules/hardwareWallet/components/SelectHardwareDeviceModal/components/HwDeviceItem.js',
+    'src/modules/hardwareWallet/store/reducers/devicesReducer.js',
+    'src/modules/hardwareWallet/components/DeviceToast/DeviceToast.js',
+    'src/modules/hardwareWallet/components/HardwareWalletStatus/HardwareWalletStatus.js',
+    'src/modules/account/components/AccountRow/AccountRow.js',
+    'src/modules/account/components/ManageAccounts/ManageAccounts.js',
+    'src/modules/account/components/SwitchAccount/SwitchAccount.js',
     'src/modules/account/components/RemoveSelectedAccountFlow/RemoveSelectedAccountFlow.js',
-    'src/modules/blockchainApplication/connection/components/RequestView/RequestView.js', // TODO: To be fixed in PDD-1482
-    'src/modules/hardwareWallet/store/actions/devicesActions.js', // TODO: To be fixed in PDD-1482
-    '/src/modules/hardwareWallet/store/reducers/devicesReducer.js', // TODO: To be fixed in PDD-1482
+    'src/modules/blockchainApplication/connection/components/RequestView/RequestView.js',
+    'src/modules/hardwareWallet/store/actions/devicesActions.js',
+    '/src/modules/hardwareWallet/store/reducers/devicesReducer.js',
     'src/modules/pos/validator/components/ClaimRewardsView/index.js',
-    'src/modules/blockchainApplication/manage/hooks/useApplicationManagement.js', // TODO: To be fixed in PDD-1522
-    'src/modules/wallet/components/MenuSelect/MenuSelect.js', // TODO: To be fixed in PDD-1522
-    'src/modules/network/components/networkSwitcherDropdown/NetworkSwitcherDropdown.js', // TODO: To be fixed in PDD-1522
-    'src/modules/blockchainApplication/manage/components/UserApplicationSelector/UserApplicationSelector.js', // TODO: To be fixed in PDD-1522
-    'src/modules/network/components/selectNetwork/SelectNetwork.js', // TODO: To be fixed in PDD-1522
-    'src/modules/blockchainApplication/manage/components/NetworkApplicationDropDownButton/NetworkApplicationDropDownButton.js', // TODO: To be fixed in PDD-1522
-    'src/modules/network/components/DialogAddNetwork/DialogAddNetwork.js', // TODO: To be fixed in PDD-1522
+    'src/modules/blockchainApplication/manage/hooks/useApplicationManagement.js',
+    'src/modules/wallet/components/MenuSelect/MenuSelect.js',
+    'src/modules/network/components/networkSwitcherDropdown/NetworkSwitcherDropdown.js',
+    'src/modules/blockchainApplication/manage/components/UserApplicationSelector/UserApplicationSelector.js',
+    'src/modules/network/components/selectNetwork/SelectNetwork.js',
+    'src/modules/blockchainApplication/manage/components/NetworkApplicationDropDownButton/NetworkApplicationDropDownButton.js',
+    'src/modules/wallet/components/walletList/tableHeader.js',
   ],
   coverageThreshold: {
     // global: {
@@ -346,11 +335,14 @@ module.exports = {
   },
   setupFiles: ['<rootDir>/setup/config/setupJest.js', 'jest-canvas-mock'],
   transform: {
-    '^.+\\.js$': 'babel-jest',
+    '\\.[jt]sx?$': 'babel-jest',
     '^.+\\.svg|png|jpg|jpeg$': '<rootDir>/tests/__mocks__/imageTransform.js',
   },
-  transformIgnorePatterns: ['node_modules/(?!(swiper|ssr-window|dom7)/)'],
-  testURL: 'http://localhost',
+  transformIgnorePatterns: ['node_modules/(?!(yup|@hookform/resolvers|swiper|ssr-window|dom7)/)'],
+  testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    url: 'http://localhost',
+  },
   globals: {
     PRODUCTION: true,
     TEST: true,
@@ -366,7 +358,6 @@ module.exports = {
     './node_modules/@testing-library/jest-dom/extend-expect',
     './node_modules/jest-enzyme/lib/index.js',
   ],
-  testEnvironment: 'enzyme',
   watchPlugins: [
     ['jest-watch-toggle-config', { setting: 'verbose' }],
     ['jest-watch-toggle-config', { setting: 'collectCoverage' }],

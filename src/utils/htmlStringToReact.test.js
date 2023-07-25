@@ -17,10 +17,48 @@ describe('htmlStringToReact util', () => {
 
     const wrapper = mount(htmlStringToReact(dummyHtml));
 
-    expect(wrapper).toHaveHTML(dummyHtml);
+    expect(wrapper.html()).toEqual(dummyHtml);
   });
 
-  it('Should return empty string if no html provided', () => {
-    expect(htmlStringToReact()).toEqual('');
+  it('Should return a clean and valid React element', () => {
+    const dirtyDummyHtml = `<div>
+      <h1>Dummy title</h1>
+      <p onclick=alert(0)>
+        <span>before <strong>Nested</strong> tags</span>
+        <a href="javascript:alert(1)">#1234</a>
+      </p>
+    </div>`;
+
+    const cleanDummyHtml = `<div>
+      <h1>Dummy title</h1>
+      <p>
+        <span>before <strong>Nested</strong> tags</span>
+        <a href="https://github.com/LiskHQ/lisk-desktop/issues/1234">#1234</a>
+      </p>
+    </div>`;
+
+    const wrapper = mount(htmlStringToReact(dirtyDummyHtml));
+
+    expect(wrapper.html()).toEqual(cleanDummyHtml);
+  });
+
+  it('Should update anchor tag link if case number is the content', () => {
+    const dummyHtml = `<div>
+      <h1>Dummy title</h1>
+      <p>
+        <span>before <strong>Nested</strong> tags</span>
+        <a>#5923</a>
+      </p>
+    </div>`;
+
+    const wrapper = mount(htmlStringToReact(dummyHtml));
+
+    expect(wrapper.find('a').prop('href')).toBe(
+      'https://github.com/LiskHQ/lisk-desktop/issues/5923'
+    );
+  });
+
+  it('Should return empty node if no html string provided', () => {
+    expect(htmlStringToReact()).toEqual([]);
   });
 });

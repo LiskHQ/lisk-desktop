@@ -10,6 +10,12 @@ import { FEE_TYPES } from '../constants';
 
 jest.useRealTimers();
 jest.spyOn(encodingUtils, 'fromTransactionJSON');
+jest.mock('@liskhq/lisk-client', () => ({
+  ...jest.requireActual('@liskhq/lisk-client'),
+  transactions: {
+    getBytes: jest.fn().mockReturnValue({ length: 65 }),
+  },
+}));
 
 const transactionJSON = {
   nonce: BigInt(0),

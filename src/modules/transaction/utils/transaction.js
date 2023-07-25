@@ -16,7 +16,6 @@ import { joinModuleAndCommand } from './moduleCommand';
 const { transfer, transferCrossChain, stake, reclaimLSK, registerMultisignature } =
   MODULE_COMMANDS_NAME_MAP;
 
-// @todo import the following 4 values from lisk-elements (#4497)
 export const MESSAGE_TAG_MULTISIG_REG = 'LSK_RMSG_';
 
 export const convertStringToBinary = (value) => Buffer.from(value, 'hex');
@@ -218,7 +217,6 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
         messageSchema
       );
 
-      // @todo use correct index once SDK exposes the sort endpoint (#4497)
       const signatures = [...Array(members.length).keys()].map((index) => {
         if (index === senderIndex) return memberSignature;
 
@@ -254,7 +252,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
         privateKeyBuffer,
         schema
       );
-
+      console.log('--->>>>>>',res)
       return res;
     } catch (e) {
       return e;

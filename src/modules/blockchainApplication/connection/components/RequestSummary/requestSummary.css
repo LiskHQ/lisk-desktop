@@ -1,12 +1,8 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .wrapper {
-  width: 100%;
-  box-sizing: border-box;
-  min-width: 450px;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: var(--color-white);
+  border: none;
+  flex-flow: column nowrap;
 }
 
 .avatarContainer {
@@ -106,6 +102,13 @@
 
   & > div {
     padding: var(--vertical-padding-m) 0;
+  }
+
+  & .invalidTransactionText {
+    color: var(--color-tx-fail-status-text);
+    font-weight: var(--font-weight-bold);
+    align-self: center;
+    padding-bottom: 10px;
   }
 }
 
