@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper';
+import { Pagination, Navigation } from 'swiper';
 import { useCurrentAccount } from '@account/hooks';
 import Overview from '@wallet/components/overview/overviewManager';
 import Box from '@theme/box';
@@ -16,6 +16,7 @@ import InfoBanner from '@common/components/infoBanner/infoBanner';
 import banners from './banners';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import styles from './AccountOverview.css';
 
 // eslint-disable-next-line max-statements
@@ -57,25 +58,29 @@ export default function AccountOverview({ address: searchAddress }) {
     <section>
       {sliderVisibility && (
         <Swiper
-          pagination={{ clickable: true }}
-          modules={[Pagination, Autoplay]}
+          pagination
+          navigation
+          modules={[Pagination, Navigation]}
           slidesPerView="auto"
-          autoplay
           spaceBetween={20}
           className={styles.bannerSwiper}
         >
           {banners.map((bannerInfo, index) => {
-            const { infoMessage, infoDescription, illustrationName } = bannerInfo;
+            const { infoMessage, infoDescription, illustrationName, infoLink, infoLinkText } =
+              bannerInfo;
             return (
               <SwiperSlide key={index}>
                 <InfoBanner
                   t={t}
                   name="walletPageBanner"
+                  className={styles.bannerWrapper}
                   infoLabel={t('New')}
                   infoMessage={infoMessage(t)}
                   infoDescription={infoDescription(t)}
                   illustrationName={illustrationName}
                   handleSliderBannerClose={handleSliderBannerClose}
+                  infoLink={infoLink}
+                  infoLinkText={infoLinkText}
                   show
                 />
               </SwiperSlide>

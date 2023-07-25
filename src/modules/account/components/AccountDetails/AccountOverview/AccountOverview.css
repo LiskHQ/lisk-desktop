@@ -11,4 +11,19 @@
       background-color: white;
     }
   }
+
+  & :global(.swiper-button-next),
+  :global(.swiper-button-prev) {
+    color: var(--color-constant-white);
+  }
+
+  & .bannerWrapper {
+    & p > a {
+      display: inline;
+      font-weight: var(--font-weight-bold);
+      font-size: 14px;
+      color: var(--color-constant-white);
+      cursor: pointer;
+    }
+  }
 }

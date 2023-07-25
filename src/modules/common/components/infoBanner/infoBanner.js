@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import Icon from '@theme/Icon';
 import Illustration from '@common/components/illustration';
@@ -11,6 +12,7 @@ const InfoBanner = ({
   infoMessage,
   infoDescription,
   infoLink,
+  infoLinkText,
   illustrationName,
   className,
   handleSliderBannerClose,
@@ -45,18 +47,20 @@ const InfoBanner = ({
         <div className={`${styles.slides} slides`}>
           <section className={`${className || ''} ${styles.active}`}>
             <h1 className={styles.infoMessage}>{infoMessage}</h1>
-            <p>{infoDescription}</p>
-            {infoLink && (
-              <p
-                className={`${styles.infoLink} link`}
-                onClick={() => {
-                  window.open(`${infoLink}`);
-                }}
-              >
-                {t('Read more ')}
-                <Icon name="whiteLinkIcon" />
-              </p>
-            )}
+            <p>
+              {infoDescription}{' '}
+              {infoLink && (
+                <Link
+                  className={`${styles.infoLink} link`}
+                  to={infoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {infoLinkText ?? t('Read more ')}
+                  <Icon name="whiteLinkIcon" />
+                </Link>
+              )}
+            </p>
           </section>
         </div>
       </div>
