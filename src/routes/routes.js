@@ -221,6 +221,7 @@ export const modals = {
   selectNode: {
     isPrivate: false,
     forbiddenTokens: [],
+    requiredParams: ['chainID'],
   },
   removeSelectedAccount: {
     isPrivate: false,

@@ -18,10 +18,7 @@ import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements
 const DialogHolder = ({ history }) => {
-  const modalName = useMemo(() => {
-    const { modal = '' } = parseSearchParams(history.location.search);
-    return routesMap[modal] ? modal : undefined;
-  }, [history.location.search]);
+  const { modal = '', ...restSearchParams } = parseSearchParams(history.location.search);
   const [currentAccount] = useCurrentAccount();
   const isAuthenticated = Object.keys(currentAccount).length > 0;
   const activeToken = useSelector(selectActiveToken);
@@ -31,6 +28,11 @@ const DialogHolder = ({ history }) => {
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);
+
+  const modalName = useMemo(
+    () => (routesMap[modal] ? modal : undefined),
+    [history.location.search]
+  );
 
   const ModalComponent = useMemo(() => {
     if (modalName) {
@@ -43,11 +45,25 @@ const DialogHolder = ({ history }) => {
     return null;
   }, [modalName]);
 
+  const hasRequiredSearchParams = useMemo(() => {
+    if (modalName && restSearchParams) {
+      const requiredParams = modals[modalName].requiredParams || [];
+
+      return requiredParams.reduce((acc, queryKey) => !!restSearchParams[queryKey] && acc, true);
+    }
+
+    return false;
+  }, [modalName, restSearchParams]);
+
   if (!modalName) {
     return null;
   }
 
   if (modals[modalName].forbiddenTokens.includes(activeToken)) {
+    return null;
+  }
+
+  if (!hasRequiredSearchParams) {
     return null;
   }
 
