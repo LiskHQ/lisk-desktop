@@ -46,7 +46,7 @@ const DialogHolder = ({ history }) => {
   }, [modalName]);
 
   const hasRequiredSearchParams = useMemo(() => {
-    if (modalName && restSearchParams) {
+    if (modalName) {
       const requiredParams = modals[modalName].requiredParams || [];
 
       return requiredParams.reduce((acc, queryKey) => !!restSearchParams[queryKey] && acc, true);
