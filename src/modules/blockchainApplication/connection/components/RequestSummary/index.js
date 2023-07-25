@@ -69,7 +69,7 @@ const RequestSummary = ({ nextStep, history }) => {
         composedFees: [
           {
             title: 'Transaction',
-            value: `${convertFromBaseDenom(transaction.fee)} ${token.symbol}`,
+            value: `${convertFromBaseDenom(transaction.fee)} ${token?.symbol}`,
             components: [],
           },
         ],
