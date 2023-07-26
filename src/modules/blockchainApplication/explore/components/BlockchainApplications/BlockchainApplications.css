@@ -6,8 +6,42 @@
   }
 }
 
-.banner {
-  width: 100%;
+.bannerSwiper {
+  & :global(.swiper-pagination-bullet) {
+    border: 1px solid var(--color-periwinkle-blue);
+
+    &:global(.swiper-pagination-bullet-active) {
+      background-color: white;
+    }
+  }
+
+  & :global(.swiper-button-next),
+  :global(.swiper-button-prev) {
+    color: var(--color-constant-white);
+  }
+
+  & :global(.swiper-button-next::after),
+  :global(.swiper-button-prev::after) {
+    font-size: 32px;
+  }
+
+  & :global(.swiper-button-next) {
+    right: 5px;
+  }
+
+  & :global(.swiper-button-prev) {
+    left: 5px;
+  }
+
+  & .bannerWrapper {
+    & p > a {
+      display: inline;
+      font-weight: var(--font-weight-bold);
+      font-size: 14px;
+      color: var(--color-constant-white);
+      cursor: pointer;
+    }
+  }
 }
 
 .contentWrapper {

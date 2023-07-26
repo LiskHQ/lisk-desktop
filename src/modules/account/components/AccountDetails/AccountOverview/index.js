@@ -61,6 +61,7 @@ export default function AccountOverview({ address: searchAddress }) {
           pagination
           navigation
           modules={[Pagination, Navigation]}
+          loop
           slidesPerView="auto"
           spaceBetween={20}
           className={styles.bannerSwiper}

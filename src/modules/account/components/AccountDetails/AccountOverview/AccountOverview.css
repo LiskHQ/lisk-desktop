@@ -17,6 +17,19 @@
     color: var(--color-constant-white);
   }
 
+  & :global(.swiper-button-next::after),
+  :global(.swiper-button-prev::after) {
+    font-size: 32px;
+  }
+
+  & :global(.swiper-button-next) {
+    right: 5px;
+  }
+
+  & :global(.swiper-button-prev) {
+    left: 5px;
+  }
+
   & .bannerWrapper {
     & p > a {
       display: inline;

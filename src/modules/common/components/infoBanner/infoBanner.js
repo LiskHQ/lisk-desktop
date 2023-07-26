@@ -52,14 +52,8 @@ const InfoBanner = ({
             <p>
               {infoDescription}{' '}
               {infoLink && isLocalLink && (
-                <Link
-                  className={`${styles.infoLink} link`}
-                  to={infoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link className={`${styles.infoLink} link`} to={infoLink}>
                   {infoLinkText ?? t('Read more ')}
-                  <Icon name="whiteLinkIcon" />
                 </Link>
               )}
               {infoLink && !isLocalLink && (
