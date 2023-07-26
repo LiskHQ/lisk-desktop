@@ -30,6 +30,12 @@
     left: 5px;
   }
 
+  & :global(.swiper-pagination-bullets) {
+    text-align: left;
+    width: initial;
+    left: 30px;
+  }
+
   & .bannerWrapper {
     & p > a {
       display: inline;
