@@ -39,7 +39,7 @@ const banners = [
         'Enjoy a streamlined and secure experience of signing transactions for external applications. Unlock a world of possibilities with Wallet Connect Integration, and take full control of your digital assets.'
       ),
     illustrationName: 'walletConnect',
-    infoLink: routes.blockchainApplications.path,
+    infoLink: `${routes.blockchainApplications.path}?tab=SessionManager`,
     infoLinkText: 'Explore',
   },
   {
@@ -59,7 +59,7 @@ const banners = [
         'With Lisk interoperability, you can now store, manage, and transact with a variety of tokens within a single wallet interface. Seamlessly switch between different digital assets and diversify your portfolio effortlessly. Enjoy the convenience and flexibility of Multi-Tokens.'
       ),
     illustrationName: 'multiTokenBalances',
-    infoLink: routes.wallet.path,
+    infoLink: routes.allTokens.path,
     infoLinkText: 'Explore',
   },
   {
@@ -85,7 +85,7 @@ const banners = [
         'Take control of your blockchain network settings. Now you can customize your network preferences according to your specific needs.'
       ),
     illustrationName: 'networkManagement',
-    infoLink: routes.network.path,
+    infoLink: `${routes.wallet.path}?modal=manageApplications`,
     infoLinkText: 'Explore',
   },
   {

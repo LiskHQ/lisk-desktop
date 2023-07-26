@@ -41,10 +41,16 @@ describe('InfoBanner component', () => {
     expect(wrapper.find('h1')).toHaveText(props.infoMessage);
   });
 
-  it('should open infoLink in a new tab when clicked', () => {
+  it('should open external infoLink in a new tab when clicked', () => {
     const wrapper = mountWithProps();
     wrapper.find('.link').first().simulate('click');
-    expect(wrapper.find(Link).props().to).toBe('https://lisk.io');
+    expect(window.open).toHaveBeenCalledWith('https://lisk.io');
+  });
+
+  it('should open internal infoLink in a new tab when clicked', () => {
+    const wrapper = mountWithProps({ infoLink: '/wallet' });
+    wrapper.find('.link').first().simulate('click');
+    expect(wrapper.find(Link).props().to).toBe('/wallet');
   });
 
   it('Should call onClose when clicking close button', () => {

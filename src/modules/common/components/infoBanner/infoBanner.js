@@ -6,6 +6,7 @@ import Icon from '@theme/Icon';
 import Illustration from '@common/components/illustration';
 import styles from './infoBanner.css';
 
+// eslint-disable-next-line complexity
 const InfoBanner = ({
   name,
   infoLabel,
@@ -22,6 +23,7 @@ const InfoBanner = ({
   const [visibility, setVisibility] = useState(!localStorage.getItem(name) && show);
   const [currentAccount] = useCurrentAccount();
   const isLoggedIn = !!currentAccount;
+  const isLocalLink = infoLink?.startsWith('/');
 
   const handleClose = () => {
     localStorage.setItem(name, true);
@@ -49,7 +51,7 @@ const InfoBanner = ({
             <h1 className={styles.infoMessage}>{infoMessage}</h1>
             <p>
               {infoDescription}{' '}
-              {infoLink && (
+              {infoLink && isLocalLink && (
                 <Link
                   className={`${styles.infoLink} link`}
                   to={infoLink}
@@ -59,6 +61,17 @@ const InfoBanner = ({
                   {infoLinkText ?? t('Read more ')}
                   <Icon name="whiteLinkIcon" />
                 </Link>
+              )}
+              {infoLink && !isLocalLink && (
+                <p
+                  className={`${styles.infoLink} link`}
+                  onClick={() => {
+                    window.open(`${infoLink}`);
+                  }}
+                >
+                  {infoLinkText ?? t('Read more ')}
+                  <Icon name="whiteLinkIcon" />
+                </p>
               )}
             </p>
           </section>
