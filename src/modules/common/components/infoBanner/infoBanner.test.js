@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
+import { MemoryRouter, Link } from 'react-router-dom';
 import InfoBanner from './infoBanner';
 
 window.open = jest.fn();
@@ -23,7 +24,9 @@ describe('InfoBanner component', () => {
     const mergedProps = Object.assign({}, props, extraProps);
     return mount(
       <Provider store={store}>
-        <InfoBanner {...mergedProps} />
+        <MemoryRouter>
+          <InfoBanner {...mergedProps} />
+        </MemoryRouter>
       </Provider>
     );
   };
@@ -41,7 +44,7 @@ describe('InfoBanner component', () => {
   it('should open infoLink in a new tab when clicked', () => {
     const wrapper = mountWithProps();
     wrapper.find('.link').first().simulate('click');
-    expect(window.open).toHaveBeenCalledWith('https://lisk.io');
+    expect(wrapper.find(Link).props().to).toBe('https://lisk.io');
   });
 
   it('Should call onClose when clicking close button', () => {
