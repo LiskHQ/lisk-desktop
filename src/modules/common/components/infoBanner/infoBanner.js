@@ -41,7 +41,11 @@ const InfoBanner = ({
 
   return (
     <div className={`${styles.infoBanner} ${className || ''}`}>
-      <span className={`closeBanner ${styles.closeBtn}`} onClick={handleClose} />
+      <span
+        className={`closeBanner ${styles.closeBtn}`}
+        data-testid="close-banner"
+        onClick={handleClose}
+      />
       <div className={styles.content}>
         <div className={styles.label}>
           <span>{infoLabel}</span>

@@ -16,6 +16,7 @@ const BlockchainApplications = ({ applications, statistics, applyFilters, filter
     !localStorage.getItem('blockchainApplicationsPageBanner')
   );
   const handleSliderBannerClose = () => setSliderVisibility(!sliderVisibility);
+
   return (
     <div className={styles.wrapper}>
       {sliderVisibility && (
