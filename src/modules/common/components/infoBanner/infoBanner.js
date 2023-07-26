@@ -63,7 +63,7 @@ const InfoBanner = ({
                 </Link>
               )}
               {infoLink && !isLocalLink && (
-                <p
+                <span
                   className={`${styles.infoLink} link`}
                   onClick={() => {
                     window.open(`${infoLink}`);
@@ -71,7 +71,7 @@ const InfoBanner = ({
                 >
                   {infoLinkText ?? t('Read more ')}
                   <Icon name="whiteLinkIcon" />
-                </p>
+                </span>
               )}
             </p>
           </section>
