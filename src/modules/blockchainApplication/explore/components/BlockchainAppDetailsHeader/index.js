@@ -22,6 +22,7 @@ const BlockchainAppDetailsHeader = ({
 }) => {
   const { t } = useTranslation();
   const { name, projectPage, icon } = application.data;
+  console.log('icon', icon);
 
   return (
     <header className={className}>
@@ -48,7 +49,7 @@ const BlockchainAppDetailsHeader = ({
             <div className={styles.logoContainer}>
               <img
                 className={styles.logo}
-                src={icon}
+                src={icon || walletConnectFallback}
                 alt="logo"
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null;
