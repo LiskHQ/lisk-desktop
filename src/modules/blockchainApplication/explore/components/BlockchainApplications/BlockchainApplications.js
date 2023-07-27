@@ -21,7 +21,7 @@ const BlockchainApplications = ({ applications, statistics, applyFilters, filter
     <div className={styles.wrapper}>
       {sliderVisibility && (
         <Swiper
-          pagination
+          pagination={{ clickable: true }}
           navigation
           modules={[Pagination, Navigation]}
           loop

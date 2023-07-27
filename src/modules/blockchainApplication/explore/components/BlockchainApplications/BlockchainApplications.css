@@ -1,7 +1,7 @@
 .wrapper {
   width: 100%;
 
-  & > div:first-child {
+  & > div:last-child {
     margin-top: 10px;
   }
 }

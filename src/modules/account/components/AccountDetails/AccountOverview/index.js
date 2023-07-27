@@ -58,7 +58,7 @@ export default function AccountOverview({ address: searchAddress }) {
     <section>
       {sliderVisibility && (
         <Swiper
-          pagination
+          pagination={{ clickable: true }}
           navigation
           modules={[Pagination, Navigation]}
           loop
