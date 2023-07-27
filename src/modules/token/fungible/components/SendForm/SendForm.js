@@ -59,7 +59,7 @@ const SendForm = (props) => {
   const [currentApplication] = useCurrentApplication();
   const sendingChain = prevState?.transactionData?.sendingChain || currentApplication;
   const { applications } = useApplicationExploreAndMetaData();
-  const { data: tokens } = useTransferableTokens(recipientChain);
+  const { data: tokens, isLoading: isLoadingTokens } = useTransferableTokens(recipientChain);
   const [reference, setReference] = useMessageField(
     getInitialData(props.prevState?.formProps, props.initialValue?.reference)
   );
@@ -258,6 +258,7 @@ const SendForm = (props) => {
               <MenuSelect
                 value={token}
                 onChange={(value) => setToken(value)}
+                isLoading={isLoadingTokens}
                 select={(selectedValue, option) => selectedValue?.tokenName === option.tokenName}
               >
                 {tokens.map((tokenValue) => (
@@ -281,6 +282,7 @@ const SendForm = (props) => {
               label={t('Amount')}
               placeholder={t('Enter amount')}
               name="amount"
+              disabled={isLoadingTokens}
             />
             <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
               <span className={`${styles.fieldLabel}`}>{t('Recipient address')}</span>
