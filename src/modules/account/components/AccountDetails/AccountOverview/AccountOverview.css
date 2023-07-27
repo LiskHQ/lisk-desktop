@@ -4,6 +4,14 @@
 }
 
 .bannerSwiper {
+  background-color: var(--color-ultramarine-blue);
+  border-radius: var(--border-radius-standard);
+  margin-top: 32px;
+
+  & :global(.bannerWrapper) {
+    margin-top: 0;
+  }
+
   & :global(.swiper-pagination-bullet) {
     border: 1px solid var(--color-periwinkle-blue);
 

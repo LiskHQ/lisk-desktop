@@ -40,7 +40,7 @@ const InfoBanner = ({
   if (!visibility || !isLoggedIn) return null;
 
   return (
-    <div className={`${styles.infoBanner} ${className || ''}`}>
+    <div className={`${styles.infoBanner} ${className || ''} bannerWrapper`}>
       <span
         className={`closeBanner ${styles.closeBtn}`}
         data-testid="close-banner"
