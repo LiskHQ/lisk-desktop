@@ -55,7 +55,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
       <div className={styles.errorWrapper}>
         <Illustration className={styles.emptyTokenIllustration} name="emptyTokensIllustration" />
         <p>{t('There are no tokens to display for this account at this time.')}</p>
-        <TertiaryButton onClick={onRequestToken}>RequestToken</TertiaryButton>
+        <TertiaryButton onClick={onRequestToken}>Request token</TertiaryButton>
       </div>
     );
   }
