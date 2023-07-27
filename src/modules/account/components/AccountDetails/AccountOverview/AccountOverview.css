@@ -20,14 +20,16 @@
     }
   }
 
-  & :global(.swiper-button-next),
-  :global(.swiper-button-prev) {
-    color: var(--color-constant-white);
-  }
+  & :global {
+    & .swiper-button-next,
+    & .swiper-button-prev {
+      color: var(--color-constant-white);
+    }
 
-  & :global(.swiper-button-next::after),
-  :global(.swiper-button-prev::after) {
-    font-size: 32px;
+    & .swiper-button-next::after,
+    & .swiper-button-prev::after {
+      font-size: 32px;
+    }
   }
 
   & :global(.swiper-button-next) {
