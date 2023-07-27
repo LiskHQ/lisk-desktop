@@ -66,7 +66,6 @@ export default {
   register: {
     path: '/register',
     isPrivate: false,
-    isSigninFlow: true,
     forbiddenTokens: [],
   },
   addAccountByFile: {
@@ -78,7 +77,6 @@ export default {
   termsOfUse: {
     path: '/terms-of-use',
     isPrivate: false,
-    isSigninFlow: true,
     forbiddenTokens: [],
   },
   transactions: {
@@ -216,10 +214,6 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  setPassword: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   switchAccount: {
     isPrivate: false,
     forbiddenTokens: [],
@@ -265,6 +259,10 @@ export const modals = {
     forbiddenTokens: [],
   },
   requestView: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  requestSignMessageDialog: {
     isPrivate: false,
     forbiddenTokens: [],
   },

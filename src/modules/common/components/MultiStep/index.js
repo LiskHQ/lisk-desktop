@@ -29,7 +29,6 @@ class MultiStep extends React.Component {
       key: 0,
       data: {},
       current: 0,
-      origin: 0,
     };
   }
 
@@ -73,7 +72,6 @@ class MultiStep extends React.Component {
     this.setState({
       current: next,
       data: data || this.state.data,
-      origin: current,
       key: reset ? key + 1 : key, // re-mounts child component.
     });
 

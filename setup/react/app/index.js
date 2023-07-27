@@ -16,7 +16,6 @@ import DialogHolder from 'src/theme/dialog/holder';
 import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
 import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
-import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
 import NetworkError from 'src/modules/common/components/NetworkError/NetworkError';
 import PageLoader from 'src/modules/common/components/pageLoader';
@@ -58,7 +57,6 @@ const App = ({ history }) => {
     dispatch(watchListRetrieved());
   }, []);
 
-  const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
   return (
     <ConnectionProvider>
       <ThemeContext.Provider value={theme}>
@@ -75,7 +73,6 @@ const App = ({ history }) => {
             bodyClassName={styles.toastText}
           />
           <NavigationBars
-            isSignInFlow={routeObj.isSigninFlow}
             location={history.location}
             history={history}
           />

@@ -42,7 +42,7 @@ const RequestSignStatus = (props) => {
   const onCopy = () => {
     setCopied(true);
     const signatures = transactions.signedTransaction?.signatures.map((sig) => sig.toString('hex'));
-    const payload = JSON.stringify(signatures);
+    const payload = JSON.stringify(signatures?.[0]);
     copyToClipboard(payload);
     // inform to the application
     respond({ payload });
@@ -63,7 +63,7 @@ const RequestSignStatus = (props) => {
         >
           <span className={styles.buttonContent}>
             <Icon name="copy" />
-            <span>{copied ? 'Copied' : 'Copy signatures'}</span>
+            <span>{copied ? t('Copied') : t('Copy signature')}</span>
           </span>
         </PrimaryButton>
       )}
