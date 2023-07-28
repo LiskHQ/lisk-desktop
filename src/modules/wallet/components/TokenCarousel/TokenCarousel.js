@@ -55,7 +55,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
       <div className={styles.errorWrapper}>
         <Illustration className={styles.emptyTokenIllustration} name="emptyTokensIllustration" />
         <p>{t('There are no tokens to display for this account at this time.')}</p>
-        <TertiaryButton onClick={onRequestToken}>Request token</TertiaryButton>
+        <TertiaryButton onClick={onRequestToken}>{t('Request token')}</TertiaryButton>
       </div>
     );
   }
@@ -64,7 +64,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
     return (
       <div className={styles.errorWrapper}>
         <p>{error?.message || error}</p>
-        <TertiaryButton onClick={rest.onRetry}>Retry</TertiaryButton>
+        <TertiaryButton onClick={rest.onRetry}>{t('Retry')}</TertiaryButton>
       </div>
     );
   }

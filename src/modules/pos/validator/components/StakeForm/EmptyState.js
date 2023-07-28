@@ -14,7 +14,7 @@ const EmptyState = ({ t }) => {
       <Illustration name="emptyStakingQueueIllustration" />
       <p>{t('There are no stakes in queue, please select validators to stake.')}</p>
       <TertiaryButton onClick={() => history.push(routes.validators.path)}>
-        Stake now
+        {t('Stake now')}
       </TertiaryButton>
     </EmptyBoxState>
   );
