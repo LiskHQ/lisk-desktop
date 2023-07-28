@@ -41,7 +41,7 @@
     max-width: 228px;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: var(--color-zodiac-blue);
+    color: var(--color-constant-zodiac-blue);
   }
 }
 
