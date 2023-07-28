@@ -31,7 +31,7 @@ const containsTransactionType = (txs = [], type) => txs.some((tx) => tx.moduleCo
 /**
  * Adapts transaction filter params to match transactions API method
  *
- * @param {Object} params - Params received from withFilters HOC
+ * @param {Object} params - Params received for filtering and sorting
  * @returns {Object} - Parameters consumable by transaction API method
  */
 const normalizeTransactionParams = (params, token) =>
