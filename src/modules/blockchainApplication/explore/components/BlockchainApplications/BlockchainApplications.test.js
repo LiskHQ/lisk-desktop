@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
@@ -76,5 +76,16 @@ describe('BlockchainApplications', () => {
     expect(screen.getByText('Staked')).toBeTruthy();
     expect(screen.getByText('5,000,000 LSK')).toBeTruthy();
     expect(screen.getByText('300,000 LSK')).toBeTruthy();
+  });
+
+  it('hides the banner after it is closed', () => {
+    expect(
+      screen.getAllByText('Introducing blockchain application exploring and management')[0]
+    ).toBeTruthy();
+    fireEvent.click(screen.getAllByTestId('close-banner')[0]);
+
+    expect(
+      screen.queryByText('Introducing blockchain application exploring and management')
+    ).toBeFalsy();
   });
 });
