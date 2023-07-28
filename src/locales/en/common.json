@@ -623,7 +623,6 @@
   "The provided amount is higher than your available staking balance.": "The provided amount is higher than your available staking balance.",
   "The statistics shown only reflects peers connected to the current Lisk Service node.": "The statistics shown only reflects peers connected to the current Lisk Service node.",
   "The total amount of stakes received for a validator.": "The total amount of stakes received for a validator.",
-  "The total amount of stakes received from this account.": "The total amount of stakes received from this account.",
   "The transaction is now fully signed": "The transaction is now fully signed",
   "The transaction was not found.": "The transaction was not found.",
   "The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your LSK (and much, much more).": "The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your LSK (and much, much more).",

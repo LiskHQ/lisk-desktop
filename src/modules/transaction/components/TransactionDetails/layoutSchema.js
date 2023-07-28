@@ -121,5 +121,3 @@ export const LayoutSchema = {
     className: styles.generalLayout,
   },
 };
-
-export default LayoutSchema;
