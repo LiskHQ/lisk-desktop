@@ -3,15 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { ACTIONS, STATUS } from '@libs/wcm/constants/lifeCycle';
 import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
-import { removeSearchParamsFromUrl, parseSearchParams } from 'src/utils/searchParams';
+import walletConnectFallback from '@setup/react/assets/images/wallet-connect-fallback.svg';
+import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { sanitizeTextFromDomains } from 'src/utils/urlUtils';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './ConnectionStatus.css';
 
 const ConnectionStatus = ({ history }) => {
   const { t } = useTranslation();
   const timeout = useRef();
-  const { status, action, name = 'web app' } = parseSearchParams(history.location.search);
+  const { logoUrl, status, action, name = 'web app' } = parseSearchParams(history.location.search);
   const sanitizedName = sanitizeTextFromDomains(name);
 
   const messages = {
@@ -51,7 +51,14 @@ const ConnectionStatus = ({ history }) => {
       <Box>
         <div className={styles.wrapper}>
           <figure>
-            <img src={liskLogo} />
+            <img
+              src={logoUrl || walletConnectFallback}
+              alt="logo"
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null;
+                currentTarget.src = walletConnectFallback;
+              }}
+            />
           </figure>
           <h3>{sanitizedName}</h3>
         </div>
