@@ -1,5 +1,4 @@
 import React from 'react';
-import withData from 'src/utils/withData';
 import { useValidators } from '@pos/validator/hooks/queries';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
@@ -36,4 +35,4 @@ export const StakesPure = ({ t }) => {
   );
 };
 
-export default withData()(StakesPure);
+export default StakesPure;
