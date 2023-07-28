@@ -1,4 +1,3 @@
-import React from 'react';
 import { mountWithRouter, renderWithRouter } from 'src/utils/testHelpers';
 import * as searchParams from 'src/utils/searchParams';
 import { fireEvent, screen } from '@testing-library/react';
