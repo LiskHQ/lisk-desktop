@@ -108,6 +108,7 @@ const ConnectionSummary = () => {
       action: ACTIONS.APPROVE,
       status: result.status,
       name: result.data?.params.proposer.metadata.name ?? '',
+      logoUrl: application.data.icon,
     });
   };
 
@@ -118,6 +119,7 @@ const ConnectionSummary = () => {
       action: ACTIONS.REJECT,
       status: result.status,
       name: result.data?.params?.proposer.metadata.name ?? '',
+      logoUrl: application.data.icon,
     });
   };
 

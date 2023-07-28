@@ -48,7 +48,7 @@ const BlockchainAppDetailsHeader = ({
             <div className={styles.logoContainer}>
               <img
                 className={styles.logo}
-                src={icon}
+                src={icon || walletConnectFallback}
                 alt="logo"
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null;

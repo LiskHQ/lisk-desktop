@@ -8,6 +8,3 @@ export const formatAmountBasedOnLocale = ({ value, format = '0,0.[00000000000000
   return numeral(amount).format(format);
 };
 
-export default {
-  formatAmountBasedOnLocale,
-};
