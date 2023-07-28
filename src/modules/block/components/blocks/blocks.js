@@ -108,13 +108,4 @@ const Blocks = () => {
   );
 };
 
-Blocks.propTypes = {
-  filters: PropTypes.shape({
-    dateFrom: PropTypes.string.isRequired,
-    dateTo: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    generatorAddress: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
 export default Blocks;
