@@ -22,7 +22,6 @@ const BlockchainAppDetailsHeader = ({
 }) => {
   const { t } = useTranslation();
   const { name, projectPage, icon } = application.data;
-  console.log('icon', icon);
 
   return (
     <header className={className}>
