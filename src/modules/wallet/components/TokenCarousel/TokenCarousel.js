@@ -1,12 +1,15 @@
 // istanbul ignore file
 import React, { useMemo, useRef, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { Navigation } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import Skeleton from 'src/modules/common/components/skeleton';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import { Navigation } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-import 'swiper/css';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
+import Illustration from 'src/modules/common/components/illustration';
 import styles from './TokenCarousel.css';
 
 const NavButton = React.forwardRef(({ isNext, onClick }, ref) => (
@@ -24,6 +27,8 @@ const NavButton = React.forwardRef(({ isNext, onClick }, ref) => (
 const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest }) => {
   const nextRef = useRef(null);
   const prevRef = useRef(null);
+  const { t } = useTranslation();
+  const history = useHistory();
 
   const [activeIndex, setSwiperIndex] = useState(0);
   const [, setWindowSize] = useState(0);
@@ -31,6 +36,10 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
 
   const isPrevVisible = useMemo(() => activeIndex > 0, [activeIndex]);
   const renderData = useMemo(() => (isLoading ? [...new Array(4).keys()] : data), [data]);
+
+  const onRequestToken = () => {
+    addSearchParamsToUrl(history, { modal: 'request' });
+  };
 
   useEffect(() => {
     const onResize = ({ target: { innerWidth, innerHeight } }) => {
@@ -41,11 +50,21 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  if (!error && !renderData.length) {
+    return (
+      <div className={styles.errorWrapper}>
+        <Illustration className={styles.emptyTokenIllustration} name="emptyTokensIllustration" />
+        <p>{t('There are no tokens to display for this account at this time.')}</p>
+        <TertiaryButton onClick={onRequestToken}>{t('Request token')}</TertiaryButton>
+      </div>
+    );
+  }
+
   if (error) {
     return (
       <div className={styles.errorWrapper}>
         <p>{error?.message || error}</p>
-        <TertiaryButton onClick={rest.onRetry}>Retry</TertiaryButton>
+        <TertiaryButton onClick={rest.onRetry}>{t('Retry')}</TertiaryButton>
       </div>
     );
   }
