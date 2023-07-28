@@ -9,5 +9,3 @@ export const keyCodes = {
   delete: 8,
   enter: 13,
 };
-
-export default keyCodes;

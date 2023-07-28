@@ -34,7 +34,6 @@ const MainRouter = ({ history }) => {
         {routesList.map((route) => (
           <CustomRoute
             key={routes[route].path}
-            route={routes[route]}
             path={routes[route].path}
             exact={routes[route].exact}
             isPrivate={routes[route].isPrivate}
