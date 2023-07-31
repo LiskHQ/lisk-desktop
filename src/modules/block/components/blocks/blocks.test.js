@@ -35,7 +35,7 @@ describe('Blocks page', () => {
       applyFilters: mockApplyFilters,
     });
     useSort.mockReturnValue({
-      sort: {},
+      sort: '',
       toggleSort: mockToggleSort,
     });
     const wrapper = mountWithQueryClient(Blocks);
@@ -55,7 +55,7 @@ describe('Blocks page', () => {
       applyFilters: mockApplyFilters,
     });
     useSort.mockReturnValue({
-      sort: {},
+      sort: '',
       toggleSort: mockToggleSort,
     });
     const wrapper = mountWithQueryClient(Blocks);
@@ -75,7 +75,7 @@ describe('Blocks page', () => {
       applyFilters: mockApplyFilters,
     });
     useSort.mockReturnValue({
-      sort: {},
+      sort: '',
       toggleSort: mockToggleSort,
     });
     const wrapper = mountWithQueryClient(Blocks);
@@ -98,7 +98,7 @@ describe('Blocks page', () => {
       applyFilters: mockApplyFilters,
     });
     useSort.mockReturnValue({
-      sort: {},
+      sort: '',
       toggleSort: mockToggleSort,
     });
     const wrapper = mountWithQueryClient(Blocks);
@@ -118,24 +118,20 @@ describe('Blocks page', () => {
       applyFilters: mockApplyFilters,
     });
     useSort.mockReturnValue({
-      sort: {},
+      sort: '',
       toggleSort: mockToggleSort,
     });
     const wrapper = mountWithQueryClient(Blocks);
     wrapper.find('button.filter').simulate('click');
     wrapper.find('input.height').simulate('change', { target: { value: height } });
     wrapper.find('form.filter-container').simulate('submit');
-    expect(mockApplyFilters).toHaveBeenCalledWith(
-      {
-        dateFrom: undefined,
-        dateTo: undefined,
-        height,
-      },
-      null,
-      expect.any(Function)
-    );
+    expect(mockApplyFilters).toHaveBeenCalledWith({
+      dateFrom: undefined,
+      dateTo: undefined,
+      height,
+    });
     wrapper.find('span.clear-filter').simulate('click');
-    expect(mockClearFilters).toHaveBeenCalledWith('height', expect.any(Function));
+    expect(mockClearFilters).toHaveBeenCalledWith(['height']);
   });
 
   it('allows to load more blocks when filtered', () => {
@@ -151,7 +147,7 @@ describe('Blocks page', () => {
       applyFilters: mockApplyFilters,
     });
     useSort.mockReturnValue({
-      sort: {},
+      sort: '',
       toggleSort: mockToggleSort,
     });
     const wrapper = mountWithQueryClient(Blocks);
@@ -171,13 +167,18 @@ describe('Blocks page', () => {
       fetchNextPage: mockFetchNextPage,
       hasNextPage: true,
     });
+    useFilter.mockReturnValue({
+      filters: {},
+      clearFilters: mockClearFilters,
+      applyFilters: mockApplyFilters,
+    });
     useSort.mockReturnValue({
-      sort: { sort },
+      sort,
       toggleSort: mockToggleSort,
     });
     const wrapper = mountWithQueryClient(Blocks);
 
     wrapper.find('.sort-by.height').simulate('click');
-    expect(mockToggleSort).toHaveBeenCalledWith('height', expect.any(Function));
+    expect(mockToggleSort).toHaveBeenCalledWith('height');
   });
 });

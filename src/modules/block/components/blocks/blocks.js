@@ -31,7 +31,7 @@ const Blocks = () => {
     height: '',
     generatorAddress: '',
   });
-  const { sort, toggleSort } = useSort();
+  const { sort, toggleSort } = useSort({ defaultSort: 'height:desc' });
   const formatters = {
     height: (value) => `${t('Height')}: ${value}`,
     /* istanbul ignore next */
@@ -62,7 +62,7 @@ const Blocks = () => {
       ...filters,
       sort: `${id}:${sort.includes('asc') ? 'desc' : 'asc'}`,
     };
-    toggleSort('id');
+    toggleSort(id);
     setParams(transformParams(sortData));
   };
 
