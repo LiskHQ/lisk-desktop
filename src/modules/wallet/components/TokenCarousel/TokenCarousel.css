@@ -74,6 +74,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  box-sizing: border-box;
 
   & > p {
     border-radius: 5px;
