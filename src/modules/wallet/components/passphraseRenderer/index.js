@@ -131,7 +131,7 @@ class PassphraseRenderer extends React.Component {
     const shouldDisplayOptions = Object.values(chosenWords).length < 2;
 
     this.setState((state) => ({
-      state,
+      ...state,
       chosenWords: {
         ...chosenWords,
         [selectedIndex]: option,
