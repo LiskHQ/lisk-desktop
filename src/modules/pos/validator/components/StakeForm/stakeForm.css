@@ -27,6 +27,11 @@
   & .emptyState {
     margin: 5px var(--reverse-margin) 0 var(--reverse-margin);
     width: calc(100% + 2 * var(--horizontal-padding-l));
+
+    & > p {
+      max-width: unset;
+      margin-bottom: 0px;
+    }
   }
 
   & .emptyState + div {
