@@ -35,6 +35,7 @@ const AmountField = ({
   displayConverter,
   useMaxWarning,
   token = {},
+  disabled,
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
@@ -128,6 +129,7 @@ const AmountField = ({
           isLoading={amount.isLoading}
           status={amount.error ? 'error' : 'ok'}
           feedback={amount.feedback}
+          disabled={disabled}
         />
         {displayConverter && !!amount.value && (
           <Converter
