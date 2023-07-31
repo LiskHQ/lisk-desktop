@@ -1,5 +1,4 @@
 // istanbul ignore file
-import withFilters from 'src/utils/withFilters';
-import Blocks, { defaultFilters } from './blocks';
+import Blocks from './blocks';
 
-export default withFilters('blocks', defaultFilters, 'height:desc')(Blocks);
+export default Blocks;

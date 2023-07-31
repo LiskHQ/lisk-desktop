@@ -152,7 +152,6 @@ module.exports = {
     'src/modules/pos/validator/store/reducers/staking.js',
     'src/modules/transaction/components/TransactionResult/illustrationsMap.js',
     'src/modules/transaction/components/Regular/Regular.js',
-    'src/utils/withFilters.js',
     'src/modules/token/fungible/components/BalanceInfo/EmptyBalanceTooltipWrapper.js',
     'src/modules/wallet/utils/api/index.js',
     'src/modules/transaction/utils/hwManager/index.js',

@@ -9,14 +9,14 @@ export default function useFilter(defaultFilters = {}) {
         const copiedFilters = { ...filters };
 
         params.forEach((param) => {
-          delete copiedFilters[param];
+          copiedFilters[param] = defaultFilters[param];
         });
 
         setFilters(copiedFilters);
         return;
       }
 
-      setFilters({});
+      setFilters(defaultFilters);
     },
     [filters]
   );
