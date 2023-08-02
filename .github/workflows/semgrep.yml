@@ -3,10 +3,10 @@ name: Semgrep
 
 on:
   push:
-    branches: ['development', feature/*, hotfix/*, main, release/*]
+    branches: [ "development", feature/*, hotfix/*, main, release/* ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: ['development', feature/*, hotfix/*, release/*]
+    branches: [ "development", feature/*, hotfix/*, release/* ]
   # Schedule the CI job (this method uses cron syntax):
   schedule:
     - cron: '30 3 * * 2'
@@ -15,8 +15,8 @@ on:
 jobs:
   semgrep:
     # User definable name of this GitHub Actions job.
-    name: semgrep/ci
-    # If you are self-hosting, change the following `runs-on` value:
+    name: semgrep/ci 
+    # If you are self-hosting, change the following `runs-on` value: 
     runs-on: ubuntu-latest
 
     container:
@@ -36,7 +36,7 @@ jobs:
           # Generate a token from Semgrep Cloud Platform > Settings
           # and add it to your GitHub secrets.
           # SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-          SEMGREP_RULES: 'p/javascript p/r2c p/r2c-security-audit p/r2c-best-practices p/nodejs p/nodejsscan p/jsx-not-internationalized'
+          SEMGREP_RULES: "p/javascript p/r2c p/r2c-security-audit p/r2c-best-practices p/nodejs p/nodejsscan ../semgrep/rule.yaml"
 
       - name: Upload SARIF file for GitHub Advanced Security Dashboard
         uses: github/codeql-action/upload-sarif@v2
