@@ -104,7 +104,7 @@ const Overview = ({ isWalletRoute, history }) => {
           copy
           size={50}
           address={authData?.meta?.address}
-          accountName={searchAddress || validator.name ? validator.name : name}
+          accountName={!searchAddress ? name : validator.name}
           detailsClassName={styles.accountSummary}
           truncate={false}
           isMultisig={authData?.data?.numberOfSignatures > 0}

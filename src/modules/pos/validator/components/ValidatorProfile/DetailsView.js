@@ -20,9 +20,10 @@ import usePosToken from '../../hooks/usePosToken';
 
 // eslint-disable-next-line max-statements
 const DetailsView = ({ data, isMyProfile, address }) => {
+  const { name, rank, validatorWeight, commission } = data;
   const { data: pooledTransactionsData } = useTransactionsFromPool({
     address,
-    customConfig: { commission: data.commission },
+    customConfig: { commission },
   });
   const hasChangeCommission = pooledTransactionsData?.data?.some(
     (pooledTransaction) => pooledTransaction.command === 'changeCommission'
@@ -31,8 +32,6 @@ const DetailsView = ({ data, isMyProfile, address }) => {
   const history = useHistory();
   const theme = useTheme();
   const { t } = useTranslation();
-  const { rank } = data;
-  const status = data.status || '';
   // @TODO: this is wrong we need to get this value from the validator's endpoint.
   const {
     data: { timestamp: latestBlockTimestamp },
@@ -41,24 +40,24 @@ const DetailsView = ({ data, isMyProfile, address }) => {
 
   const displayList = [
     {
+      icon: 'validatorName',
+      label: t('Validator name'),
+      value: name ?? '-',
+    },
+    {
       icon: 'star',
       label: t('Rank'),
       value: rank ?? '-',
     },
     {
-      icon: 'clockActive',
-      label: t('Round state'),
-      value: status.toLowerCase(),
-    },
-    {
       icon: 'weight',
       label: t('Validator weight'),
-      value: <TokenAmount val={data.validatorWeight} token={token} />,
+      value: <TokenAmount val={validatorWeight} token={token} />,
     },
     {
       icon: 'commissionIcon',
       label: t('Commission'),
-      value: `${convertCommissionToPercentage(data.commission)}%`,
+      value: `${convertCommissionToPercentage(commission)}%`,
       onEdit: !isMyProfile
         ? undefined
         : () => addSearchParamsToUrl(history, { modal: 'changeCommission' }),
