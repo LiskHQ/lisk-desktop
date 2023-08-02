@@ -79,10 +79,12 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
       setError('accountName', {
         message: t(`Account with name "${values.accountName}" already exists.`),
       });
+
+      setIsLoading(false);
       return null;
     }
 
-    const encryptAccountWorker = new Worker(new URL('./encryptAccountWorker.js', import.meta.url));
+    const encryptAccountWorker = new Worker(new URL('./encryptAccount.worker.js', import.meta.url));
     /* istanbul ignore next */
     const showEncryptAccountError = () => {
       toast.error(t('Failed to setup password'));
