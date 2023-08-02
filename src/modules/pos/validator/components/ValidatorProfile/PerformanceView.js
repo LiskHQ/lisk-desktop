@@ -86,7 +86,7 @@ const PunishedValidator = ({ theme, t }) => (
     </p>
     <DialogLink className={grid.row} component="validatorPerformance" data={{ status: 'punished' }}>
       <div className={`${styles.details} ${grid.col} ${grid['col-md-12']}`}>
-        <p>Details &gt;</p>
+        <p>{t('Details ')}&gt;</p>
       </div>
     </DialogLink>
   </div>
@@ -174,7 +174,7 @@ const PerformanceView = ({ data }) => {
                 </div>
               </div>
               <div className={styles.details}>
-                <span>Self stake</span>
+                <span>{t('Self stake')}</span>
                 <Tooltip position="top" tooltipClassName={styles.tooltipDetails}>
                   <span>{t('Total rewards earned based on number of blocks generated.')}</span>
                 </Tooltip>
@@ -184,7 +184,7 @@ const PerformanceView = ({ data }) => {
                 </span>
               </div>
               <div className={styles.details}>
-                <span>Commission</span>
+                <span>{t('Commission')}</span>
                 <Tooltip position="top" tooltipClassName={styles.tooltipDetails}>
                   <span>
                     {t(

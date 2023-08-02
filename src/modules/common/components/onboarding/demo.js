@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import DemoRenderer from '@theme/demo/demoRenderer';
 import Onboarding from './onboarding';
 
@@ -20,18 +21,22 @@ const getOnboardingSlides = () => [
   },
 ];
 
-const OnboardingDemo = () => (
-  <div>
-    <h2>Onboarding</h2>
-    <DemoRenderer>
-      <Onboarding
-        slides={getOnboardingSlides()}
-        finalCallback={finalCallback}
-        ctaLabel="Start staking"
-        name="validatorOnboarding"
-      />
-    </DemoRenderer>
-  </div>
-);
+const OnboardingDemo = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <h2>{t('Onboarding')}</h2>
+      <DemoRenderer>
+        <Onboarding
+          slides={getOnboardingSlides()}
+          finalCallback={finalCallback}
+          ctaLabel="Start staking"
+          name="validatorOnboarding"
+        />
+      </DemoRenderer>
+    </div>
+  );
+};
 
 export default OnboardingDemo;

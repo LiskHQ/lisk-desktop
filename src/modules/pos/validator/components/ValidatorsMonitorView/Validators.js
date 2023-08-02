@@ -161,7 +161,7 @@ const ValidatorsMonitor = ({ watchList }) => {
           <div className={grid['col-md-4']}>
             {!!address && (
               <Link to={routes.sentStakes.path}>
-                <SecondaryButton>Stakes</SecondaryButton>
+                <SecondaryButton>{t('Stakes')}</SecondaryButton>
               </Link>
             )}
             <ValidatorActionButton isValidator={isValidator} address={address} />

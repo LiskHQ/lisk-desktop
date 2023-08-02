@@ -22,6 +22,8 @@ import { useLatestBlock } from '../../hooks/queries/useLatestBlock';
 import styles from './blockDetails.css';
 
 const Generator = ({ generatorAddress, generatorUsername }) => {
+  const { t } = useTranslation();
+
   if (generatorUsername && generatorAddress) {
     return (
       <Link className={styles.generator} to={`${routes.explorer.path}?address=${generatorAddress}`}>
@@ -31,7 +33,7 @@ const Generator = ({ generatorAddress, generatorUsername }) => {
     );
   }
 
-  return <span>None (Genesis block)</span>;
+  return <span>{t('None (Genesis block)')}</span>;
 };
 
 const getFields = (data = {}, token, t, currentHeight) => ({
