@@ -15,8 +15,8 @@ export const isActiveStep = (current, index) => current === index;
 
 /**
  * @param {Number} current - The index number of the currently active group.
- * @param {Function} prevPage - If passed it will be caeed when clicked
- *  the BAck button in the first step.
+ * @param {Function} prevPage - If passed it will be called when clicked
+ *  the back button in the first step.
  * @param {Function} prevStep - A function to be called to remove to the previous step.
  */
 export const backButtonFn = (current, prevPage, prevStep) => {
