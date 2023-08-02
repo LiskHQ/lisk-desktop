@@ -230,6 +230,7 @@ export const modals = {
   blockChainApplicationDetails: {
     isPrivate: false,
     forbiddenTokens: [],
+    requiredParams: ['chainID'],
   },
   addApplicationList: {
     isPrivate: false,
@@ -246,6 +247,7 @@ export const modals = {
   removeApplicationFlow: {
     isPrivate: false,
     forbiddenTokens: [],
+    requiredParams: ['chainID'],
   },
   connectionProposal: {
     isPrivate: false,
