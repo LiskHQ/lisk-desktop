@@ -43,16 +43,16 @@ export function useApplicationManagement() {
   };
 
   const getApplicationByChainId = useCallback(
-    (chainId) => applications.find((app) => app.chainID === chainId),
+    (chainID) => applications.find((app) => app.chainID === chainID),
     [applications]
   );
 
-  const deleteApplicationByChainId = useCallback((chainId) => {
-    const userApplication = getApplicationByChainId(chainId);
+  const deleteApplicationByChainId = useCallback((chainID) => {
+    const userApplication = getApplicationByChainId(chainID);
     if (userApplication.isDefault) return;
 
-    dispatch(deleteApplication(chainId, mainChainNetwork.name));
-    if (currentApplication.chainID === chainId) {
+    dispatch(deleteApplication(chainID, mainChainNetwork.name));
+    if (currentApplication.chainID === chainID) {
       // Set Lisk as default if application in use is being deleted
       setCurrentApplication(defaultApplications[0]);
     }

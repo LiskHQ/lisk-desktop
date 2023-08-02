@@ -106,7 +106,7 @@ const ApplicationManagementRow = ({ className, application }) => {
     if (!isTerminated) {
       if (application.serviceURLs.length > 1) {
         // redirect to select node
-        addSearchParamsToUrl(history, { modal: 'selectNode', chainId: application.chainID });
+        addSearchParamsToUrl(history, { modal: 'selectNode', chainID: application.chainID });
       } else {
         setApplication(application);
       }

@@ -54,12 +54,14 @@ const RequestSummary = ({ nextStep, history }) => {
   useSchemas();
 
   const sendingChainID = request?.chainId.replace('lisk:', '');
-  const tokenData = useAppsMetaTokens({ config: { params: { chainID: sendingChainID } } });
+  const { data: tokenData } = useAppsMetaTokens({
+    config: { params: { chainID: sendingChainID } },
+  });
 
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
     const transactionJSON = toTransactionJSON(transaction, request?.request?.params.schema);
-    const token = tokenData.data.data.length > 0 ? tokenData.data.data[0] : defaultToken;
+    const token = tokenData?.data?.length > 0 ? tokenData?.data[0] : defaultToken;
 
     nextStep({
       transactionJSON,
@@ -67,7 +69,7 @@ const RequestSummary = ({ nextStep, history }) => {
         composedFees: [
           {
             title: 'Transaction',
-            value: `${convertFromBaseDenom(transaction.fee)} ${token.symbol}`,
+            value: `${convertFromBaseDenom(transaction.fee)} ${token?.symbol}`,
             components: [],
           },
         ],

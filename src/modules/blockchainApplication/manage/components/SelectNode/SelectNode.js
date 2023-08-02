@@ -29,10 +29,10 @@ const SelectNode = () => {
   const history = useHistory();
   const location = useLocation();
   const { t } = useTranslation();
-  const chainId = parseSearchParams(location.search).chainId;
+  const chainID = parseSearchParams(location.search).chainID;
   const [, setApplication] = useCurrentApplication();
   const { getApplicationByChainId } = useApplicationManagement();
-  const application = getApplicationByChainId(chainId);
+  const application = getApplicationByChainId(chainID);
 
   const selectAppNode = (node) => {
     setApplication(application, node);
