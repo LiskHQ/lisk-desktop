@@ -28,13 +28,6 @@ export const getTransactionBaseFees = (network) =>
 
 /**
  * creates a new transaction
- *
- * @param {Object} transaction The transaction information
- * @param {String} transaction.moduleCommand The combination of module Id and asset Id.
- * @param {Object} transaction.network Network config from the redux store
- * @param {Object} transaction.keys keys of the multisig account
- * @param {Object} transaction.transactionObject Details of the transaction, including passphrase
- * @param {boolean} transaction.isHwSigning true if an hardware wallet will sign the transaction
  * @returns {Promise} promise that resolves to a transaction or
  * rejects with an error
  */
@@ -54,11 +47,6 @@ export const signTransaction = async ({
 
 /**
  * broadcasts a transaction over the network
- *
- * @param {object} transaction
- * @param {Object} network
- * @param {string} network.name - the network name, e.g. mainnet, betanet
- * @param {string} network.address - the node address e.g. https://service.lisk.com
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas }) => {
@@ -80,7 +68,6 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
 
 /**
  * Dry run a transaction to verify if the transaction is valid to be broadcasted to network
- * @param {*} param0 
  * @returns 
  * {
   result: enum {

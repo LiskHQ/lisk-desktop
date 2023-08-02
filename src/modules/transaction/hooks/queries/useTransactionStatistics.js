@@ -3,19 +3,6 @@ import { TRANSACTION_STATISTICS } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
-/**
- * Creates a custom hook for transaction statistics list query
- *
- * @param {object} configuration - the custom query configuration object
- * @param {object} configuration.config - the query config
- * @param {object} configuration.config.params - the query config params
- * @param {string} configuration.config.params.interval - the query's interval. i.e "day"|"month"
- * @param {number} [configuration.config.params.limit] - the query limit
- * @param {number} [configuration.config.params.offset] - the query offset
- *
- * @returns the query object
- */
-
 export const useTransactionStatistics = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/transactions/statistics`,

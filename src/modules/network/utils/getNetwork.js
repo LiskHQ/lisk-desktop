@@ -13,11 +13,7 @@ export const getNetworksList = () => {
 export const getNetworkName = (network = {}) => network?.name || DEFAULT_NETWORK;
 
 /**
- * Returns human readable error messages
- *
- * @param {Object} error
- * @param {String} error.message - The error message received from network API call
- * @returns {String} - The human readable error message.
+ * Returns human-readable error messages
  */
 export const getConnectionErrorMessage = (error) => {
   const { t } = useTranslation();

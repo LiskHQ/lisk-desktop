@@ -45,15 +45,9 @@ export const stakeDiscarded = (data) => ({
 
 /**
  * Defines the new stake amount for a given validator.
- * The reducer will add a new stake if if didn't exist before
+ * The reducer will add a new stake if i didn't exist before
  * Any stake whose stake amount changes to zero will be removed
  * when the stake transaction is confirmed (via stakesConfirmed action)
- *
- * @param {Object} data
- * @param {String} data.address - Validator address
- * @param {String} data.name - Validator name
- * @param {String} data.stakeAmount - (New) stake amount in Beddows
- * @returns {Object} Pure action object
  */
 export const stakeEdited = (data) => async (dispatch) =>
   dispatch({
@@ -65,11 +59,6 @@ export const stakeEdited = (data) => async (dispatch) =>
  * Makes Api call to register stakes
  * Adds pending state and then after the duration of one round
  * cleans the pending state
- *
- * @param {object} data
- * @param {object} data.fee
- * @param {object} data.stakes
- * @param {promise} API call response
  */
 export const stakesSubmitted =
   (_, transactionJSON, privateKey, __, senderAccount, moduleCommandSchemas) =>
@@ -163,13 +152,6 @@ const signAndDispatchTransaction = async (
   }
 };
 
-/**
- * Submits unlock balance transactions
- *
- * @param {object} data
- * @param {string} data.selectedFee
- * @returns {promise}
- */
 export const balanceUnlocked =
   (formProps, transactionJSON, privateKey, senderAccount) => async (dispatch, getState) => {
     await signAndDispatchTransaction(

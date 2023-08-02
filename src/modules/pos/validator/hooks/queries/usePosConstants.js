@@ -4,13 +4,6 @@ import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for pos constants queries
- *
- * @param {object} configuration - the custom query configuration object
- * @param {Object} configuration.config - the query config
- * @param {Object} configuration.config.params - the query config params
- * @param {string} configuration.config.params.address - auth address
- * @param {string} configuration.options - the query options
- *
  * @returns the query object
  */
 

@@ -1,10 +1,5 @@
 import actionTypes from 'src/modules/common/store/actionTypes';
 
-/**
- *
- * @param {Array} state
- * @param {Object} action
- */
 const dialog = (state = [], action) => {
   switch (action.type) {
     case actionTypes.loadingStarted:

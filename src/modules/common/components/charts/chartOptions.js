@@ -9,7 +9,6 @@ const merge = (...args) => lodashMerge({}, ...args);
 
 /**
  * data ONLY for Line chart
- * @param {object} data - More data that can be pass to the chart
  */
 export const lineChartData = (data) =>
   merge(
@@ -30,7 +29,6 @@ export const lineChartData = (data) =>
 
 /**
  * data ONLY for Bar chart
- * @param {object} data - More data that can be pass to the chart
  */
 export const barChartData = (data) =>
   merge(
@@ -50,7 +48,6 @@ export const barChartData = (data) =>
 
 /**
  * data ONLY for Doughnut chart
- * @param {object} data - More data that can be pass to the chart
  */
 export const doughnutChartData = (data, theme) =>
   merge(

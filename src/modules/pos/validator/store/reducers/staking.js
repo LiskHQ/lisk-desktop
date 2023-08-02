@@ -1,11 +1,5 @@
 import actionTypes from '../actions/actionTypes';
 
-/**
- * staking reducer
- *
- * @param {Object} state
- * @param {Object} action
- */
 const staking = (state = {}, action) => {
   const clonedState = { ...state };
 

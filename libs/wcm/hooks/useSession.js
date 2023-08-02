@@ -96,8 +96,6 @@ export const useSession = () => {
 
   /**
    * Disconnect a given pairing. Removes the pairing from context and the bridge.
-   *
-   * @param {string} topic - The pairing topic (Connection ID) to disconnect.
    */
   const disconnect = useCallback(
     async (topic) => {
