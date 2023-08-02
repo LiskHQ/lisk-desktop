@@ -1,0 +1,13 @@
+rules:
+  - id: schema_hardcoded_pattern
+    message: A fastest-validator schema uses a hardcoded pattern instead of a constant
+    languages:
+      - javascript
+    severity: WARNING
+    patterns:
+      - pattern-inside: >
+          {
+            params: {
+              $X: { pattern: /.../ },
+            }
+          }
