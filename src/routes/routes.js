@@ -42,12 +42,6 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  selectNetwork: {
-    path: '/select-network',
-    isPrivate: false,
-    exact: true,
-    forbiddenTokens: [],
-  },
   backupRecoveryPhraseFlow: {
     path: '/account/backup-recovery-phrase',
     isPrivate: true,
@@ -72,7 +66,6 @@ export default {
   register: {
     path: '/register',
     isPrivate: false,
-    isSigninFlow: true,
     forbiddenTokens: [],
   },
   addAccountByFile: {
@@ -84,7 +77,6 @@ export default {
   termsOfUse: {
     path: '/terms-of-use',
     isPrivate: false,
-    isSigninFlow: true,
     forbiddenTokens: [],
   },
   transactions: {
@@ -190,11 +182,11 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  deviceDisconnectDialog: {
+  dialogAddNetwork: {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  dialogAddNetwork: {
+  dialogRemoveNetwork: {
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -219,10 +211,6 @@ export const modals = {
     forbiddenTokens: [],
   },
   validatorPerformance: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
-  setPassword: {
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -271,6 +259,10 @@ export const modals = {
     forbiddenTokens: [],
   },
   requestView: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  requestSignMessageDialog: {
     isPrivate: false,
     forbiddenTokens: [],
   },

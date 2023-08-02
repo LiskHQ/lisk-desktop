@@ -1,21 +1,19 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithCustomRouter } from 'src/utils/testHelpers';
 import AnalyticsMessage from './analyticsMessage';
 
 describe('Analytics Message banner', () => {
-  const props = {
-    t: (v) => v,
-  };
   let wrapper;
   const pushMock = jest.fn();
+  const props = {
+    t: (v) => v,
+    history: {
+      push: pushMock,
+      location: { search: '', path: '' },
+    },
+  };
 
   beforeEach(() => {
-    wrapper = mount(
-      <AnalyticsMessage
-        history={{ push: pushMock, location: { search: '', path: '' } }}
-        {...props}
-      />
-    );
+    wrapper = mountWithCustomRouter(AnalyticsMessage, props);
   });
 
   it('Should render correctly with all passed props', () => {

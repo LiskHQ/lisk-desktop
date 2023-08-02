@@ -24,6 +24,7 @@ module.exports = {
     'react-hot-loader/babel',
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-nullish-coalescing-operator',
+    'babel-plugin-transform-import-meta',
   ],
   env: {
     test: {

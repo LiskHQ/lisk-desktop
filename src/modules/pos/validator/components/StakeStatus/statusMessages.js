@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* istanbul ignore file */
 import React from 'react';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
@@ -5,15 +6,26 @@ import { statusMessages } from '@transaction/configuration/statusConfig';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './styles.css';
 
-const unlockTime = 5;
-
-const LiskAmountFormatted = ({ val, token }) => (
+const LiskAmountFormatted = ({ val, token, message, prefixMessage }) => (
   <span className={styles.subHeadingBold}>
-    <TokenAmount val={val} token={token} />
+    {prefixMessage} <TokenAmount val={val} token={token} /> {message}
   </span>
 );
 
-const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }, token) => {
+const RewardAmountFormatted = ({ val, token, message }) => (
+  <span className={styles.rewardAmount}>
+    <TokenAmount val={val} token={token} /> {message}
+  </span>
+);
+
+const getSuccessMessage = (
+  t,
+  locked,
+  unlockable,
+  selfUnstake = { confirmed: 0 },
+  token,
+  { rewards }
+) => {
   if (!locked && unlockable) {
     const regularUnlockable = BigInt(unlockable) - BigInt(selfUnstake.confirmed || 0);
     const selfUnstakeUnlockable = selfUnstake.confirmed;
@@ -22,14 +34,42 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
       <>
         {regularUnlockable > BigInt(0) ? (
           <>
-            <LiskAmountFormatted val={regularUnlockable.toString()} token={token} />{' '}
-            <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
+            <div className={styles.stakeSection}>
+              <LiskAmountFormatted
+                val={regularUnlockable.toString()}
+                token={token}
+                message={t('will be available to unlock when the locking period ends.')}
+              />
+            </div>
+            {rewards.total && (
+              <div className={styles.rewardsSection}>
+                <RewardAmountFormatted
+                  val={rewards.total}
+                  token={token}
+                  message={t('will be credited to your account due to changes in stakes.')}
+                />
+              </div>
+            )}
           </>
         ) : null}
         {selfUnstakeUnlockable > 0 ? (
           <>
-            <LiskAmountFormatted val={selfUnstakeUnlockable} token={token} />{' '}
-            <span>{t('will be available to unlock in 1 month.')}</span>
+            <div className={styles.stakeSection}>
+              <LiskAmountFormatted
+                val={selfUnstakeUnlockable}
+                token={token}
+                message={t('will be available to unlock when the locking period ends.')}
+              />
+            </div>
+            {rewards.total && (
+              <div className={styles.rewardsSection}>
+                <RewardAmountFormatted
+                  val={rewards.total}
+                  token={token}
+                  message={t('will be credited to your account due to changes in stakes.')}
+                />
+              </div>
+            )}
           </>
         ) : null}
       </>
@@ -38,25 +78,57 @@ const getSuccessMessage = (t, locked, unlockable, selfUnstake = { confirmed: 0 }
   if (locked && !unlockable) {
     return (
       <>
-        <LiskAmountFormatted val={locked} token={token} />{' '}
-        <span>{t('will be locked for staking.')}</span>
+        <div className={styles.stakeSection}>
+          <LiskAmountFormatted
+            val={locked}
+            token={token}
+            message={t('will be locked for staking.')}
+          />
+        </div>
+        {rewards.total && (
+          <div className={styles.rewardsSection}>
+            <RewardAmountFormatted
+              val={rewards.total}
+              token={token}
+              message={t('will be credited to your account due to changes in stakes.')}
+            />
+          </div>
+        )}
       </>
     );
   }
   if (locked && unlockable) {
     return (
       <>
-        <span>{t('You have now locked')}</span> <LiskAmountFormatted val={locked} token={token} />{' '}
-        <span>{t('for staking and may unlock')}</span>{' '}
-        <LiskAmountFormatted val={unlockable} token={token} />{' '}
-        <span>{t('in {{unlockTime}} hours.', { unlockTime })}</span>
+        <LiskAmountFormatted
+          val={locked}
+          token={token}
+          prefixMessage={t('You have now locked')}
+          message={t('for staking and may unlock')}
+        />
+        <div className={styles.stakeSection}>
+          <LiskAmountFormatted
+            val={unlockable}
+            token={token}
+            message={t('when the locking period ends.')}
+          />
+        </div>
+        {rewards.total && (
+          <div className={styles.rewardsSection}>
+            <RewardAmountFormatted
+              val={rewards.total}
+              token={token}
+              message={t('will be credited to your account due to changes in stakes.')}
+            />
+          </div>
+        )}
       </>
     );
   }
   return '';
 };
 
-const stakeStatusMessages = (t, statusInfo, token) => ({
+const stakeStatusMessages = (t, statusInfo, token, formProps) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Tokens are staked'),
@@ -65,7 +137,8 @@ const stakeStatusMessages = (t, statusInfo, token) => ({
       statusInfo.locked,
       statusInfo.unlockable,
       statusInfo.selfUnstake,
-      token
+      token,
+      formProps || {}
     ),
   },
 });

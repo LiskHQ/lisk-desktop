@@ -170,6 +170,7 @@ or "warn/action" ineastd of "red/green"
   --color-strong-ink-blue: var(--color-ink-blue);
   --color-satin-deep-black: #1c1c1e;
   --color-zodiac-blue: #0c152e;
+  --color-constant-zodiac-blue: #0c152e;
   --color-zodiac-blue--satin-deep-black: var(--color-zodiac-blue);
   --color-search-container: #1d2b52;
   --color-periwinkle-blue: #c5cfe4;

@@ -37,6 +37,7 @@ export const chartStyles = {
 export const colorPalette = [
   chartStyles.ufoGreen,
   chartStyles.ultramarineBlue,
+  chartStyles.slateGray,
   chartStyles.deepGreen,
   chartStyles.maastrichtBlue,
   chartStyles.linthPink,
@@ -44,7 +45,6 @@ export const colorPalette = [
   chartStyles.palePink,
   chartStyles.deepPurple,
   chartStyles.darkBlue,
-  chartStyles.slateGray,
   chartStyles.blueGray,
   chartStyles.burntSienna,
   chartStyles.manateeGray,
@@ -59,6 +59,7 @@ export const colorPalette = [
 export const colorPaletteDark = [
   chartStyles.ufoGreen,
   chartStyles.ultramarineBlue,
+  chartStyles.slateGray,
   chartStyles.deepGreen,
   chartStyles.warningBorder,
   chartStyles.pasterPink,
@@ -66,7 +67,6 @@ export const colorPaletteDark = [
   chartStyles.palePink,
   chartStyles.deepPurple,
   chartStyles.cobaltBlue,
-  chartStyles.slateGray,
   chartStyles.blueGray,
   chartStyles.burntSienna,
   chartStyles.manateeGray,

@@ -7,29 +7,26 @@ export const networkKeys = {
   customNode: 'customNode',
 };
 
-// eslint-disable-next-line no-unused-vars
-export const initialSupply = 10000000000000000;
-
 const networks = {
   [networkKeys.mainnet]: {
     name: networkKeys.mainnet,
     label: 'Mainnet',
-    serviceUrl: 'http://mainnet-service.lisk.com',
-    wsServiceUrl: 'ws://mainnet-service.lisk.com',
+    serviceUrl: 'https://mainnet-service.lisk.com',
+    wsServiceUrl: 'wss://mainnet-service.lisk.com',
     isAvailable: false,
   },
   [networkKeys.alphanet]: {
     name: networkKeys.alphanet,
     label: 'Alphanet',
-    serviceUrl: 'https://alphanet-service.liskdev.net',
+    serviceUrl: 'http://alphanet-service.liskdev.net',
     wsServiceUrl: 'ws://alphanet-service.liskdev.net',
-    isAvailable: true,
+    isAvailable: false,
   },
   [networkKeys.betanet]: {
     name: networkKeys.betanet,
     label: 'Betanet',
-    serviceUrl: 'http://betanet-service.lisk.com',
-    wsServiceUrl: 'ws://betanet-service.lisk.com',
+    serviceUrl: 'https://betanet-service.lisk.com',
+    wsServiceUrl: 'wss://betanet-service.lisk.com',
     isAvailable: true,
   },
   [networkKeys.devnet]: {
@@ -42,8 +39,8 @@ const networks = {
   [networkKeys.testnet]: {
     name: networkKeys.testnet,
     label: 'Testnet',
-    serviceUrl: 'http://testnet-service.lisk.com',
-    wsServiceUrl: 'ws://testnet-service.lisk.com',
+    serviceUrl: 'https://testnet-service.lisk.com',
+    wsServiceUrl: 'wss://testnet-service.lisk.com',
     isAvailable: false,
   },
   [networkKeys.customNode]: {

@@ -1,6 +1,6 @@
 import React from 'react';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { cryptography } from '@liskhq/lisk-client';
-import { mount } from 'enzyme';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import wallets from '@tests/constants/wallets';
@@ -80,12 +80,12 @@ describe('TxSummarizer', () => {
   useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
 
   it('should render title', () => {
-    const wrapper = mount(<TxSummarizer {...props} />);
+    const wrapper = mountWithRouter(TxSummarizer, props);
     expect(wrapper.find('h2').text()).toEqual(props.title);
   });
 
   it('should call action functions of each button', () => {
-    const wrapper = mount(<TxSummarizer {...props} />);
+    const wrapper = mountWithRouter(TxSummarizer, props);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(props.confirmButton.onClick).toHaveBeenCalled();
     wrapper.find('.cancel-button').at(0).simulate('click');
@@ -93,7 +93,7 @@ describe('TxSummarizer', () => {
   });
 
   it('should display HW illustration', () => {
-    const wrapper = mount(<TxSummarizer {...props} />);
+    let wrapper = mountWithRouter(TxSummarizer, props);
     const newProps = {
       ...props,
       wallet: {
@@ -102,22 +102,19 @@ describe('TxSummarizer', () => {
       },
     };
     expect(wrapper.find('.illustration')).not.toExist();
-    wrapper.setProps(newProps);
+    wrapper = mountWithRouter(TxSummarizer, newProps);
     expect(wrapper.find('.illustration')).toExist();
   });
 
   it('should mount its children', () => {
-    const wrapper = mount(
-      <TxSummarizer {...props}>
-        <span className="child-span" />
-      </TxSummarizer>
-    );
+    const mountProps = { ...props, children: <span className="child-span" /> };
+    const wrapper = mountWithRouter(TxSummarizer, mountProps);
     expect(wrapper.find('.child-span')).toExist();
   });
 
   it('should display tx fee for regular account', () => {
     // Regular account
-    const wrapper = mount(<TxSummarizer {...props} />);
+    const wrapper = mountWithRouter(TxSummarizer, props);
     expect(wrapper.find('.fee-value-test')).toExist();
     expect(wrapper.find('.fee-value-test').text()).toContain('1 LSK');
 
@@ -162,7 +159,7 @@ describe('TxSummarizer', () => {
       },
     };
 
-    const wrapper = mount(<TxSummarizer {...multisigProps} />);
+    const wrapper = mountWithRouter(TxSummarizer, multisigProps);
     expect(wrapper.find('.info-numberOfSignatures').at(0).text()).toEqual('Required signatures2');
     expect(wrapper.find('.member-info').at(0).find('p span').text()).toEqual('(Mandatory)');
     expect(wrapper.find('.member-info').at(1).find('p span').text()).toEqual('(Optional)');

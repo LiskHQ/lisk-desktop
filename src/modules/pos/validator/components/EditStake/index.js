@@ -225,7 +225,12 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
           <PrimaryButton
             className={`${styles.confirmButton} confirm`}
             onClick={handleConfirm}
-            disabled={stakeAmount.error || isGettingPosToken}
+            disabled={
+              stakeAmount.error ||
+              isGettingPosToken ||
+              (isForm &&
+                stakeAmount.value === convertFromBaseDenom(staking[address]?.confirmed, token))
+            }
           >
             {t(isForm ? 'Confirm' : 'Go to the staking queue')}
           </PrimaryButton>

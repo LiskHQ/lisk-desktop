@@ -13,9 +13,9 @@ import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
 
-const { transfer, stake, reclaimLSK, registerMultisignature } = MODULE_COMMANDS_NAME_MAP;
+const { transfer, transferCrossChain, stake, reclaimLSK, registerMultisignature } =
+  MODULE_COMMANDS_NAME_MAP;
 
-// @todo import the following 4 values from lisk-elements (#4497)
 export const MESSAGE_TAG_MULTISIG_REG = 'LSK_RMSG_';
 
 export const convertStringToBinary = (value) => Buffer.from(value, 'hex');
@@ -31,7 +31,7 @@ const containsTransactionType = (txs = [], type) => txs.some((tx) => tx.moduleCo
 /**
  * Adapts transaction filter params to match transactions API method
  *
- * @param {Object} params - Params received from withFilters HOC
+ * @param {Object} params - Params received for filtering and sorting
  * @returns {Object} - Parameters consumable by transaction API method
  */
 const normalizeTransactionParams = (params, token) =>
@@ -86,7 +86,11 @@ const getTotalSpendingAmount = ({ module, command, params = {} }) => {
     return '0';
   }
 
-  if (moduleCommand === transfer || moduleCommand === reclaimLSK) {
+  if (
+    moduleCommand === transfer ||
+    moduleCommand === transferCrossChain ||
+    moduleCommand === reclaimLSK
+  ) {
     return params.amount;
   }
 
@@ -231,7 +235,6 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
         privateKeyBuffer,
         messageSchema
       );
-
       updateMultiSigRegSignatures(transaction, members, senderIndex, memberSignature);
     }
   }

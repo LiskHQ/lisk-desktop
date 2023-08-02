@@ -52,24 +52,27 @@ const getInitialToken = (transactionData, initialTokenId, tokens) => {
 
 // eslint-disable-next-line max-statements
 const SendForm = (props) => {
-  const { account = {}, prevState, t, bookmarks, nextStep } = props;
+  const { prevState, t, bookmarks, nextStep } = props;
   const [recipientChain, setRecipientChain] = useState({});
   const [token, setToken] = useState({});
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
   const [currentApplication] = useCurrentApplication();
   const sendingChain = prevState?.transactionData?.sendingChain || currentApplication;
   const { applications } = useApplicationExploreAndMetaData();
-  const { data: tokens } = useTransferableTokens(recipientChain);
+  const { data: tokens, isLoading: isLoadingTokens } = useTransferableTokens(recipientChain);
   const [reference, setReference] = useMessageField(
     getInitialData(props.prevState?.formProps, props.initialValue?.reference)
   );
   const [amount, setAmountField] = useAmountField(
     getInitialAmount(props.prevState?.formProps, props.initialValue?.amount, token),
-    account.summary?.balance,
+    token?.availableBalance,
     token
   );
   const [recipient, setRecipientField] = useRecipientField(
-    getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
+    getInitialRecipient(
+      props.prevState?.formProps,
+      props.initialValue?.address ?? props.initialValue?.recipient
+    )
   );
   const { isAccountInitialized, initializationFees } = useGetInitializationFees({
     address: recipient.value,
@@ -255,6 +258,7 @@ const SendForm = (props) => {
               <MenuSelect
                 value={token}
                 onChange={(value) => setToken(value)}
+                isLoading={isLoadingTokens}
                 select={(selectedValue, option) => selectedValue?.tokenName === option.tokenName}
               >
                 {tokens.map((tokenValue) => (
@@ -278,6 +282,7 @@ const SendForm = (props) => {
               label={t('Amount')}
               placeholder={t('Enter amount')}
               name="amount"
+              disabled={isLoadingTokens}
             />
             <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
               <span className={`${styles.fieldLabel}`}>{t('Recipient address')}</span>

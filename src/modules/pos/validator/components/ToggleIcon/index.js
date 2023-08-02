@@ -1,12 +1,13 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Icon from 'src/theme/Icon';
 
 import styles from './toggleIcon.css';
 
-const ToggleIcon = ({ history, isNotHeader, className }) => {
+const ToggleIcon = ({ isNotHeader, className }) => {
+  const history = useHistory();
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal']);
   };
@@ -21,4 +22,4 @@ const ToggleIcon = ({ history, isNotHeader, className }) => {
   );
 };
 
-export default withRouter(ToggleIcon);
+export default ToggleIcon;

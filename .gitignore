@@ -17,6 +17,8 @@ reports
 .history
 .env
 cypress.log
+yarn-error.log
+*.tgz
 
 ## Commercial fonts
 setup/react/assets/fonts/basierCircle/
@@ -26,3 +28,9 @@ setup/react/assets/fonts/gilroy/
 tests/cypress/cypress
 tests/cypress/screenshots
 tests/cypress/videos
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+## Cucumber
+cucumber-report.html

@@ -1,5 +1,5 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { renderWithRouter } from 'src/utils/testHelpers';
+import { screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { mockRewardsClaimableWithToken } from '@pos/reward/__fixtures__';
@@ -20,7 +20,7 @@ describe('ClaimRewardsSummaryContent', () => {
   useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimableWithToken });
 
   it('should display properly', async () => {
-    render(<ClaimRewardsSummaryContent {...props} />);
+    renderWithRouter(ClaimRewardsSummaryContent, props);
 
     expect(screen.getByText('Claim reward')).toBeTruthy();
 

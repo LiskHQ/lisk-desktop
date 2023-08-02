@@ -1,5 +1,3 @@
-// @todo: this should be re-instated when the issue with lisk-client is fixed
-/* istanbul ignore file */
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';

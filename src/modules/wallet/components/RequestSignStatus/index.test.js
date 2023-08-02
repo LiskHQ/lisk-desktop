@@ -64,7 +64,7 @@ describe('RequestSignStatus', () => {
         'Your transaction has been signed. Please copy the signed transaction and return to application.'
       )
     ).toBeInTheDocument();
-    expect(screen.getByText('Copy signatures')).toBeInTheDocument();
+    expect(screen.getByText('Copy signature')).toBeInTheDocument();
     expect(screen.getByText('Return to application')).toBeInTheDocument();
   });
 
@@ -78,7 +78,7 @@ describe('RequestSignStatus', () => {
         'There was an error signing your transaction. please close this dialog and try again.'
       )
     ).toBeInTheDocument();
-    expect(screen.queryAllByText('Copy signatures')).toHaveLength(0);
+    expect(screen.queryAllByText('Copy signature')).toHaveLength(0);
     expect(screen.getByText('Return to application')).toBeInTheDocument();
   });
 
@@ -86,7 +86,7 @@ describe('RequestSignStatus', () => {
     reactRedux.useSelector.mockReturnValue(successTransactions);
     useSession.mockReturnValue({ respond });
     renderWithRouterAndQueryClient(RequestSignStatus, props);
-    expect(screen.getByText('Copy signatures')).toBeInTheDocument();
+    expect(screen.getByText('Copy signature')).toBeInTheDocument();
     const button = screen.getAllByRole('button')[0];
     act(() => {
       fireEvent.click(button);
@@ -94,7 +94,7 @@ describe('RequestSignStatus', () => {
     expect(respond).toHaveBeenCalled();
     expect(screen.getByText('Copied')).toBeInTheDocument();
 
-    jest.runAllTimers();
-    expect(screen.getByText('Copy signatures')).toBeInTheDocument();
+    jest.runOnlyPendingTimers();
+    expect(screen.getByText('Copy signature')).toBeInTheDocument();
   });
 });

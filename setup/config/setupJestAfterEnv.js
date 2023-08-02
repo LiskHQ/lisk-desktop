@@ -1,6 +1,7 @@
 import { server } from 'src/service/mock/server';
 import client from 'src/utils/api/client';
 
+jest.useFakeTimers('legacy');
 // Establish API mocking before all tests.
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' });

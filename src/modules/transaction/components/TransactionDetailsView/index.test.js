@@ -85,7 +85,7 @@ describe('TransactionDetailsView', () => {
     expect(screen.getByText('Date')).toBeTruthy();
     expect(screen.getByText('Nonce')).toBeTruthy();
     expect(screen.getByText('Block status')).toBeTruthy();
-    expect(screen.getByText('Status')).toBeTruthy();
+    expect(screen.getByText('Execution status')).toBeTruthy();
     expect(screen.getByText('ID')).toBeTruthy();
     expect(screen.getByText('Block ID')).toBeTruthy();
     expect(screen.getByText('Block height')).toBeTruthy();
@@ -96,7 +96,7 @@ describe('TransactionDetailsView', () => {
     expect(screen.getByText(truncateAddress(transaction.sender.address))).toBeTruthy();
     expect(screen.getByText(transaction.sender.name)).toBeTruthy();
     expect(screen.getByText(transaction.nonce)).toBeTruthy();
-    expect(screen.getByText(transaction.block.isFinal ? 'Final' : 'Not final')).toBeTruthy();
+    expect(screen.getByText(transaction.block.isFinal ? 'Final' : 'Pending')).toBeTruthy();
     expect(screen.getByText(transaction.executionStatus)).toBeTruthy();
     expect(screen.getByText(transaction.id)).toBeTruthy();
     expect(screen.getByText(transaction.block.id)).toBeTruthy();

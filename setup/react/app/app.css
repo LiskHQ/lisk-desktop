@@ -81,7 +81,7 @@ body {
 }
 
 .mainBox {
-  max-width: var(--main-box-width);
+  max-width: calc(100% - 48px);
 }
 
 .toastBody {

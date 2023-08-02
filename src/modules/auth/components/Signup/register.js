@@ -1,12 +1,13 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from 'src/routes/routes';
 import useCreateAccounts from '@auth/hooks/useCreateAccounts';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import MultiStepProgressBar from 'src/theme/ProgressBarMultiStep';
 import MultiStep from 'src/modules/common/components/MultiStep';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
+import { defaultDerivationPath } from '@account/const';
 import ChooseAvatar from '../ChooseAvatar/chooseAvatar';
 import SavePassphrase from '../SavePassphrase/SavePassphrase';
 import ConfirmPassphrase from '../ConfirmPassphrase/confirmPassphrase';
@@ -14,18 +15,23 @@ import AccountCreated from '../AccountCreated';
 import styles from './register.css';
 import SetPasswordForm from '../SetPasswordForm';
 
-const Register = ({ account, token, history }) => {
+const Register = ({ account, token }) => {
+  const history = useHistory();
+  const { search = '' } = useLocation();
   const multiStepRef = useRef(null);
+  const queryParams = new URLSearchParams(search);
+  const strength = queryParams.get('strength');
+
   const [isStepSetPasswordForm, setIsStepSetPasswordForm] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState({});
-  const { suggestionAccounts } = useCreateAccounts();
+  const { suggestionAccounts } = useCreateAccounts(strength);
   const [, setCurrentAccount] = useCurrentAccount();
   const { setAccount } = useAccounts();
 
   const onSetPassword = (encryptedAccount) => {
     setCurrentAccount(encryptedAccount);
     setAccount(encryptedAccount);
-    multiStepRef.current.next();
+    multiStepRef.current?.next();
   };
 
   useEffect(() => {

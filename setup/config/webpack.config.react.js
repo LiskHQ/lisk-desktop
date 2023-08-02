@@ -93,8 +93,6 @@ const config = {
   },
   devtool: 'source-map',
   devServer: {
-    contentBase: 'src',
-    inline: true,
     port: 8080,
     historyApiFallback: true,
   },
@@ -145,11 +143,11 @@ const config = {
         use: [MiniCssExtractPluginLoader, reactToastifyLoader, postCssLoader],
       },
       {
-        test: /swiper\.min\.css$/,
+        test: /(swiper\.min|modules\/(pagination\/pagination|navigation\/navigation)\.min)\.css$/,
         use: [MiniCssExtractPluginLoader, reactToastifyLoader],
       },
       {
-        test: /^((?!(styles\.head|ReactToastify|(swiper\.min))).)*\.css$/,
+        test: /^((?!(styles\.head|ReactToastify|(swiper\.min)|(modules\/(pagination\/pagination|navigation\/navigation)\.min))).)*\.css$/,
         use: [MiniCssExtractPluginLoader, cssLoader, postCssLoader],
       },
     ],

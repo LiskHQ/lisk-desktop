@@ -15,30 +15,24 @@ const NetworkApplicationDropDownButton = ({ history, location }) => {
     addSearchParamsToUrl(history, { modal: 'manageApplications' });
   }, []);
 
-  const isNotOnSelectNetworkPath = routes.selectNetwork.path !== location.pathname;
   const isNotOnRegisterPath = routes.register.path !== location.pathname;
 
-  if (!(isNotOnSelectNetworkPath && isNotOnRegisterPath)) {
-    return null;
-  }
+  if (!isNotOnRegisterPath) return null;
 
   return (
     <div className={styles.container}>
       <TertiaryButton
+        data-testid="network-application-trigger"
         className={`application-management-dropdown ${styles.wrapper}`}
         onClick={handleShowApplications}
       >
-        {isNotOnSelectNetworkPath && (
-          <div className={styles.chainContainer}>
-            <div className={styles.chainLogo}>
-              <img src={getLogo({ logo: currentApplication?.logo || {} })} />
-            </div>
-            <span className={styles.chainLabel}>{currentApplication?.chainName}</span>
+        <div className={styles.chainContainer}>
+          <div className={styles.chainLogo}>
+            <img src={getLogo({ logo: currentApplication?.logo || {} })} />
           </div>
-        )}
-        {(isNotOnSelectNetworkPath || isNotOnRegisterPath) && (
-          <Network className={styles.networkProp} />
-        )}
+          <span className={styles.chainLabel}>{currentApplication?.chainName}</span>
+        </div>
+        <Network className={styles.networkProp} />
         <Icon name="dropdownArrowIcon" />
       </TertiaryButton>
     </div>

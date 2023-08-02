@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
-import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
+import { getTransactionBaseFees } from '@transaction/api';
 import RegisterValidator from './index';
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -19,12 +19,6 @@ getTransactionBaseFees.mockResolvedValue({
   Low: 0,
   Medium: 1000,
   High: 2000,
-});
-
-getTransactionFee.mockResolvedValue({
-  value: 0.1,
-  error: false,
-  feedback: '',
 });
 
 describe('RegisterValidator', () => {

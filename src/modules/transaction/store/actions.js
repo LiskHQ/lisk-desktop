@@ -1,11 +1,10 @@
 import { to } from 'await-to-js';
-import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
+import { TransactionExecutionResult } from '@transaction/constants';
 import actionTypes from './actionTypes';
-import { getTransactions, broadcast, dryRun, signTransaction } from '../api';
+import { broadcast, dryRun, signTransaction } from '../api';
 import { joinModuleAndCommand, signMultisigTransaction } from '../utils';
 import { fromTransactionJSON, toTransactionJSON } from '../utils/encoding';
 
@@ -26,53 +25,6 @@ export const pendingTransactionAdded = (data) => ({
   type: actionTypes.pendingTransactionAdded,
   data,
 });
-
-/**
- * Action trigger for retrieving any amount of transactions
- * for Dashboard and Wallet components
- *
- * @param {Object} params - Object with all params.
- * @param {String} params.address - address of the wallet to fetch the transactions for
- * @param {Number} params.limit - amount of transactions to fetch
- * @param {Number} params.offset - index of the first transaction
- * @param {Object} params.filters - object with filters for the filer dropdown
- *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
- */
-export const transactionsRetrieved =
-  ({ address, limit = DEFAULT_LIMIT, offset = 0, filters = {} }) =>
-  async (dispatch, getState) => {
-    dispatch(loadingStarted(actionTypes.transactionsRetrieved));
-
-    const { network } = getState();
-
-    const params = {
-      address,
-      ...filters,
-      limit,
-      offset,
-    };
-
-    try {
-      const { data, meta } = await getTransactions({ network, params });
-      dispatch({
-        type: actionTypes.transactionsRetrieved,
-        data: {
-          offset,
-          address,
-          filters,
-          confirmed: data,
-          count: meta.total,
-        },
-      });
-    } catch (error) {
-      dispatch({
-        type: actionTypes.transactionLoadFailed,
-        data: { error },
-      });
-    } finally {
-      dispatch(loadingFinished(actionTypes.transactionsRetrieved));
-    }
-  };
 
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
@@ -95,13 +47,17 @@ export const transactionBroadcasted =
     const serviceUrl = network.networks[activeToken].serviceUrl;
     const moduleCommand = joinModuleAndCommand(transaction);
     const paramsSchema = moduleCommandSchemas[moduleCommand];
-    let broadcastResult;
-    const dryRunResult = await dryRun({ transaction, serviceUrl, paramsSchema });
+    let broadcastErrorMessage;
 
-    if (dryRunResult.data?.result === 1) {
-      broadcastResult = await broadcast({ transaction, serviceUrl, moduleCommandSchemas });
+    const [error, dryRunResult] = await to(dryRun({ transaction, serviceUrl, paramsSchema }));
 
-      if (!broadcastResult.data?.error) {
+    if (dryRunResult?.data?.result === TransactionExecutionResult.OK) {
+      const [broadcastError, broadcastResult] = await to(
+        broadcast({ transaction, serviceUrl, moduleCommandSchemas })
+      );
+      broadcastErrorMessage = broadcastError?.message;
+
+      if (!broadcastResult?.data?.error && !broadcastError) {
         const transactionJSON = toTransactionJSON(transaction, paramsSchema);
         dispatch({
           type: actionTypes.broadcastedTransactionSuccess,
@@ -111,32 +67,22 @@ export const transactionBroadcasted =
 
         return true;
       }
-      // @todo we need to push pending transaction to the query cache
-      // https://github.com/LiskHQ/lisk-desktop/issues/4698 should handle this logic
     }
 
-    if (dryRunResult.data?.result === -1) {
-      dispatch({
-        type: actionTypes.broadcastedTransactionError,
-        data: {
-          error: dryRunResult.data?.errorMessage,
-          transaction,
-        },
-      });
-    }
+    const transactionErrorMessage =
+      error?.message ||
+      broadcastErrorMessage ||
+      (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
+        ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
+        : dryRunResult?.data?.errorMessage);
 
-    if (dryRunResult.data?.result === 0) {
-      // @TODO: Prepare error message by parsing the events based on each transaction type
-      // https://github.com/LiskHQ/lisk-desktop/issues/4698 should resolve all the dry run related logic along with feedback
-      const temporaryError = dryRunResult.data?.events.map((e) => e.name).join(', ');
-      dispatch({
-        type: actionTypes.broadcastedTransactionError,
-        data: {
-          error: temporaryError,
-          transaction,
-        },
-      });
-    }
+    dispatch({
+      type: actionTypes.broadcastedTransactionError,
+      data: {
+        error: transactionErrorMessage,
+        transaction,
+      },
+    });
 
     return false;
   };

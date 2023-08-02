@@ -1,6 +1,7 @@
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
+import routes from 'src/routes/routes';
 import TokenRow from './StakeSuccessfulModal';
 
 describe('StakeSuccessfulModal', () => {
@@ -19,10 +20,10 @@ describe('StakeSuccessfulModal', () => {
     expect(screen.getByText('Staking confirmed')).toBeTruthy();
     expect(screen.getByText('test message')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('Back to validators'));
+    fireEvent.click(screen.getByText('Show all your stakes'));
 
     await waitFor(() => {
-      expect(props.history.push).toHaveBeenCalledWith('/validators');
+      expect(props.history.push).toHaveBeenCalledWith(routes.sentStakes.path);
     });
   });
 });

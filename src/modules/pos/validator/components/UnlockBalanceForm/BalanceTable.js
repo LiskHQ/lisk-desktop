@@ -5,13 +5,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import UnlockingList from './UnlockingList';
 import styles from './unlockBalance.css';
 
-const BalanceTable = ({
-  sentStakesAmount,
-  unlockedAmount,
-  currentBlockHeight,
-  lockedPendingUnlocks,
-  token,
-}) => {
+const BalanceTable = ({ sentStakesAmount, unlockedAmount, lockedPendingUnlocks, token }) => {
   const { t } = useTranslation();
   return (
     <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
@@ -33,11 +27,7 @@ const BalanceTable = ({
         </li>
       )}
       {lockedPendingUnlocks?.length > 0 && (
-        <UnlockingList
-          lockedPendingUnlocks={lockedPendingUnlocks}
-          currentBlockHeight={currentBlockHeight}
-          t={t}
-        />
+        <UnlockingList lockedPendingUnlocks={lockedPendingUnlocks} t={t} />
       )}
       {unlockedAmount !== 0 && (
         <li>

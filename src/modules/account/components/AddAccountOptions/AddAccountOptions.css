@@ -43,7 +43,7 @@
     margin: 0 0 10px;
   }
 
-  & > p {
+  & > div {
     @mixin contentLargest;
 
     color: var(--color-slate-gray);
@@ -52,6 +52,16 @@
 
     & > a {
       margin: 20px 0px;
+    }
+
+    & .dropdownWrapper {
+      min-width: 180px;
+      top: 100%;
+
+      & div > a {
+        color: var(--color-zodiac-blue) !important;
+        font-size: 14px !important;
+      }
     }
   }
 }

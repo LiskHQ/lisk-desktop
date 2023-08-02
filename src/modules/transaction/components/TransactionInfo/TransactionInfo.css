@@ -95,6 +95,8 @@
   padding-bottom: 16px;
   border-bottom: 1px solid var(--color-very-light-gray);
   row-gap: 10px;
+  column-gap: 10px;
+  flex-direction: column;
 }
 
 .stakeItem {
@@ -241,4 +243,8 @@
     padding-bottom: 5px;
     margin-left: 10px;
   }
+}
+
+.totalReward {
+  color: var(--color-ultramarine-blue);
 }

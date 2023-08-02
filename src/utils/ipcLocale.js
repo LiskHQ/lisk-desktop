@@ -1,5 +1,6 @@
+import { IPC_SET_LOCALE, IPC_DETECT_LOCALE } from 'src/const/ipcGlobal';
+
 export default {
-  // @TODO
   // eslint-disable-next-line max-statements
   init: (i18n) => {
     const { ipc } = window;
@@ -10,14 +11,14 @@ export default {
         i18n.changeLanguage('en');
       }
 
-      ipc.on('detectedLocale', (action, locale) => {
+      ipc[IPC_DETECT_LOCALE]((_, locale) => {
         i18n.changeLanguage(locale);
         localeInit = true;
       });
 
       i18n.on('languageChanged', (locale) => {
         if (localeInit) {
-          ipc.send('set-locale', locale);
+          ipc[IPC_SET_LOCALE](locale);
         }
       });
     } else {

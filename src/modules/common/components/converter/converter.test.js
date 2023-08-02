@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import Converter from './converter';
 import useFiatRates from '../../hooks/useFiatRates';
@@ -22,10 +21,9 @@ describe('Converter', () => {
   useFiatRates.mockReturnValue(props.priceTicker);
 
   it('should render Converter component 1', () => {
-    wrapper = mount(<Converter {...props} />);
+    wrapper = mountWithRouter(Converter, props);
     expect(wrapper.find('.wrapper').first().hasClass(props.className)).toBe(true);
-    expect(wrapper.find('.price').text()).toContain(props.priceTicker.LSK.EUR);
-    expect(wrapper.find('.price').text()).toContain(props.currency);
+    expect(wrapper.find('.price').text()).toContain('~12.00 EUR');
   });
 
   it('should render 0.00 if value is NaN and has error', () => {
@@ -34,7 +32,7 @@ describe('Converter', () => {
       value: 'aaa',
       error: true,
     };
-    wrapper = mount(<Converter {...invalidProps} />);
+    wrapper = mountWithRouter(Converter, invalidProps);
     expect(wrapper.find('.price').text()).toContain('0.00');
   });
 
@@ -44,7 +42,7 @@ describe('Converter', () => {
       className: undefined,
       value: '',
     };
-    wrapper = mount(<Converter {...newProps} />);
+    wrapper = mountWithRouter(Converter, newProps);
     expect(wrapper.find('.price').exists()).toBe(false);
   });
 
@@ -55,7 +53,7 @@ describe('Converter', () => {
       emptyPlaceholder: 'test-placeholder',
       tokenSymbol: null,
     };
-    wrapper = mount(<Converter {...newProps} />);
+    wrapper = mountWithRouter(Converter, newProps);
     expect(wrapper.text()).toContain('test-placeholder');
   });
 });

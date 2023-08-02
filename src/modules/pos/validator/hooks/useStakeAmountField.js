@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { validateAmountFormat } from 'src/utils/validators';
-import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
+import { validateAmount } from 'src/utils/validators';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { selectLSKAddress } from 'src/redux/selectors';
 import { regex } from 'src/const/regex';
@@ -13,31 +13,41 @@ let loaderTimeout = null;
 
 /**
  * Returns error and feedback of stake amount field.
- *
- * @param {String} value - The stake amount value difference in Beddows
- * @param {String} balance - The account balance value in Beddows
- * @param {String} minValue - The minimum value checker in Beddows
- * @param {String} inputValue - The input stake amount value in Beddows
- * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value, balance, minValue, inputValue, token) => {
-  const { message: feedback } = validateAmountFormat({
+// eslint-disable-next-line max-statements
+const getAmountFeedbackAndError = (
+  balance,
+  minValue,
+  inputValue,
+  token,
+  previouslyConfirmedStake
+) => {
+  const stakedValue = convertToBaseDenom(inputValue, token) - previouslyConfirmedStake;
+
+  const stakeAmountChecklist = stakedValue > 0 ? ['INSUFFICIENT_STAKE_FUNDS', 'MIN_BALANCE'] : [];
+  const inputAmountChecklist = ['NEGATIVE_STAKE', 'STAKE_10X', 'FORMAT'];
+  const { message } = validateAmount({
     token,
-    value: +value,
-    funds: parseInt(balance, 10),
-    checklist: [
-      'NEGATIVE_STAKE',
-      'ZERO',
-      'STAKE_10X',
-      'INSUFFICIENT_STAKE_FUNDS',
-      'MIN_BALANCE',
-      'FORMAT',
-    ],
     minValue,
-    inputValue,
+    inputValue: convertFromBaseDenom(Math.abs(stakedValue)),
+    checklist: stakeAmountChecklist,
+    amount: parseInt(convertFromBaseDenom(Math.abs(stakedValue)), 10),
+    accountBalance: parseInt(balance, 10),
   });
 
-  return { error: !!feedback, feedback };
+  const { message: inputAmountMessage } = validateAmount({
+    token,
+    minValue,
+    inputValue,
+    checklist: inputAmountChecklist,
+    amount: inputValue,
+    accountBalance: parseInt(balance, 10),
+  });
+
+  return {
+    error: !!message || !!inputAmountMessage,
+    feedback: message || inputAmountMessage,
+  };
 };
 
 /**
@@ -58,10 +68,6 @@ const useStakeAmountField = (initialValue) => {
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');
   const staking = useSelector((state) => state.staking);
   const existingStake = staking[address || host];
-  const totalUnconfirmedStake = Object.values(staking)
-    .filter((stake) => stake.confirmed < stake.unconfirmed)
-    .map((stake) => stake.unconfirmed - stake.confirmed)
-    .reduce((total, amount) => total + amount, 0);
   const previouslyConfirmedStake = existingStake ? existingStake.confirmed : 0;
   const [amountField, setAmountField] = useState({
     value: initialValue,
@@ -92,11 +98,11 @@ const useStakeAmountField = (initialValue) => {
       isLoading: true,
     });
     const feedback = getAmountFeedbackAndError(
-      value - convertFromBaseDenom(previouslyConfirmedStake - totalUnconfirmedStake, token),
       balance,
       -1 * convertFromBaseDenom(previouslyConfirmedStake, token),
       value,
-      token
+      token,
+      previouslyConfirmedStake
     );
     loaderTimeout = setTimeout(() => {
       setAmountField({

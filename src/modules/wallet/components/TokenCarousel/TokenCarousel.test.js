@@ -34,6 +34,8 @@ describe('TokenCarousel', () => {
     wrapper.rerender(<TokenCarousel {...props} />);
 
     expect(screen.queryByText('error')).toBeTruthy();
+    expect(screen.queryByText('Retry')).toBeTruthy();
+
     props.data.forEach(({ item }) => {
       expect(screen.queryByText(`render-item-${item}`)).toBeFalsy();
     });

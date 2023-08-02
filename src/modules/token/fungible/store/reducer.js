@@ -12,7 +12,6 @@ export const initialState = {
  * @param {Array} state
  * @param {Object} action
  */
-// eslint-disable-next-line no-unused-vars
-const token = (state = initialState, action) => state;
+const token = (state = initialState) => state;
 
 export default token;

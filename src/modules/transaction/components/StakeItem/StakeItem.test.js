@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { truncateAddress } from '@wallet/utils/account';
 import StakeItem from '.';
 
@@ -14,7 +13,7 @@ describe('StakeItem', () => {
       address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
       truncate: true,
     };
-    const wrapper = mount(<StakeItem {...props} />);
+    const wrapper = mountWithRouter(StakeItem, props);
     expect(wrapper).toBeDefined();
     expect(wrapper).toContainMatchingElement('.stake-item-address');
     expect(wrapper).toContainMatchingElement('TokenAmount');

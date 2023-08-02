@@ -1,5 +1,6 @@
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouter, renderWithRouter } from 'src/utils/testHelpers';
 import * as searchParams from 'src/utils/searchParams';
+import { fireEvent, screen } from '@testing-library/react';
 import ConnectionStatus from './ConnectionStatus';
 
 jest.mock('@libs/wcm/utils/connectionCreator', () => ({
@@ -76,7 +77,7 @@ describe('ConnectionStatus', () => {
       'An error occurred while rejecting the pairing request from web app'
     );
 
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     expect(searchParams.removeSearchParamsFromUrl).toHaveBeenCalled();
   });
 
@@ -91,8 +92,16 @@ describe('ConnectionStatus', () => {
       },
     };
     mountWithRouter(ConnectionStatus, newProps);
-    jest.runAllTimers();
+    jest.runOnlyPendingTimers();
     expect(searchParams.removeSearchParamsFromUrl).toHaveBeenCalled();
     expect(props.history.push).toHaveBeenCalledWith(props.history.location.pathname);
+  });
+
+  it('should use a fallback image if image fails to load', () => {
+    renderWithRouter(ConnectionStatus, props);
+    const image = screen.getByAltText('logo');
+    fireEvent.error(image);
+    const imgSrc = image.getAttribute('src');
+    expect(typeof imgSrc).toBe('string');
   });
 });

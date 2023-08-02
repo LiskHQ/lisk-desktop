@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TertiaryButton } from 'src/theme/buttons';
+import { useHistory, useLocation } from 'react-router-dom';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
@@ -32,6 +33,7 @@ const RightRowComponent = ({
             {t('Application is terminated and can no longer be managed.')}
             <a
               href="https://lisk.com/blog/research/lifecycle-sidechain-lisk-ecosystem"
+              rel="noopener noreferrer"
               target="_blank"
             >
               {t('Read more')}
@@ -70,9 +72,12 @@ const RightRowComponent = ({
   );
 };
 
-const ApplicationManagementRow = ({ className, application, history, location }) => {
+/* eslint max-statements: ["error", 15] */
+const ApplicationManagementRow = ({ className, application }) => {
+  const history = useHistory();
+  const location = useLocation();
   const { togglePin, checkPinByChainId } = usePinBlockchainApplication();
-  const [currentApplication, setApplication] = useCurrentApplication(history);
+  const [currentApplication, setApplication] = useCurrentApplication();
 
   const isPinned = useMemo(() => checkPinByChainId(application.chainID), [checkPinByChainId]);
   const isCurrentApplication = useMemo(

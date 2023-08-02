@@ -16,7 +16,7 @@ import styles from './RequestedTxStatus.css';
 export const SuccessActions = ({ onClick, t, copied }) => (
   <PrimaryButton className={`${styles.button} respond-button`} onClick={onClick} disabled={copied}>
     <span className={styles.buttonContent}>
-      <Icon name={copied ? 'checkmark' : 'copy'} />
+      <Icon name={copied ? 'transactionStatusSuccess' : 'copy'} />
       {copied ? t('Copied') : t('Copy and return to application')}
     </span>
   </PrimaryButton>
@@ -28,9 +28,9 @@ const ErrorActions = ({ t, status, message, network }) => (
     href={getErrorReportMailto({
       error: status?.message,
       errorMessage: message,
-      networkIdentifier: network.networkIdentifier,
-      serviceUrl: network.serviceUrl,
-      liskCoreVersion: network.networkVersion,
+      networkIdentifier: network?.networkIdentifier,
+      serviceUrl: network?.serviceUrl,
+      liskCoreVersion: network?.networkVersion,
     })}
     target="_top"
     rel="noopener noreferrer"

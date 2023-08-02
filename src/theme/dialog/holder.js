@@ -5,8 +5,15 @@ import { withRouter } from 'react-router';
 import routesMap from 'src/routes/routesMap';
 import { modals } from 'src/routes/routes';
 import { useCurrentAccount } from '@account/hooks';
-import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
+import {
+  addSearchParamsToUrl,
+  parseSearchParams,
+  removeSearchParamsFromUrl,
+} from 'src/utils/searchParams';
 import { selectActiveToken } from 'src/redux/selectors';
+import { useSession } from '@libs/wcm/hooks/useSession';
+import { ACTIONS, EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { useEvents } from '@libs/wcm/hooks/useEvents';
 import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements
@@ -18,6 +25,8 @@ const DialogHolder = ({ history }) => {
   const [currentAccount] = useCurrentAccount();
   const isAuthenticated = Object.keys(currentAccount).length > 0;
   const activeToken = useSelector(selectActiveToken);
+  const { reject } = useSession();
+  const { events } = useEvents();
   const networkIsSet = useSelector((state) => !!state.network.name);
 
   const backdropRef = useRef();
@@ -50,10 +59,21 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  const onBackDropClick = (e) => {
+  const onBackDropClick = async (e) => {
     if (e.target === backdropRef.current) {
       if (modalName !== 'reclaimBalance') {
         removeSearchParamsFromUrl(history, ['modal'], true);
+      }
+      if (modalName === 'connectionSummary') {
+        const proposalEvents = events.find((ev) => ev.name === EVENTS.SESSION_PROPOSAL);
+
+        const result = await reject(proposalEvents);
+        addSearchParamsToUrl(history, {
+          modal: 'connectionSuccess',
+          action: ACTIONS.REJECT,
+          status: result.status,
+          name: result.data?.params?.proposer.metadata.name ?? '',
+        });
       }
     }
   };

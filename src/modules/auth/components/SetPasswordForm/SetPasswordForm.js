@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { selectSettings } from 'src/redux/selectors';
 import { yupResolver } from '@hookform/resolvers/yup';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from '@theme/Input';
@@ -12,7 +13,7 @@ import CheckBox from '@theme/CheckBox';
 import Tooltip from '@theme/Tooltip';
 import Icon from '@theme/Icon';
 import { regex } from 'src/const/regex';
-import { useEncryptAccount } from '@account/hooks';
+import { useAccounts } from '@account/hooks';
 import styles from './SetPasswordForm.css';
 
 const setPasswordFormSchema = yup
@@ -47,12 +48,14 @@ const setPasswordFormSchema = yup
 
 function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationPath }) {
   const { t } = useTranslation();
-  const { encryptAccount } = useEncryptAccount(customDerivationPath);
+  const { enableAccessToLegacyAccounts } = useSelector(selectSettings);
+  const { accounts } = useAccounts();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    setError,
   } = useForm({
     resolver: yupResolver(setPasswordFormSchema),
   });
@@ -63,20 +66,47 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
     () => !password?.length || !cPassword?.length || !hasAgreed,
     [formValues.password, formValues.cPassword, formValues.hasAgreed]
   );
+  const [isLoading, setIsLoading] = useState(false);
 
+  // eslint-disable-next-line max-statements
   const onFormSubmit = async (values) => {
-    const { error, result } = await encryptAccount({
-      recoveryPhrase: recoveryPhrase.value,
-      password: values.password,
-      name: values.accountName,
-    });
+    setIsLoading(true);
+    const existingAccountName = accounts.some(
+      (acc) => acc.metadata.name.toLowerCase() === values.accountName.toLowerCase()
+    );
 
-    if (error) {
-      toast.error(t('Failed to setup password'));
+    if (values.accountName && existingAccountName) {
+      setError('accountName', {
+        message: t(`Account with name "${values.accountName}" already exists.`),
+      });
       return null;
     }
 
-    return onSubmit?.(result);
+    const encryptAccountWorker = new Worker(new URL('./encryptAccountWorker.js', import.meta.url));
+    /* istanbul ignore next */
+    const showEncryptAccountError = () => {
+      toast.error(t('Failed to setup password'));
+      setIsLoading(false);
+    };
+
+    encryptAccountWorker.postMessage({
+      customDerivationPath,
+      recoveryPhrase,
+      enableAccessToLegacyAccounts,
+      ...values,
+    });
+
+    encryptAccountWorker.onmessage = ({ data: { error, result } }) => {
+      if (error) return showEncryptAccountError();
+
+      onSubmit?.(result);
+      encryptAccountWorker.terminate();
+      return setIsLoading(false);
+    };
+
+    encryptAccountWorker.onerror = showEncryptAccountError;
+
+    return null;
   };
 
   return (
@@ -147,7 +177,12 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
           <span>{t('I agree to store my encrypted secret recovery phrase on this device.')}</span>
         </label>
         <div className={[styles.fieldWrapper, styles.submitWrapper].join(' ')}>
-          <PrimaryButton type="submit" style={{ width: '100%' }} disabled={isButtonDisabled}>
+          <PrimaryButton
+            isLoading={isLoading}
+            type="submit"
+            style={{ width: '100%' }}
+            disabled={isButtonDisabled}
+          >
             {t('Save Account')}
           </PrimaryButton>
         </div>
@@ -156,4 +191,4 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
   );
 }
 
-export default withRouter(SetPasswordForm);
+export default SetPasswordForm;

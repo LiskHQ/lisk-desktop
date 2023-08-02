@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { firstBlockTime } from '@block/utils/firstBlockTime';
+import { liskGenesisBlockTime } from '@block/const';
 import { Input } from 'src/theme';
 import Calendar from 'src/modules/common/components/calendar/calendar';
 import Dropdown from 'src/theme/Dropdown/dropdown';
@@ -74,7 +74,7 @@ class DateField extends React.Component {
               locale={i18n.language}
               onDateSelected={this.dateSelected}
               dateFormat={dateFormat}
-              minDate={moment(firstBlockTime).format(dateFormat)}
+              minDate={moment(liskGenesisBlockTime).format(dateFormat)}
               date={filters[name]}
             />
           ) : (

@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
-import { client } from '@libs/wcm/utils/connectionCreator';
 import { STATUS } from '../constants/lifeCycle';
 
 export const usePairings = () => {
-  const { pairings, setPairings } = useContext(ConnectionContext);
+  const { pairings, setPairings, signClient } = useContext(ConnectionContext);
   const [hasLoaded, setHasLoaded] = useState(false);
 
   /**
@@ -14,23 +13,20 @@ export const usePairings = () => {
    *
    * @param {string} uri - The URI received from the web app.
    */
-  const setUri = useCallback(
-    async (uri) => {
-      try {
-        const data = await client.pair({ uri });
-        return {
-          status: STATUS.SUCCESS,
-          data,
-        };
-      } catch (e) {
-        return {
-          status: STATUS.FAILURE,
-          message: e.message,
-        };
-      }
-    },
-    [client]
-  );
+  const setUri = async (uri) => {
+    try {
+      const data = await signClient.core.pairing.pair({ uri });
+      return {
+        status: STATUS.SUCCESS,
+        data,
+      };
+    } catch (e) {
+      return {
+        status: STATUS.FAILURE,
+        message: e.message,
+      };
+    }
+  };
 
   const removePairing = useCallback(
     (topic) => {
@@ -50,17 +46,17 @@ export const usePairings = () => {
    * Retrieves the active parings and refreshes the list.
    */
   const refreshPairings = useCallback(() => {
-    const activePairings = client.pairing.getAll({ active: true });
+    const activePairings = signClient.pairing.getAll({ active: true });
     setPairings([...activePairings]);
-  }, [client]);
+  }, [signClient]);
 
   useEffect(() => {
-    if (client?.pairing?.getAll && !pairings?.length && setPairings) {
-      const activePairings = client.pairing.getAll({ active: true });
+    if (signClient?.pairing?.getAll && !pairings?.length && setPairings) {
+      const activePairings = signClient.pairing.getAll({ active: true });
       setPairings([...activePairings]);
       setHasLoaded(true);
     }
-  }, [client, setPairings]);
+  }, [signClient, setPairings]);
 
   return {
     hasLoaded,

@@ -13,19 +13,20 @@ import arrowLeftTailed from '@setup/react/assets/images/icons/arrow-left-tailed.
 import arrowLeftTailedDark from '@setup/react/assets/images/icons/arrow-left-tailed-dark.svg';
 import arrowRight from '@setup/react/assets/images/icons/arrow-right.svg';
 import arrowBlueRight from '@setup/react/assets/images/icons/arrow-blue-right.svg';
+import arrowBlueDown from '@setup/react/assets/images/icons/arrow-blue-down.svg';
 import arrowRightActive from '@setup/react/assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '@setup/react/assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '@setup/react/assets/images/icons/arrow-right-with-stroke.svg';
 import arrowRightCircle from '@setup/react/assets/images/icons/arrow-right-circle.svg';
 import arrowRightWithStrokeDark from '@setup/react/assets/images/icons/arrow-right-with-stroke-dark.svg';
 import arrowUpCircle from '@setup/react/assets/images/icons/click-to-update.svg';
+import arrowWhiteDown from '@setup/react/assets/images/icons/arrow-white-down.svg';
 import balance from '@setup/react/assets/images/icons/balance.svg';
 import balanceDark from '@setup/react/assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '@setup/react/assets/images/icons/bookmarks-empty-state.svg';
 import bookmarksIconEmptyStateDark from '@setup/react/assets/images/icons/bookmarks-empty-state-dark.svg';
 import checkboxFilled from '@setup/react/assets/images/icons/checkmark-filled.svg';
 import checkboxCircleFilled from '@setup/react/assets/images/icons/checkmark-circle-filled.svg';
-import checkmark from '@setup/react/assets/images/icons/checkmark.svg';
 import copy from '@setup/react/assets/images/icons/copy.svg';
 import copyActive from '@setup/react/assets/images/icons/copy-active.svg';
 import discord from '@setup/react/assets/images/icons/discord.svg';
@@ -71,9 +72,10 @@ import showPassphraseIcon from '@setup/react/assets/images/icons/icon-show-passp
 import signIn from '@setup/react/assets/images/icons/signin.svg';
 import signInActive from '@setup/react/assets/images/icons/signin-active.svg';
 import tooltipQuestionMark from '@setup/react/assets/images/icons/tooltip-question-icon.svg';
-import transactionApproved from '@setup/react/assets/images/icons/transaction-status-approved.svg';
 import transactionError from '@setup/react/assets/images/icons/transaction-error.svg';
-import transactionPending from '@setup/react/assets/images/icons/transaction-status-pending.svg';
+import transactionStatusSuccess from '@setup/react/assets/images/icons/transaction-status-success.svg';
+import transactionStatusPending from '@setup/react/assets/images/icons/transaction-status-pending.svg';
+import transactionStatusFail from '@setup/react/assets/images/icons/transaction-status-fail.svg';
 import transactionSuccess from '@setup/react/assets/images/icons/transaction-success.svg';
 import txDefault from '@setup/react/assets/images/icons/tx-default.svg';
 import txDefaultDark from '@setup/react/assets/images/icons/tx-default-dark.svg';
@@ -139,6 +141,7 @@ import star from '@setup/react/assets/images/icons/star.svg';
 import starDark from '@setup/react/assets/images/icons/star-dark.svg';
 import calendar from '@setup/react/assets/images/icons/calendar.svg';
 import calendarDark from '@setup/react/assets/images/icons/calendar-dark.svg';
+import validatorName from '@setup/react/assets/images/icons/validator-name.svg';
 import weight from '@setup/react/assets/images/icons/weight.svg';
 import weightDark from '@setup/react/assets/images/icons/weight-dark.svg';
 import reward from '@setup/react/assets/images/icons/generated-lsk.svg';
@@ -217,6 +220,7 @@ import chainLinkIcon from '@setup/react/assets/images/icons/chain-link.svg';
 import successCheckMark from '@setup/react/assets/images/icons/success-check-mark.svg';
 import dropdownArrowIcon from '@setup/react/assets/images/icons/dropdown-arrow.svg';
 import plusBlueIcon from '@setup/react/assets/images/icons/plus-blue.svg';
+import plusWhiteIcon from '@setup/react/assets/images/icons/plus-white.svg';
 import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-filled.svg';
 import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon-filled-dark.svg';
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
@@ -225,8 +229,9 @@ import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-
 import transferArrow from '@setup/react/assets/images/icons/transfer-arrow.svg';
 import receivedTransactionIcon from '@setup/react/assets/images/icons/received_transaction_icon.svg';
 import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
-import commissionsIcon from '@setup/react/assets/images/icons/commissions.svg';
+import commissionIcon from '@setup/react/assets/images/icons/commission.svg';
 import editActiveIcon from '@setup/react/assets/images/icons/editActive.svg';
+import editDisabled from '@setup/react/assets/images/icons/edit-disabled.svg';
 import hardwareWalletIcon from '@setup/react/assets/images/icons/hardware-wallet-icon.svg';
 
 export const icons = {
@@ -245,13 +250,13 @@ export const icons = {
   arrowRightInactive,
   arrowUpCircle,
   arrowRightCircle,
+  arrowWhiteDown,
   balance,
   bookmarksIconEmptyState,
   calendar,
   calendarDark,
   checkboxFilled,
   checkboxCircleFilled,
-  checkmark,
   consecutiveMissedBlocks,
   consecutiveMissedBlocksDark,
   copy,
@@ -301,9 +306,10 @@ export const icons = {
   star,
   starDark,
   tooltipQuestionMark,
-  transactionApproved,
   transactionError,
-  transactionPending,
+  transactionStatusSuccess,
+  transactionStatusPending,
+  transactionStatusFail,
   transactionSuccess,
   txDefault,
   txDefaultDark,
@@ -363,6 +369,7 @@ export const icons = {
   signOut,
   plus,
   plusActive,
+  plusWhiteIcon,
   remove,
   totalBlocks,
   totalBlocksDark,
@@ -376,6 +383,7 @@ export const icons = {
   searchInput,
   weight,
   weightDark,
+  validatorName,
   productivity,
   productivityDark,
   lock,
@@ -450,9 +458,11 @@ export const icons = {
   transferArrow,
   receivedTransactionIcon,
   sentTransactionIcon,
-  commissionsIcon,
+  commissionIcon,
   editActiveIcon,
+  editDisabled,
   arrowBlueRight,
+  arrowBlueDown,
   multisigKeys,
   multisigKeysDark,
   hardwareWalletIcon,

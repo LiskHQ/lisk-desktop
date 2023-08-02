@@ -1,6 +1,7 @@
+import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { mockOnMessage } from '@setup/config/setupJest';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import SetPasswordForm from './SetPasswordForm';
 
@@ -50,6 +51,7 @@ const props = {
     value: 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
     isValid: true,
   },
+  prevStep: jest.fn(),
 };
 let password = null;
 let cPassword = null;
@@ -57,7 +59,7 @@ let hasAgreed = null;
 let accountName = null;
 
 beforeEach(() => {
-  renderWithRouter(SetPasswordForm, props);
+  render(<SetPasswordForm {...props} />);
 
   password = screen.getByTestId('password');
   cPassword = screen.getByTestId('cPassword');
@@ -72,7 +74,12 @@ const makeSubmitActive = () => {
 };
 
 describe('Set Password Form validation should work', () => {
-  it('Submit button should be disabled', async () => {
+  it('returns to previous page if the back button is clicked', () => {
+    fireEvent.click(screen.getByAltText('arrowLeftTailed'));
+    expect(props.prevStep).toHaveBeenCalled();
+  });
+
+  it('submit button should be disabled', async () => {
     fireEvent.change(password, { target: { value: 'password' } });
     expect(screen.getByText('Save Account')).toHaveAttribute('disabled');
 
@@ -149,6 +156,18 @@ describe('Set Password Form validation should work', () => {
     });
   });
 
+  it('should display an error if account name already exists', async () => {
+    fireEvent.change(password, { target: { value: 'Password1$' } });
+    fireEvent.change(cPassword, { target: { value: 'Password1$' } });
+    fireEvent.change(accountName, { target: { value: 'account_1' } });
+    fireEvent.click(hasAgreed);
+    fireEvent.click(screen.getByText('Save Account'));
+
+    await waitFor(() => {
+      expect(screen.getByText(`Account with name "account_1" already exists.`)).toBeTruthy();
+    });
+  });
+
   it('should invoke onSubmit with form values when validation is okay', async () => {
     fireEvent.change(password, { target: { value: 'Password1$' } });
     fireEvent.change(cPassword, { target: { value: 'Password1$' } });
@@ -157,7 +176,18 @@ describe('Set Password Form validation should work', () => {
     fireEvent.click(screen.getByText('Save Account'));
 
     await waitFor(() => {
-      expect(props.onSubmit).toBeCalled();
+      expect(mockOnMessage).toHaveBeenCalledWith({
+        accountName: 'username1',
+        cPassword: 'Password1$',
+        customDerivationPath: undefined,
+        enableAccessToLegacyAccounts: undefined,
+        hasAgreed: true,
+        password: 'Password1$',
+        recoveryPhrase: {
+          isValid: true,
+          value: 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
+        },
+      });
     });
   });
 });

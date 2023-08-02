@@ -8,9 +8,12 @@ jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
 describe('unlock transaction Status', () => {
+  const mockPrevStep = jest.fn();
+
   const props = {
     t: (key) => key,
     account: accounts.genesis,
+    prevStep: mockPrevStep,
     transactions: {
       txBroadcastError: null,
       txSignatureError: null,
@@ -61,6 +64,7 @@ describe('unlock transaction Status', () => {
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
       message: 'An error occurred while signing your transaction. Please try again.',
+      onRetry: expect.any(Function),
     });
 
     const propsWithHWError = {
@@ -100,6 +104,8 @@ describe('unlock transaction Status', () => {
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
       message: 'An error occurred while sending your transaction to the network. Please try again.',
+      onRetry: expect.any(Function),
+      children: undefined,
     });
   });
 

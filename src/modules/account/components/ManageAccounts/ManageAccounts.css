@@ -16,7 +16,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  padding: 30px 10px;
   box-sizing: border-box;
   background-color: var(--color-white);
   border-radius: 16px;
@@ -37,11 +37,11 @@
 }
 
 .button {
-  width: 100%;
   display: flex;
   color: var(--color-maastricht-blue);
   margin-top: 17px;
   border-radius: 10px;
+  width: calc(100% - 40px);
 
   & > img {
     width: 18px;
@@ -52,6 +52,7 @@
 .addAccountBtn {
   color: var(--color-link);
   margin-top: 16px;
+  width: calc(100% - 40px);
 }
 
 .manageAccounts {

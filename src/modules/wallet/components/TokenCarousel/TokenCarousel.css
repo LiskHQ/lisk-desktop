@@ -74,6 +74,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  box-sizing: border-box;
 
   & > p {
     border-radius: 5px;
@@ -87,4 +88,8 @@
     color: var(--color-ultramarine-blue);
     height: fit-content !important;
   }
+}
+
+.emptyTokenIllustration {
+  height: 100px;
 }

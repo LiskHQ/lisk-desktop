@@ -2,7 +2,16 @@
 
 .detailsContainer,
 .highlightContainer {
-  overflow: hidden;
+  overflow-y: clip;
+
+  .tooltipClassNameProp {
+    padding: 15px;
+    max-width: 194px;
+    border: 1px solid #e1e3eb;
+    box-shadow: 0 2px 4px rgba(6, 22, 48, 0.06);
+    border-radius: 3px;
+    line-height: 120%;
+  }
 
   & h1.heading {
     @mixin headingNormal;
@@ -169,6 +178,10 @@
       &.capitalized {
         text-transform: capitalize;
       }
+
+      &.textLineThrough {
+        text-decoration: line-through;
+      }
     }
   }
 }
@@ -188,6 +201,10 @@
       margin: 0;
     }
 
+    &.rewardWrapper {
+      overflow: visible;
+    }
+
     & .content {
       width: max-content;
       display: flex;
@@ -204,22 +221,66 @@
         box-sizing: border-box;
         padding-right: 20px;
 
-        & > .title > div {
+        & .title {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           flex-wrap: wrap;
+          margin-bottom: 20px;
+
+          & .rewardContainer {
+            width: 100%;
+          }
+
+          & .separator {
+            margin-top: 20px;
+            height: 3px;
+            background-color: var(--color-very-light-gray);
+          }
+
+          & .performanceValue {
+            @mixin validatorPerformanceValueFont;
+
+            margin-top: 10px;
+            color: var(--color-maastricht-blue);
+            overflow-wrap: break-word;
+          }
+
+          & .highlightIcon {
+            width: 100%;
+            height: 80px;
+
+            & img {
+              width: 100%;
+            }
+          }
         }
 
-        & > .title > div a {
-          font-size: var(--button-font-size-s);
-          font-weight: var(--font-weight-normal);
-          display: flex;
-          align-items: center;
-          flex-direction: row;
+        & > .details {
+          font-family: var(--content-font);
+          flex-grow: initial;
+          margin-bottom: 16px;
 
-          & > img {
-            padding-left: 5px;
+          & > span {
+            font-size: 12px;
+            color: var(--color-slate-gray);
+          }
+
+          & .tooltipDetails {
+            width: 9vw; /* stylelint-disable-line unit-whitelist */
+          }
+
+          @media (min-width: 1600px) {
+            & .tooltipDetails {
+              width: 7vw; /* stylelint-disable-line unit-whitelist */
+            }
+          }
+
+          & .value {
+            @mixin validatorPerformanceValueFont;
+
+            color: var(--color-maastricht-blue);
+            font-size: 14px;
           }
         }
       }
@@ -235,14 +296,14 @@
         }
       }
 
-      & > *:not(.title):not(.highlighIcon) {
+      & > *:not(.title):not(.highlightIcon):not(.details) {
         @mixin validatorPerformanceValueFont;
 
         color: var(--color-maastricht-blue);
       }
     }
 
-    & .highlighIcon {
+    & .highlightIcon {
       align-self: flex-end;
       display: flex;
       flex: 1;
@@ -276,19 +337,6 @@
         position: absolute;
         min-width: 158px;
         bottom: -10px;
-      }
-
-      &.reward {
-        height: 108px;
-        width: '100%';
-        padding-right: 20px;
-        position: relative;
-        right: 15px;
-        bottom: -9px;
-
-        & img {
-          width: 100%;
-        }
       }
     }
   }
@@ -351,14 +399,14 @@
         }
       }
 
-      & > *:not(.title):not(.validatorDescription):not(.highlighIcon) {
+      & > *:not(.title):not(.validatorDescription):not(.highlightIcon) {
         @mixin validatorPerformanceValueFont;
 
         color: var(--color-maastricht-blue);
       }
     }
 
-    & .highlighIcon {
+    & .highlightIcon {
       align-self: flex-end;
       display: flex;
       flex: 1;
@@ -445,4 +493,11 @@
   border: solid 1px var(--color-edit-button-border);
   background-color: var(--color-edit-button-background);
   cursor: pointer;
+}
+
+.editDisabledIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: initial;
 }

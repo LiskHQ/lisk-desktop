@@ -45,8 +45,8 @@ export const useBlocks = ({ config: customConfig = {}, options } = {}) => {
       setHasUpdate(true);
     });
     return () => {
-      client.socket.off('new.block');
-      client.socket.off('delete.block');
+      client.socket?.off('new.block');
+      client.socket?.off('delete.block');
     };
   }, []);
 

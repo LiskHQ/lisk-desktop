@@ -7,10 +7,8 @@ describe('SearchBarWallets', () => {
 
   const props = {
     t: (v) => v,
-    wallets: [],
+    wallet: {},
     onSelectedRow: jest.fn(),
-    rowItemIndex: 0,
-    updateRowItemIndex: jest.fn(),
   };
 
   beforeEach(() => {
@@ -21,20 +19,18 @@ describe('SearchBarWallets', () => {
     expect(wrapper).toContainMatchingElement('.accounts');
     expect(wrapper).toContainMatchingElement('.accounts-header');
     expect(wrapper).toContainMatchingElement('.account-content');
-    expect(wrapper).not.toContainMatchingElement('.account-row');
+    expect(wrapper).toContainMatchingElement('.account-row');
   });
 
   it('should render properly validator accounts', () => {
     const newProps = { ...props };
-    newProps.wallets = [
-      {
-        address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
-        balance: '120',
-        isValidator: true,
-        name: 'genesis_51',
-        rank: 34,
-      },
-    ];
+    newProps.wallet = {
+      address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+      balance: '120',
+      isValidator: true,
+      name: 'genesis_51',
+      rank: 34,
+    };
     wrapper = mount(<SearchBarWallets {...newProps} />);
     expect(wrapper).toContainMatchingElement('.accounts');
     expect(wrapper).toContainMatchingElement('.accounts-header');
@@ -43,16 +39,10 @@ describe('SearchBarWallets', () => {
 
   it('should render properly with accounts data', () => {
     const newProps = { ...props };
-    newProps.wallets = [
-      {
-        address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
-        balance: '120',
-      },
-      {
-        address: 'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
-        balance: '110',
-      },
-    ];
+    newProps.wallet = {
+      address: 'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
+      balance: '110',
+    };
     wrapper = mount(<SearchBarWallets {...newProps} />);
 
     expect(wrapper).toContainMatchingElement('.accounts');
@@ -63,7 +53,7 @@ describe('SearchBarWallets', () => {
 
   it('should call onClick function on selected row', () => {
     const newProps = { ...props };
-    newProps.wallets = [
+    newProps.wallet = [
       {
         address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
         balance: '120',

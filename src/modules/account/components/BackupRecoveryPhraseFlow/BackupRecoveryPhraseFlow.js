@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import routes from 'src/routes/routes';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import MultiStep from 'src/modules/common/components/MultiStep';
@@ -11,7 +11,8 @@ import SetPasswordSuccess from '@auth/components/SetPasswordSuccess';
 import { useCurrentAccount } from '@account/hooks/useCurrentAccount';
 import styles from './BackupRecoveryPhraseFlow.css';
 
-const BackupRecoveryPhraseFlow = ({ history }) => {
+const BackupRecoveryPhraseFlow = () => {
+  const history = useHistory();
   const { t } = useTranslation();
   const multiStepRef = useRef(null);
   const [account] = useCurrentAccount();
@@ -44,4 +45,4 @@ const BackupRecoveryPhraseFlow = ({ history }) => {
   );
 };
 
-export default withRouter(BackupRecoveryPhraseFlow);
+export default BackupRecoveryPhraseFlow;

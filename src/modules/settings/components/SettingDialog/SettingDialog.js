@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { externalLinks } from 'src/utils/externalLinks';
+import { links } from 'src/const/externalLinks';
 import settingsConst from 'src/modules/settings/const/settingConstants';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
@@ -46,18 +46,6 @@ function SettingDialog() {
               </div>
             </label>
           </section>
-          <section className="advanced">
-            <h2>{t('Advanced')}</h2>
-            <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-              <Toggle isCheckbox setting={settingsConst.keys.enableAccessToLegacyAccounts} />
-              <div>
-                <span className={styles.labelName}>
-                  {t('Enable access to legacy Lisk accounts')}
-                </span>
-                <p>{t('Access to Lisk protocol v3 or older accounts.')}</p>
-              </div>
-            </label>
-          </section>
           <section className="privacy">
             <h2>{t('Privacy')}</h2>
             <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
@@ -65,11 +53,16 @@ function SettingDialog() {
               <div>
                 <span className={styles.labelName}>{t('Anonymous analytics collection')}</span>
                 <p>{t('Help improve Lisk by sending anonymous usage data.')}</p>
-                <a target="_blank" href={externalLinks.privacyPolicy} className={styles.link}>
-                  {t('Privacy policy')}
-                </a>
               </div>
             </label>
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href={links.privacyPolicy}
+              className={styles.link}
+            >
+              {t('Privacy policy')}
+            </a>
           </section>
         </BoxContent>
       </Box>

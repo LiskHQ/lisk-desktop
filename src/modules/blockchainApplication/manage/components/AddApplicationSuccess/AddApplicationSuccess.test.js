@@ -5,6 +5,10 @@ import AddApplicationSuccess from './AddApplicationSuccess';
 const props = {
   history: {
     push: jest.fn(),
+    location: {
+      search: '',
+      pathname: '/',
+    },
   },
 };
 
@@ -23,6 +27,6 @@ describe('AddApplicationSuccess', () => {
     fireEvent.click(screen.getByRole('button'));
 
     expect(props.history.push).toHaveBeenCalledTimes(1);
-    expect(props.history.push).toHaveBeenCalledWith('/wallet');
+    expect(props.history.push).toHaveBeenCalledWith('/?modal=manageApplications');
   });
 });

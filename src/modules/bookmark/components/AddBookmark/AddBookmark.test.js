@@ -1,57 +1,49 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { smartRender } from 'src/utils/testHelpers';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuth } from '@auth/__fixtures__';
 import { tokenMap, tokenKeys } from '@token/fungible/consts/tokens';
 import accounts from '@tests/constants/wallets';
 import AddBookmark from './AddBookmark';
+
+jest.mock('@auth/hooks/queries');
 
 describe('Add a new bookmark component', () => {
   const bookmarks = {
     LSK: [],
   };
   const props = {
-    t: (v) => v,
     token: {
       active: tokenMap.LSK.key,
     },
     bookmarks,
-    network: {
-      name: 'testnet',
-      networks: {
-        LSK: {
-          serviceUrl: 'https://service.lisk.com',
-        },
-      },
-    },
-    history: {
-      push: jest.fn(),
-      location: {
-        search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isValidator=false`,
-      },
-    },
-    account: {
-      data: {
-        summary: {},
-        pos: {},
-      },
-      loadData: jest.fn(),
-    },
     bookmarkAdded: jest.fn(),
     prevStep: jest.fn(),
   };
-  const addresses = {
-    LSK: accounts.genesis.summary.address,
+  const history = {
+    push: jest.fn(),
+    location: {
+      search: `?address=${accounts.genesis.summary.address}&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isValidator=false`,
+    },
+  };
+  const bookmarkDetails = {
+    LSK: { address: accounts.genesis.summary.address, title: 'genesis' },
   };
 
   let wrapper;
+  const config = {
+    renderType: 'mount',
+    historyInfo: history,
+    queryClient: true,
+  };
 
   beforeEach(() => {
-    wrapper = mount(<AddBookmark {...props} />);
+    useAuth.mockReturnValue({ data: undefined });
+    wrapper = smartRender(AddBookmark, props, config).wrapper;
   });
 
   afterEach(() => {
-    props.history.push.mockClear();
+    history.push.mockClear();
     props.bookmarkAdded.mockClear();
-    props.account.loadData.mockReset();
   });
 
   it('Should render properly and with pristine state', () => {
@@ -70,7 +62,7 @@ describe('Add a new bookmark component', () => {
           .first()
           .simulate('change', {
             target: {
-              value: addresses[token],
+              value: bookmarkDetails[token].address,
               name: 'address',
             },
           });
@@ -79,7 +71,7 @@ describe('Add a new bookmark component', () => {
           .at(0)
           .simulate('change', {
             target: {
-              value: `label-${token}`,
+              value: `label_${token}`,
               name: 'label',
             },
           });
@@ -102,30 +94,54 @@ describe('Add a new bookmark component', () => {
             name: 'address',
           },
         });
-      wrapper.setProps({
+      const updatedProps = {
+        ...props,
         account: { ...props.account, data: accounts.validator },
-        history: {
+      };
+      const updatedConfig = {
+        ...config,
+        historyInfo: {
           push: jest.fn(),
           location: {
-            search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isValidator=true`,
+            search: `?address=${accountAddress}&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isValidator=true`,
           },
         },
-      });
-      wrapper.update();
+      };
+      wrapper = smartRender(AddBookmark, updatedProps, updatedConfig).wrapper;
       expect(wrapper.find('input[name="label"]')).toHaveValue(accountUsername);
       expect(wrapper.find('input[name="label"]')).toHaveProp('readOnly', true);
-      expect(wrapper.find('button').at(0)).not.toBeDisabled();
-      wrapper.find('button').at(0).simulate('click');
+      expect(wrapper.find('button').at(1)).not.toBeDisabled();
+    });
+
+    it('should not be possible to change validator label and address if auth endpoint returns data', () => {
+      useAuth.mockReturnValue({ data: { meta: mockAuth.meta } });
+      const accountAddress = mockAuth.meta.address;
+      const accountUsername = mockAuth.meta.name;
+      wrapper
+        .find('input[name="address"]')
+        .first()
+        .simulate('change', {
+          target: {
+            value: accountAddress,
+            name: 'address',
+          },
+        });
+      wrapper = smartRender(AddBookmark, props, config).wrapper;
+      expect(wrapper.find('input[name="label"]')).toHaveValue(accountUsername);
+      expect(wrapper.find('input[name="label"]')).toHaveProp('readOnly', true);
+      expect(wrapper.find('button').at(1)).not.toBeDisabled();
     });
   });
 
   describe('Fail scenarios', () => {
     beforeEach(() => {
-      wrapper.setProps({
+      const updatedProps = {
+        ...props,
         bookmarks: {
-          LSK: [{ address: addresses.LSK, title: 'genesis' }],
+          LSK: [bookmarkDetails.LSK],
         },
-      });
+      };
+      wrapper = smartRender(AddBookmark, updatedProps, config).wrapper;
     });
 
     tokenKeys.forEach((token) => {
@@ -135,12 +151,39 @@ describe('Add a new bookmark component', () => {
           .first()
           .simulate('change', {
             target: {
-              value: addresses[token],
+              value: bookmarkDetails[token].address,
               name: 'address',
             },
           });
         expect(wrapper.find('input[name="address"]')).toHaveClassName('error');
         expect(wrapper).toContainMatchingElement('.error');
+      });
+
+      it(`should not be possible to add already bookmarked name - ${token}`, () => {
+        const bookmarkTitle = bookmarkDetails[token].title;
+        wrapper
+          .find('input[name="label"]')
+          .first()
+          .simulate('change', {
+            target: {
+              value: bookmarkTitle,
+              name: 'label',
+            },
+          });
+        wrapper
+          .find('input[name="address"]')
+          .first()
+          .simulate('change', {
+            target: {
+              value: accounts.validator.summary.address,
+              name: 'address',
+            },
+          });
+        expect(wrapper.find('input[name="label"]')).toHaveClassName('error');
+        expect(wrapper).toContainMatchingElement('.error');
+        expect(wrapper.find('.feedback.error')).toHaveText(
+          `Bookmark with name "${bookmarkTitle}" already exists.`
+        );
       });
 
       it(`should show error on invalid address - ${token}`, () => {

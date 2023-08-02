@@ -1,49 +1,41 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { validateBookmarkAddress, validateBookmarkLabel, getBookmarkMode } from '@bookmark/utils';
+import { validateBookmarkAddress, validateBookmarkLabel } from '@bookmark/utils';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
-import BoxContent from 'src/theme/box/content';
-import BoxFooter from 'src/theme/box/footer';
-import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import Box from '@theme/box';
+import BoxHeader from '@theme/box/header';
+import BoxContent from '@theme/box/content';
+import BoxFooter from '@theme/box/footer';
+import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import ModalWrapper from '@bookmark/components/BookmarksListModal/BookmarkModalWrapper';
-import Icon from 'src/theme/Icon';
+import { useAuth } from '@auth/hooks/queries';
 import styles from './AddBookmark.css';
 import BookmarkForm from './BookmarkForm';
 
 const blankField = { value: '', readonly: false, feedback: '' };
 
 // eslint-disable-next-line max-statements
-const AddBookmark = ({
-  token: { active },
-  account,
-  bookmarks,
-  history,
-  bookmarkRemoved,
-  bookmarkAdded,
-  bookmarkUpdated,
-  network,
-  t,
-}) => {
-  const [mode, setMode] = useState(getBookmarkMode(history, bookmarks, active));
+const AddBookmark = ({ token: { active }, bookmarks, bookmarkAdded }) => {
+  const history = useHistory();
+  const { t } = useTranslation();
   const [fields, setFields] = useState([blankField, blankField]);
   const timeout = useRef(null);
+  const { formAddress, label, isValidator } = parseSearchParams(history.location.search);
+  const address = formAddress ?? '';
+  const [params, setParams] = useState({ address });
+  const { data: { meta: authMeta } = {} } = useAuth({
+    config: { params },
+    options: { enabled: !!params.address },
+  });
 
   useEffect(() => {
-    const { formAddress, label, isValidator } = parseSearchParams(history.location.search);
     const bookmark = bookmarks[active].find((item) => item.address === formAddress);
-    const addressFeedback = validateBookmarkAddress(
-      active,
-      formAddress,
-      network,
-      bookmarks,
-      t,
-      false
-    );
+    const addressFeedback = validateBookmarkAddress(active, formAddress, bookmarks, t, false);
     const usernameValue = bookmark?.title || label || '';
-    const usernameFeedback = validateBookmarkLabel(usernameValue, t);
+    const usernameFeedback = validateBookmarkLabel(active, usernameValue, bookmarks, t);
 
     setFields([
       {
@@ -60,11 +52,11 @@ const AddBookmark = ({
   }, []);
 
   useEffect(() => {
-    if (account.data?.summary) {
-      const username = account.data.pos?.validator?.username ?? '';
+    if (authMeta) {
+      const username = authMeta?.name ?? '';
       setFields([
         {
-          value: account.data.summary.address,
+          value: authMeta.address,
           feedback: '',
           readonly: true,
         },
@@ -74,10 +66,8 @@ const AddBookmark = ({
           readonly: username !== '',
         },
       ]);
-
-      setMode(getBookmarkMode(history, bookmarks, active));
     }
-  }, [account.data]);
+  }, [authMeta]);
 
   const onClose = (e) => {
     if (e) {
@@ -87,7 +77,7 @@ const AddBookmark = ({
   };
 
   const onLabelChange = ({ target: { value } }) => {
-    const feedback = validateBookmarkLabel(value, t);
+    const feedback = validateBookmarkLabel(active, value, bookmarks, t);
     setFields([
       fields[0],
       {
@@ -99,12 +89,12 @@ const AddBookmark = ({
   };
 
   const onAddressChange = ({ target: { value } }) => {
-    const feedback = validateBookmarkAddress(active, value, network, bookmarks, t, true);
+    const feedback = validateBookmarkAddress(active, value, bookmarks, t, true);
     clearTimeout(timeout.current);
 
     if (!feedback && value !== '') {
       timeout.current = setTimeout(() => {
-        account.loadData({ address: value });
+        setParams({ address: value });
       }, 300);
     }
 
@@ -118,26 +108,16 @@ const AddBookmark = ({
     ]);
   };
 
-  const handleRemoveBookmark = (e) => {
-    e.preventDefault();
-    bookmarkRemoved({
-      address: fields[0].value,
-      token: active,
-    });
-    onClose();
-  };
-
   const handleAddBookmark = (e) => {
     e.preventDefault();
+    const [accountAddress, title] = fields;
 
-    const func = mode === 'edit' ? bookmarkUpdated : bookmarkAdded;
-
-    func({
+    bookmarkAdded({
       token: active,
       wallet: {
-        address: fields[0].value,
-        title: fields[1].value,
-        isValidator: fields[1].readonly,
+        address: accountAddress.value,
+        title: title.value,
+        isValidator: title.readonly,
       },
     });
     onClose();
@@ -149,12 +129,9 @@ const AddBookmark = ({
     <ModalWrapper>
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <header className={styles.header}>
-            <Icon name="bookmarkActive" />
-          </header>
           <Box className={styles.box}>
             <BoxHeader>
-              <h2>{mode === 'edit' ? t('Edit bookmark') : t('New bookmark')}</h2>
+              <h2>{t('New bookmark')}</h2>
             </BoxHeader>
             <BoxContent>
               <BookmarkForm t={t} status={fields} handlers={[onAddressChange, onLabelChange]} />
@@ -163,14 +140,6 @@ const AddBookmark = ({
               <SecondaryButton className="cancel-button" onClick={onClose}>
                 {t('Cancel')}
               </SecondaryButton>
-              {mode === 'edit' && (
-                <SecondaryButton className="remove-button" onClick={handleRemoveBookmark}>
-                  <div className={styles.removeBtn}>
-                    <Icon name="remove" />
-                    {t('Remove')}
-                  </div>
-                </SecondaryButton>
-              )}
               <PrimaryButton
                 disabled={isDisabled}
                 onClick={handleAddBookmark}
@@ -188,7 +157,6 @@ const AddBookmark = ({
 
 AddBookmark.displayName = 'AddBookmark';
 AddBookmark.propTypes = {
-  t: PropTypes.func.isRequired,
   token: PropTypes.shape({
     active: PropTypes.string.isRequired,
   }).isRequired,
@@ -199,9 +167,6 @@ AddBookmark.propTypes = {
         title: PropTypes.string.isRequired,
       })
     ),
-  }).isRequired,
-  network: PropTypes.shape({
-    name: PropTypes.string.isRequired,
   }).isRequired,
 };
 

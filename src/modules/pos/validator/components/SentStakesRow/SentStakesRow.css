@@ -19,10 +19,39 @@
     color: var(--color-content-light);
     font-size: var(--paragraph-font-size-s);
     font-weight: var(--font-weight-normal);
+
+    & a {
+      font-weight: var(--font-weight-normal);
+    }
   }
 
   &:hover .pinWrapper {
     display: block;
+  }
+
+  & .balance {
+    padding: 0px 10px 0px 10px;
+    display: flex;
+    align-items: center;
+    font-size: var(--paragraph-font-size-s);
+    color: var(--color-content-light);
+
+    &.amountCell {
+      font-size: var(--font-size-h6);
+      transition-property: color;
+      transition-timing-function: steps(8, end);
+      transition-duration: 1.5s;
+    }
+
+    &.animateRed {
+      color: var(--color-red);
+      transition-duration: 0s;
+    }
+
+    &.animateGreen {
+      color: var(--color-deep-green);
+      transition-duration: 0s;
+    }
   }
 }
 
@@ -90,18 +119,6 @@
     @mixin contentLarge;
 
     color: var(--color-slate-gray);
-  }
-}
-
-.balance {
-  padding: 0px 10px 0px 10px;
-  display: flex;
-  align-items: center;
-  font-size: var(--paragraph-font-size-s);
-  color: var(--color-content-light) !important;
-
-  &.amountCell {
-    font-size: var(--font-size-h6);
   }
 }
 

@@ -139,3 +139,6 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
   // broadcast success
   return { code: txStatusTypes.broadcastSuccess };
 };
+
+export const isTxStatusError = (statusCode) =>
+  [txStatusTypes.signatureError, txStatusTypes.broadcastError].includes(statusCode);

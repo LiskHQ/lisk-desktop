@@ -1,26 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import TabsContainer from 'src/theme/tabs/tabsContainer/tabsContainer';
-import InfoBanner from 'src/modules/common/components/infoBanner/infoBanner';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper';
+import TabsContainer from '@theme/tabs/tabsContainer/tabsContainer';
+import InfoBanner from '@common/components/infoBanner/infoBanner';
 import BlockchainApplicationList from '@blockchainApplication/explore/components/BlockchainApplicationList';
 import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics';
 import styles from './BlockchainApplications.css';
+import banners from './banners';
 import SessionManager from '../../../connection/components/SessionManager';
 
 const BlockchainApplications = ({ applications, statistics, applyFilters, filters }) => {
   const { t } = useTranslation();
+  const [sliderVisibility, setSliderVisibility] = useState(
+    !localStorage.getItem('blockchainApplicationsPageBanner')
+  );
+  const handleSliderBannerClose = () => setSliderVisibility(!sliderVisibility);
+
   return (
     <div className={styles.wrapper}>
-      <InfoBanner
-        className={styles.banner}
-        t={t}
-        name="blockchainApplicationsPageBanner"
-        infoLabel={t('New')}
-        infoMessage={t('Explore decentralized applications')}
-        infoDescription={t('Description')}
-        infoLink="https://lisk.io"
-        show
-      />
+      {sliderVisibility && (
+        <Swiper
+          pagination={{ clickable: true }}
+          navigation
+          modules={[Pagination, Navigation]}
+          loop
+          slidesPerView="auto"
+          spaceBetween={20}
+          className={styles.bannerSwiper}
+        >
+          {banners.map((bannerInfo, index) => {
+            const { infoMessage, infoDescription, illustrationName, infoLink, infoLinkText } =
+              bannerInfo;
+            return (
+              <SwiperSlide key={index}>
+                <InfoBanner
+                  t={t}
+                  className={styles.bannerWrapper}
+                  name="blockchainApplicationsPageBanner"
+                  infoLabel={t('New')}
+                  infoMessage={infoMessage(t)}
+                  infoDescription={infoDescription(t)}
+                  illustrationName={illustrationName}
+                  handleSliderBannerClose={handleSliderBannerClose}
+                  infoLink={infoLink}
+                  infoLinkText={infoLinkText}
+                  show
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      )}
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
           <TabsContainer name="main-tabs" activeTab="blockchainApplications">

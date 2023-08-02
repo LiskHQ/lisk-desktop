@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import routes from 'src/routes/routes';
@@ -12,12 +13,12 @@ import styles from './WarnPunishedValidator.css';
 const WarnPunishedValidator = ({
   t,
   isBanned,
-  history,
   daysLeft,
   readMore,
   punishmentStartDate,
   ...props
 }) => {
+  const history = useHistory();
   const theme = useTheme();
 
   useEffect(() => {

@@ -60,5 +60,6 @@
 .retryBtn {
   width: 100%;
   max-width: 354px;
-  margin-top: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

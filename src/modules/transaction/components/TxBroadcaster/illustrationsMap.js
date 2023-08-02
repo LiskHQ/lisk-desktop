@@ -41,7 +41,7 @@ const illustrations = {
   },
   registerValidator: {
     [txStatusTypes.broadcastSuccess]: 'validatorRegistrationSuccess',
-    [txStatusTypes.broadcastError]: 'validatorRegistrationSuccess',
+    [txStatusTypes.broadcastError]: 'validatorRegistrationError',
   },
 };
 

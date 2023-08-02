@@ -18,7 +18,7 @@ describe('useSearchApplications', () => {
     const { result, rerender } = hookImport;
     const { onSearchApplications } = result.current;
     act(() => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
     rerender();
     act(() => {
@@ -42,7 +42,7 @@ describe('useSearchApplications', () => {
     const { result, rerender } = hookImport;
     const { onSearchApplications } = result.current;
     act(() => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
     });
     rerender();
     act(() => {

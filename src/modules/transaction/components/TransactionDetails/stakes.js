@@ -1,39 +1,32 @@
-import React, { useEffect } from 'react';
-import withData from 'src/utils/withData';
-import { getValidators } from '@pos/validator/api';
+import React from 'react';
+import { useValidators } from '@pos/validator/hooks/queries';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import StakeItem from '../StakeItem';
 
-export const StakesPure = ({ t, stakedValidator }) => {
+export const StakesPure = ({ t }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
   const { stakes } = transaction.params;
   const { token } = usePosToken();
-
-  useEffect(() => {
-    if (transaction.params) {
-      const addressList = stakes.map((item) => item.address);
-      stakedValidator.loadData({ addressList });
-    }
-  }, []);
+  const addressList = stakes.map((item) => item.validatorAddress);
+  const { data: validatorsData } = useValidators({
+    config: { params: { address: addressList.join() } },
+  });
 
   return (
     <div className={`${styles.stakeValue}`}>
       <div className={styles.detailsWrapper}>
         <span className={styles.label}>{`${t('Stakes')} (${stakes.length})`}</span>
         <div className={`${styles.stakesContainer} ${styles.added} tx-added-stakes`}>
-          {stakes.map((stake) => (
+          {stakes.map(({ validatorAddress, amount }) => (
             <StakeItem
               truncate
-              key={`stake-${stake.address}`}
-              stake={{ confirmed: stake.amount }}
-              address={stake.address}
+              key={`stake-${validatorAddress}`}
+              stake={{ confirmed: amount }}
+              address={validatorAddress}
               token={token}
-              title={
-                stakedValidator.data[stake.address] &&
-                stakedValidator.data[stake.address].pos?.validator?.name
-              }
+              title={validatorsData?.data?.find((v) => v.address === validatorAddress)?.name}
             />
           ))}
         </div>
@@ -42,14 +35,4 @@ export const StakesPure = ({ t, stakedValidator }) => {
   );
 };
 
-export default withData({
-  stakedValidator: {
-    apiUtil: ({ networks }, params) => getValidators({ network: networks.LSK, params }),
-    defaultData: {},
-    transformResponse: (response) =>
-      response.data.reduce((acc, validator) => {
-        acc[validator.summary?.address] = validator;
-        return acc;
-      }, {}),
-  },
-})(StakesPure);
+export default StakesPure;

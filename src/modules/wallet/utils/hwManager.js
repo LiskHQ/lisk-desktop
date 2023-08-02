@@ -106,11 +106,4 @@ const signMessageByHW = async ({ account, message }) => {
   }
 };
 
-export const getDeviceType = (deviceModel = '') => {
-  if (/ledger/i.test(deviceModel)) {
-    return 'ledgerNano';
-  }
-  return '';
-};
-
 export { updateTransactionSignatures, signMessageByHW };

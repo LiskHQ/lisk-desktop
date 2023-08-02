@@ -11,7 +11,7 @@ import { useApplicationExploreAndMetaData } from './useApplicationExploreAndMeta
 export function useApplicationManagement() {
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
-  const { applications: defaultApplications } = useApplicationExploreAndMetaData();
+  const { applications: defaultApplications, isLoading } = useApplicationExploreAndMetaData();
   const { mainChainNetwork = {} } = useSettings('mainChainNetwork');
 
   const { checkPinByChainId, pins } = usePinBlockchainApplication();
@@ -59,6 +59,7 @@ export function useApplicationManagement() {
   }, []);
 
   return {
+    isLoading,
     applications,
     setApplication,
     setApplications,

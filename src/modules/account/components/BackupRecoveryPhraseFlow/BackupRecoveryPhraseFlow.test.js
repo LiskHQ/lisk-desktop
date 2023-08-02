@@ -80,8 +80,16 @@ describe('Backup account recovery phrase flow', () => {
     expect(screen.getByText('Confirm')).toBeTruthy();
     expect(screen.getByText('Go back')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('solution'));
-    fireEvent.click(screen.getByText('vendor'));
+    const inputFields = screen.getAllByTestId('word');
+    const [missingWord1, missingWord2] = inputFields.reduce((result, { innerHTML }, index) => {
+      if (innerHTML === '_______') {
+        return [...result, index];
+      }
+      return result;
+    }, []);
+
+    fireEvent.click(screen.getByText(recoveryPhrase.split(' ')[missingWord1]));
+    fireEvent.click(screen.getByText(recoveryPhrase.split(' ')[missingWord2]));
     fireEvent.click(screen.getByText('Confirm'));
 
     await waitFor(() => {

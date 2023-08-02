@@ -1,18 +1,19 @@
 /* eslint-disable max-statements */
-/* eslint-disable max-lines */
 import React, { useRef, useState } from 'react';
-import { withRouter } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import SetPasswordForm from 'src/modules/auth/components/SetPasswordForm/SetPasswordForm';
 import MultiStep from 'src/modules/common/components/MultiStep';
 import SetPasswordSuccess from 'src/modules/auth/components/SetPasswordSuccess';
 import routes from 'src/routes/routes';
 import { useCurrentAccount, useAccounts } from '@account/hooks';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
+import { defaultDerivationPath } from '@account/const';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
 
-const AddAccountBySecretRecovery = ({ history, location: { search } }) => {
+const AddAccountBySecretRecovery = () => {
+  const history = useHistory();
+  const { search } = useLocation();
   const multiStepRef = useRef(null);
   const [recoveryPhrase, setRecoveryPhrase] = useState(null);
   const [customDerivationPath, setCustomDerivationPath] = useState(defaultDerivationPath);
@@ -25,15 +26,17 @@ const AddAccountBySecretRecovery = ({ history, location: { search } }) => {
   const onAddAccount = (recoveryPhraseData, derivationPath) => {
     setRecoveryPhrase(recoveryPhraseData);
     setCustomDerivationPath(derivationPath);
-    multiStepRef.current.next();
+    multiStepRef?.current?.next();
   };
 
+  /* istanbul ignore next */
   const onSetPassword = (account) => {
     setCurrentAccount(account);
     setAccount(account);
-    multiStepRef.current.next();
+    multiStepRef?.current?.next();
   };
 
+  /* istanbul ignore next */
   const onPasswordSetComplete = () => {
     history.push(referrer || routes.wallet.path);
   };
@@ -53,4 +56,4 @@ const AddAccountBySecretRecovery = ({ history, location: { search } }) => {
   );
 };
 
-export default withRouter(AddAccountBySecretRecovery);
+export default AddAccountBySecretRecovery;

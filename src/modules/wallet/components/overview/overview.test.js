@@ -74,7 +74,7 @@ describe('Overview', () => {
     expect(screen.getByText('Send')).toBeTruthy();
     expect(screen.getByText('Tokens')).toBeTruthy();
     expect(screen.getByText(mockAuth.meta.address)).toBeTruthy();
-    expect(screen.getByText(mockAuth.meta.name)).toBeTruthy();
+    expect(screen.getByText(mockedCurrentAccount.metadata.name)).toBeTruthy();
     expect(screen.getByText('View all tokens')).toBeTruthy();
 
     expect(screen.getAllByTestId('token-card')).toHaveLength(mergedTokens.length);

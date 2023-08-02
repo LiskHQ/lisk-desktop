@@ -1,7 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { truncateAddress } from '@wallet/utils/account';
 import RemoveAccount from './RemoveAccount';
 
 const mockSetAccount = jest.fn();
@@ -31,7 +30,7 @@ describe('Remove account', () => {
 
   it('Should successfully go though the flow', async () => {
     const { address, name } = mockSavedAccounts[0].metadata;
-    const fileName = `${truncateAddress(address)}_${name}_lisk_account`;
+    const fileName = `${address}-${name}-lisk-account`;
     expect(screen.getByText('Remove Account?')).toBeTruthy();
     const message = 'This account will no longer be stored on this device.{{text}}';
     expect(screen.getByText(message)).toBeTruthy();

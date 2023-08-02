@@ -1,16 +1,18 @@
 /* eslint-disable max-lines */
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from 'src/routes/routes';
-import CustomDerivationPath from 'src/modules/auth/components/CustomDerivationPath';
+import CustomDerivationPath from '@auth/components/CustomDerivationPath';
 import { PrimaryButton } from 'src/theme/buttons';
-import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
-import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
-import NetworkSelector from 'src/modules/settings/components/networkSelector';
+import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
+import DiscreetModeToggle from '@settings/components/discreetModeToggle';
 import { getDerivationPathErrorMessage } from '@wallet/utils/account';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
+import Toggle from '@settings/components/toggle';
+import Tooltip from '@theme/Tooltip/tooltip';
+import settingsConst from '@settings/const/settingConstants';
+import { defaultDerivationPath } from '@account/const';
 import styles from './AddAccountForm.css';
 
 const AddAccountForm = ({ settings, onAddAccount }) => {
@@ -25,14 +27,10 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
 
   const props = { settings, onAddAccount, setPassphrase, passphrase };
 
-  if (settings.enableAccessToLegacyAccounts) {
-    return <AddAccountFormContainer {...props} />;
-  }
   return <AddAccountFormWithDerivationPath {...props} />;
 };
 
 const AddAccountFormContainer = ({
-  settings,
   passphrase,
   setPassphrase,
   onAddAccount,
@@ -68,12 +66,6 @@ const AddAccountFormContainer = ({
         </div>
         <form onSubmit={onFormSubmit}>
           <div className={styles.inputFields}>
-            {settings.showNetwork && (
-              <fieldset>
-                <label>{t('Switch network')}</label>
-                <NetworkSelector />
-              </fieldset>
-            )}
             <fieldset>
               <label>{t('Secret recovery phrase (12-24 mnemonic phrases supported)')}</label>
               <PassphraseInput
@@ -85,7 +77,6 @@ const AddAccountFormContainer = ({
               />
             </fieldset>
             {children}
-            <DiscreetModeToggle className={styles.discreetMode} />
           </div>
           <div className={`${styles.buttonsHolder}`}>
             <PrimaryButton
@@ -109,6 +100,7 @@ const AddAccountFormContainer = ({
 };
 
 const AddAccountFormWithDerivationPath = (props) => {
+  const { t } = useTranslation();
   const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
   const derivationPathErrorMessage = getDerivationPathErrorMessage(derivationPath);
 
@@ -123,11 +115,31 @@ const AddAccountFormWithDerivationPath = (props) => {
       isSubmitDisabled={!!derivationPathErrorMessage}
       derivationPath={derivationPath}
     >
-      <CustomDerivationPath
-        onChange={onPathInputChange}
-        value={derivationPath}
-        derivationPathErrorMessage={derivationPathErrorMessage}
-      />
+      <div className={styles.labelWrapper}>
+        <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+          <Toggle isCheckbox setting={settingsConst.keys.enableAccessToLegacyAccounts} />
+          <span className={styles.labelName}>
+            {t('Enable access to legacy Lisk accounts')}
+            <Tooltip position="bottom">
+              <span>
+                {t(
+                  'Enable this option to access your Lisk accounts created using Lisk v3 protocol or older.'
+                )}
+              </span>
+            </Tooltip>
+          </span>
+        </label>
+        <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+          <DiscreetModeToggle className={styles.discreetMode} />
+        </label>
+      </div>
+      {!props.settings.enableAccessToLegacyAccounts ? (
+        <CustomDerivationPath
+          onChange={onPathInputChange}
+          derivationPath={derivationPath}
+          derivationPathErrorMessage={derivationPathErrorMessage}
+        />
+      ) : null}
     </AddAccountFormContainer>
   );
 };

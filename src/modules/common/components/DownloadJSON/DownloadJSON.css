@@ -11,8 +11,9 @@
 
     color: var(--color-maastricht-blue);
     margin: 10px 20px;
-    text-align: left;
     word-spacing: 8px;
+    word-break: break-all;
+    text-align: center;
   }
 }
 

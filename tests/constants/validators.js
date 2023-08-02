@@ -3,12 +3,14 @@ const validator = (index) => ({
   totalStakeReceived: `100600000000${index}`,
   selfStake: `10060000000${index}`,
   commission: 10000,
+  totalSelfStakeRewards: 200 * index,
+  totalCommission: 100 * index,
   validatorWeight: `100600000${index}000`,
   address: `lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno${index}`,
   lastGeneratedHeight: 27605 + index,
   status: 'active',
   isBanned: index < 15,
-  rank: index,
+  rank: index + 1,
   pomHeights: [100 + index],
   punishmentPeriods: [
     {
@@ -16,7 +18,7 @@ const validator = (index) => ({
       end: 500 + index,
     },
   ],
-  consecutiveMissedBlocks: index < 15 ? index + 1 : 0,
+  consecutiveMissedBlocks: index < 15 ? index + 2 : 0,
 });
 
 const validators = Array(30)
