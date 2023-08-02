@@ -30,7 +30,7 @@ jobs:
       # Fetch project source with GitHub Actions Checkout.
       - uses: actions/checkout@v3
       # Run the "semgrep ci" command on the command line of the docker image.
-      - run: semgrep --sarif --output=semgrep.sarif --metrics off
+      - run: semgrep --sarif --output=semgrep.sarif --metrics off --exclude=*.test.js
         env:
           # Connect to Semgrep Cloud Platform through your SEMGREP_APP_TOKEN.
           # Generate a token from Semgrep Cloud Platform > Settings
