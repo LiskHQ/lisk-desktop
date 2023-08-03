@@ -16,6 +16,7 @@ import BlockchainApplicationRow from '../BlockchainApplicationRow';
 import header from './BlockchainApplicationListHeaderMap';
 import styles from './BlockchainApplicationList.css';
 
+// eslint-disable-next-line max-statements
 const BlockchainApplicationList = () => {
   const [searchValue, setSearchValue] = useState('');
   const { filters, applyFilters } = useFilter();
@@ -46,6 +47,14 @@ const BlockchainApplicationList = () => {
     },
     [searchValue]
   );
+  const defaultStatus = { active: 0, registered: 0, terminated: 0 };
+  const { active, registered, terminated } =
+    blockchainApplicationExplore?.data?.data?.reduce((accumulator, { status }) => {
+      accumulator[status] += 1;
+      return accumulator;
+    }, defaultStatus) || defaultStatus;
+
+  const message = `Blockchain applications found, active (${active}), registered (${registered}) or terminated (${terminated}).`;
 
   return (
     <Box main className="chain-application-box">
@@ -78,7 +87,7 @@ const BlockchainApplicationList = () => {
           headerClassName={styles.tableHeader}
           additionalRowProps={{ t }}
           emptyState={{
-            message: t('No active, registered or terminated blockchain applications found.'),
+            message: t(message),
             illustration: 'emptyExploreApplicationsIllustration',
           }}
         />
