@@ -61,7 +61,11 @@ const Overview = ({ isWalletRoute, history }) => {
     error,
     refetch,
   } = useTokenBalances({ config: { params: { address } } });
-  const isZeroBalance = BigInt(tokenBalances?.data[0]?.availableBalance || 0) === BigInt(0);
+  const { data: myTokenBalances } = useTokenBalances();
+  const hasTokenWithBalance = myTokenBalances?.data?.some(
+    (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
+  );
+
   const host = wallet.summary?.address ?? '';
 
   const showWarning = () => {
@@ -122,7 +126,7 @@ const Overview = ({ isWalletRoute, history }) => {
           </div>
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
             <DialogLink component="send">
-              <PrimaryButton disabled={isZeroBalance}>{t('Send')}</PrimaryButton>
+              <PrimaryButton disabled={!hasTokenWithBalance}>{t('Send')}</PrimaryButton>
             </DialogLink>
           </div>
         </div>
@@ -131,11 +135,9 @@ const Overview = ({ isWalletRoute, history }) => {
         <div className={styles.contentWrapper}>
           <div className={`${styles.carouselHeader}`}>
             <div>{t('Tokens')}</div>
-            {!searchAddress && (
+            {!searchAddress && hasTokenWithBalance && (
               <div>
-                <Link to={`${routes.allTokens.path}?disableSend=${isZeroBalance}`}>
-                  {t('View all tokens')}
-                </Link>
+                <Link to={`${routes.allTokens.path}`}>{t('View all tokens')}</Link>
               </div>
             )}
           </div>
