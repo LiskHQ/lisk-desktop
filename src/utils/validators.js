@@ -12,8 +12,6 @@ export const isNumeric = (value) => /^(-?[0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)
 
 /**
  * Check if address is in Lisk32 format
- *
- * @param {String} address
  * @returns {Number} -> 0: valid, 1: invalid, -1: empty
  */
 export const validateAddress = (address) => {
@@ -30,8 +28,6 @@ export const validateAddress = (address) => {
 
 /**
  * Checks the validity of a given publicKey
- *
- * @param {String} publicKey - The publicKey to validate
  * @returns {Number} 0 for valid, 1 for invalid
  */
 export const validateLSKPublicKey = (publicKey) => {

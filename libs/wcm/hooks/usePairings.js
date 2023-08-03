@@ -10,8 +10,6 @@ export const usePairings = () => {
    * Sets the pairing URI as an acknowledgement to the client.
    * Once the handshake is completed, the client will be able to
    * Request a pairing.
-   *
-   * @param {string} uri - The URI received from the web app.
    */
   const setUri = async (uri) => {
     try {

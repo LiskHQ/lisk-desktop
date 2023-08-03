@@ -4,7 +4,6 @@
  * into an array of objects that Lisk Element expects, looking like
  * [{ validatorAddress, amount }]
  *
- * @param {Object} stakes - stakes object retrieved from the Redux store
  * @returns {Array} Array of stakes as Lisk Element expects
  */
 const normalizeStakesForTx = (stakes) =>
