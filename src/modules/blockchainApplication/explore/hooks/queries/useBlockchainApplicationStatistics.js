@@ -2,17 +2,6 @@ import { BLOCKCHAIN_APPS_STATISTICS } from 'src/const/queries';
 import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 
-/**
- * Creates a custom hook for blockchain applications meta queries
- *
- * @param {object} configuration - the custom query configuration object
- * @param {object} configuration.config - the query config
- * @param {object} configuration.config.params - the query config params
- * @param {string} configuration.options - the query options
- *
- * @returns the query object
- */
-
 export const useBlockchainApplicationStatistics = ({
   config: customConfig = {},
   options,

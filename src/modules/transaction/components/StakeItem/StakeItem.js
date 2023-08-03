@@ -9,13 +9,6 @@ import styles from './StakeItem.css';
 
 /**
  * Displays address/validator username along with stake amount
- *
- * @param {Object} stake object containing either or both the confirmed and unconfirmed
- * stake amount values
- * @param {String} address the address to redirect to, also used as primary text if
- * title is not defined
- * @param {String} title text to use instead of the address e.g. validator username
- * @param {Boolean} truncate text to use instead of the address e.g. validator username
  */
 const StakeItem = ({ stake, address, title, truncate, token, reward }) => {
   const accountPath = routes.explorer.path;

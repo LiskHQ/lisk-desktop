@@ -1,15 +1,4 @@
 import client from 'src/utils/api/client';
-/**
- * Makes HTTP api call
- *
- * @param {string} baseUrl - optional service base url
- * @param {string} path - api endpoint
- * @param {string} method - HTTP method
- * @param {string} params - HTTP call parameters
- * @returns {Promise} - if success it returns data,
- * if fails on server it throws an error,
- *
- */
 
 const http = ({
   baseUrl: baseURL,

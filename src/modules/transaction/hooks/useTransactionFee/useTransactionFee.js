@@ -8,15 +8,6 @@ import { joinModuleAndCommand } from '../../utils';
 import { useMinimumFee } from '.';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
-/**
- *
- * @param {object} data
- * @param {boolean} data.isFormValid Whether the transaction form is valid or not. TxComposer defines this
- * @param {string} data.senderAddress The sender address in Lisk 32 format
- * @param {object} data.transaction Transaction object as Lisk Element expects without fee
- * @returns {object} The fee object with a total value, and a component value as an array of fees
- * that contribute in the total value
- */
 // eslint-disable-next-line max-statements
 export const useTransactionFee = ({
   isFormValid,

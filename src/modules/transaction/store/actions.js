@@ -18,8 +18,6 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  * Action trigger after a new transaction is broadcasted to the network
  * then the transaction is add to the pending transaction array in transaction reducer
  * Used in:  Send, Stake, and validator registration.
- * @param {Object} params - all params
- * @param {String} params.senderPublicKey - alphanumeric string
  */
 export const pendingTransactionAdded = (data) => ({
   type: actionTypes.pendingTransactionAdded,
@@ -32,11 +30,6 @@ export const resetTransactionResult = () => ({
 
 /**
  * Calls transactionAPI.broadcast function for put the tx object (signed) into the network
- * @param {Object} transaction
- * @param {String} transaction.recipientAddress
- * @param {Number} transaction.amount - In raw format (satoshi, beddows)
- * @param {Number} transaction.fee - In raw format, used for updating the TX List.
- * @param {Number} transaction.reference - Data field for LSK transactions
  */
 export const transactionBroadcasted =
   (transaction, moduleCommandSchemas) =>
@@ -140,9 +133,6 @@ export const multisigTransactionSigned =
  * Used when a fully signed transaction is imported, this action
  * skips the current user's signature and directly places the tx
  * in the Redux store to be ready for broadcasting.
- *
- * @param {object} data
- * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
 export const signatureSkipped =
   ({ formProps, transactionJSON }) =>

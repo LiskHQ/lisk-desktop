@@ -1,10 +1,5 @@
 import actionTypes from '../actionTypes';
 
-/**
- *
- * @param {Array} state
- * @param {Object} action
- */
 // eslint-disable-next-line complexity
 const account = (state = {}, action) => {
   switch (action.type) {

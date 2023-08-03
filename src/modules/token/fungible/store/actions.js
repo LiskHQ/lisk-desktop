@@ -6,15 +6,6 @@ import actionTypes from '@transaction/store/actionTypes';
 import { signTransaction } from '@transaction/api/index';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 
-/**
- * Calls transactionAPI.create for create the tx object that will broadcast
- * @param {Object} data
- * @param {String} data.recipientAddress
- * @param {Number} data.amount - In raw format (beddows)
- * @param {Number} data.fee - In raw format, used for updating the TX List.
- * @param {Number} data.reference - Data field for LSK transactions
- */
-
 export const tokensTransferred =
   (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
