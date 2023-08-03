@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { parseSearchParams } from 'src/utils/searchParams';
 import Piwik from 'src/utils/piwik';
 import { AutoResizeTextarea } from 'src/theme';
+import { useSelector } from 'react-redux';
 import { PrimaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
 import Tooltip from 'src/theme/Tooltip';
@@ -10,12 +11,14 @@ import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import BoxInfoText from 'src/theme/box/infoText';
 import { useCurrentAccount } from '@account/hooks';
+import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
 import styles from './messageForm.css';
 
 const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
   const [message, setMessage] = useState(prevState?.message || '');
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
+  const { isAppOpen } = useSelector(selectCurrentHWDevice);
 
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
@@ -62,7 +65,16 @@ const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
         </label>
       </BoxContent>
       <BoxFooter direction="horizontal">
-        <PrimaryButton className="next" onClick={onClick}>
+        {currentAccount.metadata?.isHW && !isAppOpen && (
+          <div className={styles.errorLabel}>
+            <span>{t('Open the Lisk app on Ledger device to continue')}</span>
+          </div>
+        )}
+        <PrimaryButton
+          className="next"
+          onClick={onClick}
+          disabled={currentAccount.metadata?.isHW ? !isAppOpen : false}
+        >
           {t('Continue')}
         </PrimaryButton>
       </BoxFooter>
