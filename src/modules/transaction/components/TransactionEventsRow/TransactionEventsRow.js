@@ -31,7 +31,7 @@ const TransactionEventRow = ({ data: transactionEvent, isWallet }) => {
         {isWallet && topics?.length > 0 && <TransactionID id={topics[0]} />}
         <EventModule module={module} isWallet={isWallet} />
         <EventName name={name} isWallet={isWallet} />
-        {data && Object.keys(data).length && (
+        {data && Object.keys(data).length > 0 && (
           <CollapseToggle
             isWallet={isWallet}
             isCollapsed={isCollapsed}
