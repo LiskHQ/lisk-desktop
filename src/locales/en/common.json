@@ -82,6 +82,7 @@
   "Block details": "Block details",
   "Block height": "Block height",
   "Block status": "Block status",
+  "Blockchain applications found, active ({{active}}), registered ({{registered}}) or terminated ({{terminated}}).": "Blockchain applications found, active ({{active}}), registered ({{registered}}) or terminated ({{terminated}}).",
   "Blocks": "Blocks",
   "Blocks generated": "Blocks generated",
   "Blocks overview": "Blocks overview",

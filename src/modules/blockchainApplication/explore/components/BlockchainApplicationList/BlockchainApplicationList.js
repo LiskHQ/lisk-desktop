@@ -54,7 +54,10 @@ const BlockchainApplicationList = () => {
       return accumulator;
     }, defaultStatus) || defaultStatus;
 
-  const message = `Blockchain applications found, active (${active}), registered (${registered}) or terminated (${terminated}).`;
+  const message = t(
+    'Blockchain applications found, active ({{active}}), registered ({{registered}}) or terminated ({{terminated}}).',
+    { active, registered, terminated }
+  );
 
   return (
     <Box main className="chain-application-box">
@@ -87,7 +90,7 @@ const BlockchainApplicationList = () => {
           headerClassName={styles.tableHeader}
           additionalRowProps={{ t }}
           emptyState={{
-            message: t(message),
+            message,
             illustration: 'emptyExploreApplicationsIllustration',
           }}
         />
