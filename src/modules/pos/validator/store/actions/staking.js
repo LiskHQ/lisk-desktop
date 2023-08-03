@@ -45,7 +45,7 @@ export const stakeDiscarded = (data) => ({
 
 /**
  * Defines the new stake amount for a given validator.
- * The reducer will add a new stake if i didn't exist before
+ * The reducer will add a new stake if it didn't exist before
  * Any stake whose stake amount changes to zero will be removed
  * when the stake transaction is confirmed (via stakesConfirmed action)
  */
