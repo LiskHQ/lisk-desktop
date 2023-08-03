@@ -31,7 +31,7 @@ const OnboardingDemo = () => {
         <Onboarding
           slides={getOnboardingSlides()}
           finalCallback={finalCallback}
-          ctaLabel="Start staking"
+          ctaLabel={t("Start staking")}
           name="validatorOnboarding"
         />
       </DemoRenderer>
