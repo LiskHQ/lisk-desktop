@@ -1,5 +1,5 @@
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
@@ -71,6 +71,8 @@ const WalletVisualWithAddress = ({
   isMultisig,
   publicKey,
 }) => {
+  const { t } = useTranslation();
+
   const getTransformedAddress = (addressValue) => {
     if (showBookmarkedAddress) {
       const bookmarkedAddress = bookmarks[token.active].find(
@@ -124,7 +126,7 @@ const WalletVisualWithAddress = ({
           }
         >
           <div className={styles.pubkey}>
-            <span>Public key:</span>
+            <span>{t('Public key:')}</span>
             <span>{truncateTransactionID(publicKey)}</span>
             <CopyToClipboard
               value={publicKey}

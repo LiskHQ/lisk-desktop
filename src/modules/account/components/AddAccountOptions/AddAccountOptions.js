@@ -62,7 +62,7 @@ const AddAccountOptions = () => {
                 buttonClassName={`${styles.inputDropdownButton}`}
                 buttonLabel={
                   <span>
-                    Create one now <Icon name="arrowBlueDown" />{' '}
+                    {t('Create one now')} <Icon name="arrowBlueDown" />{' '}
                   </span>
                 }
                 size="s"

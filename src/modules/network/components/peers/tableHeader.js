@@ -18,9 +18,11 @@ export default (changeSort, t) => [
       title: t('Country'),
       message: () => (
         <p>
-          <span>Lisk Desktop determines the country names using GeoLite2 data created by</span>
+          <span>
+            {t('Lisk Desktop determines the country names using GeoLite2 data created by')}
+          </span>
           &nbsp;
-          <a href="https://www.maxmind.com">Maxmind</a>.
+          <a href="https://www.maxmind.com">{t('Maxmind')}</a>.
         </p>
       ),
       position: 'bottom',
