@@ -7,11 +7,6 @@ import { FEE_TYPES } from '../../constants';
 
 /**
  * Calculates minimum transaction fee based on bytes as per Lisk protocol
- *
- * @param {object} data
- * @param {boolean} data.isFormValid Whether the transaction form is valid or not. TxComposer defines this
- * @param {string} data.senderAddress The sender address in Lisk 32 format
- * @param {object} data.transactionJSON Transaction object as Lisk Element expects without fee
  * @returns {object} The fee object with a result value, loading and fetched state as boolean
  */
 export const useMinimumFee = ({ isFormValid, senderAddress, transactionJSON, extraCommandFee }) => {

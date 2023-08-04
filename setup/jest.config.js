@@ -200,7 +200,6 @@ module.exports = {
     'src/modules/block/components/blocks/blockRow.js',
     'src/modules/block/components/blocks/tableHeader.js',
     'src/modules/block/components/blocks/blocks.js',
-    'src/modules/network/utils/helpers.js',
     'src/modules/network/components/map/index.js',
     'src/modules/network/components/statistics/othersTooltip.js',
     'src/modules/network/components/statistics/index.js',

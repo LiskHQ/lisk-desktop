@@ -169,7 +169,7 @@ const Request = () => {
           'Use the sharing link to easily request any amount of tokens from Lisk Desktop or Lisk Mobile users.'
         )}
       </span>
-      <p>Account</p>
+      <p>{t('Account')}</p>
       <Account />
       <label className={`${styles.fieldGroup} recipient-application`}>
         <span className={`${styles.fieldLabel}`}>{t('Recipient application')}</span>

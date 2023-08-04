@@ -20,11 +20,6 @@ const PrimaryValue = ({ value }) => {
  * 1. An instance of PrimaryValue if the value is string|number|boolean
  * 2. A list of PrimaryValue if the value is an array
  * 3. Re-iterates to return key-values as a PrimaryValue for each member of the object
- *
- * @param {Object} props
- * @param {any} props.value The value to be displayed in key-value pair
- * @param {number?} props.itx Index of the parent element in list
- * @returns {ReactElement} React element to be rendered
  */
 const ParsedParams = ({ value, itx }) => {
   if (Array.isArray(value)) {

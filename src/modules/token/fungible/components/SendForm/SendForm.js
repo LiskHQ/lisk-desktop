@@ -250,7 +250,7 @@ const SendForm = (props) => {
                 <span>{t('Token')}</span>
               </label>
               <span className={styles.balance}>
-                {!!token?.availableBalance && <span>Balance:&nbsp;&nbsp;</span>}
+                {!!token?.availableBalance && <span>{t('Balance:')}&nbsp;&nbsp;</span>}
                 <span>
                   <TokenAmount val={token?.availableBalance} token={token} />
                 </span>

@@ -7,11 +7,6 @@ export const initialState = {
   status: 'standby',
 };
 
-/**
- *
- * @param {Object} state
- * @param {Object} action
- */
 /* istanbul ignore next */
 export const currentDevice = (state = initialState, { type, payload }) => {
   switch (type) {

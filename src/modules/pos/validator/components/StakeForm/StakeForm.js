@@ -28,10 +28,6 @@ import usePosToken from '../../hooks/usePosToken';
 /**
  * Determines the number of stakes that have been
  * added, removed, or edited.
- *
- * @param {Object} stakes - stakes object retrieved from the Redux store
- * @param {Object} account - account object
- * @returns {Object} - stats object
  */
 const getStakeStats = (stakes, account) => {
   const stakesStats = Object.keys(stakes).reduce(
@@ -91,12 +87,6 @@ const getStakeStats = (stakes, account) => {
  * Validates given stakes against the following criteria:
  * - Number of stakes must not exceed STAKE_LIMIT
  * - Added stake amounts + fee must not exceed account balance
- * @param {Object} Stakes - stakes object from Redux store
- * @param {Number} balance - Account balance in Beddows
- * @param {Number} fee - Tx fee in Beddows
- * @param {Number} resultingNumOfStakes - Number of used stakes that will result after submitting tx
- * @param {Function} t - i18n translation function
- * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
 const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken) => {
