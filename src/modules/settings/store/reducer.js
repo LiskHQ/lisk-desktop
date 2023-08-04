@@ -30,11 +30,6 @@ export const initialState = {
   mainChainNetwork: networks[DEFAULT_NETWORK],
 };
 
-/**
- *
- * @param {Array} state
- * @param {Object} action
- */
 const settings = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.settingsUpdated:

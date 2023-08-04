@@ -22,7 +22,6 @@ import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
 import ClaimRewardsView from '@pos/validator/components/ClaimRewardsView';
 import editStakeManager from '@pos/validator/manager/editStakeManager';
 import StakingQueue from '@pos/validator/manager/stakingQueueManager';
-import DeviceDisconnect from '@common/components/deviceDisconnectDialog';
 import ConfirmationDialog from '@common/components/ConfirmationDialog';
 import { ChangeCommissionDialog } from '@pos/validator/components/ChangeCommission/Dialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
@@ -56,6 +55,7 @@ import ConnectionProposal from 'src/modules/blockchainApplication/connection/com
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
 import RequestView from '@blockchainApplication/connection/components/RequestView';
+import RequestSignMessageDialog from '@blockchainApplication/connection/components/RequestSignMessageDialog';
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
 import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardwareDeviceModal';
 
@@ -89,7 +89,6 @@ export default {
   editStake: editStakeManager,
   selectHardwareDeviceModal: SelectHardwareDeviceModal,
   stakingQueue: StakingQueue,
-  deviceDisconnectDialog: DeviceDisconnect,
   confirmationDialog: ConfirmationDialog,
   reclaimBalance: ReclaimBalanceModal,
   multiSignature: RegisterMultisig,
@@ -115,6 +114,7 @@ export default {
   connectionProposal: ConnectionProposal,
   sessionManager: SessionManager,
   requestView: RequestView,
+  requestSignMessageDialog: RequestSignMessageDialog,
   connectionSummary: ConnectionSummary,
   connectionStatus: ConnectionStatus,
   changeCommission: ChangeCommissionDialog,

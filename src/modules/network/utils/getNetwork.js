@@ -10,16 +10,10 @@ export const getNetworksList = () => {
   }));
 };
 
-// Return mainnet as back off network name when cache/local storage does not exists
-// @TODO: incase the network name is customNode, this needs to be properly handled here
 export const getNetworkName = (network = {}) => network?.name || DEFAULT_NETWORK;
 
 /**
- * Returns human readable error messages
- *
- * @param {Object} error
- * @param {String} error.message - The error message received from network API call
- * @returns {String} - The human readable error message.
+ * Returns human-readable error messages
  */
 export const getConnectionErrorMessage = (error) => {
   const { t } = useTranslation();

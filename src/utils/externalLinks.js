@@ -1,4 +1,5 @@
 import history from 'src/utils/history';
+import { IPC_OPEN_URL } from 'src/const/ipcGlobal';
 
 const sendRegex = /^\/(wallet|wallet\/send|main\/transactions\/send)$/;
 const sendRedirect = '/wallet?modal=send';
@@ -12,7 +13,7 @@ export const externalLinks = {
 
     if (ipc) {
       // eslint-disable-next-line max-statements
-      ipc.on('openUrl', (_, url) => {
+      ipc[IPC_OPEN_URL]((_, url) => {
         const urlDetails = new URL(url);
         const { protocol, href, search } = urlDetails;
 

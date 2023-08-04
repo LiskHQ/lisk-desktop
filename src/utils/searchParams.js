@@ -1,10 +1,8 @@
 /**
  * returns parsed query params from a url
- * @param {String} search the search string
  */
-
 export const parseSearchParams = (search) => {
-  const searchParams = new URLSearchParams(search);
+  const searchParams = new URLSearchParams(decodeURIComponent(search));
   const parsedParams = {};
 
   // eslint-disable-next-line no-restricted-syntax, no-unused-vars
@@ -22,12 +20,6 @@ export const parseSearchParams = (search) => {
 
 /**
  * returns the value of a search param from a search string
- * @param {string} search the search string
- * @param {string|string[]} query The query parameters to search for their value
- * This can be a string, or an array of string.
- * @returns {any, any[]} It'll return the value of the given query,
- * If an array is passed, it'll return an array corresponding values of the query
- * If a query parameter is not present in search string, it'll return null.
  */
 export const selectSearchParamValue = (search, query) => {
   const isArray = Array.isArray(query);
@@ -39,7 +31,6 @@ export const selectSearchParamValue = (search, query) => {
 
 /**
  * returns parsed query params from a url
- * @param {object} params the parsed searchParams object
  */
 export const stringifySearchParams = (params) => {
   const result = [];
@@ -59,8 +50,6 @@ export const stringifySearchParams = (params) => {
 
 /**
  * returns adds query param to a url and returns the new url
- * @param {String} search the search string
- * @param {object} data the key-value dictionary to add
  */
 export const appendSearchParams = (search, data) => {
   const searchParams = parseSearchParams(search);
@@ -72,8 +61,6 @@ export const appendSearchParams = (search, data) => {
 
 /**
  * removes query param from a url and returns the new url
- * @param {String} search the search string
- * @param {String[]} paramsToRemove an array of param keys to remove
  */
 export const removeSearchParams = (search, paramsToRemove, cleanParamsAfter) => {
   const params = parseSearchParams(search);
@@ -97,8 +84,6 @@ export const removeSearchParams = (search, paramsToRemove, cleanParamsAfter) => 
 
 /**
  * adds a query param to the url and redirects to that url
- * @param {object} history the search string
- * @param {object} data the key-value dictionary to add
  */
 export const addSearchParamsToUrl = (history, data) => {
   const newSearchString = appendSearchParams(history.location.search, data);
@@ -107,10 +92,6 @@ export const addSearchParamsToUrl = (history, data) => {
 
 /**
  * removes a query param to the url and redirects to that url
- *
- * @param {object} history the search string
- * @param {string[]} [paramsToRemove] the array of params to remove. Leave it blank to remove all.
- * @param {boolean} [cleanParamsAfter] clean parameters
  */
 export const removeSearchParamsFromUrl = (history, paramsToRemove, cleanParamsAfter) => {
   let newSearchString = '';

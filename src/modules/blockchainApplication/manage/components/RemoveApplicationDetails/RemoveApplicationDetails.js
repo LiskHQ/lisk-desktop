@@ -97,7 +97,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
           <Illustration name="applicationDetailsError" />
           <div className={styles.errorText}>{t('Error loading application data')}</div>
           <div className={styles.retryBtn}>
-            <TertiaryButton onClick={reloadAppDetails}>Try again</TertiaryButton>
+            <TertiaryButton onClick={reloadAppDetails}>{t('Try again')}</TertiaryButton>
           </div>
         </div>
       </Dialog>
@@ -157,7 +157,12 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
             </div>
           ) : (
             <div className={styles.addressRow}>
-              <a className={`${styles.appLink}`} target="_blank" href={projectPage}>
+              <a
+                className={`${styles.appLink}`}
+                rel="noopener noreferrer"
+                target="_blank"
+                href={projectPage}
+              >
                 <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
                 {t(projectPage)}
               </a>

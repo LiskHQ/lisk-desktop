@@ -2,22 +2,22 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
+import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import { extractAddressFromPassphrase } from '@wallet/utils/account';
-import { generatePassphraseFromSeed } from '@wallet/utils/passphrase';
+import wallets from '@tests/constants/wallets';
 import ChooseAvatar from './chooseAvatar';
 
-// @todo: this should be re-instated when the issue with lisk-client is fixed
-describe.skip('Register Process - Choose Avatar', () => {
+describe('Register Process - Choose Avatar', () => {
   let wrapper;
 
-  const cryptoObj = window.crypto || window.msCrypto;
-  const passphrases = [...Array(5)].map(() =>
-    generatePassphraseFromSeed({
-      seed: [...cryptoObj.getRandomValues(new Uint16Array(16))].map((x) =>
-        `00${(x % 256).toString(16)}`.slice(-2)
-      ),
-    })
-  );
+  const { privateKey, publicKey } = wallets.genesis.summary;
+  const defaultKeys = {
+    privateKey: Buffer.from(privateKey, 'hex'),
+    publicKey: Buffer.from(publicKey, 'hex'),
+  };
+  jest.spyOn(cryptography.legacy, 'getKeys').mockReturnValue(defaultKeys);
+
+  const passphrases = [...Array(5)].map(() => LiskPassphrase.Mnemonic.generateMnemonic());
   const accounts = passphrases.map((pass) => ({
     address: extractAddressFromPassphrase(pass),
     passphrase: pass,

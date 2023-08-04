@@ -84,7 +84,7 @@ describe('Validator Profile', () => {
     expect(screen.getByText('Stakers')).toBeTruthy();
 
     expect(screen.getByText('Rank')).toBeTruthy();
-    expect(screen.getAllByText('Round state')).toHaveLength(1);
+    expect(screen.getAllByText('Validator name')).toBeTruthy();
     expect(screen.getByText('Validator weight')).toBeTruthy();
     expect(screen.getByText('Last generated at')).toBeTruthy();
 

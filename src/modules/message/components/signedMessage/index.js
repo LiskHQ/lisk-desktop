@@ -12,7 +12,7 @@ import styles from './signedMessage.css';
 
 const Error = ({ t }) => (
   <BoxContent className={styles.statusWrapper}>
-    <Illustration name="ledgerNanoHwRejection" />
+    <Illustration name="hwRejection" />
     <h5>{t('Transaction aborted on device')}</h5>
     <p className={styles.errorInfoText}>
       {t('You have cancelled the transaction on your hardware wallet.')}

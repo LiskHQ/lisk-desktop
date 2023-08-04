@@ -72,3 +72,10 @@
     border-bottom: 0px;
   }
 }
+
+.loadLatestBtn {
+  position: absolute;
+  top: 30px;
+  z-index: 4;
+  left: 50%;
+}

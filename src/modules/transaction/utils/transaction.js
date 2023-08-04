@@ -16,7 +16,6 @@ import { joinModuleAndCommand } from './moduleCommand';
 const { transfer, transferCrossChain, stake, reclaimLSK, registerMultisignature } =
   MODULE_COMMANDS_NAME_MAP;
 
-// @todo import the following 4 values from lisk-elements (#4497)
 export const MESSAGE_TAG_MULTISIG_REG = 'LSK_RMSG_';
 
 export const convertStringToBinary = (value) => Buffer.from(value, 'hex');
@@ -31,8 +30,6 @@ const containsTransactionType = (txs = [], type) => txs.some((tx) => tx.moduleCo
 
 /**
  * Adapts transaction filter params to match transactions API method
- *
- * @param {Object} params - Params received from withFilters HOC
  * @returns {Object} - Parameters consumable by transaction API method
  */
 const normalizeTransactionParams = (params, token) =>
@@ -104,11 +101,6 @@ const getTotalSpendingAmount = ({ module, command, params = {} }) => {
   return '0';
 };
 
-/**
- * downloads the provided json to the user's machine
- * @param {object} data the payload to be stringified
- * @param {string} name the name of the JSON
- */
 /* istanbul ignore next */
 const downloadJSON = (data, name) => {
   const anchor = document.createElement('a');
@@ -123,11 +115,6 @@ const downloadJSON = (data, name) => {
 /**
  * Removes the excess signatures from optional members
  * to open up room for the mandatory ones
- *
- * @param {array} signatures - The transaction signatures array
- * @param {number} mandatoryKeysNo - Number of mandatory keys
- * @param {boolean} hasSenderSignature - Defines if the signatures list has
- * an extra sender signature at the beginning.
  * @returns {array} the trimmed array of signatures
  */
 export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
@@ -144,11 +131,6 @@ export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSig
   return trimmedSignatures;
 };
 
-/**
- * Computes transaction id
- * @param {object} transaction
- * @returns {Promise} returns transaction id for a given transaction object
- */
 export const computeTransactionId = ({ transaction, schema }) => {
   const transactionBytes = transactions.getBytes(transaction, schema);
   return cryptography.utils.hash(transactionBytes);
@@ -218,7 +200,6 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
         messageSchema
       );
 
-      // @todo use correct index once SDK exposes the sort endpoint (#4497)
       const signatures = [...Array(members.length).keys()].map((index) => {
         if (index === senderIndex) return memberSignature;
 
@@ -363,10 +344,6 @@ const signMultisigTransaction = async (
  * Note that the account passed must tbe sender account info. So for all types of txs, you
  * can get it from the Redux store. but for signing another account's tx, you should
  * make an API call using transaction.senderPublicKey to get the account info.
- *
- * @param {object} account - Sender account info
- * @param {object} transaction - Transaction object which should include the signatures property.
- * @returns {number} the number of signatures required
  */
 const getNumberOfSignatures = (account, transaction) => {
   if (account?.keys?.numberOfSignatures > 0) {
@@ -381,9 +358,6 @@ const getNumberOfSignatures = (account, transaction) => {
 
 /**
  * Adapts transaction statistics params to match transactions statistics API method
- *
- * @param {Object} period - Period received from active tab
- * @returns {Object} - Parameters consumable by transaction statistics API method
  */
 const normalizeTransactionsStatisticsParams = (period) => {
   const paramsConfig = {
@@ -396,8 +370,6 @@ const normalizeTransactionsStatisticsParams = (period) => {
 
 /**
  * Adapts chart amount distributions to distribution displayed in chart
- *
- * @param {Object} distributions - Amount distribution
  * @returns {Object} - Distribution data for chart
  */
 const normalizeNumberRange = (distributions) => {

@@ -141,6 +141,7 @@ import star from '@setup/react/assets/images/icons/star.svg';
 import starDark from '@setup/react/assets/images/icons/star-dark.svg';
 import calendar from '@setup/react/assets/images/icons/calendar.svg';
 import calendarDark from '@setup/react/assets/images/icons/calendar-dark.svg';
+import validatorName from '@setup/react/assets/images/icons/validator-name.svg';
 import weight from '@setup/react/assets/images/icons/weight.svg';
 import weightDark from '@setup/react/assets/images/icons/weight-dark.svg';
 import reward from '@setup/react/assets/images/icons/generated-lsk.svg';
@@ -219,6 +220,7 @@ import chainLinkIcon from '@setup/react/assets/images/icons/chain-link.svg';
 import successCheckMark from '@setup/react/assets/images/icons/success-check-mark.svg';
 import dropdownArrowIcon from '@setup/react/assets/images/icons/dropdown-arrow.svg';
 import plusBlueIcon from '@setup/react/assets/images/icons/plus-blue.svg';
+import plusWhiteIcon from '@setup/react/assets/images/icons/plus-white.svg';
 import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-filled.svg';
 import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon-filled-dark.svg';
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
@@ -367,6 +369,7 @@ export const icons = {
   signOut,
   plus,
   plusActive,
+  plusWhiteIcon,
   remove,
   totalBlocks,
   totalBlocksDark,
@@ -380,6 +383,7 @@ export const icons = {
   searchInput,
   weight,
   weightDark,
+  validatorName,
   productivity,
   productivityDark,
   lock,

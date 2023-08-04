@@ -13,6 +13,7 @@ import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
 import { immutablePush, immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
+import networks from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
@@ -37,31 +38,38 @@ const DialogAddNetwork = () => {
     },
   });
 
-  // eslint-disable-next-line max-statements
+  // eslint-disable-next-line max-statements, complexity
   function onSubmit(values) {
     setSuccessText('');
     setErrorText('');
     const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
-    let updatedCustomNetworks;
-    const existingCustomNetworkName = customNetworks.some(
-      (network) => network.name === values.name
+    const fullNetworkList = [...Object.values(networks), ...customNetworks];
+    const addOrEditNetworkIndex = fullNetworkList.findIndex(
+      (network) => network.serviceUrl === values.name || network.serviceUrl === values.serviceUrl
     );
-    const existingCustomNetworkServiceUrl = customNetworks.some(
-      (network) => network.serviceUrl === values.serviceUrl
-    );
-    if (!defaultName && (existingCustomNetworkName || existingCustomNetworkServiceUrl)) {
-      setErrorText('Network name or serviceUrl already exists');
-      return;
+    const editingExistingNetwork =
+      fullNetworkList.filter(
+        (network) =>
+          network.name.toLowerCase() === defaultName.toLowerCase() ||
+          network.serviceUrl.toLowerCase() === defaultServiceUrl.toLowerCase() ||
+          network.name.toLowerCase() === values.name.toLowerCase() ||
+          network.serviceUrl.toLowerCase() === values.serviceUrl.toLowerCase()
+      ).length > 1;
+
+    if (addOrEditNetworkIndex >= 0) {
+      if (defaultName === '' || editingExistingNetwork) {
+        setErrorText('Network name or serviceUrl already exists.');
+        return;
+      }
     }
+
+    let updatedCustomNetworks;
     if (defaultName) {
-      const editedCustomNetworkIndex = customNetworks.findIndex(
-        (network) => network.name === defaultName
-      );
       updatedCustomNetworks = immutableSetToArray({
         array: customNetworks,
         mapToAdd: customNetwork,
-        index: editedCustomNetworkIndex,
+        index: customNetworks.findIndex((network) => network.name === defaultName),
       });
     } else {
       updatedCustomNetworks = immutablePush(customNetworks, customNetwork);

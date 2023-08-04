@@ -12,6 +12,7 @@ import crypto from 'crypto';
 import ReactRouterDom from 'react-router-dom';
 import * as ReactRedux from 'react-redux';
 import lodashMerge from 'lodash.merge';
+import { cryptography } from '@liskhq/lisk-client';
 import defaultState from '../../tests/constants/defaultState';
 
 require('jest-localstorage-mock');
@@ -133,6 +134,18 @@ const localStorageMock = (() => {
   };
 })();
 
+export const mockOnMessage = jest.fn();
+export class WorkerMock {
+  constructor(stringUrl) {
+    this.url = stringUrl;
+    this.onmessage = mockOnMessage;
+  }
+
+  postMessage(msg) {
+    this.onmessage(msg);
+  }
+}
+
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
@@ -143,6 +156,7 @@ Object.defineProperty(window, 'crypto', {
   },
 });
 
+window.Worker = WorkerMock;
 ReactPiwik.push = () => {};
 ReactPiwik.trackingEvent = () => {};
 sinon.stub(ReactPiwik.prototype, 'connectToHistory').callsFake(() => 1);
@@ -179,3 +193,5 @@ global.fetch = jest.fn(() =>
     },
   })
 );
+
+jest.spyOn(cryptography.utils, 'hash').mockReturnValue('123456789019eac790d89f08e');

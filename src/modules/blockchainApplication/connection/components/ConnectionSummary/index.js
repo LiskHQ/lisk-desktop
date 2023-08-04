@@ -4,14 +4,77 @@ import { useTranslation } from 'react-i18next';
 import Dialog from '@theme/dialog/dialog';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
-import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { EVENTS, ACTIONS } from '@libs/wcm/constants/lifeCycle';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
+import { ACTIONS, EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSession } from '@libs/wcm/hooks/useSession';
+import classNames from 'classnames';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { getLogo } from '@token/fungible/utils/helpers';
+import Icon from '@theme/Icon';
 import BlockchainAppDetailsHeader from '../../../explore/components/BlockchainAppDetailsHeader';
 import AccountsSelector from './AccountsSelector';
 import styles from './connectionSummary.css';
+
+function ChainListingItem({ app }) {
+  const { t } = useTranslation();
+  const { chainName, networkType, chainID, logo } = app;
+  const name = `${chainName} (${networkType})`;
+  const logoUrl = getLogo({ logo });
+
+  return (
+    <div className={styles.ChainListingItem}>
+      <img
+        className={styles.chainLogo}
+        height={40}
+        width={40}
+        src={logoUrl}
+        alt={`${chainName}-logo`}
+      />
+      <div className={styles.textContainer}>
+        <h4 className={styles.name}>{name}</h4>
+        <span className={styles.chainId}>{t('Chain ID: ') + chainID}</span>
+      </div>
+    </div>
+  );
+}
+
+function ChainListing({ chainIds }) {
+  const chainIDs = chainIds?.join(',');
+  const blockchainApplicationMeta = useBlockchainApplicationMeta({
+    config: { params: { chainID: chainIDs } },
+    options: { enabled: !!chainIDs?.length },
+  });
+
+  return (
+    <div className={styles.ChainListing}>
+      {blockchainApplicationMeta?.data?.data?.map((app) => (
+        <ChainListingItem key={app.chainID} app={app} />
+      ))}
+    </div>
+  );
+}
+
+function CollapsableRow({ label, children }) {
+  const [showChildren, toggleShowChildren] = useState(true);
+
+  return (
+    <div className={styles.CollapsableRow}>
+      <TertiaryButton
+        className={classNames(styles.rowHeaderButton, showChildren && styles.marginBottom)}
+        onClick={() => toggleShowChildren(!showChildren)}
+      >
+        <span>{label}</span>
+        <Icon
+          name="arrowRightInactive"
+          className={classNames(styles.arrowIcon, { [styles.showArrowDown]: showChildren })}
+        />
+      </TertiaryButton>
+      {showChildren && children}
+    </div>
+  );
+}
 
 // eslint-disable-next-line max-statements
 const ConnectionSummary = () => {
@@ -21,6 +84,23 @@ const ConnectionSummary = () => {
   const { events } = useEvents();
   const { approve, reject } = useSession();
 
+  // istanbul ignore next
+  if (!events.length || events[events.length - 1].name !== EVENTS.SESSION_PROPOSAL) {
+    return <div>{t('Connection summary is not ready yet.')}</div>;
+  }
+
+  const { proposer, requiredNamespaces, pairingTopic } = events[events.length - 1].meta.params;
+
+  const application = {
+    data: {
+      name: proposer.metadata.name,
+      projectPage: proposer.metadata.url.replace(/\/$/, ''),
+      icon: proposer.metadata.icons[0],
+    },
+  };
+
+  const liskChainIds = requiredNamespaces.lisk.chains.map((chain) => chain.replace(/\D+/g, ''));
+
   const connectHandler = async () => {
     const result = await approve(addresses);
     addSearchParamsToUrl(history, {
@@ -28,50 +108,47 @@ const ConnectionSummary = () => {
       action: ACTIONS.APPROVE,
       status: result.status,
       name: result.data?.params.proposer.metadata.name ?? '',
+      logoUrl: application.data.icon,
     });
   };
 
   const rejectHandler = async () => {
     const result = await reject();
     addSearchParamsToUrl(history, {
-      modal: 'connectionSuccess',
+      modal: 'connectionStatus',
       action: ACTIONS.REJECT,
       status: result.status,
       name: result.data?.params?.proposer.metadata.name ?? '',
+      logoUrl: application.data.icon,
     });
   };
 
-  // istanbul ignore next
-  if (!events.length || events[events.length - 1].name !== EVENTS.SESSION_PROPOSAL) {
-    return <div>{t('Connection summary is not ready yet.')}</div>;
-  }
-
-  const { proposer, requiredNamespaces, pairingTopic } = events[events.length - 1].meta.params;
-  const application = {
-    data: {
-      name: proposer.metadata.name,
-      projectPage: proposer.metadata.url.replace(/\/$/, ''),
-      icon: proposer.metadata.icons[0],
-      address: `Chain ID: ${requiredNamespaces.lisk.chains[0].replace('lisk:', '')}`,
-    },
-  };
-
   return (
-    <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
-      <BlockchainAppDetailsHeader application={application} />
+    <Dialog
+      hasClose
+      onCloseIcon={rejectHandler}
+      className={classNames(styles.dialogWrapper, grid.row, grid['center-xs'])}
+    >
+      <BlockchainAppDetailsHeader
+        headerText={t('Connect Wallet')}
+        className={styles.blockchainAppDetailsHeaderProp}
+        application={application}
+        clipboardCopyItems={[{ label: t('Connection ID'), value: pairingTopic }]}
+        description={t(
+          'This is a request from wallet connect to establish session with Lisk Desktop, please review the following information carefully before approving.'
+        )}
+        classNameDescription={styles.description}
+      />
       <div className={styles.wrapper}>
         <section className={styles.section}>
-          <ValueAndLabel
-            className={styles.labeledValue}
-            label={t('Account(s) to use on this application')}
-          >
-            <AccountsSelector setAddresses={setAddresses} addresses={addresses} />
-          </ValueAndLabel>
+          <CollapsableRow label={t('Chains connecting')}>
+            <ChainListing chainIds={liskChainIds} />
+          </CollapsableRow>
         </section>
         <section className={styles.section}>
-          <ValueAndLabel className={styles.labeledValue} label={t('Connection ID')}>
-            <span className="pairing-topic">{pairingTopic}</span>
-          </ValueAndLabel>
+          <CollapsableRow label={t('Account(s) to use on this application')}>
+            <AccountsSelector setAddresses={setAddresses} addresses={addresses} />
+          </CollapsableRow>
         </section>
         <section className={`${styles.section} ${styles.permissions}`}>
           <span className={styles.label}>{t('Site permissions')}</span>
@@ -79,7 +156,7 @@ const ConnectionSummary = () => {
             <ValueAndLabel label={t('Methods')}>
               <div className={`${styles.items} methods`}>
                 {requiredNamespaces.lisk.methods.map((method) => (
-                  <span key={method} className={styles.label}>
+                  <span key={method} className={classNames(styles.label, styles.colorSlateGray)}>
                     {method}
                   </span>
                 ))}

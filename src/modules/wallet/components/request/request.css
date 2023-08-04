@@ -208,6 +208,10 @@
       width: 80% !important;
       height: 80% !important;
     }
+
+    &.disabled canvas {
+      filter: blur(7px);
+    }
   }
 }
 

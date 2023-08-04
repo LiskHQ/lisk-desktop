@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { isReactComponent } from 'src/utils/helpers';
 import Tooltip from 'src/theme/Tooltip';
@@ -38,33 +39,36 @@ const Sort = ({ data, currentSort, children }) => {
 };
 
 const Header = ({ data, currentSort, headerClassName, subHeader }) => {
+  const { t } = useTranslation();
   /**
    * In case we define a config array for header
    */
   if (Array.isArray(data)) {
     const defaultSize = Math.floor(12 / data.length);
     return (
-      <header className={`${grid.row} ${styles.row} ${styles.header} ${headerClassName || ''}`}>
-        {data.map((item, index) => (
-          <div
-            className={item.classList ? item.classList : grid[`col-md-${defaultSize}`]}
-            key={`table-header-${index}`}
-          >
-            {typeof item === 'object' ? (
-              <Sort data={item.sort} currentSort={currentSort}>
-                <span>{item.title}</span>
-                {item.tooltip && <Tip data={item.tooltip} />}
-              </Sort>
-            ) : (
-              <>
-                <span>{item}</span>
-                {item.tooltip && <Tip data={item.tooltip} />}
-              </>
-            )}
-          </div>
-        ))}
+      <>
+        <header className={`${grid.row} ${styles.row} ${styles.header} ${headerClassName || ''}`}>
+          {data.map((item, index) => (
+            <div
+              className={item.classList ? item.classList : grid[`col-md-${defaultSize}`]}
+              key={`table-header-${index}`}
+            >
+              {typeof item === 'object' ? (
+                <Sort data={item.sort} currentSort={currentSort}>
+                  <span>{item.title}</span>
+                  {item.tooltip && <Tip data={item.tooltip} />}
+                </Sort>
+              ) : (
+                <>
+                  <span>{item}</span>
+                  {item.tooltip && <Tip data={item.tooltip} />}
+                </>
+              )}
+            </div>
+          ))}
+        </header>
         {subHeader}
-      </header>
+      </>
     );
   }
 
@@ -79,7 +83,7 @@ const Header = ({ data, currentSort, headerClassName, subHeader }) => {
   /**
    * If the data is not passed or it's none of the above
    */
-  return <header className={styles.header}>Header</header>;
+  return <header className={styles.header}>{t('Header')}</header>;
 };
 
 export default Header;

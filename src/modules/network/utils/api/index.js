@@ -8,14 +8,6 @@ const httpPaths = {
   networkStatistics: `${HTTP_PREFIX}/network/statistics`,
 };
 
-/**
- * Retrieves status information of the network
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- *
- * @returns {Promise}
- */
 export const getNetworkStatus = ({ baseUrl }) =>
   http({
     baseUrl,
@@ -29,36 +21,19 @@ const getServiceUrl = ({ name, address = networks[networkKeys.mainnet].serviceUr
   return address;
 };
 
-/**
- * Returns network config to use for future API calls.
- *
- * @param {Object} network
- * @param {String} network.name - Mainnet, or Testnet, Custom node
- * @param {String} network.nodeUrl - a valid URL pointing to a running node
- * @returns {Promise}
- */
-export const getNetworkConfig = ({ name, address }) => {
+export const getNetworkConfig = async ({ name, address }) => {
   const serviceUrl = getServiceUrl({ name, address });
-  return getNetworkStatus({ baseUrl: serviceUrl })
-    .then((response) => ({
+  try {
+    const response = await getNetworkStatus({ baseUrl: serviceUrl });
+    return {
       ...response.data,
       serviceUrl,
-    }))
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      // throw Error(`Can not connect to ${address}`);
-    });
+    };
+  } catch (err) {
+    return err;
+  }
 };
 
-/**
- * Retrieves status useful statistics about the network
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- *
- * @returns {Promise}
- */
 export const getNetworkStatistics = ({ network }) =>
   http({
     path: httpPaths.networkStatistics,
@@ -80,19 +55,6 @@ const peerFilters = {
 /**
  * Retrieves list of peers which
  * are discoverable by Lisk Service
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- * @param {String?} data.baseUrl Custom API URL
- * @param {Object} data.params
- * @param {String?} data.params.version Lisk Core version number which the node rus
- * @param {String?} data.params.state Option of connected, disconnected, any. Default: Connected
- * @param {String?} data.params.height Block height at which the node runs
- * @param {String?} data.params.offset Used for pagination
- * @param {String?} data.params.sort  an option of 'version:asc', 'version:desc',
- * 'height:asc' and 'height:desc'
- *
- * @returns {Promise}
  */
 export const getPeers = ({ network, params }) => {
   const normParams = {};

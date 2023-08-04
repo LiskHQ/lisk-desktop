@@ -7,13 +7,9 @@ import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import styles from 'src/modules/common/components/bars/topBar/topBar.css';
 import useSettings from '../hooks/useSettings';
+
 /**
  * Toggles boolean values on store.settings
- *
- * @param {String} setting The key to update in store.settings
- * @param {Array} icons [activeIconName, normalIconName]
- * @param {Array} tips [activeTip, normalTip]
- * @param {boolean} isCheckbox show checkbox or tooltip
  */
 const Toggle = ({ setting, icons, tips, isCheckbox, className }) => {
   const { t } = useTranslation();

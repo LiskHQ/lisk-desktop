@@ -8,12 +8,6 @@ import defaultClient from 'src/utils/api/client';
 /**
  * Creates a custom hook for supported tokens query
  *
- * @param {object} configuration - the custom query configuration object
- * @param {object} configuration.config - the query config
- * @param {object} configuration.config.params - the query config params
- * @param {number} [configuration.config.params.limit] - the query limit
- * @param {number} [configuration.config.params.offset] - the query offset
- *
  * @returns the query object
  */
 export const useAppsMetaTokensConfig = () => {

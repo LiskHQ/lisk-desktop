@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import SignMessageInput from '.';
 
 describe('Sign Message Input Component', () => {
@@ -41,5 +42,38 @@ describe('Sign Message Input Component', () => {
     newProps.history.location.search = `?message=${preFilledMessage}`;
     const wrapper = setup(props);
     expect(wrapper.find('textarea')).toHaveValue(preFilledMessage);
+  });
+
+  it('Should disable continue button when HW app is not open', () => {
+    const store = {
+      account: {
+        current: {
+          metadata: {
+            isHW: true,
+          },
+        },
+      },
+      hardwareWallet: {
+        devices: [],
+        currentDevice: {
+          manufacturer: '',
+          path: '',
+          product: '',
+          status: 'standby',
+          isAppOpen: false,
+        },
+        accounts: [],
+        _persist: {
+          version: -1,
+          rehydrated: true,
+        },
+      },
+    };
+    const wrapper = mountWithRouterAndStore(SignMessageInput, props, {}, store);
+
+    expect(wrapper.find('span[data-testid="hwError"]')).toHaveText(
+      'Open the Lisk app on Ledger device to continue'
+    );
+    expect(wrapper.find('button').at(0)).toBeDisabled();
   });
 });

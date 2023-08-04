@@ -4,6 +4,7 @@
   background: #08223c !important;
   color: #9bf436 !important;
   margin-bottom: 30px;
+  resize: none;
 }
 
 .button {

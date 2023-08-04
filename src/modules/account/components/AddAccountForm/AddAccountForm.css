@@ -121,6 +121,7 @@ form {
 
   & .fieldGroup {
     font-size: 16px;
+    color: var(--color-zodiac-blue);
 
     &:last-child {
       margin-left: 10px;

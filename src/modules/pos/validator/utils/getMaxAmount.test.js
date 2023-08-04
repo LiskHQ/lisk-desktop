@@ -19,10 +19,6 @@ const staking = {
 };
 const mockToken = mockAppsTokens.data[0];
 
-jest.mock('@transaction/api', () => ({
-  getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
-}));
-
 jest.mock('@pos/validator/store/actions/staking', () => ({
   stakeEdited: jest.fn(),
 }));

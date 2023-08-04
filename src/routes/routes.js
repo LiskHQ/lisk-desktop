@@ -66,7 +66,6 @@ export default {
   register: {
     path: '/register',
     isPrivate: false,
-    isSigninFlow: true,
     forbiddenTokens: [],
   },
   addAccountByFile: {
@@ -78,7 +77,6 @@ export default {
   termsOfUse: {
     path: '/terms-of-use',
     isPrivate: false,
-    isSigninFlow: true,
     forbiddenTokens: [],
   },
   transactions: {
@@ -184,10 +182,6 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  deviceDisconnectDialog: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   dialogAddNetwork: {
     isPrivate: false,
     forbiddenTokens: [],
@@ -220,10 +214,6 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  setPassword: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   switchAccount: {
     isPrivate: false,
     forbiddenTokens: [],
@@ -231,6 +221,7 @@ export const modals = {
   selectNode: {
     isPrivate: false,
     forbiddenTokens: [],
+    requiredParams: ['chainID'],
   },
   removeSelectedAccount: {
     isPrivate: false,
@@ -239,6 +230,7 @@ export const modals = {
   blockChainApplicationDetails: {
     isPrivate: false,
     forbiddenTokens: [],
+    requiredParams: ['chainId'],
   },
   addApplicationList: {
     isPrivate: false,
@@ -255,6 +247,7 @@ export const modals = {
   removeApplicationFlow: {
     isPrivate: false,
     forbiddenTokens: [],
+    requiredParams: ['chainId'],
   },
   connectionProposal: {
     isPrivate: false,
@@ -269,6 +262,10 @@ export const modals = {
     forbiddenTokens: [],
   },
   requestView: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  requestSignMessageDialog: {
     isPrivate: false,
     forbiddenTokens: [],
   },

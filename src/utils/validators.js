@@ -12,8 +12,6 @@ export const isNumeric = (value) => /^(-?[0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)
 
 /**
  * Check if address is in Lisk32 format
- *
- * @param {String} address
  * @returns {Number} -> 0: valid, 1: invalid, -1: empty
  */
 export const validateAddress = (address) => {
@@ -30,8 +28,6 @@ export const validateAddress = (address) => {
 
 /**
  * Checks the validity of a given publicKey
- *
- * @param {String} publicKey - The publicKey to validate
  * @returns {Number} 0 for valid, 1 for invalid
  */
 export const validateLSKPublicKey = (publicKey) => {
@@ -98,11 +94,11 @@ export const validateAmount = ({
     },
     INSUFFICIENT_FUNDS: {
       message: i18n.t('Provided amount is higher than your current balance.'),
-      fn: () => accountBalance < convertToBaseDenom(numeral(amount).value(), token),
+      fn: () => BigInt(accountBalance) < BigInt(convertToBaseDenom(numeral(amount).value(), token)),
     },
     INSUFFICIENT_STAKE_FUNDS: {
       message: i18n.t('The provided amount is higher than your available staking balance.'),
-      fn: () => accountBalance < convertToBaseDenom(numeral(amount).value(), token),
+      fn: () => BigInt(accountBalance) < BigInt(convertToBaseDenom(numeral(amount).value(), token)),
     },
     MIN_BALANCE: {
       message: i18n.t(
@@ -111,7 +107,7 @@ export const validateAmount = ({
       fn: () => {
         const amountInBase = convertToBaseDenom(numeral(amount).value(), token);
         // TODO: this minimum balance logic should be replaced by actual fee (transaction + cross chain transfer) as one can make 0 balance for an account in Lisk v4
-        return MIN_ACCOUNT_BALANCE > accountBalance - amountInBase;
+        return MIN_ACCOUNT_BALANCE > BigInt(accountBalance) - BigInt(amountInBase);
       },
     },
   };

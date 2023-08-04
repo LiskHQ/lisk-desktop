@@ -1,48 +1,39 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <base href="./">
-        <meta charset="utf-8">
-        <meta name="application-name" content="lisk-desktop-<%= htmlWebpackPlugin.options.VERSION %>" data-lisk-desktop-version="<%= htmlWebpackPlugin.options.VERSION %>">
-        <meta name="viewport" content="width=device-width">
-        <meta name="keywords" content="Lisk, Lisk, wallet">
-        <meta property="og:title" content="Lisk">
-        <meta property="og:description" name="description" content="Lisk is an all-in-one solution to manage your Lisk ID, access and send LSK tokens, as well as stake for validators.">
-        <meta property="og:image" content="https://lisk.com/hub/assets/images/og-logo.png">
-        <title>Lisk</title>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-        <style>
-          <%= compilation.assets['head.css'].source() %>
-        </style>
-
-        <%= htmlWebpackPlugin.files.css.map(href =>
-          '<link href="' + href + '" rel="stylesheet">'
-        ).join('\n') %>
-        <link rel="icon" type="image/png" href="./assets/images/LISK.png" />
-        <script>
-          /* Following comment is a placeholder used by `yarn run build:testnet`, do not remove */
-          var defaultNet = "mainnet";//defaultNetwork
-          (function(targetNet) {
-            if (window.localStorage && !window.localStorage.getItem('defaultNetwork')){
-              window.localStorage.setItem('defaultNetwork', defaultNet);
-            }
-          })(defaultNet);
-        </script>
-    </head>
-    <body>
-        <div id="app"></div>
-        <div class='splash-screen'>
-          <figure class='logo'>
-              <img alt="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSI1NiIgdmlld0JveD0iMCAwIDU2IDU2Ij4KICAgIDxwYXRoIGZpbGw9IiAjYzVjZmU0IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGQ9Ik0yNS41NDUgNDMuOTNjLS4wMjQuMDIzLS4wNy4wNDctLjA5NC4wN2gtMi42MmMtLjA0NyAwLS4wNy0uMDIzLS4wOTQtLjA0N2wtNy43Mi04LjcwNGEuMTUuMTUgMCAwIDEgMC0uMTRsOS42MTUtMTYuNTY0Yy4wNDctLjA3LjE2NC0uMDcuMjEgMGwyLjY5MSA0LjY0NmMuMDIzLjAyMy4wMjMuMDcgMCAuMTE3bC02LjUwMyAxMS4xOWMtLjAyNC4wNDcgMCAuMDk0LjAyMy4xNDFsMy44ODMgNC4zNjRjLjAyNC4wMjMuMDcuMDQ3LjA5NC4wNDdoNC41ODVjLjExNyAwIC4xNjQuMTE3LjA5NC4xODhsLTQuMTY0IDQuNjkyem0yLjg1NC0zMS44NmMuMDQ2LS4wOTMuMTYzLS4wOTMuMTg3IDBMNDEuOTkgMzUuMDYyYy4wMjQuMDQ3IDAgLjA5My0uMDIzLjE0bC03LjcyIDguNzA0YS4xNzcuMTc3IDAgMCAxLS4wOTQuMDQ3aC02LjI2OWMtLjExNyAwLS4xNjQtLjExNy0uMDk0LS4xODhsNC4xODgtNC43MzkgMy45My00LjQxYy4wNDctLjA0Ny4wNDctLjA5NC4wMjMtLjE0bC03LjQzOS0xMi44MS0yLjgwNy00LjgzM2MtLjAyMy0uMDI0LS4wMjMtLjA3IDAtLjExN2wyLjcxNC00LjY0NnoiLz4KPC9zdmc+Cg==">
-            <div class="lds-ring">
-                <div> </div>
-                <div> </div>
-                <div> </div>
-                <div> </div>
-            </div>
-          </figure>
+  <head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta name="application-name" content="lisk-desktop-<%= htmlWebpackPlugin.options.VERSION %>" data-lisk-desktop-version="<%= htmlWebpackPlugin.options.VERSION %>">
+    <meta name="viewport" content="width=device-width">
+    <meta name="keywords" content="Lisk, Lisk, wallet">
+    <meta property="og:title" content="Lisk">
+    <meta property="og:description" name="description" content="Lisk is an all-in-one solution to manage your Lisk ID, access and send LSK tokens, as well as stake for validators.">
+    <meta property="og:image" content="https://lisk.com/hub/assets/images/og-logo.png">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/ https://unpkg.com/leaflet@1.9.4/; img-src 'self' data: https://raw.githubusercontent.com/LiskHQ/app-registry/main/ https://api.mapbox.com/; font-src 'self' data: https://fonts.gstatic.com/; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' http: ws:; frame-src https://verify.walletconnect.com/">
+    <title>Lisk</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+      <%= compilation.assets['head.css'].source() %>
+    </style>
+    <%= htmlWebpackPlugin.files.css.map(href =>
+      '<link href="' + href + '" rel="stylesheet">'
+      ).join('\n') %>
+    <link rel="icon" type="image/png" href="./assets/images/LISK.png" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <div class='splash-screen'>
+      <figure class='logo'>
+        <img alt="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSI1NiIgdmlld0JveD0iMCAwIDU2IDU2Ij4KICAgIDxwYXRoIGZpbGw9IiAjYzVjZmU0IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGQ9Ik0yNS41NDUgNDMuOTNjLS4wMjQuMDIzLS4wNy4wNDctLjA5NC4wN2gtMi42MmMtLjA0NyAwLS4wNy0uMDIzLS4wOTQtLjA0N2wtNy43Mi04LjcwNGEuMTUuMTUgMCAwIDEgMC0uMTRsOS42MTUtMTYuNTY0Yy4wNDctLjA3LjE2NC0uMDcuMjEgMGwyLjY5MSA0LjY0NmMuMDIzLjAyMy4wMjMuMDcgMCAuMTE3bC02LjUwMyAxMS4xOWMtLjAyNC4wNDcgMCAuMDk0LjAyMy4xNDFsMy44ODMgNC4zNjRjLjAyNC4wMjMuMDcuMDQ3LjA5NC4wNDdoNC41ODVjLjExNyAwIC4xNjQuMTE3LjA5NC4xODhsLTQuMTY0IDQuNjkyem0yLjg1NC0zMS44NmMuMDQ2LS4wOTMuMTYzLS4wOTMuMTg3IDBMNDEuOTkgMzUuMDYyYy4wMjQuMDQ3IDAgLjA5My0uMDIzLjE0bC03LjcyIDguNzA0YS4xNzcuMTc3IDAgMCAxLS4wOTQuMDQ3aC02LjI2OWMtLjExNyAwLS4xNjQtLjExNy0uMDk0LS4xODhsNC4xODgtNC43MzkgMy45My00LjQxYy4wNDctLjA0Ny4wNDctLjA5NC4wMjMtLjE0bC03LjQzOS0xMi44MS0yLjgwNy00LjgzM2MtLjAyMy0uMDI0LS4wMjMtLjA3IDAtLjExN2wyLjcxNC00LjY0NnoiLz4KPC9zdmc+Cg==">
+        <div class="lds-ring">
+          <div> </div>
+          <div> </div>
+          <div> </div>
+          <div> </div>
         </div>
-        <%= htmlWebpackPlugin.files.js.map(href =>
-          '<script type="text/javascript" src="' + href + '"></script>'
-        ).join('\n') %>
+      </figure>
+    </div>
+    <%= htmlWebpackPlugin.files.js.map(href =>
+      '<script type="text/javascript" src="' + href + '"></script>'
+      ).join('\n') %>
 </html>

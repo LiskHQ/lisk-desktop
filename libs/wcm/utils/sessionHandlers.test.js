@@ -1,5 +1,4 @@
 import wallets from '@tests/constants/wallets';
-import { client } from '@libs/wcm/utils/connectionCreator';
 import { onApprove, onReject } from './sessionHandlers';
 import { STATUS, ERROR_CASES } from '../constants/lifeCycle';
 
@@ -7,18 +6,16 @@ jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
 }));
 
-jest.mock('@libs/wcm/utils/connectionCreator', () => ({
-  client: {
+describe('sessionHandlers', () => {
+  const signClient = {
     approve: jest.fn().mockImplementation(() =>
       Promise.resolve({
         acknowledged: jest.fn(),
       })
     ),
     reject: jest.fn().mockImplementation(() => Promise.resolve({})),
-  },
-}));
+  };
 
-describe('sessionHandlers', () => {
   const proposal = {
     params: {
       requiredNamespaces: [],
@@ -30,8 +27,8 @@ describe('sessionHandlers', () => {
 
   describe('onApprove', () => {
     it('Should client.approve with correct arguments', async () => {
-      const res = await onApprove(proposal, selectedAccounts);
-      expect(client.approve).toHaveBeenCalledWith({
+      const res = await onApprove(proposal, selectedAccounts, signClient);
+      expect(signClient.approve).toHaveBeenCalledWith({
         id: proposal.id,
         namespaces: {},
         relayProtocol: proposal.params.relays[0].protocol,
@@ -40,17 +37,19 @@ describe('sessionHandlers', () => {
     });
 
     it('Should throw error if selectedAccounts is not a list of addresses', async () => {
-      client.approve.mockImplementation(() => Promise.reject(new Error('Accounts are invalid')));
-      const res = await onApprove(proposal, []);
+      signClient.approve.mockImplementation(() =>
+        Promise.reject(new Error('Accounts are invalid'))
+      );
+      const res = await onApprove(proposal, [], signClient);
       expect(res).toEqual(STATUS.FAILURE);
     });
   });
 
   describe('onReject', () => {
     it('Should client.approve with correct arguments', async () => {
-      await onReject(proposal);
+      await onReject(proposal, signClient);
 
-      expect(client.reject).toHaveBeenCalledWith({
+      expect(signClient.reject).toHaveBeenCalledWith({
         id: proposal.id,
         reason: ERROR_CASES.USER_REJECTED_METHODS,
       });

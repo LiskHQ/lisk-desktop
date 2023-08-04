@@ -33,6 +33,7 @@ const RightRowComponent = ({
             {t('Application is terminated and can no longer be managed.')}
             <a
               href="https://lisk.com/blog/research/lifecycle-sidechain-lisk-ecosystem"
+              rel="noopener noreferrer"
               target="_blank"
             >
               {t('Read more')}
@@ -105,7 +106,7 @@ const ApplicationManagementRow = ({ className, application }) => {
     if (!isTerminated) {
       if (application.serviceURLs.length > 1) {
         // redirect to select node
-        addSearchParamsToUrl(history, { modal: 'selectNode', chainId: application.chainID });
+        addSearchParamsToUrl(history, { modal: 'selectNode', chainID: application.chainID });
       } else {
         setApplication(application);
       }

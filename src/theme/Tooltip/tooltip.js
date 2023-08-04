@@ -10,7 +10,6 @@ class Tooltip extends React.Component {
 
     this.state = {
       showTooltip: props.showTooltip,
-      timeoutObj: null,
       clicked: false,
     };
 
@@ -23,15 +22,11 @@ class Tooltip extends React.Component {
 
   handleMouseMove() {
     this.setState({
-      timeoutObj: null,
       showTooltip: true,
     });
   }
 
   handleMouseLeave() {
-    this.setState({
-      timeoutObj: !this.state.clicked && this.state.showTooltip,
-    });
     this.handleClose();
   }
 

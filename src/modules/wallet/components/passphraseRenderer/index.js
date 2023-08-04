@@ -1,8 +1,8 @@
 /* eslint-disable complexity */
 import React from 'react';
-import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
+import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import styles from './passphraseRenderer.css';
 
@@ -73,7 +73,9 @@ class PassphraseRenderer extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   assembleWordOptions(values, missing) {
-    const wordsList = fillWordsList.filter((word) => !values.includes(word));
+    const wordsList = LiskPassphrase.Mnemonic.wordlists.english.filter(
+      (word) => !values.includes(word)
+    );
     const numberOfOptions = 3;
 
     const mixWithMissingWords = (options) =>
@@ -128,24 +130,24 @@ class PassphraseRenderer extends React.Component {
     const otherIndex = indexes.find((index) => index !== selectedIndex);
     const shouldDisplayOptions = Object.values(chosenWords).length < 2;
 
-    this.setState({
-      ...this.state,
+    this.setState((state) => ({
+      ...state,
       chosenWords: {
         ...chosenWords,
         [selectedIndex]: option,
       },
       fieldSelected: shouldDisplayOptions ? otherIndex : undefined,
-    });
+    }));
   }
 
   render() {
     const { t, showInfo, isConfirmation, prevStep, footerStyle, subheader, confirmText } =
       this.props;
     const { options, fieldSelected, chosenWords } = this.state;
-    const hasChoosenWords = Object.values(chosenWords).length === 2;
+    const hasChosenWords = Object.values(chosenWords).length === 2;
 
     // eslint-disable-next-line no-restricted-globals
-    if ((isNaN(fieldSelected) && !hasChoosenWords) || !options) return null;
+    if ((isNaN(fieldSelected) && !hasChosenWords) || !options) return null;
 
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
 

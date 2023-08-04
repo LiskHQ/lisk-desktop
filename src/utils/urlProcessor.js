@@ -10,7 +10,6 @@ const isUsernameValid = (username) => regex.name.test(username);
  * Returns an empty array if the given list is not an array
  * of usernames in string format
  *
- * @param {[String]} usernames Array of usernames
  * @returns {[String]} Array of strings or an empty array
  */
 const normalizeUsernames = (usernames) => {
@@ -38,8 +37,6 @@ const normalizeUsernames = (usernames) => {
  * Fetches the accounts corresponding to the usernames
  * passed by stakes and unstakes query params
  *
- * @param {String} search - Search string from history.location
- * @param {Object} network - network config from Redux store
  * @returns {Promise} - A promise that resolves after all accounts are fetched
  */
 const urlProcessor = (search, network) => {

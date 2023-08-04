@@ -98,11 +98,12 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     },
   ];
 
-  const app = {
+  const application = {
     data: {
       ...aggregatedApplicationData,
       icon: getLogo({ logo }),
       bg: defaultBackgroundImage,
+      name: aggregatedApplicationData.chainName,
     },
   };
 
@@ -113,7 +114,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
           <Illustration name="applicationDetailsError" />
           <div className={styles.errorText}>{t('Error loading application data')}</div>
           <div className={styles.retryBtn}>
-            <TertiaryButton onClick={reloadAppDetails}>Try again</TertiaryButton>
+            <TertiaryButton onClick={reloadAppDetails}>{t('Try again')}</TertiaryButton>
           </div>
         </div>
       </Dialog>
@@ -128,13 +129,15 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     >
       <div className={styles.wrapper}>
         <BlockchainAppDetailsHeader
-          application={app}
+          classNameBackgroundColor={styles.classNameBackgroundColorProp}
+          application={application}
           chainAction={
             <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
           }
           loading={onChainLoading || offChainLoading}
+          clipboardCopyItems={[{ value: aggregatedApplicationData.address }]}
         />
         <div className={styles.balanceRow}>
           {onChainLoading || offChainLoading ? (

@@ -4,11 +4,6 @@ import { immutableDeleteFromArrayById, immutablePush } from 'src/utils/immutable
 
 export const initialState = [];
 
-/**
- *
- * @param {Array} state
- * @param {Object} action
- */
 export const devices = (state = initialState, { type, payload }) => {
   switch (type) {
     case actionTypes.setHWDevices: {

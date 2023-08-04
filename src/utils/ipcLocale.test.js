@@ -1,15 +1,16 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
+import { IPC_DETECT_LOCALE, IPC_SET_LOCALE } from 'src/const/ipcGlobal';
 import ipcLocale from './ipcLocale';
 
 describe('ipcLocale', () => {
   let localStorageStub;
   let callbacks;
   const ipc = {
-    on: (event, callback) => {
-      callbacks[event] = callback;
+    [IPC_DETECT_LOCALE]: (callback) => {
+      callbacks[IPC_DETECT_LOCALE] = callback;
     },
-    send: spy(),
+    [IPC_SET_LOCALE]: spy(),
   };
 
   const i18n = {
@@ -28,21 +29,21 @@ describe('ipcLocale', () => {
 
     afterEach(() => {
       localStorageStub.restore();
-      ipc.send.resetHistory();
+      ipc[IPC_SET_LOCALE].resetHistory();
     });
 
     describe('Without ipc on window', () => {
       it('calling init when ipc is not on window does not call ipc', () => {
         ipcLocale.init(i18n);
         expect(Object.keys(callbacks)).to.have.length(0);
-        expect(ipc.send).to.not.have.been.calledWith();
+        expect(ipc[IPC_SET_LOCALE]).to.not.have.been.calledWith();
       });
 
       it('Saves locale in browser when there is no locale in i18n', () => {
         localStorageStub.withArgs('lang').returns('es');
         ipcLocale.init(i18n);
 
-        expect(ipc.send).to.not.have.been.calledWith();
+        expect(ipc[IPC_SET_LOCALE]).to.not.have.been.calledWith();
         expect(i18n.changeLanguage).to.have.been.calledWith('es');
       });
 
@@ -83,17 +84,17 @@ describe('ipcLocale', () => {
         window.ipc = ipc;
         i18n.language = 'en';
         ipcLocale.init(i18n);
-        expect(window.ipc.send).to.not.have.been.calledWith('request-locale');
+        expect(window.ipc[IPC_SET_LOCALE]).to.not.have.been.calledWith('request-locale');
         i18n.language = '';
         ipcLocale.init(i18n);
-        expect(window.ipc.send).to.have.been.calledWith('request-locale');
+        expect(window.ipc[IPC_SET_LOCALE]).to.have.been.calledWith('request-locale');
       });
 
       it('Changes locale when detected', () => {
         window.ipc = ipc;
         ipcLocale.init(i18n);
 
-        callbacks.detectedLocale({}, 'de');
+        callbacks[IPC_DETECT_LOCALE]({}, 'de');
         expect(i18n.changeLanguage).to.have.been.calledWith('de');
       });
 
@@ -108,11 +109,11 @@ describe('ipcLocale', () => {
         });
 
         callbacks.languageChanged('de');
-        expect(window.ipc.send).to.not.have.been.calledWith();
+        expect(window.ipc[IPC_SET_LOCALE]).to.not.have.been.calledWith();
 
-        callbacks.detectedLocale({}, 'es');
+        callbacks[IPC_DETECT_LOCALE]({}, 'es');
         callbacks.languageChanged('es');
-        expect(window.ipc.send).to.have.been.calledWith();
+        expect(window.ipc[IPC_SET_LOCALE]).to.have.been.calledWith();
       });
     });
   });
