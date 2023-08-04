@@ -50,13 +50,6 @@ const getAmountFeedbackAndError = (
   };
 };
 
-/**
- * Formats and defines potential errors of the stake mount value
- * Also provides a setter function
- *
- * @param {String} initialValue - The initial stake amount value in Beddows
- * @returns {[Boolean, Function]} The error flag, The setter function
- */
 // eslint-disable-next-line max-statements
 const useStakeAmountField = (initialValue) => {
   const { token, isLoading: isGettingPosToken } = usePosToken();

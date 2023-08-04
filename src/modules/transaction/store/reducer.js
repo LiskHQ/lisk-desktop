@@ -2,8 +2,6 @@ import actionTypes from './actionTypes';
 
 /**
  * Initial State
- * @param {Array} state
- * @param {Object} action
  */
 const initialState = {
   pending: [],

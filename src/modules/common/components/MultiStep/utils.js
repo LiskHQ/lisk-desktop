@@ -1,24 +1,10 @@
 export const noGroupTitle = 'groups-not-defined-properly';
 
-/**
- * @param {Number} current - The index number of the currently active group.
- * @param {Array} group - Array of group elements.
- */
 export const isActiveGroup = (current, group) =>
   group.steps.map((step) => step.index).includes(current);
 
-/**
- * @param {Number} current - The index number of the currently active group.
- * @param {Number} index - The index the group to check if it is active.
- */
 export const isActiveStep = (current, index) => current === index;
 
-/**
- * @param {Number} current - The index number of the currently active group.
- * @param {Function} prevPage - If passed it will be called when clicked
- *  the back button in the first step.
- * @param {Function} prevStep - A function to be called to remove to the previous step.
- */
 export const backButtonFn = (current, prevPage, prevStep) => {
   if (current === 0 && typeof prevPage === 'function') prevPage();
   else prevStep();
@@ -29,10 +15,6 @@ export const backButtonFn = (current, prevPage, prevStep) => {
  *
  * If not all the groups are defined properly, this function
  * creates a single group titled "groups-not-defined-properly"
- *
- *
- * @param {Array} steps - An array of React elements.
- * @returns {Object} - The grouped object of React elements with the above specifications.
  */
 export const groupSteps = (steps) => {
   const allGroupsValid = steps.reduce(
@@ -59,9 +41,6 @@ export const groupSteps = (steps) => {
  * to define the style rules.
  * This function chooses between the "className" and "style"
  * based on the medium.
- *
- * @param {Object} styles - Object of the styles or class names
- * @returns {Object} - Objects with defined key names for React and RN
  */
 export const getStyles = (styles) =>
   Object.keys(styles).reduce((acc, key) => {

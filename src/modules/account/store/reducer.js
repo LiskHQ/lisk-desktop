@@ -3,11 +3,6 @@ import { persistReducer } from 'redux-persist';
 import { storage } from 'src/redux/store';
 import actionTypes from './actionTypes';
 
-/**
- *
- * @param {Object} state
- * @param {type: String, encryptedAccount: Object, accountDetail: String, address: String} action
- */
 export const current = (state = {}, { type, encryptedAccount, accountDetail, address }) => {
   switch (type) {
     case actionTypes.setCurrentAccount:
@@ -30,11 +25,6 @@ export const current = (state = {}, { type, encryptedAccount, accountDetail, add
   }
 };
 
-/**
- *
- * @param {Object} state
- * @param {type: String, encryptedAccount: Object, accountDetail: String, address: string} action
- */
 export const list = (state = {}, { type, encryptedAccount, accountDetail, address }) => {
   switch (type) {
     case actionTypes.addAccount:

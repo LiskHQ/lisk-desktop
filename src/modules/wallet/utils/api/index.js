@@ -86,22 +86,6 @@ export const getUsedHWAccounts = async (publicKeyList) => {
   return Promise.all(requests);
 };
 
-/**
- * Retrieves the list of accounts with given params
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- * @param {String?} data.baseUrl Custom API URL
- * @param {Object} data.params
- * @param {String?} data.params.usernameList Valid validator username
- * @param {String?} data.params.addressList Valid Lisk Address
- * @param {String?} data.params.publicKeyList Valid Lisk PublicKey
- * @param {String?} data.params.limit Used for pagination
- * @param {String?} data.params.offset Used for pagination
- * @param {String?} data.params.sort  an option of 'balance:asc' and 'balance:desc',
- *
- * @returns {Promise}
- */
 export const getAccounts = async ({ network, params = {}, baseUrl }) => {
   // Use websocket to retrieve accounts with a given array of addresses
   const requests = getRequests(

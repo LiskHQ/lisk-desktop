@@ -1,15 +1,6 @@
 /* istanbul ignore file */
 import client from 'src/utils/api/client';
-/**
- * Makes RPC api call
- *
- * @param {string} event - api event end point
- * @param {string} params - HTTP call parameters
- * @param {string} data - HTTP call parameters
- * @returns {Promise} - if success it returns data,
- * if fails on server it throws an error,
- *
- */
+
 const rpc = ({ event, params, data }) =>
   new Promise((resolve, reject) => {
     if (client.socket.disconnected) {

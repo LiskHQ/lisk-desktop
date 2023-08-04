@@ -5,8 +5,6 @@ import actionTypes from './actionTypes';
 
 /**
  * Initial State
- * @param {Array} state
- * @param {Object} action
  */
 const initialState = {
   pins: [],
@@ -14,11 +12,6 @@ const initialState = {
   current: null,
 };
 
-/**
- *
- * @param {Object} state
- * @param {type: String, chainId: string} action
- */
 export const pins = (state = initialState.pins, { type, chainId }) => {
   switch (type) {
     case actionTypes.toggleApplicationPin:
@@ -38,11 +31,6 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
   }
 };
 
-/**
- *
- * @param {Object} state
- * @param {type: String, app: Object, apps: Object, chainId: String} action
- */
 export const applications = (
   state = initialState.applications,
   { type, app, apps, chainId, network }
@@ -72,11 +60,6 @@ export const applications = (
   }
 };
 
-/**
- *
- * @param {Object} state
- * @param {type: String, application: Object} action
- */
 export const current = (state = initialState.current, { type, app }) => {
   switch (type) {
     case actionTypes.setCurrentApplication:
