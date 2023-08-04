@@ -67,7 +67,7 @@ const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
       <BoxFooter direction="horizontal">
         {currentAccount.metadata?.isHW && !isAppOpen && (
           <div className={styles.errorLabel}>
-            <span>{t('Open the Lisk app on Ledger device to continue')}</span>
+            <span data-testid="hwError">{t('Open the Lisk app on Ledger device to continue')}</span>
           </div>
         )}
         <PrimaryButton
