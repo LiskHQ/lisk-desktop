@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from "classnames";
+import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useCurrentAccount } from '@account/hooks';
 import { useDispatch } from 'react-redux';

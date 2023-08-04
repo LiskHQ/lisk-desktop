@@ -103,6 +103,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
       ...aggregatedApplicationData,
       icon: getLogo({ logo }),
       bg: defaultBackgroundImage,
+      name: aggregatedApplicationData.chainName,
     },
   };
 
@@ -128,6 +129,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     >
       <div className={styles.wrapper}>
         <BlockchainAppDetailsHeader
+          classNameBackgroundColor={styles.classNameBackgroundColorProp}
           application={application}
           chainAction={
             <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>

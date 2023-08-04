@@ -101,7 +101,7 @@
     display: flex;
     flex-direction: column;
     flex-basis: 67%;
-    padding: 30px 50px 30px 30px;
+    padding: 30px 50px 30px 50px;
     z-index: 1;
   }
 
