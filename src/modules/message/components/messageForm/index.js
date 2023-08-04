@@ -73,7 +73,7 @@ const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
         <PrimaryButton
           className="next"
           onClick={onClick}
-          disabled={currentAccount.metadata?.isHW ? !isAppOpen : false}
+          disabled={currentAccount.metadata?.isHW ? !isAppOpen : !message}
         >
           {t('Continue')}
         </PrimaryButton>
