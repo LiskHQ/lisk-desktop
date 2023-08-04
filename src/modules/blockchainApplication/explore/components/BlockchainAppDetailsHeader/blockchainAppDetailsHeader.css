@@ -34,12 +34,12 @@
       width: 100%;
     }
   }
+}
 
-  & .bg {
-    width: 100%;
-    height: 100%;
-    background: #3396ff;
-  }
+& .bg {
+  width: 100%;
+  height: 100%;
+  background: #3396ff;
 }
 
 .detailsWrapper {

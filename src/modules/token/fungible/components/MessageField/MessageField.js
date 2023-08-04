@@ -45,7 +45,7 @@ function MessageField({
       className={`${styles.addMessageButton} add-message-button`}
     >
       <Icon name="plusBlueIcon" />
-      <span>Add message (Optional)</span>
+      <span>{t('Add message (Optional)')}</span>
     </TertiaryButton>
   ) : (
     <div className={`${styles.container} reference`}>
@@ -53,7 +53,7 @@ function MessageField({
         <span>{label}</span>{' '}
         <TertiaryButton onClick={onShrinkField} className={styles.removeMessageButton}>
           <Icon name="removeBlueIcon" />
-          <span>Remove</span>
+          <span>{t('Remove')}</span>
         </TertiaryButton>
       </div>
       <span className={`${styles.referenceField}`}>

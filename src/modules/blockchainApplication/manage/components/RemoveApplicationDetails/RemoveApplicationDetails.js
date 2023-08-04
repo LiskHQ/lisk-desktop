@@ -97,7 +97,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
           <Illustration name="applicationDetailsError" />
           <div className={styles.errorText}>{t('Error loading application data')}</div>
           <div className={styles.retryBtn}>
-            <TertiaryButton onClick={reloadAppDetails}>Try again</TertiaryButton>
+            <TertiaryButton onClick={reloadAppDetails}>{t('Try again')}</TertiaryButton>
           </div>
         </div>
       </Dialog>

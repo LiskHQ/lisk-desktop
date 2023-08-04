@@ -15,10 +15,6 @@ const history = createMemoryHistory();
 /**
  * Mounts components that are wrapped in WithRouter
  *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {?Object} routeConfig - A fake history.location object
- *
  * @returns {Object} Mounted component
  */
 export const mountWithRouter = (Component, props, routeConfig = {}) =>
@@ -30,9 +26,6 @@ export const mountWithRouter = (Component, props, routeConfig = {}) =>
 
 /**
  * Mounts components that are wrapped in WithRouter with custom router
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
  *
  * @returns {Object} Mounted component
  */
@@ -55,10 +48,6 @@ export const mountWithCustomRouter = (Component, props) =>
 /**
  * Mounts components that are wrapped in WithRouter and store with custom router
  *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {?Object} store - A fake redux store object
- *
  * @returns {Object} Mounted component
  */
 export const mountWithCustomRouterAndStore = (Component, props, store) =>
@@ -75,11 +64,6 @@ export const mountWithCustomRouterAndStore = (Component, props, store) =>
 /**
  * Mounts components that are wrapped in WithRouter
  *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {?Object} routeConfig - A fake history.location object
- * @param {?Object} store - A fake redux store object
- *
  * @returns {Object} Mounted component
  */
 export const mountWithRouterAndStore = (Component, props, routeConfig = {}, store) =>
@@ -93,9 +77,6 @@ export const mountWithRouterAndStore = (Component, props, routeConfig = {}, stor
 
 /**
  * Mounts components that are wrapped in Query Client
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
  *
  * @returns {Object} Mounted component
  */
@@ -113,9 +94,6 @@ export const mountWithQueryClient = (Component, props = {}) => {
 
 /**
  * Mounts components that are wrapped in QueryClientProvider and Router
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
  *
  * @returns {Object} Rendered component
  */
@@ -137,10 +115,6 @@ export const mountWithRouterAndQueryClient = (Component, props) => {
 /**
  * Renders components that are wrapped in WithRouter
  *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {?Object} routeConfig - A fake history.location object
- *
  * @returns {Object} Mounted component
  */
 export const renderWithRouter = (Component, props, routeConfig = {}) =>
@@ -152,9 +126,6 @@ export const renderWithRouter = (Component, props, routeConfig = {}) =>
 
 /**
  * Renders components that are wrapped in WithRouter
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
  *
  * @returns {Object} Rendered component
  */
@@ -170,9 +141,6 @@ export const renderWithCustomRouter = (Component, props) =>
 /**
  * Renders components that are wrapped in QueryClientProvider
  *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- *
  * @returns {Object} Rendered component
  */
 export const renderWithQueryClient = (Component, props) => {
@@ -187,9 +155,6 @@ export const renderWithQueryClient = (Component, props) => {
 
 /**
  * Renders components that are wrapped in QueryClientProvider and Router
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
  *
  * @returns {Object} Rendered component
  */
@@ -211,9 +176,6 @@ export const renderWithRouterAndQueryClient = (Component, props = {}) => {
 /**
  * Rerenders components that are wrapped in QueryClientProvider and Router
  *
- * @param {Class|Function} Component - A React component to be rerendered
- * @param {Object} props - Set of props to be passed to the component
- *
  * @returns {Object} Rerendered component
  */
 export const rerenderWithRouterAndQueryClient = (Component, props = {}) => {
@@ -231,10 +193,6 @@ export const rerenderWithRouterAndQueryClient = (Component, props = {}) => {
 
 /**
  * Mounts components that require to access Redux store and QueryClient
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {Object} store - A fake Redux store object
  *
  * @returns {Object} Mounted component
  */
@@ -254,10 +212,6 @@ export const mountWithQueryAndProps = (Component, props, store) => {
 /**
  * render's components that requires access Redux store
  *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {Object} store - A fake Redux store object
- *
  * @returns {Object} Mounted component
  */
 export const renderWithStore = (Component, props, store) =>
@@ -269,10 +223,6 @@ export const renderWithStore = (Component, props, store) =>
 
 /**
  * render's components that requires access Redux store with react router
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {Object} store - A fake Redux store object
  *
  * @returns {Object} Mounted component
  */
@@ -302,9 +252,6 @@ export const renderWithRouterAndStoreAndQueryClient = (Component, props = {}, st
 
 /**
  * Renders components that are wrapped in QueryClientProvider
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
  *
  * @returns {Object} Rendered component
  */
@@ -371,17 +318,6 @@ const recursiveRender = (Component, props, providers) =>
 
 /**
  * Renders components that are wrapped in WithRouter
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- * @param {Object} [config] - Set of configurations for the render process
- * @param {String} [config.renderType] - Render type for the render process based on library. Could be render or mount
- * @param {Object} [config.historyInfo] - Browser history info for the render process
- * @param {Boolean} [config.queryClient] - QueryClient configuration for the render process
- * @param {Class} [config.queryClientInfo] - QueryClient data for the render process
- * @param {Boolean} [config.store] - Redux store configuration for the render process
- * @param {Object} [config.storeInfo] - Redux store data for the render process
- * @param {Boolean} [config.wc] - WalletConnect configuration for the render process
  *
  * @returns {Object} Rendered component
  * @returns {Object} Component wrapper

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
@@ -11,6 +12,7 @@ import validatorPerformanceDetails from './validatorPerformanceDetails';
 import styles from './styles.css';
 
 const ValidatorPerformance = ({ history }) => {
+  const {t} = useTranslation()
   const address = parseSearchParams(history.location.search).address;
   const {
     isLoading,
@@ -45,10 +47,10 @@ const ValidatorPerformance = ({ history }) => {
         </Box>
         <Box className={`${grid.row} ${styles.performanceContainer}`}>
           <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
-            <p className={styles.header}>Punishment starts</p>
+            <p className={styles.header}>{t('Punishment starts')}</p>
           </Box>
           <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
-            <p className={styles.header}>Punishment ends</p>
+            <p className={styles.header}>{t('Punishment ends')}</p>
           </Box>
         </Box>
         {punishmentPeriods &&

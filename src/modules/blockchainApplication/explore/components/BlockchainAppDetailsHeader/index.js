@@ -12,9 +12,10 @@ import styles from './blockchainAppDetailsHeader.css';
 
 const BlockchainAppDetailsHeader = ({
   className,
+  classNameDescription,
+  classNameBackgroundColor,
   headerText,
   description,
-  classNameDescription,
   application,
   chainAction,
   loading,
@@ -56,7 +57,7 @@ const BlockchainAppDetailsHeader = ({
                 }}
               />
             </div>
-            <div className={styles.bg} />
+            <div className={classNames(styles.bg, classNameBackgroundColor)} />
           </div>
           <Box className={styles.detailsWrapper}>
             <div className={styles.chainNameWrapper}>

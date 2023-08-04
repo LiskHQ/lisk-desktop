@@ -56,4 +56,19 @@ describe('TransactionEventsRow', () => {
       expect(screen.queryByTestId('transaction-event-json-viewer').className).toContain('shrink');
     });
   });
+
+  it('should render default value when event has missing data', async () => {
+    const props = {
+      data: {
+        block: {
+          id: '625835480267616579',
+          height: 8350681,
+          timestamp: 28227090,
+        },
+      },
+    };
+    render(<TransactionEventsRow {...props} isWallet />);
+
+    expect(screen.queryAllByText('-'));
+  });
 });

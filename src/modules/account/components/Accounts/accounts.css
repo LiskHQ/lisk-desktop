@@ -11,7 +11,8 @@
   & .menuWrapper {
     margin-right: 8px;
     border-radius: 40px;
-    background-color: white;
+    background-color: var(--color-body-bg);
+    border-color: var(--dark-border-color);
   }
 
   .popupWrapper {
@@ -41,7 +42,7 @@
     max-width: 228px;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: var(--color-constant-zodiac-blue);
+    color: var(--color-maastricht-blue);
   }
 }
 

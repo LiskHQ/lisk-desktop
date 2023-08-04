@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React, { useState } from 'react';
-import { fromTransactionJSON, toTransactionJSON } from '@transaction/utils/encoding';
+import { fromTransactionJSON } from '@transaction/utils/encoding';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { useCommandSchema } from '@network/hooks';
 import Box from 'src/theme/box';
@@ -15,23 +15,11 @@ import { getParamsSchema } from '@transaction/hooks/useTransactionFee/utils';
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
 
-const getTransactionObject = (transaction, moduleCommandSchemas) => {
-  const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
-  const transactionObject = fromTransactionJSON(transaction, paramsSchema);
-  const isValid = transactions.validateTransaction(transactionObject, paramsSchema);
-
-  return {
-    transactionObject,
-    isValid,
-  };
-};
-
 // eslint-disable-next-line max-statements
 const Form = ({ t, nextStep }) => {
   const [transaction, setTransaction] = useState();
-  const [transactionObject, setTransactionObject] = useState();
   const [error, setError] = useState();
-  const { moduleCommandSchemas } = useCommandSchema();
+  const { moduleCommandSchemas, isError, isFetching } = useCommandSchema();
   // @todo Once the transactions are refactored and working, we should
   // use the schema returned by this hook instead of reading from the Redux store.
   useSchemas();
@@ -40,23 +28,12 @@ const Form = ({ t, nextStep }) => {
   const onReview = () => {
     try {
       const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
+      const transactionObject = fromTransactionJSON(transaction, paramsSchema);
+      transactions.validateTransaction(transactionObject, paramsSchema);
+
       const moduleCommand = joinModuleAndCommand(transaction);
       const formProps = { moduleCommand };
-      nextStep({ formProps, transactionJSON: toTransactionJSON(transactionObject, paramsSchema) });
-    } catch (e) {
-      nextStep({ error: e });
-    }
-  };
-
-  const validateAndSetTransaction = (value) => {
-    setError(undefined);
-
-    try {
-      setTransaction(value);
-      const result = getTransactionObject(value, moduleCommandSchemas);
-      setTransactionObject(result.transactionObject);
-      // TODO: Need to handle the validator error and show to end user
-      setError(result.isValid ? 'Unknown transaction' : undefined);
+      nextStep({ formProps, transactionJSON: transaction });
     } catch (e) {
       setTransaction(undefined);
       setError(`Invalid transaction: ${e.message}`);
@@ -65,6 +42,10 @@ const Form = ({ t, nextStep }) => {
 
   const handleJsonInputError = (inputError) => {
     setError(inputError.message);
+  };
+
+  const onLoad = () => {
+    setError(undefined);
   };
 
   return (
@@ -83,7 +64,8 @@ const Form = ({ t, nextStep }) => {
           <UploadJSONInput
             prefixLabel={`${t('Paste transaction value')}  `}
             label={t('Read from JSON file')}
-            onChange={validateAndSetTransaction}
+            onChange={setTransaction}
+            onLoad={onLoad}
             value={transaction}
             error={error}
             onError={handleJsonInputError}
@@ -94,7 +76,7 @@ const Form = ({ t, nextStep }) => {
             className="confirm"
             size="l"
             onClick={onReview}
-            disabled={!transaction || error}
+            disabled={isFetching || isError}
           >
             {t('Review and sign')}
           </PrimaryButton>

@@ -98,8 +98,9 @@ const DetailsView = ({ data, isMyProfile, address }) => {
                       content={<Icon name="editDisabled" />}
                     >
                       <p>
-                        You have to wait for your current commission change to finalize before you
-                        can edit again.
+                        {t(
+                          'You have to wait for your current commission change to finalize before you can edit again.'
+                        )}
                       </p>
                     </Tooltip>
                   ) : (

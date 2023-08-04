@@ -4,9 +4,6 @@ import { STATUS, ERROR_CASES } from '../constants/lifeCycle';
 
 /**
  * The approval handler for connection proposal
- *
- * @param {object} proposal The proposal object as received via the event
- * @param {array} selectedAccounts List of lisk addresses selected by the user
  * @returns {Promise} The promise that resolves when the approval is complete
  */
 export const onApprove = async (proposal, selectedAccounts, signClient) => {
@@ -45,8 +42,6 @@ export const onApprove = async (proposal, selectedAccounts, signClient) => {
 
 /**
  * The reject handler for connection proposal
- *
- * @param {object} proposal The proposal object as received via the event
  * @returns {Promise} The promise that resolves when the rejection is complete
  */
 export const onReject = (proposal, signClient) => {

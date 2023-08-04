@@ -72,10 +72,7 @@ const App = ({ history }) => {
             toastClassName={styles.toastBody}
             bodyClassName={styles.toastText}
           />
-          <NavigationBars
-            location={history.location}
-            history={history}
-          />
+          <NavigationBars location={history.location} history={history} />
           <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
             <section className="scrollContainer">
               <FlashMessageHolder />
