@@ -103,6 +103,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
       ...aggregatedApplicationData,
       icon: getLogo({ logo }),
       bg: defaultBackgroundImage,
+      name: aggregatedApplicationData.chainName,
     },
   };
 
