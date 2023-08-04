@@ -128,6 +128,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     >
       <div className={styles.wrapper}>
         <BlockchainAppDetailsHeader
+          classNameBackgroundColor={styles.classNameBackgroundColorProp}
           application={application}
           chainAction={
             <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
