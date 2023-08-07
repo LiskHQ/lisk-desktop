@@ -74,9 +74,9 @@ const MultisigAccountDetails = ({ t, history }) => {
             <div className={styles.row}>
               <span className={styles.title}>{t('Public key')}:</span>
               <CopyToClipboard
-                value={authData?.meta.publicKey}
+                value={currentAccount.metadata?.pubkey}
                 className={styles.rowValue}
-                text={truncateAddress(authData?.meta.publicKey)}
+                text={truncateAddress(currentAccount.metadata?.pubkey)}
               />
             </div>
           </BoxInfoText>

@@ -60,13 +60,14 @@ const signTransactionByHW = async ({
 }) => {
   const isMultisigReg =
     joinModuleAndCommand(transaction) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
-  const signerPublicKey = Buffer.from(senderAccount.summary.publicKey, 'hex');
+  const signerPublicKey = Buffer.from(wallet.metadata?.pubkey, 'hex');
   const isSender =
     Buffer.isBuffer(transaction.senderPublicKey) &&
     signerPublicKey.equals(transaction.senderPublicKey);
 
   let unsignedMessage;
   let signature;
+  let isParamsSigning = false;
 
   if (isMultisigReg) {
     const isNonEmptySignatureExists =
@@ -75,9 +76,8 @@ const signTransactionByHW = async ({
     if (isNonEmptySignatureExists) {
       const unsignedBytes = createUnsignedBytes(transaction, options);
       unsignedMessage = createUnsignedMessage(MESSAGE_TAG_MULTISIG_REG, chainID, unsignedBytes);
-
-      signature = unsignedMessage;
-      signature = await signMessageByHW({ account: wallet, unsignedMessage });
+      signature = await signMessageByHW({ account: wallet, message: unsignedMessage });
+      isParamsSigning = true;
     }
 
     if (isSender && !isNonEmptySignatureExists) {
@@ -87,7 +87,13 @@ const signTransactionByHW = async ({
     signature = await signMultiSignatureTransaction(wallet, schema, chainID, transaction);
   }
 
-  return updateTransactionSignatures(wallet, senderAccount, transaction, signature);
+  return updateTransactionSignatures(
+    wallet,
+    senderAccount,
+    transaction,
+    signature,
+    isParamsSigning
+  );
 };
 
 export { signTransactionByHW, createUnsignedMessage };

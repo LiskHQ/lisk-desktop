@@ -19,10 +19,16 @@ const isKeyMatch = (aPublicKey, signerPublicKey) =>
  * The below logic is copied from Lisk SDK https://github.com/LiskHQ/lisk-sdk/blob/2593d1fe70154a9209b713994a252c494cad7123/elements/lisk-transactions/src/sign.ts#L228-L297
  */
 /* eslint-disable max-statements, complexity */
-const updateTransactionSignatures = (wallet, senderAccount, transaction, signature) => {
+const updateTransactionSignatures = (
+  wallet,
+  senderAccount,
+  transaction,
+  signature,
+  isParamsSigning
+) => {
   const isMultisigReg =
     joinModuleAndCommand(transaction) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
-  const signerPublicKey = Buffer.from(senderAccount.summary.publicKey, 'hex');
+  const signerPublicKey = Buffer.from(wallet.metadata.pubkey, 'hex');
   const isSender =
     Buffer.isBuffer(transaction.senderPublicKey) &&
     signerPublicKey.equals(transaction.senderPublicKey);
@@ -31,7 +37,7 @@ const updateTransactionSignatures = (wallet, senderAccount, transaction, signatu
   const currentAccountPubKey = Buffer.from(wallet.metadata.pubkey, 'hex');
 
   // When signing a regular account
-  if (!isAccountMultisignature && !isMultisigReg) {
+  if (!isAccountMultisignature && !isParamsSigning) {
     transaction.signatures[0] = signature;
 
     return transaction;
