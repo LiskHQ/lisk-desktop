@@ -157,7 +157,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
   return signedTransaction;
 };
 
-const signMessageSignature = (chainIDBuffer, transaction, privateKeyBuffer, messageSchema) => {
+const getUnsignedBytes = (transaction, messageSchema) => {
   const message = {
     mandatoryKeys: transaction.params.mandatoryKeys,
     optionalKeys: transaction.params.optionalKeys,
@@ -166,8 +166,7 @@ const signMessageSignature = (chainIDBuffer, transaction, privateKeyBuffer, mess
     nonce: transaction.nonce,
   };
 
-  const data = codec.codec.encode(messageSchema, message);
-  return cryptography.ed.signData(MESSAGE_TAG_MULTISIG_REG, chainIDBuffer, data, privateKeyBuffer);
+  return codec.codec.encode(messageSchema, message);
 };
 
 const getMembersAndSenderIndex = (transaction, publicKeyBuffer) => {
@@ -212,12 +211,14 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
 
     if (senderIndex > -1) {
       const { messageSchema } = options;
-      const memberSignature = signMessageSignature(
+      const unsignedBytes = getUnsignedBytes(transaction, messageSchema);
+      const memberSignature = cryptography.ed.signData(
+        MESSAGE_TAG_MULTISIG_REG,
         chainIDBuffer,
-        transaction,
-        privateKeyBuffer,
-        messageSchema
+        unsignedBytes,
+        privateKeyBuffer
       );
+
       updateMultiSigRegSignatures(transaction, members, senderIndex, memberSignature);
     }
   }
@@ -411,14 +412,15 @@ const normalizeNumberRange = (distributions) => {
 };
 
 export {
-  getTotalSpendingAmount,
-  downloadJSON,
   containsTransactionType,
-  normalizeTransactionParams,
-  signMultisigTransaction,
+  downloadJSON,
+  getTotalSpendingAmount,
+  getUnsignedBytes,
   getNumberOfSignatures,
+  getMembersAndSenderIndex,
   normalizeTransactionsStatisticsParams,
   normalizeNumberRange,
-  getMembersAndSenderIndex,
+  normalizeTransactionParams,
+  signMultisigTransaction,
   updateMultiSigRegSignatures,
 };
