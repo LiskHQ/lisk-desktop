@@ -252,7 +252,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
         privateKeyBuffer,
         schema
       );
-      console.log('--->>>>>>',res)
+
       return res;
     } catch (e) {
       return e;

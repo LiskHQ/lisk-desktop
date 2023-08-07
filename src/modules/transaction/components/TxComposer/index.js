@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
@@ -66,7 +67,13 @@ const TxComposer = ({
     signatures: [],
   };
 
-  const { minimumFee, components, transactionFee } = useTransactionFee({
+  const {
+    minimumFee,
+    components,
+    transactionFee,
+    isFetched,
+    isLoading: isLoadingFee,
+  } = useTransactionFee({
     selectedPriority,
     transactionJSON,
     isFormValid: formProps.isFormValid,
@@ -124,13 +131,11 @@ const TxComposer = ({
     const paramsSchema = moduleCommandSchemas[moduleCommand];
     const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
 
-    console.log('--->>>', transaction, transactionJSON);
-
     const [error, dryRunResult] = await to(
       dryRun({
         paramsSchema,
         transaction,
-        skipVerify: false,
+        skipVerify: true,
         serviceUrl: mainChainNetwork.serviceUrl,
       })
     );
@@ -141,10 +146,13 @@ const TxComposer = ({
         ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
         : dryRunResult?.data?.errorMessage);
 
-    if (transactionErrorMessage) setFeedBack(transactionErrorMessage);
+    if (transactionErrorMessage) {
+      setIsRunningDryRun(false);
+      return setFeedBack(transactionErrorMessage);
+    }
 
     setIsRunningDryRun(false);
-    onConfirm(formProps, transactionJSON, selectedPriority, composedFees);
+    return onConfirm(formProps, transactionJSON, selectedPriority, composedFees);
   };
 
   if (recipientChain && sendingChain) {
@@ -166,7 +174,7 @@ const TxComposer = ({
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
         loadError={prioritiesLoadError}
-        isLoading={loadingPriorities}
+        isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
       />
       <Feedback
@@ -181,7 +189,8 @@ const TxComposer = ({
           isLoading={isRunningDryRun}
           disabled={
             !formProps.isFormValid ||
-            minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0)
+            minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0) ||
+            !isFetched
           }
         >
           {buttonTitle ?? t('Continue')}
