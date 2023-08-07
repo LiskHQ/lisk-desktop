@@ -32,15 +32,15 @@ const updateTransactionSignatures = (
   const isAccountMultisignature = mandatoryKeys.length + optionalKeys.length > 0;
   const currentAccountPubKey = Buffer.from(wallet.metadata.pubkey, 'hex');
 
-  // When signing a regular account
+  // Add signature when signing from a regular account
   if (!isAccountMultisignature && !isParamsSigning) {
     transaction.signatures[0] = signature;
 
     return transaction;
   }
 
-  // When registering multisignature account
-  if (!isAccountMultisignature || (isSender && isMultisigReg)) {
+  // Add params signature when registering multisignature account
+  if (!isAccountMultisignature || (isSender && isMultisigReg && isParamsSigning)) {
     const { senderIndex, members } = getMembersAndSenderIndex(transaction, currentAccountPubKey);
     if (senderIndex >= 0) {
       updateMultiSigRegSignatures(transaction, members, senderIndex, signature);
@@ -50,20 +50,18 @@ const updateTransactionSignatures = (
   }
 
   // Add signature when signing from multisig accounts
-  if (isAccountMultisignature) {
-    const keys = {
-      mandatoryKeys: options.txInitiatorAccount.mandatoryKeys.map((k) => Buffer.from(k, 'hex')),
-      optionalKeys: options.txInitiatorAccount.optionalKeys.map((k) => Buffer.from(k, 'hex')),
-    };
-    keys.mandatoryKeys.sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB));
-    keys.optionalKeys.sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB));
-    const accountKeys = keys.mandatoryKeys.concat(keys.optionalKeys);
-    for (let i = 0; i < accountKeys.length; i += 1) {
-      if (accountKeys[i].equals(signerPublicKey)) {
-        transaction.signatures[i] = signature;
-      } else if (transaction.signatures[i] === undefined) {
-        transaction.signatures[i] = Buffer.alloc(0);
-      }
+  const keys = {
+    mandatoryKeys: options.txInitiatorAccount.mandatoryKeys.map((k) => Buffer.from(k, 'hex')),
+    optionalKeys: options.txInitiatorAccount.optionalKeys.map((k) => Buffer.from(k, 'hex')),
+  };
+  keys.mandatoryKeys.sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB));
+  keys.optionalKeys.sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB));
+  const accountKeys = keys.mandatoryKeys.concat(keys.optionalKeys);
+  for (let i = 0; i < accountKeys.length; i += 1) {
+    if (accountKeys[i].equals(signerPublicKey)) {
+      transaction.signatures[i] = signature;
+    } else if (transaction.signatures[i] === undefined) {
+      transaction.signatures[i] = Buffer.alloc(0);
     }
   }
 
