@@ -117,7 +117,7 @@ const downloadJSON = (data, name) => {
  * to open up room for the mandatory ones
  * @returns {array} the trimmed array of signatures
  */
-export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
+const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
   const skip = hasSenderSignature ? 1 : 0;
   const firstOptional = skip + mandatoryKeysNo;
   let cleared = false;
@@ -169,64 +169,63 @@ const getUnsignedBytes = (transaction, messageSchema) => {
   return codec.codec.encode(messageSchema, message);
 };
 
-const getMembersAndSenderIndex = (transaction, publicKeyBuffer) => {
-  const members = [
-    ...transaction.params.mandatoryKeys.sort((publicKeyA, publicKeyB) =>
-      publicKeyA.compare(publicKeyB)
-    ),
-    ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) =>
-      publicKeyA.compare(publicKeyB)
-    ),
-  ];
+const getAccountKeys = (account) => {
+  const keys = {
+    mandatoryKeys: account.mandatoryKeys
+      .map((k) => (Buffer.isBuffer(k) ? k : Buffer.from(k, 'hex')))
+      .sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB)),
+    optionalKeys: account.optionalKeys
+      .map((k) => (Buffer.isBuffer(k) ? k : Buffer.from(k, 'hex')))
+      .sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB)),
+  };
 
-  const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
-
-  return { members, senderIndex };
+  return keys.mandatoryKeys.concat(keys.optionalKeys);
 };
 
-const updateMultiSigRegSignatures = (transaction, members, senderIndex, memberSignature) => {
-  const signatures = [...Array(members.length).keys()].map((index) => {
-    if (index === senderIndex) return memberSignature;
-
-    if (!transaction.params.signatures[index] || !transaction.params.signatures[index].length) {
-      return Buffer.alloc(64);
+const insertSignature = (signatures, signature, accountKeys, currentAccountPubKey) => {
+  for (let i = 0; i < accountKeys.length; i += 1) {
+    if (accountKeys[i].equals(currentAccountPubKey)) {
+      signatures[i] = signature;
+    } else if (signatures[i] === undefined) {
+      signatures[i] = Buffer.alloc(0);
     }
-    return transaction.params.signatures[index];
-  });
+  }
 
-  transaction.params.signatures = signatures;
+  return signatures;
 };
 
 // eslint-disable-next-line max-statements
 const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, options) => {
   const moduleCommand = joinModuleAndCommand(transaction);
-  const isGroupRegistration = moduleCommand === registerMultisignature;
+  const isRegisterMultisignature = moduleCommand === registerMultisignature;
   const chainIDBuffer = Buffer.from(chainID, 'hex');
   const privateKeyBuffer = privateKey ? Buffer.from(privateKey, 'hex') : Buffer.alloc(0);
-  const publicKeyBuffer = Buffer.from(wallet.summary.publicKey, 'hex');
+  const currentAccountPubKey = Buffer.from(wallet.summary.publicKey, 'hex');
+  const areAllMembersSigned =
+    isRegisterMultisignature &&
+    transaction.params.signatures.filter((sig) => sig.compare(Buffer.alloc(64)) === 0).length === 0;
 
   // Sign the params if tx is a group registration and the current account is a member
-  if (isGroupRegistration) {
-    const { members, senderIndex } = getMembersAndSenderIndex(transaction, publicKeyBuffer);
-
-    if (senderIndex > -1) {
-      const { messageSchema } = options;
-      const unsignedBytes = getUnsignedBytes(transaction, messageSchema);
-      const memberSignature = cryptography.ed.signData(
-        MESSAGE_TAG_MULTISIG_REG,
-        chainIDBuffer,
-        unsignedBytes,
-        privateKeyBuffer
-      );
-
-      updateMultiSigRegSignatures(transaction, members, senderIndex, memberSignature);
-    }
+  if (isRegisterMultisignature && !areAllMembersSigned) {
+    const unsignedBytes = getUnsignedBytes(transaction, options.messageSchema);
+    const signature = cryptography.ed.signData(
+      MESSAGE_TAG_MULTISIG_REG,
+      chainIDBuffer,
+      unsignedBytes,
+      privateKeyBuffer
+    );
+    const accountKeys = getAccountKeys(transaction.params);
+    transaction.params.signatures = insertSignature(
+      transaction.params.signatures,
+      signature,
+      accountKeys,
+      currentAccountPubKey
+    );
   }
 
   // Sign the tx only if the account is the initiator of the tx
-
   const { mandatoryKeys, optionalKeys, numberOfSignatures } = wallet.keys;
-  const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;
+  const isSender = Buffer.compare(transaction.senderPublicKey, currentAccountPubKey) === 0;
   const multiSigStatus = getTransactionSignatureStatus(
     {
       mandatoryKeys,
@@ -236,8 +235,10 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
     transaction
   );
   if (
-    (isSender && isGroupRegistration && multiSigStatus === signatureCollectionStatus.fullySigned) ||
-    (isSender && !isGroupRegistration)
+    (isSender &&
+      isRegisterMultisignature &&
+      multiSigStatus === signatureCollectionStatus.fullySigned) ||
+    (isSender && !isRegisterMultisignature)
   ) {
     try {
       const res = transactions.signTransactionWithPrivateKey(
@@ -417,10 +418,10 @@ export {
   getTotalSpendingAmount,
   getUnsignedBytes,
   getNumberOfSignatures,
-  getMembersAndSenderIndex,
+  getAccountKeys,
+  insertSignature,
   normalizeTransactionsStatisticsParams,
   normalizeNumberRange,
   normalizeTransactionParams,
   signMultisigTransaction,
-  updateMultiSigRegSignatures,
 };
