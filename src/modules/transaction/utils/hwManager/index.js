@@ -92,7 +92,8 @@ const signTransactionByHW = async ({
     senderAccount,
     transaction,
     signature,
-    isParamsSigning
+    isParamsSigning,
+    options
   );
 };
 

@@ -26,7 +26,7 @@ const emptyKeys = {
 const MultisigAccountDetails = ({ t, history }) => {
   const [currentAccount] = useCurrentAccount();
   const queryAddress = selectSearchParamValue(history.location.search, 'address');
-  const address = queryAddress || currentAccount.metadata.address;
+  const address = queryAddress || currentAccount.metadata?.address;
   const { data: authData } = useAuth({
     config: { params: { address } },
   });
@@ -60,7 +60,9 @@ const MultisigAccountDetails = ({ t, history }) => {
         <BoxContent className={styles.mainContent}>
           <BoxInfoText className={styles.nameAndAddress}>
             <div className={styles.accountName}>
-              <h3>{currentAccount.metadata.name}</h3>
+              <h3>
+                {queryAddress ? 'Multisignature account details' : currentAccount.metadata?.name}
+              </h3>
               <Icon name="multisigKeys" />
             </div>
             <div className={styles.row}>
@@ -74,9 +76,9 @@ const MultisigAccountDetails = ({ t, history }) => {
             <div className={styles.row}>
               <span className={styles.title}>{t('Public key')}:</span>
               <CopyToClipboard
-                value={currentAccount.metadata?.pubkey}
+                value={authData?.meta.publicKey}
                 className={styles.rowValue}
-                text={truncateAddress(currentAccount.metadata?.pubkey)}
+                text={truncateAddress(authData?.meta.publicKey)}
               />
             </div>
           </BoxInfoText>
