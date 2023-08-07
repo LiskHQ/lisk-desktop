@@ -1,6 +1,6 @@
 import { transactions } from '@liskhq/lisk-client';
 import { getSignedTransaction } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
-import { signMessageUsingHW } from 'src/modules/wallet/utils/signMessage';
+import { signMessageUsingHW } from '@wallet/utils/signMessage';
 import {
   getAccountKeys,
   getUnsignedBytes,
@@ -15,29 +15,7 @@ const createUnsignedMessage = (TAG, chainID, unsignedBytes) =>
     'hex'
   );
 
-const signTransaction = async (wallet, schema, chainID, transaction) => {
-  const unsignedBytes = transactions.getSigningBytes(transaction, schema);
-  const unsignedMessage = createUnsignedMessage(
-    transactions.TAG_TRANSACTION,
-    chainID,
-    unsignedBytes
-  );
-
-  const signedTransaction = await getSignedTransaction(
-    wallet.hw.path,
-    wallet.metadata.accountIndex,
-    unsignedMessage
-  );
-  let signature = signedTransaction?.signature;
-
-  if (signature instanceof Uint8Array) {
-    signature = Buffer.from(signature);
-  }
-
-  return signature;
-};
-
-const signRegisterMultisignatureParams = async (transaction, wallet, chainID, options) => {
+const signRegisterMultisignatureParams = async ({ wallet, transaction, chainID, options }) => {
   const currentAccountPubKey = Buffer.from(wallet.metadata.pubkey, 'hex');
   const unsignedBytes = getUnsignedBytes(transaction, options.messageSchema);
   const unsignedMessage = createUnsignedMessage(MESSAGE_TAG_MULTISIG_REG, chainID, unsignedBytes);
@@ -52,6 +30,28 @@ const signRegisterMultisignatureParams = async (transaction, wallet, chainID, op
   );
 
   return transaction;
+};
+
+const signTransaction = async ({ wallet: account, schema, chainID, transaction }) => {
+  const unsignedBytes = transactions.getSigningBytes(transaction, schema);
+  const unsignedMessage = createUnsignedMessage(
+    transactions.TAG_TRANSACTION,
+    chainID,
+    unsignedBytes
+  );
+
+  const signedTransaction = await getSignedTransaction(
+    account.hw.path,
+    account.metadata.accountIndex,
+    unsignedMessage
+  );
+  let signature = signedTransaction?.signature;
+
+  if (signature instanceof Uint8Array) {
+    signature = Buffer.from(signature);
+  }
+
+  return signature;
 };
 
 /**
@@ -100,12 +100,16 @@ const signTransactionByHW = async ({
     joinModuleAndCommand(transaction) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
   const areAllMembersSigned =
     isRegisterMultisignature &&
-    transaction.params.signatures.filter((sig) => sig.compare(Buffer.alloc(64)) === 0).length === 0;
+    transaction.params.signatures.filter(
+      (sig) => sig.length !== 64 || Buffer.from(sig).equals(Buffer.alloc(64))
+    ).length === 0 &&
+    transaction.params.signatures.length ===
+      transaction.params.mandatoryKeys.length + transaction.params.optionalKeys.length;
 
   if (isRegisterMultisignature && !areAllMembersSigned) {
-    transaction = await signRegisterMultisignatureParams(transaction, wallet, chainID, options);
+    transaction = await signRegisterMultisignatureParams({ wallet, transaction, chainID, options });
   } else {
-    const signature = await signTransaction(wallet, schema, chainID, transaction);
+    const signature = await signTransaction({ wallet, schema, chainID, transaction });
     transaction = updateTransactionSignatures(
       wallet,
       senderAccount,

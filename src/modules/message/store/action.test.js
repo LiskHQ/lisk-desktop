@@ -4,6 +4,7 @@ import * as signMessageUtil from '@wallet/utils/signMessage';
 import { signMessage } from './action';
 
 jest.spyOn(cryptography.ed, 'signAndPrintMessage');
+jest.spyOn(cryptography.ed, 'printSignedMessage');
 jest.spyOn(signMessageUtil, 'signMessageUsingHW');
 
 describe('balanceReclaimed', () => {
@@ -27,6 +28,7 @@ describe('balanceReclaimed', () => {
 
   it('should dispatch transactionCreatedSuccess', async () => {
     cryptography.ed.signAndPrintMessage.mockReturnValue(defaultPrintedMessage);
+    cryptography.ed.printSignedMessage.mockReturnValue(defaultPrintedMessage);
 
     await signMessage({ nextStep, privateKey, message })();
 
