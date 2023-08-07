@@ -11,73 +11,59 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import Input from '@theme/Input';
 import { PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
-import { immutablePush, immutableSetToArray } from 'src/utils/immutableUtils';
+import { immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
+import {
+  DEFAULT_NETWORK_FORM_STATE,
+  getDuplicateNetworkFields,
+} from '@network/components/DialogAddNetwork/utils';
 import networks from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
 
 const DialogAddNetwork = () => {
+  const { t } = useTranslation();
   const history = useHistory();
-  const { name: defaultName = '', serviceUrl: defaultServiceUrl = '' } = parseSearchParams(
-    history.location.search
-  );
   const { setValue, customNetworks } = useSettings('customNetworks');
   const [successText, setSuccessText] = useState('');
   const [errorText, setErrorText] = useState('');
 
-  const { t } = useTranslation();
+  const { name: defaultName = '' } = parseSearchParams(history.location.search);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      name: defaultName,
-      serviceUrl: defaultServiceUrl,
-    },
+    defaultValues: defaultName
+      ? customNetworks.find((customNetwork) => customNetwork.name === defaultName)
+      : DEFAULT_NETWORK_FORM_STATE,
   });
 
-  // eslint-disable-next-line max-statements, complexity
+  // eslint-disable-next-line max-statements
   function onSubmit(values) {
     setSuccessText('');
     setErrorText('');
-    const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
-    const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
     const fullNetworkList = [...Object.values(networks), ...customNetworks];
-    const addOrEditNetworkIndex = fullNetworkList.findIndex(
-      (network) => network.serviceUrl === values.name || network.serviceUrl === values.serviceUrl
-    );
-    const editingExistingNetwork =
-      fullNetworkList.filter(
-        (network) =>
-          network.name.toLowerCase() === defaultName.toLowerCase() ||
-          network.serviceUrl.toLowerCase() === defaultServiceUrl.toLowerCase() ||
-          network.name.toLowerCase() === values.name.toLowerCase() ||
-          network.serviceUrl.toLowerCase() === values.serviceUrl.toLowerCase()
-      ).length > 1;
-
-    if (addOrEditNetworkIndex >= 0) {
-      if (defaultName === '' || editingExistingNetwork) {
-        setErrorText('Network name or serviceUrl already exists.');
-        return;
-      }
+    const duplicateNetworkFields = getDuplicateNetworkFields(values, fullNetworkList, defaultName);
+    if (duplicateNetworkFields) {
+      const duplicates = Object.keys(duplicateNetworkFields)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' & ');
+      return setErrorText(`${duplicates} already exists.`);
     }
 
-    let updatedCustomNetworks;
-    if (defaultName) {
-      updatedCustomNetworks = immutableSetToArray({
-        array: customNetworks,
-        mapToAdd: customNetwork,
-        index: customNetworks.findIndex((network) => network.name === defaultName),
-      });
-    } else {
-      updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
-      reset();
-    }
+    const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
+    const updatedCustomNetworks = immutableSetToArray({
+      array: customNetworks,
+      mapToAdd: { wsServiceUrl, isAvailable: true, ...values , label: values.name},
+      index: customNetworks.findIndex((network) => network.name === defaultName),
+    });
     setValue(updatedCustomNetworks);
 
-    setSuccessText(`${t('Success: Network')} ${defaultName ? t('edited') : t('added')}`);
+    if (!defaultName) reset();
+
+    return setSuccessText(`${t('Success: Network')} ${defaultName ? t('edited') : t('added')}`);
   }
 
   return (
@@ -117,6 +103,17 @@ const DialogAddNetwork = () => {
               {...register('serviceUrl', {
                 required: 'Service URL is required',
                 pattern: { value: regex.url, message: t('Invalid URL') },
+              })}
+            />
+            <Input
+              size="l"
+              label="Websocket URL"
+              placeholder={t('Enter service URL, e.g. wss://mainnet-service.lisk.com')}
+              feedback={errors.wsServiceUrl?.message}
+              status={errors.wsServiceUrl?.message ? 'error' : undefined}
+              {...register('wsServiceUrl', {
+                required: 'Service URL is required',
+                pattern: { value: regex.webSocketUrl, message: t('Invalid websocket URL') },
               })}
             />
             <PrimaryButton type="submit" className={`${styles.button}`}>
