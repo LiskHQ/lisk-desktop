@@ -54,8 +54,8 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, extraCommandFe
     minimumFee,
     messageFee,
     messageFeeTokenID: transaction?.params?.messageFee?.tokenID,
-    isLoading: transactionFee.isFetching,
-    isFetched: transactionFee.isFetched,
+    isLoading: transactionFee?.isFetching,
+    isFetched: transactionFee?.isFetched,
     transactionFee: (BigInt(minimumFee) + BigInt(priorityFee.value)).toString(),
   };
 };

@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { mountWithCustomRouterAndStore, smartRender } from 'src/utils/testHelpers';
+import { smartRender } from 'src/utils/testHelpers';
 import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
