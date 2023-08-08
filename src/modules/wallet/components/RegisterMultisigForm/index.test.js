@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { mountWithQueryClient } from 'src/utils/testHelpers';
+import { waitFor } from '@testing-library/react';
 import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransactionEstimateFees';
 import useSettings from '@settings/hooks/useSettings';
 import { useAuth } from '@auth/hooks/queries';
@@ -7,9 +7,8 @@ import { mockAuth } from '@auth/__fixtures__';
 import { getTransactionBaseFees, dryRun } from '@transaction/api';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import wallets from '@tests/constants/wallets';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
 import Form, { validateState } from './index';
-import flushPromises from '@tests/unit-test-utils/flushPromises';
-import { waitFor } from '@testing-library/react';
 
 jest.mock('@transaction/api');
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -20,6 +19,26 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 }));
 
 const mockCurrentAccount = mockSavedAccounts[0];
+const mockEstimateFeeResponse = {
+  data: {
+    transaction: {
+      fee: {
+        tokenID: '0400000000000000',
+        minimum: '5104000',
+      },
+    },
+  },
+  meta: {
+    breakdown: {
+      fee: {
+        minimum: {
+          byteFee: '96000',
+          additionalFees: {},
+        },
+      },
+    },
+  },
+};
 
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
@@ -29,7 +48,7 @@ jest.mock('@settings/hooks/useSettings');
 jest.mock('@auth/hooks/queries');
 
 useTransactionEstimateFees.mockReturnValue({
-  data: jest.fn(),
+  data: mockEstimateFeeResponse,
   isFetching: false,
   isFetched: true,
   error: false,
