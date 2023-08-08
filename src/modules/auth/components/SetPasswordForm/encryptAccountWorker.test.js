@@ -1,5 +1,5 @@
 import { encryptAccount } from '../../../account/utils';
-import './encryptAccountWorker';
+import './encryptAccount.worker';
 
 window.self.postMessage = jest.fn();
 

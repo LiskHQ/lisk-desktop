@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "author": "Lisk Foundation <admin@lisk.com>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
   "productName": "Lisk",
@@ -114,7 +114,7 @@
   "dependencies": {
     "@hookform/resolvers": "2.8.8",
     "@ledgerhq/hw-transport-node-hid": "6.27.17-next.0",
-    "@liskhq/lisk-client": "6.0.0-beta.3",
+    "@liskhq/lisk-client": "6.0.0-beta.4",
     "@tanstack/react-query": "4.0.10",
     "@tanstack/react-query-devtools": "4.2.1",
     "@walletconnect/sign-client": "2.9.0",

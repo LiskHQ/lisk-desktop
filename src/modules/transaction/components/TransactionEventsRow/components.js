@@ -25,17 +25,17 @@ export const BlockHeight = ({ height, id }) => (
 
 export const EventName = ({ name, isWallet }) => (
   <div className={`${grid[`col-xs-${isWallet ? 3 : 4}`]} event-action ${styles.eventAction}`}>
-    {name}
+    {name || '-'}
   </div>
 );
 
 export const EventModule = ({ module, isWallet }) => (
   <div className={`${grid[`col-xs-${isWallet ? 3 : 4}`]} event-action ${styles.eventAction}`}>
-    {module}
+    {module || '-'}
   </div>
 );
 
-export const EventIndex = ({ id }) => <div className={grid['col-xs-3']}>{id}</div>;
+export const EventIndex = ({ id }) => <div className={grid['col-xs-3']}>{id || '-'}</div>;
 
 export const CollapseToggle = ({ isCollapsed, onToggle }) => (
   <div className={`${styles.toggleButton} ${grid['col-xs-1']}`}>

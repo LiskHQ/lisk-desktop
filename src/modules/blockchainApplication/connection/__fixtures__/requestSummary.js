@@ -31,5 +31,6 @@ export const context = {
         url: 'http://example.com',
       },
     },
+    requiredNamespaces: { lisk: { chains: ['lisk:00000001'] } },
   },
 };

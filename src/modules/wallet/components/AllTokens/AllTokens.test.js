@@ -30,9 +30,13 @@ jest.mock('@pos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('src/modules/common/hooks');
 jest.mock('src/modules/common/hooks/useFiatRates');
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: jest.fn().mockReturnValue({ search: '?disableSend=false' }),
+}));
 
 describe('AllTokens', () => {
-  const history = { location: { search: '' } };
+  const history = [];
   const mergedTokens = mockAppsTokens.data.map((token, index) => ({
     ...mockTokensBalance.data[index],
     ...token,
@@ -110,6 +114,23 @@ describe('AllTokens', () => {
 
     await waitFor(() => {
       expect(setFilter).toHaveBeenCalledWith('search', 'test');
+    });
+  });
+
+  it('should navigate back to overview', async () => {
+    const setFilter = jest.fn();
+    const props = {
+      history,
+    };
+    useFilter.mockReturnValue({ filters: {}, setFilter });
+    renderWithRouter(AllTokens, props);
+
+    expect(history).toEqual([]);
+
+    fireEvent.click(screen.getByAltText('arrowLeftTailed'));
+
+    await waitFor(() => {
+      expect(history).toEqual(['/wallet']);
     });
   });
 });

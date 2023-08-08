@@ -37,7 +37,7 @@ const Overview = ({ tokenData, setFilter }) => {
         <h1>{t('All accounts')}</h1>
       </div>
       <div className={styles.filterWrapper}>
-        <span>Filter by :</span>
+        <span>{t('Filter by :')}</span>
         <MenuSelect
           value={selectedToken}
           onChange={onChange}

@@ -56,6 +56,16 @@ import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-
 import validatorRegistrationSuccess from '@setup/react/assets/images/illustrations/validator-registration-success.svg';
 import validatorRegistrationError from '@setup/react/assets/images/illustrations/validator-registration-error.svg';
 import applicationDetailsError from '@setup/react/assets/images/illustrations/application-details-error.svg';
+import accountManagement from '@setup/react/assets/images/illustrations/account-management.svg';
+import applicationManagement from '@setup/react/assets/images/illustrations/application-management.svg';
+import proofOfStake from '@setup/react/assets/images/illustrations/proof-of-stake.svg';
+import hardwareWalletManagement from '@setup/react/assets/images/illustrations/hardware-wallet-management.svg';
+import walletConnect from '@setup/react/assets/images/illustrations/wallet-connect.svg';
+import transactionEvents from '@setup/react/assets/images/illustrations/transaction-events.svg';
+import multiTokenBalances from '@setup/react/assets/images/illustrations/multi-token-balances.svg';
+import crossApplicationsSendRequestTokens from '@setup/react/assets/images/illustrations/cross-applications-send-request-tokens.svg';
+import withinAndCrossApplicationsSendRequestTokens from '@setup/react/assets/images/illustrations/within-and-cross-applications-send-request-tokens.svg';
+import networkManagement from '@setup/react/assets/images/illustrations/network-management.svg';
 import networkErrorIllustration from '@setup/react/assets/images/illustrations/networkError.svg';
 
 import emptyEventsIllustration from '@setup/react/assets/images/illustrations/emptyStates/events-empty-illustration.svg';
@@ -126,6 +136,16 @@ export const illustrations = {
   validatorRegistrationSuccess,
   validatorRegistrationError,
   applicationDetailsError,
+  accountManagement,
+  applicationManagement,
+  proofOfStake,
+  hardwareWalletManagement,
+  walletConnect,
+  transactionEvents,
+  multiTokenBalances,
+  crossApplicationsSendRequestTokens,
+  withinAndCrossApplicationsSendRequestTokens,
+  networkManagement,
   networkErrorIllustration,
 
   emptyEventsIllustration,

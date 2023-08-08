@@ -3,7 +3,6 @@ import {
   deepMergeObj,
   removeUndefinedKeys,
   isEmpty,
-  filterObjectPropsWithValue,
   sizeOfString,
   isReactComponent,
   kFormatter,
@@ -54,21 +53,6 @@ describe('helpers', () => {
 
     it('works properly with objects', () => {
       expect(isEmpty({ test: 'test' })).toBe(false);
-    });
-  });
-  describe('filterObjectPropsWithValue', () => {
-    it('works properly with arrays', () => {
-      expect(
-        filterObjectPropsWithValue(
-          {
-            genesis_14: 'notStakedYet',
-            genesis_15: 'unstakes',
-            genesis_16: 'unstakes',
-            genesis_17: 'stakes',
-          },
-          'unstakes'
-        )
-      ).toEqual(['genesis_15', 'genesis_16']);
     });
   });
   describe('sizeOfString', () => {

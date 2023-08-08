@@ -6,10 +6,6 @@ import { regex } from 'src/const/regex';
  * 1. generatorKey or
  * 2. blsKey or
  * 3. proofOfPossession
- *
- * @param {any} key - The name of the validator key
- * @param {any} value - A value to be validated
- * @returns {boolean} true if valid.
  */
 export const validatorKeyValidator = (key, value) => {
   if (typeof value !== 'string' || !regex[key]) {

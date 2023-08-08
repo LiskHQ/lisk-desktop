@@ -1,0 +1,13 @@
+rules:
+  - id: missing-internationalisation
+    patterns:
+      - pattern: <$ELEMENT>$MESSAGE</$ELEMENT>
+      - metavariable-regex:
+          metavariable: $MESSAGE
+          regex: ([A-Za-z\n ]+[A-Za-z]+[A-Za-z\n ]+)
+      - pattern-not: <$ELEMENT>t('$KEY', ...)</$ELEMENT>
+    message: "JSX element not internationalized: '$MESSAGE'."
+    languages:
+      - typescript
+      - javascript
+    severity: WARNING

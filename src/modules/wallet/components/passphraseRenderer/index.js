@@ -130,24 +130,24 @@ class PassphraseRenderer extends React.Component {
     const otherIndex = indexes.find((index) => index !== selectedIndex);
     const shouldDisplayOptions = Object.values(chosenWords).length < 2;
 
-    this.setState({
-      ...this.state,
+    this.setState((state) => ({
+      ...state,
       chosenWords: {
         ...chosenWords,
         [selectedIndex]: option,
       },
       fieldSelected: shouldDisplayOptions ? otherIndex : undefined,
-    });
+    }));
   }
 
   render() {
     const { t, showInfo, isConfirmation, prevStep, footerStyle, subheader, confirmText } =
       this.props;
     const { options, fieldSelected, chosenWords } = this.state;
-    const hasChoosenWords = Object.values(chosenWords).length === 2;
+    const hasChosenWords = Object.values(chosenWords).length === 2;
 
     // eslint-disable-next-line no-restricted-globals
-    if ((isNaN(fieldSelected) && !hasChoosenWords) || !options) return null;
+    if ((isNaN(fieldSelected) && !hasChosenWords) || !options) return null;
 
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
 

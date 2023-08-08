@@ -16,11 +16,7 @@ import { getStyles } from './utils';
  * Every next child may expect all properties passed from previous step
  * in addition to the hard coded properties
  *
- * Last child may won't receive a cb function from MultiStep
- *
- * @param {Boolean} showNav - defines the visibility of navigation, defaults to true
- *
- *
+ * Last child may not receive a cb function from MultiStep
  */
 class MultiStep extends React.Component {
   constructor(props) {
@@ -29,7 +25,6 @@ class MultiStep extends React.Component {
       key: 0,
       data: {},
       current: 0,
-      origin: 0,
     };
   }
 
@@ -37,16 +32,6 @@ class MultiStep extends React.Component {
     this.move({ moves: 1, data });
   };
 
-  /**
-   *
-   * @param {Object} config
-   * @param {Number} config.jump - The number of steps to jump back
-   * @param {Boolean} config.reset - Should return to first step,
-   *    this overrides all other configurations
-   * @param {Number} config.to - The index of the step to go to
-   * @memberOf MultiStep
-   *
-   */
   prev = (moves = -1) => {
     // On Lisk Desktop this function is not passed a number by default
     const stepsBack = typeof moves === 'number' ? moves : -1;
@@ -73,7 +58,6 @@ class MultiStep extends React.Component {
     this.setState({
       current: next,
       data: data || this.state.data,
-      origin: current,
       key: reset ? key + 1 : key, // re-mounts child component.
     });
 

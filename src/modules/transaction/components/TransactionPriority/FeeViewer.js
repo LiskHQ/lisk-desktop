@@ -117,7 +117,7 @@ const FeesViewer = ({
             {title === 'Transaction' && (
               <Tooltip position="top left">
                 <div className={styles.feesBreakdownRow}>
-                  <p>Fee breakdown</p>
+                  <p>{t('Fee breakdown')}</p>
                   {transactionFeeList.map(({ type, value: feeValueInfo }, index) => (
                     <FeesBreakdownDetails
                       key={`${index}-${type}-${feeValueInfo}`}

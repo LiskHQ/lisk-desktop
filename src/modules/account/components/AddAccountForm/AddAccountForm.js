@@ -8,7 +8,6 @@ import CustomDerivationPath from '@auth/components/CustomDerivationPath';
 import { PrimaryButton } from 'src/theme/buttons';
 import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
 import DiscreetModeToggle from '@settings/components/discreetModeToggle';
-import NetworkSelector from '@settings/components/networkSelector';
 import { getDerivationPathErrorMessage } from '@wallet/utils/account';
 import Toggle from '@settings/components/toggle';
 import Tooltip from '@theme/Tooltip/tooltip';
@@ -32,7 +31,6 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
 };
 
 const AddAccountFormContainer = ({
-  settings,
   passphrase,
   setPassphrase,
   onAddAccount,
@@ -68,12 +66,6 @@ const AddAccountFormContainer = ({
         </div>
         <form onSubmit={onFormSubmit}>
           <div className={styles.inputFields}>
-            {settings.showNetwork && (
-              <fieldset>
-                <label>{t('Switch network')}</label>
-                <NetworkSelector />
-              </fieldset>
-            )}
             <fieldset>
               <label>{t('Secret recovery phrase (12-24 mnemonic phrases supported)')}</label>
               <PassphraseInput

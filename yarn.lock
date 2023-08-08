@@ -2159,42 +2159,42 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@liskhq/lisk-api-client@^6.0.0-beta.3":
-  version "6.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-api-client/-/lisk-api-client-6.0.0-beta.3.tgz#46c1e0c49628143aad8336ce1138c3bd7159f4e6"
-  integrity sha512-0vymOPO6c5EovsNaXNoTLsOI2IMT9oL5pyGJaOFyLm4NHjoEHnMPMcoGClIqenqxFvCqpMMP9nWnulZFub3KVQ==
+"@liskhq/lisk-api-client@^6.0.0-beta.4":
+  version "6.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-api-client/-/lisk-api-client-6.0.0-beta.4.tgz#6fd13167d94326553837c5422f7bc01b201d7fc3"
+  integrity sha512-vINeE5NifCry6WgJvDKk47DOAaBYB0FSFTrEmIDVJmY01YmxnIoX+yS4IjQAFdWdoSpQLymgqKK+W9DTCugpAw==
   dependencies:
-    "@liskhq/lisk-codec" "^0.3.0-beta.2"
+    "@liskhq/lisk-codec" "^0.3.0-beta.3"
     "@liskhq/lisk-cryptography" "^4.0.0-beta.2"
-    "@liskhq/lisk-transactions" "^6.0.0-beta.2"
-    "@liskhq/lisk-validator" "^0.7.0-beta.2"
+    "@liskhq/lisk-transactions" "^6.0.0-beta.3"
+    "@liskhq/lisk-validator" "^0.7.0-beta.3"
     isomorphic-ws "4.0.1"
     ws "8.11.0"
     zeromq "6.0.0-beta.6"
 
-"@liskhq/lisk-client@6.0.0-beta.3":
-  version "6.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-client/-/lisk-client-6.0.0-beta.3.tgz#9bd8fa9e1af1ef346f3fa967d5b1545f51d4df6f"
-  integrity sha512-tJSEKj07dVEA9iqrT26bh3N3jqzLSf45bM/2E844278NPZ8WvaaP81FsWYyQVYG6BKx/kFzobmEBD7IemomYoA==
+"@liskhq/lisk-client@6.0.0-beta.4":
+  version "6.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-client/-/lisk-client-6.0.0-beta.4.tgz#25a6aed5e316f21531c05d96deb952cfb2a43e2b"
+  integrity sha512-OLcmnkOYocvR033f/AelzhRsCmj7KLZm4GwEDdP5nPsGjkuDU/BP/DkViNHUbrlZIkW2tfBjCaRPLh5yxpLAxQ==
   dependencies:
-    "@liskhq/lisk-api-client" "^6.0.0-beta.3"
-    "@liskhq/lisk-codec" "^0.3.0-beta.2"
+    "@liskhq/lisk-api-client" "^6.0.0-beta.4"
+    "@liskhq/lisk-codec" "^0.3.0-beta.3"
     "@liskhq/lisk-cryptography" "^4.0.0-beta.2"
     "@liskhq/lisk-passphrase" "^4.0.0-beta.2"
-    "@liskhq/lisk-transactions" "^6.0.0-beta.2"
-    "@liskhq/lisk-tree" "^0.3.0-beta.2"
-    "@liskhq/lisk-utils" "^0.3.0-beta.2"
-    "@liskhq/lisk-validator" "^0.7.0-beta.2"
+    "@liskhq/lisk-transactions" "^6.0.0-beta.3"
+    "@liskhq/lisk-tree" "^0.3.0-beta.3"
+    "@liskhq/lisk-utils" "^0.3.0-beta.3"
+    "@liskhq/lisk-validator" "^0.7.0-beta.3"
     buffer "6.0.3"
 
-"@liskhq/lisk-codec@^0.3.0-beta.2":
-  version "0.3.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-codec/-/lisk-codec-0.3.0-beta.2.tgz#f989d316f60902511565e8fc36d064ef32fa0eb3"
-  integrity sha512-aMMeuMXAwV8VMGK12bw1pLZNwxd1kv8J3VO+Lj3Y3GZEpBC8ibvVNfE4T5n13iozohUmCRERXituRB7cMD0IDg==
+"@liskhq/lisk-codec@^0.3.0-beta.3":
+  version "0.3.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-codec/-/lisk-codec-0.3.0-beta.3.tgz#18128b8e6c96b15ba8575715e69d3230da752d25"
+  integrity sha512-6xeG3skvhbo7hv25ljjLqQ7HRb5Kah8r59obKNF5I71c/gcO7SAdJ9o9ePnmQDy+74ZnUYO2arjRfEAvOA1Ihw==
   dependencies:
     "@liskhq/lisk-cryptography" "^4.0.0-beta.2"
-    "@liskhq/lisk-utils" "^0.3.0-beta.2"
-    "@liskhq/lisk-validator" "^0.7.0-beta.2"
+    "@liskhq/lisk-utils" "^0.3.0-beta.3"
+    "@liskhq/lisk-validator" "^0.7.0-beta.3"
 
 "@liskhq/lisk-cryptography@^4.0.0-beta.2":
   version "4.0.0-beta.2"
@@ -2214,40 +2214,40 @@
   dependencies:
     bip39 "3.0.3"
 
-"@liskhq/lisk-transactions@^6.0.0-beta.2":
-  version "6.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-transactions/-/lisk-transactions-6.0.0-beta.2.tgz#50fcc0de98119d1170bfa862f4c2fc2616ee0b87"
-  integrity sha512-o8XsXiSSVgLoMGofa7uynCQTU4BkkKHqPjjib5GC7bheZAIG4sn13Zc9wnJO12OJInL6jA4Hps6FVTABJXL9fw==
+"@liskhq/lisk-transactions@^6.0.0-beta.3":
+  version "6.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-transactions/-/lisk-transactions-6.0.0-beta.3.tgz#263df6f6ba09adcb6b5fa20cd8fab26bab343101"
+  integrity sha512-MlK+zV+xwXCTzKUqbFtL/Gk2nnFKUl29mACGKSe6BWiZyLrWJ82LgqyMYilIupDx6CPnDm+x6yJYHlmkehAH9A==
   dependencies:
-    "@liskhq/lisk-codec" "^0.3.0-beta.2"
+    "@liskhq/lisk-codec" "^0.3.0-beta.3"
     "@liskhq/lisk-cryptography" "^4.0.0-beta.2"
-    "@liskhq/lisk-validator" "^0.7.0-beta.2"
+    "@liskhq/lisk-validator" "^0.7.0-beta.3"
 
-"@liskhq/lisk-tree@^0.3.0-beta.2":
-  version "0.3.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-tree/-/lisk-tree-0.3.0-beta.2.tgz#a0c7019b67f7de6ad2bed247225689b7f8b82e64"
-  integrity sha512-2USCb0yV1N2YqrobcJ+zkJxs8nzlByrKHBgX7IyyDiDm/n7/26H94zRP5Pg+uAoTRMP4dNcnUszG0WTv7OUtLA==
+"@liskhq/lisk-tree@^0.3.0-beta.3":
+  version "0.3.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-tree/-/lisk-tree-0.3.0-beta.3.tgz#ee685a862109a6fe586442cfd0d2eb2abf800a73"
+  integrity sha512-NYgSui9E1m6edOUlpEggWabtdbe5spFlmTYiCZn3TkCElvQ8oEfr414GQQXZpal2eQ4TkA8MybFGzfZuT7lQlw==
   dependencies:
     "@liskhq/lisk-cryptography" "^4.0.0-beta.2"
-    "@liskhq/lisk-utils" "^0.3.0-beta.2"
+    "@liskhq/lisk-utils" "^0.3.0-beta.3"
 
-"@liskhq/lisk-utils@^0.3.0-beta.2":
-  version "0.3.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-utils/-/lisk-utils-0.3.0-beta.2.tgz#a9b383301131d8f48523fba63aa29391efd7e91c"
-  integrity sha512-7dyBpT6qS8DUJYUiHYR+Ps3UCI/E+Jt3BZakxfHl8CrpE0sqHhcBfFGUa+/yjA30Bcpp3M/QcaRDsNZLy3fShA==
+"@liskhq/lisk-utils@^0.3.0-beta.3":
+  version "0.3.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-utils/-/lisk-utils-0.3.0-beta.3.tgz#40eff4baba8833bb4f185ce6b4fedada90d109b2"
+  integrity sha512-xVLJ0vPFG+DAXOO9zcCKamG3fcZMH23JEtZ460mQGL/uErhOG0XChXm/zC6u6gMqKT3QOstDiUlog33q2279pA==
   dependencies:
     lodash.clonedeep "4.5.0"
 
-"@liskhq/lisk-validator@^0.7.0-beta.2":
-  version "0.7.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-validator/-/lisk-validator-0.7.0-beta.2.tgz#7f57471fa5411282f0c23d4f61c677dca0752024"
-  integrity sha512-AoT9Z0dmZLEWgYTXrwWFGDGSgePMr/VW8TNsVC1VC+Q1F8Rvta6qDimfH3OXdvDhFyOAp/aiXUy29EjsQ31EAQ==
+"@liskhq/lisk-validator@^0.7.0-beta.3":
+  version "0.7.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-validator/-/lisk-validator-0.7.0-beta.3.tgz#0a5f8cc0028189f4f27c2507d0c9b91059f86581"
+  integrity sha512-CPRsFDYcpVOZBrwTpShmEzoWlSKzz+8Nw7yyXSuL0w6dSoI0GvXXo6pzGZWr8eddx0QoogD6lBIqqBocBMTo7g==
   dependencies:
     "@liskhq/lisk-cryptography" "^4.0.0-beta.2"
     ajv "8.1.0"
     ajv-formats "2.1.1"
     debug "4.3.4"
-    semver "7.3.8"
+    semver "7.5.2"
     validator "13.7.0"
 
 "@malept/cross-spawn-promise@^1.1.0":
@@ -15856,6 +15856,13 @@ semver@7.3.8:
   version "7.3.8"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.8.tgz#07a78feafb3f7b32347d725e33de7e2a2df67798"
   integrity sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==
+  dependencies:
+    lru-cache "^6.0.0"
+
+semver@7.5.2:
+  version "7.5.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.2.tgz#5b851e66d1be07c1cdaf37dfc856f543325a2beb"
+  integrity sha512-SoftuTROv/cRjCze/scjGyiDtcUyxw1rgYQSZY7XTmtR5hX+dm76iDbTH8TkLPHCQmlbQVSSbNZCPM2hb0knnQ==
   dependencies:
     lru-cache "^6.0.0"
 

@@ -2,3 +2,57 @@
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
+.bannerSwiper {
+  background-color: var(--color-ultramarine-blue);
+  border-radius: var(--border-radius-standard);
+  margin-top: 32px;
+
+  & :global(.bannerWrapper) {
+    margin-top: 0;
+  }
+
+  & :global(.swiper-pagination-bullet) {
+    border: 1px solid var(--color-periwinkle-blue);
+
+    &:global(.swiper-pagination-bullet-active) {
+      background-color: white;
+    }
+  }
+
+  & :global {
+    & .swiper-button-next,
+    & .swiper-button-prev {
+      color: var(--color-constant-white);
+    }
+
+    & .swiper-button-next::after,
+    & .swiper-button-prev::after {
+      font-size: 32px;
+    }
+  }
+
+  & :global(.swiper-button-next) {
+    right: 5px;
+  }
+
+  & :global(.swiper-button-prev) {
+    left: 5px;
+  }
+
+  & :global(.swiper-pagination-bullets) {
+    text-align: left;
+    width: initial;
+    left: 30px;
+  }
+
+  & .bannerWrapper {
+    & p > a {
+      display: inline;
+      font-weight: var(--font-weight-bold);
+      font-size: 14px;
+      color: var(--color-constant-white);
+      cursor: pointer;
+    }
+  }
+}

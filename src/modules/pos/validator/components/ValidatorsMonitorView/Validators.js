@@ -6,17 +6,18 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import { Input } from 'src/theme';
-import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
-import BoxContent from 'src/theme/box/content';
-import BoxTabs from 'src/theme/tabs';
-import useFilter from 'src/modules/common/hooks/useFilter';
-import DialogLink from 'src/theme/dialog/link';
-import { useCurrentAccount } from 'src/modules/account/hooks';
-import Icon from 'src/theme/Icon';
+import Box from '@theme/box';
+import BoxHeader from '@theme/box/header';
+import BoxContent from '@theme/box/content';
+import BoxTabs from '@theme/tabs';
+import useFilter from '@common/hooks/useFilter';
+import DialogLink from '@theme/dialog/link';
+import { useCurrentAccount } from '@account/hooks';
+import InfoBanner from '@common/components/infoBanner/infoBanner';
+import Icon from '@theme/Icon';
 import { ROUND_LENGTH } from '@pos/validator/consts';
-import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
+import { PrimaryButton, SecondaryButton } from '@theme/buttons';
+import { useBlocks } from '@block/hooks/queries/useBlocks';
 import ValidatorsOverview from '../Overview/ValidatorsOverview';
 import GeneratingDetails from '../Overview/GeneratingDetails';
 import ValidatorsTable from '../ValidatorsTable';
@@ -140,6 +141,17 @@ const ValidatorsMonitor = ({ watchList }) => {
 
   return (
     <Box>
+      <InfoBanner
+        t={t}
+        name="validatorsPageBanner"
+        infoLabel={t('New')}
+        infoMessage={t('Introducing proof of stake')}
+        infoDescription={t(
+          'Enhancing the blockchain consensus mechanism with PoS, and providing increased decentralization, scalability, and energy efficiency, empowering users to participate in securing the network, and earning rewards based on their token holdings.'
+        )}
+        illustrationName="proofOfStake"
+        show
+      />
       <BoxHeader className={`${styles.validatorPageWrapper}`}>
         <div className={grid.row}>
           <div className={grid['col-md-8']}>
@@ -149,7 +161,7 @@ const ValidatorsMonitor = ({ watchList }) => {
           <div className={grid['col-md-4']}>
             {!!address && (
               <Link to={routes.sentStakes.path}>
-                <SecondaryButton>Stakes</SecondaryButton>
+                <SecondaryButton>{t('Stakes')}</SecondaryButton>
               </Link>
             )}
             <ValidatorActionButton isValidator={isValidator} address={address} />

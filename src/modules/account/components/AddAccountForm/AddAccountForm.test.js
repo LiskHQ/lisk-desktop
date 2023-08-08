@@ -77,13 +77,6 @@ describe('AddAccountForm', () => {
     expect(props.onAddAccount).not.toBeCalled();
   });
 
-  it('should show the network selector', () => {
-    props.settings.showNetwork = true;
-
-    accountFormInstance.rerender(<AddAccountForm {...props} />);
-    expect(screen.queryByText('Switch network')).toBeTruthy();
-  });
-
   it('should have disabled button if derivation path has an error', () => {
     props.settings.enableAccessToLegacyAccounts = false;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
