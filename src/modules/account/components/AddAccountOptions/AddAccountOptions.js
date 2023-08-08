@@ -33,7 +33,7 @@ const AddAccountOptionButton = ({ iconName, text, onClick }) => (
 
 const AddAccountOptions = () => {
   const history = useHistory();
-  const { search } = useLocation
+  const { search } = useLocation();
   const { t } = useTranslation();
 
   return (

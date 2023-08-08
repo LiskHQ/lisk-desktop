@@ -5,22 +5,22 @@ import { useTransactionEstimateFees } from '../queries';
 
 // eslint-disable-next-line max-statements
 export const useTransactionFee = ({ isFormValid, transactionJSON, extraCommandFee = 0 }) => {
+  let accountInitializationFee = {};
+  const { signatures, ...transactionToSendJSON } = transactionJSON;
+
+  transactionToSendJSON.fee = transactionToSendJSON.fee.toString();
+
   const transactionFee = useTransactionEstimateFees({
-    config: { data: { transaction: transactionJSON } },
+    config: { data: { transaction: transactionToSendJSON } },
     options: { enabled: isFormValid && !!transactionJSON },
   });
 
   const { data: { transaction } = {}, meta = {} } = transactionFee?.data || {};
-
-  // @todo: remove offset when service is fixed
-  const offset = transaction?.fee?.minimum ? 68000 : 0;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
-  let accountInitializationFee = {};
-
   const initializationFee =
     meta.breakdown?.fee?.minimum?.additionalFees?.userAccountInitializationFee || 0;
-  const minimumFee = BigInt(transaction?.fee?.minimum || 0) + BigInt(offset);
-  const messageFee = BigInt(0);
+  const minimumFee = BigInt(transaction?.fee?.minimum || 0);
+  const messageFee = BigInt(transaction?.params?.messageFee?.amount || 0);
 
   if (initializationFee) {
     accountInitializationFee = {
@@ -53,6 +53,7 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, extraCommandFe
     components,
     minimumFee,
     messageFee,
+    messageFeeTokenID: transaction?.params?.messageFee?.tokenID,
     isLoading: transactionFee.isFetching,
     isFetched: transactionFee.isFetched,
     transactionFee: (BigInt(minimumFee) + BigInt(priorityFee.value)).toString(),

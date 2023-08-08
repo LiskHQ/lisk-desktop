@@ -45,7 +45,6 @@ const EnterPasswordForm = ({
 
   const onSubmit = async ({ password }) => {
     setIsLoading(true);
-    // const { error, result } = await decryptAccount(account.crypto, password);
 
     const decryptAccountWorker = new Worker(new URL('./decryptAccountWorker.js', import.meta.url));
     /* istanbul ignore next */
@@ -54,6 +53,7 @@ const EnterPasswordForm = ({
         type: 'custom',
         message: t('Unable to decrypt account. Please check your password'),
       });
+      setIsLoading(false);
     };
 
     decryptAccountWorker.postMessage({

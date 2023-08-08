@@ -9,7 +9,7 @@ import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
-import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -46,6 +46,7 @@ const TxComposer = ({
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
   const { symbol: tokenSymbol = '' } = formProps.fields.token || {};
+  const { fields } = formProps;
   const [customFee, setCustomFee] = useState();
   const [feedback, setFeedBack] = useState(formProps.feedback);
   const [isRunningDryRun, setIsRunningDryRun] = useState(false);
@@ -71,6 +72,8 @@ const TxComposer = ({
     minimumFee,
     components,
     transactionFee,
+    messageFeeTokenID,
+    messageFee,
     isFetched,
     isLoading: isLoadingFee,
   } = useTransactionFee({
@@ -81,11 +84,21 @@ const TxComposer = ({
     extraCommandFee: formProps.extraCommandFee,
   });
 
+  if (isFetched && fields?.sendingChain?.chainID !== fields?.recipientChain?.chainID) {
+    transactionJSON.params = {
+      ...transactionJSON.params,
+      messageFee,
+      messageFeeTokenID,
+    };
+  }
+
   useEffect(() => {
     if (typeof onComposed === 'function') {
       onComposed({}, formProps, {
         ...transactionJSON,
-        fee: convertToBaseDenom(transactionFee, formProps.fields.token),
+        messageFeeTokenID,
+        messageFee,
+        fee: transactionFee,
       });
     }
   }, [selectedPriority, transactionJSON.params]);
@@ -177,11 +190,7 @@ const TxComposer = ({
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
       />
-      <Feedback
-        feedback={feedback}
-        // minRequiredBalance={minRequiredBalance.toString()}
-        // token={formProps.fields?.token || {}}
-      />
+      <Feedback feedback={feedback} />
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"

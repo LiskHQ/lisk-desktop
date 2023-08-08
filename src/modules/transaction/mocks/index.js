@@ -87,6 +87,6 @@ export const validator = rest.get(`*/api/${API_VERSION}/events`, async (req, res
 export const fees = rest.get(`*/api/${API_VERSION}/fees`, (_, res, ctx) => res(ctx.json(mockFees)));
 
 export const transactionFees = rest.post(
-  `*/api/${API_VERSION}/transaction/estimate-fees`,
+  `*/api/${API_VERSION}/transactions/estimate-fees`,
   (_, res, ctx) => res(ctx.json(mockTransactionFees))
 );
