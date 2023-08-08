@@ -203,7 +203,11 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
   const currentAccountPubKey = Buffer.from(wallet.summary.publicKey, 'hex');
   const areAllMembersSigned =
     isRegisterMultisignature &&
-    transaction.params.signatures.filter((sig) => sig.compare(Buffer.alloc(64)) === 0).length === 0;
+    transaction.params.signatures.filter(
+      (sig) => sig.length !== 64 || Buffer.from(sig).equals(Buffer.alloc(64))
+    ).length === 0 &&
+    transaction.params.signatures.length ===
+      transaction.params.mandatoryKeys.length + transaction.params.optionalKeys.length;
 
   // Sign the params if tx is a group registration and the current account is a member
   if (isRegisterMultisignature && !areAllMembersSigned) {
