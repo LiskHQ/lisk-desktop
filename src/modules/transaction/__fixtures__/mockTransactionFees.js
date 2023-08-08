@@ -1,21 +1,22 @@
 export const mockTransactionFees = {
   data: {
-    transactionFeeEstimates: {
-      minFee: '135000',
-      accountInitializationFee: {
+    transaction: {
+      fee: {
         tokenID: '0400000000000000',
-        amount: '500000',
+        minimum: '5147764',
       },
-      messageFee: {
-        tokenID: '0400000000000000',
-        amount: '343000',
-      },
-    },
-    dynamicFeeEstimates: {
-      low: '135000',
-      medium: '135000',
-      high: '135000',
     },
   },
-  meta: {},
+  meta: {
+    breakdown: {
+      fee: {
+        minimum: {
+          byteFee: '96000',
+          additionalFees: {
+            userAccountInitializationFee: '5000000',
+          },
+        },
+      },
+    },
+  },
 };

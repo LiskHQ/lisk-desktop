@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
+import { mountWithCustomRouterAndStore, smartRender } from 'src/utils/testHelpers';
 import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
@@ -63,7 +63,9 @@ describe('Reclaim balance Summary', () => {
   const props = {
     nextStep: jest.fn(),
     history: {
+      push: jest.fn(),
       goBack: jest.fn(),
+      location: { search: '' },
     },
     t: (key) => key,
     wallet: wallet.info.LSK,
@@ -72,13 +74,19 @@ describe('Reclaim balance Summary', () => {
     balanceReclaimed: jest.fn(),
     selectedPriority: { title: 'Normal', value: 1 },
   };
+  const config = {
+    queryClient: true,
+    store: true,
+    storeInfo: state,
+    renderType: 'mount',
+    historyInfo: props.history,
+  };
 
   useAuth.mockReturnValue({ data: mockAuth });
 
   it('should render summary component', () => {
     // Arrange
-    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
-
+    const { wrapper } = smartRender(Summary, props, config);
     // Act
     const html = wrapper.html();
 
@@ -92,7 +100,7 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to next page when continue button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
+    const { wrapper } = smartRender(Summary, props, config);
     wrapper.find('button.confirm-button').simulate('click');
 
     // Act
@@ -124,7 +132,7 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to previous page when cancel button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
+    const { wrapper } = smartRender(Summary, props, config);
     wrapper.find('button.cancel-button').simulate('click');
 
     // Act
