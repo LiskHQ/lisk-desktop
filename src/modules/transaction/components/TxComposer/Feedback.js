@@ -1,28 +1,13 @@
 import React from 'react';
-// import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'src/utils/helpers';
-// import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import styles from './txComposer.css';
 
-const Feedback = ({ /* minRequiredBalance,  */ feedback /* token */ }) => {
-  // const { t } = useTranslation();
-  // const hasMinRequiredBalance =
-  //   BigInt(minRequiredBalance || 0) <= BigInt(token.availableBalance || 0);
+const Feedback = ({ feedback }) => {
+  if (isEmpty(feedback)) return null;
 
-  if (/* hasMinRequiredBalance &&  */ isEmpty(feedback)) {
-    return null;
-  }
-
-  const message =
-    /* hasMinRequiredBalance
-    ?  */ feedback;
-  // : t('The minimum required balance for this action is {{minRequiredBalance}} {{token}}', {
-  //     token: token.symbol,
-  //     minRequiredBalance: convertFromBaseDenom(minRequiredBalance, token),
-  //   });
   return (
     <div className={`${styles.feedback} feedback`}>
-      <span>{message}</span>
+      <span>{feedback}</span>
     </div>
   );
 };
