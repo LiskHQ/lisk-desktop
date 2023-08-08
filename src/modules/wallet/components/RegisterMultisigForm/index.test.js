@@ -46,6 +46,11 @@ jest.mock('@account/hooks', () => ({
 jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
 jest.mock('@settings/hooks/useSettings');
 jest.mock('@auth/hooks/queries');
+jest.mock('@token/fungible/hooks/queries/useTokenBalances', () => ({
+  useTokenBalances: jest.fn(() => ({
+    data: { data: [{ chainID: '04000000', symbol: 'LSK', availableBalance: 40000000 }] },
+  })),
+}));
 
 useTransactionEstimateFees.mockReturnValue({
   data: mockEstimateFeeResponse,
