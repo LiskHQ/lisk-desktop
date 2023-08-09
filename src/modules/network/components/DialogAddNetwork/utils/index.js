@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const DEFAULT_NETWORK_FORM_STATE = {
   name: '',
   serviceUrl: '',
@@ -38,4 +40,13 @@ export function getDuplicateNetworkFields(newNetwork, networks, networkToExclude
   }, {});
 
   return Object.keys(result).length > 0 ? result : undefined;
+}
+
+export async function isNetworkUrlSuccess(url) {
+  try {
+    await axios({ url, timeout: 4000 });
+    return true;
+  } catch (error) {
+    return false;
+  }
 }

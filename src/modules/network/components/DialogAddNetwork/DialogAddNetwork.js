@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import { useForm } from 'react-hook-form';
 import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
-import classNames from 'classnames';
-import { useForm } from 'react-hook-form';
 import { parseSearchParams } from 'src/utils/searchParams';
 import Input from '@theme/Input';
-import { PrimaryButton } from '@theme/buttons';
+import { PrimaryButton, TertiaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
 import { immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
 import {
   DEFAULT_NETWORK_FORM_STATE,
   getDuplicateNetworkFields,
+  isNetworkUrlSuccess,
 } from '@network/components/DialogAddNetwork/utils';
 import networks from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
@@ -24,45 +25,68 @@ const DialogAddNetwork = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { setValue, customNetworks } = useSettings('customNetworks');
+  const [isAddingNetwork, setIsAddingNetwork] = useState(false);
+  const [isNetworkUrlOk, setIsNetworkUrlOk] = useState(true);
   const [successText, setSuccessText] = useState('');
   const [errorText, setErrorText] = useState('');
 
   const { name: defaultName = '' } = parseSearchParams(history.location.search);
 
   const {
+    watch,
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({
     defaultValues: defaultName
       ? customNetworks.find((customNetwork) => customNetwork.name === defaultName)
       : DEFAULT_NETWORK_FORM_STATE,
   });
+  const formValues = watch();
+
+  async function onTryNetworkUrl() {
+    const isServiceUrlOk = await isNetworkUrlSuccess(formValues.serviceUrl);
+    if (isServiceUrlOk) {
+      setIsNetworkUrlOk(true);
+    } else {
+      setIsNetworkUrlOk(false);
+    }
+  }
 
   // eslint-disable-next-line max-statements
-  function onSubmit(values) {
+  async function onSubmit(values) {
     setSuccessText('');
     setErrorText('');
+    setIsAddingNetwork(true);
     const fullNetworkList = [...Object.values(networks), ...customNetworks];
     const duplicateNetworkFields = getDuplicateNetworkFields(values, fullNetworkList, defaultName);
     if (duplicateNetworkFields) {
       const duplicates = Object.keys(duplicateNetworkFields)
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' & ');
+      setIsAddingNetwork(false);
       return setErrorText(`${duplicates} already exists.`);
     }
 
-    const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
+    const isOk = await isNetworkUrlSuccess(formValues.serviceUrl);
+    if (!isOk) {
+      setIsAddingNetwork(false);
+      return setIsNetworkUrlOk(false);
+    }
+
+    const wsServiceUrl = values.wsServiceUrl || values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const updatedCustomNetworks = immutableSetToArray({
       array: customNetworks,
-      mapToAdd: { wsServiceUrl, isAvailable: true, ...values , label: values.name},
+      mapToAdd: { ...values, isAvailable: true, wsServiceUrl, label: values.name },
       index: customNetworks.findIndex((network) => network.name === defaultName),
     });
     setValue(updatedCustomNetworks);
 
-    if (!defaultName) reset();
-
+    if (!defaultName) {
+      reset();
+    }
+    setIsAddingNetwork(false);
     return setSuccessText(`${t('Success: Network')} ${defaultName ? t('edited') : t('added')}`);
   }
 
@@ -105,6 +129,18 @@ const DialogAddNetwork = () => {
                 pattern: { value: regex.url, message: t('Invalid URL') },
               })}
             />
+            {!isNetworkUrlOk && !isAddingNetwork && (
+              <span className={styles.connectionFailed}>
+                <span className={styles.errorText}>{t('Error fetching url.')}</span>
+                <TertiaryButton
+                  type="button"
+                  onClick={onTryNetworkUrl}
+                  className={styles.tryAgainButton}
+                >
+                  {t('Try again')}
+                </TertiaryButton>
+              </span>
+            )}
             <Input
               size="l"
               label="Websocket URL"
@@ -112,11 +148,14 @@ const DialogAddNetwork = () => {
               feedback={errors.wsServiceUrl?.message}
               status={errors.wsServiceUrl?.message ? 'error' : undefined}
               {...register('wsServiceUrl', {
-                required: 'Service URL is required',
                 pattern: { value: regex.webSocketUrl, message: t('Invalid websocket URL') },
               })}
             />
-            <PrimaryButton type="submit" className={`${styles.button}`}>
+            <PrimaryButton
+              disabled={!isDirty || isAddingNetwork || !isNetworkUrlOk}
+              type="submit"
+              className={`${styles.button}`}
+            >
               {t(`${!defaultName ? 'Add' : 'Save'} network`)}
             </PrimaryButton>
             {successText && <span className={styles.successText}>{successText}</span>}

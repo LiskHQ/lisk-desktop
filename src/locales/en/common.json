@@ -228,6 +228,7 @@
   "Enter your account password": "Enter your account password",
   "Enter your secret recovery phrase to manage your account.": "Enter your secret recovery phrase to manage your account.",
   "Error": "Error",
+  "Error fetching url.": "Error fetching url.",
   "Error loading application data": "Error loading application data",
   "Error retrieving conversion rates.": "Error retrieving conversion rates.",
   "Events": "Events",
