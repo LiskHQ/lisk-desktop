@@ -15,6 +15,10 @@ describe('getDuplicateNetworkFields', () => {
 
   const MOCK_NETWORKS = [MAINNET, CUSTOM];
 
+  it('Should return undefined no name or serviceUrl provided', () => {
+    expect(getDuplicateNetworkFields()).toBeUndefined();
+  });
+
   it('Should return undefined if no duplicate values', () => {
     const UNIQUE_NETWORK = {
       name: 'New',

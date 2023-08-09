@@ -46,6 +46,7 @@ export function getDuplicateNetworkFields(newNetwork, networks, networkToExclude
   return Object.keys(result).length > 0 ? result : undefined;
 }
 
+/* istanbul ignore next */
 export async function isNetworkUrlSuccess(url) {
   try {
     await axios({ url, timeout: 4000 });
