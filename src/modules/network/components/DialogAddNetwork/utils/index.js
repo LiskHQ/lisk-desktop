@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const DEFAULT_NETWORK_FORM_STATE = {
   name: '',
@@ -7,9 +7,13 @@ export const DEFAULT_NETWORK_FORM_STATE = {
 };
 
 export function getDuplicateNetworkFields(newNetwork, networks, networkToExclude) {
+  if (!newNetwork || !networks) {
+    return undefined;
+  }
+
   const newNetworkValues = Object.values(newNetwork);
 
-  const result = networks?.reduce((accumResult, network) => {
+  const result = networks.reduce((accumResult, network) => {
     const excluded = network.name === networkToExclude;
     if (excluded) {
       return accumResult;
