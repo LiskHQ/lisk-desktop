@@ -4,6 +4,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from '@account/hooks';
 import { mockRewardsClaimableWithToken } from '@pos/reward/__fixtures__';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import * as transactionApi from '@transaction/api';
 import useFiatRates from '@common/hooks/useFiatRates';
@@ -14,7 +15,6 @@ import useSettings from 'src/modules/settings/hooks/useSettings';
 import { useAuth } from 'src/modules/auth/hooks/queries';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import ClaimRewardsForm from './index';
-import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 
 const mockEstimateFeeResponse = {
   data: {
