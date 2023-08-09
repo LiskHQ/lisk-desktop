@@ -14,6 +14,7 @@ import useSettings from 'src/modules/settings/hooks/useSettings';
 import { useAuth } from 'src/modules/auth/hooks/queries';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import ClaimRewardsForm from './index';
+import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 
 const mockEstimateFeeResponse = {
   data: {
@@ -51,11 +52,7 @@ jest.mock('@pos/reward/hooks/queries');
 jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
 jest.mock('@settings/hooks/useSettings');
 jest.mock('@auth/hooks/queries/useAuth');
-jest.mock('@token/fungible/hooks/queries/useTokenBalances', () => ({
-  useTokenBalances: jest.fn(() => ({
-    data: { data: [{ chainID: '04000000', symbol: 'LSK', availableBalance: 40000000 }] },
-  })),
-}));
+jest.mock('@token/fungible/hooks/queries/useTokenBalances');
 jest.spyOn(transactionApi, 'dryRun').mockResolvedValue([]);
 
 describe('ClaimRewardsForm', () => {
@@ -100,6 +97,9 @@ describe('ClaimRewardsForm', () => {
     mainChainNetwork: { name: 'devnet' },
     toggleSetting: jest.fn(),
   });
+  useTokenBalances.mockReturnValue({
+    data: { data: [{ chainID: '04000000', symbol: 'LSK', availableBalance: 40000000 }] },
+  });
 
   const nextStep = jest.fn();
 
@@ -131,6 +131,18 @@ describe('ClaimRewardsForm', () => {
 
     await waitFor(() => {
       expect(props.nextStep).toHaveBeenCalled();
+    });
+  });
+
+  it('should have its confirm button disabled if there no availalbe token balances', async () => {
+    jest.clearAllMocks();
+    useTokenBalances.mockReturnValue({});
+
+    smartRender(ClaimRewardsForm, props, config);
+    fireEvent.click(screen.getByRole('button', { name: 'Claim rewards' }));
+
+    await waitFor(() => {
+      expect(props.nextStep).not.toHaveBeenCalled();
     });
   });
 });

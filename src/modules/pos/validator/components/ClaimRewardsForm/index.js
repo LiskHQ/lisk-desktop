@@ -27,7 +27,6 @@ const ClaimRewardsForm = ({ nextStep }) => {
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
-
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       formProps,
@@ -39,7 +38,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
 
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.claimRewards,
-    isFormValid: rewardsClaimable?.data?.length > 0 && !!token,
+    isFormValid: rewardsClaimable?.data?.length > 0 && !!Object.keys(token).length,
     enableMinimumBalanceFeedback: true,
     fields: { token },
   };
