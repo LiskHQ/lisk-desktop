@@ -10,7 +10,7 @@ const MoonpayDialog = ({ className }) => {
     <Dialog className={classNames(className, styles.moonpayDialog)}>
       <iframe
         id="moonpayIframe"
-        src={`https://buy-sandbox.moonpay.com/?apiKey=${pkKey}}&theme=dark`}
+        src={`https://buy-sandbox.moonpay.com/?apiKey=${pkKey}&theme=dark`}
         title="MoonPay"
       />
     </Dialog>
