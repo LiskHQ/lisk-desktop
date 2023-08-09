@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
@@ -28,7 +29,6 @@ const DialogAddNetwork = () => {
   const { setValue, customNetworks } = useSettings('customNetworks');
   const [isAddingNetwork, setIsAddingNetwork] = useState(false);
   const [isNetworkUrlOk, setIsNetworkUrlOk] = useState(true);
-  const [successText, setSuccessText] = useState('');
   const [errorText, setErrorText] = useState('');
 
   const { name: defaultName = '' } = parseSearchParams(history.location.search);
@@ -57,7 +57,6 @@ const DialogAddNetwork = () => {
 
   // eslint-disable-next-line max-statements
   async function onSubmit(values) {
-    setSuccessText('');
     setErrorText('');
     setIsAddingNetwork(true);
     const fullNetworkList = [...Object.values(networks), ...customNetworks];
@@ -87,8 +86,12 @@ const DialogAddNetwork = () => {
     if (!defaultName) {
       reset();
     }
+    toast.info(t(`Custom network ${defaultName ? 'edited' : 'added'} "${values.name}"`), {
+      position: 'bottom-right',
+    });
     setIsAddingNetwork(false);
-    return setSuccessText(`${t('Success: Network')} ${defaultName ? t('edited') : t('added')}`);
+
+    return history.goBack();
   }
 
   return (
@@ -159,7 +162,6 @@ const DialogAddNetwork = () => {
             >
               {t(`${!defaultName ? 'Add' : 'Save'} network`)}
             </PrimaryButton>
-            {successText && <span className={styles.successText}>{successText}</span>}
             {errorText && <span className={styles.errorText}>{errorText}</span>}
           </form>
         </BoxContent>
