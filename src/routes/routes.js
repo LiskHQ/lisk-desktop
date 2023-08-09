@@ -194,6 +194,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  moonpay: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   reclaimBalance: {
     isPrivate: true,
     forbiddenTokens: [],

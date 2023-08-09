@@ -14,7 +14,7 @@ import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress'
 import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
-import { SecondaryButton, PrimaryButton } from '@theme/buttons';
+import { SecondaryButton, PrimaryButton, TertiaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
@@ -117,14 +117,19 @@ const Overview = ({ isWalletRoute, history }) => {
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
         <div className={`${grid.row} ${styles.actionButtons}`}>
-          <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
+          <div className={`${grid['col-xs-4']} ${grid['col-md-4']} ${grid['col-lg-4']}`}>
+            <DialogLink component="moonpay">
+              <TertiaryButton>{t('Buy LSK')}</TertiaryButton>
+            </DialogLink>
+          </div>
+          <div className={`${grid['col-xs-4']} ${grid['col-md-4']} ${grid['col-lg-4']}`}>
             {!searchAddress && (
               <DialogLink component="request">
                 <SecondaryButton>{t('Request')}</SecondaryButton>
               </DialogLink>
             )}
           </div>
-          <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
+          <div className={`${grid['col-xs-4']} ${grid['col-md-4']} ${grid['col-lg-4']}`}>
             <DialogLink component="send">
               <PrimaryButton disabled={!hasTokenWithBalance}>{t('Send')}</PrimaryButton>
             </DialogLink>

@@ -58,6 +58,7 @@ import RequestView from '@blockchainApplication/connection/components/RequestVie
 import RequestSignMessageDialog from '@blockchainApplication/connection/components/RequestSignMessageDialog';
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
 import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardwareDeviceModal';
+import MoonpayDialog from '@common/components/moonpayDialog';
 
 export default {
   wallet: AccountDetails,
@@ -120,4 +121,5 @@ export default {
   changeCommission: ChangeCommissionDialog,
   dialogAddNetwork: DialogAddNetwork,
   dialogRemoveNetwork: DialogRemoveNetwork,
+  moonpay: MoonpayDialog,
 };
