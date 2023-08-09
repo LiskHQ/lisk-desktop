@@ -148,7 +148,7 @@ const DialogAddNetwork = () => {
             <Input
               size="l"
               label="Websocket URL"
-              placeholder={t('Enter service URL, e.g. wss://mainnet-service.lisk.com')}
+              placeholder={t('Enter websocket service URL, e.g. wss://mainnet-service.lisk.com')}
               feedback={errors.wsServiceUrl?.message}
               status={errors.wsServiceUrl?.message ? 'error' : undefined}
               {...register('wsServiceUrl', {
