@@ -236,6 +236,7 @@ describe('Unlock LSK modal', () => {
         ],
         isFormValid: true,
         moduleCommand: 'pos:unlock',
+        enableMinimumBalanceFeedback: true,
         fields: {
           token: mockTokensBalance.data[0],
         },
@@ -281,6 +282,7 @@ describe('Unlock LSK modal', () => {
             },
           ],
           isFormValid: true,
+          enableMinimumBalanceFeedback: true,
           moduleCommand: 'pos:unlock',
           fields: {
             token: mockTokensBalance.data[0],
