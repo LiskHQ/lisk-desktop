@@ -1,4 +1,5 @@
 /* eslint-disable complexity */
+import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 import { FEE_TYPES } from '../../constants';
 import { joinModuleAndCommand } from '../../utils';
 import { useTransactionEstimateFees } from '../queries';
@@ -42,8 +43,8 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, extraCommandFe
   );
 
   if (
-    moduleCommand !== 'token:transfer' &&
-    moduleCommand !== 'token:transferCrossChain' &&
+    moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer &&
+    moduleCommand !== MODULE_COMMANDS_NAME_MAP.transferCrossChain &&
     extraCommandFee
   ) {
     components = [...components, { type: 'Registration', value: BigInt(extraCommandFee) }];

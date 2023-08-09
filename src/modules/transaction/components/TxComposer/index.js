@@ -18,9 +18,10 @@ import { useCommandSchema } from 'src/modules/network/hooks';
 import useSettings from 'src/modules/settings/hooks/useSettings';
 import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
-import { fromTransactionJSON, splitModuleAndCommand } from '../../utils';
+import { fromTransactionJSON, joinModuleAndCommand, splitModuleAndCommand } from '../../utils';
 import { dryRun } from '../../api';
 import { TransactionExecutionResult } from '../../constants';
+import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
@@ -144,24 +145,26 @@ const TxComposer = ({
     const paramsSchema = moduleCommandSchemas[moduleCommand];
     const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
 
-    const [error, dryRunResult] = await to(
-      dryRun({
-        paramsSchema,
-        transaction,
-        skipVerify: true,
-        serviceUrl: mainChainNetwork.serviceUrl,
-      })
-    );
+    if (joinModuleAndCommand(transactionJSON) !== MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
+      const [error, dryRunResult] = await to(
+        dryRun({
+          paramsSchema,
+          transaction,
+          skipVerify: true,
+          serviceUrl: mainChainNetwork.serviceUrl,
+        })
+      );
 
-    const transactionErrorMessage =
-      error?.message ||
-      (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
-        ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
-        : dryRunResult?.data?.errorMessage);
+      const transactionErrorMessage =
+        error?.message ||
+        (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
+          ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
+          : dryRunResult?.data?.errorMessage);
 
-    if (transactionErrorMessage) {
-      setIsRunningDryRun(false);
-      return setFeedBack(transactionErrorMessage);
+      if (transactionErrorMessage) {
+        setIsRunningDryRun(false);
+        return setFeedBack(transactionErrorMessage);
+      }
     }
 
     setIsRunningDryRun(false);
@@ -190,7 +193,11 @@ const TxComposer = ({
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
       />
-      <Feedback feedback={feedback} />
+      <Feedback
+        feedback={feedback}
+        minRequiredBalance={formProps.enableMinimumBalanceFeedback && minRequiredBalance.toString()}
+        token={formProps.enableMinimumBalanceFeedback && (formProps.fields?.token || {})}
+      />
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"

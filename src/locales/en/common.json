@@ -640,6 +640,7 @@
   "The list shown only contains peers connected to the current Lisk Service node.": "The list shown only contains peers connected to the current Lisk Service node.",
   "The message can't contain whitespace at the beginning or end.": "The message can't contain whitespace at the beginning or end.",
   "The message signature has been canceled on your {{model}}": "The message signature has been canceled on your {{model}}",
+  "The minimum required balance for this action is {{minRequiredBalance}} {{token}}": "The minimum required balance for this action is {{minRequiredBalance}} {{token}}",
   "The number of transactions submitted over the selected time period.": "The number of transactions submitted over the selected time period.",
   "The provided amount is higher than your available staking balance.": "The provided amount is higher than your available staking balance.",
   "The statistics shown only reflects peers connected to the current Lisk Service node.": "The statistics shown only reflects peers connected to the current Lisk Service node.",

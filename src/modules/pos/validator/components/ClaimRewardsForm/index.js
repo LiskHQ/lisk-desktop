@@ -40,6 +40,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.claimRewards,
     isFormValid: rewardsClaimable?.data?.length > 0 && !!token,
+    enableMinimumBalanceFeedback: true,
     fields: { token },
   };
 

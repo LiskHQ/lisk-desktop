@@ -46,7 +46,7 @@ const EnterPasswordForm = ({
   const onSubmit = async ({ password }) => {
     setIsLoading(true);
 
-    const decryptAccountWorker = new Worker(new URL('./decryptAccountWorker.js', import.meta.url));
+    const decryptAccountWorker = new Worker(new URL('./decryptAccount.worker.js', import.meta.url));
     /* istanbul ignore next */
     const showDecryptAccountError = () => {
       setError(API_ERROR_NAME, {
