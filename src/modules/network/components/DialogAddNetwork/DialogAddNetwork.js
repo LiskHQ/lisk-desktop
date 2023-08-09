@@ -21,6 +21,7 @@ import {
 import networks from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
 
+// eslint-disable-next-line max-statements,complexity
 const DialogAddNetwork = () => {
   const { t } = useTranslation();
   const history = useHistory();
