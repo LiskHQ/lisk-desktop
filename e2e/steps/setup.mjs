@@ -7,6 +7,7 @@ class CustomWorld {
 
     const browser = await playwright.chromium.launch({
       headless: true,
+      args: ['--disable-web-security'],
     });
     const context = await browser.newContext();
 

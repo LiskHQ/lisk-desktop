@@ -94,10 +94,12 @@ Given(
 );
 
 Given('I switch to network {string}', async function (networkName) {
-  await this.page.getByTestId('network-application-trigger').click();
+  if (!(await this.page.getByText('Add application'))) {
+    await this.page.getByTestId('network-application-trigger').click();
+  }
   await expect(this.page.getByTestId('spinner')).not.toBeVisible({ timeout: 10000 });
   await this.page.getByTestId('selected-menu-item').click();
-  await this.page.getByText(networkName).click();
+  await this.page.getByText(networkName, { exact: true }).click();
 });
 
 Given('I go back to the previous page', async function () {
