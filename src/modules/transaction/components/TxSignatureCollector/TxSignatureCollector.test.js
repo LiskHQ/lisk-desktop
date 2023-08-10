@@ -13,6 +13,8 @@ import { mockHWCurrentDevice } from '@hardwareWallet/__fixtures__';
 import TxSignatureCollector from './TxSignatureCollector';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
+const mockOnTerminate = jest.fn();
+const mockOnPostMessage = jest.fn();
 const mockCurrentAccount = mockSavedAccounts[0];
 const address = mockCurrentAccount.metadata.address;
 const mockSetCurrentAccount = jest.fn();
@@ -26,6 +28,35 @@ const mockAppState = {
     },
   },
 };
+class WorkerMock {
+  constructor(stringUrl) {
+    this.url = stringUrl;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  set onmessage(fn) {
+    const data = {
+      error: null,
+      result: {
+        recoveryPhrase:
+          'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
+        privateKey: accounts.genesis.summary.privateKey,
+      },
+    };
+
+    fn({ data });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  postMessage(msg) {
+    mockOnPostMessage(msg);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  terminate() {
+    mockOnTerminate();
+  }
+}
 
 jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('@auth/hooks/queries/useAuth');
@@ -62,6 +93,10 @@ jest.mock('@account/hooks', () => ({
   })),
 }));
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
+
+beforeAll(() => {
+  window.Worker = WorkerMock;
+});
 
 describe('TxSignatureCollector', () => {
   const t = (str, words) => {
@@ -224,8 +259,10 @@ describe('TxSignatureCollector', () => {
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
       target: { value: 'DeykUBjUn7uZHYv!' },
     });
+
+    fireEvent.click(screen.getByText('Continue'));
+
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Continue'));
       expect(props.actionFunction).toHaveBeenCalled();
     });
   });

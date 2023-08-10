@@ -78,6 +78,7 @@ const TxSignatureCollector = ({
        * HW pending screen. For ordinary login we don't display
        * the illustration.
        */
+
       return actionFunction(
         {
           ...formProps,

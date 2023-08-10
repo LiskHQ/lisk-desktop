@@ -151,6 +151,7 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
     isFormValid: feedback.error === 0,
     feedback: feedback.messages,
+    enableMinimumBalanceFeedback: true,
     fields: {
       token: defaultToken,
     },
