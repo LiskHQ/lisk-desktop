@@ -12,7 +12,7 @@ import validatorPerformanceDetails from './validatorPerformanceDetails';
 import styles from './styles.css';
 
 const ValidatorPerformance = ({ history }) => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const address = parseSearchParams(history.location.search).address;
   const {
     isLoading,

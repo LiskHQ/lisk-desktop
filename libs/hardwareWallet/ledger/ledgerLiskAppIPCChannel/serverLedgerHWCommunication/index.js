@@ -3,6 +3,13 @@ import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
 import { LiskApp } from '@zondax/ledger-lisk';
 import { getDevicesFromPaths, getLedgerAccount } from './utils';
 
+const isHexString = (data) => {
+  if (typeof data !== 'string') {
+    return false;
+  }
+  return data === '' || /^([0-9a-f]{2})+$/i.test(data);
+};
+
 export async function getPubKey({ devicePath, accountIndex, showOnDevice }) {
   let transport;
   try {
@@ -50,10 +57,10 @@ export async function getSignedMessage({ devicePath, accountIndex, unsignedMessa
     transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
-    const signature = await liskLedger.signMessage(
-      ledgerAccount.derivePath(),
-      Buffer.from(unsignedMessage)
-    );
+    const message = isHexString(unsignedMessage)
+      ? Buffer.from(unsignedMessage, 'hex')
+      : Buffer.from(unsignedMessage);
+    const signature = await liskLedger.signMessage(ledgerAccount.derivePath(), message);
     await transport?.close();
     return signature;
   } catch (error) {
