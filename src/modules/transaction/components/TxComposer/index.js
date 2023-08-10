@@ -8,6 +8,12 @@ import { useCurrentAccount } from '@account/hooks';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
+import {
+  fromTransactionJSON,
+  joinModuleAndCommand,
+  splitModuleAndCommand,
+} from '@transaction/utils';
+import { dryRun } from '@transaction/api';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
@@ -18,8 +24,6 @@ import { useCommandSchema } from 'src/modules/network/hooks';
 import useSettings from 'src/modules/settings/hooks/useSettings';
 import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
-import { fromTransactionJSON, joinModuleAndCommand, splitModuleAndCommand } from '../../utils';
-import { dryRun } from '../../api';
 import { TransactionExecutionResult } from '../../constants';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
