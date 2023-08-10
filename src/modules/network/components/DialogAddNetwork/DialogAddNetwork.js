@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -17,10 +17,9 @@ import { regex } from 'src/const/regex';
 import {
   DEFAULT_NETWORK_FORM_STATE,
   getDuplicateNetworkFields,
+  useNetworkCheck,
 } from '@network/components/DialogAddNetwork/utils';
-import { useNetworkStatus } from '@network/hooks/queries';
-import { Client } from 'src/utils/api/client';
-import networks from '../../configuration/networks';
+import networks from '@network/configuration/networks';
 import styles from './DialogAddNetwork.css';
 
 // eslint-disable-next-line max-statements,complexity
@@ -46,21 +45,10 @@ const DialogAddNetwork = () => {
       : DEFAULT_NETWORK_FORM_STATE,
   });
   const formValues = watch();
-
-  const client = useMemo(
-    () => formValues.serviceUrl && new Client({ http: formValues.serviceUrl }),
-    [formValues.serviceUrl]
-  );
-
-  const networkStatus = useNetworkStatus({
-    options: { enabled: !!formValues.serviceUrl },
-    client,
-  });
+  const networkCheck = useNetworkCheck(formValues.serviceUrl);
 
   async function onTryNetworkUrl() {
-    const isNetworkStatusOK = !!networkStatus?.data?.data;
-
-    if (isNetworkStatusOK) {
+    if (networkCheck.isNetworkOK) {
       setIsNetworkUrlOk(true);
     } else {
       setIsNetworkUrlOk(false);
@@ -81,8 +69,7 @@ const DialogAddNetwork = () => {
       return setErrorText(`${duplicates} already exists.`);
     }
 
-    const isNetworkStatusOK = !!networkStatus?.data?.data;
-    if (!isNetworkStatusOK) {
+    if (!networkCheck.isNetworkOK) {
       setIsAddingNetwork(false);
       return setIsNetworkUrlOk(false);
     }
@@ -147,7 +134,9 @@ const DialogAddNetwork = () => {
             />
             {!isNetworkUrlOk && !isAddingNetwork && (
               <span className={styles.connectionFailed}>
-                <span className={styles.errorText}>{t('Could not fetch chain ID. Is your RPC URL correct?')}</span>
+                <span className={styles.errorText}>
+                  {t('Could not fetch chain ID. Is your RPC URL correct?')}
+                </span>
                 <TertiaryButton
                   type="button"
                   onClick={onTryNetworkUrl}

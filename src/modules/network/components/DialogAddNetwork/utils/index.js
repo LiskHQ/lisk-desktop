@@ -1,3 +1,8 @@
+import { useMemo } from 'react';
+import { Client } from 'src/utils/api/client';
+import { useNetworkStatus } from '@network/hooks/queries';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+
 export const DEFAULT_NETWORK_FORM_STATE = {
   name: '',
   serviceUrl: '',
@@ -42,4 +47,29 @@ export function getDuplicateNetworkFields(newNetwork, networks, networkToExclude
   }, {});
 
   return Object.keys(result).length > 0 ? result : undefined;
+}
+
+export function useNetworkCheck(serviceUrl) {
+  const client = useMemo(() => serviceUrl && new Client({ http: serviceUrl }), [serviceUrl]);
+
+  const networkStatus = useNetworkStatus({
+    options: { enabled: !!serviceUrl },
+    client,
+  });
+
+  const blockchainAppsMeta = useBlockchainApplicationMeta({
+    config: {
+      params: {
+        chainID: [...new Set([networkStatus.data?.data?.chainID])].filter((item) => item).join(','),
+      },
+    },
+    options: { enabled: !!networkStatus.data?.data },
+    client,
+  });
+
+  return {
+    isNetworkOK: !!networkStatus?.data?.data && !!blockchainAppsMeta?.data?.data,
+    isOnchainOK: !!networkStatus?.data?.data,
+    isOffchainOK: !!blockchainAppsMeta?.data?.data,
+  };
 }
