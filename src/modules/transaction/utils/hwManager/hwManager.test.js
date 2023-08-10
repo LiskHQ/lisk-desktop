@@ -1,56 +1,149 @@
-// import accounts from '@tests/constants/wallets';
+import { cryptography, transactions, codec } from '@liskhq/lisk-client';
+import * as signMessage from '@wallet/utils/signMessage';
+import moduleCommandSchemas from '@tests/constants/schemas';
+import accounts from '@tests/constants/wallets';
+import * as clientLedgerHWCommunication from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+
+import { fromTransactionJSON } from '../encoding';
 import { signTransactionByHW } from '.';
 
-describe.skip('signTransactionByHW', () => {
-  // @todo fix the temp signature
-  const signature = { data: [], type: 'Buffer' };
-  it.skip('should return a transaction object with the proper signature', async () => {
-    const wallet = {
-      summary: {
-        address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
-        publicKey: 'fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122',
-      },
-      hwInfo: {
-        path: '060E803263E985C022CA2C9B',
-        derivationIndex: 0,
-      },
-    };
+const mockSignature = Buffer.from(
+  'e44891990718640616ebb0c64562120ae6a3f25d7ba973bb34a4f98cd61acfa066b9303aba4f40cc93aab868a96c99422ef7f01932d6d2ca83c265703c09c30c',
+  'hex'
+);
+const mockTransactionHex = Buffer.from(
+  '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f32230a04040000001080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+  'hex'
+);
 
-    const transactionObject = {
-      params: {
-        amount: '100000000',
-        data: 'testing',
-        recipientAddress: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
-      },
-      fee: '10000000',
-      module: 2,
-      command: 0,
+jest.spyOn(transactions, 'getSigningBytes').mockReturnValue(mockTransactionHex);
+jest
+  .spyOn(cryptography.address, 'getAddressFromPublicKey')
+  .mockReturnValue(accounts.multiSig.summary.address);
+jest.spyOn(codec.codec, 'encode').mockReturnValue(mockTransactionHex);
+jest
+  .spyOn(clientLedgerHWCommunication, 'getSignedMessage')
+  .mockResolvedValue({ signature: mockSignature });
+jest
+  .spyOn(clientLedgerHWCommunication, 'getSignedTransaction')
+  .mockResolvedValue({ signature: mockSignature });
+jest.spyOn(signMessage, 'signMessageUsingHW').mockResolvedValue(mockSignature);
+
+describe('signTransactionByHW', () => {
+  const wallet = {
+    hw: {
+      path: '20231',
+      model: 'Nano S',
+      brand: 'Ledger',
+    },
+    metadata: {
+      pubkey: accounts.multiSig.keys.mandatoryKeys[0],
+      path: '',
+      accountIndex: 1,
+      isHW: true,
+      address: 'lskyyoff8q6cj4jcrpvcm9yquv6anc5qf7rjggm2t',
+    },
+  };
+  const txInitiatorAccount = accounts.multiSig.keys;
+  const chainID = cryptography.utils.getRandomBytes(64);
+  const senderAccount = accounts.multiSig.keys;
+  const options = {
+    messageSchema: moduleCommandSchemas['auth:paramsSchema'],
+    txInitiatorAccount,
+  };
+
+  it('Should sign params and transaction to register multisignature', async () => {
+    // Arrange
+    const schema = moduleCommandSchemas['auth:registerMultisignature'];
+    const transactionJSON = {
+      module: 'auth',
+      command: 'registerMultisignature',
       nonce: '1',
-      senderAddress: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      fee: '343000',
+      senderPublicKey: accounts.multiSig.keys.mandatoryKeys[0],
+      params: {
+        mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,
+        optionalKeys: accounts.multiSig.keys.optionalKeys,
+        numberOfSignatures: 2,
+        signatures: [],
+      },
       signatures: [],
     };
+    const transaction = fromTransactionJSON(transactionJSON, schema);
+    const signature1 = cryptography.utils.getRandomBytes(64);
+    signMessage.signMessageUsingHW.mockResolvedValue(signature1);
 
-    // const keys = {
-    //   mandatoryKeys: [Buffer.from(wallet.summary.publicKey, 'hex'), Buffer.from(wallets.genesis.summary.publicKey, 'hex')],
-    //   optionalKeys: [],
-    // };
-
-    const networkIdentifier = Buffer.from(
-      '15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c',
-      'hex'
-    );
-    const transactionBytes = Buffer.from(
-      '15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c',
-      'hex'
-    );
-
-    const signedTransaction = await signTransactionByHW({
+    // Act
+    const transactionWithFirstSignature = await signTransactionByHW({
       wallet,
-      networkIdentifier,
-      transaction: transactionObject,
-      transactionBytes,
+      schema,
+      chainID,
+      transaction,
+      senderAccount,
+      options,
     });
 
-    expect(signedTransaction.signatures[0]).toEqual(signature);
+    // Assert
+    expect(transactionWithFirstSignature.params.signatures[0]).toEqual(signature1);
+
+    // Arrange
+    const signature2 = cryptography.utils.getRandomBytes(64);
+    signMessage.signMessageUsingHW.mockResolvedValue(signature2);
+
+    // Act
+    const transactionWithSecondSignature = await signTransactionByHW({
+      wallet: {
+        ...wallet,
+        metadata: { ...wallet.metadata, pubkey: accounts.multiSig.keys.optionalKeys[0] },
+      },
+      schema,
+      chainID,
+      transaction: { ...transactionWithFirstSignature },
+      senderAccount,
+      options,
+    });
+
+    // Assert
+    expect(transactionWithSecondSignature.params.signatures[1]).toEqual(signature2);
+
+    // Arrange
+    const signature3 = cryptography.utils.getRandomBytes(64);
+    signMessage.signMessageUsingHW.mockResolvedValue(signature3);
+
+    // Act
+    const transactionWithThirdSignature = await signTransactionByHW({
+      wallet: {
+        ...wallet,
+        metadata: { ...wallet.metadata, pubkey: accounts.multiSig.keys.optionalKeys[1] },
+      },
+      schema,
+      chainID,
+      transaction: transactionWithSecondSignature,
+      senderAccount,
+      options,
+    });
+
+    // Assert
+    expect(transactionWithThirdSignature.params.signatures[2]).toEqual(signature3);
+
+    // Act
+    const fullySignedTransaction = await signTransactionByHW({
+      wallet: {
+        ...wallet,
+        metadata: { ...wallet.metadata, pubkey: accounts.multiSig.keys.mandatoryKeys[0] },
+      },
+      schema,
+      chainID,
+      transaction: transactionWithThirdSignature,
+      senderAccount,
+      options,
+    });
+
+    // Assert
+    const allSignatures = [signature1, signature2, signature3];
+    fullySignedTransaction.params.signatures.forEach((sig, i) => {
+      expect(sig).toEqual(allSignatures[i]);
+    });
+    expect(fullySignedTransaction.signatures[0]).toEqual(mockSignature);
   });
 });
