@@ -1,9 +1,13 @@
 import { act } from 'react-dom/test-utils';
-import { mountWithQueryClient } from 'src/utils/testHelpers';
-
-import { getTransactionBaseFees } from '@transaction/api';
+import { waitFor } from '@testing-library/react';
+import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransactionEstimateFees';
+import useSettings from '@settings/hooks/useSettings';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuth } from '@auth/__fixtures__';
+import { getTransactionBaseFees, dryRun } from '@transaction/api';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import wallets from '@tests/constants/wallets';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
 import Form, { validateState } from './index';
 
 jest.mock('@transaction/api');
@@ -15,10 +19,51 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 }));
 
 const mockCurrentAccount = mockSavedAccounts[0];
+const mockEstimateFeeResponse = {
+  data: {
+    transaction: {
+      fee: {
+        tokenID: '0400000000000000',
+        minimum: '5104000',
+      },
+    },
+  },
+  meta: {
+    breakdown: {
+      fee: {
+        minimum: {
+          byteFee: '96000',
+          additionalFees: {},
+        },
+      },
+    },
+  },
+};
 
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
 }));
+jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
+jest.mock('@settings/hooks/useSettings');
+jest.mock('@auth/hooks/queries');
+jest.mock('@token/fungible/hooks/queries/useTokenBalances', () => ({
+  useTokenBalances: jest.fn(() => ({
+    data: { data: [{ chainID: '04000000', symbol: 'LSK', availableBalance: 40000000 }] },
+  })),
+}));
+
+useTransactionEstimateFees.mockReturnValue({
+  data: mockEstimateFeeResponse,
+  isFetching: false,
+  isFetched: true,
+  error: false,
+});
+
+useSettings.mockReturnValue({
+  mainChainNetwork: { name: 'devnet' },
+  toggleSetting: jest.fn(),
+});
+useAuth.mockReturnValue({ data: mockAuth });
 
 const transactionBaseFees = {
   Low: 156,
@@ -27,6 +72,7 @@ const transactionBaseFees = {
 };
 
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
+dryRun.mockResolvedValue([]);
 
 describe('Multisignature editor component', () => {
   let wrapper;
@@ -95,7 +141,7 @@ describe('Multisignature editor component', () => {
     expect(wrapper).toContainMatchingElements(2, 'MemberField');
   });
 
-  it('props.nextStep is called when the CTA is clicked', () => {
+  it('props.nextStep is called when the CTA is clicked', async () => {
     wrapper
       .find('input.msign-pk-input')
       .at(0)
@@ -107,8 +153,12 @@ describe('Multisignature editor component', () => {
     act(() => {
       wrapper.update();
     });
+
     wrapper.find('.confirm-btn').at(0).simulate('click');
-    expect(props.nextStep).toHaveBeenCalledTimes(1);
+
+    await waitFor(() => {
+      expect(props.nextStep).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('should render previous state correctly', () => {
@@ -132,7 +182,7 @@ describe('Multisignature editor component', () => {
     expect(wrapper.find('MemberField')).toHaveLength(3);
   });
 
-  it('should be able to change the number of signatures', () => {
+  it('should be able to change the number of signatures', async () => {
     props.nextStep.mockReset();
     wrapper
       .find('.multisignature-editor-input input')
@@ -146,7 +196,9 @@ describe('Multisignature editor component', () => {
       wrapper.update();
     });
     wrapper.find('.confirm-btn').at(0).simulate('click');
-    expect(props.nextStep).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(props.nextStep).toHaveBeenCalledTimes(1);
+    });
   });
 });
 

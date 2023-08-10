@@ -37,6 +37,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
       token: posToken,
     },
     isFormValid: unlockedAmount > 0,
+    enableMinimumBalanceFeedback: true,
     unlockedAmount,
   };
 
