@@ -12,7 +12,7 @@ import validatorPerformanceDetails from './validatorPerformanceDetails';
 import styles from './styles.css';
 
 const ValidatorPerformance = ({ history }) => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const address = parseSearchParams(history.location.search).address;
   const {
     isLoading,
@@ -29,7 +29,7 @@ const ValidatorPerformance = ({ history }) => {
   const { punishmentPeriods, status, consecutiveMissedBlocks } = data[0];
   const headerTitle = {
     punished: 'Punishment details',
-    banned: 'Ban details',
+    banned: 'Banned details',
   };
 
   return (
