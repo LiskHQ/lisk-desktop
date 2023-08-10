@@ -25,7 +25,7 @@ const Warning = ({ stake, ...props }) => {
   const { data: blocksAtHeight } = useBlocks({ config: { params: { height: pomHeight.start } } });
 
   const { daysLeft, punishmentStartDate } = getPunishmentDetails(
-    blocksAtHeight.timestamp,
+    blocksAtHeight?.data[0]?.timestamp,
     pomHeight,
     currentHeight
   );
