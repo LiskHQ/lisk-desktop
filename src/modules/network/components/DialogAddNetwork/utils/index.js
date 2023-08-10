@@ -52,6 +52,6 @@ export async function isNetworkUrlSuccess(url) {
     await axios({ url, timeout: 4000 });
     return true;
   } catch (error) {
-    return false;
+    return error.response.status !== 0;
   }
 }
