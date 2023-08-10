@@ -1,7 +1,7 @@
 Feature: AddAccount
     Background: Navigate to add account options
         Given I navigate to page "wallet"
-        And I add a custom network with name "local_network" and serviceUrl "http://192.168.213.13:9901"
+        And I add a custom network with name "local_network" and serviceUrl "http://127.0.0.1:9901"
         And I switch to network "local_network"
         And I go back to the previous page
         Then I should see "Welcome to Lisk"
