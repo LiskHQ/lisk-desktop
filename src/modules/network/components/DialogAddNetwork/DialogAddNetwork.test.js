@@ -2,7 +2,8 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { smartRender } from 'src/utils/testHelpers';
 import useSettings from '@settings/hooks/useSettings';
 import { toast } from 'react-toastify';
-import {isNetworkUrlSuccess} from "@network/components/DialogAddNetwork/utils";
+import { mockNetworkStatus } from '@network/__fixtures__';
+import { useNetworkStatus } from '@network/hooks/queries';
 import DialogAddNetwork from './DialogAddNetwork';
 
 jest.mock('@settings/hooks/useSettings');
@@ -11,15 +12,14 @@ useSettings.mockReturnValue({
   setValue: mockSetValue,
   customNetworks: [],
 });
+
 jest.mock('react-toastify', () => ({
   ...jest.requireActual('react-toastify'),
   toast: { info: jest.fn() },
 }));
 
-jest.mock('@network/components/DialogAddNetwork/utils', () => ({
-  ...jest.requireActual('@network/components/DialogAddNetwork/utils'),
-  isNetworkUrlSuccess: jest.fn(() => true),
-}));
+jest.mock('@network/hooks/queries/useNetworkStatus');
+useNetworkStatus.mockReturnValue({ data: mockNetworkStatus });
 
 describe('DialogAddNetwork', () => {
   const config = {
@@ -27,6 +27,7 @@ describe('DialogAddNetwork', () => {
     historyInfo: {
       goBack: jest.fn(),
     },
+    queryClient: true,
   };
 
   beforeEach(() => {
@@ -73,21 +74,6 @@ describe('DialogAddNetwork', () => {
     });
   });
 
-  it('should show retry button if network url fails to fetch', async () => {
-    isNetworkUrlSuccess.mockReturnValue(false);
-    smartRender(DialogAddNetwork, null, config);
-
-    fireEvent.change(screen.getByTestId('name'), { target: { value: 'test' } });
-    fireEvent.change(screen.getByTestId('serviceUrl'), {
-      target: { value: 'https://www.failedrequest.com' },
-    });
-    fireEvent.click(screen.getByRole('button', { name: 'Add network' }));
-
-    await waitFor(() => {
-      expect(screen.getByText('Try again')).toBeInTheDocument();
-    });
-  });
-
   it('throws errors if the network name or address already exists', async () => {
     useSettings.mockReturnValue({
       setValue: mockSetValue,
@@ -109,12 +95,13 @@ describe('DialogAddNetwork', () => {
     });
     fireEvent.click(screen.getByRole('button'));
     await waitFor(() => {
-      expect(screen.getByText('Name & ServiceUrl & WsServiceUrl already exists.')).toBeInTheDocument();
+      expect(
+        screen.getByText('Name & ServiceUrl & WsServiceUrl already exists.')
+      ).toBeInTheDocument();
     });
   });
 
   it('edits selected network', async () => {
-    isNetworkUrlSuccess.mockReturnValue(true);
     useSettings.mockReturnValue({
       setValue: mockSetValue,
       customNetworks: [
@@ -148,6 +135,21 @@ describe('DialogAddNetwork', () => {
     await waitFor(() => {
       expect(toast.info).toBeCalled();
       expect(updatedConfig.historyInfo.goBack).toBeCalled();
+    });
+  });
+
+  it('should show retry button if network url fails to fetch', async () => {
+    useNetworkStatus.mockReturnValue();
+    smartRender(DialogAddNetwork, null, config);
+
+    fireEvent.change(screen.getByTestId('name'), { target: { value: 'test' } });
+    fireEvent.change(screen.getByTestId('serviceUrl'), {
+      target: { value: 'https://www.failedrequest.com' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Add network' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Retry')).toBeInTheDocument();
     });
   });
 });

@@ -10,7 +10,7 @@ export const useNetworkStatus = ({ config: customConfig = {}, options, client } 
     ...customConfig,
   };
   return useCustomQuery({
-    keys: [NETWORK_STATUS],
+    keys: [NETWORK_STATUS, client.host],
     config,
     options,
     client,

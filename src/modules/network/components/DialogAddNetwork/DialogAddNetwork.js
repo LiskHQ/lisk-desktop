@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -17,8 +17,9 @@ import { regex } from 'src/const/regex';
 import {
   DEFAULT_NETWORK_FORM_STATE,
   getDuplicateNetworkFields,
-  isNetworkUrlSuccess,
 } from '@network/components/DialogAddNetwork/utils';
+import { useNetworkStatus } from '@network/hooks/queries';
+import { Client } from 'src/utils/api/client';
 import networks from '../../configuration/networks';
 import styles from './DialogAddNetwork.css';
 
@@ -46,9 +47,20 @@ const DialogAddNetwork = () => {
   });
   const formValues = watch();
 
+  const client = useMemo(
+    () => formValues.serviceUrl && new Client({ http: formValues.serviceUrl }),
+    [formValues.serviceUrl]
+  );
+
+  const networkStatus = useNetworkStatus({
+    options: { enabled: !!formValues.serviceUrl },
+    client,
+  });
+
   async function onTryNetworkUrl() {
-    const isServiceUrlOk = await isNetworkUrlSuccess(formValues.serviceUrl);
-    if (isServiceUrlOk) {
+    const isNetworkStatusOK = !!networkStatus?.data?.data;
+
+    if (isNetworkStatusOK) {
       setIsNetworkUrlOk(true);
     } else {
       setIsNetworkUrlOk(false);
@@ -69,8 +81,8 @@ const DialogAddNetwork = () => {
       return setErrorText(`${duplicates} already exists.`);
     }
 
-    const isOk = await isNetworkUrlSuccess(formValues.serviceUrl);
-    if (!isOk) {
+    const isNetworkStatusOK = !!networkStatus?.data?.data;
+    if (!isNetworkStatusOK) {
       setIsAddingNetwork(false);
       return setIsNetworkUrlOk(false);
     }
@@ -135,13 +147,13 @@ const DialogAddNetwork = () => {
             />
             {!isNetworkUrlOk && !isAddingNetwork && (
               <span className={styles.connectionFailed}>
-                <span className={styles.errorText}>{t('Error fetching url.')}</span>
+                <span className={styles.errorText}>{t('Could not fetch chain ID. Is your RPC URL correct?')}</span>
                 <TertiaryButton
                   type="button"
                   onClick={onTryNetworkUrl}
                   className={styles.tryAgainButton}
                 >
-                  {t('Try again')}
+                  {t('Retry')}
                 </TertiaryButton>
               </span>
             )}
