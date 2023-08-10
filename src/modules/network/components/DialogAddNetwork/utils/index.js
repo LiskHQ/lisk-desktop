@@ -60,10 +60,10 @@ export function useNetworkCheck(serviceUrl) {
   const blockchainAppsMeta = useBlockchainApplicationMeta({
     config: {
       params: {
-        chainID: [...new Set([networkStatus.data?.data?.chainID])].filter((item) => item).join(','),
+        chainID: [...new Set([networkStatus?.data?.data?.chainID])].filter((item) => item).join(','),
       },
     },
-    options: { enabled: !!networkStatus.data?.data },
+    options: { enabled: !!networkStatus?.data?.data },
     client,
   });
 
