@@ -113,7 +113,7 @@ Given(
     await this.page.getByText('Add network').click({ timeout: 10000 });
 
     await this.page.getByTestId('name').fill(networkName, { timeout: 10000 });
-    // await this.page.getByTestId('serviceUrl').fill(serviceUrl, { timeout: 10000 });
+    await this.page.getByTestId('serviceUrl').fill(serviceUrl, { timeout: 10000 });
     // await this.page
     //   .locator('[type="submit"]')
     //   .filter({
