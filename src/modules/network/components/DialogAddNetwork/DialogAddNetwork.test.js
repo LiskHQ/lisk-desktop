@@ -2,8 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { smartRender } from 'src/utils/testHelpers';
 import useSettings from '@settings/hooks/useSettings';
 import { toast } from 'react-toastify';
-import { mockNetworkStatus } from '@network/__fixtures__';
-import { useNetworkStatus } from '@network/hooks/queries';
+import { useNetworkCheck } from '@network/components/DialogAddNetwork/utils';
 import DialogAddNetwork from './DialogAddNetwork';
 
 jest.mock('@settings/hooks/useSettings');
@@ -18,8 +17,14 @@ jest.mock('react-toastify', () => ({
   toast: { info: jest.fn() },
 }));
 
-jest.mock('@network/hooks/queries/useNetworkStatus');
-useNetworkStatus.mockReturnValue({ data: mockNetworkStatus });
+jest.mock('@network/components/DialogAddNetwork/utils', () => ({
+  ...jest.requireActual('@network/components/DialogAddNetwork/utils'),
+  useNetworkCheck: jest.fn(() => ({
+      isNetworkOK: true,
+      isOnchainOK: true,
+      isOffchainOK: true,
+    })),
+}));
 
 describe('DialogAddNetwork', () => {
   const config = {
@@ -139,7 +144,11 @@ describe('DialogAddNetwork', () => {
   });
 
   it('should show retry button if network url fails to fetch', async () => {
-    useNetworkStatus.mockReturnValue();
+    useNetworkCheck.mockReturnValue({
+      isNetworkOK: false,
+      isOnchainOK: false,
+      isOffchainOK: false,
+    });
     smartRender(DialogAddNetwork, null, config);
 
     fireEvent.change(screen.getByTestId('name'), { target: { value: 'test' } });
