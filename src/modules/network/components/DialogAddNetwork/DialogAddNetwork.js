@@ -138,7 +138,7 @@ const DialogAddNetwork = () => {
                   {t(
                     `Failed to fetch: ${!networkCheck?.isOnchainOK ? 'onchain, ' : ''}${
                       !networkCheck?.isOffchainOK ? 'offchain' : ''
-                    }. Please check the URL.`
+                    } data. Please check the URL.`
                   )}
                 </span>
                 <TertiaryButton
