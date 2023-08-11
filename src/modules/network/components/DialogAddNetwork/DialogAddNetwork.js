@@ -158,6 +158,7 @@ const DialogAddNetwork = () => {
               }
               type="submit"
               className={`${styles.button}`}
+              data-testId="add-network-button"
             >
               {t(`${!defaultName ? 'Add' : 'Save'} network`)}
             </PrimaryButton>

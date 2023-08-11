@@ -114,11 +114,9 @@ Given(
 
     await this.page.getByTestId('name').fill(networkName, { timeout: 10000 });
     await this.page.getByTestId('serviceUrl').fill(serviceUrl, { timeout: 10000 });
-    await this.page
-      .locator('[type="submit"]')
-      .filter({
-        hasText: 'Add network',
-      })
-      .click({ timeout: 10000 });
+    await expect(await this.page.getByTestId('add-network-button')).not.toBeDisabled({
+      timeout: 10000,
+    });
+    await this.page.getByTestId('add-network-button').click({ timeout: 10000 });
   }
 );
