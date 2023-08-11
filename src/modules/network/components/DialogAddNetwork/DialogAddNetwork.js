@@ -135,7 +135,11 @@ const DialogAddNetwork = () => {
             {!isNetworkUrlOk && !isAddingNetwork && (
               <span className={styles.connectionFailed}>
                 <span className={styles.errorText}>
-                  {t('Could not fetch chain ID. Is your RPC URL correct?')}
+                  {t(
+                    `Failed to fetch: ${!networkCheck?.isOnchainOK && 'onchain, '}${
+                      !networkCheck?.isOffchainOK && 'offchain'
+                    }. Please check the URL.`
+                  )}
                 </span>
                 <TertiaryButton
                   type="button"
