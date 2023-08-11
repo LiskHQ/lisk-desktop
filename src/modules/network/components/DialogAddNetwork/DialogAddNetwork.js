@@ -124,26 +124,24 @@ const DialogAddNetwork = () => {
               })}
             />
 
-            {(!isNetworkUrlOk || networkCheck.isError) &&
-              !!formValues.serviceUrl &&
-              !networkCheck.isFetching && (
-                <span className={styles.connectionFailed}>
-                  <span className={styles.errorText}>
-                    {t(
-                      `Failed to fetch: ${!networkCheck.isOnchainOK ? 'onchain, ' : ''}${
-                        !networkCheck.isOffchainOK ? 'offchain' : ''
-                      } data. Please check the URL.`
-                    )}
-                  </span>
-                  <TertiaryButton
-                    type="button"
-                    onClick={onTryNetworkUrl}
-                    className={styles.tryAgainButton}
-                  >
-                    {t('Retry')}
-                  </TertiaryButton>
+            {networkCheck.isError && !!formValues.serviceUrl && !networkCheck.isFetching && (
+              <span className={styles.connectionFailed}>
+                <span className={styles.errorText}>
+                  {t(
+                    `Failed to fetch: ${!networkCheck.isOnchainOK ? 'onchain, ' : ''}${
+                      !networkCheck.isOffchainOK ? 'offchain' : ''
+                    } data. Please check the URL.`
+                  )}
                 </span>
-              )}
+                <TertiaryButton
+                  type="button"
+                  onClick={onTryNetworkUrl}
+                  className={styles.tryAgainButton}
+                >
+                  {t('Retry')}
+                </TertiaryButton>
+              </span>
+            )}
             <Input
               size="l"
               label="Websocket URL"
