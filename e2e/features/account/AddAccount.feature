@@ -1,6 +1,7 @@
 Feature: AddAccount
     Background: Navigate to add account options
         Given I navigate to page "wallet"
+        And I wait for "2 seconds"
         And I add a custom network with name "local_network" and serviceUrl "http://127.0.0.1:9901"
         And I switch to network "local_network"
         And I go back to the previous page
