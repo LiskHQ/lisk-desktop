@@ -27,8 +27,6 @@ const DialogAddNetwork = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { setValue, customNetworks } = useSettings('customNetworks');
-  const [isAddingNetwork, setIsAddingNetwork] = useState(false);
-  const [isNetworkUrlOk, setIsNetworkUrlOk] = useState(true);
   const [errorText, setErrorText] = useState('');
 
   const { name: defaultName = '' } = parseSearchParams(history.location.search);
@@ -46,33 +44,25 @@ const DialogAddNetwork = () => {
   });
   const formValues = watch();
   const networkCheck = useNetworkCheck(formValues.serviceUrl);
+  const isNetworkUrlOk = networkCheck.isOffchainOK && networkCheck.isOnchainOK;
 
   async function onTryNetworkUrl() {
-    if (networkCheck.isNetworkOK) {
-      setIsNetworkUrlOk(true);
-    } else {
-      setIsNetworkUrlOk(false);
-    }
+    networkCheck.refetch();
   }
 
   // eslint-disable-next-line max-statements
   async function onSubmit(values) {
     setErrorText('');
-    setIsAddingNetwork(true);
     const fullNetworkList = [...Object.values(networks), ...customNetworks];
     const duplicateNetworkFields = getDuplicateNetworkFields(values, fullNetworkList, defaultName);
     if (duplicateNetworkFields) {
       const duplicates = Object.keys(duplicateNetworkFields)
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' & ');
-      setIsAddingNetwork(false);
       return setErrorText(`${duplicates} already exists.`);
     }
 
-    if (!networkCheck.isNetworkOK) {
-      setIsAddingNetwork(false);
-      return setIsNetworkUrlOk(false);
-    }
+    if (!networkCheck.isNetworkOK) return null;
 
     const wsServiceUrl = values.wsServiceUrl || values.serviceUrl.replace(/^http(s?)/, 'ws$1');
     const updatedCustomNetworks = immutableSetToArray({
@@ -88,7 +78,6 @@ const DialogAddNetwork = () => {
     toast.info(t(`Custom network ${defaultName ? 'edited' : 'added'} "${values.name}"`), {
       position: 'bottom-right',
     });
-    setIsAddingNetwork(false);
 
     return history.goBack();
   }
@@ -125,31 +114,36 @@ const DialogAddNetwork = () => {
               placeholder={t(
                 'Enter service URL, e.g. https://service.lisk.com or http://localhost:9901'
               )}
+              value={formValues.serviceUrl}
               feedback={errors.serviceUrl?.message}
               status={errors.serviceUrl?.message ? 'error' : undefined}
+              isLoading={networkCheck.isFetching}
               {...register('serviceUrl', {
                 required: 'Service URL is required',
                 pattern: { value: regex.url, message: t('Invalid URL') },
               })}
             />
-            {!isNetworkUrlOk && !isAddingNetwork && (
-              <span className={styles.connectionFailed}>
-                <span className={styles.errorText}>
-                  {t(
-                    `Failed to fetch: ${!networkCheck?.isOnchainOK ? 'onchain, ' : ''}${
-                      !networkCheck?.isOffchainOK ? 'offchain' : ''
-                    } data. Please check the URL.`
-                  )}
+
+            {(!isNetworkUrlOk || networkCheck.isError) &&
+              !!formValues.serviceUrl &&
+              !networkCheck.isFetching && (
+                <span className={styles.connectionFailed}>
+                  <span className={styles.errorText}>
+                    {t(
+                      `Failed to fetch: ${!networkCheck?.isOnchainOK ? 'onchain, ' : ''}${
+                        !networkCheck?.isOffchainOK ? 'offchain' : ''
+                      } data. Please check the URL.`
+                    )}
+                  </span>
+                  <TertiaryButton
+                    type="button"
+                    onClick={onTryNetworkUrl}
+                    className={styles.tryAgainButton}
+                  >
+                    {t('Retry')}
+                  </TertiaryButton>
                 </span>
-                <TertiaryButton
-                  type="button"
-                  onClick={onTryNetworkUrl}
-                  className={styles.tryAgainButton}
-                >
-                  {t('Retry')}
-                </TertiaryButton>
-              </span>
-            )}
+              )}
             <Input
               size="l"
               label="Websocket URL"
@@ -161,7 +155,9 @@ const DialogAddNetwork = () => {
               })}
             />
             <PrimaryButton
-              disabled={!isDirty || isAddingNetwork || !isNetworkUrlOk}
+              disabled={
+                !isDirty || !isNetworkUrlOk || networkCheck.isFetching || networkCheck.isError
+              }
               type="submit"
               className={`${styles.button}`}
             >

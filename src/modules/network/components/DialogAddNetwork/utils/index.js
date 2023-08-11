@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Client } from 'src/utils/api/client';
 import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { useDebounce } from 'src/modules/search/hooks/useDebounce';
 
 export const DEFAULT_NETWORK_FORM_STATE = {
   name: '',
@@ -51,6 +52,7 @@ export function getDuplicateNetworkFields(newNetwork, networks, networkToExclude
 
 /* istanbul ignore next */
 export function useNetworkCheck(serviceUrl) {
+  serviceUrl = useDebounce(serviceUrl, 300);
   const client = useMemo(() => serviceUrl && new Client({ http: serviceUrl }), [serviceUrl]);
 
   const networkStatus = useNetworkStatus({
@@ -70,9 +72,17 @@ export function useNetworkCheck(serviceUrl) {
     client,
   });
 
+  const handleRefetch = () => {
+    networkStatus.refetch();
+    blockchainAppsMeta.refetch();
+  };
+
   return {
     isNetworkOK: !!networkStatus?.data?.data && !!blockchainAppsMeta?.data?.data,
     isOnchainOK: !!networkStatus?.data?.data,
     isOffchainOK: !!blockchainAppsMeta?.data?.data,
+    isFetching: networkStatus?.isFetching || blockchainAppsMeta?.isFetching,
+    isError: networkStatus?.isError || blockchainAppsMeta?.isError,
+    refetch: handleRefetch,
   };
 }

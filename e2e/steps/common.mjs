@@ -114,6 +114,7 @@ Given(
 
     await this.page.getByTestId('name').fill(networkName);
     await this.page.getByTestId('serviceUrl').fill(serviceUrl);
+    await expect(this.page.getByTestId('input-spinner')).not.toBeVisible({ timeout: 10000 });
     await this.page
       .locator('[type="submit"]')
       .filter({
