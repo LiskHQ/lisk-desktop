@@ -130,8 +130,8 @@ const DialogAddNetwork = () => {
                 <span className={styles.connectionFailed}>
                   <span className={styles.errorText}>
                     {t(
-                      `Failed to fetch: ${!networkCheck?.isOnchainOK ? 'onchain, ' : ''}${
-                        !networkCheck?.isOffchainOK ? 'offchain' : ''
+                      `Failed to fetch: ${!networkCheck.isOnchainOK ? 'onchain, ' : ''}${
+                        !networkCheck.isOffchainOK ? 'offchain' : ''
                       } data. Please check the URL.`
                     )}
                   </span>
