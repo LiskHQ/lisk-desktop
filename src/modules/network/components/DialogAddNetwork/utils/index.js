@@ -54,17 +54,19 @@ export function useNetworkCheck(serviceUrl) {
   const client = useMemo(() => serviceUrl && new Client({ http: serviceUrl }), [serviceUrl]);
 
   const networkStatus = useNetworkStatus({
-    options: { enabled: !!serviceUrl },
+    options: { enabled: !!serviceUrl, retry: false },
     client,
   });
 
   const blockchainAppsMeta = useBlockchainApplicationMeta({
     config: {
       params: {
-        chainID: [...new Set([networkStatus?.data?.data?.chainID])].filter((item) => item).join(','),
+        chainID: [...new Set([networkStatus?.data?.data?.chainID])]
+          .filter((item) => item)
+          .join(','),
       },
     },
-    options: { enabled: !!networkStatus?.data?.data },
+    options: { enabled: !!networkStatus?.data?.data, retry: false },
     client,
   });
 
