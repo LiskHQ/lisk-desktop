@@ -1,5 +1,3 @@
-import * as accountApi from '@wallet/utils/api';
-import * as networkActions from '@network/store/action';
 import actionTypes from './actionTypes';
 import { secondPassphraseStored, secondPassphraseRemoved } from './action';
 
@@ -19,9 +17,6 @@ jest.mock('@wallet/utils/api', () => ({
 jest.mock('@transaction/store/actions', () => ({
   updateTransactions: jest.fn(),
 }));
-jest.mock('@network/store/action', () => ({
-  networkStatusUpdated: jest.fn(),
-}));
 jest.mock('@wallet/utils/account', () => ({
   extractKeyPair: jest.fn(),
 }));
@@ -29,11 +24,6 @@ jest.mock('@wallet/utils/account', () => ({
 describe('actions: account', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-  });
-
-  afterEach(() => {
-    accountApi.getAccount.mockReset();
-    networkActions.networkStatusUpdated.mockReset();
   });
 
   describe('secondPassphraseStored', () => {

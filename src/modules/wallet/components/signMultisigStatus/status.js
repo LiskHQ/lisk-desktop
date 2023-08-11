@@ -14,7 +14,7 @@ import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 // eslint-disable-next-line max-statements
 const Status = ({ transactions, t, transactionJSON }) => {
   const [currentAccount] = useCurrentAccount();
-  const moduleCommandSchemas = useCommandSchema();
+  const { moduleCommandSchemas } = useCommandSchema();
 
   // This is to replace previous withData implementations.
   const { txInitiatorAccount } = useTxInitiatorAccount({

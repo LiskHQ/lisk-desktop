@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useGetInitializationFees } from '@token/fungible/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee/useTransactionFee';
+import { useFees } from '@transaction/hooks/queries';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 import { splitModuleAndCommand } from 'src/modules/transaction/utils';
@@ -23,7 +24,6 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const transactionJSON = useMemo(
     () => ({
-      id: '',
       module,
       command,
       fee: 0,
@@ -34,8 +34,11 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
     }),
     [wallet.legacy?.balance, module, command, wallet.sequence?.nonce, wallet.summary?.publicKey]
   );
+  const { data: networkFees } = useFees();
+
   const { initializationFees } = useGetInitializationFees({
     address: wallet.summary?.address,
+    tokenID: networkFees?.data?.feeTokenID,
   });
 
   const { transactionFee } = useTransactionFee({

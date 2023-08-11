@@ -43,7 +43,6 @@ export const isEmpty = (collection) => {
 export const getErrorReportMailto = ({
   error = 'Unknown error occurred',
   errorMessage,
-  networkIdentifier,
   serviceUrl,
   liskCoreVersion,
 }) => {
@@ -52,7 +51,7 @@ export const getErrorReportMailto = ({
   const body = encodeURIComponent(`
     \nImportant metadata for the team, please do not edit:
     \r
-    Lisk Core Version: ${liskCoreVersion}, NetworkIdentifier: ${networkIdentifier}, ServiceURL: ${serviceUrl}
+    Lisk Core Version: ${liskCoreVersion}, ServiceURL: ${serviceUrl}
     \r
     Error Message: ${errorMessage}
     \r

@@ -18,7 +18,7 @@ const TxBroadcasterWithStatus = ({
   t,
   prevStep,
 }) => {
-  const moduleCommandSchemas = useCommandSchema();
+  const { moduleCommandSchemas } = useCommandSchema();
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
   const isBroadcastError = isTxStatusError(status.code);

@@ -24,7 +24,7 @@ const DialogHolder = ({ history }) => {
   const activeToken = useSelector(selectActiveToken);
   const { reject } = useSession();
   const { events } = useEvents();
-  const networkIsSet = useSelector((state) => !!state.network.name);
+  const networkIsSet = useSelector((state) => !!state.settings?.network?.name);
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);

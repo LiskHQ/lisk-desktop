@@ -16,10 +16,12 @@ describe('TransactionResult Regular', () => {
         signatures: [accounts.genesis.summary.publicKey],
       },
     },
-    network: {
-      networkIdentifier: 'networkIdentifier1',
-      serviceUrl: 'http://testnet.io',
-      networkVersion: '5.0.1',
+    settings: {
+      network: {
+        networkIdentifier: 'networkIdentifier1',
+        serviceUrl: 'http://testnet.io',
+        networkVersion: '5.0.1',
+      },
     },
     account: accounts.genesis,
     title: 'Test title',
@@ -63,7 +65,7 @@ describe('TransactionResult Regular', () => {
     expect(wrapper.find('.report-error-link')).toHaveText('Report the error via email');
     expect(wrapper.find('.report-error-link')).toHaveProp(
       'href',
-      'mailto:desktopdev@lisk.com?&subject=User Reported Error - Lisk - &body=%0A%20%20%20%20%0AImportant%20metadata%20for%20the%20team%2C%20please%20do%20not%20edit%3A%0A%20%20%20%20%0D%0A%20%20%20%20Lisk%20Core%20Version%3A%205.0.1%2C%20NetworkIdentifier%3A%20networkIdentifier1%2C%20ServiceURL%3A%20http%3A%2F%2Ftestnet.io%0A%20%20%20%20%0D%0A%20%20%20%20Error%20Message%3A%20lorem%20ipsum%0A%20%20%20%20%0D%0A%20%20%20%20Transaction%3A%20test%20error%0A%20%20'
+      'mailto:desktopdev@lisk.com?&subject=User Reported Error - Lisk - &body=%0A%20%20%20%20%0AImportant%20metadata%20for%20the%20team%2C%20please%20do%20not%20edit%3A%0A%20%20%20%20%0D%0A%20%20%20%20Lisk%20Core%20Version%3A%205.0.1%2C%20ServiceURL%3A%20http%3A%2F%2Ftestnet.io%0A%20%20%20%20%0D%0A%20%20%20%20Error%20Message%3A%20lorem%20ipsum%0A%20%20%20%20%0D%0A%20%20%20%20Transaction%3A%20test%20error%0A%20%20'
     );
   });
 

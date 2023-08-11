@@ -10,7 +10,7 @@ export const useGetInitializationFees = ({ options = {}, address, tokenID }) => 
   };
 
   const queryConfig = {
-    options: { enabled: !!address },
+    options: { enabled: !!address && !!tokenID },
     config: { params: { address, tokenID } },
   };
 

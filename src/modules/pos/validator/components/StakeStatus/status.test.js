@@ -1,8 +1,8 @@
-import { mountWithRouter, mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
+import { mountWithRouter, mountWithRouterAndQueryClient, smartRender } from 'src/utils/testHelpers';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import Result from './Status';
+import StakeStatus from '.';
 
 const props = {
   t: (s) => s,
@@ -28,13 +28,13 @@ describe('StakingQueue.Result', () => {
   });
 
   it('renders properly', () => {
-    const wrapper = mountWithRouter(Result, props);
+    const wrapper = mountWithRouter(StakeStatus, props);
 
     expect(wrapper).toContainMatchingElement('StakeSuccessfulModal');
   });
 
   it('displays the locked message properly', () => {
-    const wrapper = mountWithRouterAndQueryClient(Result, {
+    const wrapper = mountWithRouterAndQueryClient(StakeStatus, {
       ...props,
       statusInfo: { locked: 200 },
     });
@@ -44,7 +44,7 @@ describe('StakingQueue.Result', () => {
   });
 
   it('displays the unlocked message properly', () => {
-    const wrapper = mountWithRouterAndQueryClient(Result, {
+    const wrapper = mountWithRouterAndQueryClient(StakeStatus, {
       ...props,
       statusInfo: { unlockable: 300 },
     });
@@ -56,7 +56,7 @@ describe('StakingQueue.Result', () => {
   });
 
   it('displays the unlocked message and rewards properly', () => {
-    const wrapper = mountWithRouterAndQueryClient(Result, {
+    const wrapper = mountWithRouterAndQueryClient(StakeStatus, {
       ...props,
       formProps: {
         rewards: { total: 20000000n },
@@ -71,7 +71,7 @@ describe('StakingQueue.Result', () => {
   });
 
   it('displays the combined message properly', () => {
-    const wrapper = mountWithRouterAndQueryClient(Result, {
+    const wrapper = mountWithRouterAndQueryClient(StakeStatus, {
       ...props,
       statusInfo: { locked: 200, unlockable: 300 },
     });
@@ -83,13 +83,34 @@ describe('StakingQueue.Result', () => {
   });
 
   it('displays error modal', () => {
-    const wrapper = mountWithRouterAndQueryClient(Result, {
-      ...props,
-      transactions: {
-        txSignatureError: { message: 'error' },
-        signedTransaction: { signatures: [] },
+    const renderConfig = {
+      renderType: 'mount',
+      historyInfo: {
+        push: jest.fn(),
+        location: { search: '' },
       },
-    });
+      queryClient: true,
+      store: true,
+      storeInfo: {
+        settings: {
+          network: {
+            serviceUrl: 'http://testnet.io',
+          },
+        },
+      },
+    };
+    const { wrapper } = smartRender(
+      StakeStatus,
+      {
+        ...props,
+        transactions: {
+          txSignatureError: { message: 'error' },
+          signedTransaction: { signatures: [] },
+        },
+      },
+      renderConfig
+    );
+
     const element = wrapper.find('TxBroadcaster');
 
     expect(element.text()).toContain(

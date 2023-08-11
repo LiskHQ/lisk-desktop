@@ -8,12 +8,22 @@ import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { mockValidators } from '@pos/validator/__fixtures__';
+import { useCommandSchema } from '@network/hooks';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Status from './Status';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
 jest.mock('@pos/validator/hooks/queries');
+jest.mock('@network/hooks/useCommandsSchema');
+
+useCommandSchema.mockReturnValue({
+  moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
+    (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+    {}
+  ),
+});
 
 describe('Sent token Status', () => {
   const props = {

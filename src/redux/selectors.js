@@ -15,8 +15,8 @@ const selectAccountBalance = (
   state // @todo account has multiple balance now
 ) => (state.wallet.info ? state.wallet.info[state.token.active].summary.balance : undefined);
 const selectSettings = (state) => state.settings;
-const selectNetwork = (state) => state.network;
-const selectNetworkName = (state) => state.network.name;
+const selectNetwork = (state) => state.settings.network;
+const selectNetworkName = (state) => state.settings.network.name;
 const selectStaking = (state) => state.staking;
 const selectBookmarks = (state) => state.bookmarks;
 

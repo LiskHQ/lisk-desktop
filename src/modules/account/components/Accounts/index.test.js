@@ -4,7 +4,7 @@ import {
   useTokensBalanceTop,
   useTokenSummary,
 } from '@token/fungible/hooks/queries';
-import { useFees } from '@transaction/hooks/queries';
+import { useFees } from '@transaction/hooks/queries/useFees';
 import { mockAppsTokens, mockTokenBalancesTop } from '@token/fungible/__fixtures__';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import WalletsMonitor from './Accounts';
@@ -33,7 +33,7 @@ describe('Top Accounts Monitor Page', () => {
       },
     },
   });
-  useFees.mockReturnValue({ dat: { data: { feeTokenID: '0000000100000000' } } });
+  useFees.mockReturnValue({ data: { data: { feeTokenID: '0000000100000000' } } });
   useTokenSummary.mockReturnValue({
     data: {
       data: { totalSupply: [{ tokenID: '0000000100000000', amount: '11043784297530566' }] },

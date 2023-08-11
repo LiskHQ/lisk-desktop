@@ -3,7 +3,6 @@ import { getTransactionSignatureStatus } from '@wallet/components/signMultisigVi
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 import { TransactionExecutionResult } from '@transaction/constants';
-import useSettings from '@settings/hooks/useSettings';
 import actionTypes from './actionTypes';
 import { broadcast, dryRun, signTransaction } from '../api';
 import { joinModuleAndCommand, signMultisigTransaction } from '../utils';
@@ -35,9 +34,9 @@ export const resetTransactionResult = () => ({
 export const transactionBroadcasted =
   (transaction, moduleCommandSchemas) =>
   // eslint-disable-next-line max-statements
-  async (dispatch) => {
-    const { mainChainNetwork } = useSettings('mainChainNetwork');
-    const serviceUrl = mainChainNetwork.serviceUrl;
+  async (dispatch, getState) => {
+    const { settings } = getState();
+    const serviceUrl = settings.mainChainNetwork.serviceUrl;
     const moduleCommand = joinModuleAndCommand(transaction);
     const paramsSchema = moduleCommandSchemas[moduleCommand];
     let broadcastErrorMessage;

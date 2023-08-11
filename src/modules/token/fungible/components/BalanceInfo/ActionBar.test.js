@@ -34,6 +34,9 @@ describe('Reclaim balance screen', () => {
     },
     token: { active: tokenMap.LSK.key },
     staking: {},
+    settings: {
+      network: { name: 'mainnet' },
+    },
   };
 
   it('Should display register validator button and send', () => {

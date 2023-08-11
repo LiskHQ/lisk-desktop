@@ -4,12 +4,22 @@ import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import { mockAuth } from '@auth/__fixtures__';
 import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
+import { useCommandSchema } from '@network/hooks';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Status from './status';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
 jest.mock('@transaction/hooks/useTxInitiatorAccount');
+jest.mock('@network/hooks/useCommandsSchema');
+
+useCommandSchema.mockReturnValue({
+  moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
+    (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+    {}
+  ),
+});
 
 describe('Sign Multisignature Tx Status component', () => {
   const props = {

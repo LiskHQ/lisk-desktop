@@ -23,23 +23,15 @@ export default {
   settings: {
     currency: 'USD',
     darkMode: false,
+    network: {
+      name: 'Testnet',
+      serviceUrl: 'http://example.com',
+    },
   },
   token: {
     active: 'LSK',
     list: {
       LSK: true,
-    },
-  },
-  network: {
-    name: 'Testnet',
-    networks: {
-      LSK: {
-        serviceUrl: 'http://example.com',
-        moduleCommandSchemas,
-      },
-    },
-    statue: {
-      online: true,
     },
   },
   staking: {

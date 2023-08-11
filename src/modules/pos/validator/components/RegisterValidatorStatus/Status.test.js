@@ -2,11 +2,21 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import accounts from '@tests/constants/wallets';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
+import { useCommandSchema } from '@network/hooks';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Status from './Status';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
+jest.mock('@network/hooks/useCommandsSchema');
+
+useCommandSchema.mockReturnValue({
+  moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
+    (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+    {}
+  ),
+});
 
 describe('Validator Registration Status', () => {
   const props = {

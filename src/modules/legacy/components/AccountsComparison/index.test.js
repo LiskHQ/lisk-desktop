@@ -5,7 +5,7 @@ import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { mockTokensBalance as mockTokens } from '@token/fungible/__fixtures__';
+import { useFees } from '@transaction/hooks/queries/useFees';
 import Reclaim from './index';
 import styles from './reclaim.css';
 
@@ -18,9 +18,12 @@ jest.mock('@account/hooks/useCurrentAccount', () => ({
 }));
 jest.mock('@token/fungible/hooks/queries/useGetHasUserAccount');
 jest.mock('@token/fungible/hooks/queries/useGetInitializationFees');
+jest.mock('@transaction/hooks/queries/useFees');
 
 const mockNonMigrated = wallets.non_migrated;
+const tokenID = '0000000100000000';
 
+useFees.mockReturnValue({ data: { data: { feeTokenID: '0000000100000000' } } });
 jest.mock('react-redux', () => {
   const originalModule = jest.requireActual('react-redux');
 
@@ -29,7 +32,6 @@ jest.mock('react-redux', () => {
     ...originalModule,
     useSelector: jest.fn(() => ({
       ...mockNonMigrated,
-      token: mockTokens.data,
       staking: {},
     })),
   };
@@ -66,7 +68,7 @@ describe('Reclaim balance screen', () => {
     wrapper.find(styles.button).first().simulate('click');
     expect(addSearchParamsToUrl).toHaveBeenNthCalledWith(1, expect.objectContaining({}), {
       modal: 'reclaimBalance',
-      tokenID: mockTokens.data[0].tokenID,
+      tokenID,
     });
   });
 

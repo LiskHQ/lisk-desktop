@@ -94,7 +94,6 @@ const Regular = ({
             href={getErrorReportMailto({
               error: status.message,
               errorMessage: message,
-              networkIdentifier: network.networkIdentifier,
               serviceUrl: network.serviceUrl,
               liskCoreVersion: network.networkVersion,
             })}
