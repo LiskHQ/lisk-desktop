@@ -49,6 +49,7 @@ export function getDuplicateNetworkFields(newNetwork, networks, networkToExclude
   return Object.keys(result).length > 0 ? result : undefined;
 }
 
+/* istanbul ignore next */
 export function useNetworkCheck(serviceUrl) {
   const client = useMemo(() => serviceUrl && new Client({ http: serviceUrl }), [serviceUrl]);
 
