@@ -64,6 +64,41 @@ pipeline {
 		stage('test') {
 			steps {
 				parallel (
+					//side-chain
+					"side-chain": {
+						dir('lisk-service') {
+							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
+						}
+						nvm(getNodejsVersion()) {
+							withEnv(["REACT_APP_MSW=true"]) {
+								wrap([$class: 'Xvfb']) {
+									sh '''
+									# lisk-core
+									npm i -g lisk-core
+									rm -rf ~/.lisk/
+									lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
+									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 --config ./e2e/artifacts/config.json --overwrite-config >lisk-core.out 2>lisk-core.err &
+									echo $! >lisk-core.pid
+
+									# lisk-service
+									cp -f lisk-service/docker/example.env lisk-service/.env
+									echo LISK_APP_WS=ws://host.docker.internal:7887 >>lisk-service/.env
+									make -C lisk-service build
+									make -C lisk-service up
+
+									# wait for service to be up and running
+									sleep 10
+									set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
+									curl --verbose http://127.0.0.1:9901/api/v3/network/status
+									curl --verbose http://127.0.0.1:9901/api/v3/blocks
+
+									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
+									yarn run cucumber:playwright:open
+									'''
+								}
+							}
+						}
+					},
 					// cypress
 					"end-to-end": {
 						dir('lisk-service') {
