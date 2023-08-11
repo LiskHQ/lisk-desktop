@@ -20,10 +20,10 @@ jest.mock('react-toastify', () => ({
 jest.mock('@network/components/DialogAddNetwork/utils', () => ({
   ...jest.requireActual('@network/components/DialogAddNetwork/utils'),
   useNetworkCheck: jest.fn(() => ({
-      isNetworkOK: true,
-      isOnchainOK: true,
-      isOffchainOK: true,
-    })),
+    isNetworkOK: true,
+    isOnchainOK: true,
+    isOffchainOK: true,
+  })),
 }));
 
 describe('DialogAddNetwork', () => {
@@ -148,6 +148,8 @@ describe('DialogAddNetwork', () => {
       isNetworkOK: false,
       isOnchainOK: false,
       isOffchainOK: false,
+      isError: true,
+      isLoading: false,
     });
     smartRender(DialogAddNetwork, null, config);
 
