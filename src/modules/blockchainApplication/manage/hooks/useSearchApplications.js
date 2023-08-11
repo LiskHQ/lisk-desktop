@@ -25,7 +25,7 @@ export const useSearchApplications = () => {
   const setDebounceSearch = (value) => {
     setSearchValue(value);
     clearTimeout(timeout.current);
-    // Validate the URL with denouncer
+    // Validate the URL with debouncer
     timeout.current = setTimeout(() => {
       setDebouncedSearchValue(value);
     }, 500);

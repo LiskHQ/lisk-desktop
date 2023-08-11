@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Heading from 'src/modules/common/components/Heading';
 import { useFilter } from 'src/modules/common/hooks';
@@ -32,7 +32,7 @@ const AllTokens = ({ history }) => {
   const { filters, setFilter } = useFilter({});
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
-  const disableSend = Boolean(queryParams.get('disableSend'));
+  const isSendDisabled = queryParams.get('disableSend') === 'true';
   const searchAddress = Boolean(queryParams.get('address'));
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
@@ -68,7 +68,7 @@ const AllTokens = ({ history }) => {
                 <SecondaryButton>{t('Request')}</SecondaryButton>
               </DialogLink>
               <DialogLink component="send">
-                <PrimaryButton disabled={disableSend}>{t('Send')}</PrimaryButton>
+                <PrimaryButton disabled={isSendDisabled}>{t('Send')}</PrimaryButton>
               </DialogLink>
             </div>
           </div>

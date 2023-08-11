@@ -35,19 +35,6 @@ const peerFilters = {
 /**
  * Retrieves list of peers which
  * are discoverable by Lisk Service
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- * @param {String?} data.baseUrl Custom API URL
- * @param {Object} data.params
- * @param {String?} data.params.version Lisk Core version number which the node rus
- * @param {String?} data.params.state Option of connected, disconnected, any. Default: Connected
- * @param {String?} data.params.height Block height at which the node runs
- * @param {String?} data.params.offset Used for pagination
- * @param {String?} data.params.sort  an option of 'version:asc', 'version:desc',
- * 'height:asc' and 'height:desc'
- *
- * @returns {Promise}
  */
 export const getPeers = ({ network, params }) => {
   const normParams = {};

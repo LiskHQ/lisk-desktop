@@ -1,25 +1,33 @@
-import { cryptography } from '@liskhq/lisk-client';
-import { signMessageByHW } from './hwManager';
+import i18next from 'i18next';
+import { getSignedMessage } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
-/**
- * Signs a string using hardware wallet
- * @param {Object} signData - consists of the message and account information
- * @param {string} signData.message - A signed value of the message
- * @param {Object} signData.account - Account of the signed in user
- * @return {string} a signed value of the message
- */
-export const signMessageUsingHW = async ({ message, account }) => {
-  let signature = await signMessageByHW({
-    account,
-    message,
-  });
-  if (signature instanceof Uint8Array) {
-    signature = Buffer.from(signature);
+export const signMessageUsingHW = async ({ account, message }) => {
+  try {
+    const signedMessage = await getSignedMessage(
+      account.hw.path,
+      account.metadata.accountIndex,
+      message
+    );
+    let signature = signedMessage?.signature;
+
+    if (!signature) {
+      throw new Error(
+        i18next.t('The message signature has been canceled on your {{model}}', {
+          model: account.hw.product,
+        })
+      );
+    }
+
+    if (signature instanceof Uint8Array) {
+      signature = Buffer.from(signature);
+    }
+
+    return signature;
+  } catch (error) {
+    throw new Error(
+      i18next.t('The message signature has been canceled on your {{model}}', {
+        model: account.hw.product,
+      })
+    );
   }
-  const result = cryptography.ed.printSignedMessage({
-    message,
-    signature,
-    publicKey: account.metadata.pubkey,
-  });
-  return result;
 };

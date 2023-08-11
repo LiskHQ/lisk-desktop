@@ -14,10 +14,6 @@ import MultiStepNav from './multiStepNav';
  * in addition to the hard coded properties
  *
  * Last child may won't receive a cb function from MultiStep
- *
- * @param {Boolean} showNav - defines the visibility of navigation, defaults to true
- *
- *
  */
 class MultiStep extends React.Component {
   constructor() {
@@ -47,16 +43,6 @@ class MultiStep extends React.Component {
     }
   }
 
-  /**
-   *
-   * @param {Object} config
-   * @param {Number} config.jump - The number of steps to jump back
-   * @param {Boolean} config.reset - Should return to first step,
-   *    this overrides all other configurations
-   * @param {Number} config.to - The index of the step to go to
-   * @memberOf MultiStep
-   *
-   */
   prev(config) {
     const getTarget = (current) => {
       if (current === 0) return current;

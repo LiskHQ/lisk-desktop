@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Box from 'src/theme/box';
-import BoxContent from 'src/theme/box/content';
-import FilterBar from 'src/modules/common/components/filterBar';
-import StickyHeader from 'src/theme/table/stickyHeader';
+import Box from '@theme/box';
+import BoxContent from '@theme/box/content';
+import FilterBar from '@common/components/filterBar';
+import StickyHeader from '@theme/table/stickyHeader';
 import { QueryTable } from '@theme/QueryTable';
 import transformParams from 'src/utils/transformParams';
+import { useFilter, useSort } from '@common/hooks';
 import { useBlocks } from '../../hooks/queries/useBlocks';
 import BlocksOverview from '../blocksOverview';
 import BlockFilterDropdown from './blockFilterDropdown';
@@ -22,9 +22,16 @@ export const defaultFilters = {
 };
 
 // eslint-disable-next-line max-statements
-const Blocks = ({ filters, applyFilters, clearFilter, clearAllFilters, sort, changeSort }) => {
+const Blocks = () => {
   const { t } = useTranslation();
   const [params, setParams] = useState();
+  const { filters, clearFilters, applyFilters } = useFilter({
+    dateFrom: '',
+    dateTo: '',
+    height: '',
+    generatorAddress: '',
+  });
+  const { sort, toggleSort } = useSort({ defaultSort: 'height:desc' });
   const formatters = {
     height: (value) => `${t('Height')}: ${value}`,
     /* istanbul ignore next */
@@ -32,8 +39,8 @@ const Blocks = ({ filters, applyFilters, clearFilter, clearAllFilters, sort, cha
   };
 
   const applyBlockFilters = (blockFilters) => {
-    const updateApplyFilterData = (usedFilters) => setParams(transformParams(usedFilters));
-    applyFilters(blockFilters, null, updateApplyFilterData);
+    applyFilters(blockFilters);
+    setParams(transformParams(blockFilters));
   };
 
   const clearBlockFilter = (name) => {
@@ -41,13 +48,13 @@ const Blocks = ({ filters, applyFilters, clearFilter, clearAllFilters, sort, cha
       ...filters,
       [name]: defaultFilters[name],
     };
-    const updateFilterData = () => setParams(transformParams(filterData));
-    clearFilter(name, updateFilterData);
+    setParams(transformParams(filterData));
+    clearFilters([name]);
   };
 
   const clearAllBlockFilters = () => {
-    const clearFilterData = () => setParams({});
-    clearAllFilters(clearFilterData);
+    clearFilters();
+    setParams({});
   };
 
   const changeBlockSort = (id) => {
@@ -55,8 +62,8 @@ const Blocks = ({ filters, applyFilters, clearFilter, clearAllFilters, sort, cha
       ...filters,
       sort: `${id}:${sort.includes('asc') ? 'desc' : 'asc'}`,
     };
-    const updateSort = () => setParams(transformParams(sortData));
-    changeSort(id, updateSort);
+    toggleSort(id);
+    setParams(transformParams(sortData));
   };
 
   /* istanbul ignore next */
@@ -98,15 +105,6 @@ const Blocks = ({ filters, applyFilters, clearFilter, clearAllFilters, sort, cha
       </Box>
     </div>
   );
-};
-
-Blocks.propTypes = {
-  filters: PropTypes.shape({
-    dateFrom: PropTypes.string.isRequired,
-    dateTo: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    generatorAddress: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default Blocks;

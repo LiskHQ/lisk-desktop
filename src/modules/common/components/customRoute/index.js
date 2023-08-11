@@ -8,10 +8,12 @@ import routes from 'src/routes/routes';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import { useCheckLegacyAccount } from '@legacy/hooks/queries';
 import useSettings from '@settings/hooks/useSettings';
+import { useTranslation } from 'react-i18next';
 import ErrorBoundary from './errorBoundary';
 
 // eslint-disable-next-line max-statements
-const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, history }) => {
+const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, history }) => {
+  const { t } = useTranslation();
   const token = useSelector((state) => state.token);
   const [currentAccount] = useCurrentAccount();
   const { pubkey, address, isHW } = currentAccount?.metadata || {};

@@ -1,78 +1,62 @@
-// @Todo: this should be fixed in this issue #4521
-/* istanbul ignore file */
-import { useCommandSchema } from '@network/hooks/useCommandsSchema';
-import { getParamsSchema } from './utils';
-import usePriorityFee from '../usePriorityFee';
+/* eslint-disable complexity */
+import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 import { FEE_TYPES } from '../../constants';
 import { joinModuleAndCommand } from '../../utils';
-import { useMinimumFee } from '.';
-import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
+import { useTransactionEstimateFees } from '../queries';
 
-/**
- *
- * @param {object} data
- * @param {boolean} data.isFormValid Whether the transaction form is valid or not. TxComposer defines this
- * @param {string} data.senderAddress The sender address in Lisk 32 format
- * @param {object} data.transaction Transaction object as Lisk Element expects without fee
- * @returns {object} The fee object with a total value, and a component value as an array of fees
- * that contribute in the total value
- */
 // eslint-disable-next-line max-statements
-export const useTransactionFee = ({
-  isFormValid,
-  transactionJSON,
-  senderAddress,
-  selectedPriority = [],
-  extraCommandFee = 0,
-}) => {
-  const {
-    moduleCommandSchemas,
-    isLoading: isSchemaLoading,
-    isFetched: isSchemaFetched,
-  } = useCommandSchema();
-  const paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
+export const useTransactionFee = ({ isFormValid, transactionJSON, extraCommandFee = 0 }) => {
+  let accountInitializationFee = {};
+  const { signatures, ...transactionToSendJSON } = transactionJSON;
 
-  const {
-    result: minimumFee,
-    isLoading: isLoadingByteFee,
-    isFetched: isFetchedByteFee,
-  } = useMinimumFee({
-    senderAddress,
-    isFormValid,
-    transactionJSON,
-    extraCommandFee,
+  transactionToSendJSON.fee = transactionToSendJSON.fee.toString();
+
+  const transactionFee = useTransactionEstimateFees({
+    config: { data: { transaction: transactionToSendJSON } },
+    options: { enabled: isFormValid && !!transactionJSON },
   });
 
-  const priorityFee = usePriorityFee({
-    selectedPriority,
-    transactionJSON,
-    paramsSchema,
-    isEnabled: !!paramsSchema && isFormValid,
-  });
+  const { data: { transaction } = {}, meta = {} } = transactionFee?.data || {};
+  const moduleCommand = joinModuleAndCommand(transactionJSON);
+  const initializationFee =
+    meta.breakdown?.fee?.minimum?.additionalFees?.userAccountInitializationFee || 0;
+  const minimumFee = BigInt(transaction?.fee?.minimum || 0);
+  const messageFee = BigInt(transaction?.params?.messageFee?.amount || 0);
+
+  if (initializationFee) {
+    accountInitializationFee = {
+      value: BigInt(initializationFee),
+      type: 'Account Initialization',
+    };
+  }
+
+  const priorityFee = {
+    type: FEE_TYPES.PRIORITY_FEE,
+    value: 0,
+  };
   const bytesFee = {
-    value: BigInt(minimumFee.value) - BigInt(extraCommandFee),
+    value: BigInt(meta.breakdown?.fee?.minimum?.byteFee || 0),
     type: FEE_TYPES.BYTES_FEE,
   };
-  const components = [bytesFee, priorityFee].filter((item) => item.value > 0);
-  const moduleCommand = joinModuleAndCommand(transactionJSON);
-  let txComponentType = '';
+  let components = [bytesFee, accountInitializationFee, priorityFee].filter(
+    (item) => item.value > 0
+  );
+
   if (
-    moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer ||
-    moduleCommand === MODULE_COMMANDS_NAME_MAP.transferCrossChain
+    moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer &&
+    moduleCommand !== MODULE_COMMANDS_NAME_MAP.transferCrossChain &&
+    extraCommandFee
   ) {
-    txComponentType = 'Account Initialization';
-  } else {
-    txComponentType = 'Registration';
+    components = [...components, { type: 'Registration', value: BigInt(extraCommandFee) }];
   }
 
   return {
-    components:
-      extraCommandFee > 0
-        ? [...components, { type: txComponentType, value: BigInt(extraCommandFee) }]
-        : components,
-    isLoading: isSchemaLoading || isLoadingByteFee,
-    isFetched: isSchemaFetched && isFetchedByteFee,
-    transactionFee: (BigInt(minimumFee.value) + BigInt(priorityFee.value)).toString(),
-    minimumFee: minimumFee.value,
+    components,
+    minimumFee,
+    messageFee,
+    messageFeeTokenID: transaction?.params?.messageFee?.tokenID,
+    isLoading: transactionFee?.isFetching,
+    isFetched: transactionFee?.isFetched,
+    transactionFee: (BigInt(minimumFee) + BigInt(priorityFee.value)).toString(),
   };
 };

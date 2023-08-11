@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import Icon from 'src/theme/Icon';
 import WalletVisual from '@wallet/components/walletVisual';
-import { decryptAccount } from '@account/utils/encryptAccount';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
@@ -34,6 +33,7 @@ const EnterPasswordForm = ({
     formState: { errors },
   } = useForm();
   const apiError = errors[API_ERROR_NAME];
+  const [isLoading, setIsLoading] = useState(false);
   const { getAccountByAddress } = useAccounts();
   const [currentAccount] = useCurrentAccount();
   const requestedAccount = getAccountByAddress(currentAccount?.metadata?.address);
@@ -44,20 +44,37 @@ const EnterPasswordForm = ({
   const formValues = watch();
 
   const onSubmit = async ({ password }) => {
-    const { error, result } = await decryptAccount(account.crypto, password);
+    setIsLoading(true);
 
-    if (error) {
+    const decryptAccountWorker = new Worker(new URL('./decryptAccount.worker.js', import.meta.url));
+    /* istanbul ignore next */
+    const showDecryptAccountError = () => {
       setError(API_ERROR_NAME, {
         type: 'custom',
         message: t('Unable to decrypt account. Please check your password'),
       });
-    } else {
+      setIsLoading(false);
+    };
+
+    decryptAccountWorker.postMessage({
+      account,
+      password,
+    });
+
+    decryptAccountWorker.onmessage = ({ data: { error, result } }) => {
+      if (error) return showDecryptAccountError();
+
       onEnterPasswordSuccess({
         recoveryPhrase: result.recoveryPhrase,
         encryptedAccount: account,
         privateKey: result.privateKey,
       });
-    }
+
+      decryptAccountWorker.terminate();
+      return setIsLoading(false);
+    };
+
+    decryptAccountWorker.onerror = showDecryptAccountError;
   };
 
   return (
@@ -88,6 +105,7 @@ const EnterPasswordForm = ({
           />
           <PrimaryButton
             type="submit"
+            isLoading={isLoading}
             disabled={isDisabled || !formValues.password}
             className={`${styles.button} continue-btn`}
           >

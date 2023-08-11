@@ -31,11 +31,13 @@ const TransactionEventRow = ({ data: transactionEvent, isWallet }) => {
         {isWallet && topics?.length > 0 && <TransactionID id={topics[0]} />}
         <EventModule module={module} isWallet={isWallet} />
         <EventName name={name} isWallet={isWallet} />
-        <CollapseToggle
-          isWallet={isWallet}
-          isCollapsed={isCollapsed}
-          onToggle={() => toggleCollapsed((state) => !state)}
-        />
+        {data && Object.keys(data).length > 0 && (
+          <CollapseToggle
+            isWallet={isWallet}
+            isCollapsed={isCollapsed}
+            onToggle={() => toggleCollapsed((state) => !state)}
+          />
+        )}
       </div>
       <div
         data-testid="transaction-event-json-viewer"

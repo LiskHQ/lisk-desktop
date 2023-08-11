@@ -14,9 +14,6 @@ const setLocale = (locale) => {
 
 /**
  * Returns if current Date is greater than min Date, based on amount passed on options
- * @param {String|Date} current Value that should be validated
- * @param {String|Date} min Value to validate against
- * @param {Object} options Options to use when parsing date and amount to check.
  * - defaults to: {dateFormat: 'DD.MM.YY', locale: ['en'], amount: 'day'}
  */
 export const canGoToPrevious = (current, min, options = {}) => {
@@ -31,9 +28,6 @@ export const canGoToPrevious = (current, min, options = {}) => {
 
 /**
  * Returns if current Date is less than min Date, based on amount passed on options
- * @param {String|Date} current Value that should be validated
- * @param {String|Date} max Value to validate against
- * @param {Object} options Options to use when parsing date and amount to check.
  * - defaults to: {dateFormat: 'DD.MM.YY', locale: ['en'], amount: 'day'}
  */
 export const canGoToNext = (current, max, options = {}) => {
@@ -48,10 +42,6 @@ export const canGoToNext = (current, max, options = {}) => {
 
 /**
  * Returns true if date isn't between min and max, and should be disabled
- * @param {String|Date} date Date to check if should be disabled
- * @param {String|Date} min Date to check if greater than
- * @param {String|Date} max Date to check if less than
- * @param {Object} options Options to use when parsing date and amount to check.
  * - defaults to: {dateFormat: 'DD.MM.YY', locale: ['en'], amount: 'day'}
  */
 export const shouldBeDisabled = (date, min, max, options = {}) => {
@@ -70,10 +60,6 @@ export const shouldBeDisabled = (date, min, max, options = {}) => {
 
 /**
  * Generate disabled placeholder of days
- * @param {Int} count How many placeholder to add
- * @param {String|Date} day Initial date to use
- * @param {String} className className to add to placeholder items
- * @param {Object} options Options to use when parsing date.
  * - defaults to: {dateFormat: 'DD.MM.YY', locale: ['en']}
  */
 export const generateDayPlaceholder = (count = 0, day, className = '', options = {}) => {
@@ -97,8 +83,4 @@ export const validations = {
   canGoToPrevious,
   canGoToNext,
   shouldBeDisabled,
-};
-
-export default {
-  validations,
 };

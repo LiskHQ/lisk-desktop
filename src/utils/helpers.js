@@ -1,8 +1,6 @@
 /**
  * Deeply merge two objects recursively, if the value isn't an object it considers
  * the value of the second object.
- * @param {Object} obj1 - Object to be merged into.
- * @param {Object} obj2 - Object with new values to be merged onto obj1.
  */
 export const deepMergeObj = (obj1, obj2) =>
   Object.keys({ ...obj2 }).reduce(
@@ -16,11 +14,6 @@ export const deepMergeObj = (obj1, obj2) =>
     obj1
   );
 
-/**
- * Removes undefined keys from an object.
- * @param {Object} obj - Source object
- * @returns {Object} - Simplified object
- */
 export const removeUndefinedKeys = (obj) =>
   Object.keys(obj).reduce((acc, key) => {
     const item = obj[key];
@@ -34,8 +27,6 @@ export const removeUndefinedKeys = (obj) =>
 
 /**
  * Checks if the given collection is empty.
- * @param {Object|Array} collection
- * @returns {Boolean}
  */
 export const isEmpty = (collection) => {
   if (!collection) return true;
@@ -47,18 +38,7 @@ export const isEmpty = (collection) => {
 };
 
 /**
- * Filters object keys by given value
- * @param {Object} object - object to filter on
- * @param {Any} value - value to be matched against object keys
- * @returns {Array} array of matching keys
- */
-export const filterObjectPropsWithValue = (object = {}, value) =>
-  Object.keys(object).filter((key) => object[key] === value);
-
-/**
  * Creates mailto link from an error
- * @param {string} error - error message to put into the email body
- * @returns {sting} mailto link with recipient, subject, and body
  */
 export const getErrorReportMailto = ({
   error = 'Unknown error occurred',
@@ -83,8 +63,6 @@ export const getErrorReportMailto = ({
 
 /**
  * Flattens array to be one level deep.
- * @param {Array} arr - Array to be flattened
- * @returns {Array} Flattened array
  */
 export const flattenArray = (arr) =>
   arr
@@ -96,18 +74,9 @@ export const flattenArray = (arr) =>
 
 /**
  * Returns the size of a given string in bytes
- *
- * @param {string} str - a random string
- * @returns {number} - string size in bytes
  */
 export const sizeOfString = (str = '') => encodeURI(str).split(/%..|./).length - 1;
 
-/**
- * Checks if a given parameter is a React component
- *
- * @param {any} component - the target to test
- * @returns {string|boolean} - Component type or false
- */
 export const isReactComponent = (component) => {
   if (typeof component === 'function' && component.prototype.isReactComponent) {
     return 'class';
@@ -120,9 +89,6 @@ export const isReactComponent = (component) => {
 
 /**
  * Uses M and K to define million and thousand.
- *
- * @param {Number} num - Given number like 2500
- * @param {Number} precision - The number of floating digits
  * @returns {String} Stringified number like 2.5K
  */
 export const kFormatter = (num, precision = 0) => {
@@ -139,8 +105,5 @@ export const kFormatter = (num, precision = 0) => {
  * Convert given strings to capitalized format
  * sample string -> Sample string
  * sampleString -> Samplestring
- *
- * @param {String} str - The string to convert to capitalized
- * @return {String} capitalized string
  */
 export const capitalize = (str) => str.toLowerCase().replace(/^\w/, (c) => c.toUpperCase());

@@ -5,11 +5,6 @@ import i18next from 'i18next';
 
 /**
  * Extracts Lisk PrivateKey/PublicKey pair from a given valid Mnemonic passphrase
- *
- * @param {String} passphrase - Valid Mnemonic passphrase
- * @param {boolean} enableAccessToLegacyAccounts - enable custom derivation for HW
- * @param {String} derivationPath - custom derivation path for HW
- * @returns {object} - Extracted publicKey for a given valid passphrase
  */
 export const extractKeyPair = async ({
   passphrase,
@@ -42,11 +37,6 @@ export const extractKeyPair = async ({
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
- *
- * @param {String} passphrase - Valid Mnemonic passphrase
- * @param {boolean} enableAccessToLegacyAccounts - enable custom derivation for HW
- * @param {String} derivationPath - custom derivation path for HW
- * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
 export const extractPublicKey = async (
   passphrase,
@@ -68,11 +58,6 @@ export const extractPublicKey = async (
 
 /**
  * Extracts Lisk PrivateKey from a given valid Mnemonic passphrase
- *
- * @param {String} passphrase - Valid Mnemonic passphrase
- * @param {boolean} enableAccessToLegacyAccounts - enable custom derivation for HW
- * @param {String} derivationPath - custom derivation path for HW
- * @returns {String?} - Extracted PrivateKey for a given valid passphrase
  */
 export const extractPrivateKey = async (
   passphrase,
@@ -93,9 +78,6 @@ export const extractPrivateKey = async (
 
 /**
  * Extracts address from publicKey
- *
- * @param {String} data PublicKey in Hex
- * @returns {String} - address derived from the given publicKey
  */
 export const extractAddressFromPublicKey = (publicKey) => {
   if (regex.publicKey.test(publicKey)) {
@@ -111,9 +93,6 @@ export const extractAddressFromPublicKey = (publicKey) => {
 
 /**
  * Extracts address from Mnemonic passphrase
- *
- * @param {String} data Valid Mnemonic passphrase
- * @returns {String} - address derived from the given passphrase
  */
 export const extractAddressFromPassphrase = (data) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
@@ -137,9 +116,6 @@ export const getAddressFromBase32Address = (data) => {
  * Returns a shorter version of a given address
  * by replacing characters by ellipsis except for
  * the first and last 3.
- * @param {String} address LSk address
- * @param {String?} size An option of small and medium
- * @returns {String} Truncated address
  */
 export const truncateAddress = (address, size) => {
   const truncateOptions = ['small', 'medium'];
@@ -152,8 +128,6 @@ export const truncateAddress = (address, size) => {
  * Returns a shorter version of a given account name
  * by replacing characters by ellipsis except for
  * the first 6 and last 3.
- * @param {String} accountName account name
- * @returns {String} Truncated account name
  */
 export const truncateAccountName = (accountName) => {
   if (!accountName) return accountName;
@@ -164,41 +138,21 @@ export const truncateAccountName = (accountName) => {
  * Returns a shorter version of a given transactionID
  * by replacing characters by ellipsis except for
  * the first 10 and last 5.
- * @param {String} id transactionID
- * @returns {String} Truncated transactionID
  */
 export const truncateTransactionID = (id) => {
   if (!id) return id;
   return id.replace(/^(\w{10})\w+(\w{5})$/g, '$1...$2');
 };
 
-/**
- * calculates the balance locked in stakes
- *
- * @param {Object} stakes - Stakes dictionary, values must include stake.confirmed
- * @returns {Number} - Sum of stake amounts
- */
 export const calculateBalanceLockedInStakes = (stakes = {}) =>
   Object.values(stakes).reduce((total, stake) => total + stake.confirmed, 0);
 
 export const calculateSentStakesAmount = (sentStakes = []) =>
   sentStakes.reduce((total, stake) => total + parseInt(stake.amount, 10), 0);
 
-/**
- * calculates balance locked for the account in unstakes
- *
- * @param {Array} unlocking - unlocking values array from the account details
- * @returns {Number} - Sum of locked LSK, this can be different than sum of stake amounts
- */
 export const calculateBalanceLockedInUnstakes = (unlocking = []) =>
   unlocking.reduce((acc, stake) => acc + parseInt(stake.amount, 10), 0);
 
-/**
- * returns total amount that can be unlocked
- *
- * @param {Array} pendingUnlocks - pendingUnlocks array
- * @returns {Number} - Total amount that can be unlocked
- */
 export const calculateUnlockedAmount = (pendingUnlocks = []) =>
   pendingUnlocks.reduce(
     (sum, pendingUnlock) => sum + (pendingUnlock.isLocked ? 0 : parseInt(pendingUnlock.amount, 10)),
@@ -255,11 +209,6 @@ export const calculateRemainingAndSignedMembers = (
 
 /**
  * Get keys object from account info or multisig tx asset
- * @param {object} data
- * @param {object} data.senderAccount - Account info
- * @param {object} data.transaction - Transaction details
- * @param {boolean} data.isRegisterMultisignature - tx moduleAsset check
- * @returns {object} - Keys, including number and list of mandatory and optional keys
  */
 export const getKeys = ({ senderAccount, transaction, isRegisterMultisignature }) => {
   if (isRegisterMultisignature) {
@@ -269,11 +218,6 @@ export const getKeys = ({ senderAccount, transaction, isRegisterMultisignature }
   return senderAccount;
 };
 
-/**
- * Validate a derivation path
- * @param {string} derivationPath
- * @returns {string} - undefined/error
- */
 export const getDerivationPathErrorMessage = (derivationPath) => {
   try {
     cryptography.utils.parseKeyDerivationPath(derivationPath);

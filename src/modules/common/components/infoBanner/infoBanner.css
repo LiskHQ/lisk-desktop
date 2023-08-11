@@ -1,13 +1,14 @@
 @import '../../../../../setup/react/app/mixins.css';
 
 .infoBanner {
-  background-color: var(--color-strong-ink-blue);
+  background-color: var(--color-ultramarine-blue);
   border-radius: var(--border-radius-standard);
   color: var(--color-white);
   display: flex;
   margin-top: 32px;
   overflow: hidden;
   position: relative;
+  min-height: 282px;
 
   & .illustrations {
     min-height: 257px;
@@ -44,11 +45,13 @@
     display: flex;
 
     & > span {
-      background-color: #2bd67b;
-      border-radius: 4px;
+      background-color: var(--color-jade-green);
+      color: var(--color-zodiac-blue);
+      border-radius: var(--border-radius-box);
       padding: 5px 10px;
       font-family: var(--heading-font);
-      font-size: var(--paragraph-font-size-l);
+      font-size: 14px;
+      font-weight: var(--font-weight-semi-bold);
       line-height: 18px;
     }
 
@@ -61,18 +64,18 @@
   & .closeBtn {
     align-items: center;
     border: 1px solid var(--color-ghost-white);
-    border-radius: var(--border-radius-box);
+    border-radius: 8px;
     box-sizing: border-box;
     cursor: pointer;
     display: flex;
     flex-shrink: 0;
-    height: 32px;
+    height: 24px;
     justify-content: center;
     margin-left: auto;
     right: 30px;
     position: absolute;
     top: 30px;
-    width: 32px;
+    width: 24px;
     z-index: 10;
 
     &::before,
@@ -98,8 +101,12 @@
     display: flex;
     flex-direction: column;
     flex-basis: 67%;
-    padding: 30px 50px 30px 30px;
+    padding: 30px 50px 30px 50px;
     z-index: 1;
+  }
+
+  & .bannerImg {
+    display: flex;
   }
 
   & .slides {
@@ -143,6 +150,7 @@
       line-height: 25px;
       margin: 0;
       color: var(--color-strong-white);
+      font-size: 16px;
 
       &.infoLink {
         margin-top: 16px;
@@ -152,7 +160,7 @@
     & h1 {
       @mixin headingNormalIntermediate;
 
-      margin: 30px 0 10px 0;
+      margin: 20px 0 10px 0;
       color: var(--color-strong-white);
     }
   }
@@ -163,9 +171,10 @@
 }
 
 .infoLink {
-  font-size: var(--paragraph-font-size-l);
+  font-size: var(--subtitle-font-size-s);
   display: flex;
   align-items: inherit;
+  text-decoration: underline;
 
   & > img {
     margin-left: 8px;

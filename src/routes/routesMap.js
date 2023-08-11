@@ -55,6 +55,7 @@ import ConnectionProposal from 'src/modules/blockchainApplication/connection/com
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
 import RequestView from '@blockchainApplication/connection/components/RequestView';
+import RequestSignMessageDialog from '@blockchainApplication/connection/components/RequestSignMessageDialog';
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
 import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardwareDeviceModal';
 
@@ -113,6 +114,7 @@ export default {
   connectionProposal: ConnectionProposal,
   sessionManager: SessionManager,
   requestView: RequestView,
+  requestSignMessageDialog: RequestSignMessageDialog,
   connectionSummary: ConnectionSummary,
   connectionStatus: ConnectionStatus,
   changeCommission: ChangeCommissionDialog,

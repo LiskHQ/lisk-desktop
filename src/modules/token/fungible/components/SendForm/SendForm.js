@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
-import { useGetInitializationFees, useGetMinimumMessageFee } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
 import { convertToBaseDenom, convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
@@ -59,7 +58,7 @@ const SendForm = (props) => {
   const [currentApplication] = useCurrentApplication();
   const sendingChain = prevState?.transactionData?.sendingChain || currentApplication;
   const { applications } = useApplicationExploreAndMetaData();
-  const { data: tokens } = useTransferableTokens(recipientChain);
+  const { data: tokens, isLoading: isLoadingTokens } = useTransferableTokens(recipientChain);
   const [reference, setReference] = useMessageField(
     getInitialData(props.prevState?.formProps, props.initialValue?.reference)
   );
@@ -74,16 +73,6 @@ const SendForm = (props) => {
       props.initialValue?.address ?? props.initialValue?.recipient
     )
   );
-  const { isAccountInitialized, initializationFees } = useGetInitializationFees({
-    address: recipient.value,
-    tokenID: token?.tokenID,
-  });
-  const { data: messageFeeResult } = useGetMinimumMessageFee();
-
-  const extraCommandFee =
-    sendingChain.chainID !== recipientChain.chainID
-      ? initializationFees?.escrowAccount
-      : initializationFees?.userAccount;
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
@@ -121,6 +110,7 @@ const SendForm = (props) => {
   useEffect(() => {
     setToken(getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens));
   }, [prevState?.transactionData, props.initialValue?.token, tokens]);
+
   useEffect(() => {
     setRecipientChain(
       getInitialRecipientChain(
@@ -155,23 +145,19 @@ const SendForm = (props) => {
       token,
       recipient,
     },
-    extraCommandFee: isAccountInitialized ? 0 : extraCommandFee,
   };
+
   let commandParams = {
     tokenID: token?.tokenID,
     amount: convertToBaseDenom(amount.value, token),
     recipientAddress: recipient.value,
     data: reference.value,
   };
+
   if (sendingChain.chainID !== recipientChain.chainID) {
-    // TODO: Hardcoded 200 bytes length for cross chain message
-    const messageFee = BigInt(messageFeeResult?.data?.fee || 0) * BigInt(100000);
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
-      messageFee: messageFee.toString(),
-      // TODO: Message fees are always paid in LSK, so we need to fetch the tokenID based on Mainchain for a given selected network
-      messageFeeTokenID: '0400000000000000',
     };
     sendFormProps.moduleCommand = MODULE_COMMANDS_NAME_MAP.transferCrossChain;
   }
@@ -250,7 +236,7 @@ const SendForm = (props) => {
                 <span>{t('Token')}</span>
               </label>
               <span className={styles.balance}>
-                {!!token?.availableBalance && <span>Balance:&nbsp;&nbsp;</span>}
+                {!!token?.availableBalance && <span>{t('Balance:')}&nbsp;&nbsp;</span>}
                 <span>
                   <TokenAmount val={token?.availableBalance} token={token} />
                 </span>
@@ -258,6 +244,7 @@ const SendForm = (props) => {
               <MenuSelect
                 value={token}
                 onChange={(value) => setToken(value)}
+                isLoading={isLoadingTokens}
                 select={(selectedValue, option) => selectedValue?.tokenName === option.tokenName}
               >
                 {tokens.map((tokenValue) => (
@@ -281,6 +268,7 @@ const SendForm = (props) => {
               label={t('Amount')}
               placeholder={t('Enter amount')}
               name="amount"
+              disabled={isLoadingTokens}
             />
             <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
               <span className={`${styles.fieldLabel}`}>{t('Recipient address')}</span>

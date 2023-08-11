@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { isReactComponent } from 'src/utils/helpers';
 import Tooltip from 'src/theme/Tooltip';
@@ -38,6 +39,7 @@ const Sort = ({ data, currentSort, children }) => {
 };
 
 const Header = ({ data, currentSort, headerClassName, subHeader }) => {
+  const { t } = useTranslation();
   /**
    * In case we define a config array for header
    */
@@ -81,7 +83,7 @@ const Header = ({ data, currentSort, headerClassName, subHeader }) => {
   /**
    * If the data is not passed or it's none of the above
    */
-  return <header className={styles.header}>Header</header>;
+  return <header className={styles.header}>{t('Header')}</header>;
 };
 
 export default Header;

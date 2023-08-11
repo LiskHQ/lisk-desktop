@@ -14,24 +14,25 @@ import { selectActiveToken } from 'src/redux/selectors';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { ACTIONS, EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
-import useSettings from '@settings/hooks/useSettings';
 import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements
 const DialogHolder = ({ history }) => {
-  const modalName = useMemo(() => {
-    const { modal = '' } = parseSearchParams(history.location.search);
-    return routesMap[modal] ? modal : undefined;
-  }, [history.location.search]);
+  const { modal = '', ...restSearchParams } = parseSearchParams(history.location.search);
   const [currentAccount] = useCurrentAccount();
   const isAuthenticated = Object.keys(currentAccount).length > 0;
   const activeToken = useSelector(selectActiveToken);
   const { reject } = useSession();
   const { events } = useEvents();
-  const { mainChainNetwork } = useSettings('mainChainNetwork');
+  const networkIsSet = useSelector((state) => !!state.network.name);
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);
+
+  const modalName = useMemo(
+    () => (routesMap[modal] ? modal : undefined),
+    [history.location.search]
+  );
 
   const ModalComponent = useMemo(() => {
     if (modalName) {
@@ -44,6 +45,16 @@ const DialogHolder = ({ history }) => {
     return null;
   }, [modalName]);
 
+  const hasRequiredSearchParams = useMemo(() => {
+    if (modalName) {
+      const requiredParams = modals[modalName].requiredParams || [];
+
+      return requiredParams.reduce((acc, queryKey) => !!restSearchParams[queryKey] && acc, true);
+    }
+
+    return false;
+  }, [modalName, restSearchParams]);
+
   if (!modalName) {
     return null;
   }
@@ -52,7 +63,11 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  if (!mainChainNetwork.isAvailable && modals[modalName].isPrivate) {
+  if (!hasRequiredSearchParams) {
+    return null;
+  }
+
+  if (!networkIsSet && modals[modalName].isPrivate) {
     return null;
   }
 

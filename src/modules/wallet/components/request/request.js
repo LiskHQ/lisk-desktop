@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import React, { useMemo, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer } from 'react';
 import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
 import {
@@ -127,6 +127,12 @@ const Request = () => {
     });
   };
 
+  useEffect(() => {
+    handleFieldChange({
+      target: { name: 'token', value: networkSupportedTokens.data?.[0]?.tokenID },
+    });
+  }, [networkSupportedTokens.isFetched]);
+
   const onSelectReceipentChain = (value) => {
     handleFieldChange({
       target: { name: 'recipientChain', value },
@@ -147,6 +153,7 @@ const Request = () => {
 
   const { recipientChain, token, amount, reference } = state;
   const selectedToken = networkSupportedTokens.data?.find(({ tokenID }) => tokenID === token.value);
+  const isFormInvalid = Object.values(state).some(({ error }) => !!error);
 
   return (
     <RequestWrapper
@@ -155,13 +162,14 @@ const Request = () => {
       t={t}
       title={t('Request tokens')}
       className="request-wrapper"
+      disabled={isFormInvalid}
     >
       <span className={`${styles.label}`}>
         {t(
           'Use the sharing link to easily request any amount of tokens from Lisk Desktop or Lisk Mobile users.'
         )}
       </span>
-      <p>Account</p>
+      <p>{t('Account')}</p>
       <Account />
       <label className={`${styles.fieldGroup} recipient-application`}>
         <span className={`${styles.fieldLabel}`}>{t('Recipient application')}</span>

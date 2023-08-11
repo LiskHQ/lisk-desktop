@@ -46,12 +46,11 @@ class TabsContainer extends React.Component {
     const children = this.filterChildren(this.props.children);
     const tab = selectSearchParamValue(this.props.history.location.search, 'tab');
 
-    this.setState({
+    this.setState((_, props) => ({
       activeTab:
-        (React.Children.count(children) > 1 &&
-          (tab || this.props.activeTab || children[0].props.id)) ||
+        (React.Children.count(children) > 1 && (tab || props.activeTab || children[0].props.id)) ||
         '',
-    });
+    }));
   }
 
   render() {

@@ -38,12 +38,12 @@ jest.mock('@settings/hooks/useSettings');
 const props = {
   history: {
     location: {
-      search: '?modal=selectNode&chainId=aq25derd17a4syc8aet3pryt',
+      search: '?modal=selectNode&chainID=aq25derd17a4syc8aet3pryt',
     },
     push: jest.fn(),
   },
   location: {
-    search: '?modal=selectNode&chainId=aq25derd17a4syc8aet3pryt',
+    search: '?modal=selectNode&chainID=aq25derd17a4syc8aet3pryt',
   },
 };
 
