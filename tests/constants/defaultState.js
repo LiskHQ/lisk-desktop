@@ -1,6 +1,5 @@
 import wallets from './wallets';
 import savedAccounts from '../fixtures/accounts';
-import moduleCommandSchemas from './schemas';
 
 export default {
   wallet: {
