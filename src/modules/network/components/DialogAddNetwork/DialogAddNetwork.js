@@ -1,83 +1,85 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
-import classNames from 'classnames';
-import { useForm } from 'react-hook-form';
 import { parseSearchParams } from 'src/utils/searchParams';
 import Input from '@theme/Input';
-import { PrimaryButton } from '@theme/buttons';
+import { PrimaryButton, TertiaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
-import { immutablePush, immutableSetToArray } from 'src/utils/immutableUtils';
+import { immutableSetToArray } from 'src/utils/immutableUtils';
 import { regex } from 'src/const/regex';
-import networks from '../../configuration/networks';
+import {
+  DEFAULT_NETWORK_FORM_STATE,
+  getDuplicateNetworkFields,
+  useNetworkCheck,
+} from '@network/components/DialogAddNetwork/utils';
+import networks from '@network/configuration/networks';
 import styles from './DialogAddNetwork.css';
 
+// eslint-disable-next-line max-statements,complexity
 const DialogAddNetwork = () => {
+  const { t } = useTranslation();
   const history = useHistory();
-  const { name: defaultName = '', serviceUrl: defaultServiceUrl = '' } = parseSearchParams(
-    history.location.search
-  );
   const { setValue, customNetworks } = useSettings('customNetworks');
-  const [successText, setSuccessText] = useState('');
   const [errorText, setErrorText] = useState('');
 
-  const { t } = useTranslation();
+  const { name: defaultName = '' } = parseSearchParams(history.location.search);
+
   const {
+    watch,
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({
-    defaultValues: {
-      name: defaultName,
-      serviceUrl: defaultServiceUrl,
-    },
+    defaultValues: defaultName
+      ? customNetworks.find((customNetwork) => customNetwork.name === defaultName)
+      : DEFAULT_NETWORK_FORM_STATE,
   });
+  const formValues = watch();
+  const networkCheck = useNetworkCheck(formValues.serviceUrl);
+  const isNetworkUrlOk = networkCheck.isOffchainOK && networkCheck.isOnchainOK;
 
-  // eslint-disable-next-line max-statements, complexity
-  function onSubmit(values) {
-    setSuccessText('');
+  async function onTryNetworkUrl() {
+    networkCheck.refetch();
+  }
+
+  // eslint-disable-next-line max-statements
+  async function onSubmit(values) {
     setErrorText('');
-    const wsServiceUrl = values.serviceUrl.replace(/^http(s?)/, 'ws$1');
-    const customNetwork = { ...values, wsServiceUrl, label: values.name, isAvailable: true };
     const fullNetworkList = [...Object.values(networks), ...customNetworks];
-    const addOrEditNetworkIndex = fullNetworkList.findIndex(
-      (network) => network.serviceUrl === values.name || network.serviceUrl === values.serviceUrl
-    );
-    const editingExistingNetwork =
-      fullNetworkList.filter(
-        (network) =>
-          network.name.toLowerCase() === defaultName.toLowerCase() ||
-          network.serviceUrl.toLowerCase() === defaultServiceUrl.toLowerCase() ||
-          network.name.toLowerCase() === values.name.toLowerCase() ||
-          network.serviceUrl.toLowerCase() === values.serviceUrl.toLowerCase()
-      ).length > 1;
-
-    if (addOrEditNetworkIndex >= 0) {
-      if (defaultName === '' || editingExistingNetwork) {
-        setErrorText('Network name or serviceUrl already exists.');
-        return;
-      }
+    const duplicateNetworkFields = getDuplicateNetworkFields(values, fullNetworkList, defaultName);
+    if (duplicateNetworkFields) {
+      const duplicates = Object.keys(duplicateNetworkFields)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' & ');
+      return setErrorText(`${duplicates} already exists.`);
     }
 
-    let updatedCustomNetworks;
-    if (defaultName) {
-      updatedCustomNetworks = immutableSetToArray({
-        array: customNetworks,
-        mapToAdd: customNetwork,
-        index: customNetworks.findIndex((network) => network.name === defaultName),
-      });
-    } else {
-      updatedCustomNetworks = immutablePush(customNetworks, customNetwork);
-      reset();
-    }
+    if (!networkCheck.isNetworkOK) return null;
+
+    const wsServiceUrl = values.wsServiceUrl || values.serviceUrl.replace(/^http(s?)/, 'ws$1');
+    const updatedCustomNetworks = immutableSetToArray({
+      array: customNetworks,
+      mapToAdd: { ...values, isAvailable: true, wsServiceUrl, label: values.name },
+      index: customNetworks.findIndex((network) => network.name === defaultName),
+    });
     setValue(updatedCustomNetworks);
 
-    setSuccessText(`${t('Success: Network')} ${defaultName ? t('edited') : t('added')}`);
+    if (!defaultName) {
+      reset();
+    }
+    toast.info(t(`Custom network ${defaultName ? 'edited' : 'added'} "${values.name}"`), {
+      position: 'bottom-right',
+    });
+
+    return history.goBack();
   }
 
   return (
@@ -112,17 +114,54 @@ const DialogAddNetwork = () => {
               placeholder={t(
                 'Enter service URL, e.g. https://service.lisk.com or http://localhost:9901'
               )}
+              value={formValues.serviceUrl}
               feedback={errors.serviceUrl?.message}
               status={errors.serviceUrl?.message ? 'error' : undefined}
+              isLoading={networkCheck.isFetching}
               {...register('serviceUrl', {
                 required: 'Service URL is required',
                 pattern: { value: regex.url, message: t('Invalid URL') },
               })}
             />
-            <PrimaryButton type="submit" className={`${styles.button}`}>
+
+            {networkCheck.isError && !!formValues.serviceUrl && !networkCheck.isFetching && (
+              <span className={styles.connectionFailed}>
+                <span className={styles.errorText}>
+                  {t(
+                    `Failed to fetch: ${!networkCheck.isOnchainOK ? 'onchain, ' : ''}${
+                      !networkCheck.isOffchainOK ? 'offchain' : ''
+                    } data. Please check the URL.`
+                  )}
+                </span>
+                <TertiaryButton
+                  type="button"
+                  onClick={onTryNetworkUrl}
+                  className={styles.tryAgainButton}
+                >
+                  {t('Retry')}
+                </TertiaryButton>
+              </span>
+            )}
+            <Input
+              size="l"
+              label="Websocket URL (Optional)"
+              placeholder={t('Enter websocket service URL, e.g. wss://mainnet-service.lisk.com')}
+              feedback={errors.wsServiceUrl?.message}
+              status={errors.wsServiceUrl?.message ? 'error' : undefined}
+              {...register('wsServiceUrl', {
+                pattern: { value: regex.webSocketUrl, message: t('Invalid websocket URL') },
+              })}
+            />
+            <PrimaryButton
+              disabled={
+                !isDirty || !isNetworkUrlOk || networkCheck.isFetching || networkCheck.isError
+              }
+              type="submit"
+              className={`${styles.button}`}
+              data-testId="add-network-button"
+            >
               {t(`${!defaultName ? 'Add' : 'Save'} network`)}
             </PrimaryButton>
-            {successText && <span className={styles.successText}>{successText}</span>}
             {errorText && <span className={styles.errorText}>{errorText}</span>}
           </form>
         </BoxContent>

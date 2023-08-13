@@ -23,6 +23,8 @@ export class Client {
 
   http = null;
 
+  host = null;
+
   rpc = ({ event, params, data }) =>
     new Promise((resolve, reject) => {
       if (this.socketRPC.disconnected) {
@@ -48,6 +50,7 @@ export class Client {
     this[METHOD](args).then(transformResult);
 
   create({ ws, http } = {}) {
+    this.host = http || ws;
     if (ws) {
       this.socket = io(`${ws}/blockchain`, { transports: ['websocket'] });
       this.socketRPC = io(`${ws}/rpc-v3`, { transports: ['websocket'] });
