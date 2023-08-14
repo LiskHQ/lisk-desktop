@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
@@ -7,14 +8,24 @@ import { useCurrentAccount } from '@account/hooks';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
+import {
+  fromTransactionJSON,
+  joinModuleAndCommand,
+  splitModuleAndCommand,
+} from '@transaction/utils';
+import { dryRun } from '@transaction/api';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
-import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
 import { PrimaryButton } from 'src/theme/buttons';
+import to from 'await-to-js';
+import { useCommandSchema } from 'src/modules/network/hooks';
+import useSettings from 'src/modules/settings/hooks/useSettings';
 import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
-import { splitModuleAndCommand } from '../../utils';
+import { TransactionExecutionResult } from '../../constants';
+import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
@@ -28,6 +39,8 @@ const TxComposer = ({
 }) => {
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const { t } = useTranslation();
+  const { moduleCommandSchemas } = useCommandSchema();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   useSchemas();
   useDeprecatedAccount();
@@ -38,7 +51,10 @@ const TxComposer = ({
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
   const { symbol: tokenSymbol = '' } = formProps.fields.token || {};
+  const { fields } = formProps;
   const [customFee, setCustomFee] = useState();
+  const [feedback, setFeedBack] = useState(formProps.feedback);
+  const [isRunningDryRun, setIsRunningDryRun] = useState(false);
   const [
     selectedPriority,
     selectTransactionPriority,
@@ -57,7 +73,15 @@ const TxComposer = ({
     signatures: [],
   };
 
-  const { minimumFee, components, transactionFee } = useTransactionFee({
+  const {
+    minimumFee,
+    components,
+    transactionFee,
+    messageFeeTokenID,
+    messageFee,
+    isFetched,
+    isLoading: isLoadingFee,
+  } = useTransactionFee({
     selectedPriority,
     transactionJSON,
     isFormValid: formProps.isFormValid,
@@ -65,14 +89,28 @@ const TxComposer = ({
     extraCommandFee: formProps.extraCommandFee,
   });
 
+  if (isFetched && fields?.sendingChain?.chainID !== fields?.recipientChain?.chainID) {
+    transactionJSON.params = {
+      ...transactionJSON.params,
+      messageFee,
+      messageFeeTokenID,
+    };
+  }
+
   useEffect(() => {
     if (typeof onComposed === 'function') {
       onComposed({}, formProps, {
         ...transactionJSON,
-        fee: convertToBaseDenom(transactionFee, formProps.fields.token),
+        messageFeeTokenID,
+        messageFee,
+        fee: transactionFee,
       });
     }
   }, [selectedPriority, transactionJSON.params]);
+
+  useEffect(() => {
+    setFeedBack(formProps.feedback);
+  }, [formProps.feedback]);
 
   const minRequiredBalance =
     BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
@@ -104,6 +142,39 @@ const TxComposer = ({
   formProps.composedFees = composedFees;
   transactionJSON.fee = transactionFee;
 
+  // eslint-disable-next-line max-statements
+  const onSubmit = async () => {
+    setIsRunningDryRun(true);
+    const moduleCommand = formProps.moduleCommand;
+    const paramsSchema = moduleCommandSchemas[moduleCommand];
+    const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
+
+    if (joinModuleAndCommand(transactionJSON) !== MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
+      const [error, dryRunResult] = await to(
+        dryRun({
+          paramsSchema,
+          transaction,
+          skipVerify: true,
+          serviceUrl: mainChainNetwork.serviceUrl,
+        })
+      );
+
+      const transactionErrorMessage =
+        error?.message ||
+        (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
+          ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
+          : dryRunResult?.data?.errorMessage);
+
+      if (transactionErrorMessage) {
+        setIsRunningDryRun(false);
+        return setFeedBack(transactionErrorMessage);
+      }
+    }
+
+    setIsRunningDryRun(false);
+    return onConfirm(formProps, transactionJSON, selectedPriority, composedFees);
+  };
+
   if (recipientChain && sendingChain) {
     formProps.recipientChain = recipientChain;
     formProps.sendingChain = sendingChain;
@@ -123,21 +194,23 @@ const TxComposer = ({
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
         loadError={prioritiesLoadError}
-        isLoading={loadingPriorities}
+        isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
       />
       <Feedback
-        feedback={formProps.feedback}
-        minRequiredBalance={minRequiredBalance.toString()}
-        token={formProps.fields?.token || {}}
+        feedback={feedback}
+        minRequiredBalance={formProps.enableMinimumBalanceFeedback && minRequiredBalance.toString()}
+        token={formProps.enableMinimumBalanceFeedback && (formProps.fields?.token || {})}
       />
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() => onConfirm(formProps, transactionJSON, selectedPriority, composedFees)}
+          onClick={onSubmit}
+          isLoading={isRunningDryRun}
           disabled={
             !formProps.isFormValid ||
-            minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0)
+            minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0) ||
+            !isFetched
           }
         >
           {buttonTitle ?? t('Continue')}

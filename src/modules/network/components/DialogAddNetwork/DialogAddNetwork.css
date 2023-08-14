@@ -39,6 +39,17 @@
           }
         }
 
+        & .connectionFailed {
+          margin-top: 4px;
+          font-size: var(--paragraph-font-size-s);
+
+          & .tryAgainButton {
+            height: initial;
+            padding: 0;
+            font-weight: var(--font-weight-normal);
+          }
+        }
+
         & .button {
           margin-top: 24px;
         }

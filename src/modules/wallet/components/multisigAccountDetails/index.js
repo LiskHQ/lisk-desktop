@@ -26,7 +26,7 @@ const emptyKeys = {
 const MultisigAccountDetails = ({ t, history }) => {
   const [currentAccount] = useCurrentAccount();
   const queryAddress = selectSearchParamValue(history.location.search, 'address');
-  const address = queryAddress || currentAccount.metadata.address;
+  const address = queryAddress || currentAccount.metadata?.address;
   const { data: authData } = useAuth({
     config: { params: { address } },
   });
@@ -60,7 +60,9 @@ const MultisigAccountDetails = ({ t, history }) => {
         <BoxContent className={styles.mainContent}>
           <BoxInfoText className={styles.nameAndAddress}>
             <div className={styles.accountName}>
-              <h3>{currentAccount.metadata.name}</h3>
+              <h3>
+                {queryAddress ? 'Multisignature account details' : currentAccount.metadata?.name}
+              </h3>
               <Icon name="multisigKeys" />
             </div>
             <div className={styles.row}>

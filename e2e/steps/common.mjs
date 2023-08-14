@@ -94,10 +94,12 @@ Given(
 );
 
 Given('I switch to network {string}', async function (networkName) {
-  await this.page.getByTestId('network-application-trigger').click();
+  if (!(await this.page.getByText('Add application'))) {
+    await this.page.getByTestId('network-application-trigger').click();
+  }
   await expect(this.page.getByTestId('spinner')).not.toBeVisible({ timeout: 10000 });
   await this.page.getByTestId('selected-menu-item').click();
-  await this.page.getByText(networkName).click();
+  await this.page.getByText(networkName, { exact: true }).click();
 });
 
 Given('I go back to the previous page', async function () {
@@ -107,16 +109,14 @@ Given('I go back to the previous page', async function () {
 Given(
   'I add a custom network with name {string} and serviceUrl {string}',
   async function (networkName, serviceUrl) {
-    await this.page.getByTestId('network-application-trigger').click();
-    await this.page.getByText('Add network').click();
+    await this.page.getByTestId('network-application-trigger').click({ timeout: 10000 });
+    await this.page.getByText('Add network').click({ timeout: 10000 });
 
-    await this.page.getByTestId('name').fill(networkName);
-    await this.page.getByTestId('serviceUrl').fill(serviceUrl);
-    await this.page
-      .locator('[type="submit"]')
-      .filter({
-        hasText: 'Add network',
-      })
-      .click();
+    await this.page.getByTestId('name').fill(networkName, { timeout: 10000 });
+    await this.page.getByTestId('serviceUrl').fill(serviceUrl, { timeout: 10000 });
+    await expect(await this.page.getByTestId('add-network-button')).not.toBeDisabled({
+      timeout: 10000,
+    });
+    await this.page.getByTestId('add-network-button').click({ timeout: 10000 });
   }
 );
