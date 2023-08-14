@@ -12,9 +12,14 @@ import styles from './Form.css';
 import { usePosConstants } from '../../hooks/queries';
 import usePosToken from '../../hooks/usePosToken';
 
-const isFormValid = (name, generatorKey, blsKey, proofOfPossession) =>
-  !name.error && !name.loading && !generatorKey.error && !blsKey.error && !proofOfPossession.error;
+const isFormValid = (name, generatorKey, blsKey, proofOfPossession) => {
+  const isNameValid = !name.error && !name.loading && !!name.value;
+  const isGeneratorKeyValid = !generatorKey.error && !!generatorKey.value;
+  const isBlsKeyValid = !blsKey.error && !!blsKey.value;
+  const isProofOfPossessionValid = !proofOfPossession.error && !!proofOfPossession.value;
 
+  return isNameValid && isGeneratorKeyValid && isBlsKeyValid && isProofOfPossessionValid;
+};
 const getTooltips = (field, t) => {
   if (field === 'name') {
     return t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.');
@@ -64,6 +69,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
     fields: { token },
     extraCommandFee: posConstants?.data?.extraCommandFees?.validatorRegistrationFee || 0,
+    enableMinimumBalanceFeedback: true,
   };
   const commandParams = {
     name: name.value,
