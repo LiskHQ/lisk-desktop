@@ -16,12 +16,10 @@ describe('TransactionResult Regular', () => {
         signatures: [accounts.genesis.summary.publicKey],
       },
     },
-    settings: {
-      network: {
-        networkIdentifier: 'networkIdentifier1',
-        serviceUrl: 'http://testnet.io',
-        networkVersion: '5.0.1',
-      },
+    network: {
+      networkIdentifier: 'networkIdentifier1',
+      serviceUrl: 'http://testnet.io',
+      networkVersion: '5.0.1',
     },
     account: accounts.genesis,
     title: 'Test title',
