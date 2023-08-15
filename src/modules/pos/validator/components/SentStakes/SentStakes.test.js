@@ -44,7 +44,7 @@ describe('SentStakes', () => {
     data: getMockValidators(config.params?.address),
   }));
   useSentStakes.mockReturnValue({ data: mockSentStakes, refetch: mockRefetchSentStakes });
-  useUnlocks.mockReturnValue({ data: mockUnlocks });
+  useUnlocks.mockReturnValue({ data: mockUnlocks, refetch: jest.fn() });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
 
   it('should display properly', async () => {
