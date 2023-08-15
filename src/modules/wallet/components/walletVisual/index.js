@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
-import generateUniqueId from 'src/utils/generateUniqueId';
 import { validateAddress } from 'src/utils/validators';
 import { Gradients, gradientSchemes } from './gradients';
 import styles from './walletVisual.css';
@@ -188,7 +187,7 @@ function replaceUrlByHashOnScheme(uniqueSvgUrlHash, gradientScheme) {
 class WalletVisual extends React.Component {
   constructor(props) {
     super(props);
-    this.uniqueSvgUrlHash = generateUniqueId();
+    this.uniqueSvgUrlHash = cryptography.utils.getRandomBytes(64).toString('hex');
   }
 
   shouldComponentUpdate(nextProps) {
