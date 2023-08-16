@@ -151,7 +151,7 @@ describe('SearchBar', () => {
     fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown });
     fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp });
     fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter });
-    expect(config.historyInfo.push).toBeCalledWith(`/validators/profile?address=${accountAddress}`);
+    expect(config.historyInfo.push).toBeCalledWith(`/validators/profile?validatorAddress=${accountAddress}`);
   });
 
   it('should use keyboard navigation to select search result for address', () => {
@@ -281,7 +281,7 @@ describe('SearchBar', () => {
     });
 
     wrapper.find('.validators-row').at(0).simulate('click');
-    expect(config.historyInfo.push).toBeCalledWith(`/validators/profile?address=${accountAddress}`);
+    expect(config.historyInfo.push).toBeCalledWith(`/validators/profile?validatorAddress=${accountAddress}`);
   });
 
   it('should redirect to a blocks page if user do a click on selected block', () => {
