@@ -36,7 +36,8 @@ const removeWarningMessage = () => {
 const ValidatorProfile = ({ history }) => {
   const { t } = useTranslation();
   const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
-  const address = selectSearchParamValue(history.location.search, 'address') || currentAddress;
+  const address =
+    selectSearchParamValue(history.location.search, 'validatorAddress') || currentAddress;
 
   const tokenBalances = useTokenBalances({
     config: { params: { address: currentAddress } },
@@ -128,7 +129,7 @@ const ValidatorProfile = ({ history }) => {
         isLoading={isLoadingValidators}
         className={`${grid.row} ${styles.statsContainer} stats-container`}
       >
-        <DetailsView data={validator} isMyProfile={isMyProfile} address={address} />
+        <DetailsView data={validator} isMyProfile={isMyProfile} />
         <PerformanceView data={{ ...validator, producedBlocks: generatedBlocks?.meta?.total }} />
       </Box>
       <ValidatorStakesView address={address} />

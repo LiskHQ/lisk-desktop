@@ -22,7 +22,7 @@ export const Balance = ({ className, colSpanXs = 2, value }) => (
 
 export const Actions = withRouter(({ address }) => (
   <div className={`${styles.action} ${grid['col-xs-2']}`}>
-    <DialogLink component="editStake" data={{ address }}>
+    <DialogLink component="editStake" data={{ validatorAddress: address }}>
       <Icon name="edit" />
     </DialogLink>
   </div>

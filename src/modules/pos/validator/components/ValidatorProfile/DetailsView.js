@@ -19,10 +19,9 @@ import { convertCommissionToPercentage } from '../../utils';
 import usePosToken from '../../hooks/usePosToken';
 
 // eslint-disable-next-line max-statements
-const DetailsView = ({ data, isMyProfile, address }) => {
+const DetailsView = ({ data, isMyProfile }) => {
   const { name, rank, validatorWeight, commission } = data;
   const { data: pooledTransactionsData } = useTransactionsFromPool({
-    address,
     customConfig: { commission },
   });
   const hasChangeCommission = pooledTransactionsData?.data?.some(
