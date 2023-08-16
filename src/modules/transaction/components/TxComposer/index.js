@@ -187,7 +187,7 @@ const TxComposer = ({
         token={formProps.fields?.token}
         fee={transactionFee}
         minFee={minimumFee}
-        customFee={customFee ? customFee.value : undefined}
+        customFee={customFee}
         moduleCommand={formProps.moduleCommand}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
@@ -196,6 +196,7 @@ const TxComposer = ({
         loadError={prioritiesLoadError}
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
+        minRequiredBalance={minRequiredBalance}
       />
       <Feedback
         feedback={feedback}

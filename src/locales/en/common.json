@@ -47,7 +47,6 @@
   "Amount can't be negative.": "Amount can't be negative.",
   "Amount can't be zero.": "Amount can't be zero.",
   "Amount of LSK tokens staked by validators and nominators for PoS governance": "Amount of LSK tokens staked by validators and nominators for PoS governance",
-  "Amount per transaction (LSK)": "Amount per transaction (LSK)",
   "Amount to unlock": "Amount to unlock",
   "An error occurred while rejecting the pairing request from {{sanitizedName}}": "An error occurred while rejecting the pairing request from {{sanitizedName}}",
   "An error occurred while rendering this page": "An error occurred while rendering this page",
