@@ -22,7 +22,7 @@ export const SuccessActions = ({ onClick, t, copied }) => (
   </PrimaryButton>
 );
 
-const ErrorActions = ({ t, status, message, network }) => (
+const ErrorActions = ({ t, status, message, network, application }) => (
   <a
     className="report-error-link"
     href={getErrorReportMailto({
@@ -31,6 +31,7 @@ const ErrorActions = ({ t, status, message, network }) => (
       networkIdentifier: network?.networkIdentifier,
       serviceUrl: network?.serviceUrl,
       liskCoreVersion: network?.networkVersion,
+      application,
     })}
     target="_top"
     rel="noopener noreferrer"
@@ -48,6 +49,7 @@ const RequestedTxStatus = ({
   className,
   resetTransactionResult,
   network,
+  application,
 }) => {
   const { respond } = useSession();
   const { events } = useContext(ConnectionContext);
@@ -79,7 +81,13 @@ const RequestedTxStatus = ({
 
       <div className={styles.primaryActions}>
         {status.code === txStatusTypes.signatureError ? (
-          <ErrorActions message={message} network={network} status={status} t={t} />
+          <ErrorActions
+            message={message}
+            network={network}
+            status={status}
+            t={t}
+            application={application}
+          />
         ) : (
           <SuccessActions onClick={onClick} t={t} copied={copied} />
         )}

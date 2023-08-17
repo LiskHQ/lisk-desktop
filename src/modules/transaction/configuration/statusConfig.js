@@ -56,14 +56,23 @@ export const statusMessages = (t) => ({
   },
 });
 
-const getErrorMessage = (data, paramSchema) => {
+const getErrorMessage = (transaction, paramSchema, errorMessage) => {
+  let transactionJSON;
   try {
-    LiskTransaction.validateTransaction(data, paramSchema);
+    LiskTransaction.validateTransaction(transaction, paramSchema);
 
-    return toTransactionJSON(data, paramSchema);
+    transactionJSON = toTransactionJSON(transaction, paramSchema);
   } catch (error) {
-    return data;
+    return JSON.stringify({
+      transaction,
+      error: errorMessage,
+    });
   }
+
+  return {
+    transaction: transactionJSON,
+    error: errorMessage,
+  };
 };
 
 /**
@@ -89,7 +98,11 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
 
     return {
       code: txStatusTypes.signatureError,
-      message: JSON.stringify(getErrorMessage(transactions.txSignatureError, paramSchema)),
+      message: getErrorMessage(
+        transactions.txSignatureError.transaction,
+        paramSchema,
+        txSignatureErrorMsg
+      ),
     };
   }
 
@@ -97,7 +110,11 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
   if (transactions.txBroadcastError) {
     return {
       code: txStatusTypes.broadcastError,
-      message: JSON.stringify(getErrorMessage(transactions.txBroadcastError, paramSchema)),
+      message: getErrorMessage(
+        transactions.txBroadcastError.transaction,
+        transactions.txBroadcastError.paramsSchema || paramSchema,
+        transactions.txBroadcastError.error
+      ),
     };
   }
 

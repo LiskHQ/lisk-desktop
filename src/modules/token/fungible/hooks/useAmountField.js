@@ -30,18 +30,12 @@ const useAmountField = (initialValue, balance = '0', token) => {
   const { t, i18n } = useTranslation();
 
   const getAmountFeedbackAndError = (value, maxAmount = balance) => {
-    const checklist = [
-      'NEGATIVE_AMOUNT',
-      'MAX_ACCURACY',
-      'INSUFFICIENT_FUNDS',
-      'MIN_BALANCE',
-      'FORMAT',
-    ];
+    const checklist = ['FORMAT', 'MAX_ACCURACY', 'NEGATIVE_AMOUNT', 'INSUFFICIENT_FUNDS'];
     let { message: feedback } = validateAmount({
       amount: value,
       token,
       accountBalance: maxAmount,
-      checklist: [...checklist, 'MIN_BALANCE'],
+      checklist: [...checklist],
     });
 
     if (!feedback && BigInt(maxAmount) < BigInt(convertToBaseDenom(value, token))) {

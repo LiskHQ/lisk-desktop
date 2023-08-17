@@ -16,6 +16,10 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, extraCommandFe
     options: { enabled: isFormValid && !!transactionJSON },
   });
 
+  if (transactionFee?.error) {
+    return { feeEstimateError: transactionFee?.error?.response?.data?.message };
+  }
+
   const { data: { transaction } = {}, meta = {} } = transactionFee?.data || {};
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const initializationFee =

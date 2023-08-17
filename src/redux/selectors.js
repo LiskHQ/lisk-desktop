@@ -20,6 +20,7 @@ const selectNetworkName = (state) => state.network.name;
 const selectStaking = (state) => state.staking;
 const selectModuleCommandSchemas = (state) => state.network.networks?.LSK?.moduleCommandSchemas;
 const selectBookmarks = (state) => state.bookmarks;
+const selectCurrentBlockchainApplication = (state) => state.blockChainApplications.current;
 
 export {
   selectStaking,
@@ -33,4 +34,5 @@ export {
   selectNetworkName,
   selectModuleCommandSchemas,
   selectBookmarks,
+  selectCurrentBlockchainApplication,
 };

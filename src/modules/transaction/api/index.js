@@ -2,9 +2,11 @@
 import { transactions } from '@liskhq/lisk-client';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
 import http from 'src/utils/api/http';
+import to from 'await-to-js';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';
+import { ERROR_EVENTS, TransactionExecutionResult } from '../constants';
 
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
@@ -66,26 +68,40 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
   });
 };
 
+const getDryRunErrors = (events) => {
+  const event = events.find((e) => ERROR_EVENTS[e.name]);
+
+  if (event) {
+    return ERROR_EVENTS[event.name];
+  }
+
+  return 'Failed to process transaction, error events unknown.';
+};
+
 /**
  * Dry run a transaction to verify if the transaction is valid to be broadcasted to network
- * @returns 
- * {
-  result: enum {
-    INVALID = -1,
-    FAIL = 0,
-    OK = 1,
-   },
-   errorMessage?: string, 
-   events: EventJSON [],
-}
  */
-export const dryRun = ({ transaction, serviceUrl, paramsSchema, skipVerify = false }) => {
+export const dryRunTransaction = async ({ transaction, paramsSchema, skipVerify = false }) => {
   const transactionBytes = transactions.getBytes(transaction, paramsSchema);
 
-  return http({
-    method: 'POST',
-    baseUrl: serviceUrl,
-    path: httpPaths.dryRun,
-    data: { transaction: transactionBytes.toString('hex'), skipVerify },
-  });
+  const [error, response] = await to(
+    http({
+      method: 'POST',
+      path: httpPaths.dryRun,
+      data: { transaction: transactionBytes.toString('hex'), skipVerify },
+    })
+  );
+
+  const isOk = response?.data?.result === TransactionExecutionResult.OK;
+  let errorMessage = error?.message || response?.data?.errorMessage;
+
+  if (!isOk && !errorMessage) {
+    errorMessage = getDryRunErrors(response?.data?.events);
+  }
+
+  return {
+    isOk,
+    errorMessage,
+    response,
+  };
 };
