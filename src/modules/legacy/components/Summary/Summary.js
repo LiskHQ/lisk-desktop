@@ -5,6 +5,7 @@ import { useGetInitializationFees } from '@token/fungible/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee/useTransactionFee';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
+import { useFees } from '@transaction/hooks/queries';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 import { splitModuleAndCommand } from 'src/modules/transaction/utils';
 import styles from './summary.css';
@@ -33,8 +34,11 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
     }),
     [wallet.legacy?.balance, module, command, wallet.sequence?.nonce, wallet.summary?.publicKey]
   );
+  const { data: networkFees } = useFees();
+
   const { initializationFees } = useGetInitializationFees({
     address: wallet.summary?.address,
+    tokenID: networkFees?.data?.feeTokenID,
   });
 
   const { transactionFee } = useTransactionFee({
