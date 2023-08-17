@@ -5,7 +5,7 @@ import { getState } from '@fixtures/transactions';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
 import { fromTransactionJSON } from '@transaction/utils/encoding';
-import { dryRun } from './index';
+import { dryRunTransaction } from './index';
 
 const { stake } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
@@ -69,8 +69,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('dryRun', () => {
-    const serviceUrl = 'http://localhost:4000';
+  describe('dryRunTransaction', () => {
     it('should return error if transaction is invalid', async () => {
       const transactionJSON = {
         ...baseTx,
@@ -85,14 +84,12 @@ describe('API: LSK Transactions', () => {
       };
       const paramsSchema = network.networks.LSK.moduleCommandSchemas['token:transfer'];
       const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
-      await dryRun({
+      await dryRunTransaction({
         transaction,
-        serviceUrl,
         paramsSchema,
       });
 
       expect(http).toHaveBeenCalledWith({
-        baseUrl: serviceUrl,
         method: 'POST',
         path: '/api/v3/transactions/dryrun',
         data: {

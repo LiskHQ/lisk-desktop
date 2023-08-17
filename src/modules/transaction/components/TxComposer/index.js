@@ -62,7 +62,7 @@ const TxComposer = ({
   const transactionJSON = {
     module,
     command,
-    nonce: '0',
+    nonce: auth?.data?.nonce,
     fee: 0,
     senderPublicKey: pubkey,
     params: commandParams,

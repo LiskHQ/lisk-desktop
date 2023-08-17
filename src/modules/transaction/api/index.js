@@ -69,7 +69,7 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
 };
 
 const getDryRunErrors = (events) => {
-  const event = events.find((e) => ERROR_EVENTS[e.name]);
+  const event = events?.find((e) => ERROR_EVENTS[e.name]);
 
   if (event) {
     return ERROR_EVENTS[event.name];
