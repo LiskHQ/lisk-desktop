@@ -84,6 +84,11 @@ const moduleCommandSchemas = {
       },
     },
   },
+  'pos:unlock': {
+    $id: '/lisk/empty',
+    type: 'object',
+    properties: {},
+  },
   'pos:registerValidator': {
     $id: '/pos/command/registerValidatorParams',
     type: 'object',
@@ -222,7 +227,7 @@ const moduleCommandSchemas = {
       },
     },
   },
-  'legacy:reclaim': {
+  'legacy:reclaimLSK': {
     $id: 'lisk/legacy/reclaim',
     type: 'object',
     required: ['amount'],

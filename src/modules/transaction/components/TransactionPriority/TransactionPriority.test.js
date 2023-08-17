@@ -1,7 +1,7 @@
 import React from 'react';
 import { waitFor } from '@testing-library/dom';
 import { mount } from 'enzyme';
-import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import { mockTokensBalance } from '@token/fungible/__fixtures__';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import TransactionPriority from '.';
 
@@ -10,7 +10,7 @@ const baseFees = {
   Medium: 1000,
   High: 2000,
 };
-const mockToken = mockAppsTokens.data[0];
+const mockToken = mockTokensBalance.data[0];
 
 describe('TransactionPriority', () => {
   let wrapper;
@@ -18,6 +18,9 @@ describe('TransactionPriority', () => {
 
   const props = {
     t: (str) => str,
+    customFee: '1',
+    minFee: '1',
+    minRequiredBalance: '1',
     token: mockToken,
     priorityOptions: [
       { title: 'Low', value: baseFees.Low },
@@ -133,8 +136,8 @@ describe('TransactionPriority', () => {
       .simulate('change', { target: { name: 'amount', value: '0.5' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: true,
-      feedback: 'invalid custom fee',
-      value: undefined,
+      feedback: 'Fee must be greater than 0 and less than 0.',
+      value: '1',
     });
   });
 
@@ -151,8 +154,8 @@ describe('TransactionPriority', () => {
       .simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: true,
-      feedback: 'invalid custom fee',
-      value: undefined,
+      feedback: 'Maximum allowed decimal point is {{decimal}}.',
+      value: 1000,
     });
   });
 
@@ -163,9 +166,9 @@ describe('TransactionPriority', () => {
       .at(1)
       .simulate('change', { target: { name: 'amount', value: '0.019' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
-      error: false,
-      feedback: '',
-      value: '0.019',
+      error: true,
+      feedback: 'Fee must be greater than 0 and less than 0.',
+      value: '1',
     });
   });
 

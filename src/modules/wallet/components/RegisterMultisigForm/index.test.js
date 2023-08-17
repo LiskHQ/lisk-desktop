@@ -4,7 +4,7 @@ import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransa
 import useSettings from '@settings/hooks/useSettings';
 import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from '@auth/__fixtures__';
-import { getTransactionBaseFees, dryRun } from '@transaction/api';
+import { getTransactionBaseFees, dryRunTransaction } from '@transaction/api';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import wallets from '@tests/constants/wallets';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
@@ -72,7 +72,7 @@ const transactionBaseFees = {
 };
 
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
-dryRun.mockResolvedValue([]);
+dryRunTransaction.mockResolvedValue([]);
 
 describe('Multisignature editor component', () => {
   let wrapper;

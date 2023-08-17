@@ -9,7 +9,7 @@ import { validateAmount } from 'src/utils/validators';
 import styles from './TransactionPriority.css';
 
 const getCustomFeeStatus = ({ customFeeInput, minFee, minRequiredBalance, token }) => {
-  if (!customFeeInput) return undefined;
+  if (!customFeeInput || !token || !minRequiredBalance) return undefined;
 
   const { message } = validateAmount({
     amount: customFeeInput.toString(),

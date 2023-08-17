@@ -68,7 +68,7 @@ describe('Validator Registration Status', () => {
       message: 'An error occurred while signing your transaction. Please try again.',
       status: {
         code: 'SIGNATURE_ERROR',
-        message: '{"message":"error:test"}',
+        message: '{"error":"error:test"}',
       },
       onRetry: expect.any(Function),
       title: 'Transaction failed',
@@ -79,9 +79,12 @@ describe('Validator Registration Status', () => {
     const propsWithError = {
       ...props,
       transactions: {
-        txBroadcastError: { message: 'error:test' },
+        ...props.transactions,
+        txBroadcastError: {
+          error: 'error:test',
+          transaction: props.transactions.signedTransaction,
+        },
         txSignatureError: null,
-        signedTransaction: {},
       },
     };
 
@@ -93,7 +96,10 @@ describe('Validator Registration Status', () => {
       message: 'An error occurred while sending your transaction to the network. Please try again.',
       status: {
         code: 'BROADCAST_ERROR',
-        message: '{"message":"error:test"}',
+        message: JSON.stringify({
+          error: 'error:test',
+          transaction: props.transactions.signedTransaction,
+        }),
       },
       onRetry: expect.any(Function),
       title: 'Transaction failed',
