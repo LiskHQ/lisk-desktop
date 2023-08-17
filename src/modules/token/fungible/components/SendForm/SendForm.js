@@ -103,7 +103,7 @@ const SendForm = (props) => {
       },
       true
     );
-    const isTokenValid = !!token && Object.keys(token).length;
+    const isTokenValid = !!token && !!Object.keys(token).length;
     return areFieldsValid && isTokenValid;
   }, [amount, recipient, reference, recipientChain, sendingChain, token]);
 

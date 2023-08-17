@@ -50,7 +50,7 @@ const useAmountField = (initialValue, balance = '0', token) => {
 
   useEffect(() => {
     setAmountField(getAmountFieldState(initialValue, getAmountFeedbackAndError));
-  }, [initialValue]);
+  }, [initialValue, token]);
 
   const onAmountInputChange = ({ value: amount }, maxAmount) => {
     const { leadingPoint, maxDecimals } = regex.amount[i18n.language];
