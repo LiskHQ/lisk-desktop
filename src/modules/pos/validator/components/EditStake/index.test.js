@@ -65,7 +65,7 @@ describe('EditStake', () => {
     },
   };
   const props = {
-    history: { location: { search: `?address=${validatorAddress}` }, push: jest.fn() },
+    history: { location: { search: `?validatorAddress=${validatorAddress}` }, push: jest.fn() },
     stakeEdited: jest.fn(),
     network: {},
     staking: {},
@@ -73,7 +73,7 @@ describe('EditStake', () => {
   const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
   const updatedProps = {
     ...props,
-    history: { ...props.history, location: { search: `?address=${address}` } },
+    history: { ...props.history, location: { search: `?validatorAddress=${address}` } },
   };
 
   beforeEach(() => {
@@ -230,12 +230,15 @@ describe('EditStake', () => {
     };
     const customProps = {
       ...props,
-      history: { ...props.history, location: { search: `?address=${stakedValidatorAddress}` } },
+      history: {
+        ...props.history,
+        location: { search: `?validatorAddress=${stakedValidatorAddress}` },
+      },
       staking: stakingValues,
     };
 
     delete window.location;
-    window.location = new URL(`http://localhost/?address=${stakedValidatorAddress}`);
+    window.location = new URL(`http://localhost/?validatorAddress=${stakedValidatorAddress}`);
 
     usePosToken.mockReturnValue({
       token: { ...mockAppsTokens.data[0], availableBalance: '500000000' },
@@ -297,19 +300,23 @@ describe('EditStake', () => {
     });
 
     it('should return an error if inputted amount is not a multiple of 10', async () => {
+      usePosToken.mockReturnValue({
+        token: { ...mockAppsTokens.data[0], availableBalance: '10000000000' },
+      });
+
       renderWithRouterAndStoreAndQueryClient(EditStake, customProps, { staking: stakingValues });
 
       expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
 
       const stakingField = screen.getByTestId('stake');
-      fireEvent.change(stakingField, { target: { value: 10.11 } });
+      fireEvent.change(stakingField, { target: { value: 8.11 } });
 
       await waitFor(() => {
         expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
         expect(screen.queryByText(`You can only stake in multiplies of 10 LSK.`)).toBeTruthy();
       });
 
-      fireEvent.change(stakingField, { target: { value: 15 } });
+      fireEvent.change(stakingField, { target: { value: 9 } });
 
       await waitFor(() => {
         expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
