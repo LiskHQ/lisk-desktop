@@ -122,7 +122,6 @@ describe('Reclaim balance Summary', () => {
         },
         senderPublicKey: accounts.non_migrated.summary.publicKey,
         fee: '5147764',
-        id: '',
         nonce: accounts.non_migrated.sequence.nonce,
         signatures: [],
       },

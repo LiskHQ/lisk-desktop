@@ -23,7 +23,6 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const transactionJSON = useMemo(
     () => ({
-      id: '',
       module,
       command,
       fee: 0,
