@@ -214,6 +214,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  accountDetails: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   switchAccount: {
     isPrivate: false,
     forbiddenTokens: [],

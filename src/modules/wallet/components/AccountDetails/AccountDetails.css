@@ -1,0 +1,168 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.container {
+  border: 0;
+
+  & :global(.dialog-close-button) {
+    &::before,
+    &::after {
+      background-color: var(--color-strong-white);
+    }
+  }
+}
+
+.header {
+  width: 100%;
+
+  & img {
+    width: 100%;
+    height: 112px;
+  }
+
+  & .avatar {
+    margin-top: -32px;
+  }
+
+  & h3 {
+    @mixin headingNormalIntermediate very-bold;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    white-space: nowrap;
+    color: var(--color-constant-white);
+    font-size: 28px;
+  }
+}
+
+.wrapper {
+  padding: 0 !important;
+
+  & .nameAndAddress {
+    text-align: center;
+  }
+
+  & .mainContent {
+    padding-top: 0;
+
+    & .accountName {
+      width: auto;
+
+      & h3,
+      & img {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      & h3 {
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin: 12px 0;
+        color: var(--color-maastricht-blue);
+      }
+
+      & img {
+        margin: 0 5px;
+
+        &:last-child {
+          margin-left: 0;
+        }
+      }
+    }
+
+    & .infoRow {
+      display: inline-flex;
+      padding: 8px 12px;
+      align-items: center;
+      gap: 8px;
+      border-radius: 100px;
+      border: 1px solid var(--color-very-light-gray);
+    }
+
+    & .row {
+      margin-bottom: 16px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      & .title,
+      & > div,
+      & > div > span > span {
+        display: inline;
+
+        & > img {
+          vertical-align: middle;
+          display: inline-block;
+        }
+      }
+
+      & .title {
+        letter-spacing: 0.33px;
+        color: var(--color-slate-gray);
+      }
+
+      & > div {
+        padding-left: 5px;
+        color: var(--color-zodiac-blue);
+      }
+    }
+  }
+
+  & .content {
+    display: flex;
+    width: auto;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  & .infoContainer {
+    display: flex;
+    border-top: 1px solid var(--color-platinum);
+    text-align: left;
+    padding: 24px 0;
+
+    & > div {
+      width: 50%;
+
+      & > .header {
+        & > span {
+          color: var(--color-zodiac-blue);
+          font-size: 16px;
+          font-weight: var(--font-weight-semi-bold);
+        }
+      }
+
+      & > .link {
+        text-align: right;
+
+        & > span {
+          color: var(--color-ultramarine-blue);
+          font-size: 12px;
+          font-weight: var(--font-weight-semi-bold);
+        }
+      }
+    }
+
+    & strong {
+      @mixin contentLargest semi-bold;
+
+      margin: 0;
+      color: var(--color-maastricht-blue);
+    }
+
+    & span {
+      margin: 6px 0 0 0;
+      letter-spacing: 0px;
+      color: var(--color-blue-gray);
+      font-size: 14px;
+    }
+  }
+
+  & .members {
+    & > p {
+      @mixin contentLargest semi-bold;
+    }
+  }
+}
