@@ -125,7 +125,7 @@ describe('Validator Registration Status', () => {
       status: {
         code: 'BROADCAST_SUCCESS',
       },
-      title: 'Validator registration succeeded',
+      title: 'Validator registration submitted',
     });
   });
 });

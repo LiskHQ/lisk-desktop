@@ -91,7 +91,6 @@ export const signFixtureTransaction = ({
   privateKey = Buffer.isBuffer(privateKey) ? privateKey : Buffer.from(privateKey, 'hex');
   paramsSchema = getParamsSchema(transactionJSON, moduleCommandSchemas);
   const transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
-  transactionJSON = toTransactionJSON(transactionObject, paramsSchema);
 
   return transactions.signTransactionWithPrivateKey(
     transactionObject,
