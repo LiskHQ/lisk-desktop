@@ -1,0 +1,28 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.errorWrapper {
+  width: 100%;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  & > p {
+    border-radius: 5px;
+    text-align: center;
+    color: var(--color-slate-gray);
+    font-size: var(--paragraph-font-size-s);
+    padding: 2px;
+  }
+
+  & > button {
+    color: var(--color-ultramarine-blue);
+    height: fit-content !important;
+  }
+}
+
+.emptyTokenIllustration {
+  height: 100px;
+}

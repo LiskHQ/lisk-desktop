@@ -7,7 +7,7 @@ import { selectStaking } from 'src/redux/selectors';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useSentStakes } from '../../hooks/queries';
 
-function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled }) {
+function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, hasTokenBalance }) {
   const { t } = useTranslation();
   const staking = useSelector((state) => selectStaking(state));
   const { data: sentStakes, isLoading: sentStakesLoading } = useSentStakes({
@@ -24,7 +24,10 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled })
   const isEdit = validatorStake || staking[address];
 
   return (
-    <DialogLink component="editStake">
+    <DialogLink
+      data={{ message: 'There are no tokens available to stake a validator at this time.' }}
+      component={hasTokenBalance ? 'editStake' : 'noTokenBalance'}
+    >
       {isEdit ? (
         <SecondaryButton disabled={sentStakesLoading || isBanned || !currentAddress || isDisabled}>
           {t('Edit stake')}

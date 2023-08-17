@@ -47,13 +47,14 @@ const ValidatorProfile = ({ history }) => {
   });
   const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
 
-  const isDisableStakeButton =
-    isLoadingValidators ||
-    (tokenBalances.isLoading || BigInt(tokenBalances.data.data[0]?.availableBalance || 0)) ===
-      BigInt(0);
+  const isDisableStakeButton = isLoadingValidators || tokenBalances.isLoading;
   const { data: generatedBlocks } = useBlocks({
     config: { params: { generatorAddress: address } },
   });
+
+  const hasTokenBalancse = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => !!BigInt(availableBalance)
+  );
 
   const {
     data: { height: currentHeight },
@@ -86,6 +87,7 @@ const ValidatorProfile = ({ history }) => {
   }, [address, validator, currentHeight]);
 
   const isMyProfile = address === currentAddress;
+
   if (!validator.address && !isLoadingValidators) {
     toast.info("This user isn't a validator");
     history.goBack();
@@ -120,6 +122,7 @@ const ValidatorProfile = ({ history }) => {
               address={address}
               isBanned={isBanned}
               isDisabled={isDisableStakeButton}
+              hasTokenBalancse={hasTokenBalancse}
             />
           </div>
         </div>
