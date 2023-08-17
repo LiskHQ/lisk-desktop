@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { cryptography, transactions } from '@liskhq/lisk-client';
-import { fromTransactionJSON, toTransactionJSON } from 'src/modules/transaction/utils';
+import { fromTransactionJSON } from 'src/modules/transaction/utils';
 import wallets from '@tests/constants/wallets';
 import moduleCommandSchemas from '@tests/constants/schemas';
 import { getParamsSchema } from 'src/modules/transaction/hooks/useTransactionFee/utils';

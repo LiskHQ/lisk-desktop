@@ -146,7 +146,10 @@ export const useDeprecatedAccount = (accountInfo) => {
     data: legacy,
     isLoading: isLegacyLoading,
     isSuccess: isLegacySuccess,
-  } = useLegacy({ config: { params: { publicKey: pubkey } } });
+  } = useLegacy({
+    config: { params: { publicKey: pubkey } },
+    options: { enabled: !!pubkey },
+  });
   useEffect(() => {
     if (!isLegacySuccess) {
       return;
