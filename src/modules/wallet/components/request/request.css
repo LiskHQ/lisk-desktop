@@ -19,7 +19,14 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    flex-basis: calc(50% - 18px);
+
+    &:first-of-type {
+      flex-basis: calc(52% - 18px);
+    }
+
+    &:last-of-type {
+      flex-basis: calc(48% - 18px);
+    }
   }
 
   & .label {

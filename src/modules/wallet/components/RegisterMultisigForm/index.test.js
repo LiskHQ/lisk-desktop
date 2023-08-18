@@ -240,7 +240,8 @@ describe('validateState', () => {
       optionalKeys: [pbk],
       numberOfSignatures: 4,
     };
-    const error = 'Either change the optional member to mandatory or define more optional members.';
+    const error =
+      'Either change the optional member to mandatory or reduce the number of signatures.';
     expect(validateState(params).messages).toContain(error);
   });
 
@@ -252,7 +253,7 @@ describe('validateState', () => {
       optionalKeys: [pbk],
       numberOfSignatures: 3,
     };
-    const error = 'Either change the optional member to mandatory or define more optional members.';
+    const error = 'Number of signatures must be above {{num}}.';
     expect(validateState(params).messages).toContain(error);
   });
 

@@ -186,6 +186,7 @@
     width: 100%;
     text-align: left;
     overflow-x: auto;
+    background-color: transparent !important;
   }
 }
 
