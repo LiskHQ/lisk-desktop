@@ -47,7 +47,7 @@ const SearchBar = ({ className, disabled }) => {
     if (type === 'transactions') {
       history.push(`${routes.transactionDetails.path}?transactionID=${value}`);
     } else if (type === 'validator-account') {
-      history.push(`${routes.validatorProfile.path}?${routes.explorer.searchParam}=${value}`);
+      history.push(`${routes.validatorProfile.path}?validatorAddress=${value}`);
     } else {
       history.push(`${routes[type].path}?${routes[type].searchParam}=${value}`);
     }
