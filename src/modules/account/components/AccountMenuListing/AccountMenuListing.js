@@ -41,7 +41,7 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
         hasNetworkError,
         isLoadingNetwork,
         hasAvailableTokenBalance: tokenBalances.data?.data?.some(
-          ({ availableBalance }) => !!BigInt(availableBalance)
+          ({ availableBalance }) => BigInt(availableBalance) > 0
         ),
       }).map(
         ({ path, icon, label, component, isHidden, data }) =>
