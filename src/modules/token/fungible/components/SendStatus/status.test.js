@@ -102,14 +102,14 @@ describe('Sent token Status', () => {
       illustration: 'default',
       status: {
         code: 'SIGNATURE_ERROR',
-        message: JSON.stringify({ message: 'error:test' }),
+        message: JSON.stringify({ error: 'error:test' }),
       },
       title: 'Transaction failed',
       message: 'An error occurred while signing your transaction. Please try again.',
     });
   });
 
-  it.only('passes correct props to TxBroadcaster when transaction broadcast fails', () => {
+  it('passes correct props to TxBroadcaster when transaction broadcast fails', () => {
     const propsWithError = {
       ...props,
       transactions: {
