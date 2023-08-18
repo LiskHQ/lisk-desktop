@@ -65,7 +65,7 @@
       & img {
         margin: 0 5px;
 
-        &:last-child {
+        &:not(:last-child) {
           margin-left: 0;
         }
       }
@@ -110,6 +110,10 @@
 
       & > .detailsWrapper {
         padding-left: 0;
+
+        & span:last-child {
+          color: var(--color-zodiac-blue);
+        }
       }
     }
   }

@@ -16,6 +16,7 @@ import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import defaultBackgroundImage from '@setup/react/assets/images/default-chain-background.png';
 import { useAuth } from '@auth/hooks/queries';
+import { useValidators } from '@pos/validator/hooks/queries';
 
 import Members from '../multisignatureMembers';
 import styles from './AccountDetails.css';
@@ -40,20 +41,30 @@ const AccountDetails = () => {
   const appendAccountName = `-${accountName}`;
   const fileName = `${address}${accountName ? appendAccountName : ''}-lisk-account`;
   const truncatedFilename = `${truncateAddress(fileName)}.json`;
-  const { numberOfSignatures, optionalKeys, mandatoryKeys, nonce } = authData?.data || emptyKeys;
+  const {
+    numberOfSignatures,
+    optionalKeys,
+    mandatoryKeys,
+    nonce = 0,
+  } = authData?.data || emptyKeys;
+  const { name = '', publicKey = '' } = authData?.meta ?? {};
+  const { data: validatorData } = useValidators({
+    config: { params: { address } },
+    options: { enabled: !!name },
+  });
 
   const members = useMemo(
     () =>
       optionalKeys
-        .map((publicKey) => ({
-          address: extractAddressFromPublicKey(publicKey),
-          publicKey,
+        .map((memberPublicKey) => ({
+          address: extractAddressFromPublicKey(memberPublicKey),
+          publicKey: memberPublicKey,
           mandatory: false,
         }))
         .concat(
-          mandatoryKeys.map((publicKey) => ({
-            address: extractAddressFromPublicKey(publicKey),
-            publicKey,
+          mandatoryKeys.map((memberPublicKey) => ({
+            address: extractAddressFromPublicKey(memberPublicKey),
+            publicKey: memberPublicKey,
             mandatory: true,
           }))
         ),
@@ -72,7 +83,7 @@ const AccountDetails = () => {
           <BoxInfoText className={styles.infoHeader}>
             <div className={styles.accountName}>
               <h3>{currentAccount.metadata?.name}</h3>
-              <Icon name="multisigKeys" />
+              {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
               <Icon name="edit" />
             </div>
             <div className={styles.infoRow}>
@@ -95,9 +106,9 @@ const AccountDetails = () => {
               <div className={styles.row}>
                 <span className={styles.title}>{t('Public Key')}:</span>
                 <CopyToClipboard
-                  value={authData?.meta.publicKey}
+                  value={publicKey}
                   className={styles.rowValue}
-                  text={truncateAddress(authData?.meta.publicKey)}
+                  text={truncateAddress(publicKey)}
                 />
               </div>
             </div>
@@ -108,45 +119,52 @@ const AccountDetails = () => {
               </div>
             </div>
           </div>
-          <div className={styles.infoContainer}>
-            <div>
-              <div className={`${styles.header} ${styles.sectionHeader}`}>
-                <span>{t('Validator details')}</span>
+          {name && (
+            <div className={styles.infoContainer}>
+              <div>
+                <div className={`${styles.header} ${styles.sectionHeader}`}>
+                  <span>{t('Validator details')}</span>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.detailsWrapper}>
+                    <span className={styles.title}>
+                      {t('Name')}: {name}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className={styles.row}>
-                <div className={styles.detailsWrapper}>
-                  <span className={styles.title}>{t('Name')}: lemi</span>
+              <div>
+                <div className={`${styles.link} ${styles.sectionHeader}`}>
+                  <Link to={`${routes.validatorProfile.path}?address=${address}`}>
+                    {t('View profile')}
+                  </Link>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.detailsWrapper}>
+                    <span className={styles.title}>{t('Rank')}: </span>
+                    <span>#{validatorData?.data[0].rank}</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div>
-              <div className={`${styles.link} ${styles.sectionHeader}`}>
-                <Link to={`${routes.validatorProfile.path}?address=${address}`}>
-                  {t('View profile')}
-                </Link>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.detailsWrapper}>
-                  <span className={styles.title}>{t('Rank')}: #0</span>
+          )}
+          {numberOfSignatures > 0 && (
+            <div className={styles.infoContainer}>
+              <div className={styles.multisigDetailsWrapper}>
+                <div className={`${styles.header} ${styles.sectionHeader}`}>
+                  <span>{t('Multisignature details')}</span>
                 </div>
+                <Members
+                  members={members}
+                  numberOfSignatures={numberOfSignatures}
+                  showSignatureCount
+                  t={t}
+                  size={40}
+                  className={styles.members}
+                />
               </div>
             </div>
-          </div>
-          <div className={styles.infoContainer}>
-            <div className={styles.multisigDetailsWrapper}>
-              <div className={`${styles.header} ${styles.sectionHeader}`}>
-                <span>{t('Multisignature details')}</span>
-              </div>
-              <Members
-                members={members}
-                numberOfSignatures={numberOfSignatures}
-                showSignatureCount
-                t={t}
-                size={40}
-                className={styles.members}
-              />
-            </div>
-          </div>
+          )}
         </BoxContent>
       </Box>
     </Dialog>
