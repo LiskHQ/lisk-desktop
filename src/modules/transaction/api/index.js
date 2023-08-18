@@ -6,7 +6,7 @@ import to from 'await-to-js';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';
-import { ERROR_EVENTS, TransactionExecutionResult } from '../constants';
+import { ERROR_EVENTS, EVENT_DATA_RESULT, TransactionExecutionResult } from '../constants';
 
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
@@ -68,6 +68,16 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
   });
 };
 
+const getEventDataResultError = (events) => {
+  const event = events?.find((e) => e.data?.result && e.data?.result !== 0);
+
+  if (event) {
+    return EVENT_DATA_RESULT[event.data.result];
+  }
+
+  return 'Transaction dry run failed with errors, hence aborting next step.';
+};
+
 const getDryRunErrors = (events) => {
   const event = events?.find((e) => ERROR_EVENTS[e.name]);
 
@@ -75,20 +85,27 @@ const getDryRunErrors = (events) => {
     return ERROR_EVENTS[event.name];
   }
 
-  return 'Failed to process transaction, error events unknown.';
+  return getEventDataResultError(events);
 };
 
 /**
- * Dry run a transaction to verify if the transaction is valid to be broadcasted to network
+ * Dry run a transaction to verify if the transaction is valid to be broadcasted to network.
+ * skipVerify : default (false) should be true when transaction requires its command verify step to be skipped.
+ * strict: default (false) should be true when transaction has signature.
  */
-export const dryRunTransaction = async ({ transaction, paramsSchema, skipVerify = false }) => {
+export const dryRunTransaction = async ({
+  transaction,
+  paramsSchema,
+  skipVerify = false,
+  strict = false,
+}) => {
   const transactionBytes = transactions.getBytes(transaction, paramsSchema);
 
   const [error, response] = await to(
     http({
       method: 'POST',
       path: httpPaths.dryRun,
-      data: { transaction: transactionBytes.toString('hex'), skipVerify },
+      data: { transaction: transactionBytes.toString('hex'), skipVerify, strict },
     })
   );
 

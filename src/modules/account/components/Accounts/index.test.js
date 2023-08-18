@@ -33,7 +33,7 @@ describe('Top Accounts Monitor Page', () => {
       },
     },
   });
-  useFees.mockReturnValue({ dat: { data: { feeTokenID: '0000000100000000' } } });
+  useFees.mockReturnValue({ data: { data: { feeTokenID: '0000000100000000' } } });
   useTokenSummary.mockReturnValue({
     data: {
       data: { totalSupply: [{ tokenID: '0000000100000000', amount: '11043784297530566' }] },

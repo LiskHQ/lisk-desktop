@@ -95,6 +95,7 @@ describe('API: LSK Transactions', () => {
         data: {
           transaction: encodedTransactionHex,
           skipVerify: false,
+          strict: false,
         },
       });
     });

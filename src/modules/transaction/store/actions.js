@@ -44,7 +44,8 @@ export const transactionBroadcasted =
     const { isOk, errorMessage } = await dryRunTransaction({
       paramsSchema,
       transaction,
-      skipVerify: true,
+      skipVerify: false,
+      strict: true,
     });
 
     if (isOk) {

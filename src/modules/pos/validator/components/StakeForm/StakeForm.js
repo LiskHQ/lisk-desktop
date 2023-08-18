@@ -135,7 +135,6 @@ const getRewards = async ({ moduleCommandSchemas, transactionJSON, currentAccoun
   const { isOk, errorMessage, response } = await dryRunTransaction({
     paramsSchema,
     transaction,
-    skipVerify: true,
   });
 
   if (!isOk && errorMessage) return { error: errorMessage };

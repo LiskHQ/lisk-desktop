@@ -15,12 +15,12 @@ const TxBroadcaster = (props) => {
       !props.transactions.txSignatureError &&
       !props.transactions.txBroadcastError &&
       props.status.code !== txStatusTypes.broadcastSuccess &&
-      (props.transactions.signedTransaction.signatures.length > 1 ||
+      (props.transactions.signedTransaction?.signatures?.length > 1 ||
         props.status.code === txStatusTypes.multisigSignaturePartialSuccess ||
         props.status.code === txStatusTypes.multisigSignatureSuccess ||
         props.account.summary.isMultisignature ||
         props.account.summary.publicKey !==
-          props.transactions.signedTransaction.senderPublicKey.toString('hex'));
+          props.transactions.signedTransaction?.senderPublicKey?.toString('hex'));
     if (props.location.search?.includes('request')) {
       setTxType('requested');
     } else if (isMultisig) {

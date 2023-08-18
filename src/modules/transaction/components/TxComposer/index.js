@@ -156,7 +156,6 @@ const TxComposer = ({
       const { isOk, errorMessage } = await dryRunTransaction({
         paramsSchema,
         transaction,
-        skipVerify: true,
       });
 
       if (!isOk && errorMessage) {

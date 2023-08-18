@@ -86,8 +86,8 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
   const paramSchema = options?.moduleCommandSchemas[moduleCommand];
 
   // Signature errors
-  if (transactions.txSignatureError) {
-    const txSignatureErrorMsg = transactions.txSignatureError.message;
+  if (transactions.txSignatureError || transactions.signedTransaction?.errors) {
+    const txSignatureErrorMsg = transactions.txSignatureError?.message;
     const hwTxStatusType = transactions.txSignatureError?.hwTxStatusType;
     if (hwTxStatusType) {
       return {
@@ -96,13 +96,13 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
       };
     }
 
+    const message =
+      transactions.signedTransaction?.message ||
+      getErrorMessage(transactions.txSignatureError.transaction, paramSchema, txSignatureErrorMsg);
+
     return {
       code: txStatusTypes.signatureError,
-      message: getErrorMessage(
-        transactions.txSignatureError.transaction,
-        paramSchema,
-        txSignatureErrorMsg
-      ),
+      message,
     };
   }
 
