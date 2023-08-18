@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import Illustration from 'src/modules/common/components/illustration';
 import { TertiaryButton } from 'src/theme/buttons';
 import styles from './NoTokenBalance.css';
