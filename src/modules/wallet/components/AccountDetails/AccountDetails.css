@@ -78,6 +78,10 @@
       gap: 8px;
       border-radius: 100px;
       border: 1px solid var(--color-very-light-gray);
+
+      & .downloadIcon {
+        cursor: pointer;
+      }
     }
 
     & .row {
@@ -101,6 +105,10 @@
       & .title {
         letter-spacing: 0.33px;
         color: var(--color-slate-gray);
+
+        & + span {
+          color: var(--color-zodiac-blue);
+        }
       }
 
       & > div {
@@ -110,10 +118,6 @@
 
       & > .detailsWrapper {
         padding-left: 0;
-
-        & span:last-child {
-          color: var(--color-zodiac-blue);
-        }
       }
     }
   }

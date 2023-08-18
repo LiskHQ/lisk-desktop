@@ -6,17 +6,18 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
-import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
-import Box from 'src/theme/box';
+import CopyToClipboard from '@common/components/copyToClipboard';
+import Box from '@theme/box';
 import { useCurrentAccount } from '@account/hooks';
-import BoxContent from 'src/theme/box/content';
-import BoxInfoText from 'src/theme/box/infoText';
-import Dialog from 'src/theme/dialog/dialog';
-import Icon from 'src/theme/Icon';
+import BoxContent from '@theme/box/content';
+import BoxInfoText from '@theme/box/infoText';
+import Dialog from '@theme/dialog/dialog';
+import Icon from '@theme/Icon';
 import routes from 'src/routes/routes';
 import defaultBackgroundImage from '@setup/react/assets/images/default-chain-background.png';
 import { useAuth } from '@auth/hooks/queries';
 import { useValidators } from '@pos/validator/hooks/queries';
+import { downloadJSON } from '@transaction/utils';
 
 import Members from '../multisignatureMembers';
 import styles from './AccountDetails.css';
@@ -71,6 +72,8 @@ const AccountDetails = () => {
     [numberOfSignatures, optionalKeys, mandatoryKeys]
   );
 
+  const downloadAccountJSON = () => downloadJSON(currentAccount, fileName);
+
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
       <header className={styles.header}>
@@ -90,7 +93,11 @@ const AccountDetails = () => {
               <span className={styles.title}>{t('Backup account')}: </span>
               <Icon name="filePlain" />
               {truncatedFilename}
-              <Icon name="downloadBlue" />
+              <Icon
+                name="downloadBlue"
+                className={styles.downloadIcon}
+                onClick={downloadAccountJSON}
+              />
             </div>
           </BoxInfoText>
           <div className={styles.infoContainer}>
@@ -127,9 +134,8 @@ const AccountDetails = () => {
                 </div>
                 <div className={styles.row}>
                   <div className={styles.detailsWrapper}>
-                    <span className={styles.title}>
-                      {t('Name')}: {name}
-                    </span>
+                    <span className={styles.title}>{t('Name')}: </span>
+                    <span>{name}</span>
                   </div>
                 </div>
               </div>
