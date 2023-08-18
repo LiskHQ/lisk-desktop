@@ -19,6 +19,7 @@ import ValidatorStakesView from './ValidatorStakesView';
 import { useValidators } from '../../hooks/queries';
 import ValidatorStakeButton from './ValidatorStakeButton';
 import WarnPunishedValidator from '../WarnPunishedValidator';
+import { STAKE_LIMIT } from '../../consts';
 
 const numOfBlockPerDay = 24 * 60 * 6;
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
@@ -53,8 +54,8 @@ const ValidatorProfile = ({ history }) => {
     config: { params: { generatorAddress: address } },
   });
 
-  const hasTokenBalancse = tokenBalances.data?.data?.some(
-    ({ availableBalance }) => !!BigInt(availableBalance)
+  const hasTokenBalance = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => BigInt(availableBalance) > STAKE_LIMIT
   );
 
   const {
@@ -123,7 +124,7 @@ const ValidatorProfile = ({ history }) => {
               address={address}
               isBanned={isBanned}
               isDisabled={isDisableStakeButton}
-              hasTokenBalancse={hasTokenBalancse}
+              hasTokenBalance={hasTokenBalance}
             />
           </div>
         </div>

@@ -126,7 +126,7 @@ const Overview = ({ isWalletRoute, history }) => {
           </div>
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
             <DialogLink
-              data={{ message: 'There are no tokens to send at this moment.' }}
+              data={{ message: t('There are no tokens to send at this moment.') }}
               component={hasTokenWithBalance ? 'send' : 'noTokenBalance'}
             >
               <PrimaryButton>{t('Send')}</PrimaryButton>

@@ -46,7 +46,7 @@ const ValidatorActionButton = ({ address, isValidator }) => {
 
   return (
     <DialogLink
-      data={{ message: 'There are no tokens to register a validator at this time.' }}
+      data={{ message: t('Token balance is not enough to register a validator.') }}
       component={hasTokenBalances ? 'registerValidator' : 'noTokenBalance'}
     >
       <PrimaryButton className="register-validator">{t('Register validator')}</PrimaryButton>

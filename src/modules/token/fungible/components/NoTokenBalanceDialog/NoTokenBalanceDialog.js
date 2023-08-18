@@ -6,7 +6,6 @@ import NoTokenBalance from './NoTokenBalance';
 
 const NoTokenBalanceDialog = () => {
   const history = useHistory();
-
   const onRequestToken = () => {
     addSearchParamsToUrl(history, { modal: 'request' });
   };

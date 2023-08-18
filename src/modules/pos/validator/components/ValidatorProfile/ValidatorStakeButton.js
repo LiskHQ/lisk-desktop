@@ -25,7 +25,7 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, h
 
   return (
     <DialogLink
-      data={{ message: 'There are no tokens available to stake a validator at this time.' }}
+      data={{ message: t('Token balance is not enough to stake a validator.') }}
       component={hasTokenBalance ? 'editStake' : 'noTokenBalance'}
     >
       {isEdit ? (

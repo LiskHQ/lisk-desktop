@@ -13,7 +13,7 @@ describe('NoTokenBalance', () => {
     const wrapper = renderWithRouter(NoTokenBalance, { onRequestToken: mockOnRequestToken });
 
     expect(
-      wrapper.getByText('There are no tokens to display for this account at this time.')
+      wrapper.getByText('There are no tokens to display for this account at this moment.')
     ).toBeTruthy();
     expect(wrapper.getByText('Request token')).toBeTruthy();
 
@@ -30,7 +30,7 @@ describe('NoTokenBalance', () => {
     const wrapper = renderWithRouter(NoTokenBalance, { onRequestToken: mockOnRequestToken });
 
     expect(
-      wrapper.queryByText('There are no tokens to display for this account at this time.')
+      wrapper.queryByText('There are no tokens to display for this account at this monent.')
     ).toBeFalsy();
     expect(wrapper.getByText('test-message')).toBeTruthy();
     expect(wrapper.getByText('Request token')).toBeTruthy();

@@ -14,7 +14,7 @@ function NoTokenBalance({ onRequestToken }) {
   return (
     <div className={styles.errorWrapper}>
       <Illustration className={styles.emptyTokenIllustration} name="emptyTokensIllustration" />
-      <p>{message || t('There are no tokens to display for this account at this time.')}</p>
+      <p>{message || t('There are no tokens to display for this account at this moment.')}</p>
       <TertiaryButton onClick={onRequestToken}>{t('Request token')}</TertiaryButton>
     </div>
   );

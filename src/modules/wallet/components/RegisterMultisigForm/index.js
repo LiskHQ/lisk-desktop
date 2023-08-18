@@ -119,6 +119,8 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
 
   const changeNumberOfSignatures = (e) => {
     const value = e.target.value ? Number(e.target.value) : undefined;
+    // if (value > MAX_MULTI_SIG_MEMBERS) return;
+
     setNumberOfSignatures(value);
   };
 
@@ -128,10 +130,16 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
   };
 
   useEffect(() => {
-    const difference = numberOfSignatures - members.length;
+    const difference = (numberOfSignatures || 0) - members.length;
     if (difference > 0) {
       const newMembers = new Array(difference).fill(placeholderMember);
       setMembers((prevMembers) => [...prevMembers, ...newMembers]);
+    } else {
+      const newMembers = members.filter(
+        ({ publicKey }, index) => !!publicKey || index < numberOfSignatures
+      );
+
+      setMembers(newMembers);
     }
   }, [numberOfSignatures]);
 
@@ -191,7 +199,7 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
               <span>{t('Members')}</span>
               <TertiaryButton
                 size="s"
-                disabled={members.length >= 64}
+                disabled={members.length >= MAX_MULTI_SIG_MEMBERS}
                 onClick={addMemberField}
                 className="add-new-members"
               >
