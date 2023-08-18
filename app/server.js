@@ -17,6 +17,7 @@ const server = {
     const app = express();
 
     app.set('views', path.join(__dirname, '.'));
+    app.use(limiter);
     app.use(express.static(path.join(__dirname, '.')));
 
     app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../setup/react/index.html')));
@@ -27,7 +28,6 @@ const server = {
       err.status = 404;
       next(err);
     });
-    app.use(limiter);
     app.listen(port, host);
 
     return `http://${host}:${port}/`;
