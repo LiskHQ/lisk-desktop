@@ -277,4 +277,8 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  noTokenBalance: {
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
 };

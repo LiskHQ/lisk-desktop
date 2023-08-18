@@ -7,6 +7,7 @@
  * - Please do NOT modify this file.
  * - Please do NOT serve this file on production.
  */
+import { cryptography } from '@liskhq/lisk-client';
 
 const INTEGRITY_CHECKSUM = '3d6b9f06410d179a7f7404d4bf4c3c70'
 const activeClientIds = new Set()
@@ -112,7 +113,7 @@ self.addEventListener('fetch', function (event) {
   }
 
   // Generate unique request ID.
-  const requestId = Math.random().toString(16).slice(2)
+  const requestId = cryptography.utils.getRandomBytes(64).toString('hex');
 
   event.respondWith(
     handleRequest(event, requestId).catch((error) => {
