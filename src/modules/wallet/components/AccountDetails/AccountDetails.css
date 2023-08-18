@@ -39,7 +39,7 @@
 .wrapper {
   padding: 0 !important;
 
-  & .nameAndAddress {
+  & .infoHeader {
     text-align: center;
   }
 
@@ -107,6 +107,10 @@
         padding-left: 5px;
         color: var(--color-zodiac-blue);
       }
+
+      & > .detailsWrapper {
+        padding-left: 0;
+      }
     }
   }
 
@@ -126,6 +130,10 @@
     & > div {
       width: 50%;
 
+      &.multisigDetailsWrapper {
+        width: 100%;
+      }
+
       & > .header {
         & > span {
           color: var(--color-zodiac-blue);
@@ -134,13 +142,18 @@
         }
       }
 
+      & > .sectionHeader {
+        margin-bottom: 16px;
+      }
+
       & > .link {
         text-align: right;
 
-        & > span {
+        & > a {
           color: var(--color-ultramarine-blue);
           font-size: 12px;
           font-weight: var(--font-weight-semi-bold);
+          text-decoration: none;
         }
       }
     }
@@ -154,8 +167,6 @@
 
     & span {
       margin: 6px 0 0 0;
-      letter-spacing: 0px;
-      color: var(--color-blue-gray);
       font-size: 14px;
     }
   }
@@ -163,6 +174,8 @@
   & .members {
     & > p {
       @mixin contentLargest semi-bold;
+
+      margin-top: 0;
     }
   }
 }

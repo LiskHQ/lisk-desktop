@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
@@ -13,6 +13,7 @@ import BoxContent from 'src/theme/box/content';
 import BoxInfoText from 'src/theme/box/infoText';
 import Dialog from 'src/theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
+import routes from 'src/routes/routes';
 import defaultBackgroundImage from '@setup/react/assets/images/default-chain-background.png';
 import { useAuth } from '@auth/hooks/queries';
 
@@ -68,7 +69,7 @@ const AccountDetails = () => {
       </header>
       <Box isLoading={false} className={styles.wrapper}>
         <BoxContent className={styles.mainContent}>
-          <BoxInfoText className={styles.nameAndAddress}>
+          <BoxInfoText className={styles.infoHeader}>
             <div className={styles.accountName}>
               <h3>{currentAccount.metadata?.name}</h3>
               <Icon name="multisigKeys" />
@@ -92,7 +93,7 @@ const AccountDetails = () => {
                 />
               </div>
               <div className={styles.row}>
-                <span className={styles.title}>{t('Public key')}:</span>
+                <span className={styles.title}>{t('Public Key')}:</span>
                 <CopyToClipboard
                   value={authData?.meta.publicKey}
                   className={styles.rowValue}
@@ -109,28 +110,42 @@ const AccountDetails = () => {
           </div>
           <div className={styles.infoContainer}>
             <div>
-              <div className={styles.header}>
+              <div className={`${styles.header} ${styles.sectionHeader}`}>
                 <span>{t('Validator details')}</span>
               </div>
               <div className={styles.row}>
-                <div>
+                <div className={styles.detailsWrapper}>
                   <span className={styles.title}>{t('Name')}: lemi</span>
                 </div>
               </div>
             </div>
             <div>
-              <div className={styles.link}>
-                <span>View profile</span>
+              <div className={`${styles.link} ${styles.sectionHeader}`}>
+                <Link to={`${routes.validatorProfile.path}?address=${address}`}>
+                  {t('View profile')}
+                </Link>
               </div>
               <div className={styles.row}>
-                <div>
-                  <span className={styles.title}>{t('Rank')}: 0</span>
+                <div className={styles.detailsWrapper}>
+                  <span className={styles.title}>{t('Rank')}: #0</span>
                 </div>
               </div>
             </div>
           </div>
           <div className={styles.infoContainer}>
-            <Members members={members} t={t} size={40} className={styles.members} />
+            <div className={styles.multisigDetailsWrapper}>
+              <div className={`${styles.header} ${styles.sectionHeader}`}>
+                <span>{t('Multisignature details')}</span>
+              </div>
+              <Members
+                members={members}
+                numberOfSignatures={numberOfSignatures}
+                showSignatureCount
+                t={t}
+                size={40}
+                className={styles.members}
+              />
+            </div>
           </div>
         </BoxContent>
       </Box>
