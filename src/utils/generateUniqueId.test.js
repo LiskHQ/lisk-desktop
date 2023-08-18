@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import generateUniqueId from './generateUniqueId';
 
-describe('genearateUniqueId', () => {
+describe('generateUniqueId', () => {
   let generatedUniqueId;
   beforeEach(() => {
     generatedUniqueId = generateUniqueId();
