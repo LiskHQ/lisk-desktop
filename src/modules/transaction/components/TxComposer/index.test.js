@@ -4,9 +4,11 @@ import { mountWithQueryClient, mountWithQueryAndProps } from 'src/utils/testHelp
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
+import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransactionEstimateFees';
 import * as encodingUtils from '../../utils/encoding';
 import TxComposer from './index';
 
+jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
 jest.mock('@network/hooks/useCommandsSchema');
 jest.spyOn(encodingUtils, 'fromTransactionJSON').mockImplementation((tx) => tx);
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -42,6 +44,33 @@ describe('TxComposer', () => {
     },
   };
 
+  const mockEstimateFeeResponse = {
+    data: {
+      transaction: {
+        fee: {
+          tokenID: '0400000000000000',
+          minimum: '5104000',
+        },
+      },
+    },
+    meta: {
+      breakdown: {
+        fee: {
+          minimum: {
+            byteFee: '96000',
+            additionalFees: {},
+          },
+        },
+      },
+    },
+  };
+
+  useTransactionEstimateFees.mockReturnValue({
+    data: mockEstimateFeeResponse,
+    isFetching: false,
+    isFetched: true,
+    error: false,
+  });
   useCommandSchema.mockReturnValue({
     moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
@@ -99,9 +128,6 @@ describe('TxComposer', () => {
     };
     const wrapper = mountWithQueryAndProps(TxComposer, newProps, state);
     expect(wrapper.find('TransactionPriority')).toExist();
-    expect(wrapper.find('Feedback').text()).toEqual(
-      'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
-    );
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);
   });
 

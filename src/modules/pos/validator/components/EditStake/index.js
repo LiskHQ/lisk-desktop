@@ -61,7 +61,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   const [maxAmount, setMaxAmount] = useState(0);
   const [isForm, setIsForm] = useState(true);
 
-  const [address] = selectSearchParamValue(history.location.search, ['address']);
+  const [address] = selectSearchParamValue(history.location.search, ['validatorAddress']);
 
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address } },

@@ -6,6 +6,37 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import wallets from '@tests/constants/wallets';
 import BackupRecoveryPhraseFlow from './BackupRecoveryPhraseFlow';
 
+const mockOnTerminate = jest.fn();
+const mockOnPostMessage = jest.fn();
+class WorkerMock {
+  constructor(stringUrl) {
+    this.url = stringUrl;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  set onmessage(fn) {
+    const data = {
+      error: null,
+      result: {
+        recoveryPhrase:
+          'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
+        privateKey: wallets.genesis.summary.privateKey,
+      },
+    };
+
+    fn({ data });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  postMessage(msg) {
+    mockOnPostMessage(msg);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  terminate() {
+    mockOnTerminate();
+  }
+}
 const recoveryPhrase =
   'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 
@@ -34,6 +65,10 @@ const props = {
   history: { push: jest.fn() },
   confirmText: 'Confirm',
 };
+
+beforeAll(() => {
+  window.Worker = WorkerMock;
+});
 
 describe('Backup account recovery phrase flow', () => {
   useCurrentAccount.mockReturnValue([mockSavedAccounts[0]]);

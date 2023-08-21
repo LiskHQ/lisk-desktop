@@ -1,12 +1,45 @@
+/* eslint-disable max-classes-per-file */
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { decryptAccount } from '@account/utils/encryptAccount';
+import accounts from '@tests/constants/wallets';
 import EnterPasswordForm from '.';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
+const mockOnPostMessage = jest.fn();
+const mockOnTerminate = jest.fn();
 const recoveryPhrase =
   'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+
+class WorkerMock {
+  constructor(stringUrl) {
+    this.url = stringUrl;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  set onmessage(fn) {
+    const data = {
+      error: null,
+      result: {
+        recoveryPhrase:
+          'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
+        privateKey: accounts.genesis.summary.privateKey,
+      },
+    };
+
+    fn({ data });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  postMessage(msg) {
+    mockOnPostMessage(msg);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  terminate() {
+    mockOnTerminate();
+  }
+}
 
 jest.mock('@account/utils/encryptAccount');
 jest.mock('@account/hooks', () => ({
@@ -15,6 +48,10 @@ jest.mock('@account/hooks', () => ({
     getAccountByAddress: jest.fn(() => mockedCurrentAccount),
   })),
 }));
+
+beforeAll(() => {
+  window.Worker = WorkerMock;
+});
 
 describe('EnterPasswordForm', () => {
   const props = {
@@ -52,14 +89,6 @@ describe('EnterPasswordForm', () => {
 
   it('should call onEnterPasswordSuccess when onSubmit click', async () => {
     const wrapper = render(<EnterPasswordForm {...props} />);
-    const privateKey = 'privateKey';
-    decryptAccount.mockImplementation(() => ({
-      error: null,
-      result: {
-        privateKey,
-        recoveryPhrase,
-      },
-    }));
     props.recoveryPhrase = recoveryPhrase;
     wrapper.rerender(<EnterPasswordForm {...props} />);
 
@@ -67,21 +96,48 @@ describe('EnterPasswordForm', () => {
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
-      expect(decryptAccount).toHaveBeenCalledWith(mockedCurrentAccount.crypto, accountPassword);
       expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
         recoveryPhrase,
-        privateKey,
+        privateKey: accounts.genesis.summary.privateKey,
         encryptedAccount: mockedCurrentAccount,
       });
     });
   });
 
   it('should display error', async () => {
+    class WorkerMock2 {
+      constructor(stringUrl) {
+        this.url = stringUrl;
+      }
+
+      // eslint-disable-next-line class-methods-use-this
+      set onmessage(fn) {
+        const data = {
+          error: true,
+          result: {
+            recoveryPhrase:
+              'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
+            privateKey: accounts.genesis.summary.privateKey,
+          },
+        };
+
+        fn({ data });
+      }
+
+      // eslint-disable-next-line class-methods-use-this
+      postMessage(msg) {
+        mockOnPostMessage(msg);
+      }
+
+      // eslint-disable-next-line class-methods-use-this
+      terminate() {
+        mockOnTerminate();
+      }
+    }
+    window.Worker = WorkerMock2;
+
     const wrapper = render(<EnterPasswordForm {...props} />);
     const error = 'Unable to decrypt account. Please check your password';
-    decryptAccount.mockImplementation(() => ({
-      error,
-    }));
     wrapper.rerender(<EnterPasswordForm {...props} />);
 
     fireEvent.change(screen.getByTestId('password'), { target: { value: accountPassword } });

@@ -102,6 +102,7 @@ const Input = forwardRef(
           {status === 'pending' && (
             <Spinner
               className={`${styles.loading} ${styles.status} node-connection-loading-spinner`}
+              data-testid="input-spinner"
             />
           )}
           {statusIconNameMap[status] && (
