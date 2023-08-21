@@ -115,12 +115,10 @@ export const validateAmount = ({
       },
     },
     FEE_RANGE: {
-      message: i18n.t(
-        `Fee must be greater than ${convertFromBaseDenom(
-          minValue,
-          token
-        )} and less than ${convertFromBaseDenom(accountBalance, token)}.`
-      ),
+      message: i18n.t(`Fee must be greater than {{ maxFee }} and less than {{ minFee }}.`, {
+        minFee: convertFromBaseDenom(accountBalance, token),
+        maxFee: convertFromBaseDenom(minValue, token),
+      }),
       fn: () => {
         const inputFeeValue = BigInt(convertToBaseDenom(amount, token));
 

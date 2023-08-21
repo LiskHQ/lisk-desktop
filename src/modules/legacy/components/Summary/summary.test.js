@@ -11,7 +11,7 @@ import { mockAuth } from '@auth/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks';
-import { useGetInitializationFees, useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Summary from '.';
 
@@ -49,7 +49,6 @@ useCommandSchema.mockReturnValue({
   ),
 });
 useTokenBalances.mockReturnValue({ data: mockAppsTokens, isLoading: false });
-useGetInitializationFees.mockReturnValue({ initializationFees: { userAccount: 5000000 } });
 
 describe('Reclaim balance Summary', () => {
   const wallet = { info: { LSK: accounts.non_migrated } };

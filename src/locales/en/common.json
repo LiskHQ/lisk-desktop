@@ -245,6 +245,7 @@
   "Failed to setup password": "Failed to setup password",
   "Fee": "Fee",
   "Fee breakdown": "Fee breakdown",
+  "Fee must be greater than {{ maxFee }} and less than {{ minFee }}.": "Fee must be greater than {{ maxFee }} and less than {{ minFee }}.",
   "Fees": "Fees",
   "Fiat": "Fiat",
   "Fiat balance": "Fiat balance",
