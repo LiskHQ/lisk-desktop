@@ -3,7 +3,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import { signMessageUsingHW } from '@wallet/utils/signMessage';
 import { signMessageWithPrivateKey } from '../utils/signMessageWithPrivateKey';
 
-export const getUnsignedMessage = (message) =>
+export const getUnsignedNonProtocolMessage = (message) =>
   Buffer.concat([
     Buffer.from(cryptography.constants.MESSAGE_TAG_NON_PROTOCOL_MESSAGE, 'utf8'),
     Buffer.from(message, 'utf8'),
@@ -14,7 +14,7 @@ export const signMessage =
   async () => {
     if (currentAccount?.hw) {
       const [error, signature] = await to(
-        signMessageUsingHW({ account: currentAccount, message: getUnsignedMessage(message) })
+        signMessageUsingHW({ account: currentAccount, message: getUnsignedNonProtocolMessage(message) })
       );
       const result = cryptography.ed.printSignedMessage({
         message,
