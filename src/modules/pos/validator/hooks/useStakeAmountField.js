@@ -58,7 +58,7 @@ const useStakeAmountField = (initialValue) => {
   const balance = Number(token?.availableBalance);
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
-  const address = selectSearchParamValue(`?${searchDetails}`, 'address');
+  const address = selectSearchParamValue(`?${searchDetails}`, 'validatorAddress');
   const staking = useSelector((state) => state.staking);
   const existingStake = staking[address || host];
   const previouslyConfirmedStake = existingStake ? existingStake.confirmed : 0;
