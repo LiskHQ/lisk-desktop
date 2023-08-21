@@ -19,7 +19,7 @@ const getCustomFeeStatus = ({ customFeeInput, minFee, minRequiredBalance, token 
     checklist: ['FORMAT', 'ZERO', 'MAX_ACCURACY', 'FEE_RANGE'],
   });
 
-  return message !== '' ? message : undefined;
+  return message;
 };
 
 const displayFeeInfo = (feeInfo) => {

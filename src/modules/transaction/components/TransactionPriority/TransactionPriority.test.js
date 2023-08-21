@@ -1,7 +1,7 @@
 import React from 'react';
 import { waitFor } from '@testing-library/dom';
 import { mount } from 'enzyme';
-import { mockTokensBalance } from '@token/fungible/__fixtures__';
+import { mockTokensBalance, mockAppsTokens } from '@token/fungible/__fixtures__';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import TransactionPriority from '.';
 
@@ -10,7 +10,12 @@ const baseFees = {
   Medium: 1000,
   High: 2000,
 };
-const mockToken = mockTokensBalance.data[0];
+const tokenBalance = mockTokensBalance.data[0];
+const mockToken = {
+  ...tokenBalance,
+  availableBalance: 500000000000,
+  ...mockAppsTokens.data.filter((t) => t.tokenID === tokenBalance.tokenID)[0],
+};
 
 describe('TransactionPriority', () => {
   let wrapper;
@@ -18,9 +23,9 @@ describe('TransactionPriority', () => {
 
   const props = {
     t: (str) => str,
-    customFee: '1',
-    minFee: '1',
-    minRequiredBalance: '1',
+    customFee: '165000',
+    minFee: '165000',
+    minRequiredBalance: '1000000000',
     token: mockToken,
     priorityOptions: [
       { title: 'Low', value: baseFees.Low },
@@ -133,11 +138,11 @@ describe('TransactionPriority', () => {
     wrapper
       .find('.custom-fee-input')
       .at(1)
-      .simulate('change', { target: { name: 'amount', value: '0.5' } });
+      .simulate('change', { target: { name: 'amount', value: '0.00005' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: true,
-      feedback: 'Fee must be greater than 0 and less than 0.',
-      value: '1',
+      feedback: 'Fee must be greater than 0.00165 and less than 4990.',
+      value: '165000',
     });
   });
 
@@ -154,7 +159,7 @@ describe('TransactionPriority', () => {
       .simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: true,
-      feedback: 'Maximum allowed decimal point is {{decimal}}.',
+      feedback: 'Maximum allowed decimal point is 8.',
       value: 1000,
     });
   });
@@ -166,9 +171,9 @@ describe('TransactionPriority', () => {
       .at(1)
       .simulate('change', { target: { name: 'amount', value: '0.019' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
-      error: true,
-      feedback: 'Fee must be greater than 0 and less than 0.',
-      value: '1',
+      error: false,
+      feedback: '',
+      value: '0.019',
     });
   });
 
