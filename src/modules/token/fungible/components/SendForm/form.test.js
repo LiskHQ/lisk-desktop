@@ -76,7 +76,7 @@ jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationM
 jest.mock('@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore');
 jest.mock('src/modules/common/hooks/useFiatRates');
 jest.mock('@auth/hooks/queries/useAuth');
-jest.spyOn(transactionApi, 'dryRun').mockResolvedValue([]);
+jest.spyOn(transactionApi, 'dryRunTransaction').mockResolvedValue([]);
 
 describe('Form', () => {
   let props;

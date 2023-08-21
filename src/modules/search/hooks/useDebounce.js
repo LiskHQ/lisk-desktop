@@ -5,14 +5,14 @@ import { useState, useEffect, useRef } from 'react';
  */
 // eslint-disable-next-line import/prefer-default-export
 export function useDebounce(value, delay) {
-  const timeoutHandler = useRef(null)
+  const timeoutHandler = useRef(null);
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
-    clearTimeout(timeoutHandler.current)
+    clearTimeout(timeoutHandler.current);
     timeoutHandler.current = setTimeout(() => {
       setDebouncedValue(value);
-      clearTimeout(timeoutHandler.current)
+      clearTimeout(timeoutHandler.current);
     }, delay);
 
     return () => {

@@ -2,11 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import accounts from '@tests/constants/wallets';
 import { LEDGER_HW_IPC_CHANNELS } from '@libs/hardwareWallet/ledger/constants';
+import { posUnlock, getTransactionObject } from '@tests/fixtures/transactions';
 import Status from './UnlockBalanceStatus';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
+
 describe('unlock transaction Status', () => {
   const mockPrevStep = jest.fn();
 
@@ -17,29 +19,12 @@ describe('unlock transaction Status', () => {
     transactions: {
       txBroadcastError: null,
       txSignatureError: null,
-      signedTransaction: { signatures: ['123'] },
+      signedTransaction: { ...getTransactionObject(posUnlock) },
     },
   };
 
-  const signedTransaction = {
-    id: 'pos:unlock',
-    senderPublicKey: accounts.genesis.summary.publicKey,
-    signatures: [accounts.genesis.summary.publicKey],
-    nonce: '19n',
-    fee: '207000n',
-  };
-
   it('passes correct props to TxBroadcaster when signed transaction', () => {
-    const propsWithSignedTx = {
-      ...props,
-      transactions: {
-        txBroadcastError: null,
-        txSignatureError: null,
-        signedTransaction,
-      },
-    };
-
-    const wrapper = shallow(<Status {...propsWithSignedTx} />);
+    const wrapper = shallow(<Status {...props} />);
     expect(wrapper.props().children.props).toEqual({
       illustration: 'default',
       status: { code: 'SIGNATURE_SUCCESS' },
@@ -52,16 +37,16 @@ describe('unlock transaction Status', () => {
     const propsWithError = {
       ...props,
       transactions: {
+        ...props.transactions,
         txBroadcastError: null,
         txSignatureError: { message: 'error:test' },
-        signedTransaction: { signatures: ['123'] },
       },
     };
 
     let wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.props().children.props).toEqual({
       illustration: 'default',
-      status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ error: 'error:test' }) },
       title: 'Transaction failed',
       message: 'An error occurred while signing your transaction. Please try again.',
       onRetry: expect.any(Function),
@@ -70,12 +55,12 @@ describe('unlock transaction Status', () => {
     const propsWithHWError = {
       ...props,
       transactions: {
+        ...props.transactions,
         txBroadcastError: null,
         txSignatureError: {
           message: LEDGER_HW_IPC_CHANNELS.GET_SIGNED_TRANSACTION,
           hwTxStatusType: 'HW_REJECTED',
         },
-        signedTransaction: { signatures: ['123'] },
       },
     };
 
@@ -92,16 +77,19 @@ describe('unlock transaction Status', () => {
     const propsWithError = {
       ...props,
       transactions: {
-        txBroadcastError: { message: 'error:test' },
+        ...props.transactions,
+        txBroadcastError: {
+          error: 'error:test',
+          transaction: props.transactions.signedTransaction,
+        },
         txSignatureError: null,
-        signedTransaction: {},
       },
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.props().children.props).toEqual({
       illustration: 'default',
-      status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      status: { code: 'BROADCAST_ERROR', message: { error: 'error:test', transaction: posUnlock } },
       title: 'Transaction failed',
       message: 'An error occurred while sending your transaction to the network. Please try again.',
       onRetry: expect.any(Function),

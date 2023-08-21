@@ -179,7 +179,7 @@ describe('Unlock LSK modal', () => {
   const config = { renderType: 'mount', queryClient: true, store: true, storeInfo: store };
 
   beforeAll(() => {
-    jest.spyOn(transactionApi, 'dryRun').mockResolvedValue([]);
+    jest.spyOn(transactionApi, 'dryRunTransaction').mockResolvedValue([]);
     useTransactionEstimateFees.mockReturnValue({
       data: mockEstimateFeeResponse,
       isFetching: false,

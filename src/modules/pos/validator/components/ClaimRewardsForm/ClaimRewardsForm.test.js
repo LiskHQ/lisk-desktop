@@ -53,7 +53,7 @@ jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
 jest.mock('@settings/hooks/useSettings');
 jest.mock('@auth/hooks/queries/useAuth');
 jest.mock('@token/fungible/hooks/queries/useTokenBalances');
-jest.spyOn(transactionApi, 'dryRun').mockResolvedValue([]);
+jest.spyOn(transactionApi, 'dryRunTransaction').mockResolvedValue([]);
 
 describe('ClaimRewardsForm', () => {
   const usdRate = '0.9699';

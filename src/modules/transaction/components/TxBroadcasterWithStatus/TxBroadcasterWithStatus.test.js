@@ -31,6 +31,14 @@ describe('TxBroadcasterWithStatus', () => {
       txSignatureError: null,
       signedTransaction,
     },
+    blockChainApplications: {
+      current: {
+        chainName: 'lisk',
+        chainID: '04000000',
+        networkType: 'devnet',
+        serviceURLs: [{ http: 'http://devnet-service.liskdev.net:9901' }],
+      },
+    },
   };
 
   useCommandSchema.mockReturnValue({

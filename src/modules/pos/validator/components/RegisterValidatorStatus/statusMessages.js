@@ -5,7 +5,7 @@ import { txStatusTypes } from '@transaction/configuration/txStatus';
 const registerValidatorsMessages = (t) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
-    title: t('Validator registration succeeded'),
+    title: t('Validator registration submitted'),
     message: t('You will be notified when your transaction is confirmed.'),
   },
 });

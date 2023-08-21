@@ -23,6 +23,8 @@ const TransactionPriority = ({
   loadError,
   isLoading,
   composedFees,
+  customFee,
+  minRequiredBalance,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState();
@@ -148,7 +150,9 @@ const TransactionPriority = ({
           minFee={minFee}
           fees={composedFees}
           setCustomFee={setCustomFee}
+          customFee={customFee}
           token={token}
+          minRequiredBalance={minRequiredBalance}
         />
       </div>
     </div>
