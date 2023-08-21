@@ -7,7 +7,13 @@ export const signMessage =
   ({ nextStep, message, privateKey, currentAccount }) =>
   async () => {
     if (currentAccount?.hw) {
-      const [error, signature] = await to(signMessageUsingHW({ message, account: currentAccount }));
+      const unsignedMessage = Buffer.concat([
+        Buffer.from(cryptography.constants.MESSAGE_TAG_NON_PROTOCOL_MESSAGE, 'utf8'),
+        Buffer.from(message, 'utf8'),
+      ]).toString('hex');
+      const [error, signature] = await to(
+        signMessageUsingHW({ account: currentAccount, message: unsignedMessage })
+      );
       const result = cryptography.ed.printSignedMessage({
         message,
         signature,
