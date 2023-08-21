@@ -19,7 +19,7 @@ export const useTransferableTokens = (application) => {
   return useMemo(() => {
     const isSuccess = isTokensSuccess && isSupportedSuccess;
     const isLoading = isTokenLoading || isSupportLoading;
-    const isSupportAllTokens = true || supportedTokens?.isSupportAllTokens;
+    const isSupportAllTokens = supportedTokens?.isSupportAllTokens;
     const exactTokensSupported = !isSuccess
       ? []
       : myTokens.filter((token) =>
