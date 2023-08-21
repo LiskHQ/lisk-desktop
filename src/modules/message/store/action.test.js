@@ -1,7 +1,7 @@
 import { cryptography } from '@liskhq/lisk-client';
 import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
 import * as signMessageUtil from '@wallet/utils/signMessage';
-import { signMessage } from './action';
+import { getUnsignedMessage, signMessage } from './action';
 
 jest.spyOn(cryptography.ed, 'signAndPrintMessage');
 jest.spyOn(cryptography.ed, 'printSignedMessage');
@@ -47,7 +47,7 @@ describe('balanceReclaimed', () => {
     await signMessage({ nextStep, privateKey, message, currentAccount: mockCurrentAccount })();
 
     expect(signMessageUtil.signMessageUsingHW).toHaveBeenCalledWith({
-      message,
+      message: getUnsignedMessage(message),
       account: mockCurrentAccount,
     });
   });
