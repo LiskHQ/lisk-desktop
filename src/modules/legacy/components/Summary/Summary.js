@@ -33,7 +33,7 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
     [wallet.legacy?.balance, module, command, wallet.sequence?.nonce, wallet.summary?.publicKey]
   );
 
-  const { transactionFee } = useTransactionFee({
+  const { transactionFee, isFetched } = useTransactionFee({
     transactionJSON,
     selectedPriority,
     isFormValid: true,
@@ -53,6 +53,7 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
     label: t('Confirm and send'),
     className: styles.actionBtn,
     onClick: onSubmit,
+    disabled: !isFetched,
   };
 
   const onCancelAction = {
