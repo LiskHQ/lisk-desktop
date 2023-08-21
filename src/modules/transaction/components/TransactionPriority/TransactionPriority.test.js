@@ -139,9 +139,10 @@ describe('TransactionPriority', () => {
       .find('.custom-fee-input')
       .at(1)
       .simulate('change', { target: { name: 'amount', value: '0.00005' } });
+
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: true,
-      feedback: 'Fee must be greater than 0.00165 and less than 4990.',
+      feedback: 'Fee must be greater than {{ maxFee }} and less than {{ minFee }}.',
       value: '165000',
     });
   });

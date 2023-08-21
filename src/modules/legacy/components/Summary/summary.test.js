@@ -12,6 +12,7 @@ import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransactionEstimateFees';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Summary from '.';
 
@@ -26,6 +27,7 @@ jest.mock('@transaction/api');
 jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('@transaction/utils/hwManager');
 jest.mock('@token/fungible/hooks/queries');
+jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
 
 const transactionBaseFees = {
   Low: 156,
@@ -39,6 +41,27 @@ const response = {
   id: 'tx-id',
 };
 
+const mockEstimateFeeResponse = {
+  data: {
+    transaction: {
+      fee: {
+        tokenID: '0400000000000000',
+        minimum: '5147764',
+      },
+    },
+  },
+  meta: {
+    breakdown: {
+      fee: {
+        minimum: {
+          byteFee: '96000',
+          additionalFees: {},
+        },
+      },
+    },
+  },
+};
+
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
 hwManager.signTransactionByHW.mockResolvedValue(response);
 
@@ -49,6 +72,13 @@ useCommandSchema.mockReturnValue({
   ),
 });
 useTokenBalances.mockReturnValue({ data: mockAppsTokens, isLoading: false });
+
+useTransactionEstimateFees.mockReturnValue({
+  data: mockEstimateFeeResponse,
+  isFetching: false,
+  isFetched: true,
+  error: false,
+});
 
 describe('Reclaim balance Summary', () => {
   const wallet = { info: { LSK: accounts.non_migrated } };
