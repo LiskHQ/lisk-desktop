@@ -14,18 +14,6 @@ import styles from './TransactionEvents.css';
 
 const getFilterFields = (t) => [
   {
-    label: t('Module'),
-    placeholder: t('e.g. pos'),
-    name: 'module',
-    type: 'text',
-  },
-  {
-    label: t('Name'),
-    placeholder: t('e.g. RewardsAssigned'),
-    name: 'name',
-    type: 'text',
-  },
-  {
     label: t('Transaction ID'),
     placeholder: t('e.g. f37305dd68de8d...'),
     name: 'transactionID',
@@ -42,6 +30,18 @@ const getFilterFields = (t) => [
     placeholder: t('e.g. {{value}}', { value: '10180477' }),
     name: 'height',
     type: 'integer',
+  },
+  {
+    label: t('Module'),
+    placeholder: t('e.g. pos'),
+    name: 'module',
+    type: 'text',
+  },
+  {
+    label: t('Name'),
+    placeholder: t('e.g. RewardsAssigned'),
+    name: 'name',
+    type: 'text',
   },
 ];
 
