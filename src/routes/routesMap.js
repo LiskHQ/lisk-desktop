@@ -37,7 +37,6 @@ import AddAccountBySecretRecovery from '@account/components/AddAccountBySecretRe
 import AddAccountByFile from '@account/components/AddAccountByFile';
 import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
-import EditAccount from '@account/components/EditAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
 import BlockchainApplications from '@blockchainApplication/explore/components/BlockchainApplications/BlockchainApplications';
@@ -62,7 +61,6 @@ import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardware
 
 export default {
   wallet: AccountOverviewDetails,
-  editAccount: EditAccount,
   explorer: Explorer,
   register: Register,
   termsOfUse: TermsOfUse,

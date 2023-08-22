@@ -2,7 +2,7 @@ import routes from 'src/routes/routes';
 
 export const accountMenu = (authData, isHW, hasNetworkError, isLoadingNetwork) => [
   {
-    component: 'editAccount',
+    component: 'accountDetails',
     icon: 'profileOutline',
     label: 'Account details',
   },

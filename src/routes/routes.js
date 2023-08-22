@@ -130,10 +130,6 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  editAccount: {
-    isPrivate: true,
-    forbiddenTokens: [],
-  },
   send: {
     isPrivate: true,
     forbiddenTokens: [],
