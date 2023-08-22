@@ -27,7 +27,7 @@ const networks = {
     label: 'Betanet',
     serviceUrl: 'https://betanet-service.lisk.com',
     wsServiceUrl: 'wss://betanet-service.lisk.com',
-    isAvailable: false,
+    isAvailable: true,
   },
   [networkKeys.devnet]: {
     name: networkKeys.devnet,
