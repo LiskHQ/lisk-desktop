@@ -17,8 +17,8 @@ const getMaxAmount = async ({ balance, staking, address }) => {
     1e9;
 
   if (
-    BigInt(maxStakeAmount) <=
-    BigInt(balance - totalUnconfirmedStakes + currentStake - MIN_ACCOUNT_BALANCE)
+    BigInt(maxStakeAmount || 0) <=
+    BigInt(balance - totalUnconfirmedStakes + currentStake - MIN_ACCOUNT_BALANCE || 0)
   ) {
     return maxStakeAmount;
   }
