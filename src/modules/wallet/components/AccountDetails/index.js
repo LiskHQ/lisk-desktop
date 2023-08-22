@@ -151,7 +151,10 @@ const AccountDetails = () => {
       dispatch(updateHWAccount(updatedAccount));
     } else {
       dispatch(
-        updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })
+        updateAccount({
+          encryptedAccount: currentAccount,
+          accountDetail: { name: updatedAccountName },
+        })
       );
     }
     setReadMode(!readMode);
