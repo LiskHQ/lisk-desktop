@@ -73,9 +73,9 @@ import signIn from '@setup/react/assets/images/icons/signin.svg';
 import signInActive from '@setup/react/assets/images/icons/signin-active.svg';
 import tooltipQuestionMark from '@setup/react/assets/images/icons/tooltip-question-icon.svg';
 import transactionError from '@setup/react/assets/images/icons/transaction-error.svg';
-import transactionStatusSuccess from '@setup/react/assets/images/icons/transaction-status-success.svg';
+import transactionStatusSuccessful from '@setup/react/assets/images/icons/transaction-status-successful.svg';
 import transactionStatusPending from '@setup/react/assets/images/icons/transaction-status-pending.svg';
-import transactionStatusFail from '@setup/react/assets/images/icons/transaction-status-fail.svg';
+import transactionStatusFailed from '@setup/react/assets/images/icons/transaction-status-failed.svg';
 import transactionSuccess from '@setup/react/assets/images/icons/transaction-success.svg';
 import txDefault from '@setup/react/assets/images/icons/tx-default.svg';
 import txDefaultDark from '@setup/react/assets/images/icons/tx-default-dark.svg';
@@ -307,9 +307,9 @@ export const icons = {
   starDark,
   tooltipQuestionMark,
   transactionError,
-  transactionStatusSuccess,
+  transactionStatusSuccessful,
   transactionStatusPending,
-  transactionStatusFail,
+  transactionStatusFailed,
   transactionSuccess,
   txDefault,
   txDefaultDark,

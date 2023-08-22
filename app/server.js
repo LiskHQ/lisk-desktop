@@ -2,10 +2,12 @@ const express = require('express');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 
+const API_RATE_LIMITER = process.env.API_RATE_LIMITER || 50;
+
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 5,
-  message: 'You can only make 5 requests per minute',
+  max: API_RATE_LIMITER,
+  message: `You can only make ${API_RATE_LIMITER} requests per minute`,
 });
 
 const server = {

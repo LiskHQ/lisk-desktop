@@ -2,7 +2,7 @@ import { useBlockchainApplicationExplore } from '../../explore/hooks/queries/use
 import { useBlockchainApplicationMeta } from './queries/useBlockchainApplicationMeta';
 import { useCurrentApplication } from './useCurrentApplication';
 
-export const useApplicationExploreAndMetaData = ({ appState = 'active' } = {}) => {
+export const useApplicationExploreAndMetaData = ({ appState = 'activated' } = {}) => {
   const [currentApplication] = useCurrentApplication();
   const {
     data: { data: activeApps = [] } = {},

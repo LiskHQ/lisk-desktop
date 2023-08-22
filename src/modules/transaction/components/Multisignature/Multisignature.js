@@ -138,7 +138,7 @@ const Multisignature = ({
         status.code !== txStatusTypes.broadcastError ? (
           <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
             <span className={styles.buttonContent}>
-              <Icon name={copied ? 'transactionStatusSuccess' : 'copy'} />
+              <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />
               {t(copied ? 'Copied' : 'Copy')}
             </span>
           </SecondaryButton>
