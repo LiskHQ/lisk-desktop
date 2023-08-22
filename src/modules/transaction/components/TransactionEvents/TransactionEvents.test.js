@@ -106,6 +106,8 @@ describe('TransactionEvents', () => {
 
     fireEvent.click(screen.queryByText('Filter'));
 
+    expect(screen.getByText('Module')).toBeTruthy();
+    expect(screen.getByText('Name')).toBeTruthy();
     expect(screen.getByText('Transaction ID')).toBeTruthy();
     expect(screen.getByText('Block ID')).toBeTruthy();
     expect(screen.getByText('Block height')).toBeTruthy();
