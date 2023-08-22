@@ -1,18 +1,27 @@
-import React, { useMemo } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+/* eslint-disable max-statements, complexity */
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { selectSearchParamValue } from 'src/utils/searchParams';
 import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import CopyToClipboard from '@common/components/copyToClipboard';
 import Box from '@theme/box';
-import { useCurrentAccount } from '@account/hooks';
+import { useCurrentAccount, useAccounts } from '@account/hooks';
 import BoxContent from '@theme/box/content';
 import BoxInfoText from '@theme/box/infoText';
 import Dialog from '@theme/dialog/dialog';
 import Icon from '@theme/Icon';
+import { Input } from 'src/theme';
+import { TertiaryButton } from '@theme/buttons';
+import { updateCurrentAccount, updateAccount } from '@account/store/action';
+import { updateHWAccount } from '@hardwareWallet/store/actions';
+import { regex } from 'src/const/regex';
 import routes from 'src/routes/routes';
 import defaultBackgroundImage from '@setup/react/assets/images/default-chain-background.png';
 import { useAuth } from '@auth/hooks/queries';
@@ -23,19 +32,32 @@ import Members from '../multisignatureMembers';
 import styles from './AccountDetails.css';
 
 const emptyKeys = {
-  numberOfSignatures: 1,
+  numberOfSignatures: 0,
   optionalKeys: [],
   mandatoryKeys: [],
 };
 
-// eslint-disable-next-line max-statements
+const editAccountFormSchema = yup
+  .object({
+    accountName: yup
+      .string()
+      .required()
+      .matches(
+        regex.accountName,
+        'Can be alphanumeric with either !,@,$,&,_,. as special characters'
+      )
+      .max(20, "Character length can't be more than 20")
+      .min(3, "Character length can't be less than 3"),
+  })
+  .required();
+
 const AccountDetails = () => {
-  const history = useHistory();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
-  const queryAddress = selectSearchParamValue(history.location.search, 'address');
-  const address = queryAddress || currentAccount.metadata?.address;
-  const { data: authData } = useAuth({
+  const { accounts } = useAccounts();
+  const address = currentAccount.metadata?.address;
+  const { data: authData, isLoading: authLoading } = useAuth({
     config: { params: { address } },
   });
   const accountName = currentAccount.metadata?.name;
@@ -71,8 +93,70 @@ const AccountDetails = () => {
         ),
     [numberOfSignatures, optionalKeys, mandatoryKeys]
   );
+  const [readMode, setReadMode] = useState(true);
+  const [editedAccountName, setEditedAccountName] = useState(name);
+  const [feedback, setFeedback] = useState('');
+  const editInput = useRef();
 
-  const downloadAccountJSON = () => downloadJSON(currentAccount, fileName);
+  useEffect(() => {
+    setEditedAccountName(name);
+  }, [authData?.data]);
+
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors, isDirty },
+    setValue,
+    setError,
+  } = useForm({
+    resolver: yupResolver(editAccountFormSchema),
+  });
+  const formValues = watch();
+
+  const downloadAccountJSON = () => {
+    downloadJSON(currentAccount, fileName);
+  };
+
+  const updateAccountName = () => {
+    setEditedAccountName(editedAccountName);
+    setFeedback('');
+    setReadMode(true);
+  };
+
+  const setMode = (e) => {
+    e.preventDefault();
+    setValue('accountName', editedAccountName);
+    setReadMode(!readMode);
+    setTimeout(() => {
+      editInput.current.select();
+    }, 10);
+  };
+
+  const onFormSubmit = (values) => {
+    setEditedAccountName(values.accountName);
+    const existingAccountName = accounts.some(
+      (acc) =>
+        acc.metadata.name.toLowerCase() === accountName.toLowerCase() &&
+        acc.metadata.address !== currentAccount.metadata.address
+    );
+    if (existingAccountName) {
+      setError('accountName', { message: t(`Account with name "${accountName}" already exists.`) });
+      return;
+    }
+    dispatch(updateCurrentAccount({ name: accountName }));
+    if (currentAccount.metadata.isHW) {
+      const updatedAccount = {
+        ...currentAccount,
+        metadata: { ...currentAccount.metadata, name: accountName },
+      };
+      dispatch(updateHWAccount(updatedAccount));
+    } else {
+      dispatch(
+        updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })
+      );
+    }
+  };
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
@@ -85,9 +169,44 @@ const AccountDetails = () => {
         <BoxContent className={styles.mainContent}>
           <BoxInfoText className={styles.infoHeader}>
             <div className={styles.accountName}>
-              <h3>{currentAccount.metadata?.name}</h3>
-              {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
-              <Icon name="edit" />
+              {readMode ? (
+                <>
+                  <h3>{currentAccount.metadata?.name}</h3>
+                  {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
+                  {!authLoading && <Icon name="edit" onClick={(e) => setMode(e)} />}
+                </>
+              ) : (
+                <>
+                  <form onSubmit={handleSubmit(onFormSubmit)} setRef={editInput}>
+                    <Input
+                      autoComplete="off"
+                      className={`account-edit-input ${styles.editInput}`}
+                      placeholder={t('Update name')}
+                      size="m"
+                      value={formValues.accountName}
+                      error={!!errors.accountName?.message}
+                      feedback={errors.accountName?.message}
+                      status={errors.accountName?.message ? 'error' : 'ok'}
+                      {...register('accountName')}
+                    />
+                    <TertiaryButton
+                      onClick={() => updateAccountName()}
+                      className={`account-cancel-button ${styles.cancelBtn}`}
+                      size="m"
+                    >
+                      {t('Cancel')}
+                    </TertiaryButton>
+                    <TertiaryButton
+                      className={`account-save-changes-button ${styles.confirmBtn}`}
+                      size="m"
+                      disabled={!!feedback || !editedAccountName || !!isDirty}
+                      type="submit"
+                    >
+                      {t('Save changes')}
+                    </TertiaryButton>
+                  </form>
+                </>
+              )}
             </div>
             <div className={styles.infoRow}>
               <span className={styles.title}>{t('Backup account')}: </span>

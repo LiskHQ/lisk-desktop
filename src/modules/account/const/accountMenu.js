@@ -3,8 +3,8 @@ import routes from 'src/routes/routes';
 export const accountMenu = (authData, isHW, hasNetworkError, isLoadingNetwork) => [
   {
     component: 'editAccount',
-    icon: 'edit',
-    label: 'Edit account name',
+    icon: 'profileOutline',
+    label: 'Account details',
   },
   {
     component: 'switchAccount',

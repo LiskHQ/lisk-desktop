@@ -126,6 +126,7 @@ import stakingActive from '@setup/react/assets/images/icons/stakingActive.svg';
 import signOut from '@setup/react/assets/images/icons/signOut.svg';
 import plus from '@setup/react/assets/images/icons/plus.svg';
 import plusActive from '@setup/react/assets/images/icons/plusActive.svg';
+import profileOutline from '@setup/react/assets/images/icons/profile-outline.svg';
 import remove from '@setup/react/assets/images/icons/remove.svg';
 import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
 import removeRed from '@setup/react/assets/images/icons/remove-red.svg';
@@ -372,6 +373,7 @@ export const icons = {
   plus,
   plusActive,
   plusWhiteIcon,
+  profileOutline,
   remove,
   totalBlocks,
   totalBlocksDark,

@@ -47,6 +47,8 @@
     padding-top: 0;
 
     & .accountName {
+      display: flex;
+      justify-content: center;
       width: auto;
 
       & h3,
@@ -65,9 +67,29 @@
       & img {
         margin: 0 5px;
 
+        &:last-child {
+          cursor: pointer;
+        }
+
         &:not(:last-child) {
           margin-left: 0;
         }
+      }
+
+      & > form {
+        margin: 12px 0;
+
+        & > span {
+          width: auto;
+        }
+      }
+
+      & .cancelBtn {
+        color: var(--color-maastricht-blue);
+      }
+
+      & .confirmBtn:hover {
+        color: var(--color-ultramarine-blue);
       }
     }
 
