@@ -1,5 +1,5 @@
-/* eslint-disable max-statements, complexity */
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+/* eslint-disable max-statements, complexity, max-lines */
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -95,8 +95,6 @@ const AccountDetails = () => {
   );
   const [readMode, setReadMode] = useState(true);
   const [editedAccountName, setEditedAccountName] = useState(name);
-  const [feedback, setFeedback] = useState('');
-  const editInput = useRef();
 
   useEffect(() => {
     setEditedAccountName(name);
@@ -106,6 +104,7 @@ const AccountDetails = () => {
     register,
     watch,
     handleSubmit,
+    reset,
     formState: { errors, isDirty },
     setValue,
     setError,
@@ -120,35 +119,34 @@ const AccountDetails = () => {
 
   const updateAccountName = () => {
     setEditedAccountName(editedAccountName);
-    setFeedback('');
     setReadMode(true);
   };
 
   const setMode = (e) => {
     e.preventDefault();
-    setValue('accountName', editedAccountName);
+    setValue('accountName', accountName || editedAccountName);
     setReadMode(!readMode);
-    setTimeout(() => {
-      editInput.current.select();
-    }, 10);
   };
 
   const onFormSubmit = (values) => {
-    setEditedAccountName(values.accountName);
+    const updatedAccountName = values.accountName;
+    setEditedAccountName(updateAccountName);
     const existingAccountName = accounts.some(
       (acc) =>
-        acc.metadata.name.toLowerCase() === accountName.toLowerCase() &&
+        acc.metadata.name.toLowerCase() === updatedAccountName.toLowerCase() &&
         acc.metadata.address !== currentAccount.metadata.address
     );
     if (existingAccountName) {
-      setError('accountName', { message: t(`Account with name "${accountName}" already exists.`) });
+      setError('accountName', {
+        message: t(`Account with name "${updatedAccountName}" already exists.`),
+      });
       return;
     }
-    dispatch(updateCurrentAccount({ name: accountName }));
+    dispatch(updateCurrentAccount({ name: updatedAccountName }));
     if (currentAccount.metadata.isHW) {
       const updatedAccount = {
         ...currentAccount,
-        metadata: { ...currentAccount.metadata, name: accountName },
+        metadata: { ...currentAccount.metadata, name: updatedAccountName },
       };
       dispatch(updateHWAccount(updatedAccount));
     } else {
@@ -156,6 +154,8 @@ const AccountDetails = () => {
         updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })
       );
     }
+    setReadMode(!readMode);
+    reset();
   };
 
   return (
@@ -177,7 +177,7 @@ const AccountDetails = () => {
                 </>
               ) : (
                 <>
-                  <form onSubmit={handleSubmit(onFormSubmit)} setRef={editInput}>
+                  <form onSubmit={handleSubmit(onFormSubmit)}>
                     <Input
                       autoComplete="off"
                       className={`account-edit-input ${styles.editInput}`}
@@ -190,7 +190,7 @@ const AccountDetails = () => {
                       {...register('accountName')}
                     />
                     <TertiaryButton
-                      onClick={() => updateAccountName()}
+                      onClick={updateAccountName}
                       className={`account-cancel-button ${styles.cancelBtn}`}
                       size="m"
                     >
@@ -199,7 +199,7 @@ const AccountDetails = () => {
                     <TertiaryButton
                       className={`account-save-changes-button ${styles.confirmBtn}`}
                       size="m"
-                      disabled={!!feedback || !editedAccountName || !!isDirty}
+                      disabled={!!errors.accountName?.message || !isDirty}
                       type="submit"
                     >
                       {t('Save changes')}
