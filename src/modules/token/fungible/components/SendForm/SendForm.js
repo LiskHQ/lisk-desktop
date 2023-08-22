@@ -31,7 +31,7 @@ const getInitialAmount = (formProps, initialValue, token) =>
 const getInitialRecipient = (formProps, initialValue) =>
   formProps?.params.recipient.address || initialValue || '';
 const getInitialRecipientChain = (
-  transactionData,
+  recipientChain,
   initialChainId,
   currentApplication,
   applications
@@ -40,7 +40,7 @@ const getInitialRecipientChain = (
     ? applications.find(({ chainID }) => chainID === initialChainId)
     : null;
 
-  return transactionData?.recipientChain || initialRecipientChain || currentApplication;
+  return recipientChain || initialRecipientChain || currentApplication;
 };
 const getInitialToken = (transactionData, initialTokenId, tokens) => {
   const initialToken = initialTokenId
@@ -103,7 +103,7 @@ const SendForm = (props) => {
       },
       true
     );
-    const isTokenValid = !!token && Object.keys(token).length;
+    const isTokenValid = !!token && !!Object.keys(token).length;
     return areFieldsValid && isTokenValid;
   }, [amount, recipient, reference, recipientChain, sendingChain, token]);
 
@@ -114,7 +114,7 @@ const SendForm = (props) => {
   useEffect(() => {
     setRecipientChain(
       getInitialRecipientChain(
-        prevState?.transactionData,
+        prevState?.formProps?.fields?.recipientChain,
         props.initialValue?.recipientChain,
         currentApplication,
         applications

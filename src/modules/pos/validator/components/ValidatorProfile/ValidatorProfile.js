@@ -19,6 +19,7 @@ import ValidatorStakesView from './ValidatorStakesView';
 import { useValidators } from '../../hooks/queries';
 import ValidatorStakeButton from './ValidatorStakeButton';
 import WarnPunishedValidator from '../WarnPunishedValidator';
+import { STAKE_LIMIT } from '../../consts';
 
 const numOfBlockPerDay = 24 * 60 * 6;
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
@@ -48,13 +49,14 @@ const ValidatorProfile = ({ history }) => {
   });
   const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
 
-  const isDisableStakeButton =
-    isLoadingValidators ||
-    (tokenBalances.isLoading || BigInt(tokenBalances.data.data[0]?.availableBalance || 0)) ===
-      BigInt(0);
+  const isDisableStakeButton = isLoadingValidators || tokenBalances.isLoading;
   const { data: generatedBlocks } = useBlocks({
     config: { params: { generatorAddress: address } },
   });
+
+  const hasTokenBalance = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => BigInt(availableBalance) > STAKE_LIMIT
+  );
 
   const {
     data: { height: currentHeight },
@@ -87,6 +89,7 @@ const ValidatorProfile = ({ history }) => {
   }, [address, validator, currentHeight]);
 
   const isMyProfile = address === currentAddress;
+
   if (!validator.address && !isLoadingValidators) {
     toast.info("This user isn't a validator");
     history.goBack();
@@ -121,6 +124,7 @@ const ValidatorProfile = ({ history }) => {
               address={address}
               isBanned={isBanned}
               isDisabled={isDisableStakeButton}
+              hasTokenBalance={hasTokenBalance}
             />
           </div>
         </div>

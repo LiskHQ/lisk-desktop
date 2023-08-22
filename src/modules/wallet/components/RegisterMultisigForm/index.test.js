@@ -4,7 +4,7 @@ import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransa
 import useSettings from '@settings/hooks/useSettings';
 import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from '@auth/__fixtures__';
-import { getTransactionBaseFees, dryRun } from '@transaction/api';
+import { getTransactionBaseFees, dryRunTransaction } from '@transaction/api';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import wallets from '@tests/constants/wallets';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
@@ -72,7 +72,7 @@ const transactionBaseFees = {
 };
 
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
-dryRun.mockResolvedValue([]);
+dryRunTransaction.mockResolvedValue([]);
 
 describe('Multisignature editor component', () => {
   let wrapper;
@@ -240,7 +240,8 @@ describe('validateState', () => {
       optionalKeys: [pbk],
       numberOfSignatures: 4,
     };
-    const error = 'Either change the optional member to mandatory or define more optional members.';
+    const error =
+      'Either change the optional member to mandatory or reduce the number of signatures.';
     expect(validateState(params).messages).toContain(error);
   });
 
@@ -252,7 +253,7 @@ describe('validateState', () => {
       optionalKeys: [pbk],
       numberOfSignatures: 3,
     };
-    const error = 'Either change the optional member to mandatory or define more optional members.';
+    const error = 'Number of signatures must be above {{num}}.';
     expect(validateState(params).messages).toContain(error);
   });
 

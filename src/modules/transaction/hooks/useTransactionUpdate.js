@@ -47,7 +47,7 @@ export const useTransactionUpdate = (isLoading) => {
         .forEach((query) => {
           queryClient.setQueriesData({ queryKey: query[0] }, (oldData) => {
             const newTransactionsData = newTransactions.data.filter(
-              (newTx) => !oldData.pages[0].data.some((oldTx) => oldTx.id === newTx.id)
+              (newTx) => !oldData?.pages[0].data.some((oldTx) => oldTx.id === newTx.id)
             );
 
             return {

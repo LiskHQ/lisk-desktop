@@ -6,10 +6,10 @@ import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Skeleton from 'src/modules/common/components/skeleton';
+import NoTokenBalance from 'src/modules/token/fungible/components/NoTokenBalanceDialog/NoTokenBalance';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import Illustration from 'src/modules/common/components/illustration';
 import styles from './TokenCarousel.css';
 
 const NavButton = React.forwardRef(({ isNext, onClick }, ref) => (
@@ -51,13 +51,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
   }, []);
 
   if (!error && !renderData.length) {
-    return (
-      <div className={styles.errorWrapper}>
-        <Illustration className={styles.emptyTokenIllustration} name="emptyTokensIllustration" />
-        <p>{t('There are no tokens to display for this account at this time.')}</p>
-        <TertiaryButton onClick={onRequestToken}>{t('Request token')}</TertiaryButton>
-      </div>
-    );
+    return <NoTokenBalance onRequestToken={onRequestToken} />;
   }
 
   if (error) {

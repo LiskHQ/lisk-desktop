@@ -1,7 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useGetInitializationFees } from '@token/fungible/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee/useTransactionFee';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
@@ -23,7 +22,6 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const transactionJSON = useMemo(
     () => ({
-      id: '',
       module,
       command,
       fee: 0,
@@ -34,16 +32,12 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
     }),
     [wallet.legacy?.balance, module, command, wallet.sequence?.nonce, wallet.summary?.publicKey]
   );
-  const { initializationFees } = useGetInitializationFees({
-    address: wallet.summary?.address,
-  });
 
-  const { transactionFee } = useTransactionFee({
+  const { transactionFee, isFetched } = useTransactionFee({
     transactionJSON,
     selectedPriority,
     isFormValid: true,
     senderAddress: wallet.summary?.address,
-    extraCommandFee: initializationFees?.userAccount,
   });
   transactionJSON.fee = transactionFee;
 
@@ -59,6 +53,7 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
     label: t('Confirm and send'),
     className: styles.actionBtn,
     onClick: onSubmit,
+    disabled: !isFetched,
   };
 
   const onCancelAction = {
@@ -82,8 +77,6 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
     />
   );
 };
-
-Summary.whyDidYouRender = true;
 
 // istanbul ignore next
 const areEqual = (

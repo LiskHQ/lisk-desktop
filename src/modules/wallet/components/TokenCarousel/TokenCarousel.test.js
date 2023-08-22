@@ -1,10 +1,14 @@
 import React from 'react';
+import { useLocation } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import TokenCarousel from './TokenCarousel';
+
+jest.mock('react-router');
 
 describe('TokenCarousel', () => {
   let wrapper;
 
+  useLocation.mockReturnValue({});
   it('should display properly', async () => {
     const props = {
       renderItem: ({ item }) => `render-item-${item}`,

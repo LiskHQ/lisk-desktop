@@ -28,7 +28,7 @@ const getTxDirectionConfig = (moduleCommand, host, recipient, styles) => {
 
 export const getFeeStatus = ({ fee, tokenSymbol, customFee }) => {
   if (customFee) {
-    return customFee;
+    return `${formatAmountBasedOnLocale({ value: customFee.value })} ${tokenSymbol}`;
   }
   return !fee.error ? `${formatAmountBasedOnLocale({ value: fee })} ${tokenSymbol}` : fee.feedback;
 };

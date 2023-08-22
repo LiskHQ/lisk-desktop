@@ -24,6 +24,7 @@ const successTypes = [
 const Regular = ({
   transactions,
   network,
+  application,
   account,
   noBackButton,
   title,
@@ -94,9 +95,9 @@ const Regular = ({
             href={getErrorReportMailto({
               error: status.message,
               errorMessage: message,
-              networkIdentifier: network.networkIdentifier,
               serviceUrl: network.serviceUrl,
               liskCoreVersion: network.networkVersion,
+              application,
             })}
             target="_top"
             rel="noopener noreferrer"

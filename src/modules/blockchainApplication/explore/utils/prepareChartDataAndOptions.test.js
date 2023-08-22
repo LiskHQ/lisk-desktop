@@ -4,7 +4,7 @@ describe('BlockchainApplication explore utils', () => {
   it('Should return correct data when calling prepareChartDataAndOptions', () => {
     const statistics = {
       registered: 101,
-      active: 53,
+      activated: 53,
       terminated: 9,
       totalSupplyLSK: '5000000',
       stakedLSK: '3000000',
@@ -18,11 +18,11 @@ describe('BlockchainApplication explore utils', () => {
     );
 
     expect(doughnutChartData).toEqual({
-      labels: ['Registered', 'Active', 'Terminated'],
+      labels: ['Registered', 'Activated', 'Terminated'],
       datasets: [
         {
           backgroundColor: ['blue', 'green', 'grey'],
-          data: [statistics.registered, statistics.active, statistics.terminated],
+          data: [statistics.registered, statistics.activated, statistics.terminated],
         },
       ],
     });

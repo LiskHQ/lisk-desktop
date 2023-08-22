@@ -1,7 +1,11 @@
 import { cryptography } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 import { regex as reg } from 'src/const/regex';
-import { convertToBaseDenom, getTokenDecimals } from '@token/fungible/utils/helpers';
+import {
+  convertFromBaseDenom,
+  convertToBaseDenom,
+  getTokenDecimals,
+} from '@token/fungible/utils/helpers';
 import i18n from 'src/utils/i18n/i18n';
 import { MIN_ACCOUNT_BALANCE } from 'src/modules/transaction/configuration/transactions';
 
@@ -108,6 +112,17 @@ export const validateAmount = ({
         const amountInBase = convertToBaseDenom(numeral(amount).value(), token);
         // TODO: this minimum balance logic should be replaced by actual fee (transaction + cross chain transfer) as one can make 0 balance for an account in Lisk v4
         return MIN_ACCOUNT_BALANCE > BigInt(accountBalance) - BigInt(amountInBase);
+      },
+    },
+    FEE_RANGE: {
+      message: i18n.t(`Fee must be greater than {{ maxFee }} and less than {{ minFee }}.`, {
+        minFee: convertFromBaseDenom(accountBalance, token),
+        maxFee: convertFromBaseDenom(minValue, token),
+      }),
+      fn: () => {
+        const inputFeeValue = BigInt(convertToBaseDenom(amount, token));
+
+        return !(inputFeeValue >= BigInt(minValue) && inputFeeValue <= BigInt(accountBalance));
       },
     },
   };

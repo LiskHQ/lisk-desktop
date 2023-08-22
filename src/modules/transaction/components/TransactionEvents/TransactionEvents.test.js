@@ -36,7 +36,11 @@ describe('TransactionEvents', () => {
   });
 
   useFilter.mockReturnValue({
-    filters: { dateFrom: '', dateTo: '' },
+    filters: {
+      blockID: '',
+      height: '',
+      transactionID: '',
+    },
     applyFilters: mockApplyFilters,
     clearFilters: mockClearFilters,
   });
@@ -131,8 +135,6 @@ describe('TransactionEvents', () => {
 
     await waitFor(() => {
       expect(mockApplyFilters).toHaveBeenCalledWith({
-        dateFrom: '',
-        dateTo: '',
         ...filters,
       });
     });

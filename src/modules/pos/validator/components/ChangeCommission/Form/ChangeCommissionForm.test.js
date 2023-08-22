@@ -48,7 +48,7 @@ jest.mock('@pos/validator/hooks/useCurrentCommissionPercentage', () => ({
 }));
 jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
 jest.mock('@settings/hooks/useSettings');
-jest.spyOn(transactionApi, 'dryRun').mockResolvedValue([]);
+jest.spyOn(transactionApi, 'dryRunTransaction').mockResolvedValue([]);
 jest.mock('@pos/validator/hooks/queries/usePosConstants');
 
 describe('ChangeCommissionForm', () => {

@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
+import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import Input from 'src/theme/Input/Input';
 import Icon from 'src/theme/Icon';
 import Spinner from 'src/theme/Spinner';
 import Tooltip from 'src/theme/Tooltip';
+import { validateAmount } from 'src/utils/validators';
 import styles from './TransactionPriority.css';
 
-const isCustomFeeValid = (value, maxFee, minFee, token) => {
-  if (!value) return false;
-  const rawValue = convertToBaseDenom(parseFloat(value), token);
+const getCustomFeeStatus = ({ customFeeInput, minFee, minRequiredBalance, token }) => {
+  if (!customFeeInput || !token || !minRequiredBalance) return undefined;
 
-  if (rawValue > maxFee) {
-    return false;
-  }
+  const { message } = validateAmount({
+    amount: customFeeInput.toString(),
+    token,
+    accountBalance: BigInt(token.availableBalance) - BigInt(minRequiredBalance),
+    minValue: minFee,
+    checklist: ['FORMAT', 'ZERO', 'MAX_ACCURACY', 'FEE_RANGE'],
+  });
 
-  return rawValue >= convertToBaseDenom(minFee, token);
+  return message;
 };
 
 const displayFeeInfo = (feeInfo) => {
@@ -41,11 +45,12 @@ const FeesViewer = ({
   isCustom,
   onInputFee,
   feeValue,
-  maxFee,
   minFee,
   fees,
   setCustomFee,
+  customFee,
   token,
+  minRequiredBalance,
 }) => {
   const { t } = useTranslation();
   const [showEditIcon, setShowEditIcon] = useState(false);
@@ -66,13 +71,19 @@ const FeesViewer = ({
 
   const onInputChange = (e) => {
     e.preventDefault();
-    const newValue = e.target.value;
-    onInputFee(newValue);
-    if (isCustomFeeValid(newValue, maxFee, minFee, token)) {
-      setCustomFee({ value: newValue, feedback: '', error: false });
-    } else {
-      setCustomFee({ value: undefined, feedback: 'invalid custom fee', error: true });
-    }
+    const customFeeInput = e.target.value;
+    onInputFee(customFeeInput);
+    const customFeeStatus = getCustomFeeStatus({
+      customFeeInput,
+      minFee,
+      minRequiredBalance,
+      token,
+    });
+    setCustomFee({
+      value: !customFeeStatus ? customFeeInput || minFee : minFee,
+      feedback: customFeeStatus,
+      error: !!customFeeStatus,
+    });
   };
 
   const onClickCustomEdit = (e) => {
@@ -100,8 +111,12 @@ const FeesViewer = ({
         onChange={onInputChange}
         onBlur={onInputBlur}
         onFocus={onInputFocus}
-        status={!isCustomFeeValid(feeValue, maxFee, minFee, token) ? 'error' : 'ok'}
-        feedback={`fee must be between ${minFee} and ${convertFromBaseDenom(maxFee, token)}`}
+        status={
+          getCustomFeeStatus({ customFeeInput: feeValue, minFee, minRequiredBalance, token })
+            ? 'error'
+            : 'ok'
+        }
+        feedback={customFee?.feedback}
       />
     );
   }
@@ -112,7 +127,7 @@ const FeesViewer = ({
         <div className={styles.feeRow} key={title}>
           <span>{title}</span>
           <span className={`${styles.value} fee-value-${title}`} onClick={onClickCustomEdit}>
-            {value}
+            {typeof value === 'object' ? value?.value : value}
             {isCustom && showEditIcon && title === 'Transaction' && <Icon name="edit" />}
             {title === 'Transaction' && (
               <Tooltip position="top left">

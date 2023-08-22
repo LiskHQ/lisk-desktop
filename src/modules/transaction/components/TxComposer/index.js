@@ -13,18 +13,15 @@ import {
   joinModuleAndCommand,
   splitModuleAndCommand,
 } from '@transaction/utils';
-import { dryRun } from '@transaction/api';
+import { dryRunTransaction } from '@transaction/api';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
 import { PrimaryButton } from 'src/theme/buttons';
-import to from 'await-to-js';
 import { useCommandSchema } from 'src/modules/network/hooks';
-import useSettings from 'src/modules/settings/hooks/useSettings';
 import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
-import { TransactionExecutionResult } from '../../constants';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
 // eslint-disable-next-line max-statements
@@ -40,7 +37,6 @@ const TxComposer = ({
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const { t } = useTranslation();
   const { moduleCommandSchemas } = useCommandSchema();
-  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   useSchemas();
   useDeprecatedAccount();
@@ -74,13 +70,14 @@ const TxComposer = ({
   };
 
   const {
-    minimumFee,
-    components,
-    transactionFee,
+    minimumFee = BigInt(0),
+    components = [],
+    transactionFee = BigInt(0),
     messageFeeTokenID,
     messageFee,
-    isFetched,
+    isFetched = true,
     isLoading: isLoadingFee,
+    feeEstimateError,
   } = useTransactionFee({
     selectedPriority,
     transactionJSON,
@@ -96,6 +93,12 @@ const TxComposer = ({
       messageFeeTokenID,
     };
   }
+
+  useEffect(() => {
+    if (feeEstimateError) {
+      setFeedBack([feeEstimateError]);
+    }
+  }, [feeEstimateError]);
 
   useEffect(() => {
     if (typeof onComposed === 'function') {
@@ -150,24 +153,14 @@ const TxComposer = ({
     const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
 
     if (joinModuleAndCommand(transactionJSON) !== MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
-      const [error, dryRunResult] = await to(
-        dryRun({
-          paramsSchema,
-          transaction,
-          skipVerify: true,
-          serviceUrl: mainChainNetwork.serviceUrl,
-        })
-      );
+      const { isOk, errorMessage } = await dryRunTransaction({
+        paramsSchema,
+        transaction,
+      });
 
-      const transactionErrorMessage =
-        error?.message ||
-        (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
-          ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
-          : dryRunResult?.data?.errorMessage);
-
-      if (transactionErrorMessage) {
+      if (!isOk && errorMessage) {
         setIsRunningDryRun(false);
-        return setFeedBack(transactionErrorMessage);
+        return setFeedBack([errorMessage]);
       }
     }
 
@@ -187,7 +180,7 @@ const TxComposer = ({
         token={formProps.fields?.token}
         fee={transactionFee}
         minFee={minimumFee}
-        customFee={customFee ? customFee.value : undefined}
+        customFee={customFee}
         moduleCommand={formProps.moduleCommand}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
@@ -196,6 +189,7 @@ const TxComposer = ({
         loadError={prioritiesLoadError}
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
+        minRequiredBalance={minRequiredBalance}
       />
       <Feedback
         feedback={feedback}

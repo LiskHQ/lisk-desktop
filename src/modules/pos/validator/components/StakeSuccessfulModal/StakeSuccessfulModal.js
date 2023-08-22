@@ -27,7 +27,7 @@ function StakeSuccessfulModal({ history, statusMessage }) {
       </BoxContent>
       <BoxFooter className={styles.footer}>
         <PrimaryButton className={styles.actionButton} onClick={handleBackToValidator}>
-          {t('Show all your stakes')}
+          {t('Back to stakes')}
         </PrimaryButton>
       </BoxFooter>
     </Box>

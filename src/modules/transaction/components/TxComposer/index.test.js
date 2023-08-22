@@ -71,6 +71,7 @@ describe('TxComposer', () => {
     isFetched: true,
     error: false,
   });
+
   useCommandSchema.mockReturnValue({
     moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
@@ -151,5 +152,35 @@ describe('TxComposer', () => {
     expect(wrapper.find('.confirm-btn')).toExist();
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(false);
     expect(wrapper.find('.confirm-btn').at(0).props().children).toEqual('Continue to stake');
+  });
+
+  it('should render transaction form when useTransactionEstimateFees hook errors', () => {
+    const newProps = {
+      ...props,
+      buttonTitle: 'Continue to summary',
+      formProps: {
+        isFormValid: true,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+        fields: { token: { availableBalance: 10000000000000 } },
+        sendingChain: { chainID: '1' },
+        recipientChain: { chainID: '2' },
+      },
+      commandParams: {},
+    };
+
+    useTransactionEstimateFees.mockReturnValue({
+      error: {
+        response: { data: { message: 'Failed to estimate fees.' } },
+      },
+      isFetching: false,
+      isFetched: true,
+    });
+
+    const wrapper = mountWithQueryClient(TxComposer, newProps);
+    expect(wrapper.find('TransactionPriority')).toExist();
+    expect(wrapper.find('Feedback').html()).toEqual(null);
+    expect(wrapper.find('.confirm-btn')).toExist();
+    expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(false);
+    expect(wrapper.find('.confirm-btn').at(0).props().children).toEqual('Continue to summary');
   });
 });
