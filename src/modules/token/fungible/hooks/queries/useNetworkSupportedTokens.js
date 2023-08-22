@@ -7,7 +7,7 @@ export const useNetworkSupportedTokens = (application) => {
   client.current.create(application?.serviceURLs?.[0]);
 
   const tokensSupported = useTokenSummary({ client: client.current });
-  const isSupportAllTokens = tokensSupported.data?.supportedTokens?.isSupportAllTokens;
+  const isSupportAllTokens = tokensSupported.data?.data?.supportedTokens?.isSupportAllTokens;
 
   const appsMetaTokens = useAppsMetaTokens({
     options: { enabled: isSupportAllTokens },
