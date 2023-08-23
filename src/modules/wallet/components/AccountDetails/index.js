@@ -1,6 +1,6 @@
 /* eslint-disable max-statements, complexity, max-lines */
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
+import { selectSearchParamValue } from 'src/utils/searchParams';
 import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import CopyToClipboard from '@common/components/copyToClipboard';
@@ -52,11 +53,13 @@ const editAccountFormSchema = yup
   .required();
 
 const AccountDetails = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
   const { accounts } = useAccounts();
-  const address = currentAccount.metadata?.address;
+  const queryAddress = selectSearchParamValue(history.location.search, 'validatorAddress');
+  const address = queryAddress || currentAccount.metadata?.address;
   const { data: authData, isLoading: authLoading } = useAuth({
     config: { params: { address } },
   });
@@ -175,9 +178,14 @@ const AccountDetails = () => {
             <div className={styles.accountName}>
               {readMode ? (
                 <>
-                  <h3>{currentAccount.metadata?.name}</h3>
+                  <h3>{authData?.meta?.name ?? currentAccount.metadata?.name}</h3>
                   {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
-                  {!authLoading && <Icon name="edit" onClick={(e) => setMode(e)} />}
+                  {!authLoading && !queryAddress && (
+                    <Icon name="edit" onClick={(e) => setMode(e)} />
+                  )}
+                  {!queryAddress && currentAccount.metadata.isHW && (
+                    <Icon name="hardwareWalletIcon" />
+                  )}
                 </>
               ) : (
                 <>
@@ -212,16 +220,18 @@ const AccountDetails = () => {
                 </>
               )}
             </div>
-            <div className={styles.infoRow}>
-              <span className={styles.title}>{t('Backup account')}: </span>
-              <Icon name="filePlain" />
-              {truncatedFilename}
-              <Icon
-                name="downloadBlue"
-                className={styles.downloadIcon}
-                onClick={downloadAccountJSON}
-              />
-            </div>
+            {!queryAddress && !currentAccount.metadata.isHW && (
+              <div className={styles.infoRow}>
+                <span className={styles.title}>{t('Backup account')}: </span>
+                <Icon name="filePlain" />
+                {truncatedFilename}
+                <Icon
+                  name="downloadBlue"
+                  className={styles.downloadIcon}
+                  onClick={downloadAccountJSON}
+                />
+              </div>
+            )}
           </BoxInfoText>
           <div className={styles.infoContainer}>
             <div>
@@ -264,7 +274,7 @@ const AccountDetails = () => {
               </div>
               <div>
                 <div className={`${styles.link} ${styles.sectionHeader}`}>
-                  <Link to={`${routes.validatorProfile.path}?address=${address}`}>
+                  <Link to={`${routes.validatorProfile.path}?validatorAddress=${address}`}>
                     {t('View profile')}
                   </Link>
                 </div>
