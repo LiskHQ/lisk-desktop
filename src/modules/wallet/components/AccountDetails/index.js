@@ -178,7 +178,7 @@ const AccountDetails = () => {
             <div className={styles.accountName}>
               {readMode ? (
                 <>
-                  <h3>{authData?.meta?.name ?? currentAccount.metadata?.name}</h3>
+                  <h3>{authData?.meta?.name || currentAccount.metadata?.name}</h3>
                   {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
                   {!authLoading && !queryAddress && (
                     <Icon name="edit" onClick={(e) => setMode(e)} />

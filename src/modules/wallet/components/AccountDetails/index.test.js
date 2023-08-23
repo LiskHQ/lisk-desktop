@@ -43,6 +43,10 @@ const mockAuth = {
 };
 
 describe('AccountDetails', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders properly for a regular account', () => {
     useAuth.mockReturnValue({ data: mockAuth });
     useValidators.mockReturnValue({});
@@ -71,16 +75,19 @@ describe('AccountDetails', () => {
   });
 
   it('renders properly for a validator account', () => {
-    const mockValidatorAuth = { ...mockAuth, meta: { ...mockAuth.meta, name: 'genesis_1' } };
+    const validatorName = 'genesis_1';
+    const mockValidatorAuth = { ...mockAuth, meta: { ...mockAuth.meta, name: validatorName } };
     useAuth.mockReturnValue({ data: mockValidatorAuth });
     useValidators.mockReturnValue({
-      data: { data: [{ name: acctName, address: acctAddress, publicKey: acctPubkey, rank: 8 }] },
+      data: {
+        data: [{ name: validatorName, address: acctAddress, publicKey: acctPubkey, rank: 8 }],
+      },
     });
 
     smartRender(AccountDetails, null, config);
 
     expect(screen.getByText('Account details')).toBeInTheDocument();
-    expect(screen.getByText(acctName)).toBeInTheDocument();
+    expect(screen.getAllByText(validatorName)[0]).toBeInTheDocument();
     expect(screen.getByText(truncateAddress(acctAddress))).toBeInTheDocument();
     expect(screen.getByText(truncateAddress(acctPubkey))).toBeInTheDocument();
     expect(screen.getByText('Validator details')).toBeInTheDocument();
