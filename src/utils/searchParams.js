@@ -110,6 +110,7 @@ export const removeThenAppendSearchParamsToUrl = (
 ) => {
   let newSearchString = '';
   let formattedSearchString = '';
+
   if (Array.isArray(paramsToRemove) && paramsToRemove.length) {
     newSearchString = removeSearchParams(history.location.search, paramsToRemove, cleanParamsAfter);
   }
