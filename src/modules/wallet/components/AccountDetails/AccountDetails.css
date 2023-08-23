@@ -65,14 +65,14 @@
       }
 
       & img {
-        margin: 0 5px;
+        margin: 0 8px;
 
         &:last-child {
           cursor: pointer;
         }
 
-        &:not(:last-child) {
-          margin-left: 0;
+        &:not(:only-child) {
+          margin-right: 0;
         }
       }
 
@@ -202,6 +202,8 @@
   }
 
   & .members {
+    overflow: unset;
+
     & > p {
       @mixin contentLargest semi-bold;
 

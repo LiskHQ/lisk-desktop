@@ -58,7 +58,9 @@ const AccountDetails = () => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
   const { accounts } = useAccounts();
-  const queryAddress = selectSearchParamValue(history.location.search, 'validatorAddress');
+  const queryAddress =
+    selectSearchParamValue(history.location.search, 'validatorAddress') ||
+    selectSearchParamValue(history.location.search, 'address');
   const address = queryAddress || currentAccount.metadata?.address;
   const { data: authData, isLoading: authLoading } = useAuth({
     config: { params: { address } },
@@ -108,9 +110,9 @@ const AccountDetails = () => {
     watch,
     handleSubmit,
     reset,
-    formState: { errors, isDirty },
     setValue,
     setError,
+    formState: { errors, isDirty },
   } = useForm({
     resolver: yupResolver(editAccountFormSchema),
   });
@@ -246,9 +248,9 @@ const AccountDetails = () => {
               <div className={styles.row}>
                 <span className={styles.title}>{t('Public Key')}:</span>
                 <CopyToClipboard
-                  value={publicKey}
+                  value={publicKey || currentAccount.metadata.pubkey}
                   className={styles.rowValue}
-                  text={truncateAddress(publicKey)}
+                  text={truncateAddress(publicKey || currentAccount.metadata.pubkey)}
                 />
               </div>
             </div>
