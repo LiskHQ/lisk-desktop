@@ -112,6 +112,7 @@ const AccountDetails = () => {
     resolver: yupResolver(editAccountFormSchema),
   });
   const formValues = watch();
+  const accountNameError = errors.accountName?.message;
 
   const downloadAccountJSON = () => {
     downloadJSON(currentAccount, fileName);
@@ -160,6 +161,7 @@ const AccountDetails = () => {
     setReadMode(!readMode);
     reset();
   };
+  console.log({ accountNameError });
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
@@ -187,9 +189,9 @@ const AccountDetails = () => {
                       placeholder={t('Update name')}
                       size="m"
                       value={formValues.accountName}
-                      error={!!errors.accountName?.message}
-                      feedback={errors.accountName?.message}
-                      status={errors.accountName?.message ? 'error' : 'ok'}
+                      error={!!accountNameError}
+                      feedback={accountNameError}
+                      status={accountNameError ? 'error' : 'ok'}
                       {...register('accountName')}
                     />
                     <TertiaryButton
@@ -202,7 +204,7 @@ const AccountDetails = () => {
                     <TertiaryButton
                       className={`account-save-changes-button ${styles.confirmBtn}`}
                       size="m"
-                      disabled={!!errors.accountName?.message || !isDirty}
+                      disabled={!!accountNameError || !isDirty}
                       type="submit"
                     >
                       {t('Save changes')}
