@@ -10,7 +10,7 @@ import styles from './RemoveApplicationFlow.css';
 const RemoveApplicationFlow = ({ testHistory, testLocation }) => {
   const history = useHistory();
   const handleCancelAppDetails = () => {
-    removeSearchParamsFromUrl(history, ['modal'], true);
+    removeSearchParamsFromUrl(history, ['modal', 'chainId'], true);
   };
 
   return (

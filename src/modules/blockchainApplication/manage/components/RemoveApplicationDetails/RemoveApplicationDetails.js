@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Box from '@theme/box';
@@ -10,7 +10,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
 import Icon from '@theme/Icon';
 import Tooltip from '@theme/Tooltip';
-import { parseSearchParams } from 'src/utils/searchParams';
+import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { getLogo } from '@token/fungible/utils/helpers';
 import Skeleton from '@common/components/skeleton/Skeleton';
 import Illustration from 'src/modules/common/components/illustration';
@@ -20,7 +20,7 @@ import { useApplicationManagement } from '../../hooks/useApplicationManagement';
 import styles from './RemoveApplicationDetails.css';
 
 // eslint-disable-next-line max-statements, complexity
-const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
+const RemoveApplicationDetails = ({ location, onCancel, nextStep, history }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search)?.chainId;
   const {
@@ -87,10 +87,15 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
 
   const handleRemoveApplication = () => {
     deleteApplicationByChainId(chainId);
+    removeSearchParamsFromUrl(history, ['chainId']);
     nextStep({ application });
   };
 
-  if (isOnChainDataError || isOffChainDataError)
+  useEffect(() => {
+    if (!chainId) removeSearchParamsFromUrl(history, ['modal'], true);
+  }, [chainId]);
+
+  if (isOnChainDataError || isOffChainDataError) {
     return (
       <Dialog hasClose className={`${grid.row} ${grid['center-xs']}`}>
         <div className={`${styles.wrapper} ${styles.errorWrapper}`}>
@@ -102,6 +107,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep }) => {
         </div>
       </Dialog>
     );
+  }
 
   return (
     <Dialog className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>

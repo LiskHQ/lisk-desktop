@@ -247,7 +247,6 @@ export const modals = {
   removeApplicationFlow: {
     isPrivate: false,
     forbiddenTokens: [],
-    requiredParams: ['chainId'],
   },
   connectionProposal: {
     isPrivate: false,
