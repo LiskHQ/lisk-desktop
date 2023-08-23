@@ -60,11 +60,11 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   };
   const addNewApplication = () => {
     setApplication(aggregatedApplicationData);
-    removeThenAppendSearchParamsToUrl(
-      history,
-      { modal: 'addApplicationSuccess', chainId: aggregatedApplicationData.chainID },
-      ['modal', 'chainId', 'mode']
-    );
+    removeThenAppendSearchParamsToUrl(history, { modal: 'addApplicationSuccess' }, [
+      'modal',
+      'chainId',
+      'mode',
+    ]);
   };
 
   const reloadAppDetails = () => {
@@ -123,7 +123,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   return (
     <Dialog
       hasClose
-      hasBack
+      hasBack={!!mode}
       className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}
       customBackBtn="arrowLeftTailedDark"
     >
