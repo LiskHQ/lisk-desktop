@@ -4,16 +4,19 @@ import { useAuth } from '@auth/hooks/queries';
 import { useValidators } from '@pos/validator/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import * as transactionUtils from '@transaction/utils/transaction';
+import { updateHWAccount } from '@hardwareWallet/store/actions';
+import actionTypes from 'src/modules/hardwareWallet/store/actions/actionTypes';
 import { truncateAddress } from '../../utils/account';
 import AccountDetails from '.';
 
+const currentAccount = mockSavedAccounts[0];
+
 jest.mock('@auth/hooks/queries/useAuth');
+jest.mock('@hardwareWallet/store/actions');
 jest.mock('@pos/validator/hooks/queries/useValidators');
 jest.mock('@transaction/utils/transaction', () => ({
   downloadJSON: jest.fn(),
 }));
-
-const currentAccount = mockSavedAccounts[0];
 
 const config = {
   queryClient: true,
@@ -53,6 +56,18 @@ describe('AccountDetails', () => {
     expect(screen.getByText('Nonce:')).toBeInTheDocument();
     expect(screen.getByText(mockAuth.data.nonce)).toBeInTheDocument();
     expect(screen.getByAltText('edit')).toBeInTheDocument();
+  });
+
+  it('renders with default values if authData is not returned', () => {
+    useAuth.mockReturnValue({ data: undefined });
+    useValidators.mockReturnValue({});
+
+    smartRender(AccountDetails, null, config);
+
+    expect(screen.getByText('Account details')).toBeInTheDocument();
+    expect(screen.getByText(acctName)).toBeInTheDocument();
+    expect(screen.getByText('Nonce:')).toBeInTheDocument();
+    expect(screen.getByText('0')).toBeInTheDocument();
   });
 
   it('renders properly for a validator account', () => {
@@ -159,6 +174,48 @@ describe('AccountDetails', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Account with name "account_2" already exists.')).toBeInTheDocument();
+    });
+  });
+
+  it('allows renaming hardware wallet accounts', async () => {
+    useAuth.mockReturnValue({ data: mockAuth });
+    useValidators.mockReturnValue({});
+    updateHWAccount.mockImplementation((hwAccount) => ({
+      type: actionTypes.updateHWAccount,
+      hwAccount,
+    }));
+    const modifiedCurrentAccount = {
+      ...currentAccount,
+      metadata: { ...currentAccount.metadata, isHW: true },
+    };
+    const modifiedConfig = {
+      ...config,
+      storeInfo: {
+        ...config.storeInfo,
+        account: { ...config.storeInfo.account, current: modifiedCurrentAccount },
+      },
+    };
+    const newHWAccountName = 'new_hw_account';
+    const newCurrentAccount = {
+      ...modifiedCurrentAccount,
+      metadata: { ...modifiedCurrentAccount.metadata, name: newHWAccountName },
+    };
+
+    smartRender(AccountDetails, null, modifiedConfig);
+
+    fireEvent.click(screen.getByAltText('edit'));
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('Update name')).toBeVisible();
+      expect(screen.getByText('Save changes')).toBeVisible();
+    });
+
+    const input = screen.getByTestId('accountName');
+    fireEvent.change(input, { target: { value: newHWAccountName } });
+    fireEvent.click(screen.getByText('Save changes'));
+
+    await waitFor(() => {
+      expect(updateHWAccount).toBeCalledWith(newCurrentAccount);
     });
   });
 });

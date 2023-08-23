@@ -130,38 +130,37 @@ const AccountDetails = () => {
   };
 
   const onFormSubmit = (values) => {
-    const updatedAccountName = values.accountName;
-    setEditedAccountName(updateAccountName);
+    const modifiedAccountName = values.accountName;
+    setEditedAccountName(modifiedAccountName);
     const existingAccountName = accounts.some(
       (acc) =>
-        acc.metadata.name.toLowerCase() === updatedAccountName.toLowerCase() &&
+        acc.metadata.name.toLowerCase() === modifiedAccountName.toLowerCase() &&
         acc.metadata.address !== currentAccount.metadata.address
     );
     if (existingAccountName) {
       setError('accountName', {
-        message: t(`Account with name "${updatedAccountName}" already exists.`),
+        message: t(`Account with name "${modifiedAccountName}" already exists.`),
       });
       return;
     }
-    dispatch(updateCurrentAccount({ name: updatedAccountName }));
+    dispatch(updateCurrentAccount({ name: modifiedAccountName }));
     if (currentAccount.metadata.isHW) {
       const updatedAccount = {
         ...currentAccount,
-        metadata: { ...currentAccount.metadata, name: updatedAccountName },
+        metadata: { ...currentAccount.metadata, name: modifiedAccountName },
       };
       dispatch(updateHWAccount(updatedAccount));
     } else {
       dispatch(
         updateAccount({
           encryptedAccount: currentAccount,
-          accountDetail: { name: updatedAccountName },
+          accountDetail: { name: modifiedAccountName },
         })
       );
     }
     setReadMode(!readMode);
     reset();
   };
-  console.log({ accountNameError });
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>

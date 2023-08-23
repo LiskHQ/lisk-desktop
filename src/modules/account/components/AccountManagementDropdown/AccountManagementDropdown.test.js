@@ -34,7 +34,7 @@ describe('AccountManagementDropdown', () => {
     ).toBeInTheDocument();
     fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
     expect(mockOnMenuClick).toHaveBeenCalledTimes(2);
-    expect(screen.getByText('Edit account name')).toBeInTheDocument();
+    expect(screen.getByText('Account details')).toBeInTheDocument();
     expect(screen.getByText('Switch account')).toBeInTheDocument();
     expect(screen.getByText('Backup account')).toBeInTheDocument();
     expect(screen.getByText('Add new account')).toBeInTheDocument();
