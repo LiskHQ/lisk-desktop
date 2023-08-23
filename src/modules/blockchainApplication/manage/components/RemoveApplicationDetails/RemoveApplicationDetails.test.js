@@ -29,6 +29,7 @@ describe('BlockchainApplicationDetails', () => {
     location: {
       search: 'chainId=00000001',
     },
+    history: { push: jest.fn() },
     nextStep: jest.fn(),
     onCancel: jest.fn(),
   };
