@@ -196,7 +196,7 @@ const ValidatorsMonitor = ({ watchList }) => {
               value={search}
               className={`${styles.filterValidators} filter-by-name`}
               size="m"
-              placeholder={t('Search by name')}
+              placeholder={t('Search for name or address')}
             />
           </span>
         </BoxHeader>

@@ -23,7 +23,6 @@ const DateTimeFromTimestamp = withTranslation()((props) => {
           dateTime.format('DD MMM YYYY, hh:mm:ss A')
         : dateTime.calendar(null, {
             lastDay: props.t('DD MMM YYYY'),
-            sameDay: props.t('hh:mm A'),
             nextDay: props.t('[Tomorrow], hh:mm A'),
             lastWeek: props.t('DD MMM YYYY'),
             nextWeek: props.t('DD MMM YYYY'),
