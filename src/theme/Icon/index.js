@@ -35,6 +35,7 @@ import discreetMode from '@setup/react/assets/images/icons/discreet-mode.svg';
 import discreetModeActive from '@setup/react/assets/images/icons/discreet-mode-active.svg';
 import feedback from '@setup/react/assets/images/icons/feedback.svg';
 import feedbackActive from '@setup/react/assets/images/icons/feedback-active.svg';
+import filePlain from '@setup/react/assets/images/icons/file-plain.svg';
 import fileOutline from '@setup/react/assets/images/icons/icon-file-outline.svg';
 import fileOutlineDark from '@setup/react/assets/images/icons/icon-file-outline-dark.svg';
 import help from '@setup/react/assets/images/icons/help.svg';
@@ -125,6 +126,7 @@ import stakingActive from '@setup/react/assets/images/icons/stakingActive.svg';
 import signOut from '@setup/react/assets/images/icons/signOut.svg';
 import plus from '@setup/react/assets/images/icons/plus.svg';
 import plusActive from '@setup/react/assets/images/icons/plusActive.svg';
+import profileOutline from '@setup/react/assets/images/icons/profile-outline.svg';
 import remove from '@setup/react/assets/images/icons/remove.svg';
 import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
 import removeRed from '@setup/react/assets/images/icons/remove-red.svg';
@@ -267,6 +269,7 @@ export const icons = {
   discreetModeActive,
   feedback,
   feedbackActive,
+  filePlain,
   fileOutline,
   generatedBlocks,
   generatedBlocksDark,
@@ -370,6 +373,7 @@ export const icons = {
   plus,
   plusActive,
   plusWhiteIcon,
+  profileOutline,
   remove,
   totalBlocks,
   totalBlocksDark,

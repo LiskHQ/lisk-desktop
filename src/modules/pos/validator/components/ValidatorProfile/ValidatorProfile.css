@@ -73,6 +73,12 @@
     }
   }
 
+  & .walletVisualWrapper {
+    & div > div {
+      cursor: pointer;
+    }
+  }
+
   & .accountSummary {
     display: flex;
     flex-direction: column;

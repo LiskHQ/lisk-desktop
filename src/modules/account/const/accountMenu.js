@@ -9,9 +9,9 @@ export const accountMenu = ({
   hasAvailableTokenBalance,
 }) => [
   {
-    component: 'editAccount',
-    icon: 'edit',
-    label: 'Edit account name',
+    component: 'accountDetails',
+    icon: 'profileOutline',
+    label: 'Account details',
   },
   {
     component: 'switchAccount',

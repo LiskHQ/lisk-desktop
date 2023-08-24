@@ -39,7 +39,7 @@ const removeWarningMessage = () => {
 const Overview = ({ isWalletRoute, history }) => {
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const { t } = useTranslation();
-  const [{ metadata: { address: currentAddress, name, pubkey } = {} }] = useCurrentAccount();
+  const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: validators } = useValidators({ config: { params: { address } } });
@@ -104,16 +104,18 @@ const Overview = ({ isWalletRoute, history }) => {
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
-        <WalletVisualWithAddress
-          copy
-          size={50}
-          address={authData?.meta?.address}
-          accountName={!searchAddress ? name : validator.name}
-          detailsClassName={styles.accountSummary}
-          truncate={false}
-          isMultisig={authData?.data?.numberOfSignatures > 0}
-          publicKey={searchAddress ? authData?.meta?.publicKey : pubkey}
-        />
+        <DialogLink component="accountDetails">
+          <WalletVisualWithAddress
+            copy
+            size={50}
+            address={authData?.meta?.address}
+            accountName={!searchAddress ? name : validator.name}
+            className={styles.walletVisualWrapper}
+            detailsClassName={styles.accountSummary}
+            truncate={false}
+            isMultisig={authData?.data?.numberOfSignatures > 0}
+          />
+        </DialogLink>
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
         <div className={`${grid.row} ${styles.actionButtons}`}>

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Tooltip from '@theme/Tooltip/tooltip';
 import WalletVisual from '../walletVisual';
 import { truncateAddress } from '../../utils/account';
 
@@ -19,13 +20,40 @@ const Member = ({ member, i, t, size }) => (
   </div>
 );
 
-const Members = ({ members, t, className, size }) => {
+const Members = ({
+  members,
+  numberOfSignatures,
+  t,
+  className,
+  size,
+  showSignatureCount = false,
+}) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
   const rightColumn = members.slice(sliceIndex, members.length);
   return (
     <div className={`${styles.membersContainer} ${className}`}>
-      <p className={styles.title}>{t('Members')}</p>
+      <div className={styles.label}>
+        <p>{t('Members')}:</p>
+        {showSignatureCount && !!numberOfSignatures && (
+          <p className={styles.signatureInfo}>
+            <span>{t('Required signatures')} </span>
+            <Tooltip
+              size="m"
+              className={styles.tooltipWrapper}
+              tooltipClassName={`${styles.tooltipContainer}`}
+              position="left"
+            >
+              <p>
+                {t(
+                  'Number of signatures required to approve any outgoing transactions from this account.'
+                )}
+              </p>
+            </Tooltip>
+            <span>: {numberOfSignatures}</span>
+          </p>
+        )}
+      </div>
       <div>
         {leftColumn.map((member, i) => (
           <Member
