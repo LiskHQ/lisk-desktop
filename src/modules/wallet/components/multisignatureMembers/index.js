@@ -27,6 +27,7 @@ const Members = ({
   className,
   size,
   showSignatureCount = false,
+  accountDetails = false,
 }) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
@@ -42,7 +43,7 @@ const Members = ({
               size="m"
               className={styles.tooltipWrapper}
               tooltipClassName={`${styles.tooltipContainer}`}
-              position="left"
+              position={accountDetails ? 'bottom left' : 'left'}
             >
               <p>
                 {t(

@@ -202,12 +202,16 @@
   }
 
   & .members {
-    overflow: unset;
+    max-height: 400px;
 
     & > p {
       @mixin contentLargest semi-bold;
 
       margin-top: 0;
+    }
+
+    & div > p > div > div > span {
+      top: -25px !important;
     }
   }
 }
