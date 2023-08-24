@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
+import DialogLink from '@theme/dialog/link';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
@@ -104,15 +105,17 @@ const ValidatorProfile = ({ history }) => {
           isMyProfile ? (
             t('My validator profile')
           ) : (
-            <WalletVisualWithAddress
-              copy
-              size={50}
-              address={address}
-              accountName={validator.name}
-              detailsClassName={styles.accountSummary}
-              truncate={false}
-              publicKey={validator.publicKey}
-            />
+            <DialogLink component="accountDetails">
+              <WalletVisualWithAddress
+                copy
+                size={50}
+                address={address}
+                accountName={validator.name}
+                className={styles.walletVisualWrapper}
+                detailsClassName={styles.accountSummary}
+                truncate={false}
+              />
+            </DialogLink>
           )
         }
         onGoBack={() => history.push(routes.validators.path)}

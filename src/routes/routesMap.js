@@ -14,7 +14,7 @@ import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from '@common/components/TermsOfUse';
 import Explorer from '@wallet/manager/explorerManager';
-import AccountDetails from '@account/components/AccountDetails';
+import AccountOverviewDetails from '@account/components/AccountDetails';
 import TransactionDetails from '@transaction/manager/transactionDetailViewManager';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@wallet/components/request';
@@ -30,13 +30,13 @@ import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import RegisterMultisig from '@wallet/manager/registerMultisigManager';
 import SignMultiSig from '@wallet/manager/signMultisigManager';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
+import AccountDetails from '@wallet/components/AccountDetails';
 import ManageAccounts from '@account/components/ManageAccounts';
 import AddAccountOptions from '@account/components/AddAccountOptions';
 import AddAccountBySecretRecovery from '@account/components/AddAccountBySecretRecovery';
 import AddAccountByFile from '@account/components/AddAccountByFile';
 import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
-import EditAccount from '@account/components/EditAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
 import BlockchainApplications from '@blockchainApplication/explore/components/BlockchainApplications/BlockchainApplications';
@@ -61,8 +61,7 @@ import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardware
 import { NoTokenBalanceDialog } from 'src/modules/token/fungible/components/NoTokenBalanceDialog';
 
 export default {
-  wallet: AccountDetails,
-  editAccount: EditAccount,
+  wallet: AccountOverviewDetails,
   explorer: Explorer,
   register: Register,
   termsOfUse: TermsOfUse,
@@ -95,6 +94,7 @@ export default {
   multiSignature: RegisterMultisig,
   multisigAccountDetails: MultisigAccountDetails,
   signMultiSignTransaction: SignMultiSig,
+  accountDetails: AccountDetails,
   manageAccounts: ManageAccounts,
   addAccountOptions: AddAccountOptions,
   accountAdd: AddAccountForm,
