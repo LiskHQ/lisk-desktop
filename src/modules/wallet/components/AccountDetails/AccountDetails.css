@@ -2,6 +2,7 @@
 
 .container {
   border: 0;
+  flex-wrap: nowrap;
 
   & :global(.dialog-close-button) {
     &::before,
@@ -38,6 +39,8 @@
 
 .wrapper {
   padding: 0 !important;
+  flex: 1;
+  overflow-y: auto;
 
   & .infoHeader {
     text-align: center;
@@ -157,6 +160,10 @@
     text-align: left;
     padding: 24px 0;
 
+    &:last-child {
+      padding-bottom: 0;
+    }
+
     & > div {
       width: 50%;
 
@@ -203,6 +210,7 @@
 
   & .members {
     max-height: 400px;
+    overflow-y: unset;
 
     & > p {
       @mixin contentLargest semi-bold;
@@ -211,7 +219,7 @@
     }
 
     & div > p > div > div > span {
-      top: -25px !important;
+      top: calc(40% - 15px) !important;
     }
   }
 }

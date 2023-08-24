@@ -299,7 +299,6 @@ const AccountDetails = () => {
                   members={members}
                   numberOfSignatures={numberOfSignatures}
                   showSignatureCount
-                  accountDetails
                   t={t}
                   size={40}
                   className={styles.members}
