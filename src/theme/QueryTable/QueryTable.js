@@ -10,6 +10,7 @@ export const QueryTable = ({
   scrollToSelector,
   transformResponse,
   onFetched,
+  onQueryChange,
   ...props
 }) => {
   const data = queryHook(queryConfig);
@@ -57,6 +58,10 @@ export const QueryTable = ({
       onFetched(response);
     }
   }, [isFetched]);
+
+  useEffect(() => {
+    onQueryChange?.(data);
+  }, [data]);
 
   return (
     <Table

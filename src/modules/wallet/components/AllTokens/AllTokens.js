@@ -29,6 +29,7 @@ const AllTokens = ({ history }) => {
   const timeout = useRef();
 
   const [searchToken, setSearch] = useState('');
+  const [shouldShowSearch, setShouldShowSearch] = useState(true);
   const { filters, setFilter } = useFilter({});
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
@@ -49,20 +50,27 @@ const AllTokens = ({ history }) => {
 
   const handleGoBack = () => history.push(routes.wallet.path);
 
+  const onGetTokenBalance = ({ data, isFetched }) => {
+    const tokenBalanceLength = data?.data?.length;
+    setShouldShowSearch(isFetched && tokenBalanceLength >= 10);
+  };
+
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
         <Heading title={t('All tokens')} onGoBack={handleGoBack}>
           <div className={styles.rightHeaderSection}>
-            <Input
-              icon={<Icon className={styles.searchIcon} name="searchActive" />}
-              onChange={handleFilter}
-              value={searchToken}
-              className={styles.filterTokens}
-              size="l"
-              name="search-token"
-              placeholder={t('Search token')}
-            />
+            {shouldShowSearch && (
+              <Input
+                icon={<Icon className={styles.searchIcon} name="searchActive" />}
+                onChange={handleFilter}
+                value={searchToken}
+                className={styles.filterTokens}
+                size="l"
+                name="search-token"
+                placeholder={t('Search token')}
+              />
+            )}
             <div className={styles.actionButtons}>
               <DialogLink component="request">
                 <SecondaryButton>{t('Request')}</SecondaryButton>
@@ -77,6 +85,7 @@ const AllTokens = ({ history }) => {
       <BoxContent>
         <QueryTable
           showHeader
+          onQueryChange={onGetTokenBalance}
           queryHook={useTokenBalances}
           queryConfig={{ config: { params } }}
           row={TokenRow}
