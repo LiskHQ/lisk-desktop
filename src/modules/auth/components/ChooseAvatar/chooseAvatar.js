@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import routes from 'src/routes/routes';
-import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
-import useSettings from 'src/modules/settings/hooks/useSettings';
-import { extractKeyPair, extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
+import { PrimaryButton, TertiaryButton } from '@theme/buttons';
+import useSettings from '@settings/hooks/useSettings';
+import { extractKeyPair, extractAddressFromPublicKey } from '@wallet/utils/account';
 import { defaultDerivationPath } from '@account/const';
 import WalletVisual from '@wallet/components/walletVisual';
 import registerStyles from '../Signup/register.css';
@@ -73,6 +73,7 @@ const ChooseAvatar = ({ accounts, selected, handleSelectAvatar, nextStep }) => {
         className={`${styles.avatarsHolder} ${
           selected.address ? styles.avatarSelected : ''
         } choose-avatar`}
+        data-testid="avatars-holder"
       >
         {accountList.map((account, key) => (
           <span
@@ -81,6 +82,7 @@ const ChooseAvatar = ({ accounts, selected, handleSelectAvatar, nextStep }) => {
               selected: selected.address,
               previous: deselect.address,
             })}
+            data-testid={`choose-avatar-${account.address}`}
             onClick={() => handleSelectAvatar(account)}
             key={key}
           >
