@@ -25,10 +25,6 @@ import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import TransactionAmount from '../TransactionAmount';
 
-const remapModuleCommandNames = {
-  [MODULE_COMMANDS_NAME_MAP.stake]: 'PoS:stake',
-};
-
 export const ID = ({ address, isWallet }) => {
   const { data } = useContext(TransactionRowContext);
   return (
@@ -55,13 +51,7 @@ export const Round = () => {
 
 export const Type = () => {
   const { data } = useContext(TransactionRowContext);
-  const formatTransactionType = (transactionType) => {
-    let txType = transactionType;
-
-    if (remapModuleCommandNames[transactionType]) txType = remapModuleCommandNames[transactionType];
-
-    return txType.replace(':', ' ');
-  };
+  const formatTransactionType = (txType) => txType.replace(':', ' ');
   return <span className={styles.type}>{formatTransactionType(data.moduleCommand)}</span>;
 };
 
