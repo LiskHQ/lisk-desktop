@@ -5,7 +5,7 @@ import { requestTokenSchema } from './validationSchema';
 const PERMISSION_WHITE_LIST = ['clipboard-read', 'notifications', 'openExternal'];
 const WHITE_LISTED_DEEP_LINKS = [
   {
-    pathRegex: /^\/\/wallet\/?$/,
+    pathRegex: /^wallet$/,
     validationSchema: requestTokenSchema,
   },
 ];
@@ -19,11 +19,10 @@ export const setRendererPermissions = (win) => {
 };
 
 export const canExecuteDeepLinking = (url) => {
-  const { protocol, href, searchParams } = new URL(url);
+  const { protocol, searchParams, hostname } = new URL(url);
   if (protocol !== 'lisk:') return false;
 
-  const pathname = href.match(/(?<=(lisk:))(\/\/[\w|/]+)/g)?.[0];
-  const foundLink = WHITE_LISTED_DEEP_LINKS.find(({ pathRegex }) => pathRegex.test(pathname));
+  const foundLink = WHITE_LISTED_DEEP_LINKS.find(({ pathRegex }) => pathRegex.test(hostname));
   if (!foundLink) return false;
 
   const searchParamObject = [...searchParams.entries()].reduce(
