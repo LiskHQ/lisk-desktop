@@ -34,7 +34,12 @@ const Registrations = () => {
               },
             ],
           }}
-          options={{ legend: { display: false } }}
+          options={{
+            legend: { display: false },
+            scales: {
+              yAxes: [{ ticks: { precision: 0 } }],
+            },
+          }}
         />
       </div>
     </div>
