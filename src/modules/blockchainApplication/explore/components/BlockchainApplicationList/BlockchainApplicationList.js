@@ -49,7 +49,7 @@ const BlockchainApplicationList = () => {
   return (
     <Box main className="chain-application-box">
       <div className={styles.searchWrapper}>
-        {(blockchainApplicationExplore?.data?.data?.length > 0 || !!searchValue) && (
+        {(blockchainApplicationExplore?.data?.data?.length > 5 || !!searchValue) && (
           <div align="right" className={grid['col-xs-12']}>
             <div className={styles.filterHolder}>
               <Input

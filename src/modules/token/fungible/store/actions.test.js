@@ -3,7 +3,6 @@ import * as hwManager from '@transaction/utils/hwManager';
 import { getState } from '@tests/fixtures/transactions';
 import actionTypes from '@transaction/store/actionTypes';
 import wallets from '@tests/constants/wallets';
-import { getAddressFromBase32Address } from '@wallet/utils/account';
 import { convertStringToBinary } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { tokensTransferred } from './actions';
@@ -63,7 +62,7 @@ describe('actions: transactions', () => {
         senderPublicKey: convertStringToBinary(wallets.genesis.summary.publicKey),
         nonce: BigInt(2),
         params: {
-          recipientAddress: getAddressFromBase32Address(wallets.genesis.summary.address),
+          recipientAddress: wallets.genesis.summary.address,
           amount: BigInt(112300000),
           data: 'test',
         },
@@ -115,7 +114,7 @@ describe('actions: transactions', () => {
         senderPublicKey: convertStringToBinary(wallets.genesis.summary.publicKey),
         nonce: BigInt(2),
         params: {
-          recipientAddress: getAddressFromBase32Address(wallets.genesis.summary.address),
+          recipientAddress: wallets.genesis.summary.address,
           amount: BigInt(112300000),
           data: 'test',
         },

@@ -2,10 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
-import { extractAddressFromPassphrase } from '@wallet/utils/account';
+import { cryptography } from '@liskhq/lisk-client';
 import wallets from '@tests/constants/wallets';
 import ChooseAvatar from './chooseAvatar';
+import { getPassphraseAndAddress } from '../../hooks/useCreateAccounts';
 
 describe('Register Process - Choose Avatar', () => {
   let wrapper;
@@ -17,11 +17,7 @@ describe('Register Process - Choose Avatar', () => {
   };
   jest.spyOn(cryptography.legacy, 'getKeys').mockReturnValue(defaultKeys);
 
-  const passphrases = [...Array(5)].map(() => LiskPassphrase.Mnemonic.generateMnemonic());
-  const accounts = passphrases.map((pass) => ({
-    address: extractAddressFromPassphrase(pass),
-    passphrase: pass,
-  }));
+  let accounts;
 
   const props = {
     handleSelectAvatar: sinon.spy(),
@@ -29,7 +25,9 @@ describe('Register Process - Choose Avatar', () => {
     accounts,
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    accounts = await Promise.all([...Array(5)].map(() => getPassphraseAndAddress(128)));
+    props.accounts = accounts;
     wrapper = mount(<ChooseAvatar {...props} />);
   });
 
