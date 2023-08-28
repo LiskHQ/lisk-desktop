@@ -30,9 +30,9 @@ const DetailsView = ({ data, isMyProfile }) => {
   const history = useHistory();
   const theme = useTheme();
   const { t } = useTranslation();
-  const { data: generateBlock } = useBlocks({
+  const { data: generatedBlock } = useBlocks({
     config: { params: { height: lastGeneratedHeight } },
-    options: { enable: !lastGeneratedHeight },
+    options: { enable: !!lastGeneratedHeight },
   });
   const { token } = usePosToken();
 
@@ -63,11 +63,11 @@ const DetailsView = ({ data, isMyProfile }) => {
     {
       icon: 'calendar',
       label: t('Last generated at'),
-      value: generateBlock?.data?.[0] ? (
+      value: generatedBlock?.data?.[0] ? (
         <DateTimeFromTimestamp
           fulltime
           className="date"
-          time={generateBlock?.data?.[0].timestamp}
+          time={generatedBlock?.data?.[0].timestamp}
         />
       ) : (
         '-'
