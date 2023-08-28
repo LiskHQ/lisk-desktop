@@ -128,9 +128,7 @@ const RequestSummary = ({ nextStep, history }) => {
         validator.validator.validateSchema(schema);
         const transactionObj = decodeTransaction(Buffer.from(payload, 'hex'), schema);
         setTransaction(transactionObj);
-        const address =
-          'lsk2447tv63fubjrqpkfn7e9e3zhhwnuhzyhmvhqw' ||
-          extractAddressFromPublicKey(transactionObj.senderPublicKey);
+        const address = extractAddressFromPublicKey(transactionObj.senderPublicKey);
         const account = getAccountByAddress(address);
 
         setSenderAccount({
