@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import Icon from 'src/theme/Icon';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -6,7 +7,7 @@ import Tooltip from '@theme/Tooltip';
 import { useTranslation } from 'react-i18next';
 import styles from './AccountRow.css';
 
-function AccountRow({ account, currentAccount, onSelect, onRemove, truncate }) {
+function AccountRow({ account, currentAccount, onSelect, onRemove, truncate, className }) {
   const {
     metadata: { name, address, isHW, isNew },
   } = account;
@@ -16,8 +17,8 @@ function AccountRow({ account, currentAccount, onSelect, onRemove, truncate }) {
     <div
       key={address}
       data-testid={address}
-      className={styles.accountWrapper}
-      onClick={() => onSelect(account)}
+      className={classNames(styles.accountWrapper, className)}
+      onClick={() => onSelect?.(account)}
     >
       <WalletVisual address={address} size={40} />
       <div className={styles.addressWrapper}>
