@@ -8,6 +8,14 @@
     display: flex;
     justify-content: space-between;
     margin-top: 1em; /* stylelint-disable-line unit-whitelist */
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-top: 48px;
+    }
   }
 }
 
@@ -42,6 +50,43 @@
   & .downloadBtn {
     padding-right: 15px;
     padding-left: 15px;
+  }
+
+  &.jsonWrapper {
+    & .infoFooterText {
+      margin-bottom: 16px;
+    }
+
+    & div {
+      @mixin contentNormal;
+
+      font-size: 14px;
+
+      & > span:first-child {
+        padding: 8px 12px;
+        margin-right: 8px;
+        border: 1px solid var(--color-slate-gray);
+        border-radius: 100px;
+        color: var(--color-zodiac-blue);
+
+        & img {
+          margin-right: 8px;
+        }
+      }
+
+      & span:last-child {
+        color: var(--color-ultramarine-blue);
+        font-weight: 500;
+
+        & > span {
+          margin-right: 8px;
+        }
+
+        & img {
+          vertical-align: middle;
+        }
+      }
+    }
   }
 }
 
@@ -89,7 +134,7 @@
 
 .copyPassphrase {
   position: absolute;
-  top: 65px;
+  top: 20px;
   right: 0;
   padding: 0 !important;
 

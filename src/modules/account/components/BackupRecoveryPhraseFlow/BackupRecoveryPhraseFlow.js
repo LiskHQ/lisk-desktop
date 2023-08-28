@@ -32,7 +32,7 @@ const BackupRecoveryPhraseFlow = () => {
       <div className={`${styles.backupRecoveryPhraseFlow} ${grid.row}`}>
         <MultiStep navStyles={{ multiStepWrapper: styles.wrapper }} ref={multiStepRef}>
           <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />
-          <SavePassphrase passphrase={passphrase} title={t('Backup your secret recovery phrase')} />
+          <SavePassphrase passphrase={passphrase} title={t('Backup account')} isJsonBackup />
           <ConfirmPassphrase passphrase={passphrase} confirmText={t('Confirm')} />
           <SetPasswordSuccess
             buttonText={t('Continue to wallet')}
