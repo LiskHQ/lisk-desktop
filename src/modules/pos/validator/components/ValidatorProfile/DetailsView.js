@@ -32,7 +32,7 @@ const DetailsView = ({ data, isMyProfile }) => {
   const { t } = useTranslation();
   const { data: generatedBlock } = useBlocks({
     config: { params: { height: lastGeneratedHeight } },
-    options: { enable: !!lastGeneratedHeight },
+    options: { enabled: !!lastGeneratedHeight },
   });
   const { token } = usePosToken();
 
