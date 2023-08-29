@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import QRCode from 'qrcode.react';
-import { TertiaryButton, SecondaryButton } from '@theme/buttons';
+import { TertiaryButton } from '@theme/buttons';
 import renderPaperWallet from 'src/utils/paperWallet';
 import PassphraseRenderer from '@wallet/components/passphraseRenderer';
 import CopyToClipboard from '@common/components/copyToClipboard';
@@ -76,6 +76,7 @@ const PassphraseBackup = ({ t, passphrase, paperWalletName, jsonBackup = false }
             </div>
           </div>
         </div>
+        <div className={styles.hrSection} />
         <div className={`${styles.option}`}>
           {!jsonBackup ? (
             <div className={`${styles.optionContent}`}>
@@ -89,14 +90,11 @@ const PassphraseBackup = ({ t, passphrase, paperWalletName, jsonBackup = false }
               <div className={styles.downloadLisk}>
                 <Icon name="fileOutline" />
                 <p className="option-value">{walletName}</p>
+                <span onClick={generatePaperWallet}>
+                  <span>{t('Download')}</span>
+                  <Icon name="downloadBlue" className={styles.downloadIcon} />
+                </span>
               </div>
-              <SecondaryButton
-                className={styles.downloadBtn}
-                size="xs"
-                onClick={generatePaperWallet}
-              >
-                {t('Download')}
-              </SecondaryButton>
             </div>
           ) : (
             <div className={`${styles.optionContent} ${styles.jsonWrapper}`}>

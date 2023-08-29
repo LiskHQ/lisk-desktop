@@ -77,6 +77,10 @@
     margin: 32px 0 0;
     color: var(--color-ultramarine-blue) !important;
   }
+
+  & .savePassphraseBackButton {
+    margin: 8px 0 0;
+  }
 }
 
 .stepsLabel {
