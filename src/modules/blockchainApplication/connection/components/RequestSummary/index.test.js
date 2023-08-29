@@ -124,4 +124,11 @@ describe('RequestSummary', () => {
     fireEvent.click(button);
     expect(nextStep).toHaveBeenCalled();
   });
+
+
+  it('Should display a warning if current account is not the signing account', () => {
+  });
+  
+  it('Should display a warning if signing account is not present', () => {
+  });
 });

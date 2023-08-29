@@ -197,7 +197,7 @@ const RequestSummary = ({ nextStep, history }) => {
                     <span>{t('Current account')}</span>
                     {!isSenderCurrentAccount && !!encryptedSenderAccount && (
                       <TertiaryButton onClick={handleSwitchAccount}>
-                        <span>Switch to signing account</span> <SwtichIcon />
+                        <span>{t('Switch to signing account')}</span> <SwtichIcon />
                       </TertiaryButton>
                     )}
                   </div>
