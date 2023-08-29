@@ -17,14 +17,14 @@ export const getPassphraseAndAddress = async (strength) => {
 };
 
 const useCreateAccounts = (strength) => {
-  const [accounts, setAccountSuggestion] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
 
   useEffect(() => {
     const accountsWithPassphrase = [...Array(5)].map(() => getPassphraseAndAddress(strength));
     Promise.all(accountsWithPassphrase)
-      .then(setAccountSuggestion)
+      .then(setAccounts)
       .catch((e) => setError(e))
       .finally(() => setIsLoading(false));
   }, [strength]);
