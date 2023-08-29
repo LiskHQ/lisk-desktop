@@ -29,7 +29,7 @@ import Box from 'src/theme/box';
 import routes from 'src/routes/routes';
 import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
 import WarningNotification from '@common/components/warningNotification';
-import { ReactComponent as SwtichIcon } from '@setup/react/assets/images/icons/switch-icon.svg';
+import { ReactComponent as SwtichIcon } from '../../../../../../setup/react/assets/images/icons/switch-icon.svg';
 import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
 
@@ -130,7 +130,6 @@ const RequestSummary = ({ nextStep, history }) => {
         setTransaction(transactionObj);
         const address = extractAddressFromPublicKey(transactionObj.senderPublicKey);
         const account = getAccountByAddress(address);
-
         setSenderAccount({
           pubkey: transactionObj.senderPublicKey,
           address,
@@ -197,7 +196,8 @@ const RequestSummary = ({ nextStep, history }) => {
                     <span>{t('Current account')}</span>
                     {!isSenderCurrentAccount && !!encryptedSenderAccount && (
                       <TertiaryButton onClick={handleSwitchAccount}>
-                        <span>{t('Switch to signing account')}</span> <SwtichIcon />
+                        <span>{t('Switch to signing account')}</span>{' '}
+                        <SwtichIcon data-testid="switch-icon" />
                       </TertiaryButton>
                     )}
                   </div>
