@@ -129,6 +129,8 @@
   & .warning {
     @mixin contentNormal;
 
+    display: flex;
+    flex-direction: row;
     margin-top: 40px;
     padding: 10px 8px;
     background-color: var(--color-warning-bg);
@@ -138,7 +140,8 @@
     max-width: 603px;
     font-size: 14px;
     line-height: 18px;
-    color: var(--color-zodiac-blue);
+    color: var(--color-constant-zodiac-blue);
+    text-align: left;
 
     & > img {
       vertical-align: bottom;
