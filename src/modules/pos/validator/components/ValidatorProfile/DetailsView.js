@@ -8,7 +8,7 @@ import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import Icon from '@theme/Icon';
-import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { useBlocks } from '@block/hooks/queries/useBlocks';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import TokenAmount from '@token/fungible/components/tokenAmount';
@@ -18,9 +18,8 @@ import styles from './ValidatorProfile.css';
 import { convertCommissionToPercentage } from '../../utils';
 import usePosToken from '../../hooks/usePosToken';
 
-// eslint-disable-next-line max-statements
 const DetailsView = ({ data, isMyProfile }) => {
-  const { name, rank, validatorWeight, commission } = data;
+  const { name, rank, validatorWeight, commission, lastGeneratedHeight } = data;
   const { data: pooledTransactionsData } = useTransactionsFromPool({
     customConfig: { commission },
   });
@@ -31,10 +30,10 @@ const DetailsView = ({ data, isMyProfile }) => {
   const history = useHistory();
   const theme = useTheme();
   const { t } = useTranslation();
-  // @TODO: this is wrong we need to get this value from the validator's endpoint.
-  const {
-    data: { timestamp: latestBlockTimestamp },
-  } = useLatestBlock();
+  const { data: generatedBlock } = useBlocks({
+    config: { params: { height: lastGeneratedHeight } },
+    options: { enabled: !!lastGeneratedHeight },
+  });
   const { token } = usePosToken();
 
   const displayList = [
@@ -64,8 +63,12 @@ const DetailsView = ({ data, isMyProfile }) => {
     {
       icon: 'calendar',
       label: t('Last generated at'),
-      value: latestBlockTimestamp ? (
-        <DateTimeFromTimestamp fulltime className="date" time={latestBlockTimestamp} />
+      value: generatedBlock?.data?.[0] ? (
+        <DateTimeFromTimestamp
+          fulltime
+          className="date"
+          time={generatedBlock?.data?.[0].timestamp}
+        />
       ) : (
         '-'
       ),
