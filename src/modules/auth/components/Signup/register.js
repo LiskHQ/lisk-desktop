@@ -24,7 +24,7 @@ const Register = ({ account, token }) => {
 
   const [isStepSetPasswordForm, setIsStepSetPasswordForm] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState({});
-  const { suggestionAccounts } = useCreateAccounts(strength);
+  const { accounts } = useCreateAccounts(strength);
   const [, setCurrentAccount] = useCurrentAccount();
   const { setAccount } = useAccounts();
 
@@ -61,7 +61,7 @@ const Register = ({ account, token }) => {
         onChange={onMultiStepChange}
       >
         <ChooseAvatar
-          accounts={suggestionAccounts}
+          accounts={accounts}
           selected={selectedAccount}
           handleSelectAvatar={handleSelectAvatar}
         />
