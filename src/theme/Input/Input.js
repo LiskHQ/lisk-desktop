@@ -28,6 +28,7 @@ const getInputClass = ({ className, dark, icon, isMasked, status }) =>
   [
     styles.input,
     status === 'error' && styles.error,
+    status === 'pending' && styles.pending,
     isMasked && styles.mask,
     className,
     icon && styles.withIcon,

@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import NoTokenBalance from './NoTokenBalance';
+import NoTokenBalance from './NoActionView';
 
 jest.mock('react-router');
 
