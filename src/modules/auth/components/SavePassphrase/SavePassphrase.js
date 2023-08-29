@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { TertiaryButton } from '@theme/buttons';
 import Icon from '@theme/Icon';

@@ -1,9 +1,20 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
 import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
 import BackupPassphrase from './SavePassphrase';
+
+const mockHistory = {
+  location: {
+    pathname: '',
+  },
+  push: jest.fn(),
+  goBack: jest.fn(),
+};
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => mockHistory,
+}));
 
 describe('Register Process - Backup Passphrase', () => {
   let wrapper;
@@ -12,12 +23,11 @@ describe('Register Process - Backup Passphrase', () => {
 
   const props = {
     passphrase,
-    nextStep: spy(),
   };
 
   it('Should go to next step when clicking confirm', () => {
     wrapper = mount(<BackupPassphrase {...props} />);
-    wrapper.find('.yes-its-safe-button').at(1).simulate('click');
-    expect(props.nextStep).to.have.been.calledWith();
+    wrapper.find('Button').last().simulate('click');
+    expect(mockHistory.push).toHaveBeenCalled();
   });
 });
