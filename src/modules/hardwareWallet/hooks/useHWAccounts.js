@@ -49,15 +49,6 @@ function useHWAccounts(nrOfAccounts) {
     })();
   }, [nrOfAccounts]);
 
-  useEffect(
-    () => () => {
-      (async () => {
-        await resetLedgerIPCQueue();
-      })();
-    },
-    []
-  );
-
   return { hwAccounts, isLoading };
 }
 
