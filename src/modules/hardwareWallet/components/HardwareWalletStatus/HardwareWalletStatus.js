@@ -60,8 +60,8 @@ export const HardwareWalletStatus = () => {
               </li>
             ))}
           </ul>
-          <DialogLink className={styles.selectLinkLabel} component="switchAccount">
-            {t('Switch account')}
+          <DialogLink className={styles.selectLinkLabel} component="hardwareAccountManagerModal">
+            {t('Import account')}
           </DialogLink>
           <DialogLink className={styles.selectLinkLabel} component="selectHardwareDeviceModal">
             {t('Switch device')}

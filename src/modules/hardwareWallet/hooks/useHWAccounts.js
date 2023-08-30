@@ -1,74 +1,64 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   selectCurrentHWDevice,
   selectHWAccounts,
 } from '@hardwareWallet/store/selectors/hwSelectors';
-import { setHWAccounts } from '@hardwareWallet/store/actions';
 import { getNameFromAccount } from '@hardwareWallet/utils/getNameFromAccount';
-import { getHWAccounts } from '@hardwareWallet/utils/getHWAccounts';
-import { resetLedgerIPCQueue } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
+import {
+  getMultipleAddresses,
+  resetLedgerIPCQueue,
+} from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/clientLedgerHWCommunication';
 
-const useHWAccounts = () => {
-  const hwAccounts = useSelector(selectHWAccounts);
+function useHWAccounts(nrOfAccounts) {
   const currentHWDevice = useSelector(selectCurrentHWDevice);
-  const [isLoadingHWAccounts, setIsLoadingHWAccounts] = useState(false);
-  const [loadingHWAccountsError, setLoadingHWAccountsError] = useState();
-
-  const getAccountName = (address) => getNameFromAccount(address, hwAccounts);
-
-  const dispatch = useDispatch();
-  const { ipc } = window;
+  const persistedHwAccounts = useSelector(selectHWAccounts);
+  const [hwAccounts, setHwAccounts] = useState([]);
+  const [isLoading, setIsLoading] = useState(undefined);
 
   useEffect(() => {
-    let isMounted = true;
-    function getUniqueAccounts(accounts) {
-      return accounts.reduce((accum, account) => {
-        const indexOfAccount = accum.findIndex(
-          (item) => item.metadata.address === account.metadata.address
+    (async () => {
+      setIsLoading(true);
+      try {
+        const accountIndexes = Array.from(Array(nrOfAccounts).keys());
+        const addressesAndPubkeys = await getMultipleAddresses(
+          currentHWDevice.path,
+          accountIndexes
         );
-        if (indexOfAccount === -1) {
-          accum.push(account);
-        }
-        return accum;
-      }, []);
-    }
+        const accounts = Object.values(addressesAndPubkeys).map((addressAndPubkey, index) => {
+          const { address, pubKey } = addressAndPubkey;
+          const accountIndex = index + 1;
+          const name =
+            getNameFromAccount(address, persistedHwAccounts) || `Account ${accountIndex}`;
 
-    if (ipc && dispatch && currentHWDevice?.path && !isLoadingHWAccounts) {
-      // eslint-disable-next-line max-statements
-      (async () => {
-        setIsLoadingHWAccounts(true);
-        try {
-          const accounts = await getHWAccounts(currentHWDevice, getAccountName);
-          const uniqueAccounts = getUniqueAccounts(accounts);
-          if (isMounted) {
-            dispatch(setHWAccounts(uniqueAccounts));
-            setLoadingHWAccountsError(undefined);
-          }
-        } catch (error) {
-          if (isMounted) {
-            setLoadingHWAccountsError(error);
-          }
-        } finally {
-          if (isMounted) {
-            setIsLoadingHWAccounts(false);
-          }
-        }
-      })();
-    }
-
-    return () => {
-      setIsLoadingHWAccounts(false);
-      isMounted = false;
-      if (ipc) {
-        (async () => {
-          await resetLedgerIPCQueue();
-        })();
+          return {
+            hw: currentHWDevice,
+            metadata: {
+              address,
+              pubkey: pubKey,
+              accountIndex,
+              name,
+              isHW: true,
+            },
+          };
+        });
+        setHwAccounts(accounts);
+      } finally {
+        setIsLoading(false);
       }
-    };
-  }, [ipc, dispatch, currentHWDevice]);
+    })();
+  }, [nrOfAccounts]);
 
-  return { accounts: hwAccounts, isLoadingHWAccounts, loadingHWAccountsError };
-};
+  useEffect(
+    () => () => {
+      (async () => {
+        await resetLedgerIPCQueue();
+      })();
+    },
+    []
+  );
+
+  return { hwAccounts, isLoading };
+}
 
 export default useHWAccounts;
