@@ -136,7 +136,7 @@
   "Connected": "Connected",
   "Connected peers": "Connected peers",
   "Connection ID": "Connection ID",
-  "Connection request contains unsupported chainIDs": "Connection request contains unsupported chainIDs",
+  "Connection request contains unsupported chainIDs.": "Connection request contains unsupported chainIDs.",
   "Connection summary is not ready yet.": "Connection summary is not ready yet.",
   "Consecutive missed blocks": "Consecutive missed blocks",
   "Continue": "Continue",

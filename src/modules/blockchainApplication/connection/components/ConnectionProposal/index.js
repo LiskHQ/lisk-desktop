@@ -24,7 +24,9 @@ const ConnectionProposal = () => {
   const { t } = useTranslation();
   const event = events?.length && events[events.length - 1];
   const requiredNamespaces = event?.meta?.params?.requiredNamespaces;
-  const requestingChainIDs = (requiredNamespaces?.lisk?.chains || []).join(',').replace(/lisk:/g, '');
+  const requestingChainIDs = (requiredNamespaces?.lisk?.chains || [])
+    .join(',')
+    .replace(/lisk:/g, '');
 
   const blockchainAppsMeta = useBlockchainApplicationMeta({
     config: { params: { chainID: requestingChainIDs } },

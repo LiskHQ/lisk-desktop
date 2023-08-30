@@ -3,10 +3,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import AccountRow from '@account/components/AccountRow';
 import { useCurrentAccount } from '@account/hooks';
 import { useAccounts } from '@account/hooks/useAccounts';
+import { emptyTransactionsData } from 'src/redux/actions';
 import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS, ERROR_CASES } from '@libs/wcm/constants/lifeCycle';
@@ -55,6 +57,7 @@ const RequestSummary = ({ nextStep, history }) => {
   const [senderAccount, setSenderAccount] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const { sessionRequest } = useSession();
+  const reduxDispatch = useDispatch();
   const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
   useSchemas();
@@ -109,6 +112,10 @@ const RequestSummary = ({ nextStep, history }) => {
     rejectLiskRequest(request);
     removeSearchParamsFromUrl(history, ['modal', 'status', 'name', 'action']);
   };
+
+  useEffect(() => {
+    reduxDispatch(emptyTransactionsData());
+  }, []);
 
   useEffect(() => {
     const event = events.find((e) => e.name === EVENTS.SESSION_REQUEST);
