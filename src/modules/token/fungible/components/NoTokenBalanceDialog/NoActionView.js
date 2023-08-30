@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Illustration from 'src/modules/common/components/illustration';
 import { TertiaryButton } from 'src/theme/buttons';
-import styles from './NoTokenBalance.css';
+import styles from './NoActionView.css';
 
 function NoTokenBalance({ onClick, illustrationName, message, buttonTitle }) {
   const { t } = useTranslation();

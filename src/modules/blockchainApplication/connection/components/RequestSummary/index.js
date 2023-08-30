@@ -72,7 +72,7 @@ const RequestSummary = ({ nextStep, history }) => {
     return senderAccount?.address;
   }, [encryptedSenderAccount, senderAccount]);
 
-  const sendingChainID = (request?.chainId).replace('lisk:', '');
+  const sendingChainID = request?.chainId?.replace('lisk:', '');
   const { data: tokenData } = useAppsMetaTokens({
     config: { params: { chainID: sendingChainID } },
   });
