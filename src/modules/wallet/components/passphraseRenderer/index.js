@@ -19,6 +19,7 @@ class PassphraseRenderer extends React.Component {
       indexes: initialIndexes,
       fieldSelected: initialIndexes[0],
       options: this.assembleWordOptions(this.values, initialIndexes),
+      shouldDisplayWordOptions: true,
     };
 
     this.handleConfirm = this.handleConfirm.bind(this);
@@ -129,6 +130,7 @@ class PassphraseRenderer extends React.Component {
     const { chosenWords, indexes } = this.state;
     const otherIndex = indexes.find((index) => index !== selectedIndex);
     const shouldDisplayOptions = Object.values(chosenWords).length < 2;
+    const shouldDisplayWordOptions = Object.values(chosenWords).length === 1;
 
     this.setState((state) => ({
       ...state,
@@ -137,6 +139,7 @@ class PassphraseRenderer extends React.Component {
         [selectedIndex]: option,
       },
       fieldSelected: shouldDisplayOptions ? otherIndex : undefined,
+      shouldDisplayWordOptions: !shouldDisplayWordOptions,
     }));
   }
 
@@ -151,7 +154,7 @@ class PassphraseRenderer extends React.Component {
       subheaderText,
       confirmText,
     } = this.props;
-    const { options, fieldSelected, chosenWords } = this.state;
+    const { options, fieldSelected, chosenWords, shouldDisplayWordOptions } = this.state;
     const hasChosenWords = Object.values(chosenWords).length === 2;
 
     // eslint-disable-next-line no-restricted-globals
@@ -198,6 +201,7 @@ class PassphraseRenderer extends React.Component {
         </div>
         <div className={[styles.optionsContainer, 'word-options'].join(' ')}>
           {isConfirmation &&
+            shouldDisplayWordOptions &&
             typeof fieldSelected === 'number' &&
             options[fieldSelected].map((option, i) => (
               <div
