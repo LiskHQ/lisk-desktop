@@ -23,6 +23,10 @@
     overflow-y: scroll;
   }
 
+  & .warningText {
+    text-align: center;
+  }
+
   & .loadMoreBtn {
     height: initial;
     margin-top: 24px;

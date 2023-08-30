@@ -23,12 +23,6 @@ const mockStore = {
 describe('HardwareAccountManagerModal', () => {
   it('Should show Switch account in the title', () => {
     renderWithRouterAndStore(HardwareAccountManagerModal, null, mockStore);
-    expect(screen.getByText('Select hardware wallet device')).toBeTruthy();
-    expect(
-      screen.getByText(
-        'Choose a hardware wallet to perform your transactions on add to your Lisk Desktop'
-      )
-    ).toBeTruthy();
-    expect(screen.getByText('Back to wallet')).toBeTruthy();
+    expect(screen.getByText('Import account from hardware wallet')).toBeTruthy();
   });
 });

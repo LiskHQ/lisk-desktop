@@ -47,7 +47,9 @@ function HardwareAccountManagerModal() {
             <AccountRow key={hwAccount.metadata.address} account={hwAccount} onSelect={onSelect} />
           ))}
           {!isAppOpen && (
-            <p>{t('Please open the Lisk app on your ledger device to see your accounts')}</p>
+            <p className={styles.warningText}>
+              {t('Please open the Lisk app on your ledger device to see your accounts')}
+            </p>
           )}
         </div>
         {isLoading && (
