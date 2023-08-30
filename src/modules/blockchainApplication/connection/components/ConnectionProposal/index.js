@@ -24,11 +24,11 @@ const ConnectionProposal = () => {
   const { t } = useTranslation();
   const event = events?.length && events[events.length - 1];
   const requiredNamespaces = event?.meta?.params?.requiredNamespaces;
-  const requestingChains = (requiredNamespaces?.lisk?.chains || []).join(',').replace(/lisk:/g, '');
+  const requestingChainIDs = (requiredNamespaces?.lisk?.chains || []).join(',').replace(/lisk:/g, '');
 
   const blockchainAppsMeta = useBlockchainApplicationMeta({
-    config: { params: { chainID: requestingChains } },
-    options: { enabled: !!requestingChains },
+    config: { params: { chainID: requestingChainIDs } },
+    options: { enabled: !!requestingChainIDs },
   });
 
   // eslint-disable-next-line max-statements
@@ -67,7 +67,7 @@ const ConnectionProposal = () => {
     const isSessionProposal = event?.name === EVENTS.SESSION_PROPOSAL;
 
     if (!blockchainAppsMeta.data?.data?.length || blockchainAppsMeta.isError) {
-      setNameSpaceError(t('Connection request contains unsupported chainIDs'));
+      setNameSpaceError(t('Connection request contains unsupported chainIDs.'));
 
       return cleanUpFn;
     }

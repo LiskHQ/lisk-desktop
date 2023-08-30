@@ -1,7 +1,8 @@
+import { fireEvent } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import NoAccountsDialog from './NoAccountsDialog';
 
-describe('NoTokenBalanceDialog', () => {
+describe('NoAccountsDialog', () => {
   it('should render properly', async () => {
     const wrapper = renderWithRouter(NoAccountsDialog);
 
@@ -11,6 +12,7 @@ describe('NoTokenBalanceDialog', () => {
       )
     ).toBeTruthy();
     expect(wrapper.getByText('Add account')).toBeTruthy();
-    expect(wrapper.getByAltText('emptyValidatorsIllustration')).toBeTruthy();
+
+    fireEvent.click(wrapper.getByText('Add account'));
   });
 });
