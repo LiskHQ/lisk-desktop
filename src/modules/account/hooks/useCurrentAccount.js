@@ -19,7 +19,7 @@ export function useCurrentAccount() {
     (stake) => stake.confirmed !== stake.unconfirmed
   );
 
-  const setAccount = (encryptedAccount, referrer) => {
+  const setAccount = (encryptedAccount, referrer, redirect = true) => {
     // clear stakes list during login or accounts switch
     if (pendingStakes.length && history) {
       const onCancel = /* istanbul ignore next */ () =>
@@ -39,7 +39,9 @@ export function useCurrentAccount() {
       removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
     } else {
       dispatch(setCurrentAccount(encryptedAccount));
-      history?.push(referrer || routes.wallet.path);
+      if (redirect) {
+        history?.push(referrer || routes.wallet.path);
+      }
     }
   };
   const currentAccount = useSelector(selectCurrentAccount);
