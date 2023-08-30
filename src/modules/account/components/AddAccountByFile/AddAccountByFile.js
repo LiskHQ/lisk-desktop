@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import RestoreAccountForm from 'src/modules/auth/components/RestoreAccountForm';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
@@ -16,6 +17,7 @@ const AddAccountByPassFile = () => {
   const multiStepRef = useRef(null);
   const queryParams = new URLSearchParams(search);
   const referrer = queryParams.get('referrer');
+  const { t } = useTranslation();
 
   const onEnterPasswordSuccess = ({ encryptedAccount }) => {
     setAccount(encryptedAccount);
@@ -31,6 +33,7 @@ const AddAccountByPassFile = () => {
         prevStep={multiStepRef.current?.prev}
         className={styles.enterPasswordContainer}
         onEnterPasswordSuccess={onEnterPasswordSuccess}
+        title={t('Please enter your account password to restore this account.')}
       />
       <SetPasswordSuccess
         encryptedPhrase={currentAccount}

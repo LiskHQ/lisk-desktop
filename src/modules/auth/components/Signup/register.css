@@ -77,6 +77,10 @@
     margin: 32px 0 0;
     color: var(--color-ultramarine-blue) !important;
   }
+
+  & .savePassphraseBackButton {
+    margin: 8px 0 0;
+  }
 }
 
 .stepsLabel {
@@ -94,7 +98,7 @@
   color: var(--color-content);
   font-family: var(--heading-font);
   text-align: center;
-  margin: 16px 0 60px 0;
+  margin: 16px 0 40px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,6 +124,29 @@
     margin: 0;
     color: var(--color-maastricht-blue);
     min-width: 450px;
+  }
+
+  & .warning {
+    @mixin contentNormal;
+
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    padding: 10px 8px;
+    background-color: var(--color-warning-bg);
+    border: 1px solid var(--color-warning-border);
+    border-radius: 5px;
+    min-width: 450px;
+    max-width: 603px;
+    font-size: 14px;
+    line-height: 18px;
+    color: var(--color-constant-zodiac-blue);
+    text-align: left;
+
+    & > img {
+      vertical-align: bottom;
+      margin-right: 10px;
+    }
   }
 }
 
