@@ -168,7 +168,7 @@ const RequestSummary = ({ nextStep, history }) => {
   return (
     <div className={`${styles.wrapper}`}>
       <BlockchainAppDetailsHeader
-        headerText={getTitle(request.request.method, t)}
+        headerText={getTitle(request?.request?.method, t)}
         application={application}
         clipboardCopyItems={clipboardCopyItems}
       />

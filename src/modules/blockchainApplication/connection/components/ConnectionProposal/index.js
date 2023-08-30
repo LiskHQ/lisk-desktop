@@ -66,14 +66,7 @@ const ConnectionProposal = () => {
       !nameSpaceKeys || nameSpaceKeys.length > 1 || !nameSpaceKeys.includes('lisk');
     const isSessionProposal = event?.name === EVENTS.SESSION_PROPOSAL;
 
-    console.log(
-      '----',
-      requiredNamespaces,
-      !blockchainAppsMeta?.data?.data?.length || blockchainAppsMeta.isError,
-      { ...blockchainAppsMeta }
-    );
-
-    if (!blockchainAppsMeta?.data?.data?.length || blockchainAppsMeta.isError) {
+    if (!blockchainAppsMeta.data?.data?.length || blockchainAppsMeta.isError) {
       setNameSpaceError(t('Connection request contains unsupported chainIDs'));
 
       return cleanUpFn;
