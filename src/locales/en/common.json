@@ -457,6 +457,7 @@
   "Please enter the stake amounts for the validators you wish to stake for": "Please enter the stake amounts for the validators you wish to stake for",
   "Please enter your account password to backup the secret recovery phrase.": "Please enter your account password to backup the secret recovery phrase.",
   "Please enter your account password to sign this {{type}}.": "Please enter your account password to sign this {{type}}.",
+  "Please open the Lisk app on your ledger device to see your accounts": "Please open the Lisk app on your ledger device to see your accounts",
   "Please reconnect your hardware wallet to sign this transaction": "Please reconnect your hardware wallet to sign this transaction",
   "Please review and verify the transaction details before signing.": "Please review and verify the transaction details before signing.",
   "Please sign in": "Please sign in",
