@@ -124,7 +124,6 @@ const ss = {
   emptyResultsMessage: '.empty-message',
   revealCheckbox: '.reveal-checkbox',
   passphraseTextarea: 'textarea.passphrase',
-  itsSafeBtn: '.yes-its-safe-button',
   passphraseWordHolder: '.passphrase-holder label',
   getToDashboardBtn: '.get-to-your-dashboard-button',
   confirmCheckbox: '.confirm-checkbox',

@@ -141,8 +141,16 @@ class PassphraseRenderer extends React.Component {
   }
 
   render() {
-    const { t, showInfo, isConfirmation, prevStep, footerStyle, subheader, confirmText } =
-      this.props;
+    const {
+      t,
+      showInfo,
+      isConfirmation,
+      prevStep,
+      footerStyle,
+      subheader,
+      subheaderText,
+      confirmText,
+    } = this.props;
     const { options, fieldSelected, chosenWords } = this.state;
     const hasChosenWords = Object.values(chosenWords).length === 2;
 
@@ -158,9 +166,10 @@ class PassphraseRenderer extends React.Component {
             <h2 className={styles.header}>{t('Secret recovery phrase')}</h2>
             {subheader && (
               <p className={styles.subheader}>
-                {t(
-                  'Please write down these seed values carefully. Ensure that you keep this in a safe place, with access to the seed you can re-create the account.'
-                )}
+                {subheaderText ||
+                  t(
+                    'Please write down these seed values carefully. Ensure that you keep this in a safe place, with access to the seed you can re-create the account.'
+                  )}
               </p>
             )}
           </>

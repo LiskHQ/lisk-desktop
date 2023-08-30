@@ -8,6 +8,15 @@
     display: flex;
     justify-content: space-between;
     margin-top: 1em; /* stylelint-disable-line unit-whitelist */
+
+    &:first-child {
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+
+    &:last-child {
+      margin-top: 24px;
+    }
   }
 }
 
@@ -28,14 +37,30 @@
 
   & > .downloadLisk {
     display: flex;
+    margin: 16px 0;
+    align-items: center;
 
     & > p {
       @mixin contentLarge bold;
 
       color: var(--color-dark-blue);
-      margin: 20px;
       text-align: left;
       word-spacing: 8px;
+      margin: 0 8px;
+    }
+
+    & > span {
+      color: var(--color-ultramarine-blue);
+      font-weight: 500;
+      cursor: pointer;
+
+      & > span {
+        margin-right: 8px;
+      }
+
+      & img {
+        vertical-align: top;
+      }
     }
   }
 
@@ -43,6 +68,48 @@
     padding-right: 15px;
     padding-left: 15px;
   }
+
+  &.jsonWrapper {
+    & .infoFooterText {
+      margin-bottom: 16px;
+    }
+
+    & div {
+      @mixin contentNormal;
+
+      font-size: 14px;
+
+      & > span:first-child {
+        padding: 8px 12px;
+        margin-right: 8px;
+        border: 1px solid var(--color-slate-gray);
+        border-radius: 100px;
+        color: var(--color-zodiac-blue);
+
+        & img {
+          margin-right: 8px;
+        }
+      }
+
+      & span:last-child {
+        color: var(--color-ultramarine-blue);
+        font-weight: 500;
+        cursor: pointer;
+
+        & > span {
+          margin-right: 8px;
+        }
+
+        & img {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+& .hrSection {
+  border-top: 1px solid var(--color-very-light-gray);
 }
 
 .tipContainer {
@@ -83,13 +150,13 @@
 .infoFooterText {
   @mixin contentLargest;
 
-  margin: 15px 0 0;
+  margin: 8px 0 0;
   color: var(--color-slate-gray);
 }
 
 .copyPassphrase {
   position: absolute;
-  top: 65px;
+  top: 20px;
   right: 0;
   padding: 0 !important;
 

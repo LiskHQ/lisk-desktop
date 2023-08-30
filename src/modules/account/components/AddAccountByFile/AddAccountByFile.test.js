@@ -98,7 +98,7 @@ describe('Add account by file flow', () => {
 
     expect(screen.getByText('Enter your account password')).toBeTruthy();
     expect(
-      screen.getByText('Please enter your account password to backup the secret recovery phrase.')
+      screen.getByText('Please enter your account password to restore this account.')
     ).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.name)).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.address)).toBeTruthy();
