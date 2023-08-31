@@ -18,6 +18,7 @@ import { toTransactionJSON } from '@transaction/utils/encoding';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
+import { signMessage } from '@message/store/action';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { validator } from '@liskhq/lisk-client';
 import { useSession } from '@libs/wcm/hooks/useSession';
@@ -47,7 +48,7 @@ export const rejectLiskRequest = (request) => {
 };
 
 // eslint-disable-next-line max-statements
-const RequestSummary = ({ nextStep, history }) => {
+const RequestSummary = ({ nextStep, history, message }) => {
   const { t } = useTranslation();
   const { getAccountByAddress } = useAccounts();
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
@@ -56,7 +57,7 @@ const RequestSummary = ({ nextStep, history }) => {
   const [transaction, setTransaction] = useState(null);
   const [senderAccount, setSenderAccount] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const { sessionRequest } = useSession();
+  const { sessionRequest } = useSession({ isEnabled: !message });
   const reduxDispatch = useDispatch();
   const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
@@ -64,14 +65,12 @@ const RequestSummary = ({ nextStep, history }) => {
 
   const encryptedSenderAccount = getAccountByAddress(senderAccount?.address);
   const isSenderCurrentAccount = currentAccount.metadata.address === senderAccount?.address;
-
   const signingAccountDetails = useMemo(() => {
     if (encryptedSenderAccount) {
       return `(${encryptedSenderAccount.metadata.name} - ${truncateAddress(
         senderAccount?.address
       )})`;
     }
-
     return senderAccount?.address;
   }, [encryptedSenderAccount, senderAccount]);
 
@@ -83,31 +82,38 @@ const RequestSummary = ({ nextStep, history }) => {
   const navigateToAddAccountFlow = () => {
     history.push(routes.addAccountOptions.path);
   };
-
   const approveHandler = () => {
-    const moduleCommand = joinModuleAndCommand(transaction);
-    const transactionJSON = toTransactionJSON(transaction, request?.request?.params.schema);
-    const token = tokenData?.data?.length > 0 ? tokenData?.data[0] : defaultToken;
+    // eslint-disable-next-line no-extra-boolean-cast
+    if (!!message) {
+      nextStep({
+        message,
+        actionFunction: (formProps, _, privateKey) =>
+          reduxDispatch(signMessage({ message, nextStep, privateKey, currentAccount })),
+      });
+    } else {
+      const moduleCommand = joinModuleAndCommand(transaction);
+      const transactionJSON = toTransactionJSON(transaction, request?.request?.params.schema);
+      const token = tokenData?.data?.length > 0 ? tokenData?.data[0] : defaultToken;
 
-    nextStep({
-      transactionJSON,
-      formProps: {
-        composedFees: [
-          {
-            title: 'Transaction',
-            value: `${convertFromBaseDenom(transaction.fee)} ${token?.symbol}`,
-            components: [],
-          },
-        ],
-        moduleCommand,
-        chainID: sendingChainID,
-        schema: request?.request?.params.schema,
-        url: sessionRequest.peer.metadata.url,
-      },
-      selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
-    });
+      nextStep({
+        transactionJSON,
+        formProps: {
+          composedFees: [
+            {
+              title: 'Transaction',
+              value: `${convertFromBaseDenom(transaction.fee)} ${token?.symbol}`,
+              components: [],
+            },
+          ],
+          moduleCommand,
+          chainID: sendingChainID,
+          schema: request?.request?.params.schema,
+          url: sessionRequest.peer.metadata.url,
+        },
+        selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
+      });
+    }
   };
-
   const rejectHandler = () => {
     rejectLiskRequest(request);
     removeSearchParamsFromUrl(history, ['modal', 'status', 'name', 'action']);
@@ -131,15 +137,21 @@ const RequestSummary = ({ nextStep, history }) => {
   useEffect(() => {
     if (request && !transaction) {
       try {
-        const { payload, schema } = request.request.params;
-        validator.validator.validateSchema(schema);
-        const transactionObj = decodeTransaction(Buffer.from(payload, 'hex'), schema);
-        setTransaction(transactionObj);
-        const address = extractAddressFromPublicKey(transactionObj.senderPublicKey);
+        const { payload, schema, address: publicKey } = request.request.params;
+        let transactionObj;
+
+        if (!message) {
+          validator.validator.validateSchema(schema);
+          transactionObj = decodeTransaction(Buffer.from(payload, 'hex'), schema);
+          setTransaction(transactionObj);
+        }
+
+        const senderPublicKey = !message ? transactionObj.senderPublicKey : publicKey;
+        const address = extractAddressFromPublicKey(senderPublicKey);
         const account = getAccountByAddress(address);
         setSenderAccount({
-          pubkey: transactionObj.senderPublicKey,
           address,
+          pubkey: senderPublicKey,
           name: account?.metadata?.name,
         });
         setErrorMessage('');
@@ -149,11 +161,11 @@ const RequestSummary = ({ nextStep, history }) => {
     }
   }, [request]);
 
-  if (!sessionRequest || !request) {
+  if ((!sessionRequest || !request) && !message) {
     return <EmptyState history={history} />;
   }
 
-  const { icons, name, url } = sessionRequest.peer.metadata;
+  const { icons = [], name, url = '' } = sessionRequest?.peer?.metadata || {};
 
   const application = {
     data: {
@@ -169,16 +181,21 @@ const RequestSummary = ({ nextStep, history }) => {
   }));
 
   const handleSwitchAccount = () => {
-    setCurrentAccount(encryptedSenderAccount, '/wallet?modal=requestView');
+    setCurrentAccount(
+      encryptedSenderAccount,
+      `/wallet?modal=${!message ? 'requestView' : 'requestSignMessageDialog'}`
+    );
   };
 
   return (
     <div className={`${styles.wrapper}`}>
-      <BlockchainAppDetailsHeader
-        headerText={getTitle(request?.request?.method, t)}
-        application={application}
-        clipboardCopyItems={clipboardCopyItems}
-      />
+      {!message && (
+        <BlockchainAppDetailsHeader
+          headerText={getTitle(request?.request?.method, t)}
+          application={application}
+          clipboardCopyItems={clipboardCopyItems}
+        />
+      )}
       <Box>
         <div className={styles.information}>
           <ValueAndLabel className={styles.labeledValue} label={t('Information')}>

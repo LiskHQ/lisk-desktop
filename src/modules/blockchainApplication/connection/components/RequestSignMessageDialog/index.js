@@ -15,6 +15,7 @@ import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import SignedMessage from '@message/components/signedMessage';
 import { RequestSignMessageConfirmation } from '@blockchainApplication/connection/components/RequestSignMessageDialog/RequestSignMessageConfirmation';
 import styles from './RequestSignMessageDialog.css';
+import RequestSummary from '../RequestSummary';
 
 // eslint-disable-next-line max-statements
 const RequestSignMessageDialog = () => {
@@ -32,14 +33,13 @@ const RequestSignMessageDialog = () => {
   } = currentAccount;
   const event = events?.find((e) => e.name === EVENTS.SESSION_REQUEST);
   const { message, address } = event?.meta?.params?.request?.params || {};
-
   const { icons, name, url } = peer?.metadata || {};
 
   const onMultiStepChange = useCallback(({ step: { current } }) => {
     setMultiStepPosition(current);
   }, []);
 
-  const isPasswordStep = multiStepPosition === 1;
+  const isPasswordStep = multiStepPosition === 2;
 
   useEffect(() => {
     reduxDispatch(emptyTransactionsData());
@@ -75,6 +75,7 @@ const RequestSignMessageDialog = () => {
         })}
         onChange={onMultiStepChange}
       >
+        <RequestSummary history={history} message={message} />
         <RequestSignMessageConfirmation message={message} address={address} />
         <TxSignatureCollector
           type="message"
