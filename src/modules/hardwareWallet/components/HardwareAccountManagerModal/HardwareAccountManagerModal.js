@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import classNames from 'classnames';
 import Dialog from '@theme/dialog/dialog';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -51,10 +50,7 @@ function HardwareAccountManagerModal() {
         <div className={styles.accountListWrapper}>
           {hwAccounts?.map((hwAccount) => (
             <AccountRow
-              className={classNames({
-                [styles.accountRowProp]: true,
-                [styles.isImported]: hwAccount.metadata.isImported,
-              })}
+              className={styles.accountRowProp}
               key={hwAccount.metadata.address}
               account={hwAccount}
               onSelect={onSelect}

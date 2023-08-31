@@ -24,11 +24,7 @@
 
     & .accountRowProp {
       width: 98%;
-
-      &.isImported {
-        pointer-events: none;
-      }
-
+      
       & .icon {
         width: 20px;
       }
