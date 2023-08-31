@@ -38,6 +38,8 @@ function useHWAccounts(nrOfAccounts) {
                 accountIndex: index,
                 name,
                 isHW: true,
+                creationTime: new Date().toISOString(),
+                path: '',
               },
             };
           });
