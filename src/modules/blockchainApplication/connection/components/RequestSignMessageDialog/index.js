@@ -28,9 +28,6 @@ const RequestSignMessageDialog = () => {
   const reduxDispatch = useDispatch();
 
   const { peer, requiredNamespaces } = sessionRequest || {};
-  const {
-    metadata: { pubkey },
-  } = currentAccount;
   const event = events?.find((e) => e.name === EVENTS.SESSION_REQUEST);
   const { message, address } = event?.meta?.params?.request?.params || {};
   const { icons, name, url } = peer?.metadata || {};
@@ -78,7 +75,7 @@ const RequestSignMessageDialog = () => {
         <RequestSignMessageConfirmation message={message} address={address} />
         <TxSignatureCollector
           type="message"
-          transactionJSON={{ senderPublicKey: pubkey, params: {} }}
+          transactionJSON={{ senderPublicKey: currentAccount.metadata?.pubkey, params: {} }}
         />
         <SignedMessage history={history} account={currentAccount} />
       </MultiStep>

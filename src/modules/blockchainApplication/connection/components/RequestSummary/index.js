@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable complexity */
 /* istanbul ignore file */ // @todo Add unit tests by #4824
 import React, { useEffect, useMemo, useState } from 'react';
@@ -19,7 +20,7 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { signMessage } from '@message/store/action';
-import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
+import { addSearchParamsToUrl, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { validator } from '@liskhq/lisk-client';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
@@ -38,7 +39,6 @@ import styles from './requestSummary.css';
 
 const getTitle = (key, t) =>
   Object.values(SIGNING_METHODS).find((item) => item.key === key)?.title ?? t('Method not found.');
-
 const defaultToken = { symbol: 'LSK' };
 
 export const rejectLiskRequest = (request) => {
@@ -50,7 +50,7 @@ export const rejectLiskRequest = (request) => {
 // eslint-disable-next-line max-statements
 const RequestSummary = ({ nextStep, history, message }) => {
   const { t } = useTranslation();
-  const { getAccountByAddress } = useAccounts();
+  const { getAccountByAddress, accounts } = useAccounts();
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
   const { events } = useEvents();
   const [request, setRequest] = useState(null);
@@ -64,7 +64,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
   useSchemas();
 
   const encryptedSenderAccount = getAccountByAddress(senderAccount?.address);
-  const isSenderCurrentAccount = currentAccount.metadata.address === senderAccount?.address;
+  const isSenderCurrentAccount = currentAccount.metadata?.address === senderAccount?.address;
   const signingAccountDetails = useMemo(() => {
     if (encryptedSenderAccount) {
       return `(${encryptedSenderAccount.metadata.name} - ${truncateAddress(
@@ -82,6 +82,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
   const navigateToAddAccountFlow = () => {
     history.push(routes.addAccountOptions.path);
   };
+
   const approveHandler = () => {
     // eslint-disable-next-line no-extra-boolean-cast
     if (!!message) {
@@ -186,6 +187,14 @@ const RequestSummary = ({ nextStep, history, message }) => {
       `/wallet?modal=${!message ? 'requestView' : 'requestSignMessageDialog'}`
     );
   };
+
+  if (!currentAccount.metadata || accounts.length === 0) {
+    addSearchParamsToUrl(history, {
+      modal: 'NoAccountView',
+      mode: accounts.length === 0 ? 'EMPTY_ACCOUNT_LIST' : 'NO_CURRENT_ACCOUNT',
+    });
+    return null;
+  }
 
   return (
     <div className={`${styles.wrapper}`}>
