@@ -27,8 +27,8 @@ function useHWAccounts(nrOfAccounts) {
           const accounts = Object.values(addressesAndPubkeys).map((addressAndPubkey, index) => {
             const { address, pubKey } = addressAndPubkey;
             const accountIndex = index + 1;
-            const name =
-              getNameFromAccount(address, persistedHwAccounts) || `Account ${accountIndex}`;
+            const persistedName = getNameFromAccount(address, persistedHwAccounts);
+            const name = persistedName || `Account ${accountIndex}`;
 
             return {
               hw: currentHWDevice,
@@ -38,6 +38,7 @@ function useHWAccounts(nrOfAccounts) {
                 accountIndex: index,
                 name,
                 isHW: true,
+                isImported: !!persistedName,
                 creationTime: new Date().toISOString(),
                 path: '',
               },

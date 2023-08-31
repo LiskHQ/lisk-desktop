@@ -4,6 +4,7 @@
   max-width: 477px;
   width: calc(100% - var(--horizontal-margin));
   padding: 24px;
+  color: var(--color-maastricht-blue);
 
   & .title {
     margin: 0 0 24px 0;
@@ -21,8 +22,12 @@
     max-height: 400px;
     overflow-y: scroll;
 
-    .accountRowProp {
+    & .accountRowProp {
       width: 98%;
+
+      &.isImported {
+        pointer-events: none;
+      }
 
       & .icon {
         width: 20px;

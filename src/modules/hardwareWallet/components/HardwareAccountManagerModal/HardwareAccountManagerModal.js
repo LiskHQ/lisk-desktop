@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import Dialog from '@theme/dialog/dialog';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,6 +37,8 @@ function HardwareAccountManagerModal() {
   useEffect(() => {
     if (isAppOpen) {
       setNrOfAccounts(3);
+    } else {
+      setNrOfAccounts(0);
     }
   }, [isAppOpen]);
 
@@ -46,11 +49,19 @@ function HardwareAccountManagerModal() {
         <div className={styles.accountListWrapper}>
           {hwAccounts?.map((hwAccount) => (
             <AccountRow
-              className={styles.accountRowProp}
+              className={classNames({
+                [styles.accountRowProp]: true,
+                [styles.isImported]: hwAccount.metadata.isImported,
+              })}
               key={hwAccount.metadata.address}
               account={hwAccount}
               onSelect={onSelect}
-              RightSlot={<Icon className={styles.icon} name="downloadBlue" />}
+              RightSlot={
+                <Icon
+                  className={styles.icon}
+                  name={hwAccount.metadata.isImported ? 'checkmarkBlue' : 'downloadBlue'}
+                />
+              }
             />
           ))}
           {!isAppOpen && (
