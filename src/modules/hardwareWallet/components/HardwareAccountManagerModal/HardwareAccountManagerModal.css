@@ -1,0 +1,65 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.HardwareAccountManagerModal {
+  max-width: 477px;
+  width: calc(100% - var(--horizontal-margin));
+  padding: 24px;
+  color: var(--color-maastricht-blue);
+
+  & .title {
+    margin: 0 0 24px 0;
+    padding: 0;
+    text-align: center;
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-very-bold);
+  }
+
+  & .accountListWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    max-height: 400px;
+    overflow-y: scroll;
+
+    & .accountRowProp {
+      width: 98%;
+
+      & .icon {
+        width: 20px;
+      }
+    }
+  }
+
+  & .warningText {
+    text-align: center;
+  }
+
+  & .loadMoreBtn {
+    height: initial;
+    margin-top: 24px;
+  }
+}
+
+.loaderWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  & > .spinner {
+    color: var(--color-ultramarine-blue);
+    margin: 10px 0px 20px 0px;
+
+    & > span {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  & > span {
+    color: var(--color-slate-gray);
+    font-size: var(--paragraph-font-size-s);
+  }
+}

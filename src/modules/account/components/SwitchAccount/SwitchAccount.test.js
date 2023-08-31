@@ -8,9 +8,6 @@ import SwitchAccount from './SwitchAccount';
 jest.mock('@account/hooks/useAccounts', () => ({
   useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
 }));
-jest.mock('src/modules/hardwareWallet/hooks/useHWAccounts', () =>
-  jest.fn().mockReturnValue({ accounts: mockHWAccounts })
-);
 
 jest.mock('react-i18next');
 jest.mock('@account/hooks', () => ({
@@ -19,8 +16,14 @@ jest.mock('@account/hooks', () => ({
   })),
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], jest.fn()]),
 }));
+
+const mockState = {
+  hardwareWallet: {
+    accounts: mockHWAccounts,
+  },
+};
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
+  useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
 }));
 
 describe('Switch account', () => {
