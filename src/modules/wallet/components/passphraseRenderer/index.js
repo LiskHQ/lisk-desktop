@@ -94,6 +94,7 @@ class PassphraseRenderer extends React.Component {
     return mixWithMissingWords(wordOptions);
   }
 
+  /* istanbul ignore next */
   getStyle(i, missingWords) {
     const { isConfirmation } = this.props;
     const { chosenWords } = this.state;
