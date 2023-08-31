@@ -13,7 +13,7 @@
     "url": "https://github.com/LiskHQ/lisk-desktop"
   },
   "engines": {
-    "node": ">=v18.12.0"
+    "node": ">=v18.16.1"
   },
   "scripts": {
     "install:all": "yarn --cwd app && yarn",
@@ -216,8 +216,8 @@
     "cypress-failed-log": "2.9.2",
     "cypress-pipe": "2.0.0",
     "cypress-terminal-report": "3.4.1",
-    "electron": "25.2.0",
-    "electron-builder": "24.4.0",
+    "electron": "26.1.0",
+    "electron-builder": "24.6.3",
     "electron-builder-notarize": "1.5.1",
     "electron-devtools-installer": "3.2.0",
     "electron-ipc-mock": "0.0.3",
