@@ -1,10 +1,10 @@
 import React from 'react';
+import classNames from 'classnames';
 import Icon from 'src/theme/Icon';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Tooltip from '@theme/Tooltip';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import styles from './AccountRow.css';
 
 function AccountRow({
@@ -26,7 +26,7 @@ function AccountRow({
       key={address}
       data-testid={address}
       className={classNames(styles.accountWrapper, className)}
-      onClick={() => onSelect(account)}
+      onClick={() => onSelect?.(account)}
     >
       <WalletVisual address={address} size={40} />
       <div className={styles.addressWrapper}>

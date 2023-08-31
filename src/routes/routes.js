@@ -284,4 +284,8 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  NoAccountView: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };

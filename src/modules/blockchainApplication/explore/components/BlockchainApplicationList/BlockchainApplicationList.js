@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import BoxHeader from '@theme/box/header';
 import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
 import { QueryTable } from '@theme/QueryTable';
@@ -49,10 +48,9 @@ const BlockchainApplicationList = () => {
 
   return (
     <Box main className="chain-application-box">
-      <BoxHeader className={styles.boxHeader}>
-        <div className={grid['col-xs-6']}>{t('Applications')}</div>
-        {blockchainApplicationExplore?.data?.data?.length > 5 && (
-          <div align="right" className={grid['col-xs-6']}>
+      <div className={styles.searchWrapper}>
+        {(blockchainApplicationExplore?.data?.data?.length > 5 || !!searchValue) && (
+          <div align="right" className={grid['col-xs-12']}>
             <div className={styles.filterHolder}>
               <Input
                 icon={<Icon className={styles.searchIcon} name="searchActive" />}
@@ -66,7 +64,7 @@ const BlockchainApplicationList = () => {
             </div>
           </div>
         )}
-      </BoxHeader>
+      </div>
       <BoxContent className={`${styles.content} chain-application-result`}>
         <QueryTable
           showHeader

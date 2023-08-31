@@ -1,16 +1,12 @@
-import { useLocation } from 'react-router';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import NoTokenBalance from './NoTokenBalance';
+import NoActionView from './NoActionView';
 
-jest.mock('react-router');
-
-describe('NoTokenBalance', () => {
+describe('NoActionView', () => {
   const mockOnRequestToken = jest.fn();
 
   it('should render properly', async () => {
-    useLocation.mockReturnValue({});
-    const wrapper = renderWithRouter(NoTokenBalance, { onRequestToken: mockOnRequestToken });
+    const wrapper = renderWithRouter(NoActionView, { onClick: mockOnRequestToken });
 
     expect(
       wrapper.getByText('There are no tokens to display for this account at this moment.')
@@ -25,9 +21,10 @@ describe('NoTokenBalance', () => {
   });
 
   it('should render custom message', async () => {
-    useLocation.mockReturnValue({ search: '?message=test-message' });
-
-    const wrapper = renderWithRouter(NoTokenBalance, { onRequestToken: mockOnRequestToken });
+    const wrapper = renderWithRouter(NoActionView, {
+      onClick: mockOnRequestToken,
+      message: 'test-message',
+    });
 
     expect(
       wrapper.queryByText('There are no tokens to display for this account at this monent.')
