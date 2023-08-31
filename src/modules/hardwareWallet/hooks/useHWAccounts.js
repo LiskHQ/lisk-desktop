@@ -35,7 +35,7 @@ function useHWAccounts(nrOfAccounts) {
               metadata: {
                 address,
                 pubkey: pubKey,
-                accountIndex,
+                accountIndex: index,
                 name,
                 isHW: true,
               },
