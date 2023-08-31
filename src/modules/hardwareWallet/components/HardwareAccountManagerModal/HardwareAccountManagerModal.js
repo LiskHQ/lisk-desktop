@@ -9,6 +9,7 @@ import AccountRow from '@account/components/AccountRow';
 import { TertiaryButton } from '@theme/buttons';
 import useHWAccounts from '@hardwareWallet/hooks/useHWAccounts';
 import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
+import Icon from '@theme/Icon';
 import styles from './HardwareAccountManagerModal.css';
 
 // eslint-disable-next-line max-statements
@@ -44,7 +45,13 @@ function HardwareAccountManagerModal() {
         <h2 className={styles.title}>{t('Import account from hardware wallet')}</h2>
         <div className={styles.accountListWrapper}>
           {hwAccounts?.map((hwAccount) => (
-            <AccountRow key={hwAccount.metadata.address} account={hwAccount} onSelect={onSelect} />
+            <AccountRow
+              className={styles.accountRowProp}
+              key={hwAccount.metadata.address}
+              account={hwAccount}
+              onSelect={onSelect}
+              RightSlot={<Icon className={styles.icon} name="downloadBlue" />}
+            />
           ))}
           {!isAppOpen && (
             <p className={styles.warningText}>

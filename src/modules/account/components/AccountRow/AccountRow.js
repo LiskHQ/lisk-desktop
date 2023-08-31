@@ -4,9 +4,18 @@ import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Tooltip from '@theme/Tooltip';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import styles from './AccountRow.css';
 
-function AccountRow({ account, currentAccount, onSelect, onRemove, truncate }) {
+function AccountRow({
+  className,
+  account,
+  currentAccount,
+  onSelect,
+  onRemove,
+  truncate,
+  RightSlot,
+}) {
   const {
     metadata: { name, address, isHW, isNew },
   } = account;
@@ -16,7 +25,7 @@ function AccountRow({ account, currentAccount, onSelect, onRemove, truncate }) {
     <div
       key={address}
       data-testid={address}
-      className={styles.accountWrapper}
+      className={classNames(styles.accountWrapper, className)}
       onClick={() => onSelect(account)}
     >
       <WalletVisual address={address} size={40} />
@@ -56,6 +65,7 @@ function AccountRow({ account, currentAccount, onSelect, onRemove, truncate }) {
           <Icon name="deleteRedIcon" />
         </button>
       )}
+      {RightSlot && RightSlot}
     </div>
   );
 }

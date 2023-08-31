@@ -1,7 +1,7 @@
 @import '../../../../../setup/react/app/mixins.css';
 
 .HardwareAccountManagerModal {
-  max-width: 485px;
+  max-width: 477px;
   width: calc(100% - var(--horizontal-margin));
   padding: 24px;
 
@@ -17,10 +17,17 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     row-gap: 16px;
     max-height: 400px;
     overflow-y: scroll;
+
+    .accountRowProp {
+      width: 98%;
+
+      & .icon {
+        width: 20px;
+      }
+    }
   }
 
   & .warningText {
