@@ -14,8 +14,15 @@ jest.mock('@account/hooks', () => ({
   })),
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
 }));
+
+const mockState = {
+  hardwareWallet: {
+    accounts: [],
+  },
+};
+
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
+  useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
 }));
 
 const props = {
