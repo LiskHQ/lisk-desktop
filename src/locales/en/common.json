@@ -1,6 +1,7 @@
 {
   "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ": "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ",
   " is out. ": " is out. ",
+  " to complete the request.": " to complete the request.",
   "\"Lisk\" will be the default mainchain application, please enter your custom network to be added to the wallet.": "\"Lisk\" will be the default mainchain application, please enter your custom network to be added to the wallet.",
   "\"{{username}}\" is already taken.": "\"{{username}}\" is already taken.",
   "64 bytes left": "64 bytes left",
@@ -135,6 +136,7 @@
   "Connected": "Connected",
   "Connected peers": "Connected peers",
   "Connection ID": "Connection ID",
+  "Connection request contains unsupported chainIDs.": "Connection request contains unsupported chainIDs.",
   "Connection summary is not ready yet.": "Connection summary is not ready yet.",
   "Consecutive missed blocks": "Consecutive missed blocks",
   "Continue": "Continue",
@@ -161,6 +163,7 @@
   "Cross chain transfer": "Cross chain transfer",
   "Cross chain update": "Cross chain update",
   "Currency": "Currency",
+  "Current account": "Current account",
   "Current version is up-to-date.": "Current version is up-to-date.",
   "Custom": "Custom",
   "Custom derivation path": "Custom derivation path",
@@ -444,6 +447,7 @@
   "Ping device": "Ping device",
   "Please add a member beyond yourself for registering multisignature account.": "Please add a member beyond yourself for registering multisignature account.",
   "Please choose the correct words from the list below to complete your secret recovery phrase.": "Please choose the correct words from the list below to complete your secret recovery phrase.",
+  "Please click on “Switch to signing account” ": "Please click on “Switch to signing account” ",
   "Please confirm the transaction on your {{deviceModel}}": "Please confirm the transaction on your {{deviceModel}}",
   "Please drag and drop the JSON file from your device.": "Please drag and drop the JSON file from your device.",
   "Please drop the JSON here": "Please drop the JSON here",
@@ -594,7 +598,6 @@
   "Signature is incorrect": "Signature is incorrect",
   "Signed": "Signed",
   "Signed message": "Signed message",
-  "Signing account": "Signing account",
   "Simply scan the QR code using the Lisk Mobile app or any other QR code reader.": "Simply scan the QR code using the Lisk Mobile app or any other QR code reader.",
   "Since you want to reclaim your LSK on the new blockchain, you need to pay the network fee from your new account.": "Since you want to reclaim your LSK on the new blockchain, you need to pay the network fee from your new account.",
   "Site permissions": "Site permissions",
@@ -629,6 +632,7 @@
   "Switch application": "Switch application",
   "Switch device": "Switch device",
   "Switch network": "Switch network",
+  "Switch to signing account": "Switch to signing account",
   "Take control of your blockchain network settings. Now you can customize your network preferences according to your specific needs.": "Take control of your blockchain network settings. Now you can customize your network preferences according to your specific needs.",
   "Terminate sidechain": "Terminate sidechain",
   "Terminated": "Terminated",
@@ -645,6 +649,7 @@
   "The minimum required balance for this action is {{minRequiredBalance}} {{token}}": "The minimum required balance for this action is {{minRequiredBalance}} {{token}}",
   "The number of transactions submitted over the selected time period.": "The number of transactions submitted over the selected time period.",
   "The provided amount is higher than your available staking balance.": "The provided amount is higher than your available staking balance.",
+  "The selected account for signing the requested transaction is missing. Please add the missing account “": "The selected account for signing the requested transaction is missing. Please add the missing account “",
   "The statistics shown only reflects peers connected to the current Lisk Service node.": "The statistics shown only reflects peers connected to the current Lisk Service node.",
   "The total amount of stakes received for a validator.": "The total amount of stakes received for a validator.",
   "The transaction is now fully signed": "The transaction is now fully signed",
@@ -851,5 +856,6 @@
   "{{num}} year": "{{num}} year",
   "{{reclaimedAmount}} LSK will be deposited in your account": "{{reclaimedAmount}} LSK will be deposited in your account",
   "{{stake}} still available in your account": "{{stake}} still available in your account",
-  "{{transactions}} transactions": "{{transactions}} transactions"
+  "{{transactions}} transactions": "{{transactions}} transactions",
+  "” to Lisk Desktop and re-initiate the transaction signing from the external application.": "” to Lisk Desktop and re-initiate the transaction signing from the external application."
 }

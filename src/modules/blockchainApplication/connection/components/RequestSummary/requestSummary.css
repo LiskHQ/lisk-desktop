@@ -100,7 +100,7 @@
   border-width: 1px 0;
   border-style: solid;
 
-  & > div {
+  & > .labeledValue {
     padding: var(--vertical-padding-m) 0;
   }
 
@@ -129,5 +129,38 @@
 .emptyState {
   & .illustration {
     width: 120px;
+  }
+}
+
+.labeledValue {
+  & > span:first-child {
+    width: 100%;
+  }
+
+  & .disabledAccountRow {
+    opacity: 0.4;
+  }
+
+  & .accountRow {
+    border-bottom: none;
+    margin-bottom: 0px;
+    padding-bottom: 6px;
+  }
+}
+
+.switchAccountHeader {
+  display: flex;
+  justify-content: space-between;
+
+  & > button {
+    color: var(--color-ultramarine-blue);
+    font-family: var(--heading-font) !important;
+    padding: 0px 0px !important;
+    height: fit-content !important;
+    font-weight: var(--font-weight-semi-bold) !important;
+
+    & > svg {
+      margin-bottom: -4px;
+    }
   }
 }

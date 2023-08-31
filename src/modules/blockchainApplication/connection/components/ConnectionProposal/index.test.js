@@ -1,12 +1,15 @@
 import React from 'react';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { usePairings } from '@libs/wcm/hooks/usePairings';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { isValidWCURI } from '@libs/wcm/utils/validator';
+import mockApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionProposal from './index';
 
+jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.spyOn(React, 'useContext').mockImplementation(() => ({
   events: [
     {
@@ -45,7 +48,7 @@ const setup = (value) => {
     </ConnectionContext.Provider>
   );
 
-  return mountWithRouter(Component, {}, {});
+  return mountWithRouterAndQueryClient(Component, {}, {});
 };
 
 describe('ConnectionProposal', () => {
@@ -58,6 +61,12 @@ describe('ConnectionProposal', () => {
     });
     usePairings.mockReturnValue({
       setUri,
+    });
+
+    useBlockchainApplicationMeta.mockReturnValue({
+      data: { data: mockApplicationsManage },
+      isLoading: false,
+      isFetching: false,
     });
   });
 

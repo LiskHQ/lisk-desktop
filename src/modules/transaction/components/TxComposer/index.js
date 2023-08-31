@@ -1,6 +1,7 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useAuth } from '@auth/hooks/queries';
@@ -23,6 +24,7 @@ import { useCommandSchema } from 'src/modules/network/hooks';
 import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
+import { emptyTransactionsData } from '../../store/actions';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
@@ -37,6 +39,7 @@ const TxComposer = ({
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const { t } = useTranslation();
   const { moduleCommandSchemas } = useCommandSchema();
+  const reduxDispatch = useDispatch();
 
   useSchemas();
   useDeprecatedAccount();
@@ -93,6 +96,10 @@ const TxComposer = ({
       messageFeeTokenID,
     };
   }
+
+  useEffect(() => {
+    reduxDispatch(emptyTransactionsData());
+  }, []);
 
   useEffect(() => {
     if (feeEstimateError) {

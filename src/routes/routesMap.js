@@ -59,6 +59,7 @@ import RequestSignMessageDialog from '@blockchainApplication/connection/componen
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
 import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardwareDeviceModal';
 import { NoTokenBalanceDialog } from 'src/modules/token/fungible/components/NoTokenBalanceDialog';
+import NoAccountDialog from '@token/fungible/components/NoTokenBalanceDialog/NoAccountsDialog';
 
 export default {
   wallet: AccountOverviewDetails,
@@ -122,4 +123,5 @@ export default {
   dialogAddNetwork: DialogAddNetwork,
   dialogRemoveNetwork: DialogRemoveNetwork,
   noTokenBalance: NoTokenBalanceDialog,
+  NoAccountView: NoAccountDialog,
 };

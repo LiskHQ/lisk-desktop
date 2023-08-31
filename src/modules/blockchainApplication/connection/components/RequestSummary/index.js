@@ -1,10 +1,15 @@
+/* eslint-disable complexity */
 /* istanbul ignore file */ // @todo Add unit tests by #4824
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import AccountRow from '@account/components/AccountRow';
+import { useCurrentAccount } from '@account/hooks';
 import { useAccounts } from '@account/hooks/useAccounts';
-import { extractAddressFromPublicKey } from '@wallet/utils/account';
+import { emptyTransactionsData } from 'src/redux/actions';
+import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS, ERROR_CASES } from '@libs/wcm/constants/lifeCycle';
 import { formatJsonRpcError } from '@libs/wcm/utils/jsonRPCFormat';
@@ -19,12 +24,14 @@ import { useSession } from '@libs/wcm/hooks/useSession';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
-import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import { getSdkError } from '@walletconnect/utils';
 import { decodeTransaction } from '@transaction/utils';
-
 import Box from 'src/theme/box';
+import routes from 'src/routes/routes';
 import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
+import WarningNotification from '@common/components/warningNotification';
+import { ReactComponent as SwtichIcon } from '../../../../../../setup/react/assets/images/icons/switch-icon.svg';
 import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
 
@@ -43,20 +50,39 @@ export const rejectLiskRequest = (request) => {
 const RequestSummary = ({ nextStep, history }) => {
   const { t } = useTranslation();
   const { getAccountByAddress } = useAccounts();
+  const [currentAccount, setCurrentAccount] = useCurrentAccount();
   const { events } = useEvents();
   const [request, setRequest] = useState(null);
   const [transaction, setTransaction] = useState(null);
   const [senderAccount, setSenderAccount] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const { sessionRequest } = useSession();
+  const reduxDispatch = useDispatch();
   const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
   useSchemas();
 
-  const sendingChainID = request?.chainId.replace('lisk:', '');
+  const encryptedSenderAccount = getAccountByAddress(senderAccount?.address);
+  const isSenderCurrentAccount = currentAccount.metadata.address === senderAccount?.address;
+
+  const signingAccountDetails = useMemo(() => {
+    if (encryptedSenderAccount) {
+      return `(${encryptedSenderAccount.metadata.name} - ${truncateAddress(
+        senderAccount?.address
+      )})`;
+    }
+
+    return senderAccount?.address;
+  }, [encryptedSenderAccount, senderAccount]);
+
+  const sendingChainID = request?.chainId?.replace('lisk:', '');
   const { data: tokenData } = useAppsMetaTokens({
     config: { params: { chainID: sendingChainID } },
   });
+
+  const navigateToAddAccountFlow = () => {
+    history.push(routes.addAccountOptions.path);
+  };
 
   const approveHandler = () => {
     const moduleCommand = joinModuleAndCommand(transaction);
@@ -88,6 +114,10 @@ const RequestSummary = ({ nextStep, history }) => {
   };
 
   useEffect(() => {
+    reduxDispatch(emptyTransactionsData());
+  }, []);
+
+  useEffect(() => {
     const event = events.find((e) => e.name === EVENTS.SESSION_REQUEST);
     if (event?.meta?.params?.request?.params) {
       setRequest({
@@ -107,7 +137,6 @@ const RequestSummary = ({ nextStep, history }) => {
         setTransaction(transactionObj);
         const address = extractAddressFromPublicKey(transactionObj.senderPublicKey);
         const account = getAccountByAddress(address);
-        // @todo if account doesn't exist, we should inform the user that the tx can't be signed
         setSenderAccount({
           pubkey: transactionObj.senderPublicKey,
           address,
@@ -139,10 +168,14 @@ const RequestSummary = ({ nextStep, history }) => {
     value: chain.replace(/\D+/g, ''),
   }));
 
+  const handleSwitchAccount = () => {
+    setCurrentAccount(encryptedSenderAccount, '/wallet?modal=requestView');
+  };
+
   return (
     <div className={`${styles.wrapper}`}>
       <BlockchainAppDetailsHeader
-        headerText={getTitle(request.request.method, t)}
+        headerText={getTitle(request?.request?.method, t)}
         application={application}
         clipboardCopyItems={clipboardCopyItems}
       />
@@ -162,15 +195,59 @@ const RequestSummary = ({ nextStep, history }) => {
             )}
           </ValueAndLabel>
           {!errorMessage && (
-            <ValueAndLabel className={styles.labeledValue} label={t('Signing account')}>
-              <AccountRow
-                account={{
-                  metadata: { name: senderAccount?.name, address: senderAccount?.address },
-                }}
-                truncate
-                onSelect={() => {}}
-              />
-            </ValueAndLabel>
+            <>
+              <ValueAndLabel
+                className={styles.labeledValue}
+                label={
+                  <div className={styles.switchAccountHeader}>
+                    <span>{t('Current account')}</span>
+                    {!isSenderCurrentAccount && !!encryptedSenderAccount && (
+                      <TertiaryButton onClick={handleSwitchAccount}>
+                        <span>{t('Switch to signing account')}</span>{' '}
+                        <SwtichIcon data-testid="switch-icon" />
+                      </TertiaryButton>
+                    )}
+                  </div>
+                }
+              >
+                <>
+                  <AccountRow
+                    truncate
+                    className={classNames(styles.accountRow, {
+                      [styles.disabledAccountRow]:
+                        !isSenderCurrentAccount || !encryptedSenderAccount,
+                    })}
+                    account={currentAccount}
+                  />
+                  <WarningNotification
+                    isVisible={!isSenderCurrentAccount || !encryptedSenderAccount}
+                    message={
+                      !encryptedSenderAccount ? (
+                        <>
+                          <span>
+                            {t(
+                              'The selected account for signing the requested transaction is missing. Please add the missing account “'
+                            )}
+                          </span>
+                          <b>{signingAccountDetails}</b>
+                          <span>
+                            {t(
+                              '” to Lisk Desktop and re-initiate the transaction signing from the external application.'
+                            )}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <span>{t('Please click on “Switch to signing account” ')}</span>
+                          <b>{signingAccountDetails}</b>
+                          <span>{t(' to complete the request.')}</span>
+                        </>
+                      )
+                    }
+                  />
+                </>
+              </ValueAndLabel>
+            </>
           )}
         </div>
         <footer className={styles.actionBar}>
@@ -183,11 +260,15 @@ const RequestSummary = ({ nextStep, history }) => {
           </SecondaryButton>
           <PrimaryButton
             className={styles.button}
-            onClick={approveHandler}
+            onClick={!encryptedSenderAccount ? navigateToAddAccountFlow : approveHandler}
             data-testid="approve-button"
-            disabled={!metaData.data || errorMessage}
+            disabled={
+              !metaData.data ||
+              errorMessage ||
+              (!isSenderCurrentAccount && !!encryptedSenderAccount)
+            }
           >
-            {t('Continue')}
+            {!encryptedSenderAccount ? t('Add account') : t('Continue')}
           </PrimaryButton>
         </footer>
       </Box>

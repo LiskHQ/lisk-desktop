@@ -6,7 +6,7 @@ import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Skeleton from 'src/modules/common/components/skeleton';
-import NoTokenBalance from 'src/modules/token/fungible/components/NoTokenBalanceDialog/NoTokenBalance';
+import NoTokenBalance from 'src/modules/token/fungible/components/NoTokenBalanceDialog/NoActionView';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
