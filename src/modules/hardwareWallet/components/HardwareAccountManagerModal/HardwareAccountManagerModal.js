@@ -13,6 +13,8 @@ import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelecto
 import Icon from '@theme/Icon';
 import styles from './HardwareAccountManagerModal.css';
 
+const NR_OF_ACCOUNTS_TO_LOAD = 3;
+
 // eslint-disable-next-line max-statements
 function HardwareAccountManagerModal() {
   const { t } = useTranslation();
@@ -31,12 +33,12 @@ function HardwareAccountManagerModal() {
   }
 
   function onLoadMore() {
-    setNrOfAccounts((prevState) => prevState + 3);
+    setNrOfAccounts((prevState) => prevState + NR_OF_ACCOUNTS_TO_LOAD);
   }
 
   useEffect(() => {
     if (isAppOpen) {
-      setNrOfAccounts(3);
+      setNrOfAccounts(NR_OF_ACCOUNTS_TO_LOAD);
     } else {
       setNrOfAccounts(0);
     }
