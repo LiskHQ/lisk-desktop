@@ -123,14 +123,14 @@ const menu = {
         },
         {
           label: i18n.t('Discord'),
-          click: menu.onClickLink.bind(null, electron, 'https://discord.gg/CngsY6D'),
+          click: menu.onClickLink.bind(null, electron, 'https://discord.com/invite/7EKWJ7b'),
         },
         {
           label: i18n.t('Provide Feedback'),
           click: menu.onClickLink.bind(
             null,
             electron,
-            'https://lisk.com/contact/i-want-provide-feedback-about-lisk-product/form'
+            'https://discord.com/channels/405002561775599619/1123912726507438151'
           ),
         },
         {
