@@ -123,7 +123,7 @@ const menu = {
         },
         {
           label: i18n.t('Discord'),
-          click: menu.onClickLink.bind(null, electron, 'https://discord.com/invite/7EKWJ7b'),
+          click: menu.onClickLink.bind(null, electron, 'https://lisk.chat'),
         },
         {
           label: i18n.t('Provide Feedback'),
