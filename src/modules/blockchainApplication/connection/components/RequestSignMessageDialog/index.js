@@ -38,7 +38,6 @@ const RequestSignMessageDialog = () => {
   const onMultiStepChange = useCallback(({ step: { current } }) => {
     setMultiStepPosition(current);
   }, []);
-
   const isPasswordStep = multiStepPosition === 2;
 
   useEffect(() => {
