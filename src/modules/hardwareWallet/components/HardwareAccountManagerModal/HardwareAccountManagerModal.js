@@ -39,7 +39,7 @@ function HardwareAccountManagerModal() {
   }, [isAppOpen]);
 
   return (
-    <Dialog className={styles.HardwareAccountManagerModal}>
+    <Dialog className={styles.HardwareAccountManagerModal} hasClose>
       <>
         <h2 className={styles.title}>{t('Import account from hardware wallet')}</h2>
         <div className={styles.accountListWrapper}>
@@ -48,7 +48,7 @@ function HardwareAccountManagerModal() {
           ))}
           {!isAppOpen && (
             <p className={styles.warningText}>
-              {t('Please open the Lisk app on your ledger device to see your accounts')}
+              {t('Please open the Lisk app on your hardware wallet device to see your accounts.')}
             </p>
           )}
         </div>
