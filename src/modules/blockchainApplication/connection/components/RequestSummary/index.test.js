@@ -69,6 +69,7 @@ useCommandSchema.mockReturnValue({
 });
 useAccounts.mockReturnValue({
   getAccountByAddress: () => mockSavedAccounts[0],
+  accounts: mockSavedAccounts,
 });
 useEvents.mockReturnValue({
   events: [
@@ -163,6 +164,7 @@ describe('RequestSummary', () => {
 
     useAccounts.mockReturnValue({
       getAccountByAddress: () => null,
+      accounts: mockSavedAccounts,
     });
 
     renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
@@ -189,5 +191,21 @@ describe('RequestSummary', () => {
         '” to Lisk Desktop and re-initiate the transaction signing from the external application.'
       )
     ).toBeTruthy();
+  });
+
+  it('Should not display content', () => {
+    jest
+      .spyOn(accountUtils, 'extractAddressFromPublicKey')
+      .mockReturnValue(wallets.testnet_guy.summary.address);
+
+    useAccounts.mockReturnValue({
+      getAccountByAddress: () => null,
+      accounts: [],
+    });
+
+    renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
+
+    expect(screen.queryByText('Signature request')).toBeFalsy();
+    expect(screen.queryByText('test app')).toBeFalsy();
   });
 });
