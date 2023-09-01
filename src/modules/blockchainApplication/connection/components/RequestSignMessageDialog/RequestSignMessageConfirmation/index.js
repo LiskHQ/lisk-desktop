@@ -40,7 +40,7 @@ export function RequestSignMessageConfirmation({ nextStep, address, message }) {
         />
         <p className={styles.label}>{t('Message')}</p>
         <div className={styles.messageBox}>{message}</div>
-        <PrimaryButton className={styles.btnContinue} onClick={onClick}>
+        <PrimaryButton className={classNames(styles.btnContinue, 'continue-btn')} onClick={onClick}>
           {t('Continue')}
         </PrimaryButton>
       </div>
