@@ -2,7 +2,7 @@ import localeHandler from './localeHandler';
 import menu from '../menu';
 import process from './process';
 import { IPC_OPEN_URL } from '../../../src/const/ipcGlobal';
-import { WHITE_LISTED_DOMAIN } from '../utils';
+import { WHITE_LISTED_DOMAIN, WHITE_LISTED_PROTOCOLS } from '../utils';
 
 const win = {
   browser: null,
@@ -88,10 +88,12 @@ const win = {
       }
     });
 
+    // eslint-disable-next-line max-statements
     const handleRedirect = (e, url) => {
       try {
-        const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(new URL(url).hostname);
-
+        const urlData = new URL(url);
+        const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(urlData.origin);
+        console.log('>>>>', urlData, isAllowedUrl);
         if (!isAllowedUrl) return e.preventDefault();
 
         if (url !== win.browser.webContents.getURL()) {
@@ -101,6 +103,7 @@ const win = {
 
         return null;
       } catch {
+        e.preventDefault();
         return null;
       }
     };
