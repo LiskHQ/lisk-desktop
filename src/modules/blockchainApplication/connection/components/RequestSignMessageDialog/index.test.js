@@ -47,6 +47,7 @@ useSession.mockReturnValue({ reject, sessionRequest: defaultContext.sessionReque
 useCurrentAccount.mockReturnValue([mockCurrentAccount, mockSetCurrentAccount]);
 useAccounts.mockReturnValue({
   getAccountByAddress: () => mockSavedAccounts[0],
+  accounts: mockSavedAccounts,
 });
 
 useBlockchainApplicationMeta.mockReturnValue({
