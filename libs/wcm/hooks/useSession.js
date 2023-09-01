@@ -124,7 +124,7 @@ export const useSession = ({ isEnabled = true } = {}) => {
         await loadSessions();
       })();
     }
-  }, [signClient, sessions]);
+  }, [signClient, sessions, isEnabled]);
 
   return {
     hasLoaded,
