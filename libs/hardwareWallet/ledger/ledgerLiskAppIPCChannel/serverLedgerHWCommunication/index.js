@@ -77,9 +77,15 @@ export async function getSignedMessage({ devicePath, accountIndex, unsignedMessa
     const message = isHexString(unsignedMessage)
       ? Buffer.from(unsignedMessage, 'hex')
       : Buffer.from(unsignedMessage);
-    const signature = await liskLedger.signMessage(ledgerAccount.derivePath(), message);
+    const response = await liskLedger.signMessage(ledgerAccount.derivePath(), message);
     await transport?.close();
-    return signature;
+
+    console.log('getSignedMessage response', response);
+
+    if (response?.error_message === 'No errors') {
+      return response;
+    }
+    return Promise.reject(response.return_code);
   } catch (error) {
     if (transport) await transport.close();
     return Promise.reject(error);
