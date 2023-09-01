@@ -1,6 +1,7 @@
 import React from 'react';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { useSession } from '@libs/wcm/hooks/useSession';
+import { useAccounts } from '@account/hooks/useAccounts';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import SessionManager from './index';
@@ -9,11 +10,7 @@ jest.mock('src/utils/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
 }));
 jest.mock('@libs/wcm/hooks/useSession');
-jest.mock('@account/hooks', () => ({
-  useAccounts: jest.fn().mockImplementation(() => ({
-    accounts: [{ metadata: { address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt' } }],
-  })),
-}));
+jest.mock('@account/hooks/useAccounts');
 
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
@@ -57,6 +54,10 @@ describe('SessionManager', () => {
     ],
   });
 
+  useAccounts.mockReturnValue({
+    accounts: [{ metadata: { address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt' } }],
+  });
+
   it('Displays a button to add a new connection', () => {
     const wrapper = setup();
     expect(wrapper.find('.add-button')).toExist();
@@ -73,5 +74,18 @@ describe('SessionManager', () => {
     const wrapper = setup();
     wrapper.find('.connection').at(0).find('button').simulate('click');
     expect(disconnect).toHaveBeenCalled();
+  });
+
+  it('Should show an no account modal notification', () => {
+    useAccounts.mockReturnValue({
+      accounts: [],
+    });
+    const wrapper = setup();
+    expect(wrapper.find('.add-button')).toExist();
+    wrapper.find('.add-button button').simulate('click');
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(
+      expect.objectContaining({}),
+      expect.objectContaining({ modal: 'NoAccountView' })
+    );
   });
 });

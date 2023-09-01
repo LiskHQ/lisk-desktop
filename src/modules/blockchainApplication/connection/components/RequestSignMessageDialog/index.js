@@ -1,7 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { emptyTransactionsData } from 'src/redux/actions';
 import Dialog from '@theme/dialog/dialog';
 import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
@@ -13,6 +15,7 @@ import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import SignedMessage from '@message/components/signedMessage';
 import { RequestSignMessageConfirmation } from '@blockchainApplication/connection/components/RequestSignMessageDialog/RequestSignMessageConfirmation';
 import styles from './RequestSignMessageDialog.css';
+import RequestSummary from '../RequestSummary';
 
 // eslint-disable-next-line max-statements
 const RequestSignMessageDialog = () => {
@@ -22,21 +25,21 @@ const RequestSignMessageDialog = () => {
   const { sessionRequest } = useSession();
   const [currentAccount] = useCurrentAccount();
   const history = useHistory();
+  const reduxDispatch = useDispatch();
 
   const { peer, requiredNamespaces } = sessionRequest || {};
-  const {
-    metadata: { pubkey },
-  } = currentAccount;
   const event = events?.find((e) => e.name === EVENTS.SESSION_REQUEST);
   const { message, address } = event?.meta?.params?.request?.params || {};
-
   const { icons, name, url } = peer?.metadata || {};
 
   const onMultiStepChange = useCallback(({ step: { current } }) => {
     setMultiStepPosition(current);
   }, []);
+  const isPasswordStep = multiStepPosition === 2;
 
-  const isPasswordStep = multiStepPosition === 1;
+  useEffect(() => {
+    reduxDispatch(emptyTransactionsData());
+  }, []);
 
   return (
     <Dialog
@@ -68,10 +71,11 @@ const RequestSignMessageDialog = () => {
         })}
         onChange={onMultiStepChange}
       >
+        <RequestSummary history={history} message={message} />
         <RequestSignMessageConfirmation message={message} address={address} />
         <TxSignatureCollector
           type="message"
-          transactionJSON={{ senderPublicKey: pubkey, params: {} }}
+          transactionJSON={{ senderPublicKey: currentAccount.metadata?.pubkey, params: {} }}
         />
         <SignedMessage history={history} account={currentAccount} />
       </MultiStep>

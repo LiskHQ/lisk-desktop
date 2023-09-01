@@ -30,6 +30,23 @@ export async function getPubKey({ devicePath, accountIndex, showOnDevice }) {
   }
 }
 
+export async function getMultipleAddresses({ devicePath, accountIndexes }) {
+  let transport;
+  try {
+    transport = await TransportNodeHid.open(devicePath);
+    const liskLedger = new LiskApp(transport);
+    const response = await liskLedger.getMultipleAddresses(accountIndexes);
+    await transport?.close();
+    if (response?.error_message === 'No errors') {
+      return response?.addr;
+    }
+    return Promise.reject(response.return_code);
+  } catch (error) {
+    await transport?.close();
+    return Promise.reject(error);
+  }
+}
+
 export async function getSignedTransaction({ devicePath, accountIndex, unsignedMessage }) {
   let transport;
   try {

@@ -174,6 +174,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  hardwareAccountManagerModal: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   stakingQueue: {
     isPrivate: true,
     forbiddenTokens: [],
@@ -278,6 +282,10 @@ export const modals = {
   },
   noTokenBalance: {
     isPrivate: true,
+    forbiddenTokens: [],
+  },
+  NoAccountView: {
+    isPrivate: false,
     forbiddenTokens: [],
   },
 };
