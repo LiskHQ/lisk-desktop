@@ -21,9 +21,9 @@ const Error = ({ t, error, reset }) => {
     <BoxContent className={styles.statusWrapper}>
       <Icon name="arrowLeftTailed" className={styles.backBtn} onClick={reset} />
       <Illustration className={styles.illustration} name={illustrationName || 'hwRejection'} />
-      <h3>{status.title || t('Transaction aborted on device')}</h3>
+      <h3>{status?.title || t('Transaction aborted on device')}</h3>
       <p className={styles.errorInfoText}>
-        {status.message || t('You have cancelled the transaction on your hardware wallet.')}
+        {status?.message || t('You have cancelled the transaction on your hardware wallet.')}
       </p>
     </BoxContent>
   );
