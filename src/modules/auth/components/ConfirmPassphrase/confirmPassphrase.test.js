@@ -31,9 +31,7 @@ describe('Register Process - Confirm Passphrase', () => {
 
   it('Should handle selection', async () => {
     render(<ConfirmPassphrase {...props} />);
-    await waitFor(() => {
-      selectRightWords();
-    });
+    await waitFor(selectRightWords);
     selectRightWords();
     fireEvent.click(screen.getByTestId('confirm-button'));
 
