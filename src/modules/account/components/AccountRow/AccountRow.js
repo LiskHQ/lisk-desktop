@@ -7,7 +7,15 @@ import Tooltip from '@theme/Tooltip';
 import { useTranslation } from 'react-i18next';
 import styles from './AccountRow.css';
 
-function AccountRow({ account, currentAccount, onSelect, onRemove, truncate, className }) {
+function AccountRow({
+  className,
+  account,
+  currentAccount,
+  onSelect,
+  onRemove,
+  truncate,
+  RightSlot,
+}) {
   const {
     metadata: { name, address, isHW, isNew },
   } = account;
@@ -57,6 +65,7 @@ function AccountRow({ account, currentAccount, onSelect, onRemove, truncate, cla
           <Icon name="deleteRedIcon" />
         </button>
       )}
+      {RightSlot && RightSlot}
     </div>
   );
 }

@@ -19,7 +19,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
     setIsDropdownShown(true);
   };
 
-  const truncatedAcctName = name.length > 10 ? truncateAccountName(name) : name;
+  const truncatedAcctName = name?.length > 10 ? truncateAccountName(name) : name;
 
   return (
     <DropdownButton
@@ -33,7 +33,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
         <div className={styles.accountWrapper}>
           <WalletVisual address={address} size={32} />
           <div className={styles.account}>
-            {name.length > 10 ? (
+            {name?.length > 10 ? (
               <Tooltip
                 size="s"
                 position="bottom"

@@ -58,6 +58,7 @@ import RequestView from '@blockchainApplication/connection/components/RequestVie
 import RequestSignMessageDialog from '@blockchainApplication/connection/components/RequestSignMessageDialog';
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
 import SelectHardwareDeviceModal from '@hardwareWallet/components/SelectHardwareDeviceModal';
+import HardwareAccountManagerModal from '@hardwareWallet/components/HardwareAccountManagerModal';
 import { NoTokenBalanceDialog } from 'src/modules/token/fungible/components/NoTokenBalanceDialog';
 import NoAccountDialog from '@token/fungible/components/NoTokenBalanceDialog/NoAccountsDialog';
 
@@ -89,6 +90,7 @@ export default {
   claimRewardsView: ClaimRewardsView,
   editStake: editStakeManager,
   selectHardwareDeviceModal: SelectHardwareDeviceModal,
+  hardwareAccountManagerModal: HardwareAccountManagerModal,
   stakingQueue: StakingQueue,
   confirmationDialog: ConfirmationDialog,
   reclaimBalance: ReclaimBalanceModal,

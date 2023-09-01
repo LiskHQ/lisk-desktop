@@ -129,7 +129,7 @@
   &.standby {
     border-color: var(--color-warning-border-transparent);
     background-color: var(--color-warning-border-background-transparent);
-    color: var(--color-warning-border) !important;
+    color: var(--color-zodiac-blue) !important;
 
     &::before {
       background-color: var(--color-warning-border);
