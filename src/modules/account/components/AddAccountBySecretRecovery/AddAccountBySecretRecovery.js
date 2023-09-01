@@ -31,7 +31,7 @@ const AddAccountBySecretRecovery = () => {
 
   /* istanbul ignore next */
   const onSetPassword = (account) => {
-    setCurrentAccount(account);
+    setCurrentAccount(account, null, false);
     setAccount(account);
     multiStepRef?.current?.next();
   };
