@@ -80,8 +80,6 @@ export async function getSignedMessage({ devicePath, accountIndex, unsignedMessa
     const response = await liskLedger.signMessage(ledgerAccount.derivePath(), message);
     await transport?.close();
 
-    console.log('getSignedMessage response', response);
-
     if (response?.error_message === 'No errors') {
       return response;
     }
