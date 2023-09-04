@@ -282,6 +282,7 @@
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "4.15.1",
     "webpack-merge": "=4.1.5",
+    "webpack-subresource-integrity": "5.1.0",
     "yarn": "1.22.19"
   },
   "msw": {
