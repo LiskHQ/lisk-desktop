@@ -29,7 +29,7 @@ const Register = ({ account, token }) => {
   const { setAccount } = useAccounts();
 
   const onSetPassword = (encryptedAccount) => {
-    setCurrentAccount(encryptedAccount);
+    setCurrentAccount(encryptedAccount, null, false);
     setAccount(encryptedAccount);
     multiStepRef.current?.next();
   };
