@@ -3,14 +3,14 @@ import { validator } from '@liskhq/lisk-client';
 import { requestTokenSchema } from './validationSchema';
 
 const PERMISSION_WHITE_LIST = ['clipboard-read', 'notifications', 'openExternal'];
-const WHITE_LISTED_DEEP_LINKS = [
+export const WHITE_LISTED_DEEP_LINKS = [
   {
     pathRegex: /^wallet$/,
     validationSchema: requestTokenSchema,
   },
 ];
 
-export const WHITE_LISTED_DOMAIN = ['localhost', 'lisk.com'];
+export const WHITE_LISTED_DOMAIN = ['https://lisk.com'];
 
 export const setRendererPermissions = (win) => {
   win.browser.webContents.session.setPermissionRequestHandler((_, permission, callback) => {
@@ -19,10 +19,15 @@ export const setRendererPermissions = (win) => {
 };
 
 export const canExecuteDeepLinking = (url) => {
-  const { protocol, searchParams, hostname } = new URL(url);
+  const { protocol, searchParams, hostname, pathname } = new URL(url);
+
   if (protocol !== 'lisk:') return false;
 
-  const foundLink = WHITE_LISTED_DEEP_LINKS.find(({ pathRegex }) => pathRegex.test(hostname));
+  let urlPath = hostname;
+  if (hostname.length === 0) urlPath = pathname.replace(/^\/{2}/, '');
+
+  const foundLink = WHITE_LISTED_DEEP_LINKS.find(({ pathRegex }) => pathRegex.test(urlPath));
+
   if (!foundLink) return false;
 
   const searchParamObject = [...searchParams.entries()].reduce(

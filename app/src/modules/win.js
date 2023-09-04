@@ -88,9 +88,11 @@ const win = {
       }
     });
 
+    // eslint-disable-next-line max-statements
     const handleRedirect = (e, url) => {
       try {
-        const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(new URL(url).hostname);
+        const urlData = new URL(url);
+        const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(urlData.origin);
 
         if (!isAllowedUrl) return e.preventDefault();
 
@@ -101,6 +103,7 @@ const win = {
 
         return null;
       } catch {
+        e.preventDefault();
         return null;
       }
     };
