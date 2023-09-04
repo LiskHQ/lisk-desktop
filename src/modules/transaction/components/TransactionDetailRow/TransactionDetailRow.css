@@ -67,6 +67,7 @@
 .expandToggle {
   --content-font: 'basier-circle';
 
+  height: initial !important;
   padding-left: 0px !important;
   max-width: fit-content !important;
   min-width: fit-content !important;
