@@ -15,4 +15,16 @@ describe('NoAccountsDialog', () => {
 
     fireEvent.click(wrapper.getByText('Add account'));
   });
+  it('should render in currrent account mode', async () => {
+    const wrapper = renderWithRouter(NoAccountsDialog, {}, '/?mode=NO_CURRENT_ACCOUNT');
+
+    expect(
+      wrapper.getByText(
+        'Please select a current account on your wallet before connecting external applications.'
+      )
+    ).toBeTruthy();
+    expect(wrapper.getByText('Select account')).toBeTruthy();
+
+    fireEvent.click(wrapper.getByText('Select account'));
+  });
 });

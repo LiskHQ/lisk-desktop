@@ -30,7 +30,7 @@ jobs:
       # Fetch project source with GitHub Actions Checkout.
       - uses: actions/checkout@v3
       # Run the "semgrep ci" command on the command line of the docker image.
-      - run: semgrep --sarif --output=semgrep.sarif --metrics=off --exclude=*.test.js
+      - run: semgrep --sarif --metrics=off --exclude=*.test.js
         env:
           # Connect to Semgrep Cloud Platform through your SEMGREP_APP_TOKEN.
           # Generate a token from Semgrep Cloud Platform > Settings
@@ -38,8 +38,9 @@ jobs:
           # SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
           SEMGREP_RULES: 'p/javascript p/r2c p/r2c-security-audit p/r2c-best-practices p/nodejs p/nodejsscan ./.github/semgrep/rule.yaml'
 
-      - name: Upload SARIF file for GitHub Advanced Security Dashboard
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: semgrep.sarif
-        if: always()
+      # this should be re-instated when the --output option command works with the semgrep exec command
+      # - name: Upload SARIF file for GitHub Advanced Security Dashboard
+      #   uses: github/codeql-action/upload-sarif@v2
+      #   with:
+      #     sarif_file: semgrep.sarif
+      #   if: always()

@@ -20,7 +20,8 @@
     background-color: var(--color-ink-blue);
 
     &:global(.dark) {
-      color: var(--color-zodiac-blue);
+      color: var(--color-constant-zodiac-blue);
+      background-color: var(--color-content-light);
     }
   }
 }
