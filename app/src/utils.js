@@ -10,7 +10,7 @@ export const WHITE_LISTED_DEEP_LINKS = [
   },
 ];
 
-export const WHITE_LISTED_DOMAIN = ['http://localhost', 'https://lisk.com', 'https://localhost'];
+export const WHITE_LISTED_DOMAIN = ['https://lisk.com'];
 
 export const setRendererPermissions = (win) => {
   win.browser.webContents.session.setPermissionRequestHandler((_, permission, callback) => {
