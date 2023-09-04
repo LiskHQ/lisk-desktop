@@ -19,21 +19,23 @@ export const signMessage =
           message: getUnsignedNonProtocolMessage(message),
         })
       );
-      const result =
-        !error &&
-        cryptography.ed.printSignedMessage({
-          message,
-          signature,
-          publicKey: currentAccount.metadata.pubkey,
-        });
 
-      nextStep({ signature: result, error, message });
-    } else {
-      const signature = signMessageWithPrivateKey({
+      if (error) {
+        return nextStep({ error, message });
+      }
+
+      const result = cryptography.ed.printSignedMessage({
         message,
-        privateKey,
+        signature,
+        publicKey: currentAccount.metadata.pubkey,
       });
 
-      nextStep({ signature, message });
+      return nextStep({ signature: result, message });
     }
+    const signature = signMessageWithPrivateKey({
+      message,
+      privateKey,
+    });
+
+    return nextStep({ signature, message });
   };

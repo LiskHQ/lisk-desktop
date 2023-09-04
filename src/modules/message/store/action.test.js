@@ -26,6 +26,10 @@ describe('balanceReclaimed', () => {
       -----END LISK SIGNED MESSAGE-----
     `.trim();
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should dispatch transactionCreatedSuccess', async () => {
     cryptography.ed.signAndPrintMessage.mockReturnValue(defaultPrintedMessage);
     cryptography.ed.printSignedMessage.mockReturnValue(defaultPrintedMessage);
@@ -36,6 +40,17 @@ describe('balanceReclaimed', () => {
       message,
       Buffer.from(privateKey, 'hex')
     );
+    expect(nextStep).toHaveBeenCalledWith({
+      signature: defaultPrintedMessage,
+      message,
+    });
+  });
+
+  it('should dispatch transactionCreatedSuccess', async () => {
+    const mockCurrentAccount = mockHWAccounts[0];
+    signMessageUtil.signMessageUsingHW.mockResolvedValue([undefined, defaultPrintedMessage]);
+    await signMessage({ nextStep, privateKey, message, currentAccount: mockCurrentAccount })();
+
     expect(nextStep).toHaveBeenCalledWith({
       signature: defaultPrintedMessage,
       message,
