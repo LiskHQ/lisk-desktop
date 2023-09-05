@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineChunkHtmlPlugin = require('inline-chunk-html-plugin');
 const fs = require('fs');
+const { SubresourceIntegrityPlugin } = require('webpack-subresource-integrity');
 const reactToolboxVariables = require('./reactToolbox.config');
 const I18nScannerPlugin = require('../../scripts/i18n/i18n-scanner');
 const bundleVersion = require('../../package.json').version;
@@ -95,6 +96,7 @@ const config = {
     port: 8080,
     historyApiFallback: true,
   },
+  output: { crossOriginLoading: 'anonymous' },
   plugins: [
     new ProvidePlugin({
       process: 'process/browser.js',
@@ -122,6 +124,10 @@ const config = {
         bundle: 'bundle.vendor.[contenthash].js',
         app: 'bundle.app.[contenthash].js',
       },
+    }),
+    new SubresourceIntegrityPlugin({
+      hashFuncNames: ['sha256'],
+      enabled: true,
     }),
     new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
     new I18nScannerPlugin({
