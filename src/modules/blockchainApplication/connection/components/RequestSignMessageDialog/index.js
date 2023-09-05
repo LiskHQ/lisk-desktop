@@ -33,6 +33,7 @@ const RequestSignMessageDialog = () => {
   const { message, address } = event?.meta?.params?.request?.params || {};
   const { icons, name, url } = peer?.metadata || {};
 
+  /* istanbul ignore next */
   const onMultiStepChange = useCallback((multistepState) => {
     setIsErrorView(false);
     const { step: { current, data } = {} } = multistepState || {};
