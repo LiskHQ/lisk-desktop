@@ -1,2 +1,14 @@
 @import '../signMultisigView/styles.css';
 @import '../../../../../setup/react/app/mixins.css';
+
+.boxWrapper {
+  margin-bottom: 0;
+
+  & header > h1 {
+    font-size: var(--font-size-h3);
+  }
+
+  & .contentWrapper {
+    padding: 24px;
+  }
+}

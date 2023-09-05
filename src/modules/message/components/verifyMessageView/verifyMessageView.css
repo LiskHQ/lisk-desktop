@@ -7,5 +7,5 @@
 .wrapper {
   max-width: 750px;
   width: calc(100% - var(--horizontal-margin));
-  padding: 0 var(--horizontal-padding-l);
+  padding: 0 var(--horizontal-modal-padding-l);
 }

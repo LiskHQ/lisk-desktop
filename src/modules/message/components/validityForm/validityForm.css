@@ -5,8 +5,20 @@
   resize: none;
 }
 
+.wrapper {
+  margin-bottom: 0;
+}
+
+.header > h1 {
+  font-size: var(--font-size-h3) !important;
+}
+
 .content {
   padding: 0 0 30px !important;
+
+  & > div {
+    font-size: var(--font-size-h6);
+  }
 }
 
 .inputViewSwitcher {
@@ -22,4 +34,8 @@
     margin-left: 5px;
     vertical-align: middle;
   }
+}
+
+& .footer {
+  padding-bottom: 24px !important;
 }
