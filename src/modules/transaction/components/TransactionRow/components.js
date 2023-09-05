@@ -131,14 +131,12 @@ export const Date = ({ t }) => {
     return <Spinner completed={data.block.isFinal} label={t('Pending...')} />;
   }
 
-  const isTransactionToday =
-    moment(data.block.timestamp * 1000).format('DDD') === moment().format('DDD');
-
   return (
-    <div className={styles.dateTime}>
-      <DateTimeFromTimestamp time={data.block.timestamp} />
-      {!isTransactionToday && <DateTimeFromTimestamp onlyTime time={data.block.timestamp} />}
-    </div>
+    <DateTimeFromTimestamp
+      className={styles.dateTimeProp}
+      tableDateFormat
+      time={data.block.timestamp}
+    />
   );
 };
 
