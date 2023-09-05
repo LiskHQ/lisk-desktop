@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
