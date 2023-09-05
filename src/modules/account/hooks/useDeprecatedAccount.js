@@ -13,8 +13,7 @@ const defaultAccount = {
     address: '',
     publicKey: '',
     legacyAddress: '',
-    // @todo Replace mock balance value once we have the balance in the account store
-    balance: '10000000000000',
+    balance: '0',
     username: '',
     isMigrated: true,
     isValidator: false,
@@ -22,7 +21,7 @@ const defaultAccount = {
   },
   // @todo same here.
   token: {
-    balance: '10000000000000',
+    balance: '0',
     tokenID: '00000000',
   },
   sequence: {

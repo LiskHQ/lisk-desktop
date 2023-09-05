@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 /* eslint-disable complexity */
-/* istanbul ignore file */ // @todo Add unit tests by #4824
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
