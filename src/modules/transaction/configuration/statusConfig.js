@@ -46,6 +46,10 @@ export const statusMessages = (t) => ({
     title: t('Transaction aborted on device'),
     message: t('You have cancelled the transaction on your hardware wallet.'),
   },
+  [txStatusTypes.hwMemorySizeLimitRejection]: {
+    title: t('Transaction rejected'),
+    message: t('Your ledger device cannot process this transaction due to device size limitation. Please connect a ledger device with a larger memory size or add your account to Lisk Desktop to complete this transaction.'),
+  },
   [txStatusTypes.hwDisconnected]: {
     title: t('Device disconnected'),
     message: t('You have disconnected the device'),

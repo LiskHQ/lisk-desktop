@@ -20,6 +20,7 @@ import RequestSummary from '../RequestSummary';
 // eslint-disable-next-line max-statements
 const RequestSignMessageDialog = () => {
   const [multiStepPosition, setMultiStepPosition] = useState(0);
+  const [isErrorView, setIsErrorView] = useState(false);
   const { t } = useTranslation();
   const { events } = useEvents();
   const { sessionRequest } = useSession();
@@ -32,9 +33,19 @@ const RequestSignMessageDialog = () => {
   const { message, address } = event?.meta?.params?.request?.params || {};
   const { icons, name, url } = peer?.metadata || {};
 
-  const onMultiStepChange = useCallback(({ step: { current } }) => {
+  /* istanbul ignore next */
+  const onMultiStepChange = useCallback((multistepState) => {
+    setIsErrorView(false);
+    const { step: { current, data } = {} } = multistepState || {};
+    const statusState = data?.[3];
+    const hasError = !!statusState?.error;
+
+    if (hasError) {
+      setIsErrorView(hasError);
+    }
     setMultiStepPosition(current);
   }, []);
+
   const isPasswordStep = multiStepPosition === 2;
 
   useEffect(() => {
@@ -47,8 +58,9 @@ const RequestSignMessageDialog = () => {
         [styles.passwordStep]: isPasswordStep,
       })}
       hasClose
+      size={isErrorView && 'sm'}
     >
-      {!isPasswordStep && (
+      {!isPasswordStep && !isErrorView && (
         <BlockchainAppDetailsHeader
           className={styles.blockchainAppDetailsHeaderProp}
           headerText={multiStepPosition === 2 ? t('Signed message') : t('Sign message')}

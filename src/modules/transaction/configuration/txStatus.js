@@ -7,6 +7,7 @@ export const txStatusTypes = {
   signatureError: 'SIGNATURE_ERROR',
   broadcastError: 'BROADCAST_ERROR',
   hwRejected: 'HW_REJECTED',
+  hwMemorySizeLimitRejection: 'HW_MEMORY_SIZE_LIMIT_REJECTION',
   hwLiskAppClosed: 'HW_LISK_APP_CLOSED',
   hwDisconnected: 'HW_DISCONNECTED',
 };

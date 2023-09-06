@@ -52,6 +52,6 @@ describe('Sign Message: Status', () => {
       signature: undefined,
     };
     const wrapper = mount(<Status {...props} />);
-    expect(wrapper.find('h5').text()).toMatch('Transaction aborted on device');
+    expect(wrapper.find('h3').text()).toMatch('Transaction aborted on device');
   });
 });

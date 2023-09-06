@@ -144,6 +144,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
         if (!message) {
           validator.validator.validateSchema(schema);
           transactionObj = decodeTransaction(Buffer.from(payload, 'hex'), schema);
+          validator.validator.validate(schema, transactionObj.params);
           setTransaction(transactionObj);
         }
 
@@ -215,9 +216,10 @@ const RequestSummary = ({ nextStep, history, message }) => {
                 )}
               </span>
             ) : (
-              <span className={styles.invalidTransactionText}>
-                {t('Invalid transaction initiated from another application.')}
-              </span>
+              <div className={styles.invalidTransactionTextContainer}>
+                <span>{t('Invalid transaction initiated from another application.')}</span>
+                <span className={styles.errorMessage}>{errorMessage}</span>
+              </div>
             )}
           </ValueAndLabel>
           {!errorMessage && (

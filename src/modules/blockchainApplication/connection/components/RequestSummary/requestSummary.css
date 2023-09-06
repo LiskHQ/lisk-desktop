@@ -104,11 +104,21 @@
     padding: var(--vertical-padding-m) 0;
   }
 
-  & .invalidTransactionText {
+  & .invalidTransactionTextContainer {
+    display: flex;
+    flex-direction: column;
     color: var(--color-tx-fail-status-text);
     font-weight: var(--font-weight-bold);
     align-self: center;
     padding-bottom: 10px;
+    max-height: 320px;
+    overflow: auto;
+
+    & .errorMessage {
+      margin-top: 4px;
+      font-weight: var(--font-weight-normal);
+      font-size: 14px;
+    }
   }
 }
 
