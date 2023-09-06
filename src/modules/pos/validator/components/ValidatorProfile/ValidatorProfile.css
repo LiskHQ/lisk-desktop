@@ -50,6 +50,10 @@
 
     & > div:first-child {
       height: fit-content;
+
+      & > header > span > span > input {
+        border-radius: 40px;
+      }
     }
   }
 
