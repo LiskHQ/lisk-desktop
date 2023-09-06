@@ -13,7 +13,8 @@
 }
 
 .header {
-  padding: 0 var(--horizontal-modal-padding-l) !important;
+  padding: var(--horizontal-modal-padding-l) !important;
+  height: auto !important;
 
   & > h1 {
     font-size: var(--font-size-h3) !important;

@@ -2,7 +2,7 @@
 
 .fieldGroup {
   display: block;
-  margin: 30px 0 40px;
+  margin: 24px 0 30px;
 
   & > span {
     @mixin contentNormal bold;
@@ -23,8 +23,12 @@
 .noPadding {
   padding: 0 !important;
 
-  & > div > span {
-    font-size: var(--font-size-h6);
+  & > div {
+    margin: 0;
+
+    & > span {
+      font-size: var(--font-size-h6);
+    }
   }
 }
 

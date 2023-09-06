@@ -47,7 +47,7 @@
   }
 
   & .mainContent {
-    padding-top: 0;
+    padding: 0 var(--horizontal-modal-padding-l) var(--horizontal-modal-padding-l);
 
     & .accountName {
       display: flex;
