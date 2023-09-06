@@ -18,7 +18,7 @@ const WHITE_LISTED_URLS = [
 export const isUrlAllowed = (url) => {
   const urlData = new URL(url);
 
-  WHITE_LISTED_URLS.some(
+  return WHITE_LISTED_URLS.some(
     ({ protocol, urlKey, domains }) =>
       protocol === urlData.protocol && domains.includes(urlData[urlKey])
   );
