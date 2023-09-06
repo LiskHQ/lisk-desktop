@@ -9,6 +9,7 @@ const illustrations = {
     [txStatusTypes.hwRejected]: 'hwRejection',
     [txStatusTypes.hwDisconnected]: 'hwRejection',
     [txStatusTypes.hwLiskAppClosed]: 'hwRejection',
+    [txStatusTypes.hwMemorySizeLimitRejection]: 'hwDataRejection',
   },
   stake: {
     [txStatusTypes.signatureSuccess]: 'stakingSuccess',

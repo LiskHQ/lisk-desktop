@@ -146,12 +146,17 @@ export const signatureSkipped =
   };
 
 export const transactionSigned =
-  (formProps, transactionJSON, privateKey, _, senderAccount) => async (dispatch) => {
+  (formProps, transactionJSON, privateKey, _, senderAccount) => async (dispatch, getState) => {
     const { schema, chainID } = formProps;
+    const state = getState();
+    const wallet = state.account?.current?.hw
+      ? state.account.current
+      : selectActiveTokenAccount(state);
+
     const [error, tx] = await to(
       signTransaction({
         transactionJSON,
-        wallet: senderAccount,
+        wallet,
         schema,
         chainID,
         privateKey,

@@ -14,21 +14,28 @@ export const signMessage =
   async () => {
     if (currentAccount?.hw) {
       const [error, signature] = await to(
-        signMessageUsingHW({ account: currentAccount, message: getUnsignedNonProtocolMessage(message) })
+        signMessageUsingHW({
+          account: currentAccount,
+          message: getUnsignedNonProtocolMessage(message),
+        })
       );
+
+      if (error) {
+        return nextStep({ error, message });
+      }
+
       const result = cryptography.ed.printSignedMessage({
         message,
         signature,
         publicKey: currentAccount.metadata.pubkey,
       });
 
-      nextStep({ signature: result, error, message });
-    } else {
-      const signature = signMessageWithPrivateKey({
-        message,
-        privateKey,
-      });
-
-      nextStep({ signature, message });
+      return nextStep({ signature: result, message });
     }
+    const signature = signMessageWithPrivateKey({
+      message,
+      privateKey,
+    });
+
+    return nextStep({ signature, message });
   };

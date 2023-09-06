@@ -12,20 +12,37 @@
 }
 
 .statusWrapper {
+  display: flex;
+  flex-direction: column;
   flex-wrap: nowrap;
   align-items: center !important;
 
-  & img {
-    width: 210px;
+  & .illustration {
+    margin-top: 30px;
+    width: 380px;
   }
 
-  & h5 {
+  & .backBtn {
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  & h3 {
     font-weight: var(--font-weight-bold);
     color: var(--color-maastricht-blue);
     margin-bottom: 0;
   }
 
   & .errorInfoText {
-    color: var(--color-maastricht-blue);
+    text-align: center;
+    color: var(--color-slate-gray);
   }
 }

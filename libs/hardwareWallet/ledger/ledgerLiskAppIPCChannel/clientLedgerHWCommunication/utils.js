@@ -4,13 +4,15 @@ import { txStatusTypes } from '@transaction/configuration/txStatus';
 
 const IPC = window.ipc;
 
-class IPCLedgerError extends Error {
+export const IPC_LEDGER_ERROR_NAME = 'IPCLedgerError';
+
+export class IPCLedgerError extends Error {
   constructor({ message, hwTxStatusType }) {
     super(message);
     this.message = message;
     this.hwTxStatusType = hwTxStatusType;
     this.stack = new Error(message).stack;
-    this.name = 'IPCLedgerError';
+    this.name = IPC_LEDGER_ERROR_NAME;
   }
 }
 
@@ -19,6 +21,7 @@ const getErrorMessage = (code) => {
     65535: 'Device is disconnected',
     28161: 'Lisk app is not open',
     27014: 'Transaction rejected',
+    27011: 'Data to sign is too large',
   };
   return errors[code] || errorCodeToString(code);
 };
@@ -28,6 +31,7 @@ const getHWTxStatusType = (code) => {
     65535: txStatusTypes.hwDisconnected,
     28161: txStatusTypes.hwLiskAppClosed,
     27014: txStatusTypes.hwRejected,
+    27011: txStatusTypes.hwMemorySizeLimitRejection,
   };
   return hwTxStatusTypes[code];
 };
