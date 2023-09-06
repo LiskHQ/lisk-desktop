@@ -216,7 +216,7 @@
     "cypress-failed-log": "2.9.2",
     "cypress-pipe": "2.0.0",
     "cypress-terminal-report": "3.4.1",
-    "electron": "25.2.0",
+    "electron": "25.5.0",
     "electron-builder": "24.4.0",
     "electron-builder-notarize": "1.5.1",
     "electron-devtools-installer": "3.2.0",
