@@ -25,6 +25,18 @@
       font-size: var(--font-size-h6);
       font-weight: var(--font-weight-bold);
     }
+
+    &.blockID,
+    &.blockTotalBurnt,
+    &.blockGeneratedBy,
+    &.blockDate {
+      width: 24%;
+    }
+
+    &.blockVersion,
+    &.blockStatus {
+      width: 12%;
+    }
   }
 
   & .generator {
