@@ -10,7 +10,10 @@ export const WHITE_LISTED_DEEP_LINKS = [
   },
 ];
 
-export const WHITE_LISTED_DOMAIN = ['https://lisk.com'];
+export const WHITE_LISTED_URLS = [
+  { protocol: 'https', urlKey: 'host', domains: ['https://lisk.com'] },
+  { protocol: 'mailto:', urlKey: 'pathname', domains: ['desktopdev@lisk.com'] },
+];
 
 export const setRendererPermissions = (win) => {
   win.browser.webContents.session.setPermissionRequestHandler((_, permission, callback) => {

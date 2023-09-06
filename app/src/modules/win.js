@@ -2,7 +2,7 @@ import localeHandler from './localeHandler';
 import menu from '../menu';
 import process from './process';
 import { IPC_OPEN_URL } from '../../../src/const/ipcGlobal';
-import { WHITE_LISTED_DOMAIN } from '../utils';
+import { WHITE_LISTED_URLS } from '../utils';
 
 const win = {
   browser: null,
@@ -92,9 +92,13 @@ const win = {
     const handleRedirect = (e, url) => {
       try {
         const urlData = new URL(url);
-        const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(urlData.origin);
 
-        if (!isAllowedUrl) return e.preventDefault();
+        const isUrlAllowed = WHITE_LISTED_URLS.some(
+          ({ protocol, urlKey, domains }) =>
+            protocol === urlData.protocol && domains.includes(urlData[urlKey])
+        );
+
+        if (!isUrlAllowed) return e.preventDefault();
 
         if (url !== win.browser.webContents.getURL()) {
           e.preventDefault();
