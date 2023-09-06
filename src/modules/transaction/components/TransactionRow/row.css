@@ -132,8 +132,6 @@
   }
 }
 
-.dateTime {
-  display: flex;
-  flex-direction: column;
+.dateTimeProp {
   align-items: flex-start !important;
 }
