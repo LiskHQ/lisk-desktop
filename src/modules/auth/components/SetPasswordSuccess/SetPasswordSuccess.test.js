@@ -20,7 +20,7 @@ describe('Setup password success and JSON download component', () => {
     const wrapper = mount(<SetPasswordSuccess {...props} />);
     expect(wrapper).toContainMatchingElement('.container');
     expect(wrapper).toContainMatchingElement('.content');
-    expect(wrapper).toContainMatchingElement('.subheader');
+    expect(wrapper).toContainMatchingElement('.subHeader');
     expect(wrapper).toContainMatchingElement('.downloadLisk');
     expect(wrapper).toContainMatchingElement('.downloadBtn');
     expect(wrapper).toContainMatchingElement('.continueButton');
