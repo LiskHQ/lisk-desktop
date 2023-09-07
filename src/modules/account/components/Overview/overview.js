@@ -62,7 +62,7 @@ const Overview = ({ tokenData, setFilter }) => {
         </MenuSelect>
         <span>
           <Input
-            icon={<Icon name="searchActive" />}
+            icon={<Icon name="searchInput" />}
             onChange={handleFilter}
             value={search}
             className={`${styles.filterTopAccounts} filter-by-name`}
