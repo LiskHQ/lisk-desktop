@@ -1,6 +1,6 @@
 import { to } from 'await-to-js';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
-import { selectActiveTokenAccount } from 'src/redux/selectors';
+import { selectCurrentAccountWithSigningData } from 'src/redux/selectors';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 import actionTypes from './actionTypes';
 import { broadcast, dryRunTransaction, signTransaction } from '../api';
@@ -94,9 +94,7 @@ export const multisigTransactionSigned =
   }) =>
   async (dispatch, getState) => {
     const state = getState();
-    const wallet = state.account?.current?.hw
-      ? state.account.current
-      : selectActiveTokenAccount(state);
+    const wallet = selectCurrentAccountWithSigningData(state);
     const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
     const options = {
       messageSchema: messagesSchemas[formProps.moduleCommand],
@@ -149,9 +147,7 @@ export const transactionSigned =
   (formProps, transactionJSON, privateKey, _, senderAccount) => async (dispatch, getState) => {
     const { schema, chainID } = formProps;
     const state = getState();
-    const wallet = state.account?.current?.hw
-      ? state.account.current
-      : selectActiveTokenAccount(state);
+    const wallet = selectCurrentAccountWithSigningData(state);
 
     const [error, tx] = await to(
       signTransaction({

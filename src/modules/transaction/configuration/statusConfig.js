@@ -48,7 +48,13 @@ export const statusMessages = (t) => ({
   },
   [txStatusTypes.hwMemorySizeLimitRejection]: {
     title: t('Transaction rejected'),
-    message: t('Your ledger device cannot process this transaction due to device size limitation. Please connect a ledger device with a larger memory size or add your account to Lisk Desktop to complete this transaction.'),
+    message: t(
+      'Your ledger device cannot process this transaction due to device size limitation. Please connect a ledger device with a larger memory size or add your account to Lisk Desktop to complete this transaction.'
+    ),
+  },
+  [txStatusTypes.hwCannotOpenPath]: {
+    title: t('Account could not be found on device'),
+    message: t('Please re-import your account.'),
   },
   [txStatusTypes.hwDisconnected]: {
     title: t('Device disconnected'),
