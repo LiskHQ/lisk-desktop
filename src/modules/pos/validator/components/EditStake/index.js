@@ -22,6 +22,8 @@ import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
 import RewardDurationSwitch from '@wallet/components/RegisterMultisigForm/CategorySwitch';
+import { useDebounce } from '@search/hooks/useDebounce';
+import Spinner from 'src/theme/Spinner/Spinner';
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
@@ -113,12 +115,17 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     config: {
       params: {
         validatorAddress: validator.address,
-        stake: stakeAmount.value || 100,
+        stake: convertToBaseDenom(stakeAmount.value, token),
         validatorReward: '0',
       },
     },
   };
-  const { data: expectedReward } = usePosExpectedSharedRewards(queryConfig, isMonthly);
+
+  const debouncedQueryConfig = useDebounce(queryConfig, 500);
+  const { data: expectedReward, isFetching: isFetchingRewards } = usePosExpectedSharedRewards(
+    debouncedQueryConfig,
+    isMonthly
+  );
 
   useEffect(() => {
     getMaxAmount({
@@ -242,7 +249,11 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                   />
                   <span>:</span>
                 </div>
-                <TokenAmount val={expectedReward?.data.reward || 0} token={token} />
+                {!isFetchingRewards ? (
+                  <TokenAmount val={expectedReward?.data.reward || 0} token={token} />
+                ) : (
+                  <Spinner />
+                )}
               </div>
             </>
           )}

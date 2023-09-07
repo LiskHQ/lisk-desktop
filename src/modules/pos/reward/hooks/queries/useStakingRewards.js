@@ -4,9 +4,7 @@ export const useExpectedValidatorRewards = ({ options, config: customConfig }) =
   const config = {
     data: {
       endpoint: 'dynamicReward_getExpectedValidatorRewards',
-      params: {
-        ...customConfig.params,
-      },
+      params: customConfig.params,
     },
   };
 
@@ -19,9 +17,9 @@ export const useExpectedValidatorRewards = ({ options, config: customConfig }) =
 };
 
 export const usePosExpectedSharedRewards = ({ options, config: customConfig }, isMonthly) => {
-  const { data: expectedValidatorRewards } = useExpectedValidatorRewards({
+  const { data: expectedValidatorRewards, isFetching } = useExpectedValidatorRewards({
     options,
-    config: { ...customConfig },
+    config: customConfig,
   });
 
   const validatorReward = isMonthly
@@ -46,5 +44,5 @@ export const usePosExpectedSharedRewards = ({ options, config: customConfig }, i
     },
   });
 
-  return result;
+  return { ...result, isFetching: result.isFetching || isFetching };
 };
