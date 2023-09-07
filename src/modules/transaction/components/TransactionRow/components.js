@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
@@ -131,14 +130,12 @@ export const Date = ({ t }) => {
     return <Spinner completed={data.block.isFinal} label={t('Pending...')} />;
   }
 
-  const isTransactionToday =
-    moment(data.block.timestamp * 1000).format('DDD') === moment().format('DDD');
-
   return (
-    <div className={styles.dateTime}>
-      <DateTimeFromTimestamp time={data.block.timestamp} />
-      {!isTransactionToday && <DateTimeFromTimestamp onlyTime time={data.block.timestamp} />}
-    </div>
+    <DateTimeFromTimestamp
+      className={styles.dateTimeProp}
+      tableDateFormat
+      time={data.block.timestamp}
+    />
   );
 };
 

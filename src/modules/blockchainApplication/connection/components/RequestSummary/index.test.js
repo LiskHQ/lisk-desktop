@@ -1,4 +1,4 @@
-import { codec, cryptography } from '@liskhq/lisk-client';
+import { codec, cryptography, validator } from '@liskhq/lisk-client';
 import { renderWithQueryClientAndWC } from 'src/utils/testHelpers';
 import { screen, fireEvent } from '@testing-library/react';
 import { useSession } from '@libs/wcm/hooks/useSession';
@@ -58,6 +58,7 @@ jest.mock('@transaction/hooks/queries/useSchemas', () => ({
 }));
 jest.spyOn(codec.codec, 'decode');
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
+jest.spyOn(validator.validator, 'validate').mockReturnValue(true);
 jest.mock('@account/hooks/useCurrentAccount');
 
 useCurrentAccount.mockReturnValue([mockCurrentAccount, mockSetCurrentAccount]);

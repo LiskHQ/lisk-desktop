@@ -95,6 +95,7 @@ const config = {
     port: 8080,
     historyApiFallback: true,
   },
+  output: { crossOriginLoading: 'anonymous' },
   plugins: [
     new ProvidePlugin({
       process: 'process/browser.js',
