@@ -191,7 +191,7 @@ const ValidatorsMonitor = ({ watchList }) => {
           {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
           <span className={activeTab === 'stakes' ? 'hidden' : ''}>
             <Input
-              icon={<Icon className={styles.searchIcon} name="searchInput" />}
+              icon={<Icon className={styles.searchIcon} name="searchFilter" />}
               onChange={handleFilter}
               value={search}
               className={`${styles.filterValidators} filter-by-name`}
