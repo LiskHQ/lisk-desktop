@@ -124,8 +124,28 @@
 
 .fieldGroup {
   position: relative;
+
+  & > label {
+    margin-bottom: 8px;
+  }
 }
 
 .removeStakeButton {
   border-style: solid;
+}
+
+.durationSelect {
+  display: flex;
+  justify-content: space-between !important;
+  color: var(--color-slate-gray);
+
+  & label {
+    padding: 4px 4px;
+    height: 13px;
+  }
+
+  & > div {
+    display: flex;
+    align-items: center;
+  }
 }

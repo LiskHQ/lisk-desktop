@@ -39,7 +39,15 @@ const MemberField = ({
           size="m"
           value={publicKey}
         />
-        <CategorySwitch changeCategory={changeCategory} isMandatory={isMandatory} index={index} />
+        <CategorySwitch
+          index={index}
+          changeCategory={changeCategory}
+          value={isMandatory ? 'mandatory' : 'optional'}
+          categories={[
+            { value: 'mandatory', label: t('Mandatory') },
+            { value: 'optional', label: t('Optional') },
+          ]}
+        />
       </div>
       {showDeleteIcon && (
         <span className={`${styles.deleteIcon} delete-icon`} onClick={deleteMember}>

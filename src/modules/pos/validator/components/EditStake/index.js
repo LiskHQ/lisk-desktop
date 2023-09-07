@@ -21,6 +21,7 @@ import { usePosExpectedSharedRewards } from '@pos/reward/hooks/queries/useStakin
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
+import RewardDurationSwitch from '@wallet/components/RegisterMultisigForm/CategorySwitch';
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
@@ -43,6 +44,11 @@ const getTitles = (t) => ({
   },
 });
 
+const REWARD_DURATIONS = {
+  monthly: 'MONTHLY',
+  yearly: 'YEARLY',
+};
+
 // eslint-disable-next-line max-statements
 const EditStake = ({ history, stakeEdited, network, staking }) => {
   const { t } = useTranslation();
@@ -61,6 +67,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
 
   const [maxAmount, setMaxAmount] = useState(0);
   const [isForm, setIsForm] = useState(true);
+  const [selectedDuration, setSelectedDuration] = useState('MONTHLY');
 
   const [address] = selectSearchParamValue(history.location.search, ['validatorAddress']);
 
@@ -98,8 +105,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   const mode = validatorStake || staking[address] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
 
-  // TODO
-  const isMonthly = true;
+  const isMonthly = selectedDuration === REWARD_DURATIONS.monthly;
   const queryConfig = {
     options: {
       enabled: !!validator.address && !stakeAmount.error && Number(stakeAmount.value) > 0,
@@ -167,6 +173,10 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     add: titles.title,
   };
 
+  const handleSelectDuration = ({ target: { value } }) => {
+    setSelectedDuration(value);
+  };
+
   return (
     <Dialog
       hasClose
@@ -190,9 +200,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <p>{validator.address}</p>
                 <p className={styles.availableBalance}>
                   <span>{t('Available balance: ')}</span>
-                  <span>
-                    {t('Rewards: ')} {expectedReward?.data.reward || 0}
-                  </span>
+                  <span>{t('Rewards: ')}</span>
                   <span>
                     <TokenAmount token={token} val={token.availableBalance} />
                   </span>
@@ -221,6 +229,21 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                   <span className={styles.space} />
                 </>
               )}
+              <div className={styles.durationSelect}>
+                <div>
+                  <span>{t('You will get')}</span>
+                  <RewardDurationSwitch
+                    value={selectedDuration}
+                    changeCategory={handleSelectDuration}
+                    categories={[
+                      { value: REWARD_DURATIONS.monthly, label: t('Monthly') },
+                      { value: REWARD_DURATIONS.yearly, label: t('Yearly') },
+                    ]}
+                  />
+                  <span>:</span>
+                </div>
+                <TokenAmount val={expectedReward?.data.reward || 0} token={token} />
+              </div>
             </>
           )}
         </BoxContent>
