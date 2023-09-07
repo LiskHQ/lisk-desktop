@@ -11,11 +11,11 @@ import {
 } from '@transaction/utils';
 import BoxContent from '@theme/box/content';
 import TxComposer from '@transaction/components/TxComposer';
-import { useCurrentAccount } from 'src/modules/account/hooks';
+import { useCurrentAccount } from '@account/hooks';
 import Table from '@theme/table';
-import { dryRunTransaction } from 'src/modules/transaction/api';
+import { dryRunTransaction } from '@transaction/api';
+import { useCommandSchema } from '@network/hooks';
 import routes from 'src/routes/routes';
-import { useCommandSchema } from 'src/modules/network/hooks';
 import { STAKE_LIMIT } from '../../consts';
 import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';

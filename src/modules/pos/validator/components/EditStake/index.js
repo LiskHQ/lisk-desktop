@@ -17,6 +17,7 @@ import WalletVisual from '@wallet/components/walletVisual';
 import routes from 'src/routes/routes';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WarnPunishedValidator from '@pos/validator/components/WarnPunishedValidator';
+import { usePosExpectedSharedRewards } from '@pos/reward/hooks/queries/useStakingRewards';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
@@ -97,6 +98,20 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   const mode = validatorStake || staking[address] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
 
+  // TODO
+  const queryConfig = {
+    options: { enabled: !!validator.address && !!stakeAmount },
+    config: {
+      params: {
+        validatorAddress: validator.address,
+        stake: stakeAmount.value || 100,
+        validatorReward: '0',
+      },
+    },
+  };
+  const { data: expectedReward } = usePosExpectedSharedRewards(queryConfig);
+  console.log({ expectedReward }, '.....expectedReward');
+
   useEffect(() => {
     getMaxAmount({
       balance: token.availableBalance,
@@ -173,6 +188,9 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <p>{validator.address}</p>
                 <p className={styles.availableBalance}>
                   <span>{t('Available balance: ')}</span>
+                  <span>
+                    {t('Rewards: ')} {expectedReward?.data.reward || 0}
+                  </span>
                   <span>
                     <TokenAmount token={token} val={token.availableBalance} />
                   </span>
