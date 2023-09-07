@@ -3,19 +3,19 @@ import styles from './styles.css';
 
 const CategorySwitch = ({ changeCategory, categories = [], value, index = 0 }) => (
   <div className={styles.categoryWrapper} onChange={changeCategory}>
-    {categories.map((category) => (
+    {categories.map((category, i) => (
       <>
         <input
-          key={`${category.value}-${index}`}
+          key={`input-${category.value}-${index + i}`}
           type="radio"
-          id={`${category.value}-${index}`}
-          name={`${category.label}-${index}`}
+          id={`${category.value}-${index + i}`}
+          name={`${category.label}-${index + i}`}
           value={category.value}
           checked={value === category.value}
         />
         <label
-          key={`${category.value}-${index}`}
-          htmlFor={`${category.value}-${index}`}
+          key={`label-${category.value}-${index + i}`}
+          htmlFor={`${category.value}-${index + i}`}
           className={`mandatory select-mandatory ${styles.memberCategory} mandatory-toggle`}
         >
           {category.label}

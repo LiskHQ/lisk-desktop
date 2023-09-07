@@ -111,8 +111,9 @@ describe('EditStake', () => {
     expect(screen.getByText(validator.address)).toBeTruthy();
     expect(screen.getByText(validator.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
-    expect(screen.getByText('Available balance:')).toBeTruthy();
     expect(screen.getByText('Commission:')).toBeTruthy();
+    expect(screen.getByText('Shared rewards:')).toBeTruthy();
+    expect(screen.getByText('Your available balance:')).toBeTruthy();
     expect(
       screen.getByText(`${convertCommissionToPercentage(validator.commission)}%`)
     ).toBeTruthy();
@@ -172,7 +173,7 @@ describe('EditStake', () => {
 
     expect(screen.getByText('Edit Stake')).toBeTruthy();
     expect(
-      screen.getByText('After changing your stake amount, it will be added to the staking queue.')
+      screen.getByText('Edit your stake by modifying stake amount or removing existing stake.')
     ).toBeTruthy();
     expect(screen.getByText('Stake amount')).toBeTruthy();
 
@@ -204,7 +205,7 @@ describe('EditStake', () => {
 
     expect(screen.getByText('Edit Stake')).toBeTruthy();
     expect(
-      screen.getByText('After changing your stake amount, it will be added to the staking queue.')
+      screen.getByText('Edit your stake by modifying stake amount or removing existing stake.')
     ).toBeTruthy();
     expect(screen.getByText('Stake amount')).toBeTruthy();
 

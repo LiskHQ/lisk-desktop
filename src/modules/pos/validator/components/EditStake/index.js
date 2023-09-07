@@ -29,14 +29,14 @@ import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
 import { useValidators, useSentStakes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
-import { convertCommissionToPercentage } from '../../utils';
+import { getRewardsSharedInPercentage, convertCommissionToPercentage } from '../../utils';
 import { useStakesRetrieved } from '../../store/actions/staking';
 import usePosToken from '../../hooks/usePosToken';
 
 const getTitles = (t) => ({
   edit: {
     title: t('Edit stake'),
-    description: t('After changing your Stake amount, it will be added to the staking queue.'),
+    description: t('Edit your stake by modifying stake amount or removing existing stake.'),
   },
   add: {
     title: t('Add to staking queue'),
@@ -172,7 +172,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
 
   const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
   const subTitles = {
-    edit: t('After changing your stake amount, it will be added to the staking queue.'),
+    edit: t('Edit your stake by modifying stake amount or removing existing stake.'),
     add: titles.description,
   };
   const headerTitles = {
@@ -205,16 +205,19 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <WalletVisual size={40} address={address} />
                 <p>{validator.name}</p>
                 <p>{validator.address}</p>
+                <p>
+                  {t('Validator commission: ')}
+                  <span>{convertCommissionToPercentage(validator.commission)}%</span>
+                </p>
+                <p>
+                  {t('Shared rewards: ')}
+                  <span>{getRewardsSharedInPercentage(validator.commission)}%</span>
+                </p>
                 <p className={styles.availableBalance}>
-                  <span>{t('Available balance: ')}</span>
-                  <span>{t('Rewards: ')}</span>
+                  <span>{t('Your available balance: ')}</span>
                   <span>
                     <TokenAmount token={token} val={token.availableBalance} />
                   </span>
-                </p>
-                <p>
-                  {t('Commission: ')}
-                  <span>{convertCommissionToPercentage(validator.commission)}%</span>
                 </p>
               </BoxInfoText>
               <label className={styles.fieldGroup}>
