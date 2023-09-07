@@ -31,6 +31,7 @@ const getFields = (t) => [
     type: 'address',
   },
   {
+    classNameDropdown: styles.selectDropdownProp,
     label: t('Transaction type'),
     placeholder: t('All types'),
     name: 'moduleCommand',

@@ -106,6 +106,23 @@ describe('Electron Browser Window Wrapper', () => {
       callbacks['will-navigate'](mockEvent, mockUrl);
       expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
 
+      mockUrl = 'mailto:desktopdev@lisk.com';
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
+
+      mockUrl =
+        'mailto:desktopdev@lisk.com?&subject=User%20Reported%20Error%20-%20Lisk%20-%203.0.0-beta.2&body=%0A%20%20%20%20%0AImportant%20metadata%20for%20the%20team%2C%20please%20do%20not%20edit%3A%0A%20%20%20%20%0D%0A%20%20%20%20Chain%20Name%3A%20lisk_mainchain%2C%20Chain%20ID%3A%2002000000%2C%20Network%3A%20betanet%2C%20ServiceURL%3A%20https%3A%2F%2Fbetanet-service.lisk.com%0A%20%20%20%20%0D%0A%20%20%20%20Transaction%20Error%3A%20%22Insufficient%20transaction%20fee.%20Minimum%20required%20fee%20is%20162000.%22%0A%20%20%20%20%0D%0A%20%20%20%20Transaction%3A%20%7B%0A%20%20%22module%22%3A%20%22token%22%2C%0A%20%20%22command%22%3A%20%22transfer%22%2C%0A%20%20%22nonce%22%3A%20%2252%22%2C%0A%20%20%22fee%22%3A%20%220%22%2C%0A%20%20%22senderPublicKey%22%3A%20%223972849f2ab66376a68671c10a00e8b8b67d880434cc65b04c6ed886dfa91c2c%22%2C%0A%20%20%22params%22%3A%20%7B%0A%20%20%20%20%22tokenID%22%3A%20%220200000000000000%22%2C%0A%20%20%20%20%22amount%22%3A%20%2210000000%22%2C%0A%20%20%20%20%22recipientAddress%22%3A%20%22lsktk7bj2yadx5vq3f87gh5cwca7ptpk5djpxhhc3%22%2C%0A%20%20%20%20%22data%22%3A%20%22%22%0A%20%20%7D%2C%0A%20%20%22signatures%22%3A%20%5B%0A%20%20%20%20%22e394799864462f67531bcf9589eed1c83446ce81f20969debfccea61972771eedf6edaf5a35df7d8301c15078dd9192017af7ed8d9795ebc83451bd33cb68d0e%22%0A%20%20%5D%2C%0A%20%20%22id%22%3A%20%2220bf36776222329bb04200564990ade5a6449768b2c40a73f68749f520495375%22%0A%7D%0A%20%20%20%20%0D%0A%20%20%20%20API%20Error%20Message%3A%20An%20error%20occurred%20while%20sending%20your%20transaction%20to%20the%20network.%20Please%20try%20again.%0A%20%20';
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
+
+      mockUrl = 'mailto:mobiledev@lisk.com';
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
+
+      mockUrl = 'smtp:mobiledev@lisk.com';
+      callbacks['will-navigate'](mockEvent, mockUrl);
+      expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
+
       mockUrl = 'http://localhost:9000';
       callbacks['will-navigate'](mockEvent, mockUrl);
       expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
