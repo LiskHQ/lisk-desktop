@@ -1,4 +1,4 @@
-import { REQUEST, RESPONSE } from '@libs/hardwareWallet/ledger/constants';
+import { LEDGER_CUSTOM_ERRORS, REQUEST, RESPONSE } from '@libs/hardwareWallet/ledger/constants';
 import { errorCodeToString } from '@zondax/ledger-lisk/dist/common';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 
@@ -18,6 +18,7 @@ export class IPCLedgerError extends Error {
 
 const getErrorMessage = (code) => {
   const errors = {
+    [LEDGER_CUSTOM_ERRORS.openDevicePath.return_code]: LEDGER_CUSTOM_ERRORS.openDevicePath.match,
     65535: 'Device is disconnected',
     28161: 'Lisk app is not open',
     27014: 'Transaction rejected',
@@ -28,6 +29,7 @@ const getErrorMessage = (code) => {
 
 const getHWTxStatusType = (code) => {
   const hwTxStatusTypes = {
+    [LEDGER_CUSTOM_ERRORS.openDevicePath.return_code]: txStatusTypes.hwCannotOpenPath,
     65535: txStatusTypes.hwDisconnected,
     28161: txStatusTypes.hwLiskAppClosed,
     27014: txStatusTypes.hwRejected,

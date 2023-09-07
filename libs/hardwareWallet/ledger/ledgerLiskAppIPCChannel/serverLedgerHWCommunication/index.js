@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
 import { LiskApp } from '@zondax/ledger-lisk';
-import { getDevicesFromPaths, getLedgerAccount } from './utils';
+import { getCustomErrorCode, getDevicesFromPaths, getLedgerAccount } from './utils';
 
 const isHexString = (data) => {
   if (typeof data !== 'string') {
@@ -64,7 +64,7 @@ export async function getSignedTransaction({ devicePath, accountIndex, unsignedM
     return Promise.reject(response.return_code);
   } catch (error) {
     if (transport && transport.close) await transport.close();
-    return Promise.reject(error);
+    return Promise.reject(getCustomErrorCode(error) || error);
   }
 }
 
