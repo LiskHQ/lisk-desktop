@@ -51,7 +51,7 @@
     & > div:first-child {
       height: fit-content;
 
-      & > header > span > span > input {
+      & .stakesFilter {
         border-radius: 40px;
       }
     }

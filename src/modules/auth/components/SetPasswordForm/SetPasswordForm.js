@@ -133,7 +133,7 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className={styles.fieldWrapper}>
           <Input
-            size="s"
+            size="l"
             secureTextEntry
             feedback={errors.password?.message}
             status={errors.password ? 'error' : undefined}
@@ -155,7 +155,7 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
         </div>
         <div className={styles.fieldWrapper}>
           <Input
-            size="s"
+            size="l"
             secureTextEntry
             feedback={errors.cPassword?.message}
             status={errors.cPassword ? 'error' : undefined}
@@ -166,7 +166,7 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
         </div>
         <div className={styles.fieldWrapper}>
           <Input
-            size="s"
+            size="l"
             feedback={errors.accountName?.message}
             status={errors.accountName ? 'error' : undefined}
             label="Account name (Optional)"

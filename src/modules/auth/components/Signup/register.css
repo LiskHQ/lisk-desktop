@@ -124,6 +124,10 @@
     margin: 0;
     color: var(--color-maastricht-blue);
     min-width: 450px;
+
+    &:first-of-type {
+      color: var(--color-slate-gray) !important;
+    }
   }
 
   & .warning {

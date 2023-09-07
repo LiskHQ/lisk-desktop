@@ -58,7 +58,7 @@ const ValidatorStakesView = ({ address }) => {
                 onChange={handleFilter}
                 value={searchInput}
                 name="addressFilter"
-                className="filter-by-address"
+                className={`${styles.stakesFilter} filter-by-address`}
                 size="m"
                 placeholder={t('Search by name or address...')}
               />
