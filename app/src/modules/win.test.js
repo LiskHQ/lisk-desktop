@@ -106,21 +106,17 @@ describe('Electron Browser Window Wrapper', () => {
       callbacks['will-navigate'](mockEvent, mockUrl);
       expect(electron.shell.openExternal).to.have.been.calledWith(mockUrl);
 
-
       mockUrl = 'http://localhost:9000';
       callbacks['will-navigate'](mockEvent, mockUrl);
       expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
-
 
       mockUrl = 'https://localhost:9000';
       callbacks['will-navigate'](mockEvent, mockUrl);
       expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
 
-
       mockUrl = 'https://www.testing.com';
       callbacks['will-navigate'](mockEvent, mockUrl);
       expect(electron.shell.openExternal).to.not.have.been.calledWith(mockUrl);
-
 
       mockUrl = 'testing';
       callbacks['will-navigate'](mockEvent, mockUrl);

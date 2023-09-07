@@ -99,6 +99,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   const titles = getTitles(t)[mode];
 
   // TODO
+  const isMonthly = true;
   const queryConfig = {
     options: { enabled: !!validator.address && !!stakeAmount },
     config: {
@@ -109,7 +110,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
       },
     },
   };
-  const { data: expectedReward } = usePosExpectedSharedRewards(queryConfig);
+  const { data: expectedReward } = usePosExpectedSharedRewards(queryConfig, isMonthly);
   console.log({ expectedReward }, '.....expectedReward');
 
   useEffect(() => {
