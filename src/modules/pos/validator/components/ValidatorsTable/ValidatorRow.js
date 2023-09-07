@@ -29,7 +29,7 @@ const ValidatorRow = ({ data, className, activeTab, watchList, setActiveTab }) =
   };
 
   const addToWatchList = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     e.stopPropagation();
     dispatch(addedToWatchList({ address: data.address }));
   };
