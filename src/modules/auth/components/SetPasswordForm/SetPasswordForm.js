@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
-import { selectSettings } from 'src/redux/selectors';
 import { yupResolver } from '@hookform/resolvers/yup';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from '@theme/Input';
@@ -46,9 +44,14 @@ const setPasswordFormSchema = yup
   })
   .required();
 
-function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationPath }) {
+function SetPasswordForm({
+  prevStep,
+  onSubmit,
+  recoveryPhrase,
+  customDerivationPath,
+  isLegacyAccount,
+}) {
   const { t } = useTranslation();
-  const { enableAccessToLegacyAccounts } = useSelector(selectSettings);
   const { accounts } = useAccounts();
   const {
     register,
@@ -94,7 +97,7 @@ function SetPasswordForm({ prevStep, onSubmit, recoveryPhrase, customDerivationP
     encryptAccountWorker.postMessage({
       customDerivationPath,
       recoveryPhrase,
-      enableAccessToLegacyAccounts,
+      enableAccessToLegacyAccounts: isLegacyAccount,
       ...values,
     });
 
