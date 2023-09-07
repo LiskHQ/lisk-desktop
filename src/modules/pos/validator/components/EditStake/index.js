@@ -101,7 +101,9 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   // TODO
   const isMonthly = true;
   const queryConfig = {
-    options: { enabled: !!validator.address && !!stakeAmount },
+    options: {
+      enabled: !!validator.address && !stakeAmount.error && Number(stakeAmount.value) > 0,
+    },
     config: {
       params: {
         validatorAddress: validator.address,
@@ -111,7 +113,6 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     },
   };
   const { data: expectedReward } = usePosExpectedSharedRewards(queryConfig, isMonthly);
-  console.log({ expectedReward }, '.....expectedReward');
 
   useEffect(() => {
     getMaxAmount({

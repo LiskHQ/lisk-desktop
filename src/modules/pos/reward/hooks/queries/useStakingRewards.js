@@ -47,7 +47,6 @@ export const usePosExpectedSharedRewards = (
       enabled: options.enabled && !!validatorReward,
     },
   });
-  console.log({ config, result }, '....resss');
 
   return result;
 };
