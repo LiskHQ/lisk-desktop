@@ -13,7 +13,7 @@
 }
 
 .header {
-  padding: var(--horizontal-modal-padding-l) !important;
+  padding: var(--horizontal-modal-padding-l) var(--horizontal-modal-padding-l) var(--horizontal-padding-m) !important;
   height: auto !important;
 
   & > h1 {

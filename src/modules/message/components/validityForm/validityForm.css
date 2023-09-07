@@ -9,8 +9,12 @@
   margin-bottom: 0;
 }
 
-.header > h1 {
-  font-size: var(--font-size-h3) !important;
+.header {
+  padding: var(--horizontal-modal-padding-l) 0 var(--horizontal-padding-m) !important;
+
+  & > h1 {
+    font-size: var(--font-size-h3) !important;
+  }
 }
 
 .content {
@@ -38,4 +42,8 @@
 
 & .footer {
   padding-bottom: 24px !important;
+
+  & button {
+    width: var(--footer-button-width) !important;
+  }
 }

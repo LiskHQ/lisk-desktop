@@ -39,6 +39,10 @@
   & > footer {
     flex-flow: column nowrap !important;
     padding-bottom: 24px !important;
+
+    & button {
+      width: var(--footer-button-width) !important;
+    }
   }
 }
 
