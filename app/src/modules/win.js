@@ -2,7 +2,7 @@ import localeHandler from './localeHandler';
 import menu from '../menu';
 import process from './process';
 import { IPC_OPEN_URL } from '../../../src/const/ipcGlobal';
-import { WHITE_LISTED_DOMAIN } from '../utils';
+import { isUrlAllowed } from '../utils';
 
 const win = {
   browser: null,
@@ -91,11 +91,9 @@ const win = {
     // eslint-disable-next-line max-statements
     const handleRedirect = (e, url) => {
       try {
-        const urlData = new URL(url);
-        const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(urlData.origin);
+        const isValid = isUrlAllowed(url);
 
-        if (!isAllowedUrl) return e.preventDefault();
-
+        if (!isValid) return e.preventDefault();
         if (url !== win.browser.webContents.getURL()) {
           e.preventDefault();
           electron.shell.openExternal(url);
