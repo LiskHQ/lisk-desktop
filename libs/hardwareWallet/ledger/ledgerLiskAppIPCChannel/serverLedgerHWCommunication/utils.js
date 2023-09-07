@@ -1,7 +1,7 @@
 import { LedgerAccount } from '@zondax/ledger-lisk';
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
 import { getPubKey } from '@libs/hardwareWallet/ledger/ledgerLiskAppIPCChannel/serverLedgerHWCommunication/index';
-import {LEDGER_CUSTOM_ERRORS} from "@libs/hardwareWallet/ledger/constants";
+import { LEDGER_CUSTOM_ERRORS } from '@libs/hardwareWallet/ledger/constants';
 
 export const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();
@@ -11,7 +11,9 @@ export const getLedgerAccount = (index = 0) => {
 
 export function getCustomErrorCode(error) {
   const errorMessage = error.message;
-  const customError = Object.values(LEDGER_CUSTOM_ERRORS).find(({ match }) => errorMessage.includes(match));
+  const customError = Object.values(LEDGER_CUSTOM_ERRORS).find(({ match }) =>
+    errorMessage.includes(match)
+  );
   return customError?.return_code;
 }
 
