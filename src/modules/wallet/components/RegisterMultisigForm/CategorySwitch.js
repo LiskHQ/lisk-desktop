@@ -4,7 +4,7 @@ import styles from './styles.css';
 const CategorySwitch = ({ changeCategory, categories = [], value, index = 0 }) => (
   <div className={styles.categoryWrapper} onChange={changeCategory}>
     {categories.map((category, i) => (
-      <>
+      <React.Fragment key={i}>
         <input
           key={`input-${category.value}-${index + i}`}
           type="radio"
@@ -20,7 +20,7 @@ const CategorySwitch = ({ changeCategory, categories = [], value, index = 0 }) =
         >
           {category.label}
         </label>
-      </>
+      </React.Fragment>
     ))}
   </div>
 );
