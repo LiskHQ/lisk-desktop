@@ -21,7 +21,7 @@ import { usePosExpectedSharedRewards } from '@pos/reward/hooks/queries/useStakin
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
-import RewardDurationSwitch from '@wallet/components/RegisterMultisigForm/CategorySwitch';
+import CategorySwitch from '@wallet/components/RegisterMultisigForm/CategorySwitch';
 import { useDebounce } from '@search/hooks/useDebounce';
 import Spinner from 'src/theme/Spinner/Spinner';
 import useStakeAmountField from '../../hooks/useStakeAmountField';
@@ -69,7 +69,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
 
   const [maxAmount, setMaxAmount] = useState(0);
   const [isForm, setIsForm] = useState(true);
-  const [selectedDuration, setSelectedDuration] = useState('MONTHLY');
+  const [selectedDuration, setSelectedDuration] = useState(REWARD_DURATIONS.monthly);
 
   const [address] = selectSearchParamValue(history.location.search, ['validatorAddress']);
 
@@ -242,9 +242,9 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
               <div className={styles.durationSelect}>
                 <div>
                   <span>{t('You will get')}</span>
-                  <RewardDurationSwitch
+                  <CategorySwitch
                     value={selectedDuration}
-                    changeCategory={handleSelectDuration}
+                    onChangeCategory={handleSelectDuration}
                     categories={[
                       { value: REWARD_DURATIONS.monthly, label: t('Monthly') },
                       { value: REWARD_DURATIONS.yearly, label: t('Yearly') },

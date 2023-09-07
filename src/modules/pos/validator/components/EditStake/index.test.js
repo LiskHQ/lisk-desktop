@@ -111,7 +111,7 @@ describe('EditStake', () => {
     expect(screen.getByText(validator.address)).toBeTruthy();
     expect(screen.getByText(validator.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
-    expect(screen.getByText('Commission:')).toBeTruthy();
+    expect(screen.getByText('Validator commission:')).toBeTruthy();
     expect(screen.getByText('Shared rewards:')).toBeTruthy();
     expect(screen.getByText('Your available balance:')).toBeTruthy();
     expect(

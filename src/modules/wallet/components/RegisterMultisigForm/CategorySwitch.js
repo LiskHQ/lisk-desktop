@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './styles.css';
 
-const CategorySwitch = ({ changeCategory, categories = [], value, index = 0 }) => (
-  <div className={styles.categoryWrapper} onChange={changeCategory}>
+const CategorySwitch = ({ onChangeCategory, categories = [], value, index = 0 }) => (
+  <div className={styles.categoryWrapper}>
     {categories.map((category, i) => (
       <React.Fragment key={i}>
         <input
@@ -12,11 +12,13 @@ const CategorySwitch = ({ changeCategory, categories = [], value, index = 0 }) =
           name={`${category.label}-${index + i}`}
           value={category.value}
           checked={value === category.value}
+          onChange={onChangeCategory}
+          className={`select-${category.value}-input`}
         />
         <label
           key={`label-${category.value}-${index + i}`}
           htmlFor={`${category.value}-${index + i}`}
-          className={`mandatory select-mandatory ${styles.memberCategory} mandatory-toggle`}
+          className={`${category.value} select-${category.value} ${styles.memberCategory} mandatory-toggle`}
         >
           {category.label}
         </label>

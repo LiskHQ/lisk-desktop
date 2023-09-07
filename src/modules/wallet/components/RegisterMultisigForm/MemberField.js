@@ -15,7 +15,7 @@ const MemberField = ({
   onChangeMember,
   onDeleteMember,
 }) => {
-  const changeCategory = (e) => {
+  const handleChangeCategory = (e) => {
     const {
       target: { value: flag },
     } = e;
@@ -41,7 +41,7 @@ const MemberField = ({
         />
         <CategorySwitch
           index={index}
-          changeCategory={changeCategory}
+          onChangeCategory={handleChangeCategory}
           value={isMandatory ? 'mandatory' : 'optional'}
           categories={[
             { value: 'mandatory', label: t('Mandatory') },

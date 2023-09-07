@@ -22,7 +22,7 @@ describe('MemberField', () => {
   it('changes member category to optional', () => {
     const wrapper = mount(<MemberField {...props} />);
     wrapper
-      .find('.select-optional')
+      .find('.select-optional-input')
       .simulate('change', { target: { checked: true, value: 'optional' } });
     const expectedObj = { index: props.index, publicKey: props.publicKey, isMandatory: false };
     expect(props.onChangeMember).toHaveBeenCalledWith(expectedObj);
@@ -35,7 +35,7 @@ describe('MemberField', () => {
     };
     const wrapper = mount(<MemberField {...updatedProps} />);
     wrapper
-      .find('.select-mandatory')
+      .find('.select-mandatory-input')
       .simulate('change', { target: { checked: true, value: 'mandatory' } });
     const expectedObj = { index: props.index, publicKey: props.publicKey, isMandatory: true };
     expect(props.onChangeMember).toHaveBeenCalledWith(expectedObj);
