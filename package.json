@@ -114,7 +114,7 @@
   "dependencies": {
     "@hookform/resolvers": "2.8.8",
     "@ledgerhq/hw-transport-node-hid": "6.27.17-next.0",
-    "@liskhq/lisk-client": "6.0.0-beta.6",
+    "@liskhq/lisk-client": "6.0.0-rc.0",
     "@tanstack/react-query": "4.0.10",
     "@tanstack/react-query-devtools": "4.2.1",
     "@walletconnect/sign-client": "2.9.0",
