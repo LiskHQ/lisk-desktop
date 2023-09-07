@@ -15,6 +15,7 @@ import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockTokensBalance, mockAppsTokens } from '@token/fungible/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
+import { usePosExpectedSharedRewards } from '@pos/reward/hooks/queries/useStakingRewards';
 import useFiatRates from 'src/modules/common/hooks/useFiatRates';
 import EditStake from './index';
 import { useValidators, useSentStakes, usePosConstants } from '../../hooks/queries';
@@ -48,6 +49,10 @@ jest.mock('../../hooks/queries', () => ({
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@pos/validator/hooks/usePosToken');
+jest.mock('@pos/reward/hooks/queries/useStakingRewards', () => ({
+  ...jest.requireActual('@pos/reward/hooks/queries/useStakingRewards'),
+  usePosExpectedSharedRewards: jest.fn(),
+}));
 jest.mock('src/modules/common/hooks/useFiatRates');
 
 describe('EditStake', () => {
@@ -89,6 +94,11 @@ describe('EditStake', () => {
       token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' },
     });
     useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
+    usePosExpectedSharedRewards.mockReturnValue({
+      data: {
+        data: { reward: '0' },
+      },
+    });
   });
 
   it('should properly render add stake form', () => {

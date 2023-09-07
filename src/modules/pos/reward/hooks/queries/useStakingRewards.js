@@ -1,6 +1,6 @@
 import { useInvokeQuery } from '@common/hooks';
 
-export const useExpectedValidatorRewards = ({ options = {}, config: customConfig = {} } = {}) => {
+export const useExpectedValidatorRewards = ({ options, config: customConfig }) => {
   const config = {
     data: {
       endpoint: 'dynamicReward_getExpectedValidatorRewards',
@@ -18,14 +18,12 @@ export const useExpectedValidatorRewards = ({ options = {}, config: customConfig
   return result;
 };
 
-export const usePosExpectedSharedRewards = (
-  { options = {}, config: customConfig = {} } = {},
-  isMonthly
-) => {
+export const usePosExpectedSharedRewards = ({ options, config: customConfig }, isMonthly) => {
   const { data: expectedValidatorRewards } = useExpectedValidatorRewards({
     options,
     config: { ...customConfig },
   });
+
   const validatorReward = isMonthly
     ? expectedValidatorRewards?.data?.monthlyReward
     : expectedValidatorRewards?.data?.yearlyReward;

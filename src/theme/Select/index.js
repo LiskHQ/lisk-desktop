@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import classNames from "classnames";
+import classNames from 'classnames';
 import Input from 'src/theme/Input';
 import Dropdown from '../Dropdown/dropdown';
 import styles from './select.css';
 import OutsideClickHandler from './OutsideClickHandler';
 
-const Select = ({ classNameDropdown, onChange, options, size, className, placeholder, selected }) => {
+const Select = ({
+  classNameDropdown,
+  onChange,
+  options,
+  size,
+  className,
+  placeholder,
+  selected,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = () => {
