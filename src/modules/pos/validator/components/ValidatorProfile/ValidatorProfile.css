@@ -50,6 +50,10 @@
 
     & > div:first-child {
       height: fit-content;
+
+      & .stakesFilter {
+        border-radius: 40px;
+      }
     }
   }
 

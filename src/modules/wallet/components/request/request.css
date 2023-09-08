@@ -13,6 +13,7 @@
     margin-top: 0;
     margin-bottom: 30px;
     color: var(--color-maastricht-blue);
+    font-size: var(--font-size-h3);
   }
 
   & > section {

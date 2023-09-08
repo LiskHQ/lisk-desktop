@@ -68,6 +68,7 @@ import searchActive from '@setup/react/assets/images/icons/search-active.svg';
 import searchSlim from '@setup/react/assets/images/icons/search-slim.svg';
 import search from '@setup/react/assets/images/icons/search.svg';
 import searchInput from '@setup/react/assets/images/icons/search-input.svg';
+import searchFilter from '@setup/react/assets/images/icons/search-filter.svg';
 import settings from '@setup/react/assets/images/icons/settings.svg';
 import settingsActive from '@setup/react/assets/images/icons/settings-active.svg';
 import showPassphraseIcon from '@setup/react/assets/images/icons/icon-show-passphrase.svg';
@@ -387,6 +388,7 @@ export const icons = {
   clockActive,
   clockActiveDark,
   searchInput,
+  searchFilter,
   weight,
   weightDark,
   validatorName,

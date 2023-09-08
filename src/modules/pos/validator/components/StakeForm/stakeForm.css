@@ -55,8 +55,9 @@
   & > .title {
     @mixin headingNormal;
 
+    font-size: 28px;
     color: var(--color-maastricht-blue);
-    padding: 20px 16px;
+    padding: 20px;
   }
 
   & > .stakesAvailableCounter {

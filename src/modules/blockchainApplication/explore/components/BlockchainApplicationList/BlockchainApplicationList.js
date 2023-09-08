@@ -53,7 +53,7 @@ const BlockchainApplicationList = () => {
           <div align="right" className={grid['col-xs-12']}>
             <div className={styles.filterHolder}>
               <Input
-                icon={<Icon className={styles.searchIcon} name="searchActive" />}
+                icon={<Icon className={styles.searchIcon} name="searchFilter" />}
                 className={styles.chainSearch}
                 name="application-filter"
                 value={searchValue}

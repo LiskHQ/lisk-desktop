@@ -50,7 +50,7 @@ const Form = ({ t, nextStep }) => {
 
   return (
     <section>
-      <Box className={styles.boxContainer}>
+      <Box className={`${styles.boxContainer} ${styles.boxWrapper}`}>
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
@@ -59,7 +59,7 @@ const Form = ({ t, nextStep }) => {
             )}
           </p>
         </header>
-        <BoxContent>
+        <BoxContent className={styles.contentWrapper}>
           <ProgressBar current={1} />
           <UploadJSONInput
             prefixLabel={`${t('Paste transaction value')}  `}
