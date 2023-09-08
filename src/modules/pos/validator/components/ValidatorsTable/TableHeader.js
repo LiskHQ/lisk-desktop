@@ -102,6 +102,10 @@ export default (activeTab, changeSort, t) => [
   {
     title: t('Commission (%)'),
     classList: getValidatorCommissionClass(activeTab),
+    sort: {
+      fn: changeSort,
+      key: 'commission',
+    },
   },
   {
     title: t('Rank'),
@@ -112,7 +116,7 @@ export default (activeTab, changeSort, t) => [
     classList: getGeneratingTimeClass(activeTab),
     sort: {
       fn: changeSort,
-      key: 'generatingTime',
+      key: 'nextAllocatedTime',
     },
   },
   {

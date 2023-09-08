@@ -2,7 +2,10 @@
 import { cryptography } from '@liskhq/lisk-client';
 import { extractKeyPair, extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
 
-const { encrypt } = cryptography;
+const ARGON2 = {
+  ITERATIONS: 3,
+  MEMORY: 65536,
+};
 
 // eslint-disable-next-line max-statements
 export const encryptAccount = async ({
@@ -25,7 +28,20 @@ export const encryptAccount = async ({
     }
     const address = extractAddressFromPublicKey(publicKey);
     const plainText = JSON.stringify({ privateKey, recoveryPhrase });
-    const crypto = await encrypt.encryptMessageWithPassword(plainText, password);
+    // Recommended options https://github.com/LiskHQ/lips/pull/465/files
+    const encryptOptions = {
+      kdf: cryptography.encrypt.KDF.ARGON2,
+      kdfparams: {
+        iterations: ARGON2.ITERATIONS,
+        memorySize: ARGON2.MEMORY,
+      },
+    };
+
+    const crypto = await cryptography.encrypt.encryptMessageWithPassword(
+      plainText,
+      password,
+      encryptOptions
+    );
 
     return {
       error: false,
@@ -48,7 +64,11 @@ export const encryptAccount = async ({
 
 export const decryptAccount = async (crypto, password) => {
   try {
-    const plainText = await encrypt.decryptMessageWithPassword(crypto, password, 'utf-8');
+    const plainText = await cryptography.encrypt.decryptMessageWithPassword(
+      crypto,
+      password,
+      'utf-8'
+    );
     return {
       error: null,
       result: JSON.parse(plainText),

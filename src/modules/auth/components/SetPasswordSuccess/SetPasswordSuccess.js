@@ -12,11 +12,9 @@ import styles from './SetPasswordSuccess.css';
 function SetPasswordSuccess({ onClose, encryptedPhrase, headerText, contentText, buttonText }) {
   const { t } = useTranslation();
   const onContinue = () => onClose();
-  const accountName = encryptedPhrase.metadata.name;
+  const { metadata: { name: accountName, address, isHw } = {} } = encryptedPhrase || {};
   const appendAccountName = `-${accountName}`;
-  const address = encryptedPhrase.metadata.address;
   const fileName = `${address}${accountName ? appendAccountName : ''}-lisk-account`;
-  const isHw = encryptedPhrase.metadata.isHW;
 
   return (
     <Box className={styles.container}>

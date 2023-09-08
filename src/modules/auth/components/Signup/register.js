@@ -71,6 +71,7 @@ const Register = ({ account, token }) => {
           recoveryPhrase={{ value: selectedAccount.passphrase }}
           customDerivationPath={defaultDerivationPath}
           onSubmit={onSetPassword}
+          isLegacyAccount={false}
         />
         <AccountCreated account={selectedAccount} />
       </MultiStep>

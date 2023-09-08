@@ -23,6 +23,7 @@ const selectCurrentAccountWithSigningData = (state) => {
         ...currentHWDevice,
       },
     };
+
     return accountWithUpdatedHw;
   }
 
@@ -53,5 +54,5 @@ export {
   selectModuleCommandSchemas,
   selectBookmarks,
   selectCurrentBlockchainApplication,
-  selectCurrentAccountWithSigningData
+  selectCurrentAccountWithSigningData,
 };

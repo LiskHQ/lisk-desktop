@@ -58,7 +58,7 @@ describe('balanceReclaimed', () => {
   });
 
   it('should call nextStep with error', async () => {
-    const error = {name: 'An error'};
+    const error = { name: 'An error' };
     signMessageUtil.signMessageUsingHW.mockRejectedValue(error);
     await signMessage({ nextStep, privateKey, message, currentAccount: mockCurrentAccount })();
 
