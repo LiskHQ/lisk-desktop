@@ -47,10 +47,15 @@ describe('MemberField', () => {
       showDeleteIcon: true,
     };
     const wrapper = mount(<MemberField {...updatedProps} />);
-    wrapper
-      .find('.delete-icon')
-      .simulate('click');
+    wrapper.find('.delete-icon').simulate('click');
 
     expect(props.onDeleteMember).toHaveBeenCalledWith(props.index);
+  });
+
+  it('Should change changeIdentifier', () => {
+    const wrapper = mount(<MemberField {...props} />);
+    wrapper.find('.msign-pk-input').at(1).simulate('change', { target: { value: 'key' } });
+    const expectedObj = { index: props.index, publicKey: 'key', isMandatory: true };
+    expect(props.onChangeMember).toHaveBeenCalledWith(expectedObj);
   });
 });
