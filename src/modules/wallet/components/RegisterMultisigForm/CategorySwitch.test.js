@@ -13,6 +13,11 @@ describe('CategorySwitch', () => {
     index: 0,
   };
 
+  it('should not crash when passed undefined props', async () => {
+    const { container } = render(<CategorySwitch />);
+    expect(container.firstChild).toBeEmpty();
+  });
+
   it('Should render properly', () => {
     render(<CategorySwitch {...props} />);
 
