@@ -21,7 +21,7 @@ describe('Overview', () => {
     expect(screen.getByText('All accounts')).toBeInTheDocument();
     expect(screen.getByTestId('selected-menu-item')).toHaveTextContent('LSK');
     expect(screen.getAllByTestId('dropdown-options')).toHaveLength(6);
-    expect(screen.getByPlaceholderText('Search by address')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search by name or address')).toBeInTheDocument();
   });
 
   it('does not render dropdown options if data is unavailable', () => {
@@ -43,7 +43,7 @@ describe('Overview', () => {
   it('updates the filter when the search input is changed', async () => {
     smartRender(Overview, props, config);
 
-    fireEvent.change(screen.getByPlaceholderText('Search by address'), {
+    fireEvent.change(screen.getByPlaceholderText('Search by name or address'), {
       target: { value: 'lsk3szyz' },
     });
 
