@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable complexity */
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +25,7 @@ import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons
 import CategorySwitch from '@wallet/components/RegisterMultisigForm/CategorySwitch';
 import { useDebounce } from '@search/hooks/useDebounce';
 import Spinner from 'src/theme/Spinner/Spinner';
+import Tooltip from 'src/theme/Tooltip/tooltip';
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
@@ -209,18 +211,14 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                   {t('Validator commission: ')}
                   <span>{convertCommissionToPercentage(validator.commission)}%</span>
                 </p>
-                <p>
-                  {t('Shared rewards: ')}
-                  <span>{getRewardsSharedInPercentage(validator.commission)}%</span>
-                </p>
+              </BoxInfoText>
+              <label className={styles.fieldGroup}>
                 <p className={styles.availableBalance}>
-                  <span>{t('Your available balance: ')}</span>
+                  <span>{t('Available balance: ')}</span>
                   <span>
                     <TokenAmount token={token} val={token.availableBalance} />
                   </span>
                 </p>
-              </BoxInfoText>
-              <label className={styles.fieldGroup}>
                 <AmountField
                   token={token}
                   amount={stakeAmount}
@@ -257,6 +255,16 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 ) : (
                   <Spinner />
                 )}
+              </div>
+              <div className={styles.durationSelect}>
+                <span>
+                  {t('Shared rewards')}
+                  <Tooltip size="s" position="right">
+                    <p>{t('Total rewards shared by the \nvalidator for the amount staked.')}</p>
+                  </Tooltip>{' '}
+                  :
+                </span>
+                <span>{getRewardsSharedInPercentage(validator.commission)}%</span>
               </div>
             </>
           )}

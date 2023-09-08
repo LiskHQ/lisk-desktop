@@ -110,6 +110,9 @@
 
   display: flex;
   column-gap: 5px;
+  position: absolute;
+  top: -6px;
+  right: 0px;
 
   & > span {
     color: var(--color-blue-gray) !important;
@@ -124,6 +127,7 @@
 
 .fieldGroup {
   position: relative;
+  margin-top: 3px;
 
   & > label {
     margin-bottom: 8px;
