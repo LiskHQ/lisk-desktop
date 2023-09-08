@@ -40,4 +40,17 @@ describe('MemberField', () => {
     const expectedObj = { index: props.index, publicKey: props.publicKey, isMandatory: true };
     expect(props.onChangeMember).toHaveBeenCalledWith(expectedObj);
   });
+
+  it('Should call onDeleteMember with index', () => {
+    const updatedProps = {
+      ...props,
+      showDeleteIcon: true,
+    };
+    const wrapper = mount(<MemberField {...updatedProps} />);
+    wrapper
+      .find('.delete-icon')
+      .simulate('click');
+
+    expect(props.onDeleteMember).toHaveBeenCalledWith(props.index);
+  });
 });
