@@ -28,7 +28,7 @@
 }
 
 .txDetails {
-  max-height: calc(100vh - 80px - 448px) !important; /* stylelint-disable-line unit-whitelist */
+  max-height: calc(100vh - 80px - 502px) !important; /* stylelint-disable-line unit-whitelist */
   margin-bottom: 20px;
 
   &.small {
