@@ -19,6 +19,7 @@ import { getTotalSpendingAmount } from '@transaction/utils/transaction';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
+import { useAppsMetaTokens } from '@token/fungible/hooks/queries';
 import { PrimaryButton } from 'src/theme/buttons';
 import { useCommandSchema } from 'src/modules/network/hooks';
 import Feedback from './Feedback';
@@ -49,7 +50,6 @@ const TxComposer = ({
     },
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
-  const { symbol: tokenSymbol = '' } = formProps.fields.token || {};
   const { fields } = formProps;
   const [customFee, setCustomFee] = useState();
   const [feedback, setFeedBack] = useState(formProps.feedback);
@@ -81,6 +81,7 @@ const TxComposer = ({
     isFetched = true,
     isLoading: isLoadingFee,
     feeEstimateError,
+    feeTokenID,
   } = useTransactionFee({
     selectedPriority,
     transactionJSON,
@@ -88,6 +89,21 @@ const TxComposer = ({
     senderAddress: address,
     extraCommandFee: formProps.extraCommandFee,
   });
+
+  const { data: { data: feeTokens } = {} } = useAppsMetaTokens({
+    config: { parmas: { tokenID: feeTokenID, limit: 1 } },
+  });
+  const { data: { data: messageFeeTokens } = {} } = useAppsMetaTokens({
+    config: { parmas: { tokenID: messageFeeTokenID, limit: 1 } },
+  });
+  const feeToken = feeTokens?.[0];
+  const messageFeeToken = messageFeeTokens?.[0];
+
+  commandParams = {
+    ...commandParams,
+    feeToken,
+    messageFeeToken,
+  };
 
   if (isFetched && fields?.sendingChain?.chainID !== fields?.recipientChain?.chainID) {
     transactionJSON.params = {
@@ -130,10 +146,13 @@ const TxComposer = ({
       title: 'Transaction',
       value: getFeeStatus({
         fee: Number(convertFromBaseDenom(transactionFee, formProps.fields.token)),
-        tokenSymbol,
+        tokenSymbol: feeToken?.symbol,
         customFee,
       }),
-      components,
+      components: components.map((component) => ({
+        ...component,
+        feeToken,
+      })),
     },
     {
       title: 'Message',
@@ -141,7 +160,7 @@ const TxComposer = ({
         fee: Number(
           convertFromBaseDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
         ),
-        tokenSymbol,
+        tokenSymbol: messageFeeToken?.symbol,
         customFee,
       }),
       isHidden: !transactionJSON.params.messageFee,
@@ -184,7 +203,7 @@ const TxComposer = ({
     <Box className={className}>
       {children}
       <TransactionPriority
-        token={formProps.fields?.token}
+        token={feeToken}
         fee={transactionFee}
         minFee={minimumFee}
         customFee={customFee}

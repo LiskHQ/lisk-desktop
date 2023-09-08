@@ -11,6 +11,7 @@ import BoxHeader from '@theme/box/header';
 import { maxMessageLength } from '@transaction/configuration/transactions';
 import {
   useApplicationExploreAndMetaData,
+  useApplicationManagement,
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
@@ -73,11 +74,18 @@ const SendForm = (props) => {
       props.initialValue?.address ?? props.initialValue?.recipient
     )
   );
+  const { applications: managedApps } = useApplicationManagement();
+
+  const mainChainApplication = useMemo(
+    () => managedApps.find(({ chainID }) => /0{4}$/.test(chainID)),
+    [managedApps]
+  );
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     setMaxAmount(status.maxAmount);
   }, []);
+
   const onConfirm = useCallback((formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
@@ -214,7 +222,7 @@ const SendForm = (props) => {
                   onChange={(value) => setRecipientChain(value)}
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                 >
-                  {applications.map((application) => (
+                  {[mainChainApplication, ...applications].map((application) => (
                     <MenuItem
                       className={styles.chainOptionWrapper}
                       value={application}

@@ -39,7 +39,7 @@ class Tooltip extends React.Component {
   }
 
   handleClose(event) {
-    if (this.wrapperRef && event && !this.wrapperRef.contains(event.target)) {
+    if (this.wrapperRef && event && !this.wrapperRef?.contains?.(event.target)) {
       document.removeEventListener('click', this.handleClose);
     }
     this.setState({
