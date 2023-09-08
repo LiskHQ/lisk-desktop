@@ -9,8 +9,8 @@
 
   & .container {
     & header {
-      padding-left: var(--horizontal-padding-l);
-      padding-right: var(--horizontal-padding-l);
+      padding-left: var(--horizontal-modal-padding-l);
+      padding-right: var(--horizontal-modal-padding-l);
       align-items: center;
       box-sizing: border-box;
       display: flex;
@@ -25,7 +25,7 @@
         @mixin headingNormal bold;
 
         color: var(--color-maastricht-blue);
-        font-size: 20px;
+        font-size: var(--font-size-h3);
         line-height: 26px;
         margin: 0;
         padding: 0;
@@ -41,7 +41,7 @@
 
     & .header {
       height: auto;
-      padding: 0 var(--horizontal-padding-l);
+      padding: 0 var(--horizontal-modal-padding-l);
       margin-bottom: 20px;
 
       & .searchWrapper {
@@ -115,7 +115,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px var(--horizontal-padding-l);
+      padding: 10px var(--horizontal-modal-padding-l);
       cursor: pointer;
       text-decoration: none;
 

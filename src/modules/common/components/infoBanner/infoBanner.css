@@ -5,7 +5,7 @@
   border-radius: var(--border-radius-standard);
   color: var(--color-white);
   display: flex;
-  margin-top: 32px;
+  margin-top: 24px;
   overflow: hidden;
   position: relative;
   min-height: 282px;

@@ -144,8 +144,8 @@ export default class ValidityForm extends React.Component {
     const { inputs, isInputsView } = this.state;
 
     return (
-      <Box main>
-        <BoxHeader>
+      <Box main className={styles.wrapper}>
+        <BoxHeader className={styles.header}>
           <h1>{t('Verify message')}</h1>
         </BoxHeader>
         <BoxContent className={styles.content}>
@@ -186,7 +186,7 @@ export default class ValidityForm extends React.Component {
             />
           ))}
         </BoxContent>
-        <BoxFooter direction="horizontal">
+        <BoxFooter direction="horizontal" className={styles.footer}>
           <PrimaryButton onClick={this.goNext} disabled={!this.canSubmit} className="continue">
             {t('Continue')}
           </PrimaryButton>

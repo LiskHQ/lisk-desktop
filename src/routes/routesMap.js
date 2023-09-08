@@ -29,7 +29,6 @@ import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import RegisterMultisig from '@wallet/manager/registerMultisigManager';
 import SignMultiSig from '@wallet/manager/signMultisigManager';
-import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
 import AccountDetails from '@wallet/components/AccountDetails';
 import ManageAccounts from '@account/components/ManageAccounts';
 import AddAccountOptions from '@account/components/AddAccountOptions';
@@ -95,7 +94,6 @@ export default {
   confirmationDialog: ConfirmationDialog,
   reclaimBalance: ReclaimBalanceModal,
   multiSignature: RegisterMultisig,
-  multisigAccountDetails: MultisigAccountDetails,
   signMultiSignTransaction: SignMultiSig,
   accountDetails: AccountDetails,
   manageAccounts: ManageAccounts,

@@ -20,7 +20,7 @@
 
   &.vertical {
     flex-flow: column nowrap;
-    margin: 0 auto 20px;
+    margin: 0 auto 24px;
     width: var(--footer-button-width);
 
     & button {

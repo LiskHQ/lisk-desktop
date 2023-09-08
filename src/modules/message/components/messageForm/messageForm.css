@@ -2,7 +2,7 @@
 
 .fieldGroup {
   display: block;
-  margin: 30px 0 40px;
+  margin: 24px 0 30px;
 
   & > span {
     @mixin contentNormal bold;
@@ -16,19 +16,33 @@
   & .textarea {
     resize: none;
     line-height: 28px;
+    height: 48px !important;
   }
 }
 
 .noPadding {
   padding: 0 !important;
+
+  & > div {
+    margin: 0;
+
+    & > span {
+      font-size: var(--font-size-h6);
+    }
+  }
 }
 
 .messageWrapper {
-  padding: 0 var(--horizontal-padding-l);
+  padding: 0 var(--horizontal-modal-padding-l);
   box-sizing: border-box;
 
   & > footer {
     flex-flow: column nowrap !important;
+    padding-bottom: 24px !important;
+
+    & button {
+      width: var(--footer-button-width) !important;
+    }
   }
 }
 

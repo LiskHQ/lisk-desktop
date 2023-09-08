@@ -40,6 +40,8 @@ import verifyMessageSuccess from '@setup/react/assets/images/illustrations/verif
 import verifyMessageSuccessDark from '@setup/react/assets/images/illustrations/verify-message-success-dark.svg';
 import registrationSuccess from '@setup/react/assets/images/illustrations/registration-success.svg';
 import registrationSuccessDark from '@setup/react/assets/images/illustrations/registration-success-dark.svg';
+import accountCreationSuccess from '@setup/react/assets/images/illustrations/account-creation-success.svg';
+import accountCreationSuccessDark from '@setup/react/assets/images/illustrations/account-creation-success-dark.svg';
 import multisignaturePartialSuccess from '@setup/react/assets/images/illustrations/multisignature-partial-success.svg';
 import multisignaturePartialSuccessDark from '@setup/react/assets/images/illustrations/multisignature-partial-success-dark.svg';
 import registerMultisignatureSuccess from '@setup/react/assets/images/illustrations/multisignature-success.svg';
@@ -108,6 +110,8 @@ export const illustrations = {
   verifyMessageSuccess,
   registrationSuccess,
   registrationSuccessDark,
+  accountCreationSuccess,
+  accountCreationSuccessDark,
   emptyWalletDark,
   pageNotFoundDark,
   errorBoundaryPageDark,

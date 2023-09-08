@@ -33,7 +33,7 @@ const Overview = ({ tokenData, setFilter }) => {
 
   return (
     <>
-      <div>
+      <div className={styles.header}>
         <h1>{t('All accounts')}</h1>
       </div>
       <div className={styles.filterWrapper}>
@@ -62,7 +62,7 @@ const Overview = ({ tokenData, setFilter }) => {
         </MenuSelect>
         <span>
           <Input
-            icon={<Icon name="searchActive" />}
+            icon={<Icon name="searchFilter" />}
             onChange={handleFilter}
             value={search}
             className={`${styles.filterTopAccounts} filter-by-name`}
