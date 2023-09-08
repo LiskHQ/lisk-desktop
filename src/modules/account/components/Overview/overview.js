@@ -33,7 +33,7 @@ const Overview = ({ tokenData, setFilter }) => {
 
   return (
     <>
-      <div>
+      <div className={styles.header}>
         <h1>{t('All accounts')}</h1>
       </div>
       <div className={styles.filterWrapper}>
