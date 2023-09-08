@@ -68,7 +68,7 @@ const Overview = ({ tokenData, setFilter }) => {
             className={`${styles.filterTopAccounts} filter-by-name`}
             iconClassName={styles.searchIcon}
             size="m"
-            placeholder={t('Search by address')}
+            placeholder={t('Search by name or address')}
           />
         </span>
       </div>
