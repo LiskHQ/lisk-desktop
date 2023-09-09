@@ -170,6 +170,14 @@ const SendForm = (props) => {
     sendFormProps.moduleCommand = MODULE_COMMANDS_NAME_MAP.transferCrossChain;
   }
 
+  const toApplications = useMemo(() => {
+    if (mainChainApplication.chainID !== currentApplication.chainID) {
+      return [mainChainApplication, ...applications];
+    }
+
+    return applications;
+  }, [mainChainApplication, currentApplication]);
+
   return (
     <section className={styles.wrapper}>
       <TxComposer
@@ -222,7 +230,7 @@ const SendForm = (props) => {
                   onChange={(value) => setRecipientChain(value)}
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                 >
-                  {[mainChainApplication, ...applications].map((application) => (
+                  {toApplications.map((application) => (
                     <MenuItem
                       className={styles.chainOptionWrapper}
                       value={application}

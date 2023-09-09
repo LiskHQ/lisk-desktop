@@ -19,7 +19,7 @@ import { getTotalSpendingAmount } from '@transaction/utils/transaction';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
-import { useAppsMetaTokens } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { PrimaryButton } from 'src/theme/buttons';
 import { useCommandSchema } from 'src/modules/network/hooks';
 import Feedback from './Feedback';
@@ -90,10 +90,10 @@ const TxComposer = ({
     extraCommandFee: formProps.extraCommandFee,
   });
 
-  const { data: { data: feeTokens } = {} } = useAppsMetaTokens({
+  const { data: { data: feeTokens } = {} } = useTokenBalances({
     config: { parmas: { tokenID: feeTokenID, limit: 1 } },
   });
-  const { data: { data: messageFeeTokens } = {} } = useAppsMetaTokens({
+  const { data: { data: messageFeeTokens } = {} } = useTokenBalances({
     config: { parmas: { tokenID: messageFeeTokenID, limit: 1 } },
   });
   const feeToken = feeTokens?.[0];
@@ -230,7 +230,9 @@ const TxComposer = ({
           disabled={
             !formProps.isFormValid ||
             minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0) ||
-            !isFetched
+            !isFetched ||
+            !!feeEstimateError ||
+            isLoadingFee
           }
         >
           {buttonTitle ?? t('Continue')}

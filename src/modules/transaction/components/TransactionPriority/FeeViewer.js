@@ -55,9 +55,6 @@ const FeesViewer = ({
   const { t } = useTranslation();
   const [showEditIcon, setShowEditIcon] = useState(false);
   const composedFeeList = fees.filter(({ isHidden }) => !isHidden);
-  // const transactionFeeList = composedFeeList.find(
-  //   ({ title }) => title === 'Transaction'
-  // )?.components;
 
   const onInputFocus = (e) => {
     e.preventDefault();
