@@ -29,7 +29,7 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      LISK_ENABLE_DEV_TOOL: JSON.parse(process.env.LISK_ENABLE_DEV_TOOL),
+      LISK_ENABLE_DEV_TOOL: JSON.parse(process.env.ENABLE_DEV_TOOL || true),
     }),
   ],
 };
