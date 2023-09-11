@@ -15,6 +15,7 @@ describe('Electron Browser Window Wrapper', () => {
     register: () => {},
   };
   const url = 'http://localhost:8080/';
+  window.LISK_ENABLE_DEV_TOOL = false;
 
   const electron = {
     screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
