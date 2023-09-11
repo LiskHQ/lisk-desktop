@@ -52,7 +52,13 @@
       height: fit-content;
 
       & .stakesFilter {
+        min-width: 250px;
         border-radius: 40px;
+      }
+
+      & .searchIcon {
+        margin-top: 5px;
+        margin-left: -5px;
       }
     }
   }
@@ -240,6 +246,7 @@
 
           & .rewardContainer {
             width: 100%;
+            white-space: pre;
           }
 
           & .separator {

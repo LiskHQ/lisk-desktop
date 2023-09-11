@@ -68,4 +68,5 @@
 .searchIcon {
   display: flex;
   top: 50% !important;
+  left: 12px !important;
 }

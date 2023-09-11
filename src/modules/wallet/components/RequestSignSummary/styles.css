@@ -28,12 +28,8 @@
 }
 
 .txDetails {
-  max-height: calc(100vh - 80px - 448px) !important; /* stylelint-disable-line unit-whitelist */
+  max-height: calc(100vh - 80px - 502px) !important; /* stylelint-disable-line unit-whitelist */
   margin-bottom: 20px;
-
-  &.small {
-    max-height: calc(100vh - 110px - 290px) !important; /* stylelint-disable-line unit-whitelist */
-  }
 
   & ~ footer {
     padding-bottom: 0 !important;
