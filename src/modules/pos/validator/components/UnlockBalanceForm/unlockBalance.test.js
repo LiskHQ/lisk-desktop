@@ -55,7 +55,7 @@ describe('Unlock LSK modal', () => {
   let wrapper;
   useTransactionPriority.mockImplementation(() => [
     { selectedIndex: 1 },
-    () => { },
+    () => {},
     [
       { title: 'Low', value: 0.001 },
       { title: 'Medium', value: 0.005 },
@@ -225,17 +225,19 @@ describe('Unlock LSK modal', () => {
           {
             title: 'Transaction',
             value: '-',
-            components: [{
-              type: 'bytesFee',
-              value: 96000n,
-              feeToken: {
-                availableBalance: '1000000000',
-                chainName: 'Lisk',
-                lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
-                symbol: 'LSK',
-                tokenID: '0000000100000000',
+            components: [
+              {
+                type: 'bytesFee',
+                value: 96000n,
+                feeToken: {
+                  availableBalance: '1000000000',
+                  chainName: 'Lisk',
+                  lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+                  symbol: 'LSK',
+                  tokenID: '0000000100000000',
+                },
               },
-            }],
+            ],
           },
           {
             title: 'Message',
@@ -256,15 +258,19 @@ describe('Unlock LSK modal', () => {
         {
           title: 'Transaction',
           value: '-',
-          components: [{
-            type: 'bytesFee', value: 96000n, feeToken: {
-              availableBalance: '1000000000',
-              chainName: 'Lisk',
-              lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
-              symbol: 'LSK',
-              tokenID: '0000000100000000',
+          components: [
+            {
+              type: 'bytesFee',
+              value: 96000n,
+              feeToken: {
+                availableBalance: '1000000000',
+                chainName: 'Lisk',
+                lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+                symbol: 'LSK',
+                tokenID: '0000000100000000',
+              },
             },
-          }],
+          ],
         },
         {
           title: 'Message',
