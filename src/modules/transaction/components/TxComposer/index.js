@@ -131,6 +131,10 @@ const TxComposer = ({
   }, [selectedPriority, transactionJSON.params]);
 
   useEffect(() => {
+    setFeedBack(null);
+  }, [formProps.fields]);
+
+  useEffect(() => {
     setFeedBack(formProps.feedback);
   }, [formProps.feedback]);
 
