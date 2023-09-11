@@ -135,7 +135,7 @@ const TransactionPriority = ({
                       {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose
                       one of the provided transaction priorities.
                     `,
-                  { minFee, tokenSymbol: token.symbol }
+                  { minFee, tokenSymbol: token?.symbol }
                 )}
               </p>
             </Tooltip>
