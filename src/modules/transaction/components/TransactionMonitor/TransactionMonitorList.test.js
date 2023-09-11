@@ -23,7 +23,7 @@ jest.mock('react-i18next', () => ({
 }));
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
+  useSelector: jest.fn(() => ({})),
 }));
 jest.mock('src/modules/common/hooks', () => ({
   useSort: jest.fn(() => ({

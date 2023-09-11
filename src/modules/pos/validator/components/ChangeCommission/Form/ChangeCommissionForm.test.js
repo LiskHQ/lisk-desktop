@@ -163,20 +163,32 @@ describe('ChangeCommissionForm', () => {
           expect.objectContaining({
             fees: [
               {
-                components: [{ type: 'bytesFee', value: 96000n }],
+                components: [
+                  {
+                    feeToken: { availableBalance: 40000000, chainID: '04000000', symbol: 'LSK' },
+                    type: 'bytesFee',
+                    value: 96000n,
+                  },
+                ],
                 title: 'Transaction',
-                value: '0 LSK',
+                value: '-',
               },
-              { components: [], isHidden: true, title: 'Message', value: '0 LSK' },
+              { components: [], isHidden: true, title: 'Message', value: '-' },
             ],
             formProps: {
               composedFees: [
                 {
-                  components: [{ type: 'bytesFee', value: 96000n }],
+                  components: [
+                    {
+                      feeToken: { availableBalance: 40000000, chainID: '04000000', symbol: 'LSK' },
+                      type: 'bytesFee',
+                      value: 96000n,
+                    },
+                  ],
                   title: 'Transaction',
-                  value: '0 LSK',
+                  value: '-',
                 },
-                { components: [], isHidden: true, title: 'Message', value: '0 LSK' },
+                { components: [], isHidden: true, title: 'Message', value: '-' },
               ],
               fields: {
                 newCommission: '30.00',

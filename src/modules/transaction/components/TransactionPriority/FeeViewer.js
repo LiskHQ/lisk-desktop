@@ -55,9 +55,6 @@ const FeesViewer = ({
   const { t } = useTranslation();
   const [showEditIcon, setShowEditIcon] = useState(false);
   const composedFeeList = fees.filter(({ isHidden }) => !isHidden);
-  const transactionFeeList = composedFeeList.find(
-    ({ title }) => title === 'Transaction'
-  )?.components;
 
   const onInputFocus = (e) => {
     e.preventDefault();
@@ -123,22 +120,22 @@ const FeesViewer = ({
 
   return (
     <div className={styles.feesListWrapper}>
-      {composedFeeList.map(({ title, value }) => (
+      {composedFeeList.map(({ title, value, components }) => (
         <div className={styles.feeRow} key={title}>
           <span>{title}</span>
           <span className={`${styles.value} fee-value-${title}`} onClick={onClickCustomEdit}>
             {typeof value === 'object' ? value?.value : value}
             {isCustom && showEditIcon && title === 'Transaction' && <Icon name="edit" />}
-            {title === 'Transaction' && (
+            {title === 'Transaction' && components.length !== 0 && (
               <Tooltip position="top left">
                 <div className={styles.feesBreakdownRow}>
                   <p>{t('Fee breakdown')}</p>
-                  {transactionFeeList.map(({ type, value: feeValueInfo }, index) => (
+                  {components.map(({ type, value: feeValueInfo, feeToken }, index) => (
                     <FeesBreakdownDetails
                       key={`${index}-${type}-${feeValueInfo}`}
                       type={type}
                       feeValueInfo={feeValueInfo}
-                      token={token}
+                      token={feeToken}
                     />
                   ))}
                 </div>

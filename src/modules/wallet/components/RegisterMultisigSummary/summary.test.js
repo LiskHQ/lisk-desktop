@@ -85,6 +85,7 @@ describe('Multisignature Summary component', () => {
     },
     formProps: {
       moduleCommand: 'auth:registerMultisignature',
+      fields: { token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' } },
     },
   };
 

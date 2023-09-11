@@ -12,7 +12,7 @@ export const LEDGER_HW_IPC_CHANNELS = {
 export const LEDGER_CUSTOM_ERRORS = {
   openDevicePath: {
     return_code: 1,
-    match: 'cannot open device with path'
-  }
+    match: 'cannot open device with path',
+  },
 };
 export const CHECK_STATUS_INTERVAL = 4000;

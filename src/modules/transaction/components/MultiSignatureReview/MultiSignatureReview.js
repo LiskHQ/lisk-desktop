@@ -1,7 +1,6 @@
 import React from 'react';
 import { truncateAddress } from '@wallet/utils/account';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './MultiSignatureReview.css';
 
@@ -59,23 +58,18 @@ const InfoColumn = ({ title, children, className }) => (
   </div>
 );
 
-const MultiSignatureReview = ({ t, members, fee, numberOfSignatures }) => {
-  const { data: tokens } = useTokenBalances();
-  const token = tokens?.data?.[0] || {};
-
-  return (
-    <>
-      <Members members={members} t={t} />
-      <div className={styles.infoContainer}>
-        <InfoColumn title={t('Required signatures')} className="info-numberOfSignatures">
-          {numberOfSignatures}
-        </InfoColumn>
-        <InfoColumn title={t('Fees')} className="info-fee">
-          <TokenAmount val={fee} token={token} />
-        </InfoColumn>
-      </div>
-    </>
-  );
-};
+const MultiSignatureReview = ({ t, members, fee, numberOfSignatures, token }) => (
+  <>
+    <Members members={members} t={t} />
+    <div className={styles.infoContainer}>
+      <InfoColumn title={t('Required signatures')} className="info-numberOfSignatures">
+        {numberOfSignatures}
+      </InfoColumn>
+      <InfoColumn title={t('Fees')} className="info-fee">
+        <TokenAmount val={fee} token={token} />
+      </InfoColumn>
+    </div>
+  </>
+);
 
 export default MultiSignatureReview;

@@ -29,7 +29,7 @@ const win = {
     });
 
     // Enables DevTools
-    const { LISK_ENABLE_DEV_TOOL, DEBUG } = process.env();
+    const { DEBUG } = process.env();
 
     if (LISK_ENABLE_DEV_TOOL || DEBUG) {
       win.browser.devtools = true;

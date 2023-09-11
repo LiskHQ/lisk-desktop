@@ -53,7 +53,10 @@ const DialogAddNetwork = () => {
   // eslint-disable-next-line max-statements
   async function onSubmit(values) {
     setErrorText('');
-    const fullNetworkList = [...Object.values(networks), ...customNetworks];
+    const fullNetworkList = [
+      ...Object.values(networks).filter(({ isAvailable }) => isAvailable),
+      ...customNetworks,
+    ];
     const duplicateNetworkFields = getDuplicateNetworkFields(values, fullNetworkList, defaultName);
     if (duplicateNetworkFields) {
       const duplicates = Object.keys(duplicateNetworkFields)

@@ -2,7 +2,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import TxComposer from '@transaction/components/TxComposer';
@@ -10,17 +9,12 @@ import getUnlockButtonTitle from '../../utils/getUnlockButtonTitle';
 import useUnlockableCalculator from '../../hooks/useUnlockableCalculator';
 import BalanceTable from './BalanceTable';
 import styles from './unlockBalance.css';
-import { usePosConstants } from '../../hooks/queries';
+import usePosToken from '../../hooks/usePosToken';
 
 const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const { lockedPendingUnlocks, sentStakesAmount, unlockedAmount } = useUnlockableCalculator();
-  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
-  const { data: tokens } = useTokenBalances({
-    config: { params: { tokenID: posConstants?.posTokenID } },
-    options: { enabled: !isGettingPosConstants },
-  });
-  const posToken = tokens?.data?.[0] || {};
+  const { token } = usePosToken();
 
   const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -34,7 +28,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
   const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
     fields: {
-      token: posToken,
+      token,
     },
     isFormValid: unlockedAmount > 0,
     enableMinimumBalanceFeedback: true,
@@ -62,7 +56,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
               sentStakesAmount={sentStakesAmount}
               unlockedAmount={unlockedAmount}
               lockedPendingUnlocks={lockedPendingUnlocks}
-              token={posToken}
+              token={token}
             />
           </BoxContent>
         </>
