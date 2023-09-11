@@ -55,7 +55,7 @@ describe('Unlock LSK modal', () => {
   let wrapper;
   useTransactionPriority.mockImplementation(() => [
     { selectedIndex: 1 },
-    () => {},
+    () => { },
     [
       { title: 'Low', value: 0.001 },
       { title: 'Medium', value: 0.005 },
@@ -224,12 +224,22 @@ describe('Unlock LSK modal', () => {
         composedFees: [
           {
             title: 'Transaction',
-            value: '0 LSK',
-            components: [{ type: 'bytesFee', value: 96000n }],
+            value: '-',
+            components: [{
+              type: 'bytesFee',
+              value: 96000n,
+              feeToken: {
+                availableBalance: '1000000000',
+                chainName: 'Lisk',
+                lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+                symbol: 'LSK',
+                tokenID: '0000000100000000',
+              },
+            }],
           },
           {
             title: 'Message',
-            value: '0 LSK',
+            value: '-',
             isHidden: true,
             components: [],
           },
@@ -245,12 +255,20 @@ describe('Unlock LSK modal', () => {
       fees: [
         {
           title: 'Transaction',
-          value: '0 LSK',
-          components: [{ type: 'bytesFee', value: 96000n }],
+          value: '-',
+          components: [{
+            type: 'bytesFee', value: 96000n, feeToken: {
+              availableBalance: '1000000000',
+              chainName: 'Lisk',
+              lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+              symbol: 'LSK',
+              tokenID: '0000000100000000',
+            },
+          }],
         },
         {
           title: 'Message',
-          value: '0 LSK',
+          value: '-',
           isHidden: true,
           components: [],
         },
@@ -266,43 +284,71 @@ describe('Unlock LSK modal', () => {
 
     expect(props.nextStep).toBeCalledWith(
       expect.objectContaining({
-        transactionJSON,
+        fees: [
+          {
+            components: [
+              {
+                feeToken: {
+                  availableBalance: '1000000000',
+                  chainName: 'Lisk',
+                  lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+                  symbol: 'LSK',
+                  tokenID: '0000000100000000',
+                },
+                type: 'bytesFee',
+                value: 96000n,
+              },
+            ],
+            title: 'Transaction',
+            value: '-',
+          },
+          { components: [], isHidden: true, title: 'Message', value: '-' },
+        ],
         formProps: {
           composedFees: [
             {
+              components: [
+                {
+                  feeToken: {
+                    availableBalance: '1000000000',
+                    chainName: 'Lisk',
+                    lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+                    symbol: 'LSK',
+                    tokenID: '0000000100000000',
+                  },
+                  type: 'bytesFee',
+                  value: 96000n,
+                },
+              ],
               title: 'Transaction',
-              value: '0 LSK',
-              components: [{ type: 'bytesFee', value: 96000n }],
+              value: '-',
             },
-            {
-              title: 'Message',
-              value: '0 LSK',
-              isHidden: true,
-              components: [],
-            },
+            { components: [], isHidden: true, title: 'Message', value: '-' },
           ],
-          isFormValid: true,
           enableMinimumBalanceFeedback: true,
-          moduleCommand: 'pos:unlock',
           fields: {
-            token: mockTokensBalance.data[0],
+            token: {
+              availableBalance: '1000000000',
+              chainName: 'Lisk',
+              lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+              symbol: 'LSK',
+              tokenID: '0000000100000000',
+            },
           },
+          isFormValid: true,
+          moduleCommand: 'pos:unlock',
           unlockedAmount: 455000000000,
         },
-        fees: [
-          {
-            title: 'Transaction',
-            value: '0 LSK',
-            components: [{ type: 'bytesFee', value: 96000n }],
-          },
-          {
-            title: 'Message',
-            value: '0 LSK',
-            isHidden: true,
-            components: [],
-          },
-        ],
         selectedPriority: { selectedIndex: 1 },
+        transactionJSON: {
+          command: 'unlock',
+          fee: '5104000',
+          module: 'pos',
+          nonce: '0',
+          params: {},
+          senderPublicKey: 'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535',
+          signatures: [],
+        },
       })
     );
   });
