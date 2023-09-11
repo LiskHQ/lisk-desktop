@@ -99,12 +99,6 @@ const TxComposer = ({
   const feeToken = feeTokens?.[0];
   const messageFeeToken = messageFeeTokens?.[0];
 
-  commandParams = {
-    ...commandParams,
-    feeToken,
-    messageFeeToken,
-  };
-
   if (isFetched && fields?.sendingChain?.chainID !== fields?.recipientChain?.chainID) {
     transactionJSON.params = {
       ...transactionJSON.params,
