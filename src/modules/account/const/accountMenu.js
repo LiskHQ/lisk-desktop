@@ -31,9 +31,11 @@ export const accountMenu = ({
   },
   {
     component: hasAvailableTokenBalance ? 'multiSignature' : 'noTokenBalance',
-    data: {
-      message: i18next.t('Token balance is not enough to register a multisignature account.'),
-    },
+    data: !hasAvailableTokenBalance
+      ? {
+          message: i18next.t('Token balance is not enough to register a multisignature account.'),
+        }
+      : {},
     icon: 'multiSignatureOutline',
     label: 'Register multisignature account',
     isHidden: authData?.data?.numberOfSignatures > 0 || hasNetworkError || isLoadingNetwork,

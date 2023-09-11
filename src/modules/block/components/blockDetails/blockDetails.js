@@ -17,6 +17,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import Transactions from '@transaction/components/BlockDetailsTransactions';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import TransactionEvents from '@transaction/components/TransactionEvents';
 import { useBlocks } from '../../hooks/queries/useBlocks';
 import { useLatestBlock } from '../../hooks/queries/useLatestBlock';
@@ -104,7 +105,8 @@ const getFields = (data = {}, token, t, currentHeight) => ({
 
 const Rows = ({ data, t, currentHeight }) => {
   const { data: tokens } = useTokenBalances();
-  const token = tokens?.data?.[0] || {};
+  const [currentApplication] = useCurrentApplication();
+  const token = tokens?.data?.find(({ chainID }) => chainID === currentApplication.chainID) || {};
 
   const fields = getFields(data, token, t, currentHeight);
 
