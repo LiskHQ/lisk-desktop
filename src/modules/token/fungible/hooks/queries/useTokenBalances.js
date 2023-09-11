@@ -37,11 +37,12 @@ export const useTokenBalances = ({
     transformResult,
     params: { address, ...(customConfig.params || {}) },
   });
+  const { enabled = true } = options || {};
 
   return useCustomInfiniteQuery({
     keys: [TOKENS_BALANCE],
     config,
-    options: { ...options, enabled: !!address },
+    options: { ...options, enabled: !!address && enabled },
     client,
   });
 };

@@ -126,7 +126,7 @@ const FeesViewer = ({
           <span className={`${styles.value} fee-value-${title}`} onClick={onClickCustomEdit}>
             {typeof value === 'object' ? value?.value : value}
             {isCustom && showEditIcon && title === 'Transaction' && <Icon name="edit" />}
-            {title === 'Transaction' && (
+            {title === 'Transaction' && components.length !== 0 && (
               <Tooltip position="top left">
                 <div className={styles.feesBreakdownRow}>
                   <p>{t('Fee breakdown')}</p>

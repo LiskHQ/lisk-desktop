@@ -91,14 +91,15 @@ const TxComposer = ({
   });
 
   const { data: { data: feeTokens } = {} } = useTokenBalances({
-    config: { parmas: { tokenID: feeTokenID, limit: 1 } },
+    config: { params: { tokenID: feeTokenID, limit: 1 } }, options: { enabled: !!feeTokenID }
   });
   const { data: { data: messageFeeTokens } = {} } = useTokenBalances({
-    config: { parmas: { tokenID: messageFeeTokenID, limit: 1 } },
+    config: { params: { tokenID: messageFeeTokenID, limit: 1 } }, options: { enabled: !!messageFeeTokenID }
   });
   const feeToken = feeTokens?.[0];
   const messageFeeToken = messageFeeTokens?.[0];
 
+  console.log({ feeToken, messageFeeToken, feeTokenID, messageFeeTokenID });
   if (isFetched && fields?.sendingChain?.chainID !== fields?.recipientChain?.chainID) {
     transactionJSON.params = {
       ...transactionJSON.params,
