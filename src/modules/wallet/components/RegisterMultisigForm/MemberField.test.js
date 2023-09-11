@@ -54,7 +54,10 @@ describe('MemberField', () => {
 
   it('Should change changeIdentifier', () => {
     const wrapper = mount(<MemberField {...props} />);
-    wrapper.find('.msign-pk-input').at(1).simulate('change', { target: { value: 'key' } });
+    wrapper
+      .find('.msign-pk-input')
+      .at(1)
+      .simulate('change', { target: { value: 'key' } });
     const expectedObj = { index: props.index, publicKey: 'key', isMandatory: true };
     expect(props.onChangeMember).toHaveBeenCalledWith(expectedObj);
   });

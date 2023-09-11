@@ -91,10 +91,12 @@ const TxComposer = ({
   });
 
   const { data: { data: feeTokens } = {} } = useTokenBalances({
-    config: { params: { tokenID: feeTokenID, limit: 1 } }, options: { enabled: !!feeTokenID }
+    config: { params: { tokenID: feeTokenID, limit: 1 } },
+    options: { enabled: !!feeTokenID },
   });
   const { data: { data: messageFeeTokens } = {} } = useTokenBalances({
-    config: { params: { tokenID: messageFeeTokenID, limit: 1 } }, options: { enabled: !!messageFeeTokenID }
+    config: { params: { tokenID: messageFeeTokenID, limit: 1 } },
+    options: { enabled: !!messageFeeTokenID },
   });
   const feeToken = feeTokens?.[0];
   const messageFeeToken = messageFeeTokens?.[0];

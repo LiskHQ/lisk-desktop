@@ -10,7 +10,7 @@ export const tokensTransferred =
   (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
-    const wallet =  selectCurrentAccountWithSigningData(state);
+    const wallet = selectCurrentAccountWithSigningData(state);
     const [error, tx] = await to(
       signTransaction({
         transactionJSON,
