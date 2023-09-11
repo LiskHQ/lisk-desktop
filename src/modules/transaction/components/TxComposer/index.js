@@ -101,7 +101,6 @@ const TxComposer = ({
   const feeToken = feeTokens?.[0];
   const messageFeeToken = messageFeeTokens?.[0];
 
-  console.log({ feeToken, messageFeeToken, feeTokenID, messageFeeTokenID });
   if (isFetched && fields?.sendingChain?.chainID !== fields?.recipientChain?.chainID) {
     transactionJSON.params = {
       ...transactionJSON.params,
