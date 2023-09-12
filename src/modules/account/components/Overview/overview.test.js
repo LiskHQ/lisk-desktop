@@ -10,7 +10,7 @@ const config = {
 
 const mockSetFilter = jest.fn();
 
-const props = { setFilter: mockSetFilter, tokenData: mockAppsTokens };
+const props = { setFilter: mockSetFilter, tokenData: { isFetched: true, data: mockAppsTokens } };
 
 describe('Overview', () => {
   beforeEach(() => mockSetFilter.mockClear());
@@ -25,7 +25,7 @@ describe('Overview', () => {
   });
 
   it('does not render dropdown options if data is unavailable', () => {
-    const updatedProps = { ...props, tokenData: undefined };
+    const updatedProps = { ...props, tokenData: {} };
     smartRender(Overview, updatedProps, config);
 
     expect(screen.getByTestId('selected-menu-item')).not.toHaveTextContent('LSK');
