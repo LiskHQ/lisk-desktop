@@ -45,4 +45,10 @@ describe('WalletTable', () => {
 
     expect(screen.getAllByTestId('wallets-row')).toHaveLength(20);
   });
+
+  it('renders properly without accounts', () => {
+    smartRender(WalletTable, { ...props, filters: {} }, config);
+
+    expect(screen.queryAllByTestId('wallets-row')).toHaveLength(0);
+  });
 });

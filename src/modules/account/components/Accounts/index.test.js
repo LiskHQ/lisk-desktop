@@ -14,6 +14,7 @@ jest.mock('@token/fungible/hooks/queries/useAppsMetaTokens');
 jest.mock('@transaction/hooks/queries/useFees');
 jest.mock('@token/fungible/hooks/queries/useTokensBalanceTop');
 jest.mock('@token/fungible/hooks/queries/useTokenSummary');
+jest.mock('src/modules/common/hooks/useFilter');
 
 describe('Top Accounts Monitor Page', () => {
   const mockSetFilter = jest.fn();
