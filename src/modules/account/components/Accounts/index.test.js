@@ -8,6 +8,7 @@ import { useFees } from '@transaction/hooks/queries';
 import { mockAppsTokens, mockTokenBalancesTop } from '@token/fungible/__fixtures__';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import WalletsMonitor from './Accounts';
+import { useFilter } from 'src/modules/common/hooks';
 
 jest.mock('@token/fungible/hooks/queries/useAppsMetaTokens');
 jest.mock('@transaction/hooks/queries/useFees');
@@ -15,6 +16,7 @@ jest.mock('@token/fungible/hooks/queries/useTokensBalanceTop');
 jest.mock('@token/fungible/hooks/queries/useTokenSummary');
 
 describe('Top Accounts Monitor Page', () => {
+  const mockSetFilter = jest.fn();
   beforeEach(() => {
     renderWithQueryClient(WalletsMonitor);
   });
@@ -39,8 +41,13 @@ describe('Top Accounts Monitor Page', () => {
       data: { totalSupply: [{ tokenID: '0000000100000000', amount: '11043784297530566' }] },
     },
   });
+  useFilter.mockReturnValue({ filters: { tokenID: '0000000100000000' }, setFilter: mockSetFilter });
 
   it('renders a page with header', () => {
     expect(screen.getByText('All accounts')).toBeInTheDocument();
+  });
+
+  it('renders table with accounts', () => {
+    expect(screen.getByText('Top Account from Testnet')).toBeInTheDocument();
   });
 });

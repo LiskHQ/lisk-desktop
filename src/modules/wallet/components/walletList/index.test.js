@@ -36,7 +36,7 @@ const props = {
       ],
     },
   },
-  filters: {},
+  filters: { tokenID: '0000000100000000' },
 };
 
 describe('WalletTable', () => {
