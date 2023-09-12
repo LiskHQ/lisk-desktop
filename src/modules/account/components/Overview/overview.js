@@ -11,8 +11,7 @@ const Overview = ({ tokenData, setFilter }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const [search, setSearch] = useState('');
-  const { data, isFetching, isFetched } = tokenData;
-  const tokens = data?.data ?? [];
+  const { data: tokens = [], isFetching, isFetched } = tokenData;
   const [selectedToken, setSelectedToken] = useState(tokens[0]);
 
   useEffect(() => {

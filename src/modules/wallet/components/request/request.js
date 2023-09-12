@@ -82,6 +82,7 @@ const Request = () => {
   );
   const applicationExploreAndMetaData = useApplicationExploreAndMetaData();
   const networkSupportedTokens = useNetworkSupportedTokens(state.recipientChain.value);
+  const { recipientChain, token, amount, reference } = state;
 
   const shareLink = useMemo(
     () =>
@@ -131,7 +132,7 @@ const Request = () => {
     handleFieldChange({
       target: { name: 'token', value: networkSupportedTokens.data?.[0]?.tokenID },
     });
-  }, [networkSupportedTokens.isFetched]);
+  }, [networkSupportedTokens.isFetched, recipientChain]);
 
   const onSelectReceipentChain = (value) => {
     handleFieldChange({
@@ -151,7 +152,6 @@ const Request = () => {
     });
   };
 
-  const { recipientChain, token, amount, reference } = state;
   const selectedToken = networkSupportedTokens.data?.find(({ tokenID }) => tokenID === token.value);
   const isFormInvalid = Object.values(state).some(({ error }) => !!error);
 

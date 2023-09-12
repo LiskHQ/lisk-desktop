@@ -10,7 +10,7 @@ import header from './tableHeader';
 const WalletTable = ({ tokenData, tokenSummary, filters }) => {
   const { t } = useTranslation();
   const { sort, toggleSort } = useSort({ defaultSort: 'balance:desc' });
-  const token = tokenData?.data?.data?.[0];
+  const token = tokenData?.data?.[0];
   const tokenSupply = tokenSummary?.data?.totalSupply?.filter(
     (tokenInfo) => tokenInfo.tokenID === token?.tokenID
   )[0];

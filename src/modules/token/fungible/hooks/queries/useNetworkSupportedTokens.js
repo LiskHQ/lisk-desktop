@@ -1,4 +1,5 @@
-import { useMemo, useRef } from 'react';
+/* eslint-disable max-statements */
+import { useRef } from 'react';
 import { useAppsMetaTokens, useTokenSummary } from '@token/fungible/hooks/queries';
 import { Client } from 'src/utils/api/client';
 
@@ -10,7 +11,6 @@ export const useNetworkSupportedTokens = (application) => {
   const isSupportAllTokens = tokensSupported.data?.data?.supportedTokens?.isSupportAllTokens;
 
   const appsMetaTokens = useAppsMetaTokens({
-    options: { enabled: isSupportAllTokens },
     config: { params: { chainID: application?.chainID } },
     client: client.current,
   });
@@ -18,24 +18,23 @@ export const useNetworkSupportedTokens = (application) => {
   const isFetched = tokensSupported.isFetched && appsMetaTokens.isFetched;
   const isError = tokensSupported.isError || appsMetaTokens.isError;
 
-  return useMemo(() => {
-    let tokens = [];
-    if (!isSupportAllTokens) {
-      const { exactTokenIDs = [] } = tokensSupported.data?.data?.supportedTokens || {};
-      tokens = exactTokenIDs
-        .map((exactTokenID) =>
-          appsMetaTokens.data?.data?.find(({ tokenID }) => tokenID === exactTokenID)
-        )
-        .filter((token) => token);
-    } else {
-      tokens = appsMetaTokens.data?.data || [];
-    }
+  let tokens = [];
 
-    return {
-      isLoading,
-      isFetched,
-      isError,
-      data: tokens,
-    };
-  }, [isLoading, isFetched, isError]);
+  if (!isSupportAllTokens) {
+    const { exactTokenIDs = [] } = tokensSupported.data?.data?.supportedTokens || {};
+    tokens = exactTokenIDs
+      .map((exactTokenID) =>
+        appsMetaTokens.data?.data?.find(({ tokenID }) => tokenID === exactTokenID)
+      )
+      .filter((token) => token);
+  } else {
+    tokens = appsMetaTokens.data?.data || [];
+  }
+
+  return {
+    isLoading,
+    isFetched,
+    isError,
+    data: tokens,
+  };
 };
