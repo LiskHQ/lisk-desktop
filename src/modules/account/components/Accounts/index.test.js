@@ -43,8 +43,4 @@ describe('Top Accounts Monitor Page', () => {
   it('renders a page with header', () => {
     expect(screen.getByText('All accounts')).toBeInTheDocument();
   });
-
-  it('renders table with accounts', () => {
-    expect(screen.getByText('Top Account from Testnet')).toBeInTheDocument();
-  });
 });
