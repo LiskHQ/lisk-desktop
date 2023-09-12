@@ -4,6 +4,7 @@ import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
 import {
   useApplicationExploreAndMetaData,
+  useApplicationManagement,
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
 import { useNetworkSupportedTokens } from '@token/fungible/hooks/queries';
@@ -28,24 +29,28 @@ const requestInitState = {
     value: '',
     loading: false,
     feedback: '',
+    optional: false,
   },
   reference: {
     error: false,
     value: '',
     loading: false,
     feedback: '',
+    optional: true,
   },
   token: {
     error: false,
     value: '',
     loading: false,
     feedback: '',
+    optional: false,
   },
   recipientChain: {
     error: false,
     value: {},
     loading: false,
     feedback: '',
+    optional: false,
   },
 };
 
@@ -71,6 +76,7 @@ const Request = () => {
     },
   ] = useCurrentAccount();
   const [currentApplication] = useCurrentApplication();
+  const { applications } = useApplicationManagement();
 
   const { t } = useTranslation();
 
@@ -98,6 +104,18 @@ const Request = () => {
     [address, state]
   );
 
+  const mainChainApplication = useMemo(
+    () => applications.find(({ chainID }) => /0{4}$/.test(chainID)),
+    [applications]
+  );
+  const requestingApplications = useMemo(() => {
+    if (mainChainApplication.chainID !== currentApplication.chainID) {
+      return [mainChainApplication, ...applicationExploreAndMetaData.applications];
+    }
+
+    return applicationExploreAndMetaData.applications;
+  }, [mainChainApplication, currentApplication]);
+
   const handleFieldChange = ({ target }) => {
     const byteCount = sizeOfString(target.value);
     const error =
@@ -120,6 +138,7 @@ const Request = () => {
 
     dispatch({
       [target.name]: {
+        ...state[target.name],
         feedback,
         error: !!error,
         value: target.value,
@@ -153,7 +172,9 @@ const Request = () => {
   };
 
   const selectedToken = networkSupportedTokens.data?.find(({ tokenID }) => tokenID === token.value);
-  const isFormInvalid = Object.values(state).some(({ error }) => !!error);
+  const isFormInvalid = Object.values(state).some(
+    ({ error, value, optional }) => !!error || (!value && !optional)
+  );
 
   return (
     <RequestWrapper
@@ -189,7 +210,7 @@ const Request = () => {
             }
             size="m"
           >
-            {applicationExploreAndMetaData.applications?.map((chain) => (
+            {requestingApplications?.map((chain) => (
               <MenuItem className={styles.chainOptionWrapper} value={chain} key={chain.chainID}>
                 <img className={styles.chainLogo} src={getLogo({ logo: chain.logo })} />
                 <span>{chain.chainName}</span>
