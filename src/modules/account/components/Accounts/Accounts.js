@@ -24,7 +24,7 @@ const Accounts = () => {
   return (
     <Box main className="accounts-box">
       <BoxHeader>
-        <Overview tokenData={networkSupportedTokens} setFilter={setFilter} />
+        <Overview filters={filters} tokenData={networkSupportedTokens} setFilter={setFilter} />
       </BoxHeader>
       <BoxContent className={styles.content}>
         <WalletList

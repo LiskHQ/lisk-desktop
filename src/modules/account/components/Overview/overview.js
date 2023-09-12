@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import { Input } from 'src/theme';
@@ -7,16 +7,12 @@ import Icon from '@theme/Icon';
 import { getLogo } from '@token/fungible/utils/helpers';
 import styles from '../Accounts/accounts.css';
 
-const Overview = ({ tokenData, setFilter }) => {
+const Overview = ({ tokenData, filters, setFilter }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const [search, setSearch] = useState('');
   const { data: tokens = [], isFetching } = tokenData;
-  const [selectedToken, setSelectedToken] = useState(tokens[0]);
-
-  useEffect(() => {
-    setSelectedToken(tokens[0]);
-  }, [tokens]);
+  const selectedToken = tokens.find(({ tokenID }) => tokenID === filters.tokenID);
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -28,7 +24,6 @@ const Overview = ({ tokenData, setFilter }) => {
   };
 
   const onChange = (tokenInfo) => {
-    setSelectedToken(tokenInfo);
     setFilter('tokenID', tokenInfo.tokenID);
   };
 

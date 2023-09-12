@@ -48,6 +48,9 @@ const WalletTable = ({ tokenData, tokenSummary, filters }) => {
       additionalRowProps={{ token, tokenSupply }}
       header={header(t, toggleSort)}
       currentSort={sort}
+      emptyState={{
+        message: t('There are no accounts to display.'),
+      }}
     />
   );
 };
