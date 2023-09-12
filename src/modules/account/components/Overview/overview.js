@@ -16,7 +16,7 @@ const Overview = ({ tokenData, setFilter }) => {
 
   useEffect(() => {
     setSelectedToken(tokens[0]);
-  }, [isFetched]);
+  }, [tokens]);
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);

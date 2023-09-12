@@ -19,7 +19,7 @@ const Accounts = () => {
 
   useEffect(() => {
     setFilter('tokenID', tokenID);
-  }, [networkSupportedTokens.isFetched]);
+  }, [networkSupportedTokens.isFetched, currentApplication]);
 
   return (
     <Box main className="accounts-box">
