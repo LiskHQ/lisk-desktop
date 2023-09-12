@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
@@ -10,12 +11,13 @@ const Overview = ({ tokenData, setFilter }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const [search, setSearch] = useState('');
-  const tokens = tokenData?.data ?? [];
+  const { data, isFetching, isFetched } = tokenData;
+  const tokens = data?.data ?? [];
   const [selectedToken, setSelectedToken] = useState(tokens[0]);
 
   useEffect(() => {
     setSelectedToken(tokens[0]);
-  }, [tokenData]);
+  }, [isFetched]);
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -44,6 +46,7 @@ const Overview = ({ tokenData, setFilter }) => {
           select={(selectedValue, option) => selectedValue?.tokenName === option.tokenName}
           className={styles.menuWrapper}
           popupClassName={styles.popupWrapper}
+          disabled={isFetching}
         >
           {tokens.map((tokenInfo) => (
             <MenuItem
