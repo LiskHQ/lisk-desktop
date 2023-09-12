@@ -7,8 +7,8 @@ import {
 import { useFees } from '@transaction/hooks/queries';
 import { mockAppsTokens, mockTokenBalancesTop } from '@token/fungible/__fixtures__';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
-import WalletsMonitor from './Accounts';
 import { useFilter } from 'src/modules/common/hooks';
+import WalletsMonitor from './Accounts';
 
 jest.mock('@token/fungible/hooks/queries/useAppsMetaTokens');
 jest.mock('@transaction/hooks/queries/useFees');
