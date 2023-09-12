@@ -9,7 +9,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
-import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import Summary from './Summary';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -85,9 +85,7 @@ describe('Multisignature Summary component', () => {
     },
     formProps: {
       moduleCommand: 'auth:registerMultisignature',
-      fields: {
-        token: mockAppsTokens.data[0]
-      },
+      fields: { token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' } },
     },
   };
 

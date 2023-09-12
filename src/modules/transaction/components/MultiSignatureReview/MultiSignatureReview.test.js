@@ -25,7 +25,7 @@ describe('Multisignature Review component', () => {
     ],
     fee: 2000000,
     numberOfSignatures: 2,
-    token: mockAppsTokens.data[0],
+    token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' },
   };
 
   beforeEach(() => {

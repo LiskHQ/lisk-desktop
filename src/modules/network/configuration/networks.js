@@ -41,7 +41,7 @@ const networks = {
     label: 'Testnet',
     serviceUrl: 'https://testnet-service.lisk.com',
     wsServiceUrl: 'wss://testnet-service.lisk.com',
-    isAvailable: false,
+    isAvailable: true,
   },
   [networkKeys.customNode]: {
     name: networkKeys.customNode,
