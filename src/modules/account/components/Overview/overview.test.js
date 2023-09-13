@@ -27,7 +27,9 @@ describe('Overview', () => {
     );
 
     expect(screen.getByText('All accounts')).toBeInTheDocument();
-    expect(screen.getByTestId('selected-menu-item')).toHaveTextContent(mockAppsTokens.data[2].symbol);
+    expect(screen.getByTestId('selected-menu-item')).toHaveTextContent(
+      mockAppsTokens.data[2].symbol
+    );
     expect(screen.getAllByTestId('dropdown-options')).toHaveLength(6);
     expect(screen.getByPlaceholderText('Search by name or address')).toBeInTheDocument();
   });
@@ -46,6 +48,13 @@ describe('Overview', () => {
     fireEvent.click(screen.getAllByTestId('dropdown-options')[2]);
     expect(mockSetFilter).toHaveBeenCalledTimes(1);
     expect(mockSetFilter).toHaveBeenCalledWith('tokenID', mockAppsTokens.data[2].tokenID);
+  });
+
+  it('Should not select a default token', async () => {
+    props.tokenData.data = undefined;
+    smartRender(Overview, props, config);
+
+    expect(screen.getByTestId('selected-menu-item')).not.toHaveTextContent('LSK');
   });
 
   it('updates the filter when the search input is changed', async () => {
