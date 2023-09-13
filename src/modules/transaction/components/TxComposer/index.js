@@ -216,6 +216,7 @@ const TxComposer = ({
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
         minRequiredBalance={minRequiredBalance}
+        formProps={formProps}
       />
       <Feedback
         feedback={feedback}

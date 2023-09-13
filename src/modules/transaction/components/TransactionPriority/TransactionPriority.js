@@ -25,6 +25,7 @@ const TransactionPriority = ({
   composedFees,
   customFee,
   minRequiredBalance,
+  formProps
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState();
