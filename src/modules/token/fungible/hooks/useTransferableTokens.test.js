@@ -1,20 +1,28 @@
 import { renderHook } from '@testing-library/react-hooks';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import * as queries from '@token/fungible/hooks/queries';
+// import * as queries from '@token/fungible/hooks/queries';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import * as accountHooks from '@account/hooks';
+import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import { useTransferableTokens } from './useTransferableTokens';
+import { useAppsMetaTokens, useTokenBalances, useTokenSummary } from './queries';
+import { mockAppsTokens } from '../__fixtures__';
 
 jest.mock('@account/hooks', () => ({
   __esModule: true,
   ...jest.requireActual('@account/hooks'),
 }));
-jest.mock('@token/fungible/hooks/queries', () => ({
-  __esModule: true,
-  ...jest.requireActual('@token/fungible/hooks/queries'),
-}));
+
+jest.mock('./queries/useTokenBalances');
+jest.mock('./queries/useTokenSummary');
+jest.mock('./queries/useAppsMetaTokens');
 
 const mockCurrentAccount = mockSavedAccounts[0];
+const mockAppMeta = mockBlockchainAppMeta.data[0];
+
+beforeEach(() => {
+  useAppsMetaTokens.mockReturnValue({ data: mockAppsTokens });
+});
 
 describe('useTransferableTokens hook', () => {
   jest.spyOn(accountHooks, 'useCurrentAccount').mockReturnValue([mockCurrentAccount]);
@@ -25,18 +33,18 @@ describe('useTransferableTokens hook', () => {
   ];
   it('data should be an array', async () => {
     const mockResponse = { data: undefined, isLoading: true, isSuccess: false };
-    jest.spyOn(queries, 'useTokenBalances').mockReturnValue(mockResponse);
-    jest.spyOn(queries, 'useTokenSummary').mockReturnValue(mockResponse);
-    const { result } = renderHook(() => useTransferableTokens(), { wrapper });
+    useTokenBalances.mockReturnValue(mockResponse);
+    useTokenSummary.mockReturnValue(mockResponse);
+    const { result } = renderHook(() => useTransferableTokens(mockAppMeta), { wrapper });
     const { data } = result.current;
     expect(data).toEqual([]);
   });
 
   it('should return loading', async () => {
     const mockResponse = { data: undefined, isLoading: true, isSuccess: false };
-    jest.spyOn(queries, 'useTokenBalances').mockReturnValue(mockResponse);
-    jest.spyOn(queries, 'useTokenSummary').mockReturnValue(mockResponse);
-    const { result } = renderHook(() => useTransferableTokens(), { wrapper });
+    useTokenBalances.mockReturnValue(mockResponse);
+    useTokenSummary.mockReturnValue(mockResponse);
+    const { result } = renderHook(() => useTransferableTokens(mockAppMeta), { wrapper });
     const { isLoading, isSuccess, data } = result.current;
     expect(isLoading).toBeTruthy();
     expect(isSuccess).toBeFalsy();
@@ -45,9 +53,9 @@ describe('useTransferableTokens hook', () => {
 
   it('should return success', async () => {
     const mockResponse = { data: {}, isLoading: false, isSuccess: true };
-    jest.spyOn(queries, 'useTokenBalances').mockReturnValue(mockResponse);
-    jest.spyOn(queries, 'useTokenSummary').mockReturnValue(mockResponse);
-    const { result, waitFor } = renderHook(() => useTransferableTokens(), { wrapper });
+    useTokenBalances.mockReturnValue(mockResponse);
+    useTokenSummary.mockReturnValue(mockResponse);
+    const { result, waitFor } = renderHook(() => useTransferableTokens(mockAppMeta), { wrapper });
     const { isLoading, isSuccess } = result.current;
     await waitFor(() => isSuccess);
     expect(isLoading).toBeFalsy();
@@ -57,9 +65,10 @@ describe('useTransferableTokens hook', () => {
   it('should return loading if one api is pending', async () => {
     const mockTokensBalance = { data: undefined, isLoading: true, isSuccess: false };
     const mockTokenSummary = { data: {}, isLoading: false, isSuccess: true };
-    jest.spyOn(queries, 'useTokenBalances').mockReturnValue(mockTokensBalance);
-    jest.spyOn(queries, 'useTokenSummary').mockReturnValue(mockTokenSummary);
-    const { result } = renderHook(() => useTransferableTokens(), { wrapper });
+
+    useTokenBalances.mockReturnValue(mockTokensBalance);
+    useTokenSummary.mockReturnValue(mockTokenSummary);
+    const { result } = renderHook(() => useTransferableTokens(mockAppMeta), { wrapper });
     const { isLoading, isSuccess } = result.current;
     expect(isLoading).toBeTruthy();
     expect(isSuccess).toBeFalsy();
@@ -80,9 +89,12 @@ describe('useTransferableTokens hook', () => {
       isLoading: false,
       isSuccess: true,
     };
-    jest.spyOn(queries, 'useTokenBalances').mockReturnValue(mockTokensBalance);
-    jest.spyOn(queries, 'useTokenSummary').mockReturnValue(mockTokenSummary);
-    const { result } = renderHook(() => useTransferableTokens(), { wrapper });
+    useTokenBalances.mockReturnValue(mockTokensBalance);
+    useTokenSummary.mockReturnValue(mockTokenSummary);
+
+    const { result } = renderHook(() => useTransferableTokens(mockAppMeta), {
+      wrapper,
+    });
     const { data } = result.current;
 
     expect(data).toEqual(mockAllTokens);
@@ -104,9 +116,9 @@ describe('useTransferableTokens hook', () => {
       isLoading: false,
       isSuccess: true,
     };
-    jest.spyOn(queries, 'useTokenBalances').mockReturnValue(mockTokensBalance);
-    jest.spyOn(queries, 'useTokenSummary').mockReturnValue(mockTokenSummary);
-    const { result } = renderHook(() => useTransferableTokens(), { wrapper });
+    useTokenBalances.mockReturnValue(mockTokensBalance);
+    useTokenSummary.mockReturnValue(mockTokenSummary);
+    const { result } = renderHook(() => useTransferableTokens(mockAppMeta), { wrapper });
     const { data, isSuccess } = result.current;
     expect(isSuccess).toBeTruthy();
     expect(data).toEqual(mockSupportedToken);

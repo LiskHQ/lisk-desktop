@@ -12,7 +12,7 @@ const mockSetFilter = jest.fn();
 
 const props = {
   setFilter: mockSetFilter,
-  filters: {},
+  selectedToken: mockAppsTokens.data[2],
   tokenData: { isFetched: true, data: mockAppsTokens.data },
 };
 
@@ -20,11 +20,7 @@ describe('Overview', () => {
   beforeEach(() => mockSetFilter.mockClear());
 
   it('renders properly', () => {
-    smartRender(
-      Overview,
-      { ...props, filters: { tokenID: mockAppsTokens.data[2].tokenID } },
-      config
-    );
+    smartRender(Overview, props, config);
 
     expect(screen.getByText('All accounts')).toBeInTheDocument();
     expect(screen.getByTestId('selected-menu-item')).toHaveTextContent(
@@ -47,7 +43,7 @@ describe('Overview', () => {
 
     fireEvent.click(screen.getAllByTestId('dropdown-options')[2]);
     expect(mockSetFilter).toHaveBeenCalledTimes(1);
-    expect(mockSetFilter).toHaveBeenCalledWith('tokenID', mockAppsTokens.data[2].tokenID);
+    expect(mockSetFilter).toHaveBeenCalledWith('tokenID', mockAppsTokens.data[1].tokenID);
   });
 
   it('Should not select a default token', async () => {
