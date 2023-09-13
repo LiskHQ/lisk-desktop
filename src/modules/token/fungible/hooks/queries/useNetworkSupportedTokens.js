@@ -33,10 +33,13 @@ export const useNetworkSupportedTokens = (application) => {
     tokens = appsMetaTokens.data?.data || [];
   }
 
+  const nonNativeTokens = tokens.filter(({ chainID }) => chainID !== application.chainID);
+  const nativeToken = tokens.filter(({ chainID }) => chainID === application.chainID);
+
   return {
     isLoading,
     isFetched,
     isError,
-    data: tokens,
+    data: [...nativeToken, ...nonNativeTokens],
   };
 };

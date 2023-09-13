@@ -11,11 +11,14 @@ import styles from './accounts.css';
 
 const Accounts = () => {
   const [currentApplication] = useCurrentApplication();
-
   const networkSupportedTokens = useNetworkSupportedTokens(currentApplication);
   const tokenID = networkSupportedTokens.data?.[0]?.tokenID;
   const { data: tokenSummary } = useTokenSummary();
   const { filters, setFilter } = useFilter({ tokenID });
+
+  const selectedToken = networkSupportedTokens.data.find(
+    (tokens) => tokens.tokenID === filters.tokenID
+  );
 
   useEffect(() => {
     setFilter('tokenID', tokenID);
@@ -24,14 +27,14 @@ const Accounts = () => {
   return (
     <Box main className="accounts-box">
       <BoxHeader>
-        <Overview filters={filters} tokenData={networkSupportedTokens} setFilter={setFilter} />
+        <Overview
+          selectedToken={selectedToken}
+          tokenData={networkSupportedTokens}
+          setFilter={setFilter}
+        />
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <WalletList
-          tokenData={networkSupportedTokens}
-          tokenSummary={tokenSummary}
-          filters={filters}
-        />
+        <WalletList tokenSummary={tokenSummary} selectedToken={selectedToken} filters={filters} />
       </BoxContent>
     </Box>
   );

@@ -7,13 +7,12 @@ import Icon from '@theme/Icon';
 import { getLogo } from '@token/fungible/utils/helpers';
 import styles from '../Accounts/accounts.css';
 
-const Overview = ({ tokenData, filters, setFilter }) => {
+const Overview = ({ tokenData, selectedToken, setFilter }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const [search, setSearch] = useState('');
   const { data: tokens = [], isFetching } = tokenData;
 
-  const selectedToken = tokens.find(({ tokenID }) => tokenID === filters.tokenID);
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
     clearTimeout(timeout.current);
