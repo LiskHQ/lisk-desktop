@@ -53,7 +53,7 @@ const TransactionPriority = ({
   const displayedFees = composedFees
     .filter((fee) => !fee?.isHidden)
     .reduce((acc, curr) => ({ ...acc, [curr.title]: true }), {});
-
+  console.log('>>>>', tokenRelevantPriorities);
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} ${className} transaction-priority`}>
       <div className={`${styles.col}`}>
@@ -74,7 +74,7 @@ const TransactionPriority = ({
               priority.title = priority.value === 0 ? 'Normal' : 'Low';
             } else if (index === 3) {
               // Custom fee option
-              disabled = priority.value === 0 && !loadError;
+              disabled = false;
             } else {
               // Medium and high fee option
               disabled = priority.value === 0 || loadError;
