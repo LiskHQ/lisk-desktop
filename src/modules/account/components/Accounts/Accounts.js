@@ -13,7 +13,7 @@ const Accounts = () => {
   const [currentApplication] = useCurrentApplication();
 
   const networkSupportedTokens = useNetworkSupportedTokens(currentApplication);
-  const tokenID = networkSupportedTokens?.data?.[0]?.tokenID;
+  const tokenID = networkSupportedTokens.data?.[0]?.tokenID;
   const { data: tokenSummary } = useTokenSummary();
   const { filters, setFilter } = useFilter({ tokenID });
 

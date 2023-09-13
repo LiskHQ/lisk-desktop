@@ -12,8 +12,8 @@ const Overview = ({ tokenData, filters, setFilter }) => {
   const timeout = useRef();
   const [search, setSearch] = useState('');
   const { data: tokens = [], isFetching } = tokenData;
-  const selectedToken = tokens.find(({ tokenID }) => tokenID === filters.tokenID);
 
+  const selectedToken = tokens.find(({ tokenID }) => tokenID === filters.tokenID);
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
     clearTimeout(timeout.current);
