@@ -127,7 +127,7 @@ const FeesViewer = ({
             <span>{typeof value === 'object' ? value?.value : value}</span>
             {isCustom && showEditIcon && title === 'Transaction' && <Icon name="edit" />}
             {title === 'Transaction' && components.length !== 0 && (
-              <Tooltip position="top left">
+              <Tooltip className={styles.tooltip} position="top left">
                 <div className={styles.feesBreakdownRow}>
                   <p>{t('Fee breakdown')}</p>
                   {components.map(({ type, value: feeValueInfo, feeToken }, index) => (

@@ -126,6 +126,10 @@
         & button {
           cursor: pointer;
         }
+
+        & .tooltip {
+          padding-top: 5px;
+        }
       }
     }
   }

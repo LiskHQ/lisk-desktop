@@ -25,7 +25,7 @@ const TransactionPriority = ({
   composedFees,
   customFee,
   minRequiredBalance,
-  formProps
+  formProps,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState();
@@ -75,7 +75,7 @@ const TransactionPriority = ({
               priority.title = priority.value === 0 ? 'Normal' : 'Low';
             } else if (index === 3) {
               // Custom fee option
-              disabled = false;
+              disabled = !formProps.isFormValid;
             } else {
               // Medium and high fee option
               disabled = priority.value === 0 || loadError;
