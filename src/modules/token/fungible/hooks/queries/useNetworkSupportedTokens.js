@@ -2,18 +2,16 @@
 import { useRef } from 'react';
 import { useAppsMetaTokens, useTokenSummary } from '@token/fungible/hooks/queries';
 import { Client } from 'src/utils/api/client';
-import { useSelector } from 'react-redux';
 
 export const useNetworkSupportedTokens = (application) => {
   const client = useRef(new Client());
   client.current.create(application?.serviceURLs?.[0]);
 
-  const currentNetwork = useSelector(({ network }) => network.name);
   const tokensSupported = useTokenSummary({ client: client.current });
   const isSupportAllTokens = tokensSupported.data?.data?.supportedTokens?.isSupportAllTokens;
 
   const appsMetaTokens = useAppsMetaTokens({
-    config: { params: { chainID: undefined, network: currentNetwork } },
+    config: { params: { chainID: undefined, network: application?.networkType } },
     client: client.current,
   });
   const isLoading = tokensSupported.isLoading || appsMetaTokens.isLoading;

@@ -16,7 +16,7 @@ const Accounts = () => {
   const { data: tokenSummary } = useTokenSummary();
   const { filters, setFilter } = useFilter({ tokenID });
 
-  const selectedToken = networkSupportedTokens.data.find(
+  const selectedToken = networkSupportedTokens.data?.find(
     (tokens) => tokens.tokenID === filters.tokenID
   );
 
