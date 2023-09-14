@@ -663,6 +663,7 @@
   "The validator is temporarily punished and their validator weight is set to 0 due to a misbehavior.": "The validator is temporarily punished and their validator weight is set to 0 due to a misbehavior.",
   "The validator weight is below 1,000 LSK meaning that the validator is not eligible to generate.": "The validator weight is below 1,000 LSK meaning that the validator is not eligible to generate.",
   "The {{inputLabel}} can't be empty": "The {{inputLabel}} can't be empty",
+  "There are no accounts to display.": "There are no accounts to display.",
   "There are no blockchain applications added yet.": "There are no blockchain applications added yet.",
   "There are no events for this account.": "There are no events for this account.",
   "There are no results matching your search term.": "There are no results matching your search term.",
