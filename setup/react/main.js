@@ -27,9 +27,7 @@ if (PRODUCTION) {
   externalLinks.init();
 }
 
-if (!PRODUCTION) {
-  window.store = store;
-}
+window.store = store;
 
 if (!PRODUCTION) {
   window.cryptography = cryptography;
