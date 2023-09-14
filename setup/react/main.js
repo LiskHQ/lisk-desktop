@@ -28,6 +28,10 @@ if (PRODUCTION) {
 }
 
 if (!PRODUCTION) {
+  window.store = store;
+}
+
+if (!PRODUCTION) {
   window.cryptography = cryptography;
 
   const whyDidYouRender = require('@welldone-software/why-did-you-render');
