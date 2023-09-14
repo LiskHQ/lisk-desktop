@@ -6,8 +6,7 @@ let browser;
 
 BeforeAll(async function () {
   browser = await playwright.chromium.launch({
-    headless: false,
-    slowMo: 200,
+    headless: true,
     args: ['--disable-web-security', '--allow-running-insecure-content'],
   });
 });
