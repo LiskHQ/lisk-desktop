@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-// import * as queries from '@token/fungible/hooks/queries';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import * as accountHooks from '@account/hooks';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
