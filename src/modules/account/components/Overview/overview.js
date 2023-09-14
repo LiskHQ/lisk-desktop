@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';

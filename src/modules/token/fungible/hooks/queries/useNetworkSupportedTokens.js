@@ -1,8 +1,8 @@
-/* eslint-disable max-statements */
 import { useRef } from 'react';
 import { useAppsMetaTokens, useTokenSummary } from '@token/fungible/hooks/queries';
 import { Client } from 'src/utils/api/client';
 
+// eslint-disable-next-line max-statements
 export const useNetworkSupportedTokens = (application) => {
   const client = useRef(new Client());
   client.current.create(application?.serviceURLs?.[0]);
