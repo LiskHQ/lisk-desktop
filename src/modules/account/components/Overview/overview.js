@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import { Input } from 'src/theme';
@@ -6,16 +6,11 @@ import Icon from '@theme/Icon';
 import { getLogo } from '@token/fungible/utils/helpers';
 import styles from '../Accounts/accounts.css';
 
-const Overview = ({ tokenData, setFilter }) => {
+const Overview = ({ tokenData, selectedToken, setFilter }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const [search, setSearch] = useState('');
-  const tokens = tokenData?.data ?? [];
-  const [selectedToken, setSelectedToken] = useState(tokens[0]);
-
-  useEffect(() => {
-    setSelectedToken(tokens[0]);
-  }, [tokenData]);
+  const { data: tokens = [], isFetching } = tokenData;
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -27,7 +22,6 @@ const Overview = ({ tokenData, setFilter }) => {
   };
 
   const onChange = (tokenInfo) => {
-    setSelectedToken(tokenInfo);
     setFilter('tokenID', tokenInfo.tokenID);
   };
 
@@ -44,6 +38,7 @@ const Overview = ({ tokenData, setFilter }) => {
           select={(selectedValue, option) => selectedValue?.tokenName === option.tokenName}
           className={styles.menuWrapper}
           popupClassName={styles.popupWrapper}
+          disabled={isFetching}
         >
           {tokens.map((tokenInfo) => (
             <MenuItem

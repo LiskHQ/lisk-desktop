@@ -1,45 +1,34 @@
-import { useMemo, useRef } from 'react';
-import { useTokenBalances, useTokenSummary } from '@token/fungible/hooks/queries';
-import { Client } from 'src/utils/api/client';
+import { useNetworkSupportedTokens, useTokenBalances } from '@token/fungible/hooks/queries';
+import { useMemo } from 'react';
 
 export const useTransferableTokens = (application) => {
-  const client = useRef(new Client());
-  client.current.create(application?.serviceURLs?.[0]);
+  const networkSupportedTokens = useNetworkSupportedTokens(application);
+  const tokenBalances = useTokenBalances({
+    options: { enabled: networkSupportedTokens.isFetched },
+  });
 
-  const {
-    data: { data: myTokens = [] } = {},
-    isSuccess: isTokensSuccess,
-    isLoading: isTokenLoading,
-  } = useTokenBalances();
-  const {
-    data: { data: { supportedTokens } = {} } = {},
-    isSuccess: isSupportedSuccess,
-    isLoading: isSupportLoading,
-  } = useTokenSummary({ client: client.current });
-  return useMemo(() => {
-    const isSuccess = isTokensSuccess && isSupportedSuccess;
-    const isLoading = isTokenLoading || isSupportLoading;
-    const isSupportAllTokens = supportedTokens?.isSupportAllTokens;
-    const exactTokensSupported = !isSuccess
-      ? []
-      : myTokens.filter((token) =>
-          supportedTokens?.exactTokenIDs.find((tokenID) => tokenID === token.tokenID)
-        );
-    const patternTokensSupported = !isSuccess
-      ? []
-      : supportedTokens?.patternTokenIDs
-          .map((pattern) => {
-            const chainID = pattern.slice(0, 8);
-            return myTokens.filter((token) => chainID === token.tokenID.slice(0, 8));
-          })
-          .flatMap((res) => res);
-    const supportedAppTokens = [...(patternTokensSupported || []), ...exactTokensSupported];
-    const tokens = isSupportAllTokens ? myTokens : Array.from(new Set(supportedAppTokens));
+  const transferrableTokens =
+    tokenBalances.data?.data?.filter(({ tokenID }) =>
+      networkSupportedTokens.data.find(
+        (networkSupportedToken) => networkSupportedToken.tokenID === tokenID
+      )
+    ) || [];
 
-    return {
-      isLoading,
-      isSuccess,
-      data: isSuccess ? tokens : [],
-    };
-  }, [isTokensSuccess, isSupportedSuccess, isTokenLoading, isSupportLoading, application]);
+  const nonNativeTokens = transferrableTokens.filter(
+    ({ chainID }) => chainID !== application.chainID
+  );
+  const nativeToken = transferrableTokens.filter(({ chainID }) => chainID === application.chainID);
+  const resultTokens = useMemo(
+    () => nativeToken.concat(nonNativeTokens),
+    [networkSupportedTokens.isFetched, tokenBalances.isFetched, application]
+  );
+
+  return {
+    isLoading: tokenBalances.isLoading || networkSupportedTokens.isLoading,
+    isSuccess:
+      tokenBalances.isSuccess &&
+      !networkSupportedTokens.isError &&
+      !networkSupportedTokens.isLoading,
+    data: resultTokens,
+  };
 };
