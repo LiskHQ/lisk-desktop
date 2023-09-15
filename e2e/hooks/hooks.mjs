@@ -18,8 +18,8 @@ Before(async function () {
   await newPage.goto(`${process.env.PW_BASE_URL}`);
 
   await newPage.evaluate(() => {
-    const networkName = 'local_network';
-    const serviceUrl = 'http://127.0.0.1:9901';
+    const networkName = 'devnet';
+    const serviceUrl = 'http://devnet-service.liskdev.net:9901';
 
     const customNetwork = {
       serviceUrl: serviceUrl,

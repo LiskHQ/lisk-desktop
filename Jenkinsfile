@@ -67,7 +67,7 @@ pipeline {
 					// cypress
 					"end-to-end": {
 						dir('lisk-service') {
-							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service/tree/v0.7.0-rc.0']]])
+							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
 						}
 						nvm(getNodejsVersion()) {
 							withEnv(["REACT_APP_MSW=true"]) {
