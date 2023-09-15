@@ -9,7 +9,7 @@ pipeline {
 	}
 	parameters {
 		string(name: 'CORE_VERSION', defaultValue: '4.0.0-beta.4')
-		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.7.0-beta.3')
+		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.7.0-rc.0')
 	}
 	stages {
 		stage('install') {
@@ -67,7 +67,7 @@ pipeline {
 					// cypress
 					"end-to-end": {
 						dir('lisk-service') {
-							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service/tree/v0.7.0-rc.0']]])
+							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
 						}
 						nvm(getNodejsVersion()) {
 							withEnv(["REACT_APP_MSW=true"]) {
