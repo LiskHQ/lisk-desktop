@@ -87,7 +87,7 @@ pipeline {
 									make -C lisk-service up
 
 									# wait for service to be up and running
-									sleep 10
+									sleep 20
 									set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
 									curl --verbose http://127.0.0.1:9901/api/v3/network/status
 									curl --verbose http://127.0.0.1:9901/api/v3/blocks
