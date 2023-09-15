@@ -10,7 +10,7 @@ import WarnPunishedValidator from './WarnPunishedValidator';
 const getPunishmentDetails = (punishedTimestamp, pomHeight, currentHeight) => {
   const startDate = new Date(punishedTimestamp * 1000);
   const punishmentStartDate = moment(startDate).format('MM.DD.YYYY');
-  const daysLeft = Math.ceil((pomHeight.end - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
+  const daysLeft = Math.ceil((pomHeight?.end - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
 
   return { daysLeft, punishmentStartDate };
 };
@@ -22,7 +22,7 @@ const Warning = ({ stake, ...props }) => {
   const {
     data: { height: currentHeight },
   } = useLatestBlock();
-  const { data: blocksData } = useBlocks({ config: { params: { height: pomHeight.start } } });
+  const { data: blocksData } = useBlocks({ config: { params: { height: pomHeight?.start } } });
 
   const { daysLeft, punishmentStartDate } = getPunishmentDetails(
     blocksData?.data[0]?.timestamp,
