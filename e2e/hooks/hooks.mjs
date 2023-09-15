@@ -34,12 +34,12 @@ Before(async function () {
         customNetworks: [customNetwork],
       },
     });
-    /*     window.store.dispatch({
+    window.store.dispatch({
       type: 'SETTINGS_UPDATED',
       data: {
         mainChainNetwork: customNetwork,
       },
-    }); */
+    });
   });
 
   fixture.page = newPage;
