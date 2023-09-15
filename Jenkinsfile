@@ -67,7 +67,7 @@ pipeline {
 					// cypress
 					"end-to-end": {
 						dir('lisk-service') {
-							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
+							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service/tree/v0.7.0-rc.0']]])
 						}
 						nvm(getNodejsVersion()) {
 							withEnv(["REACT_APP_MSW=true"]) {
@@ -92,7 +92,6 @@ pipeline {
 									curl --verbose http://127.0.0.1:9901/api/v3/network/status
 									curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
-									sleep 10
 									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
 									yarn run cucumber:playwright:open
 									'''
