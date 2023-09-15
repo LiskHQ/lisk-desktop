@@ -87,11 +87,12 @@ pipeline {
 									make -C lisk-service up
 
 									# wait for service to be up and running
-									sleep 20
+									sleep 10
 									set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
 									curl --verbose http://127.0.0.1:9901/api/v3/network/status
 									curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
+									sleep 10
 									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
 									yarn run cucumber:playwright:open
 									'''
