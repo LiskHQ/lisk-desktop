@@ -1,6 +1,7 @@
 Feature: AddAccount
   Background: Navigate to add account options
     Given I go to page "wallet"
+    And I wait for "2 seconds"
     Then I should see "Welcome to Lisk"
     And I should see "If you are new to the Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”."
     Given I click on a button with text "Add account"
