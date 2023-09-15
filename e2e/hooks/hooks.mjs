@@ -16,7 +16,7 @@ Before(async function () {
   const newPage = await context.newPage();
   await newPage.goto(`${process.env.PW_BASE_URL}`);
 
-  await newPage.evaluate(() => {
+/*   await newPage.evaluate(() => {
     const networkName = 'local_network';
     const serviceUrl = 'http://127.0.0.1:9901';
 
@@ -40,7 +40,7 @@ Before(async function () {
         mainChainNetwork: customNetwork,
       },
     });
-  });
+  }); */
 
   fixture.page = newPage;
 });
