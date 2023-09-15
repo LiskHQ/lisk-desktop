@@ -16,7 +16,7 @@ const RequestWrapper = ({ t, children, copyLabel, copyValue, title, className, d
           <CopyToClipboard
             className={`${styles.copyButton} copy-button`}
             Container={PrimaryButton}
-            containerProps={{ size: 'l', disabled: true }}
+            containerProps={{ size: 'l', disabled }}
             value={copyValue}
             text={copyLabel}
             copyClassName={styles.copyIcon}

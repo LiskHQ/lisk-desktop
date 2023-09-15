@@ -4,10 +4,6 @@ import { expect } from '@playwright/test';
 import routes from '../fixtures/routes.mjs';
 import { fixture } from '../fixtures/page.mjs';
 
-Given('I navigate to page {string}', { timeout: 160 * 1000 }, async function (pageName) {
-  await this.openUrl(routes[pageName]);
-});
-
 Then('I go to page {string}', async function (pageName) {
   await fixture.page.goto(`${process.env.PW_BASE_URL}${pageName}`);
 });
@@ -43,6 +39,11 @@ Given(
 
 Given('I click on a button with text {string}', async function (buttonText) {
   await fixture.page.getByText(buttonText, { exact: true }).click();
+});
+
+Then('Clipboard should contain {string}', async function (clipboardText) {
+  const text = await fixture.page.evaluate("navigator.clipboard.readText()");
+  expect(text).toContain(clipboardText);
 });
 
 Given('I click on a button with testId {string}', async function (testId) {
@@ -85,6 +86,10 @@ Then('I should be redirected to route: {string}', { timeout: 120 * 1000 }, async
 
 Then('button with text {string} should be disabled', async function (textContent) {
   await expect(fixture.page.getByText(textContent, { exact: true })).toBeDisabled();
+});
+
+Then('button with text {string} should be enabled', async function (textContent) {
+  await expect(fixture.page.getByText(textContent, { exact: true })).not.toBeDisabled();
 });
 
 // eslint-disable-next-line max-statements
