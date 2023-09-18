@@ -452,7 +452,7 @@
   "Please click on “Switch to signing account” ": "Please click on “Switch to signing account” ",
   "Please confirm the transaction on your {{deviceModel}}": "Please confirm the transaction on your {{deviceModel}}",
   "Please drag and drop the JSON file from your device.": "Please drag and drop the JSON file from your device.",
-  "Please drop the JSON here": "Please drop the JSON here",
+  "Please drop the JSON here.": "Please drop the JSON here.",
   "Please enter a valid blockchain app URI.": "Please enter a valid blockchain app URI.",
   "Please enter a valid bls key value": "Please enter a valid bls key value",
   "Please enter a valid generator key value": "Please enter a valid generator key value",
