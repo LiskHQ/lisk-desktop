@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
-export default function useFilter(defaultFilters = {}) {
-  const [filters, setFilters] = useState(defaultFilters);
+export default function useFilter(inputFilters = {}) {
+  const [filters, setFilters] = useState(inputFilters);
 
   const clearFilters = useCallback(
     (params) => {
@@ -9,14 +9,14 @@ export default function useFilter(defaultFilters = {}) {
         const copiedFilters = { ...filters };
 
         params.forEach((param) => {
-          copiedFilters[param] = defaultFilters[param];
+          copiedFilters[param] = inputFilters[param];
         });
 
         setFilters(copiedFilters);
         return;
       }
 
-      setFilters(defaultFilters);
+      setFilters(inputFilters);
     },
     [filters]
   );
@@ -41,6 +41,14 @@ export default function useFilter(defaultFilters = {}) {
     },
     [filters]
   );
+
+  useEffect(() => {
+    const areFiltersChanged =
+      Object.entries(filters).sort().toString() !== Object.entries(inputFilters).sort().toString();
+    if (areFiltersChanged) {
+      setFilters(inputFilters);
+    }
+  }, [inputFilters]);
 
   return {
     filters,
