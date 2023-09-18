@@ -5,7 +5,7 @@ import { requestTokenSchema } from './validationSchema';
 const PERMISSION_WHITE_LIST = ['clipboard-read', 'notifications', 'openExternal'];
 export const WHITE_LISTED_DEEP_LINKS = [
   {
-    pathRegex: /^wallet(\/)$/,
+    pathRegex: /^wallet(\/)?$/,
     validationSchema: requestTokenSchema,
   },
 ];
