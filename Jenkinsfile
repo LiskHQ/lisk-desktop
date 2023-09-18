@@ -109,7 +109,7 @@ pipeline {
 			}
 			post {
 				failure {
-					archiveArtifacts artifacts: 'e2e/screenshots/', allowEmptyArchive: true
+					archiveArtifacts artifacts: 'e2e/assets/screenshots/', allowEmptyArchive: true
 				}
 				always {
 					sh '''

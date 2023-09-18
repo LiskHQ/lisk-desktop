@@ -5,7 +5,6 @@ import { fixture } from '../fixtures/page.mjs';
 
 Then(
   '{string} should be selected in {string} dropdown',
-  { timeout: 500 },
   async function (selectedText, dropdownTitle) {
     const title = fixture.page
       .getByText(dropdownTitle, { exact: true })

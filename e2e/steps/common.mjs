@@ -10,7 +10,6 @@ Then('I go to page {string}', async function (pageName) {
 
 Given(
   'I add an account with passphrase {string} password {string} name {string}',
-  { timeout: 160 * 1000 },
   async function (passphrase, password, name) {
     const returnUrl = fixture.page.url();
     await fixture.page.goto(`${process.env.PW_BASE_URL}${routes.wallet}`);
@@ -80,7 +79,7 @@ Then('I should see an image with alt text {string}', async function (altText) {
   await expect(fixture.page.getByAltText(altText)).toBeVisible();
 });
 
-Then('I should be redirected to route: {string}', { timeout: 120 * 1000 }, async function (route) {
+Then('I should be redirected to route: {string}', async function (route) {
   await expect(fixture.page.url()).toBe(`${process.env.PW_BASE_URL}/${route}`);
 });
 
@@ -140,7 +139,7 @@ Given('I switch to network {string}', async function (networkName) {
   if (!(await fixture.page.getByText('Add application'))) {
     await fixture.page.getByTestId('network-application-trigger').click();
   }
-  await expect(fixture.page.getByTestId('spinner')).not.toBeVisible({ timeout: 10000 });
+  await expect(fixture.page.getByTestId('spinner')).not.toBeVisible();
   await fixture.page.getByTestId('selected-menu-item').click();
   await fixture.page.getByText(networkName, { exact: true }).click();
 });
@@ -152,14 +151,12 @@ Given('I go back to the previous page', async function () {
 Given(
   'I add a custom network with name {string} and serviceUrl {string}',
   async function (networkName, serviceUrl) {
-    await fixture.page.getByTestId('network-application-trigger').click({ timeout: 10000 });
-    await fixture.page.getByText('Add network').click({ timeout: 10000 });
+    await fixture.page.getByTestId('network-application-trigger').click();
+    await fixture.page.getByText('Add network').click();
 
-    await fixture.page.getByTestId('name').fill(networkName, { timeout: 10000 });
-    await fixture.page.getByTestId('serviceUrl').fill(serviceUrl, { timeout: 10000 });
-    await expect(await fixture.page.getByTestId('add-network-button')).not.toBeDisabled({
-      timeout: 10000,
-    });
-    await fixture.page.getByTestId('add-network-button').click({ timeout: 10000 });
+    await fixture.page.getByTestId('name').fill(networkName);
+    await fixture.page.getByTestId('serviceUrl').fill(serviceUrl);
+    await expect(await fixture.page.getByTestId('add-network-button')).not.toBeDisabled();
+    await fixture.page.getByTestId('add-network-button').click();
   }
 );
