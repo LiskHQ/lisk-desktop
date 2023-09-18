@@ -12,7 +12,7 @@ BeforeAll(async function () {
   });
 });
 
-Before(async function () {
+Before({ timeout: 12000 }, async function () {
   context = await browser.newContext({ permissions: ['clipboard-read', 'clipboard-write'] });
   const newPage = await context.newPage();
   await newPage.goto(`${process.env.PW_BASE_URL}`);
@@ -26,9 +26,6 @@ Before(async function () {
   await newPage.getByTestId('serviceUrl').fill(serviceUrl, { timeout: 10000 });
   await newPage.getByTestId('add-network-button').click({ timeout: 10000 });
 
-  if (!(await newPage.getByText('Add application'))) {
-    await newPage.getByTestId('network-application-trigger').click();
-  }
   await newPage.getByTestId('selected-menu-item').click();
   await newPage.getByText(networkName, { exact: true }).click();
 
