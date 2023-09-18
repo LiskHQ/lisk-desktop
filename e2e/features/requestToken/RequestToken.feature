@@ -2,6 +2,10 @@ Feature: Request Token
   Background: Add an account and navigate to wallet
     Given I add an account with passphrase "peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" password "Password1$" name 'test_acc'
     Then I go to page "wallet"
+    And I wait for "2 seconds"
+    And I add a custom network with name "devnet" and serviceUrl "http://devnet-service.liskdev.net:9901"
+    And I switch to network "devnet"
+    And I go back to the previous page
 
   Scenario: Request token should generate a copy link
     Given I click on a button with text "Request"

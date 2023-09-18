@@ -1,7 +1,10 @@
 Feature: AddAccount
   Background: Navigate to add account options
     Given I go to page "wallet"
-    And I wait for "4 seconds"
+    And I wait for "2 seconds"
+    And I add a custom network with name "devnet" and serviceUrl "http://devnet-service.liskdev.net:9901"
+    And I switch to network "devnet"
+    And I go back to the previous page
     Then I should see "Welcome to Lisk"
     And I should see "If you are new to the Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”."
     Given I click on a button with text "Add account"
