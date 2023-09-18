@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+/* eslint-disable complexity */
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import Input from 'src/theme/Input/Input';
 import Icon from 'src/theme/Icon';
 import Spinner from 'src/theme/Spinner';
 import Tooltip from 'src/theme/Tooltip';
+import { keyCodes } from 'src/utils/keyCodes';
 import { validateAmount } from 'src/utils/validators';
 import styles from './TransactionPriority.css';
 
@@ -45,42 +47,74 @@ const FeesViewer = ({
   isCustom,
   onInputFee,
   feeValue,
-  minFee,
+  // minFee,
   fees,
   setCustomFee,
   customFee,
   token,
   minRequiredBalance,
+  computedMinimumFees,
 }) => {
   const { t } = useTranslation();
-  const [showEditIcon, setShowEditIcon] = useState(false);
+  const [showEditIcon, setShowEditIcon] = useState(true);
   const composedFeeList = fees.filter(({ isHidden }) => !isHidden);
 
-  const onInputFocus = (e) => {
-    e.preventDefault();
-    if (!feeValue) onInputFee(minFee);
+  // const onInputFocus = (e, label) => {
+  //   e.preventDefault();
+
+  //   Object.keys(computedMinimumFees);
+
+  //   if (!feeValue[label])
+  //     onInputFee({ [label]: convertFromBaseDenom(computedMinimumFees[label], token) });
+  // };
+
+  useEffect(() => {
+    Object.keys(computedMinimumFees).forEach((feeLabel) => {
+      if (!customFee?.value?.[feeLabel]) {
+        onInputFee((state) => ({
+          ...state,
+          [feeLabel]: convertFromBaseDenom(computedMinimumFees[feeLabel], token),
+        }));
+      }
+    });
+  }, [computedMinimumFees, token]);
+
+  const onInputKeyUp = (e) => {
+    if (e.keyCode !== keyCodes.enter) return;
+    setShowEditIcon(true);
   };
 
   const onInputBlur = (e) => {
     e.preventDefault();
-    setShowEditIcon(true);
+
+    setTimeout(() => setShowEditIcon(true), 100);
   };
 
-  const onInputChange = (e) => {
+  const onInputChange = (e, label) => {
     e.preventDefault();
     const customFeeInput = e.target.value;
-    onInputFee(customFeeInput);
+
     const customFeeStatus = getCustomFeeStatus({
       customFeeInput,
-      minFee,
       minRequiredBalance,
       token,
+      minFee: computedMinimumFees[label],
     });
-    setCustomFee({
-      value: !customFeeStatus ? customFeeInput || minFee : minFee,
-      feedback: customFeeStatus,
-      error: !!customFeeStatus,
-    });
+    const minFeeFromBaseDenom = convertFromBaseDenom(computedMinimumFees[label], token);
+
+    onInputFee((minFees) => ({
+      ...minFees,
+      [label]: !customFeeStatus ? customFeeInput || minFeeFromBaseDenom : minFeeFromBaseDenom,
+    }));
+
+    setCustomFee((state) => ({
+      value: {
+        ...state.value,
+        [label]: !customFeeStatus ? customFeeInput || minFeeFromBaseDenom : minFeeFromBaseDenom,
+      },
+      feedback: { ...state.feedback, [label]: customFeeStatus },
+      error: { ...state.error, [label]: !!customFeeStatus },
+    }));
   };
 
   const onClickCustomEdit = (e) => {
@@ -97,36 +131,36 @@ const FeesViewer = ({
     );
   }
 
-  if (isCustom && !showEditIcon) {
-    return (
-      <Input
-        className="custom-fee-input"
-        autoFocus
-        type="text"
-        size="m"
-        value={feeValue}
-        onChange={onInputChange}
-        onBlur={onInputBlur}
-        onFocus={onInputFocus}
-        status={
-          getCustomFeeStatus({ customFeeInput: feeValue, minFee, minRequiredBalance, token })
-            ? 'error'
-            : 'ok'
-        }
-        feedback={customFee?.feedback}
-      />
-    );
-  }
-
+  console.log('::::', feeValue, isCustom, showEditIcon);
   return (
     <div className={styles.feesListWrapper}>
-      {composedFeeList.map(({ title, value, components }) => (
+      {composedFeeList.map(({ title, value, components, label }) => (
         <div className={styles.feeRow} key={title}>
           <span>{title}</span>
-          <span className={`${styles.value} fee-value-${title}`} onClick={onClickCustomEdit}>
-            <span>{typeof value === 'object' ? value?.value : value}</span>
-            {isCustom && showEditIcon && title === 'Transaction' && <Icon name="edit" />}
-            {title === 'Transaction' && components.length !== 0 && (
+          <span className={`${styles.value} fee-value-${title}`}>
+            {isCustom && !showEditIcon ? (
+              <div className={styles.feeInput}>
+                <Input
+                  className="custom-fee-input"
+                  type="text"
+                  size="xs"
+                  value={feeValue[label]}
+                  onChange={(e) => onInputChange(e, label)}
+                  onKeyUp={onInputKeyUp}
+                  onBlur={onInputBlur}
+                  // onFocus={(e) => onInputFocus(e, label)}
+                  status={customFee?.error?.[label] ? 'error' : 'ok'}
+                  feedback={customFee?.feedback?.[label]}
+                />
+              </div>
+            ) : (
+              <span>{typeof value === 'object' ? value?.value : value}</span>
+            )}
+            {console.log(':::::', value)}
+            {isCustom && showEditIcon && title === 'Transaction' && (
+              <Icon onClick={onClickCustomEdit} name="edit" />
+            )}
+            {title === 'Transaction' && components.length !== 0 && !isCustom && (
               <Tooltip className={styles.tooltip} position="top left">
                 <div className={styles.feesBreakdownRow}>
                   <p>{t('Fee breakdown')}</p>

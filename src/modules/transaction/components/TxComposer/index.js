@@ -51,7 +51,7 @@ const TxComposer = ({
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
   const { fields } = formProps;
-  const [customFee, setCustomFee] = useState();
+  const [customFee, setCustomFee] = useState({});
   const [feedback, setFeedBack] = useState(formProps.feedback);
   const [isRunningDryRun, setIsRunningDryRun] = useState(false);
   const [
@@ -137,17 +137,24 @@ const TxComposer = ({
   useEffect(() => {
     setFeedBack(formProps.feedback);
   }, [formProps.feedback]);
-
+  console.log(
+    '===== custome fee:',
+    customFee,
+    Number(convertFromBaseDenom(transactionFee, formProps.fields.token))
+  );
   const minRequiredBalance =
     BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
   const { recipientChain, sendingChain } = formProps;
   const composedFees = [
     {
       title: 'Transaction',
+      label: 'transactionFee',
       value: getFeeStatus({
         fee: Number(convertFromBaseDenom(transactionFee, formProps.fields.token)),
         tokenSymbol: feeToken?.symbol,
-        customFee,
+        customFee: customFee.value?.transactionFee
+          ? { value: customFee.value?.transactionFee }
+          : null,
       }),
       components: components.map((component) => ({
         ...component,
@@ -156,18 +163,19 @@ const TxComposer = ({
     },
     {
       title: 'Message',
+      label: 'messageFee',
       value: getFeeStatus({
         fee: Number(
           convertFromBaseDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
         ),
         tokenSymbol: messageFeeToken?.symbol,
-        customFee,
+        customFee: customFee.value?.transactionFee ? { value: customFee.value?.messageFee } : null,
       }),
       isHidden: !transactionJSON.params.messageFee,
       components: [],
     },
   ];
-
+  console.log('>>>>> composed fees:: ', composedFees);
   formProps.composedFees = composedFees;
   transactionJSON.fee = transactionFee;
 
@@ -216,6 +224,7 @@ const TxComposer = ({
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
         minRequiredBalance={minRequiredBalance}
+        computedMinimumFees={{ transactionFee: minimumFee, messageFee }}
         formProps={formProps}
       />
       <Feedback

@@ -117,6 +117,7 @@
 
         & > img {
           margin-left: 10px;
+          cursor: pointer;
         }
 
         & > span:first-child {
@@ -129,6 +130,10 @@
 
         & .tooltip {
           padding-top: 5px;
+        }
+
+        & .feeInput {
+          margin-top: -5px;
         }
       }
     }
@@ -175,7 +180,7 @@
     }
   }
 
-  & > .feeRow span:first-child {
+  & > .feeRow > span:first-child {
     font-size: 14px;
     font-weight: 400;
     color: var(--color-slate-gray);

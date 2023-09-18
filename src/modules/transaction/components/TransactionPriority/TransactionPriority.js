@@ -14,7 +14,6 @@ const TransactionPriority = ({
   t,
   token,
   moduleCommand,
-  minFee,
   setCustomFee,
   priorityOptions,
   selectedPriority,
@@ -26,18 +25,18 @@ const TransactionPriority = ({
   customFee,
   minRequiredBalance,
   formProps,
+  computedMinimumFees,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const [inputValue, setInputValue] = useState();
-
+  const [inputValue, setInputValue] = useState({});
   const maxFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
 
   const onClickPriority = (e) => {
     e.preventDefault();
     const selectedIndex = Number(e.target.value);
     if (setCustomFee && selectedIndex !== CUSTOM_FEE_INDEX) {
-      setCustomFee(undefined);
-      setInputValue(undefined);
+      setCustomFee({});
+      setInputValue({});
     }
     setSelectedPriority({ item: priorityOptions[selectedIndex], index: selectedIndex });
     if (showEditIcon) {
@@ -49,12 +48,12 @@ const TransactionPriority = ({
     () => getRelevantPriorityOptions(priorityOptions),
     [priorityOptions, token]
   );
-
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
+
   const displayedFees = composedFees
     .filter((fee) => !fee?.isHidden)
     .reduce((acc, curr) => ({ ...acc, [curr.title]: true }), {});
-  console.log('>>>>', tokenRelevantPriorities);
+
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} ${className} transaction-priority`}>
       <div className={`${styles.col}`}>
@@ -136,7 +135,7 @@ const TransactionPriority = ({
                       {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose
                       one of the provided transaction priorities.
                     `,
-                  { minFee, tokenSymbol: token?.symbol }
+                  { minFee: computedMinimumFees.transactionFee, tokenSymbol: token?.symbol }
                 )}
               </p>
             </Tooltip>
@@ -148,12 +147,13 @@ const TransactionPriority = ({
           onInputFee={setInputValue}
           feeValue={inputValue}
           maxFee={maxFee}
-          minFee={minFee}
+          // minFee={minFee}
           fees={composedFees}
           setCustomFee={setCustomFee}
           customFee={customFee}
           token={token}
           minRequiredBalance={minRequiredBalance}
+          computedMinimumFees={computedMinimumFees}
         />
       </div>
     </div>
