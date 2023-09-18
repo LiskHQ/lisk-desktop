@@ -12,8 +12,11 @@ BeforeAll(async function () {
   });
 });
 
-Before({ timeout: 12000 }, async function () {
-  context = await browser.newContext({ permissions: ['clipboard-read', 'clipboard-write'] });
+Before(async function () {
+  context = await browser.newContext({
+    ignoreHTTPSErrors: true,
+    permissions: ['clipboard-read', 'clipboard-write'],
+  });
   const newPage = await context.newPage();
   await newPage.goto(`${process.env.PW_BASE_URL}`);
 

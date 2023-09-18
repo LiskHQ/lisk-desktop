@@ -42,7 +42,7 @@ Given('I click on a button with text {string}', async function (buttonText) {
 });
 
 Then('Clipboard should contain {string}', async function (clipboardText) {
-  const text = await fixture.page.evaluate("navigator.clipboard.readText()");
+  const text = await fixture.page.evaluate('navigator.clipboard.readText()');
   expect(text).toContain(clipboardText);
 });
 
