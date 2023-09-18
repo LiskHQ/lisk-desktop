@@ -7,7 +7,7 @@ let context;
 
 BeforeAll(async function () {
   browser = await playwright.chromium.launch({
-    headless: true,
+    headless: false,
     args: ['--disable-web-security', '--allow-running-insecure-content'],
   });
 });
