@@ -73,9 +73,7 @@ const handleProtocol = () => {
     event.preventDefault();
 
     if (canExecuteDeepLinking(url)) {
-      if (process.platform !== 'darwin' || !app.hasSingleInstanceLock()) {
-        win.browser?.show();
-      }
+      win.browser?.show();
       win.send({ event: IPC_OPEN_URL, value: url });
     }
   });
@@ -119,16 +117,11 @@ if (!isSingleLock) {
   app.quit();
 } else {
   app.on('second-instance', (argv, commandLine) => {
-    const url = commandLine[2].replace('lisk://', '/');
+    const url = commandLine.pop();
     if (win.browser) {
-      if (process.platform !== 'darwin') {
-        win.send({ event: IPC_OPEN_URL, value: url || '/' });
-      }
       if (win.browser.isMinimized()) win.browser.restore();
       win.browser.focus();
-      app.whenReady().then(() => {
-        win.browser.loadURL(url);
-      });
+      win.send({ event: IPC_OPEN_URL, value: url || '/' });
     }
   });
 }
