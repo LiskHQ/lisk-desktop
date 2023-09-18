@@ -3,9 +3,12 @@ import { fireEvent, waitFor } from '@testing-library/dom';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import accounts from '@tests/constants/wallets';
+import { useApplicationManagement } from '@blockchainApplication/manage/hooks';
+import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import Request from './request';
 
 const mockCurrentAccount = mockSavedAccounts[0];
+const mockSetApplication = jest.fn();
 jest.mock(
   'src/modules/common/components/converter',
   () =>
@@ -16,6 +19,7 @@ jest.mock(
 jest.mock('@account/hooks/useCurrentAccount.js', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
 }));
+jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 
 describe('Request', () => {
   let wrapper;
@@ -24,6 +28,13 @@ describe('Request', () => {
     address: accounts.genesis.summary.address,
     t: (v) => v,
   };
+
+  useApplicationManagement.mockReturnValue({
+    setApplication: mockSetApplication,
+    applications: mockManagedApplications.map((app, index) =>
+      index === 0 ? { ...app, chainID: '00010000' } : app
+    ),
+  });
 
   it('should render modal properly', async () => {
     wrapper = renderWithRouterAndQueryClient(Request, props);

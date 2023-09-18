@@ -10,7 +10,11 @@ const config = {
 
 const mockSetFilter = jest.fn();
 
-const props = { setFilter: mockSetFilter, tokenData: mockAppsTokens };
+const props = {
+  setFilter: mockSetFilter,
+  selectedToken: mockAppsTokens.data[2],
+  tokenData: { isFetched: true, data: mockAppsTokens.data },
+};
 
 describe('Overview', () => {
   beforeEach(() => mockSetFilter.mockClear());
@@ -19,13 +23,15 @@ describe('Overview', () => {
     smartRender(Overview, props, config);
 
     expect(screen.getByText('All accounts')).toBeInTheDocument();
-    expect(screen.getByTestId('selected-menu-item')).toHaveTextContent('LSK');
+    expect(screen.getByTestId('selected-menu-item')).toHaveTextContent(
+      mockAppsTokens.data[2].symbol
+    );
     expect(screen.getAllByTestId('dropdown-options')).toHaveLength(6);
     expect(screen.getByPlaceholderText('Search by name or address')).toBeInTheDocument();
   });
 
   it('does not render dropdown options if data is unavailable', () => {
-    const updatedProps = { ...props, tokenData: undefined };
+    const updatedProps = { ...props, tokenData: { data: [] } };
     smartRender(Overview, updatedProps, config);
 
     expect(screen.getByTestId('selected-menu-item')).not.toHaveTextContent('LSK');
@@ -38,6 +44,13 @@ describe('Overview', () => {
     fireEvent.click(screen.getAllByTestId('dropdown-options')[2]);
     expect(mockSetFilter).toHaveBeenCalledTimes(1);
     expect(mockSetFilter).toHaveBeenCalledWith('tokenID', mockAppsTokens.data[1].tokenID);
+  });
+
+  it('Should not select a default token', async () => {
+    props.tokenData.data = undefined;
+    smartRender(Overview, props, config);
+
+    expect(screen.getByTestId('selected-menu-item')).not.toHaveTextContent('LSK');
   });
 
   it('updates the filter when the search input is changed', async () => {
