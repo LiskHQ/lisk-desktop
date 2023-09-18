@@ -23,7 +23,13 @@ Before(async function () {
   fixture.page = newPage;
 });
 
-After(async function () {
+After(async function ({ pickle }) {
+  const img = await fixture.page.screenshot({
+    path: `./test-results/screenshots/${pickle.name}.png`,
+    type: 'png',
+  });
+  await this.attach(img, 'image/png');
+
   await fixture.page.close();
   await context.close();
 });
