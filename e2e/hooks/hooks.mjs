@@ -17,31 +17,20 @@ Before(async function () {
   const newPage = await context.newPage();
   await newPage.goto(`${process.env.PW_BASE_URL}`);
 
-  await newPage.evaluate(() => {
-    const networkName = 'local_network';
-    const serviceUrl = 'http://devnet-service.liskdev.net:9901';
+  const networkName = 'devnet';
+  const serviceUrl = 'http://devnet-service.liskdev.net:9901';
+  await newPage.getByTestId('network-application-trigger').click({ timeout: 10000 });
+  await newPage.getByText('Add network').click({ timeout: 10000 });
 
-    const customNetwork = {
-      serviceUrl: serviceUrl,
-      wsServiceUrl: serviceUrl,
-      isAvailable: true,
-      name: networkName,
-      label: networkName,
-    };
+  await newPage.getByTestId('name').fill(networkName, { timeout: 10000 });
+  await newPage.getByTestId('serviceUrl').fill(serviceUrl, { timeout: 10000 });
+  await newPage.getByTestId('add-network-button').click({ timeout: 10000 });
 
-    window.store.dispatch({
-      type: 'SETTINGS_UPDATED',
-      data: {
-        customNetworks: [customNetwork],
-      },
-    });
-    window.store.dispatch({
-      type: 'SETTINGS_UPDATED',
-      data: {
-        mainChainNetwork: customNetwork,
-      },
-    });
-  });
+  if (!(await newPage.getByText('Add application'))) {
+    await newPage.getByTestId('network-application-trigger').click();
+  }
+  await newPage.getByTestId('selected-menu-item').click();
+  await newPage.getByText(networkName, { exact: true }).click();
 
   fixture.page = newPage;
 });
