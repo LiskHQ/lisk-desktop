@@ -36,7 +36,7 @@ export const EventModule = ({ module, isWallet }) => (
 );
 
 export const EventIndex = ({ index }) => (
-  <div className={grid['col-xs-3']}>{index !== undefined || index !== null ? index : '-'}</div>
+  <div className={grid['col-xs-3']}>{index !== undefined ? index : '-'}</div>
 );
 
 export const CollapseToggle = ({ isCollapsed, onToggle }) => (
