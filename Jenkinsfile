@@ -109,7 +109,7 @@ pipeline {
 			}
 			post {
 				failure {
-					archiveArtifacts artifacts: 'cucumber-report.html', allowEmptyArchive: true
+					archiveArtifacts artifacts: './e2e/screenshots', allowEmptyArchive: true
 				}
 				always {
 					sh '''

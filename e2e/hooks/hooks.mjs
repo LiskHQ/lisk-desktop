@@ -25,7 +25,7 @@ Before(async function () {
 
 After(async function ({ pickle }) {
   const img = await fixture.page.screenshot({
-    path: `./test-results/screenshots/${pickle.name}.png`,
+    path: `./e2e/screenshots/${pickle.name}.png`,
     type: 'png',
   });
   await this.attach(img, 'image/png');
