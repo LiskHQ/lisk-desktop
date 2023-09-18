@@ -47,52 +47,43 @@ const FeesViewer = ({
   isCustom,
   onInputFee,
   feeValue,
-  // minFee,
   fees,
   setCustomFee,
   customFee,
-  token,
   minRequiredBalance,
   computedMinimumFees,
 }) => {
   const { t } = useTranslation();
-  const [showEditIcon, setShowEditIcon] = useState(true);
+  const [showEditInput, setShowEditInput] = useState({});
   const composedFeeList = fees.filter(({ isHidden }) => !isHidden);
 
-  // const onInputFocus = (e, label) => {
-  //   e.preventDefault();
-
-  //   Object.keys(computedMinimumFees);
-
-  //   if (!feeValue[label])
-  //     onInputFee({ [label]: convertFromBaseDenom(computedMinimumFees[label], token) });
-  // };
-
   useEffect(() => {
-    Object.keys(computedMinimumFees).forEach((feeLabel) => {
-      if (!customFee?.value?.[feeLabel]) {
+    composedFeeList.forEach(({ label, token }) => {
+      if (!customFee?.value?.[label]) {
         onInputFee((state) => ({
           ...state,
-          [feeLabel]: convertFromBaseDenom(computedMinimumFees[feeLabel], token),
+          [label]: convertFromBaseDenom(computedMinimumFees[label], token),
         }));
       }
     });
-  }, [computedMinimumFees, token]);
+  }, [computedMinimumFees]);
 
-  const onInputKeyUp = (e) => {
+  const onInputKeyUp = (e, label) => {
     if (e.keyCode !== keyCodes.enter) return;
-    setShowEditIcon(true);
+    setShowEditInput((state) => ({ ...state, [label]: false }));
   };
 
   const onInputBlur = (e) => {
     e.preventDefault();
-
-    setTimeout(() => setShowEditIcon(true), 100);
+    setShowEditInput({}, 100);
+    setCustomFee((state) => ({ ...state, error: {}, feedback: {} }));
   };
 
   const onInputChange = (e, label) => {
     e.preventDefault();
     const customFeeInput = e.target.value;
+    const { token } =
+      composedFeeList.find((composedFeeValue) => composedFeeValue.label === label) || {};
 
     const customFeeStatus = getCustomFeeStatus({
       customFeeInput,
@@ -117,9 +108,9 @@ const FeesViewer = ({
     }));
   };
 
-  const onClickCustomEdit = (e) => {
+  const onClickCustomEdit = (e, label) => {
     e.preventDefault();
-    setShowEditIcon(false);
+    setShowEditInput(() => ({ [label]: true }));
   };
 
   if (isLoading) {
@@ -131,24 +122,23 @@ const FeesViewer = ({
     );
   }
 
-  console.log('::::', feeValue, isCustom, showEditIcon);
   return (
     <div className={styles.feesListWrapper}>
       {composedFeeList.map(({ title, value, components, label }) => (
         <div className={styles.feeRow} key={title}>
           <span>{title}</span>
           <span className={`${styles.value} fee-value-${title}`}>
-            {isCustom && !showEditIcon ? (
+            {isCustom && showEditInput[label] ? (
               <div className={styles.feeInput}>
                 <Input
+                  autoFocus
                   className="custom-fee-input"
                   type="text"
                   size="xs"
                   value={feeValue[label]}
                   onChange={(e) => onInputChange(e, label)}
-                  onKeyUp={onInputKeyUp}
+                  onKeyUp={(e) => onInputKeyUp(e, label)}
                   onBlur={onInputBlur}
-                  // onFocus={(e) => onInputFocus(e, label)}
                   status={customFee?.error?.[label] ? 'error' : 'ok'}
                   feedback={customFee?.feedback?.[label]}
                 />
@@ -156,9 +146,8 @@ const FeesViewer = ({
             ) : (
               <span>{typeof value === 'object' ? value?.value : value}</span>
             )}
-            {console.log(':::::', value)}
-            {isCustom && showEditIcon && title === 'Transaction' && (
-              <Icon onClick={onClickCustomEdit} name="edit" />
+            {isCustom && !showEditInput[label] && (
+              <Icon onClick={(e) => onClickCustomEdit(e, label)} name="edit" />
             )}
             {title === 'Transaction' && components.length !== 0 && !isCustom && (
               <Tooltip className={styles.tooltip} position="top left">

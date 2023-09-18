@@ -63,6 +63,7 @@
         padding: 7px 11px;
         outline: none;
         border: none;
+        cursor: pointer;
 
         &:disabled {
           opacity: 0;

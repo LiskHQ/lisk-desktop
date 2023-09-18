@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { MODULE_COMMANDS_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Tooltip from 'src/theme/Tooltip';
 import styles from './TransactionPriority.css';
 import FeesViewer from './FeeViewer';
@@ -13,7 +12,6 @@ const getRelevantPriorityOptions = (options) =>
 const TransactionPriority = ({
   t,
   token,
-  moduleCommand,
   setCustomFee,
   priorityOptions,
   selectedPriority,
@@ -29,7 +27,6 @@ const TransactionPriority = ({
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState({});
-  const maxFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
 
   const onClickPriority = (e) => {
     e.preventDefault();
@@ -146,12 +143,9 @@ const TransactionPriority = ({
           isCustom={isCustom}
           onInputFee={setInputValue}
           feeValue={inputValue}
-          maxFee={maxFee}
-          // minFee={minFee}
           fees={composedFees}
           setCustomFee={setCustomFee}
           customFee={customFee}
-          token={token}
           minRequiredBalance={minRequiredBalance}
           computedMinimumFees={computedMinimumFees}
         />

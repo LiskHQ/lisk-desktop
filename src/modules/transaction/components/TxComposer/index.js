@@ -137,11 +137,7 @@ const TxComposer = ({
   useEffect(() => {
     setFeedBack(formProps.feedback);
   }, [formProps.feedback]);
-  console.log(
-    '===== custome fee:',
-    customFee,
-    Number(convertFromBaseDenom(transactionFee, formProps.fields.token))
-  );
+
   const minRequiredBalance =
     BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
   const { recipientChain, sendingChain } = formProps;
@@ -149,8 +145,9 @@ const TxComposer = ({
     {
       title: 'Transaction',
       label: 'transactionFee',
+      token: feeToken,
       value: getFeeStatus({
-        fee: Number(convertFromBaseDenom(transactionFee, formProps.fields.token)),
+        fee: Number(convertFromBaseDenom(transactionFee, feeToken)),
         tokenSymbol: feeToken?.symbol,
         customFee: customFee.value?.transactionFee
           ? { value: customFee.value?.transactionFee }
@@ -164,18 +161,16 @@ const TxComposer = ({
     {
       title: 'Message',
       label: 'messageFee',
+      token: messageFeeToken,
       value: getFeeStatus({
-        fee: Number(
-          convertFromBaseDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
-        ),
+        fee: Number(convertFromBaseDenom(transactionJSON.params.messageFee || 0, messageFeeToken)),
         tokenSymbol: messageFeeToken?.symbol,
-        customFee: customFee.value?.transactionFee ? { value: customFee.value?.messageFee } : null,
+        customFee: customFee.value?.messageFee ? { value: customFee.value?.messageFee } : null,
       }),
       isHidden: !transactionJSON.params.messageFee,
       components: [],
     },
   ];
-  console.log('>>>>> composed fees:: ', composedFees);
   formProps.composedFees = composedFees;
   transactionJSON.fee = transactionFee;
 
@@ -215,7 +210,6 @@ const TxComposer = ({
         fee={transactionFee}
         minFee={minimumFee}
         customFee={customFee}
-        moduleCommand={formProps.moduleCommand}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
