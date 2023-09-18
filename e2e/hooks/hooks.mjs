@@ -18,7 +18,7 @@ Before(async function () {
   await newPage.goto(`${process.env.PW_BASE_URL}`);
 
   await newPage.evaluate(() => {
-    const networkName = 'devnet';
+    const networkName = 'local_network';
     const serviceUrl = 'http://devnet-service.liskdev.net:9901';
 
     const customNetwork = {
@@ -35,12 +35,12 @@ Before(async function () {
         customNetworks: [customNetwork],
       },
     });
-    /*     window.store.dispatch({
+    window.store.dispatch({
       type: 'SETTINGS_UPDATED',
       data: {
         mainChainNetwork: customNetwork,
       },
-    }); */
+    });
   });
 
   fixture.page = newPage;
