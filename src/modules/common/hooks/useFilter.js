@@ -43,8 +43,7 @@ export default function useFilter(inputFilters = {}) {
   );
 
   useEffect(() => {
-    const areFiltersChanged =
-      Object.entries(filters).sort().toString() !== Object.entries(inputFilters).sort().toString();
+    const areFiltersChanged = JSON.stringify(filters) !== JSON.stringify(inputFilters);
     if (areFiltersChanged) {
       setFilters(inputFilters);
     }
