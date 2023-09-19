@@ -1,4 +1,4 @@
-import { BeforeAll, AfterAll, Before, After, setDefaultTimeout } from '@cucumber/cucumber';
+import { BeforeAll, AfterAll, Before, After, setDefaultTimeout, Status } from '@cucumber/cucumber';
 import playwright from 'playwright';
 import { fixture } from '../fixtures/page.mjs';
 
@@ -38,15 +38,23 @@ Before(async function () {
   fixture.page = newPage;
 });
 
-After(async function ({ pickle }) {
-  const img = await fixture.page.screenshot({
-    path: `./e2e/assets/screenshots/${pickle.name}.png`,
-    type: 'png',
-  });
-  await this.attach(img, 'image/png');
+After(async function ({ pickle, result }) {
+  let img;
+  const isFailedStep = result?.status === Status.FAILED;
+
+  if (isFailedStep) {
+    img = await fixture.page.screenshot({
+      path: `./e2e/assets/screenshots/${pickle.name}.png`,
+      type: 'png',
+    });
+  }
 
   await fixture.page.close();
   await context.close();
+
+  if (isFailedStep) {
+    await this.attach(img, 'image/png');
+  }
 });
 
 AfterAll(async function () {
