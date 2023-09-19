@@ -16,6 +16,7 @@ export const useGenerators = ({ config: customConfig = {}, options } = {}) => {
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
+
   return useCustomInfiniteQuery({
     keys: [GENERATOR],
     config,

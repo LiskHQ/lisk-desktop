@@ -42,13 +42,11 @@ const UploadJSONInput = ({
     accept: {
       'application/JSON': ['.json'],
     },
+    noClick: true,
   });
 
   return (
-    <div
-      {...getRootProps({ onClick: (evt) => evt.preventDefault() })}
-      data-testid="upload-json-wrapper"
-    >
+    <div {...getRootProps()} data-testid="upload-json-wrapper">
       <p className={styles.fileInputLabel}>
         {prefixLabel}
         <label className={styles.fileInputBtn}>
@@ -78,8 +76,8 @@ const UploadJSONInput = ({
         />
         <span className={styles.fileInputLabel}>
           {isDragActive
-            ? t('Please drop the JSON here')
-            : t(placeholderText || 'Please paste the JSON here.')}
+            ? t('Please drop the JSON here.')
+            : t(placeholderText || 'Please paste the JSON or drag and drop the file here.')}
         </span>
         <Feedback message={error} size="m" status={error ? 'error' : 'ok'} />
       </div>
