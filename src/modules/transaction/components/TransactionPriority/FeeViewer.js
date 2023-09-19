@@ -82,8 +82,7 @@ const FeesViewer = ({
   const onInputChange = (e, label) => {
     e.preventDefault();
     const customFeeInput = e.target.value;
-    const { token } =
-      composedFeeList.find((composedFeeValue) => composedFeeValue.label === label) || {};
+    const { token } = composedFeeList.find((composedFeeValue) => composedFeeValue.label === label);
 
     const customFeeStatus = getCustomFeeStatus({
       customFeeInput,
@@ -95,7 +94,7 @@ const FeesViewer = ({
 
     onInputFee((minFees) => ({
       ...minFees,
-      [label]: !customFeeStatus ? customFeeInput || minFeeFromBaseDenom : minFeeFromBaseDenom,
+      [label]: !customFeeStatus ? customFeeInput : minFeeFromBaseDenom,
     }));
 
     setCustomFee((state) => ({

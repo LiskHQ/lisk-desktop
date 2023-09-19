@@ -3,6 +3,7 @@ import { waitFor } from '@testing-library/dom';
 import { mount } from 'enzyme';
 import { mockTokensBalance, mockAppsTokens } from '@token/fungible/__fixtures__';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
+import { keyCodes } from 'src/utils/keyCodes';
 import TransactionPriority from '.';
 
 const baseFees = {
@@ -23,7 +24,7 @@ describe('TransactionPriority', () => {
 
   const props = {
     t: (str) => str,
-    customFee: { transactionFee: '165000', messageFee: 0 },
+    customFee: { transactionFee: { value: '165000' }, messageFee: { value: '0' } },
     computedMinimumFees: { transactionFee: '165000', messageFee: 0 },
     minRequiredBalance: '1000000000',
     token: mockToken,
@@ -36,9 +37,7 @@ describe('TransactionPriority', () => {
     selectedPriority: 0,
     setSelectedPriority: jest.fn(),
     fee,
-    setCustomFee: jest.fn().mockImplementation((fn) => {
-      fn();
-    }),
+    setCustomFee: jest.fn(),
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     loadError: false,
     isloading: false,
@@ -47,12 +46,16 @@ describe('TransactionPriority', () => {
       {
         title: 'Transaction',
         value: '0 LSK',
+        label: 'transactionFee',
+        token: mockToken,
         components: [],
       },
       {
         title: 'Message',
         value: '0 LSK',
         isHidden: true,
+        label: 'messageFee',
+        token: mockToken,
         components: [],
       },
     ],
@@ -90,6 +93,28 @@ describe('TransactionPriority', () => {
       .find('.custom-fee-input')
       .at(1)
       .simulate('change', { target: { value: '0.20' } });
+    expect(props.setCustomFee).toHaveBeenCalledTimes(1);
+  });
+
+  it('when typed in custom fee input, pressing enter should commit the changes', () => {
+    wrapper.setProps({ ...props, token: mockToken, selectedPriority: 3 });
+    wrapper.find('img[data-testid="edit-icon"]').at(0).simulate('click');
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { value: '0.20' } });
+    wrapper.find('.custom-fee-input').at(1).simulate('keyup', { keyCode: keyCodes.enter });
+    expect(props.setCustomFee).toHaveBeenCalledTimes(1);
+  });
+
+  it('when typed in custom fee input, pressing other keys apart from enter should not commit the changes', () => {
+    wrapper.setProps({ ...props, token: mockToken, selectedPriority: 3 });
+    wrapper.find('img[data-testid="edit-icon"]').at(0).simulate('click');
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { value: '0.20' } });
+    wrapper.find('.custom-fee-input').at(1).simulate('keyup', { keyCode: keyCodes.space });
     expect(props.setCustomFee).toHaveBeenCalledTimes(1);
   });
 
@@ -177,5 +202,77 @@ describe('TransactionPriority', () => {
   it('Should display the fee in loading state', async () => {
     wrapper.setProps({ ...props, isLoading: true });
     expect(wrapper.find('Spinner')).toBeTruthy();
+  });
+
+  it('Should switch priority', async () => {
+    wrapper.setProps({ ...props, token: mockToken, selectedPriority: 0 });
+    wrapper.find('.option-Custom').at(0).simulate('click');
+
+    expect(wrapper.find('img[data-testid="edit-icon"]').at(0)).toBeTruthy();
+  });
+
+  it('Should display an error on fees', async () => {
+    wrapper.setProps({
+      ...props,
+      token: mockToken,
+      selectedPriority: 3,
+      customFee: {
+        value: { transactionFee: '165000' },
+        error: { transactionFee: true },
+        feedback: { transactionFee: 'test validation error' },
+      },
+    });
+    wrapper.find('img[data-testid="edit-icon"]').at(0).simulate('click');
+  });
+
+  it('Should not compute fee status when fee token is not provided', async () => {
+    const composedFees = props.composedFees.map((composedFee) =>
+      composedFee.label === 'transactionFee'
+        ? {
+            ...composedFee,
+            token: null,
+          }
+        : composedFee
+    );
+
+    wrapper.setProps({
+      ...props,
+      token: mockToken,
+      selectedPriority: 3,
+      composedFees,
+    });
+    wrapper.find('img[data-testid="edit-icon"]').at(0).simulate('click');
+
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
+    expect(props.setCustomFee).toHaveBeenCalled();
+  });
+
+  it('Should show the breakdown tooltip', async () => {
+    const composedFees = props.composedFees.map((composedFee) =>
+      composedFee.label === 'transactionFee'
+        ? {
+            ...composedFee,
+            value: { value: '100000000' },
+            components: [
+              {
+                feeToken: mockToken,
+                type: 'bytesFee',
+                value: 96000n,
+              },
+            ],
+          }
+        : composedFee
+    );
+
+    wrapper.setProps({
+      ...props,
+      token: mockToken,
+      selectedPriority: 0,
+      composedFees,
+    });
+    expect(wrapper.find('Tooltip.tooltip')).toBeTruthy();
   });
 });
