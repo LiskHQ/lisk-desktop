@@ -9,7 +9,6 @@ import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
-import { useRestrictWindowActions } from '../../hooks/useRestrictWindowActions';
 
 const API_ERROR_NAME = 'API_ERROR_NAME';
 
@@ -77,8 +76,6 @@ const EnterPasswordForm = ({
 
     decryptAccountWorker.onerror = showDecryptAccountError;
   };
-
-  useRestrictWindowActions({ window, actions: ['cut', 'copy', 'paste'] });
 
   return (
     <Box className={`${styles.container} ${className}`}>
