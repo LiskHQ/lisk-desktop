@@ -13,6 +13,7 @@ import Icon from '@theme/Icon';
 import { regex } from 'src/const/regex';
 import { useAccounts } from '@account/hooks';
 import styles from './SetPasswordForm.css';
+import { useRestrictWindowActions } from '../../hooks/useRestrictWindowActions';
 
 const setPasswordFormSchema = yup
   .object({
@@ -113,6 +114,8 @@ function SetPasswordForm({
 
     return null;
   };
+
+  useRestrictWindowActions({ window, actions: ['cut', 'copy', 'paste'] });
 
   return (
     <div data-testid="setPasswordFormContainer" className={styles.container}>
