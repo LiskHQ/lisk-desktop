@@ -118,7 +118,6 @@ const DetailsView = ({ data, isMyProfile }) => {
               <div
                 className={classNames({
                   [styles.value]: true,
-                  [styles.capitalized]: true,
                   [styles.textLineThrough]:
                     hasChangeCommission && onEdit && typeof onEdit === 'function',
                 })}

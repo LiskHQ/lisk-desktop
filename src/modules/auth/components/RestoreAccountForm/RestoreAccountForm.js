@@ -39,8 +39,8 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
       </div>
       <div className={styles.fullWidth}>
         <UploadJSONInput
-          label={t('Restore from JSON file')}
-          placeholderText={t('Please drag and drop the JSON file from your device.')}
+          label={t('Select account JSON file')}
+          placeholderText={t('Please paste the JSON or drag and drop the file here.')}
           onChange={handleJsonInputChange}
           onError={handleJsonInputError}
           value={value}

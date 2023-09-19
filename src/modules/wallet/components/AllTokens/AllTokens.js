@@ -30,7 +30,7 @@ const AllTokens = ({ history }) => {
 
   const [searchToken, setSearch] = useState('');
   const [shouldShowSearch, setShouldShowSearch] = useState(true);
-  const { filters, setFilter } = useFilter({});
+  const { filters, setFilter } = useFilter();
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   const isSendDisabled = queryParams.get('disableSend') === 'true';

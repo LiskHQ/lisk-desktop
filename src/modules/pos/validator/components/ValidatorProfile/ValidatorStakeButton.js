@@ -33,7 +33,7 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, h
           {t('Edit stake')}
         </SecondaryButton>
       ) : (
-        <PrimaryButton disabled={isDisabled}>{t('Stake validator')}</PrimaryButton>
+        <PrimaryButton disabled={isDisabled || isBanned}>{t('Stake validator')}</PrimaryButton>
       )}
     </DialogLink>
   );

@@ -38,7 +38,6 @@ jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 
-
 afterEach(() => {
   useSelector.mockClear();
   mockFetchNextPage.mockClear();
