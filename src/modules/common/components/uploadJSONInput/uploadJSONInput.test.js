@@ -5,7 +5,7 @@ import UploadJSONInput from './index';
 
 describe('Upload JSON input component', () => {
   const props = {
-    label: 'Restore from JSON file',
+    label: 'Select JSON file',
     value: null,
     error: '',
     onChange: jest.fn(),
@@ -82,7 +82,7 @@ describe('Upload JSON input component', () => {
 
     render(<UploadJSONInput {...props} />);
 
-    const inputNode = screen.getByLabelText('Restore from JSON file');
+    const inputNode = screen.getByLabelText('Select transaction JSON file');
     fireEvent.change(inputNode, { target: { files: [file] } });
 
     expect(inputNode.files[0].name).toBe(fileName);
@@ -98,7 +98,7 @@ describe('Upload JSON input component', () => {
 
     const invalidJson = '{"result":true, "count":42';
     const file = new File([invalidJson], 'file.json', { type: 'application/json' });
-    const inputNode = screen.getByLabelText('Restore from JSON file');
+    const inputNode = screen.getByLabelText('Select transaction JSON file');
 
     await act(async () => {
       await fireEvent.change(inputNode, { target: { files: [file] } });
