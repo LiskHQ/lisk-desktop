@@ -58,9 +58,7 @@ const AccountDetails = () => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
   const { accounts } = useAccounts();
-  const queryAddress =
-    selectSearchParamValue(history.location.search, 'validatorAddress') ||
-    selectSearchParamValue(history.location.search, 'address');
+  const queryAddress = selectSearchParamValue(history.location.search, 'address');
   const address = queryAddress || currentAccount.metadata?.address;
   const { data: authData, isLoading: authLoading } = useAuth({
     config: { params: { address } },

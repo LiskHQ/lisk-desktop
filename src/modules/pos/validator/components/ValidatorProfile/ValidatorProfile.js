@@ -105,7 +105,7 @@ const ValidatorProfile = ({ history }) => {
           isMyProfile ? (
             t('My validator profile')
           ) : (
-            <DialogLink component="accountDetails">
+            <DialogLink component="accountDetails" data={{ address }}>
               <WalletVisualWithAddress
                 copy
                 size={50}

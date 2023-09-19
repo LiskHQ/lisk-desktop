@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { render, screen, fireEvent, act, createEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import UploadJSONInput from './index';
 
 describe('Upload JSON input component', () => {
