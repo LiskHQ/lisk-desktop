@@ -165,7 +165,6 @@ TransactionPriority.propTypes = {
   priorityOptions: PropTypes.array.isRequired,
   selectedPriority: PropTypes.number,
   setSelectedPriority: PropTypes.func,
-  moduleCommand: PropTypes.string,
   className: PropTypes.string,
 };
 
