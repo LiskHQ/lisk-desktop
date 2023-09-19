@@ -16,6 +16,7 @@ BeforeAll(async function () {
 
 Before(async function () {
   context = await browser.newContext({
+    ignoreHTTPSErrors: true,
     permissions: ['clipboard-read', 'clipboard-write'],
   });
   const newPage = await context.newPage();
