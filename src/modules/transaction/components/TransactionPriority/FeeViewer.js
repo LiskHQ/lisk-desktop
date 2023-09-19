@@ -147,7 +147,11 @@ const FeesViewer = ({
               <span>{typeof value === 'object' ? value?.value : value}</span>
             )}
             {isCustom && !showEditInput[label] && (
-              <Icon onClick={(e) => onClickCustomEdit(e, label)} name="edit" />
+              <Icon
+                data-testid="edit-icon"
+                onClick={(e) => onClickCustomEdit(e, label)}
+                name="edit"
+              />
             )}
             {title === 'Transaction' && components.length !== 0 && !isCustom && (
               <Tooltip className={styles.tooltip} position="top left">
