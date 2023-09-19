@@ -43,11 +43,8 @@ export default function useFilter(inputFilters = {}) {
   );
 
   useEffect(() => {
-    const areFiltersChanged = JSON.stringify(filters) !== JSON.stringify(inputFilters);
-    if (areFiltersChanged) {
-      setFilters(inputFilters);
-    }
-  }, [inputFilters]);
+    setFilters(inputFilters);
+  }, [JSON.stringify(inputFilters)]);
 
   return {
     filters,
