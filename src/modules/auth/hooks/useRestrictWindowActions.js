@@ -8,7 +8,7 @@ export const useRestrictWindowActions = ({ actions, window }) => {
   useEffect(() => {
     actions?.forEach((action) => action && window.addEventListener(action, restrictAction));
     return () => {
-      actions?.forEach((action) => action && window?.removeEventListener(action, restrictAction));
+      actions?.forEach((action) => action && window.removeEventListener(action, restrictAction));
     };
   }, [actions, window, restrictAction]);
 };

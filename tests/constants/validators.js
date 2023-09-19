@@ -8,6 +8,7 @@ const validator = (index) => ({
   validatorWeight: `100600000${index}000`,
   address: `lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno${index}`,
   lastGeneratedHeight: 27605 + index,
+  generatedBlocks: 1 + index,
   status: 'active',
   isBanned: index < 15,
   rank: index + 1,
