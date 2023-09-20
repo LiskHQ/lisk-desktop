@@ -1,7 +1,7 @@
 Feature: AddAccount
   Background: Navigate to add account options
     Given I go to page "wallet"
-    And I wait for "2 seconds"
+    And I wait for "1 seconds"
     Then I should see "Welcome to Lisk"
     And I should see "If you are new to the Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”."
     Given I click on a button with text "Add account"
@@ -55,7 +55,7 @@ Feature: AddAccount
     Then I should be redirected to route: "account/add/by-file"
     And I should see "Add your account"
     And I should see "Restore your encrypted secret recovery phrase."
-    And I should see "Please drag and drop the JSON file from your device."
+    And I should see "Please paste the JSON or drag and drop the file here."
     And button with text 'Continue' should be disabled
     Given I click on a button with text "Go back"
     Then I should be redirected to route: "account/add"
