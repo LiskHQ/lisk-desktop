@@ -260,12 +260,18 @@ const Overview = () => {
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
           <div className={styles.top}>
-            <h2 className={styles.title}>{t(`Number of transactions / Volume (${token?.symbol})`)}</h2>
+            <h2 className={styles.title}>
+              {t(`Number of transactions / Volume (${token?.symbol})`)}
+            </h2>
             <aside className={styles.legends}>
               <h5 className={`${styles.legend} ${styles.volume}`}>
                 <span>{t('Volume')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>{t(`The aggregated ${token?.symbol} volume transferred over the selected time period.`)}</p>
+                  <p>
+                    {t(
+                      `The aggregated ${token?.symbol} volume transferred over the selected time period.`
+                    )}
+                  </p>
                 </Tooltip>
               </h5>
               <h5 className={`${styles.legend} ${styles.number}`}>
