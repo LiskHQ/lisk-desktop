@@ -1,6 +1,5 @@
 import { BeforeAll, AfterAll, Before, After, setDefaultTimeout, Status } from '@cucumber/cucumber';
 import playwright from 'playwright';
-import { defineConfig } from '@playwright/test';
 import { fixture } from '../fixtures/page.mjs';
 import { NETWORKS } from '../fixtures/networks.mjs';
 
@@ -8,10 +7,6 @@ let browser;
 let context;
 
 setDefaultTimeout(10000);
-export default defineConfig({
-  // Give failing tests 3 retry attempts
-  retries: 3,
-});
 
 BeforeAll(async function () {
   browser = await playwright.chromium.launch({

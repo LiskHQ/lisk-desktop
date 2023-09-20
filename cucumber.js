@@ -7,5 +7,6 @@ module.exports = {
     dryRun: false,
     publishQuite: true,
     failFast: false,
+    retry: 3,
   },
 };
