@@ -2,6 +2,7 @@ import { BeforeAll, AfterAll, Before, After, setDefaultTimeout, Status } from '@
 import playwright from 'playwright';
 import { defineConfig } from '@playwright/test';
 import { fixture } from '../fixtures/page.mjs';
+import { NETWORKS } from '../fixtures/networks.mjs';
 
 let browser;
 let context;
@@ -28,7 +29,7 @@ Before(async function () {
   await newPage.goto(`${process.env.PW_BASE_URL}`);
 
   const networkName = 'devnet';
-  const serviceUrl = 'http://devnet-service.liskdev.net:9901';
+  const serviceUrl = NETWORKS.devnet.serviceUrl;
   await newPage.getByTestId('network-application-trigger').click();
   await newPage.getByText('Add network').click();
 
