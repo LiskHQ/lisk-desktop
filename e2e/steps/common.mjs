@@ -160,3 +160,29 @@ Given(
     await fixture.page.getByTestId('add-network-button').click();
   }
 );
+
+Then(
+  '{string} should be selected in {string} dropdown',
+  async function (selectedText, dropdownTitle) {
+    const title = fixture.page
+      .getByText(dropdownTitle, { exact: true })
+      .locator('..')
+      .getByTestId('selected-menu-item')
+      .getByText(selectedText, { exact: true });
+    const content = await title.textContent();
+    expect(content).toBeTruthy();
+  }
+);
+
+Then('Element {string} should contain class {string}', async function (testId, className) {
+  const regex = new RegExp(className);
+  await expect(fixture.page.getByTestId(testId)).toHaveClass(regex);
+});
+
+Then('Element {string} should not contain class {string}', async function (testId, className) {
+  const selector = await fixture.page.getByTestId(testId);
+  const classList = await selector.evaluate(el => [...el.classList]);
+  const hasClassname = classList.find((classItem) => classItem.includes(className));
+
+  await expect(hasClassname).toBeFalsy();
+});
