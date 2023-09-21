@@ -58,15 +58,17 @@ const FeesViewer = ({
   const composedFeeList = fees.filter(({ isHidden }) => !isHidden);
 
   useEffect(() => {
-    composedFeeList.forEach(({ label, token }) => {
-      if (!customFee?.value?.[label]) {
-        onInputFee((state) => ({
-          ...state,
-          [label]: convertFromBaseDenom(computedMinimumFees[label], token),
-        }));
-      }
-    });
-  }, [computedMinimumFees]);
+    if (showEditInput) {
+      composedFeeList.forEach(({ label, token }) => {
+        if (!customFee?.value?.[label]) {
+          onInputFee((state) => ({
+            ...state,
+            [label]: convertFromBaseDenom(computedMinimumFees[label], token),
+          }));
+        }
+      });
+    }
+  }, [JSON.stringify(computedMinimumFees), showEditInput]);
 
   const onInputKeyUp = (e, label) => {
     if (e.keyCode !== keyCodes.enter || customFee?.error?.[label]) return;
