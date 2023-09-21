@@ -123,7 +123,9 @@ const Request = () => {
         ? validateAmount({
             amount: target.value,
             locale: i18n.language,
-            token: state.token.value,
+            // eslint-disable-next-line no-use-before-define
+            token: selectedToken,
+            checklist: ['MAX_ACCURACY', 'FORMAT'],
           }).message
         : byteCount > maxMessageLength;
     let feedback = '';
