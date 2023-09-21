@@ -68,7 +68,7 @@ const FeesViewer = ({
         }
       });
     }
-  }, [JSON.stringify(computedMinimumFees), showEditInput]);
+  }, [showEditInput]);
 
   const onInputKeyUp = (e, label) => {
     if (e.keyCode !== keyCodes.enter || customFee?.error?.[label]) return;
