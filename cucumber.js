@@ -5,7 +5,6 @@ module.exports = {
     paths: ['./e2e/features/**/*.feature'],
     import: ['./e2e/hooks/hooks.mjs', './e2e/steps/**/*.mjs', './e2e/steps/**/*.js'],
     dryRun: false,
-    publishQuite: true,
     failFast: false,
     retry: 3,
   },
