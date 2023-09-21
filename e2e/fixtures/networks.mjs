@@ -1,6 +1,6 @@
 export const NETWORKS = {
   devnet: {
-    name: 'local_network',
-    serviceUrl: 'http://127.0.0.1:9901',
+    name: 'devnet',
+    serviceUrl: 'http://devnet-service.liskdev.net:9901',
   }
 }
