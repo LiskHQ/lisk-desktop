@@ -9,7 +9,7 @@ import { Input } from 'src/theme';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useFilter } from 'src/modules/common/hooks';
 import Skeleton from 'src/modules/common/components/skeleton';
-import Icon from "@theme/Icon";
+import Icon from '@theme/Icon';
 import StakerRow from './StakerRow';
 import tableHeader from './StakersTableHeader';
 import styles from './ValidatorProfile.css';

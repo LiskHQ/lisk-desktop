@@ -62,7 +62,7 @@ const Transactions = () => {
   } = useLatestBlock();
   const activeToken = useSelector(selectActiveToken);
   const { sort, toggleSort } = useSort();
-  const { filters, applyFilters, clearFilters } = useFilter({});
+  const { filters, applyFilters, clearFilters } = useFilter();
   const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 

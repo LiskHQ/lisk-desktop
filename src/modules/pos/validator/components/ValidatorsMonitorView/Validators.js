@@ -58,7 +58,7 @@ const ValidatorActionButton = ({ address, isValidator }) => {
 const ValidatorsMonitor = ({ watchList }) => {
   const { t } = useTranslation();
   const timeout = useRef();
-  const { filters, setFilter } = useFilter({});
+  const { filters, setFilter } = useFilter();
   const [activeDetailTab, setActiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
   const [search, setSearch] = useState('');

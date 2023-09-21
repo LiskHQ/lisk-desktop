@@ -8,8 +8,8 @@ pipeline {
 		ansiColor('xterm')
 	}
 	parameters {
-		string(name: 'CORE_VERSION', defaultValue: '4.0.0-beta.4')
-		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.7.0-beta.3')
+		string(name: 'CORE_VERSION', defaultValue: '4.0.0-rc.0')
+		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.7.0-rc.0')
 	}
 	stages {
 		stage('install') {
@@ -109,7 +109,7 @@ pipeline {
 			}
 			post {
 				failure {
-					archiveArtifacts artifacts: 'cucumber-report.html', allowEmptyArchive: true
+					archiveArtifacts artifacts: 'e2e/assets/screenshots/', allowEmptyArchive: true
 				}
 				always {
 					sh '''

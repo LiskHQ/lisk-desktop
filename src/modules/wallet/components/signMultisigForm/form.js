@@ -62,8 +62,7 @@ const Form = ({ t, nextStep }) => {
         <BoxContent className={styles.contentWrapper}>
           <ProgressBar current={1} />
           <UploadJSONInput
-            prefixLabel={`${t('Paste transaction value')}  `}
-            label={t('Read from JSON file')}
+            label={t('Select transaction JSON file')}
             onChange={setTransaction}
             onLoad={onLoad}
             value={transaction}
