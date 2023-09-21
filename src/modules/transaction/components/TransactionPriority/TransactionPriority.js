@@ -12,7 +12,6 @@ const getRelevantPriorityOptions = (options) =>
 const TransactionPriority = ({
   t,
   token,
-  setCustomFee,
   priorityOptions,
   selectedPriority,
   setSelectedPriority,
@@ -24,6 +23,7 @@ const TransactionPriority = ({
   minRequiredBalance,
   formProps,
   computedMinimumFees,
+  setCustomFee = () => {},
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValues, setInputValues] = useState({});
@@ -41,7 +41,7 @@ const TransactionPriority = ({
     e.preventDefault();
     const selectedIndex = Number(e.target.value);
 
-    if (setCustomFee && selectedIndex !== CUSTOM_FEE_INDEX) {
+    if (selectedIndex !== CUSTOM_FEE_INDEX) {
       setCustomFee({});
       setInputValues({});
     } else {
