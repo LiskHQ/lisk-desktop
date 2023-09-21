@@ -23,7 +23,7 @@ Before(async function () {
   const newPage = await context.newPage();
   await newPage.goto(`${process.env.PW_BASE_URL}`);
 
-  const networkName = 'devnet';
+  const networkName = NETWORKS.devnet.name;
   const serviceUrl = NETWORKS.devnet.serviceUrl;
   await newPage.getByTestId('network-application-trigger').click();
   await newPage.getByText('Add network').click();
