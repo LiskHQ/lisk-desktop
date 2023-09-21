@@ -121,10 +121,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
   padding-left: 0px !important;
   margin-top: 14px;
   margin-bottom: -4px;
+  width: fit-content;
 
   & > img {
     width: 16px;
