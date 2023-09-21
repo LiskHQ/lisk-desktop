@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from 'src/theme/Tooltip';
 import styles from './TransactionPriority.css';
@@ -27,14 +27,28 @@ const TransactionPriority = ({
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValues, setInputValues] = useState({});
+  const previousFeeRef = useRef({ customFee, inputValues });
 
+  if (customFee.value) {
+    previousFeeRef.current = {
+      customFee,
+      inputValues,
+    };
+  }
+
+  // eslint-disable-next-line max-statements
   const onClickPriority = (e) => {
     e.preventDefault();
     const selectedIndex = Number(e.target.value);
+
     if (setCustomFee && selectedIndex !== CUSTOM_FEE_INDEX) {
       setCustomFee({});
       setInputValues({});
+    } else {
+      setCustomFee(previousFeeRef.current.customFee);
+      setInputValues(previousFeeRef.current.inputValues);
     }
+
     setSelectedPriority({ item: priorityOptions[selectedIndex], index: selectedIndex });
     if (showEditIcon) {
       setShowEditIcon(false);
