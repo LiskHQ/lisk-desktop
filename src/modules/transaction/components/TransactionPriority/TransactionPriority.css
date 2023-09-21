@@ -63,6 +63,7 @@
         padding: 7px 11px;
         outline: none;
         border: none;
+        cursor: pointer;
 
         &:disabled {
           opacity: 0;
@@ -113,10 +114,27 @@
         font-family: var(--content-font);
         font-weight: normal;
         font-size: var(--font-size-h6);
-        display: inline-block;
+        display: flex;
 
         & > img {
           margin-left: 10px;
+          cursor: pointer;
+        }
+
+        & > span:first-child {
+          padding-top: 2px;
+        }
+
+        & button {
+          cursor: pointer;
+        }
+
+        & .tooltip {
+          padding-top: 5px;
+        }
+
+        & .feeInput {
+          margin-top: -5px;
         }
       }
     }
@@ -163,7 +181,7 @@
     }
   }
 
-  & > .feeRow span:first-child {
+  & > .feeRow > span:first-child {
     font-size: 14px;
     font-weight: 400;
     color: var(--color-slate-gray);
