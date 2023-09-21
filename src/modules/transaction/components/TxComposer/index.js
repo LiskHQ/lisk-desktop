@@ -16,7 +16,7 @@ import {
 } from '@transaction/utils';
 import { dryRunTransaction } from '@transaction/api';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
-import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
@@ -176,7 +176,10 @@ const TxComposer = ({
     },
   ];
   formProps.composedFees = composedFees;
-  transactionJSON.fee = transactionFee;
+  // eslint-disable-next-line no-extra-boolean-cast
+  transactionJSON.fee = !!customFee.value?.transactionFee
+    ? convertToBaseDenom(customFee.value.transactionFee, feeToken)
+    : transactionFee;
 
   // eslint-disable-next-line max-statements
   const onSubmit = async () => {
