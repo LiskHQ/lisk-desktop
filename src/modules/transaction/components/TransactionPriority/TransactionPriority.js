@@ -26,14 +26,14 @@ const TransactionPriority = ({
   computedMinimumFees,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const [inputValue, setInputValue] = useState({});
+  const [inputValues, setInputValues] = useState({});
 
   const onClickPriority = (e) => {
     e.preventDefault();
     const selectedIndex = Number(e.target.value);
     if (setCustomFee && selectedIndex !== CUSTOM_FEE_INDEX) {
       setCustomFee({});
-      setInputValue({});
+      setInputValues({});
     }
     setSelectedPriority({ item: priorityOptions[selectedIndex], index: selectedIndex });
     if (showEditIcon) {
@@ -141,8 +141,8 @@ const TransactionPriority = ({
         <FeesViewer
           isLoading={isLoading}
           isCustom={isCustom}
-          onInputFee={setInputValue}
-          feeValue={inputValue}
+          onInputFee={setInputValues}
+          feeValue={inputValues}
           fees={composedFees}
           setCustomFee={setCustomFee}
           customFee={customFee}

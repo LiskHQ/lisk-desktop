@@ -69,14 +69,33 @@ const FeesViewer = ({
   }, [computedMinimumFees]);
 
   const onInputKeyUp = (e, label) => {
-    if (e.keyCode !== keyCodes.enter) return;
+    if (e.keyCode !== keyCodes.enter || customFee?.error?.[label]) return;
     setShowEditInput((state) => ({ ...state, [label]: false }));
   };
 
-  const onInputBlur = (e) => {
+  const onInputBlur = (e, label) => {
     e.preventDefault();
-    setShowEditInput({}, 100);
-    setCustomFee((state) => ({ ...state, error: {}, feedback: {} }));
+    if (customFee?.error?.[label]) {
+      const { token } = composedFeeList.find(
+        (composedFeeValue) => composedFeeValue.label === label
+      );
+      const minFeeFromBaseDenom = convertFromBaseDenom(computedMinimumFees[label], token);
+
+      onInputFee((minFees) => ({
+        ...minFees,
+        [label]: minFeeFromBaseDenom,
+      }));
+
+      setCustomFee((state) => ({
+        value: {
+          ...state.value,
+          [label]: minFeeFromBaseDenom,
+        },
+        feedback: {},
+        error: {},
+      }));
+    }
+    setShowEditInput({});
   };
 
   const onInputChange = (e, label) => {
@@ -90,17 +109,16 @@ const FeesViewer = ({
       token,
       minFee: computedMinimumFees[label],
     });
-    const minFeeFromBaseDenom = convertFromBaseDenom(computedMinimumFees[label], token);
 
     onInputFee((minFees) => ({
       ...minFees,
-      [label]: !customFeeStatus ? customFeeInput : minFeeFromBaseDenom,
+      [label]: customFeeInput,
     }));
 
     setCustomFee((state) => ({
       value: {
         ...state.value,
-        [label]: !customFeeStatus ? customFeeInput || minFeeFromBaseDenom : minFeeFromBaseDenom,
+        [label]: customFeeInput,
       },
       feedback: { ...state.feedback, [label]: customFeeStatus },
       error: { ...state.error, [label]: !!customFeeStatus },
@@ -137,7 +155,7 @@ const FeesViewer = ({
                   value={feeValue[label]}
                   onChange={(e) => onInputChange(e, label)}
                   onKeyUp={(e) => onInputKeyUp(e, label)}
-                  onBlur={onInputBlur}
+                  onBlur={(e) => onInputBlur(e, label)}
                   status={customFee?.error?.[label] ? 'error' : 'ok'}
                   feedback={customFee?.feedback?.[label]}
                 />

@@ -138,6 +138,10 @@ const TxComposer = ({
     setFeedBack(formProps.feedback);
   }, [formProps.feedback]);
 
+  useEffect(() => {
+    setCustomFee({});
+  }, [minimumFee, messageFee]);
+
   const minRequiredBalance =
     BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
   const { recipientChain, sendingChain } = formProps;
