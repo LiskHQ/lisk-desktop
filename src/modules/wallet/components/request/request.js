@@ -89,6 +89,7 @@ const Request = () => {
   const applicationExploreAndMetaData = useApplicationExploreAndMetaData();
   const networkSupportedTokens = useNetworkSupportedTokens(state.recipientChain.value);
   const { recipientChain, token, amount, reference } = state;
+  const selectedToken = networkSupportedTokens.data?.find(({ tokenID }) => tokenID === token.value);
 
   const shareLink = useMemo(
     () =>
@@ -123,7 +124,8 @@ const Request = () => {
         ? validateAmount({
             amount: target.value,
             locale: i18n.language,
-            token: state.token.value,
+            token: selectedToken,
+            checklist: ['MAX_ACCURACY', 'FORMAT'],
           }).message
         : byteCount > maxMessageLength;
     let feedback = '';
@@ -171,7 +173,6 @@ const Request = () => {
     });
   };
 
-  const selectedToken = networkSupportedTokens.data?.find(({ tokenID }) => tokenID === token.value);
   const isFormInvalid = Object.values(state).some(
     ({ error, value, optional }) => !!error || (!value && !optional)
   );
