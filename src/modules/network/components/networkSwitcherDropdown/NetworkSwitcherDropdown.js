@@ -59,35 +59,37 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   );
 
   useEffect(() => {
-    networkStatus?.refetch?.()?.then((res) => {
-      if (!res.error) {
-        // clear stakes list during network switch
-        if (pendingStakes.length) {
-          const onCancel = /* istanbul ignore next */ () =>
-            removeSearchParamsFromUrl(history, ['modal']);
-          const onConfirm = /* istanbul ignore next */ () => {
-            setValue(selectedNetwork);
+    if (selectedNetwork.serviceUrl) {
+      networkStatus?.refetch?.()?.then((res) => {
+        if (!res.error) {
+          // clear stakes list during network switch
+          if (pendingStakes.length) {
+            const onCancel = /* istanbul ignore next */ () =>
+              removeSearchParamsFromUrl(history, ['modal']);
+            const onConfirm = /* istanbul ignore next */ () => {
+              setValue(selectedNetwork);
 
-            dispatch(stakesReset());
-            removeSearchParamsFromUrl(history, ['modal']);
-          };
-          const state = createConfirmSwitchState({
-            mode: 'pendingStakes',
-            type: 'network',
-            onCancel,
-            onConfirm,
-          });
-          removeThenAppendSearchParamsToUrl(
-            history,
-            { modal: 'confirmationDialog' },
-            ['modal'],
-            state
-          );
-        } else {
-          setValue(selectedNetwork);
+              dispatch(stakesReset());
+              removeSearchParamsFromUrl(history, ['modal']);
+            };
+            const state = createConfirmSwitchState({
+              mode: 'pendingStakes',
+              type: 'network',
+              onCancel,
+              onConfirm,
+            });
+            removeThenAppendSearchParamsToUrl(
+              history,
+              { modal: 'confirmationDialog' },
+              ['modal'],
+              state
+            );
+          } else {
+            setValue(selectedNetwork);
+          }
         }
-      }
-    });
+      });
+    }
   }, [selectedNetwork.serviceUrl]);
 
   useEffect(() => {
