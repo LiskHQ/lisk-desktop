@@ -10,7 +10,7 @@ Feature: Request Token
     And button with text 'Copy link' should be disabled
     And Element 'qrContainer' should contain class 'disabled'
 
-  Scenario: Request token should generate a copy link if amount is 0
+  Scenario: Request token should generate a copy link if amount is zero
     Given I type "0" in "amount"
     Then button with text 'Copy link' should be enabled
     And Element 'qrContainer' should not contain class 'disabled'
