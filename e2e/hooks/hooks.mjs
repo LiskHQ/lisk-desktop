@@ -44,8 +44,11 @@ After(async function ({ pickle, result }) {
   const isFailedStep = result?.status === Status.FAILED;
 
   if (isFailedStep) {
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
+
     img = await fixture.page.screenshot({
-      path: `./e2e/assets/screenshots/${pickle.name}.png`,
+      path: `./e2e/assets/screenshots/${pickle.name}${timestamp}.png`,
       type: 'png',
     });
   }
