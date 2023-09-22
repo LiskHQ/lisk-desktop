@@ -26,10 +26,10 @@ Feature: Staking
     Then I should see "genesis_11" validator details
     Given I click on a button with text "Stake validator"
     Then I should see "Add to staking queue"
-    Then button with text "Continue" should be disabled
+    Then button with text "Confirm" should be disabled
     When I type "10" in "stake"
-    Then button with text "Continue" should be enabled
-    Given I click on a button with text "Continue"
+    Then button with text "Confirm" should be enabled
+    Given I click on a button with text "Confirm"
     Then I should see "Continue staking"
     Then I should see "Go to the staking queue"
     When I click on a button with text "Go to the staking queue"
