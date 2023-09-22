@@ -16,7 +16,7 @@ import {
 } from '@transaction/utils';
 import { dryRunTransaction } from '@transaction/api';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
-import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
@@ -51,7 +51,7 @@ const TxComposer = ({
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
   const { fields } = formProps;
-  const [customFee, setCustomFee] = useState();
+  const [customFee, setCustomFee] = useState({});
   const [feedback, setFeedBack] = useState(formProps.feedback);
   const [isRunningDryRun, setIsRunningDryRun] = useState(false);
   const [
@@ -138,16 +138,24 @@ const TxComposer = ({
     setFeedBack(formProps.feedback);
   }, [formProps.feedback]);
 
+  useEffect(() => {
+    setCustomFee({});
+  }, [minimumFee, messageFee]);
+
   const minRequiredBalance =
     BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
   const { recipientChain, sendingChain } = formProps;
   const composedFees = [
     {
       title: 'Transaction',
+      label: 'transactionFee',
+      token: feeToken,
       value: getFeeStatus({
-        fee: Number(convertFromBaseDenom(transactionFee, formProps.fields.token)),
+        fee: Number(convertFromBaseDenom(transactionFee, feeToken)),
         tokenSymbol: feeToken?.symbol,
-        customFee,
+        customFee: customFee.value?.transactionFee
+          ? { value: customFee.value?.transactionFee }
+          : null,
       }),
       components: components.map((component) => ({
         ...component,
@@ -156,20 +164,22 @@ const TxComposer = ({
     },
     {
       title: 'Message',
+      label: 'messageFee',
+      token: messageFeeToken,
       value: getFeeStatus({
-        fee: Number(
-          convertFromBaseDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
-        ),
+        fee: Number(convertFromBaseDenom(transactionJSON.params.messageFee || 0, messageFeeToken)),
         tokenSymbol: messageFeeToken?.symbol,
-        customFee,
+        customFee: customFee.value?.messageFee ? { value: customFee.value?.messageFee } : null,
       }),
       isHidden: !transactionJSON.params.messageFee,
       components: [],
     },
   ];
-
   formProps.composedFees = composedFees;
-  transactionJSON.fee = transactionFee;
+  // eslint-disable-next-line no-extra-boolean-cast
+  transactionJSON.fee = !!customFee.value?.transactionFee
+    ? convertToBaseDenom(customFee.value.transactionFee, feeToken)
+    : transactionFee;
 
   // eslint-disable-next-line max-statements
   const onSubmit = async () => {
@@ -207,7 +217,6 @@ const TxComposer = ({
         fee={transactionFee}
         minFee={minimumFee}
         customFee={customFee}
-        moduleCommand={formProps.moduleCommand}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
@@ -216,6 +225,8 @@ const TxComposer = ({
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
         minRequiredBalance={minRequiredBalance}
+        computedMinimumFees={{ transactionFee: minimumFee, messageFee }}
+        formProps={formProps}
       />
       <Feedback
         feedback={feedback}

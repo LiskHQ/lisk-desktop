@@ -158,6 +158,8 @@ describe('ChangeCommissionForm', () => {
       fireEvent.change(input, { target: { value } });
       fireEvent.click(button);
 
+      const feeToken = { availableBalance: 40000000, chainID: '04000000', symbol: 'LSK' };
+
       await waitFor(() => {
         expect(nextStep).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -165,15 +167,24 @@ describe('ChangeCommissionForm', () => {
               {
                 components: [
                   {
-                    feeToken: { availableBalance: 40000000, chainID: '04000000', symbol: 'LSK' },
+                    feeToken,
                     type: 'bytesFee',
                     value: 96000n,
                   },
                 ],
                 title: 'Transaction',
+                token: feeToken,
+                label: 'transactionFee',
                 value: '-',
               },
-              { components: [], isHidden: true, title: 'Message', value: '-' },
+              {
+                components: [],
+                isHidden: true,
+                title: 'Message',
+                value: '-',
+                token: feeToken,
+                label: 'messageFee',
+              },
             ],
             formProps: {
               composedFees: [
@@ -187,8 +198,17 @@ describe('ChangeCommissionForm', () => {
                   ],
                   title: 'Transaction',
                   value: '-',
+                  token: feeToken,
+                  label: 'transactionFee',
                 },
-                { components: [], isHidden: true, title: 'Message', value: '-' },
+                {
+                  components: [],
+                  isHidden: true,
+                  title: 'Message',
+                  value: '-',
+                  token: feeToken,
+                  label: 'messageFee',
+                },
               ],
               fields: {
                 newCommission: '30.00',

@@ -218,30 +218,35 @@ describe('Unlock LSK modal', () => {
       wrapper.update();
     });
     await flushPromises();
+    const feeToken = {
+      availableBalance: '1000000000',
+      chainName: 'Lisk',
+      lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+      symbol: 'LSK',
+      tokenID: '0000000100000000',
+    };
     expect(props.nextStep).toBeCalledWith({
       transactionJSON,
       formProps: {
         composedFees: [
           {
             title: 'Transaction',
+            label: 'transactionFee',
+            token: feeToken,
             value: '-',
             components: [
               {
                 type: 'bytesFee',
                 value: 96000n,
-                feeToken: {
-                  availableBalance: '1000000000',
-                  chainName: 'Lisk',
-                  lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
-                  symbol: 'LSK',
-                  tokenID: '0000000100000000',
-                },
+                feeToken,
               },
             ],
           },
           {
             title: 'Message',
             value: '-',
+            label: 'messageFee',
+            token: feeToken,
             isHidden: true,
             components: [],
           },
@@ -258,6 +263,8 @@ describe('Unlock LSK modal', () => {
         {
           title: 'Transaction',
           value: '-',
+          label: 'transactionFee',
+          token: feeToken,
           components: [
             {
               type: 'bytesFee',
@@ -275,6 +282,8 @@ describe('Unlock LSK modal', () => {
         {
           title: 'Message',
           value: '-',
+          label: 'messageFee',
+          token: feeToken,
           isHidden: true,
           components: [],
         },
@@ -287,6 +296,13 @@ describe('Unlock LSK modal', () => {
     wrapper.find('.confirm-btn').at(0).simulate('click');
 
     await flushPromises();
+    const feeToken = {
+      availableBalance: '1000000000',
+      chainName: 'Lisk',
+      lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+      symbol: 'LSK',
+      tokenID: '0000000100000000',
+    };
 
     expect(props.nextStep).toBeCalledWith(
       expect.objectContaining({
@@ -294,21 +310,24 @@ describe('Unlock LSK modal', () => {
           {
             components: [
               {
-                feeToken: {
-                  availableBalance: '1000000000',
-                  chainName: 'Lisk',
-                  lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
-                  symbol: 'LSK',
-                  tokenID: '0000000100000000',
-                },
+                feeToken,
                 type: 'bytesFee',
                 value: 96000n,
               },
             ],
             title: 'Transaction',
+            token: feeToken,
+            label: 'transactionFee',
             value: '-',
           },
-          { components: [], isHidden: true, title: 'Message', value: '-' },
+          {
+            components: [],
+            isHidden: true,
+            title: 'Message',
+            value: '-',
+            label: 'messageFee',
+            token: feeToken,
+          },
         ],
         formProps: {
           composedFees: [
@@ -327,9 +346,18 @@ describe('Unlock LSK modal', () => {
                 },
               ],
               title: 'Transaction',
+              token: feeToken,
+              label: 'transactionFee',
               value: '-',
             },
-            { components: [], isHidden: true, title: 'Message', value: '-' },
+            {
+              components: [],
+              isHidden: true,
+              title: 'Message',
+              value: '-',
+              label: 'messageFee',
+              token: feeToken,
+            },
           ],
           enableMinimumBalanceFeedback: true,
           fields: {
