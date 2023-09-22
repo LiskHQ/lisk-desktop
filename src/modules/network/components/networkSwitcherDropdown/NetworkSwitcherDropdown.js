@@ -59,7 +59,7 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   );
 
   useEffect(() => {
-    networkStatus.refetch().then((res) => {
+    networkStatus?.refetch?.()?.then((res) => {
       if (!res.error) {
         // clear stakes list during network switch
         if (pendingStakes.length) {
