@@ -10,7 +10,7 @@ setDefaultTimeout(10000);
 
 BeforeAll(async function () {
   browser = await playwright.chromium.launch({
-    headless: false,
+    headless: true,
     args: ['--disable-web-security', '--allow-running-insecure-content'],
   });
 });

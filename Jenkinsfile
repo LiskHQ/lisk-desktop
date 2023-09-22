@@ -92,7 +92,7 @@ pipeline {
 									curl --verbose http://127.0.0.1:9901/api/v3/network/status
 									curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
-									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
+									PW_BASE_URL=http://10.23.5.100/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
 									yarn run cucumber:playwright:open
 									'''
 								}
