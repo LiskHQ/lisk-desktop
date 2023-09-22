@@ -300,6 +300,7 @@ module.exports = {
     'src/modules/pos/validator/components/ClaimRewardsView/index.js',
     'src/modules/blockchainApplication/manage/hooks/useApplicationManagement.js',
     'src/modules/wallet/components/MenuSelect/MenuSelect.js',
+    'src/modules/network/components/networkSwitcherDropdown/networkMenuItem/NetworkMenuItem.js',
     'src/modules/network/components/networkSwitcherDropdown/NetworkSwitcherDropdown.js',
     'src/modules/blockchainApplication/manage/components/UserApplicationSelector/UserApplicationSelector.js',
     'src/modules/network/components/selectNetwork/SelectNetwork.js',

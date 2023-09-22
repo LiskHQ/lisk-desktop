@@ -17,7 +17,7 @@ import {
 import { createConfirmSwitchState } from '@common/utils/createConfirmSwitchState';
 import stylesSecondaryButton from '@theme/buttons/css/secondaryButton.css';
 import classNames from 'classnames';
-import NetworkMenuItem from '@network/components/networkSwitcherDropdown/networkItem/NetworkMenuItem';
+import NetworkMenuItem from '@network/components/networkSwitcherDropdown/networkMenuItem/NetworkMenuItem';
 import networks from '../../configuration/networks';
 import { useNetworkStatus } from '../../hooks/queries';
 import styles from './NetworkSwitcherDropdown.css';
