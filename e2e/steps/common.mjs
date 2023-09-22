@@ -47,7 +47,7 @@ Then('Clipboard should contain {string}', async (clipboardText) => {
   expect(text).toContain(clipboardText);
 });
 
-Given('I click on a button with testId {string}', async (testId) => {
+Given('I click on an element with testId {string}', async (testId) => {
   await fixture.page.getByTestId(testId).click();
 });
 

@@ -161,7 +161,9 @@ export const ValidatorDetails = () => {
             />
           </Tooltip>
           <div>
-            <p className={styles.validatorName}>{data.name}</p>
+            <p className={styles.validatorName} data-testid={data.name}>
+              {data.name}
+            </p>
             <p className={styles.validatorAddress}>{truncateAddress(data.address)}</p>
           </div>
         </div>
