@@ -20,6 +20,8 @@ import {
   useNetworkCheck,
 } from '@network/components/DialogAddNetwork/utils';
 import networks from '@network/configuration/networks';
+import { useDispatch } from 'react-redux';
+import { updateNetworkNameInApplications } from '@blockchainApplication/manage/store/action';
 import styles from './DialogAddNetwork.css';
 
 // eslint-disable-next-line max-statements,complexity
@@ -27,7 +29,9 @@ const DialogAddNetwork = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { setValue, customNetworks } = useSettings('customNetworks');
+  const { setValue: setMainChainNetwork, mainChainNetwork } = useSettings('mainChainNetwork');
   const [errorText, setErrorText] = useState('');
+  const dispatch = useDispatch();
 
   const { name: defaultName = '' } = parseSearchParams(history.location.search);
 
@@ -68,12 +72,22 @@ const DialogAddNetwork = () => {
     if (!networkCheck.isNetworkOK) return null;
 
     const wsServiceUrl = values.wsServiceUrl || values.serviceUrl.replace(/^http(s?)/, 'ws$1');
+    const networkToAdd = { ...values, isAvailable: true, wsServiceUrl, label: values.name };
     const updatedCustomNetworks = immutableSetToArray({
       array: customNetworks,
-      mapToAdd: { ...values, isAvailable: true, wsServiceUrl, label: values.name },
+      mapToAdd: networkToAdd,
       index: customNetworks.findIndex((network) => network.name === defaultName),
     });
     setValue(updatedCustomNetworks);
+
+    if (defaultName) {
+      dispatch(updateNetworkNameInApplications(defaultName, values.name));
+
+      const isCurrentMainChainNetwork = mainChainNetwork.serviceUrl === networkToAdd.serviceUrl;
+      if (isCurrentMainChainNetwork) {
+        setMainChainNetwork(networkToAdd);
+      }
+    }
 
     if (!defaultName) {
       reset();
