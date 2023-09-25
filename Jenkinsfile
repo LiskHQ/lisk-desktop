@@ -92,7 +92,7 @@ pipeline {
 
 								# enevti-core
 								curl -O https://lisk-qa.ams3.digitaloceanspaces.com/enevti-core-desktop.tar.gz
-								tar -xf enevti-core-beta.0.tar.gz
+								tar -xf enevti-core-desktop.tar.gz
 								cd ./enevti-core
 								rm -rf ~/.enevti
 								./bin/run blockchain:import --force ./e2e/artifacts/enevti-core/blockchain.tar.gz
@@ -105,32 +105,27 @@ pipeline {
 								echo PORT=9902 >>enevti-service/.env
 								make -C enevti-service build
 								make -C enevti-service up
+
+								# playwright invocation
+								# wait for lisk-service to be up and running
+								sleep 10
+								set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
+								
+								# wait for enevti-service to be up and running
+								set -e; while [[ $(curl -s --fail http://127.0.0.1:9902/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
+								
+								# check lisk-serivce network status and blocks
+								curl --verbose http://127.0.0.1:9901/api/v3/network/status
+								curl --verbose http://127.0.0.1:9901/api/v3/blocks
+
+								# check enevti-serivce network status and blocks
+								curl --verbose http://127.0.0.1:9902/api/v3/network/status
+								curl --verbose http://127.0.0.1:9902/api/v3/blocks
+
+								PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
+								yarn run cucumber:playwright:open
 								'''
 							}
-						}
-					},
-					// playwright
-					"end-to-end": {
-						nvm(getNodejsVersion()) {
-							sh '''
-							# wait for lisk-service to be up and running
-							sleep 10
-							set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
-							
-							# wait for enevti-service to be up and running
-							set -e; while [[ $(curl -s --fail http://127.0.0.1:9902/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
-							
-							# check lisk-serivce network status and blocks
-							curl --verbose http://127.0.0.1:9901/api/v3/network/status
-							curl --verbose http://127.0.0.1:9901/api/v3/blocks
-
-							# check enevti-serivce network status and blocks
-							curl --verbose http://127.0.0.1:9902/api/v3/network/status
-							curl --verbose http://127.0.0.1:9902/api/v3/blocks
-
-							PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
-							yarn run cucumber:playwright:open
-							'''
 						}
 					},
 					// jest
