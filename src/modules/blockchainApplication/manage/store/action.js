@@ -43,9 +43,9 @@ export const deleteApplication = (chainId, network) => ({
   network,
 });
 
-export const deleteNetworkInApplications = (network) => ({
-  type: actionTypes.deleteNetworkInApplications,
-  network,
+export const deleteNetworksInApplications = (networks) => ({
+  type: actionTypes.deleteNetworksInApplications,
+  networks,
 });
 
 export const updateNetworkNameInApplications = (currentName, newName) => ({
