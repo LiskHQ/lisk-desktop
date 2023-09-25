@@ -41,6 +41,7 @@ Feature: Staking
     And I wait for "1 seconds"
     Then I should see staking confirmation details with amount "10 LSK"
     Given I click on an element with testId "dialog-close-button"
+    And I wait for "10 seconds"
     Given I click on a button with text "Edit stake"
     Then I should see "Edit stake"
     Then button with text "Confirm" should be disabled
