@@ -74,6 +74,7 @@ pipeline {
 							wrap([$class: 'Xvfb']) {
 								sh '''
 								# create a copy instace for enevti
+								ls -a
 								cp -r lisk-serivce enevti-service
 
 								# lisk-core
@@ -111,29 +112,25 @@ pipeline {
 					// playwright
 					"end-to-end": {
 						nvm(getNodejsVersion()) {
-							withEnv(["REACT_APP_MSW=true"]) {
-								wrap([$class: 'Xvfb']) {
-									sh '''
-									# wait for lisk-service to be up and running
-									sleep 10
-									set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
-									
-									# wait for enevti-service to be up and running
-									set -e; while [[ $(curl -s --fail http://127.0.0.1:9902/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
-									
-									# check lisk-serivce network status and blocks
-									curl --verbose http://127.0.0.1:9901/api/v3/network/status
-									curl --verbose http://127.0.0.1:9901/api/v3/blocks
+							sh '''
+							# wait for lisk-service to be up and running
+							sleep 10
+							set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
+							
+							# wait for enevti-service to be up and running
+							set -e; while [[ $(curl -s --fail http://127.0.0.1:9902/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
+							
+							# check lisk-serivce network status and blocks
+							curl --verbose http://127.0.0.1:9901/api/v3/network/status
+							curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
-									# check enevti-serivce network status and blocks
-									curl --verbose http://127.0.0.1:9902/api/v3/network/status
-									curl --verbose http://127.0.0.1:9902/api/v3/blocks
+							# check enevti-serivce network status and blocks
+							curl --verbose http://127.0.0.1:9902/api/v3/network/status
+							curl --verbose http://127.0.0.1:9902/api/v3/blocks
 
-									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
-									yarn run cucumber:playwright:open
-									'''
-								}
-							}
+							PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
+							yarn run cucumber:playwright:open
+							'''
 						}
 					},
 					// jest
