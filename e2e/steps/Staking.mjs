@@ -18,7 +18,9 @@ Then('I should see {string} validator details', async (validatorName) => {
 Then(
   'I should see staking queue details for validator {string} with amount {string}',
   async (validatorName, amount) => {
-    await expect(fixture.page.getByText('Staking queue', { exact: true })).toBeVisible();
+    await expect(
+      fixture.page.getByTestId('stake-form-wrapper').filter({ hasText: 'Staking queue' })
+    ).toBeVisible();
     await expect(fixture.page.getByText(validatorName, { exact: true })).toBeVisible();
     await expect(fixture.page.getByText(amount, { exact: true })).toBeVisible();
   }
