@@ -83,4 +83,4 @@ Feature: Staking
   Scenario: View stakes
     Given I click on a button with text "Stakes"
     Then I should see "Stake amount"
-    Then I should see 3 stakes in stakes list
+    Then I should see 4 stakes in stakes list
