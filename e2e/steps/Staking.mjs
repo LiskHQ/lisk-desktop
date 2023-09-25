@@ -27,7 +27,18 @@ Then(
 Then('I should see staking confirmation details with amount {string}', async (stakeAmount) => {
   await expect(fixture.page.getByText('Staking confirmed', { exact: true })).toBeVisible();
   await expect(
-    fixture.page.getByText(`${stakeAmount} will be locked for staking`, { exact: true })
+    fixture.page.getByText(`${stakeAmount} will be locked for staking.`, { exact: true })
+  ).toBeVisible();
+  await expect(fixture.page.getByText('Back to stakes', { exact: true })).toBeVisible();
+});
+
+Then('I should see unstaking confirmation details with amount {string}', async (stakeAmount) => {
+  await expect(fixture.page.getByText('Staking confirmed', { exact: true })).toBeVisible();
+  await expect(
+    fixture.page.getByText(
+      `${stakeAmount} will be available to unlock when the locking period ends.`,
+      { exact: true }
+    )
   ).toBeVisible();
   await expect(fixture.page.getByText('Back to stakes', { exact: true })).toBeVisible();
 });
