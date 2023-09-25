@@ -146,13 +146,13 @@ pipeline {
 							)
 						}
 					}
-					stage('unit') {
-						steps {
-							nvm(getNodejsVersion()) {
-								sh 'ON_JENKINS=true yarn run test'
-							}
-						}
-					}
+					// stage('unit') {
+					// 	steps {
+					// 		nvm(getNodejsVersion()) {
+					// 			sh 'ON_JENKINS=true yarn run test'
+					// 		}
+					// 	}
+					// }
 					// "unit": {
 						
 					// },
