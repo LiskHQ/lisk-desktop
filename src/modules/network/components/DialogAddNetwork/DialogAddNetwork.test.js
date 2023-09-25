@@ -1,7 +1,8 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { smartRender } from 'src/utils/testHelpers';
-import useSettings from '@settings/hooks/useSettings';
 import { toast } from 'react-toastify';
+import useSettings from '@settings/hooks/useSettings';
+import networks from '@network/configuration/networks';
 import { useNetworkCheck } from '@network/components/DialogAddNetwork/utils';
 import DialogAddNetwork from './DialogAddNetwork';
 
@@ -91,6 +92,7 @@ describe('DialogAddNetwork', () => {
           isAvailable: true,
         },
       ],
+      mainChainNetwork: networks.devnet,
     });
     smartRender(DialogAddNetwork, null, config);
 
@@ -117,6 +119,7 @@ describe('DialogAddNetwork', () => {
           isAvailable: true,
         },
       ],
+      mainChainNetwork: networks.devnet,
     });
     const updatedConfig = {
       ...config,
