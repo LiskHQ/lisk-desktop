@@ -146,11 +146,16 @@ pipeline {
 							)
 						}
 					}
-					"unit": {
-						nvm(getNodejsVersion()) {
-							sh 'ON_JENKINS=true yarn run test'
+					stage('unit') {
+						steps {
+							nvm(getNodejsVersion()) {
+								sh 'ON_JENKINS=true yarn run test'
+							}
 						}
-					},
+					}
+					// "unit": {
+						
+					// },
 					// "enevti-chain": {
 					// 	dir('enevti-service') {
 					// 		checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
