@@ -20,7 +20,7 @@ Feature: Staking
     And I wait for "1 seconds"
     Then I should see "genesis_67" validator details
 
-  Scenario: Stake validator
+  Scenario: Stake validator then unstake validator - Edit stake
     Given I click on an element with testId "genesis_11"
     And I wait for "1 seconds"
     Then I should see "genesis_11" validator details
@@ -40,11 +40,7 @@ Feature: Staking
     And I click on a button with text "Continue"
     And I wait for "1 seconds"
     Then I should see staking confirmation details with amount "10 LSK"
-
-  Scenario: Unstake validator - Edit stake
-    Given I click on an element with testId "genesis_11"
-    And I wait for "1 seconds"
-    Then I should see "genesis_11" validator details
+    Given I click on an element with testId "dialog-close-button"
     Given I click on a button with text "Edit stake"
     Then I should see "Edit stake"
     Then button with text "Confirm" should be disabled
