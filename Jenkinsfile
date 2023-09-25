@@ -75,7 +75,7 @@ pipeline {
 								sh '''
 								# create a copy instace for enevti
 								ls -a
-								cp -r lisk-serivce enevti-service
+								cp -r lisk-service enevti-service
 
 								# lisk-core
 								npm i -g lisk-core
