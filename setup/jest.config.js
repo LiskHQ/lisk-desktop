@@ -283,7 +283,6 @@ module.exports = {
     'src/utils/immutableUtils.js',
     'src/utils/useOutsideClickListener.js',
     'src/utils/usePrevious.js',
-    'src/utils/useReduxStateModifier.js',
     'src/modules/hardwareWallet/store/actions/devicesActions.js',
     'src/modules/hardwareWallet/utils/getHWAccounts.js',
     'src/modules/hardwareWallet/hooks/useHWAccounts.js',
