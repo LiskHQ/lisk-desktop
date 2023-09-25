@@ -25,7 +25,7 @@ const useReduxStateModifier = () => {
         return !network;
       }
     );
-    if (applicationNetworkDomainsToRemove?.length > 0) {
+    if (applicationNetworkDomainsToRemove.length > 0) {
       dispatch(deleteNetworksInApplications(applicationNetworkDomainsToRemove));
     }
   };
