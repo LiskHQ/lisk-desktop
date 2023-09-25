@@ -29,6 +29,7 @@ pipeline {
 						sh '''
 						rm -rf lisk-service/ # linting will fail otherwise
 						rm -rf enevti-service/ # linting will fail otherwise
+						rm -rf enevti-core/ # linting will fail otherwise
 						yarn run lint
 						'''
 					}
