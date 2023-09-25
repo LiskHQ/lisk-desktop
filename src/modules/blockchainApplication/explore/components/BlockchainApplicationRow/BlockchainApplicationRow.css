@@ -68,7 +68,7 @@
   border-radius: 40px;
 }
 
-.active {
+.activated {
   background-color: #00d5631a;
   color: var(--color-jade-green);
 }

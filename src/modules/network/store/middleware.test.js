@@ -1,12 +1,6 @@
-import { getAutoLogInData, shouldAutoLogIn } from 'src/utils/login';
 import { networkConfigSet } from './action';
 import actionTypes from './actionTypes';
 import middleware from './middleware';
-
-jest.mock('src/utils/login', () => ({
-  getAutoLogInData: jest.fn(),
-  shouldAutoLogIn: jest.fn(),
-}));
 
 jest.mock('@auth/store/action', () => ({
   login: jest.fn(),
@@ -35,20 +29,11 @@ describe('Middleware: Network', () => {
 
   it('networkConfigSet action to perform auto login', async () => {
     const action = { type: actionTypes.networkConfigSet, data: {} };
-    shouldAutoLogIn.mockImplementation(() => true);
-    getAutoLogInData.mockImplementation(() => ({
-      settings: {
-        keys: {
-          loginKey: true,
-        },
-      },
-    }));
     await middleware(store)(next)(action);
     expect(store.dispatch).toHaveBeenCalled();
   });
   it('networkConfigSet action to not perform auto login', async () => {
     const action = { type: actionTypes.networkConfigSet, data: {} };
-    shouldAutoLogIn.mockImplementation(() => false);
     await middleware(store)(next)(action);
     expect(store.dispatch).toHaveBeenCalled();
   });

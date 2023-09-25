@@ -36,7 +36,8 @@
 }
 
 .subHeader {
-  color: var(--color-maastricht-blue);
+  color: var(--color-slate-gray);
+  text-align: center;
   margin-top: -20px;
   margin-bottom: 30px;
 }

@@ -54,7 +54,7 @@
 
 .footerDetailsRow {
   width: 100%;
-  padding: 32px;
+  padding: 24px;
   box-sizing: border-box;
   flex-direction: row;
   column-gap: 10px;
@@ -76,7 +76,7 @@
     border-radius: 40px;
   }
 
-  & .active {
+  & .activated {
     background-color: #00d5631a;
     color: var(--color-jade-green);
   }
@@ -97,7 +97,7 @@
 }
 
 .footerButton {
-  padding: 16px;
+  padding: 24px;
   box-sizing: border-box;
   align-items: center;
 }

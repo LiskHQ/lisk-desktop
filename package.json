@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-rc.1",
   "author": "Lisk Foundation <admin@lisk.com>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
   "productName": "Lisk",
@@ -13,7 +13,7 @@
     "url": "https://github.com/LiskHQ/lisk-desktop"
   },
   "engines": {
-    "node": ">=v18.12.0"
+    "node": ">=v18.16.1"
   },
   "scripts": {
     "install:all": "yarn --cwd app && yarn",
@@ -114,7 +114,7 @@
   "dependencies": {
     "@hookform/resolvers": "2.8.8",
     "@ledgerhq/hw-transport-node-hid": "6.27.17-next.0",
-    "@liskhq/lisk-client": "6.0.0-beta.4",
+    "@liskhq/lisk-client": "6.0.0-rc.0",
     "@tanstack/react-query": "4.0.10",
     "@tanstack/react-query-devtools": "4.2.1",
     "@walletconnect/sign-client": "2.9.0",
@@ -216,8 +216,8 @@
     "cypress-failed-log": "2.9.2",
     "cypress-pipe": "2.0.0",
     "cypress-terminal-report": "3.4.1",
-    "electron": "25.2.0",
-    "electron-builder": "24.4.0",
+    "electron": "26.1.0",
+    "electron-builder": "24.6.3",
     "electron-builder-notarize": "1.5.1",
     "electron-devtools-installer": "3.2.0",
     "electron-ipc-mock": "0.0.3",
@@ -282,6 +282,7 @@
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "4.15.1",
     "webpack-merge": "=4.1.5",
+    "webpack-subresource-integrity": "5.1.0",
     "yarn": "1.22.19"
   },
   "msw": {

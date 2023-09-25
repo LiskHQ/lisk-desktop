@@ -9,6 +9,7 @@ import { Input } from 'src/theme';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import BoxTabs from '@theme/tabs';
 import useFilter from '@common/hooks/useFilter';
 import DialogLink from '@theme/dialog/link';
@@ -27,6 +28,7 @@ import styles from './Validators.css';
 
 const ValidatorActionButton = ({ address, isValidator }) => {
   const { t } = useTranslation();
+  const tokenBalances = useTokenBalances({ options: { enabled: !isValidator || !address } });
 
   if (!address) return null;
 
@@ -38,8 +40,15 @@ const ValidatorActionButton = ({ address, isValidator }) => {
     );
   }
 
+  const hasTokenBalances = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => !!BigInt(availableBalance)
+  );
+
   return (
-    <DialogLink component="registerValidator">
+    <DialogLink
+      data={{ message: t('Token balance is not enough to register a validator.') }}
+      component={hasTokenBalances ? 'registerValidator' : 'noTokenBalance'}
+    >
       <PrimaryButton className="register-validator">{t('Register validator')}</PrimaryButton>
     </DialogLink>
   );
@@ -49,7 +58,7 @@ const ValidatorActionButton = ({ address, isValidator }) => {
 const ValidatorsMonitor = ({ watchList }) => {
   const { t } = useTranslation();
   const timeout = useRef();
-  const { filters, setFilter } = useFilter({});
+  const { filters, setFilter } = useFilter();
   const [activeDetailTab, setActiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
   const [search, setSearch] = useState('');
@@ -182,12 +191,12 @@ const ValidatorsMonitor = ({ watchList }) => {
           {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
           <span className={activeTab === 'stakes' ? 'hidden' : ''}>
             <Input
-              icon={<Icon className={styles.searchIcon} name="searchActive" />}
+              icon={<Icon className={styles.searchIcon} name="searchFilter" />}
               onChange={handleFilter}
               value={search}
               className={`${styles.filterValidators} filter-by-name`}
               size="m"
-              placeholder={t('Search by name')}
+              placeholder={t('Search by name or address')}
             />
           </span>
         </BoxHeader>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { PrimaryButton } from 'src/theme/buttons';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { Input } from 'src/theme';
@@ -21,6 +22,16 @@ const ConnectionProposal = () => {
   const { events } = useEvents();
   const { setUri } = usePairings();
   const { t } = useTranslation();
+  const event = events?.length && events[events.length - 1];
+  const requiredNamespaces = event?.meta?.params?.requiredNamespaces;
+  const requestingChainIDs = (requiredNamespaces?.lisk?.chains || [])
+    .join(',')
+    .replace(/lisk:/g, '');
+
+  const blockchainAppsMeta = useBlockchainApplicationMeta({
+    config: { params: { chainID: requestingChainIDs } },
+    options: { enabled: !!requestingChainIDs },
+  });
 
   // eslint-disable-next-line max-statements
   const clickHandler = async () => {
@@ -45,14 +56,23 @@ const ConnectionProposal = () => {
     }
   };
 
+  // eslint-disable-next-line max-statements, complexity
   useEffect(() => {
     // istanbul ignore else
-    const event = events?.length && events[events.length - 1];
-    const requiredNamespaces = event?.meta?.params?.requiredNamespaces;
+    const cleanUpFn = () => {};
+
+    if (blockchainAppsMeta.isFetching || blockchainAppsMeta.isLoading) return cleanUpFn;
+
     const nameSpaceKeys = requiredNamespaces && Object.keys(requiredNamespaces);
     const hasNameSpaceError =
       !nameSpaceKeys || nameSpaceKeys.length > 1 || !nameSpaceKeys.includes('lisk');
     const isSessionProposal = event?.name === EVENTS.SESSION_PROPOSAL;
+
+    if (!blockchainAppsMeta.data?.data?.length || blockchainAppsMeta.isError) {
+      setNameSpaceError(t('Connection request contains unsupported chainIDs.'));
+
+      return cleanUpFn;
+    }
 
     if (isSessionProposal && hasNameSpaceError) {
       setWCUri(`wc:${event?.meta?.params?.pairingTopic}`);
@@ -60,11 +80,13 @@ const ConnectionProposal = () => {
     } else if (isSessionProposal) {
       addSearchParamsToUrl(history, { modal: 'connectionSummary' });
     }
-  }, [events]);
 
-  const onInputChange = (event) => {
+    return cleanUpFn;
+  }, [events, blockchainAppsMeta.isFetching]);
+
+  const onInputChange = ({ target }) => {
     setNameSpaceError('');
-    setWCUri(event.target.value);
+    setWCUri(target.value);
   };
 
   return (
@@ -75,12 +97,13 @@ const ConnectionProposal = () => {
           <h6>{t('Enter a URI to connect your wallet to a blockchain application.')}</h6>
         </div>
         <div>
-          <div>
+          <div className={styles.inputWrapper}>
             <Input
               type="text"
               onChange={onInputChange}
               value={wcUri}
               className={styles.input}
+              isLoading={blockchainAppsMeta.isFetching}
               placeholder={t('Enter connection URI')}
             />
             {nameSpaceError && (
@@ -94,7 +117,13 @@ const ConnectionProposal = () => {
             )}
             <PrimaryButton
               onClick={clickHandler}
-              disabled={nameSpaceError || wcUri.length === 0 || status.isPending}
+              disabled={
+                nameSpaceError ||
+                wcUri.length === 0 ||
+                status.isPending ||
+                blockchainAppsMeta.isFetching ||
+                blockchainAppsMeta.isError
+              }
             >
               {t('Connect')}
             </PrimaryButton>

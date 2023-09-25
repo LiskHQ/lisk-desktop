@@ -27,6 +27,7 @@ import bookmarksIconEmptyState from '@setup/react/assets/images/icons/bookmarks-
 import bookmarksIconEmptyStateDark from '@setup/react/assets/images/icons/bookmarks-empty-state-dark.svg';
 import checkboxFilled from '@setup/react/assets/images/icons/checkmark-filled.svg';
 import checkboxCircleFilled from '@setup/react/assets/images/icons/checkmark-circle-filled.svg';
+import checkmarkBlue from '@setup/react/assets/images/icons/checkmark-blue.svg';
 import copy from '@setup/react/assets/images/icons/copy.svg';
 import copyActive from '@setup/react/assets/images/icons/copy-active.svg';
 import discord from '@setup/react/assets/images/icons/discord.svg';
@@ -35,6 +36,7 @@ import discreetMode from '@setup/react/assets/images/icons/discreet-mode.svg';
 import discreetModeActive from '@setup/react/assets/images/icons/discreet-mode-active.svg';
 import feedback from '@setup/react/assets/images/icons/feedback.svg';
 import feedbackActive from '@setup/react/assets/images/icons/feedback-active.svg';
+import filePlain from '@setup/react/assets/images/icons/file-plain.svg';
 import fileOutline from '@setup/react/assets/images/icons/icon-file-outline.svg';
 import fileOutlineDark from '@setup/react/assets/images/icons/icon-file-outline-dark.svg';
 import help from '@setup/react/assets/images/icons/help.svg';
@@ -66,6 +68,7 @@ import searchActive from '@setup/react/assets/images/icons/search-active.svg';
 import searchSlim from '@setup/react/assets/images/icons/search-slim.svg';
 import search from '@setup/react/assets/images/icons/search.svg';
 import searchInput from '@setup/react/assets/images/icons/search-input.svg';
+import searchFilter from '@setup/react/assets/images/icons/search-filter.svg';
 import settings from '@setup/react/assets/images/icons/settings.svg';
 import settingsActive from '@setup/react/assets/images/icons/settings-active.svg';
 import showPassphraseIcon from '@setup/react/assets/images/icons/icon-show-passphrase.svg';
@@ -73,9 +76,9 @@ import signIn from '@setup/react/assets/images/icons/signin.svg';
 import signInActive from '@setup/react/assets/images/icons/signin-active.svg';
 import tooltipQuestionMark from '@setup/react/assets/images/icons/tooltip-question-icon.svg';
 import transactionError from '@setup/react/assets/images/icons/transaction-error.svg';
-import transactionStatusSuccess from '@setup/react/assets/images/icons/transaction-status-success.svg';
+import transactionStatusSuccessful from '@setup/react/assets/images/icons/transaction-status-successful.svg';
 import transactionStatusPending from '@setup/react/assets/images/icons/transaction-status-pending.svg';
-import transactionStatusFail from '@setup/react/assets/images/icons/transaction-status-fail.svg';
+import transactionStatusFailed from '@setup/react/assets/images/icons/transaction-status-failed.svg';
 import transactionSuccess from '@setup/react/assets/images/icons/transaction-success.svg';
 import txDefault from '@setup/react/assets/images/icons/tx-default.svg';
 import txDefaultDark from '@setup/react/assets/images/icons/tx-default-dark.svg';
@@ -125,6 +128,7 @@ import stakingActive from '@setup/react/assets/images/icons/stakingActive.svg';
 import signOut from '@setup/react/assets/images/icons/signOut.svg';
 import plus from '@setup/react/assets/images/icons/plus.svg';
 import plusActive from '@setup/react/assets/images/icons/plusActive.svg';
+import profileOutline from '@setup/react/assets/images/icons/profile-outline.svg';
 import remove from '@setup/react/assets/images/icons/remove.svg';
 import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
 import removeRed from '@setup/react/assets/images/icons/remove-red.svg';
@@ -257,6 +261,7 @@ export const icons = {
   calendarDark,
   checkboxFilled,
   checkboxCircleFilled,
+  checkmarkBlue,
   consecutiveMissedBlocks,
   consecutiveMissedBlocksDark,
   copy,
@@ -267,6 +272,7 @@ export const icons = {
   discreetModeActive,
   feedback,
   feedbackActive,
+  filePlain,
   fileOutline,
   generatedBlocks,
   generatedBlocksDark,
@@ -307,9 +313,9 @@ export const icons = {
   starDark,
   tooltipQuestionMark,
   transactionError,
-  transactionStatusSuccess,
+  transactionStatusSuccessful,
   transactionStatusPending,
-  transactionStatusFail,
+  transactionStatusFailed,
   transactionSuccess,
   txDefault,
   txDefaultDark,
@@ -370,6 +376,7 @@ export const icons = {
   plus,
   plusActive,
   plusWhiteIcon,
+  profileOutline,
   remove,
   totalBlocks,
   totalBlocksDark,
@@ -381,6 +388,7 @@ export const icons = {
   clockActive,
   clockActiveDark,
   searchInput,
+  searchFilter,
   weight,
   weightDark,
   validatorName,

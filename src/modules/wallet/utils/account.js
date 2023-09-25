@@ -92,27 +92,6 @@ export const extractAddressFromPublicKey = (publicKey) => {
 };
 
 /**
- * Extracts address from Mnemonic passphrase
- */
-export const extractAddressFromPassphrase = (data) => {
-  if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
-    const { publicKey } = cryptography.legacy.getKeys(data);
-    return cryptography.address.getLisk32AddressFromPublicKey(publicKey).toString('hex');
-  }
-  throw Error('Invalid passphrase');
-};
-
-export const getAddressFromBase32Address = (data) => {
-  try {
-    return cryptography.address.getAddressFromLisk32Address(data);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    throw Error('Invalid address');
-  }
-};
-
-/**
  * Returns a shorter version of a given address
  * by replacing characters by ellipsis except for
  * the first and last 3.

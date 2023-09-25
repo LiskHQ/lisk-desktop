@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
-import { useGetInitializationFees, useGetMinimumMessageFee } from '@token/fungible/hooks/queries';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from '@theme/Icon';
 import { convertToBaseDenom, convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
@@ -12,6 +11,7 @@ import BoxHeader from '@theme/box/header';
 import { maxMessageLength } from '@transaction/configuration/transactions';
 import {
   useApplicationExploreAndMetaData,
+  useApplicationManagement,
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
@@ -32,7 +32,7 @@ const getInitialAmount = (formProps, initialValue, token) =>
 const getInitialRecipient = (formProps, initialValue) =>
   formProps?.params.recipient.address || initialValue || '';
 const getInitialRecipientChain = (
-  transactionData,
+  recipientChain,
   initialChainId,
   currentApplication,
   applications
@@ -41,7 +41,7 @@ const getInitialRecipientChain = (
     ? applications.find(({ chainID }) => chainID === initialChainId)
     : null;
 
-  return transactionData?.recipientChain || initialRecipientChain || currentApplication;
+  return recipientChain || initialRecipientChain || currentApplication;
 };
 const getInitialToken = (transactionData, initialTokenId, tokens) => {
   const initialToken = initialTokenId
@@ -74,21 +74,18 @@ const SendForm = (props) => {
       props.initialValue?.address ?? props.initialValue?.recipient
     )
   );
-  const { isAccountInitialized, initializationFees } = useGetInitializationFees({
-    address: recipient.value,
-    tokenID: token?.tokenID,
-  });
-  const { data: messageFeeResult } = useGetMinimumMessageFee();
+  const { applications: managedApps } = useApplicationManagement();
 
-  const extraCommandFee =
-    sendingChain.chainID !== recipientChain.chainID
-      ? initializationFees?.escrowAccount
-      : initializationFees?.userAccount;
+  const mainChainApplication = useMemo(
+    () => managedApps.find(({ chainID }) => /0{4}$/.test(chainID)),
+    [managedApps]
+  );
 
   const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     setMaxAmount(status.maxAmount);
   }, []);
+
   const onConfirm = useCallback((formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
@@ -114,17 +111,18 @@ const SendForm = (props) => {
       },
       true
     );
-    const isTokenValid = !!token && Object.keys(token).length;
+    const isTokenValid = !!token && !!Object.keys(token).length;
     return areFieldsValid && isTokenValid;
   }, [amount, recipient, reference, recipientChain, sendingChain, token]);
 
   useEffect(() => {
     setToken(getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens));
   }, [prevState?.transactionData, props.initialValue?.token, tokens]);
+
   useEffect(() => {
     setRecipientChain(
       getInitialRecipientChain(
-        prevState?.transactionData,
+        prevState?.formProps?.fields?.recipientChain,
         props.initialValue?.recipientChain,
         currentApplication,
         applications
@@ -155,26 +153,30 @@ const SendForm = (props) => {
       token,
       recipient,
     },
-    extraCommandFee: isAccountInitialized ? 0 : extraCommandFee,
   };
+
   let commandParams = {
     tokenID: token?.tokenID,
     amount: convertToBaseDenom(amount.value, token),
     recipientAddress: recipient.value,
     data: reference.value,
   };
+
   if (sendingChain.chainID !== recipientChain.chainID) {
-    // TODO: Hardcoded 200 bytes length for cross chain message
-    const messageFee = BigInt(messageFeeResult?.data?.fee || 0) * BigInt(100000);
     commandParams = {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
-      messageFee: messageFee.toString(),
-      // TODO: Message fees are always paid in LSK, so we need to fetch the tokenID based on Mainchain for a given selected network
-      messageFeeTokenID: '0400000000000000',
     };
     sendFormProps.moduleCommand = MODULE_COMMANDS_NAME_MAP.transferCrossChain;
   }
+
+  const toApplications = useMemo(() => {
+    if (mainChainApplication.chainID !== currentApplication.chainID) {
+      return [mainChainApplication, ...applications];
+    }
+
+    return applications;
+  }, [mainChainApplication, currentApplication]);
 
   return (
     <section className={styles.wrapper}>
@@ -228,7 +230,7 @@ const SendForm = (props) => {
                   onChange={(value) => setRecipientChain(value)}
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                 >
-                  {applications.map((application) => (
+                  {toApplications.map((application) => (
                     <MenuItem
                       className={styles.chainOptionWrapper}
                       value={application}

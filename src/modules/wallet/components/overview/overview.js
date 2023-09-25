@@ -39,7 +39,7 @@ const removeWarningMessage = () => {
 const Overview = ({ isWalletRoute, history }) => {
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const { t } = useTranslation();
-  const [{ metadata: { address: currentAddress, name, pubkey } = {} }] = useCurrentAccount();
+  const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: validators } = useValidators({ config: { params: { address } } });
@@ -80,7 +80,7 @@ const Overview = ({ isWalletRoute, history }) => {
         isBanned,
         pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
         readMore: () => {
-          const url = 'https://lisk.com/blog/development/lisk-staking-process';
+          const url = 'https://lisk.com/blog/posts/lisk-staking-process';
           window.open(url, 'rel="noopener noreferrer"');
         },
       });
@@ -104,16 +104,18 @@ const Overview = ({ isWalletRoute, history }) => {
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
-        <WalletVisualWithAddress
-          copy
-          size={50}
-          address={authData?.meta?.address}
-          accountName={!searchAddress ? name : validator.name}
-          detailsClassName={styles.accountSummary}
-          truncate={false}
-          isMultisig={authData?.data?.numberOfSignatures > 0}
-          publicKey={searchAddress ? authData?.meta?.publicKey : pubkey}
-        />
+        <DialogLink component="accountDetails" data={{ address }}>
+          <WalletVisualWithAddress
+            copy
+            size={50}
+            address={authData?.meta?.address}
+            accountName={!searchAddress ? name : validator.name}
+            className={styles.walletVisualWrapper}
+            detailsClassName={styles.accountSummary}
+            truncate={false}
+            isMultisig={authData?.data?.numberOfSignatures > 0}
+          />
+        </DialogLink>
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
         <div className={`${grid.row} ${styles.actionButtons}`}>
@@ -125,8 +127,15 @@ const Overview = ({ isWalletRoute, history }) => {
             )}
           </div>
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
-            <DialogLink component="send">
-              <PrimaryButton disabled={!hasTokenWithBalance}>{t('Send')}</PrimaryButton>
+            <DialogLink
+              data={
+                !hasTokenWithBalance
+                  ? { message: t('There are no tokens to send at this moment.') }
+                  : {}
+              }
+              component={hasTokenWithBalance ? 'send' : 'noTokenBalance'}
+            >
+              <PrimaryButton>{t('Send')}</PrimaryButton>
             </DialogLink>
           </div>
         </div>

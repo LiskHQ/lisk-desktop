@@ -1,8 +1,19 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Client } from 'src/utils/api/client';
 import { regex } from 'src/const/regex';
-import { addHttp } from 'src/utils/login';
 import { useNetworkStatus } from '@network/hooks/queries';
+
+const addHttp = (url) => {
+  const domainReg = /^(?:f|ht)tps?:\/\//i;
+  const ipReg = /^(\d+\.\d+\.\d+\.\d+)(:\d+)?/;
+  if (ipReg.test(url)) {
+    return `http://${url}`;
+  }
+  if (!domainReg.test(url)) {
+    return `https://${url}`;
+  }
+  return url;
+};
 
 const removeTrailingSlash = (url) => {
   if (url.charAt(url.length - 1) !== '/' || /http(s?):(\/){1,2}$/.test(url)) {

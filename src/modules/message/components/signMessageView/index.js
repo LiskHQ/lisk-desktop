@@ -11,20 +11,29 @@ import styles from './signMessageView.css';
 
 const signMessageView = ({ account, t, history, signMessage }) => {
   const [multiStepPosition, setMultiStepPosition] = useState(0);
+  const [isErrorView, setIsErrorView] = useState(false);
   const [
     {
       metadata: { pubkey },
     },
   ] = useCurrentAccount();
 
-  const onMultiStepChange = useCallback(({ step: { current } }) => {
+  const onMultiStepChange = useCallback((multistepState) => {
+    setIsErrorView(false);
+    const { step: { current, data } = {} } = multistepState || {};
+    const statusState = data?.[2];
+    const hasError = !!statusState?.error;
+
+    if (hasError) {
+      setIsErrorView(hasError);
+    }
     setMultiStepPosition(current);
   }, []);
 
   return (
-    <Dialog hasClose className={styles.wrapper} size={multiStepPosition === 1 && 'sm'}>
+    <Dialog hasClose className={styles.wrapper} size={multiStepPosition > 0 && 'sm'}>
       <Box>
-        {multiStepPosition !== 1 && (
+        {multiStepPosition !== 1 && !isErrorView && (
           <BoxHeader className={styles.header}>
             <h1>{multiStepPosition === 2 ? t('Signed message') : t('Sign message')}</h1>
           </BoxHeader>

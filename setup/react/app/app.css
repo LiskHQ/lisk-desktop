@@ -120,7 +120,6 @@ body {
     & + .bodyWrapper {
       & .mainBox {
         box-sizing: border-box;
-        padding: 0 24px;
       }
     }
   }
@@ -133,7 +132,6 @@ body {
 
   .mainBox {
     box-sizing: border-box;
-    padding: 0 24px;
   }
 }
 

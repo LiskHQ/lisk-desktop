@@ -1,0 +1,3 @@
+import HardwareAccountManagerModal from '@hardwareWallet/components/HardwareAccountManagerModal/HardwareAccountManagerModal';
+
+export default HardwareAccountManagerModal;

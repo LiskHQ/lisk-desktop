@@ -53,6 +53,7 @@
 
   & > h1 {
     margin-bottom: 12px;
+    font-size: var(--font-size-h3);
   }
 
   & ~ div:nth-child(2) {

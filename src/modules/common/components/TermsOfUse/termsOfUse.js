@@ -49,7 +49,7 @@ class TermsOfUse extends React.Component {
             {this.props.t('Before you continue using Lisk, please read and accept the')}
             <a
               onClick={this.checkTermsOfUse}
-              href="https://lisk.com/terms-conditions"
+              href="https://lisk.com/policies/terms-and-conditions"
               target="_blank"
               rel="noopener noreferrer"
             >

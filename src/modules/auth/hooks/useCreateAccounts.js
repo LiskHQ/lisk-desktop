@@ -1,23 +1,35 @@
 import { useEffect, useState } from 'react';
-import { extractAddressFromPassphrase } from '@wallet/utils/account';
-import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
+import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
+import { defaultDerivationPath } from '@account/const';
+
+export const getPassphraseAndAddress = async (strength) => {
+  const generatedPassphrase = LiskPassphrase.Mnemonic.generateMnemonic(strength);
+  const privateKey = await cryptography.ed.getPrivateKeyFromPhraseAndPath(
+    generatedPassphrase,
+    defaultDerivationPath
+  );
+  const publicKey = cryptography.ed.getPublicKeyFromPrivateKey(privateKey);
+
+  return {
+    address: cryptography.address.getLisk32AddressFromPublicKey(publicKey).toString('hex'),
+    passphrase: generatedPassphrase,
+  };
+};
 
 const useCreateAccounts = (strength) => {
-  const [suggestionAccounts, setSuggestionAccounts] = useState([]);
+  const [accounts, setAccounts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   useEffect(() => {
-    const passphrases = [...Array(5)].map(() => {
-      const generatedPassphrase = LiskPassphrase.Mnemonic.generateMnemonic(strength);
-      return {
-        passphrase: generatedPassphrase,
-        address: extractAddressFromPassphrase(generatedPassphrase),
-      };
-    });
+    const accountsWithPassphrase = [...Array(5)].map(() => getPassphraseAndAddress(strength));
+    Promise.all(accountsWithPassphrase)
+      .then(setAccounts)
+      .catch((e) => setError(e))
+      .finally(() => setIsLoading(false));
+  }, [strength]);
 
-    setSuggestionAccounts(passphrases);
-  }, []);
-
-  return { setSuggestionAccounts, suggestionAccounts };
+  return { accounts, isLoading, error };
 };
 
 export default useCreateAccounts;

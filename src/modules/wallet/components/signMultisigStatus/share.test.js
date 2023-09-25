@@ -100,16 +100,22 @@ describe('Sign Multisignature Tx Status component', () => {
     const propsWithError = {
       ...props,
       transactions: {
-        txBroadcastError: { message: 'error:test' },
+        ...props.transactions,
+        txBroadcastError: {
+          error: 'error:test',
+          transaction: props.transactions.signedTransaction,
+        },
         txSignatureError: null,
-        signedTransaction: {},
       },
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'signMultisignature',
-      status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      status: {
+        code: 'BROADCAST_ERROR',
+        message: JSON.stringify({ transaction: {}, error: 'error:test' }),
+      },
       title: 'Transaction failed',
       message: 'An error occurred while sending your transaction to the network. Please try again.',
       className: 'content',

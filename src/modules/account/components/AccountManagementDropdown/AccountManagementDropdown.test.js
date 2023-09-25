@@ -3,6 +3,8 @@ import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { truncateAddress, truncateAccountName } from '@wallet/utils/account';
 import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import AccountManagementDropdown from './AccountManagementDropdown';
 
 const mockCurrentAccount = mockSavedAccounts[0];
@@ -11,7 +13,15 @@ jest.mock('../../../account/hooks/useCurrentAccount.js', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
 }));
 
+jest.mock('@token/fungible/hooks/queries/useTokenBalances');
+
 describe('AccountManagementDropdown', () => {
+  useTokenBalances.mockReturnValue({
+    data: {
+      data: [{ name: 'Lisk', symbol: 'LSK', availableBalance: 0, ...mockAppsTokens.data[0] }],
+    },
+  });
+
   it('displays properly', () => {
     const props = {
       currentAccount: mockCurrentAccount,
@@ -24,7 +34,7 @@ describe('AccountManagementDropdown', () => {
     ).toBeInTheDocument();
     fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
     expect(mockOnMenuClick).toHaveBeenCalledTimes(2);
-    expect(screen.getByText('Edit account name')).toBeInTheDocument();
+    expect(screen.getByText('Account details')).toBeInTheDocument();
     expect(screen.getByText('Switch account')).toBeInTheDocument();
     expect(screen.getByText('Backup account')).toBeInTheDocument();
     expect(screen.getByText('Add new account')).toBeInTheDocument();

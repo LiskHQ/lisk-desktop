@@ -41,10 +41,8 @@ function ClaimRewardsDialogButton({ address }) {
   );
 }
 
-function UnlockDialogButton({ address }) {
+function UnlockDialogButton({ hasUnlocks }) {
   const { t } = useTranslation();
-  const { data: unlocks } = useUnlocks({ config: { params: { address } } });
-  const hasUnlocks = unlocks?.data?.pendingUnlocks?.length > 0;
 
   return (
     <DialogLink component="lockedBalance">
@@ -57,10 +55,10 @@ const SentStakes = ({ history }) => {
   const { t } = useTranslation();
   const stakerAddress = useStakerAddress(history.location.search);
   const { token } = usePosToken({ address: stakerAddress });
-  const { refetch } = useSentStakes({
+  const sentStakes = useSentStakes({
     config: { params: { address: stakerAddress } },
   });
-
+  const unlocks = useUnlocks({ config: { params: { address: stakerAddress } } });
   const { data: pooledTransactionsData } = useMyTransactions({
     config: {
       params: {
@@ -72,9 +70,12 @@ const SentStakes = ({ history }) => {
     },
   });
 
+  const hasUnlocks = unlocks?.data?.data?.pendingUnlocks?.length > 0;
+
   useEffect(() => {
     if (pooledTransactionsData?.meta?.total > 1) {
-      refetch();
+      sentStakes.refetch();
+      unlocks.refetch();
     }
   }, [pooledTransactionsData?.meta?.total]);
 
@@ -90,7 +91,7 @@ const SentStakes = ({ history }) => {
             <StakesCount className={styles.stakesCountProp} address={stakerAddress} />
             <div className={styles.actionButtons}>
               <ClaimRewardsDialogButton address={stakerAddress} />
-              <UnlockDialogButton address={stakerAddress} />
+              <UnlockDialogButton hasUnlocks={hasUnlocks} />
             </div>
           </div>
         </Heading>

@@ -9,10 +9,17 @@
     min-width: 320px;
   }
 
+  & .walletVisualWrapper {
+    & div > div {
+      cursor: pointer;
+    }
+  }
+
   & .accountSummary {
     display: flex;
     flex-direction: column;
     margin-left: 8px;
+    cursor: pointer;
 
     & p {
       @mixin headingSmall;

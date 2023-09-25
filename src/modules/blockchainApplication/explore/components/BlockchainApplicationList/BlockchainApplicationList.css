@@ -3,6 +3,7 @@
 .content {
   width: 100%;
   padding: 0px !important;
+  margin-top: 10px;
 }
 
 .boxHeader {
@@ -19,11 +20,11 @@
   }
 }
 
-.searchInputWrapper {
+.searchWrapper {
   max-width: 300px;
   position: absolute;
   right: 0;
-  top: -55px;
+  top: -60px;
 }
 
 .searchIcon {
@@ -35,6 +36,7 @@
 
 .chainSearch {
   border-radius: 40px;
+  width: 100%;
 }
 
 .tableHeader {

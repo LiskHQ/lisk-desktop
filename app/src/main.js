@@ -116,13 +116,12 @@ const isSingleLock = app.requestSingleInstanceLock();
 if (!isSingleLock) {
   app.quit();
 } else {
-  app.on('second-instance', (argv) => {
-    if (process.platform !== 'darwin') {
-      win.send({ event: IPC_OPEN_URL, value: argv[1] || '/' });
-    }
+  app.on('second-instance', (argv, commandLine) => {
+    const url = commandLine.pop();
     if (win.browser) {
       if (win.browser.isMinimized()) win.browser.restore();
       win.browser.focus();
+      win.send({ event: IPC_OPEN_URL, value: url || '/' });
     }
   });
 }

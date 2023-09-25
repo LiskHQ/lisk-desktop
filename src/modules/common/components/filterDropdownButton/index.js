@@ -112,13 +112,14 @@ class FilterDropdownButton extends React.Component {
     }));
   }
 
-  renderFields({ name, label, placeholder, valueFormatter, type }) {
+  renderFields({ classNameDropdown, name, label, placeholder, valueFormatter, type }) {
     const Component = filterComponents[type];
     const props = {
       name,
       label,
       placeholder,
       valueFormatter,
+      classNameDropdown,
     };
     return (
       <Component

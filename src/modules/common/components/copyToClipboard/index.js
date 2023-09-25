@@ -20,7 +20,7 @@ const IconAndText = ({
     <Container disabled={copied} {...containerProps}>
       {copied ? (
         <span className={`${className} copied`}>
-          <Icon name="transactionStatusSuccess" className={`${styles.icon} ${copyClassName}`} />{' '}
+          <Icon name="transactionStatusSuccessful" className={`${styles.icon} ${copyClassName}`} />{' '}
           {t('Copied')}
         </span>
       ) : (
@@ -36,7 +36,7 @@ const IconAndText = ({
 const IconOnly = ({ copyClassName, value, onCopy, copied }) => (
   <ReactCopyToClipboard text={value} onCopy={onCopy}>
     <Icon
-      name={copied ? 'transactionStatusSuccess' : 'copy'}
+      name={copied ? 'transactionStatusSuccessful' : 'copy'}
       className={`${styles.icon} ${copyClassName}`}
     />
   </ReactCopyToClipboard>

@@ -30,7 +30,7 @@ const TransactionDetails = () => {
   const { data: fees } = useFees();
   const feeTokenID = fees?.data?.feeTokenID;
   const { data: token } = useAppsMetaTokens({
-    config: { params: { tokenID: feeTokenID }, options: { enable: !feeTokenID } },
+    config: { params: { tokenID: feeTokenID }, options: { enabled: !!feeTokenID } },
   });
   const feeToken = token?.data[0];
 

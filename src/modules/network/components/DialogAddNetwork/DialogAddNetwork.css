@@ -19,6 +19,7 @@
 
     & .description {
       text-align: center;
+      margin: 0;
     }
 
     & .content {
@@ -36,6 +37,17 @@
 
           &:first-child {
             margin-top: 24px;
+          }
+        }
+
+        & .connectionFailed {
+          margin-top: 4px;
+          font-size: var(--paragraph-font-size-s);
+
+          & .tryAgainButton {
+            height: initial;
+            padding: 0;
+            font-weight: var(--font-weight-normal);
           }
         }
 

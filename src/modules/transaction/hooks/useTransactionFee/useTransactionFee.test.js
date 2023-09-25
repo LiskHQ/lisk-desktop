@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import wallets from '@tests/constants/wallets';
-import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { convertStringToBinary } from '@transaction/utils';
+import { queryClient, queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { server } from 'src/service/mock/server';
 import { useTransactionFee } from './useTransactionFee';
 import * as encodingUtils from '../../utils/encoding';
 
@@ -21,27 +21,32 @@ jest.mock('../../utils/encoding', () => ({
 }));
 
 const transactionJSON = {
-  nonce: BigInt(0),
-  fee: 0,
-  senderPublicKey: convertStringToBinary(wallets.genesis.summary.publicKey),
+  nonce: '0',
+  fee: '0',
+  senderPublicKey: wallets.genesis.summary.publicKey,
   module: 'token',
   command: 'transfer',
   params: {
-    tokenId: convertStringToBinary('00000000'),
-    amount: BigInt('1000000'),
-    recipientAddress: convertStringToBinary(wallets.genesis.summary.address),
+    tokenId: '00000000',
+    amount: '1000000',
+    recipientAddress: wallets.genesis.summary.address,
     data: '',
   },
   signatures: [],
 };
 
+beforeEach(() => {
+  jest.clearAllMocks();
+  queryClient.resetQueries();
+  server.resetHandlers();
+});
+
 describe('useTransactionFee', () => {
-  it.skip('Returns the calculated fee given transaction is valid', async () => {
+  it('Returns the calculated fee given transaction is valid', async () => {
     const { result, waitFor } = renderHook(
       () =>
         useTransactionFee({
           isFormValid: true,
-          senderAddress: wallets.genesis.summary.address,
           transactionJSON,
         }),
       { wrapper }
@@ -53,13 +58,20 @@ describe('useTransactionFee', () => {
       components: [
         {
           type: 'bytesFee',
-          value: 1000000n,
+          value: 96000n,
+        },
+        {
+          type: 'Account Initialization',
+          value: 5000000n,
         },
       ],
       isFetched: true,
       isLoading: false,
-      minimumFee: '1000000',
-      transactionFee: '1000000',
+      messageFee: 0n,
+      messageFeeTokenID: undefined,
+      feeTokenID: '0400000000000000',
+      minimumFee: 5147764n,
+      transactionFee: '5147764',
     });
   });
 
@@ -68,7 +80,6 @@ describe('useTransactionFee', () => {
       () =>
         useTransactionFee({
           isFormValid: false,
-          senderAddress: wallets.genesis.summary.address,
           transactionJSON,
         }),
       { wrapper }
@@ -80,7 +91,9 @@ describe('useTransactionFee', () => {
       components: [],
       isFetched: false,
       isLoading: false,
-      minimumFee: 0,
+      messageFee: 0n,
+      messageFeeTokenID: undefined,
+      minimumFee: 0n,
       transactionFee: '0',
     });
   });

@@ -1,11 +1,20 @@
 import React from 'react';
+import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { getModuleCommandTitle } from 'src/modules/transaction/utils/moduleCommand';
 import Select from 'src/theme/Select';
 import styles from './filters.css';
 
-const SelectFilter = ({ label, placeholder, filters, name, updateCustomFilters }) => {
+const SelectFilter = ({
+  className,
+  classNameDropdown,
+  label,
+  placeholder,
+  filters,
+  name,
+  updateCustomFilters,
+}) => {
   // TODO: This logic is static, different blockchain application can have different commands
   // We need this logic to be dynamic based on selected chain.
   const options = Object.keys(MODULE_COMMANDS_NAME_MAP).map((key) => ({
@@ -23,9 +32,10 @@ const SelectFilter = ({ label, placeholder, filters, name, updateCustomFilters }
   };
 
   return (
-    <div className={styles.fieldGroup}>
+    <div className={classNames(styles.fieldGroup, className)}>
       <span className={styles.fieldLabel}>{label}</span>
       <Select
+        classNameDropdown={classNameDropdown}
         placeholder={placeholder}
         options={options}
         selected={filters[name] || ''}

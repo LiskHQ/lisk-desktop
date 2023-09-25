@@ -27,7 +27,7 @@ const TransactionEventRow = ({ data: transactionEvent, isWallet }) => {
   return (
     <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
       <div className={`transaction-event-row ${styles.container}`}>
-        {isWallet ? <BlockHeight height={height} id={id} /> : <EventIndex id={index} />}
+        {isWallet ? <BlockHeight height={height} id={id} /> : <EventIndex index={index} />}
         {isWallet && topics?.length > 0 && <TransactionID id={topics[0]} />}
         <EventModule module={module} isWallet={isWallet} />
         <EventName name={name} isWallet={isWallet} />

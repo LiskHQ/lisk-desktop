@@ -25,13 +25,13 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
   const { sort, toggleSort } = useSort();
   const forgedBlocksInRound = latestBlocks[0]?.height % ROUND_LENGTH;
   const remainingBlocksInRound = ROUND_LENGTH - forgedBlocksInRound;
+  const [sortParam, sortDirection] = sort?.split?.(':') || [];
 
   const queryConfig = useMemo(
     () => ({
       config: {
         params: {
           ...filters,
-          ...(sort && { sort }),
           ...(activeTab === 'standby' && { status: 'standby,ineligible' }),
           ...(activeTab === 'active' && { limit: ROUND_LENGTH }),
           ...(activeTab === 'sanctioned' && { status: 'punished,banned' }),
@@ -51,27 +51,45 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
 
   const transformResponse = useCallback(
     (generatorsData) => {
-      if (!generatorsData || !validators) {
-        return [];
-      }
+      if (!generatorsData || !validators) return [];
+
       const normalizedValidators = validators.data.reduce(
         (acc, val) => ({ ...acc, [val.address]: val }),
         {}
       );
-      return generatorsData.map((gen, index) => {
+
+      const generators = generatorsData.map((generator, index) => {
         const haveForgedInRound = latestBlocks
           ?.filter((_, i) => forgedBlocksInRound >= i)
           .map((genData) => genData.generator.name);
-        if (haveForgedInRound?.indexOf(gen.name) > -1) {
-          return { ...gen, ...normalizedValidators[gen.address], state: 'generating' };
+
+        if (haveForgedInRound?.indexOf(generator.name) > -1) {
+          return { ...generator, ...normalizedValidators[generator.address], state: 'generating' };
         }
+
         if (index < remainingBlocksInRound) {
-          return { ...gen, ...normalizedValidators[gen.address], state: 'awaitingSlot' };
+          return {
+            ...generator,
+            ...normalizedValidators[generator.address],
+            state: 'awaitingSlot',
+          };
         }
-        return { ...gen, ...normalizedValidators[gen.address], state: 'missedBlock' };
+
+        return { ...generator, ...normalizedValidators[generator.address], state: 'missedBlock' };
+      });
+
+      if (!sortParam || !generators[0]?.[sortParam]) return generators;
+
+      return generators.sort((a, b) => {
+        if (sortDirection === 'desc' && b[sortParam] > a[sortParam]) return 1;
+        if (sortDirection === 'desc' && b[sortParam] < a[sortParam]) return -1;
+        if (sortDirection === 'asc' && b[sortParam] > a[sortParam]) return -1;
+        if (sortDirection === 'asc' && b[sortParam] < a[sortParam]) return 1;
+
+        return 0;
       });
     },
-    [validators, latestBlocks]
+    [validators, latestBlocks, sort]
   );
 
   return (

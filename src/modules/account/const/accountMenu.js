@@ -1,10 +1,17 @@
+import i18next from 'i18next';
 import routes from 'src/routes/routes';
 
-export const accountMenu = (authData, isHW, hasNetworkError, isLoadingNetwork) => [
+export const accountMenu = ({
+  authData,
+  isHW,
+  hasNetworkError,
+  isLoadingNetwork,
+  hasAvailableTokenBalance,
+}) => [
   {
-    component: 'editAccount',
-    icon: 'edit',
-    label: 'Edit account name',
+    component: 'accountDetails',
+    icon: 'profileOutline',
+    label: 'Account details',
   },
   {
     component: 'switchAccount',
@@ -23,7 +30,12 @@ export const accountMenu = (authData, isHW, hasNetworkError, isLoadingNetwork) =
     label: 'Add new account',
   },
   {
-    component: 'multiSignature',
+    component: hasAvailableTokenBalance ? 'multiSignature' : 'noTokenBalance',
+    data: !hasAvailableTokenBalance
+      ? {
+          message: i18next.t('Token balance is not enough to register a multisignature account.'),
+        }
+      : {},
     icon: 'multiSignatureOutline',
     label: 'Register multisignature account',
     isHidden: authData?.data?.numberOfSignatures > 0 || hasNetworkError || isLoadingNetwork,

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
+import DialogLink from '@theme/dialog/link';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
@@ -19,6 +20,7 @@ import ValidatorStakesView from './ValidatorStakesView';
 import { useValidators } from '../../hooks/queries';
 import ValidatorStakeButton from './ValidatorStakeButton';
 import WarnPunishedValidator from '../WarnPunishedValidator';
+import { STAKE_LIMIT } from '../../consts';
 
 const numOfBlockPerDay = 24 * 60 * 6;
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
@@ -36,7 +38,8 @@ const removeWarningMessage = () => {
 const ValidatorProfile = ({ history }) => {
   const { t } = useTranslation();
   const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
-  const address = selectSearchParamValue(history.location.search, 'address') || currentAddress;
+  const address =
+    selectSearchParamValue(history.location.search, 'validatorAddress') || currentAddress;
 
   const tokenBalances = useTokenBalances({
     config: { params: { address: currentAddress } },
@@ -47,13 +50,14 @@ const ValidatorProfile = ({ history }) => {
   });
   const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
 
-  const isDisableStakeButton =
-    isLoadingValidators ||
-    (tokenBalances.isLoading || BigInt(tokenBalances.data.data[0]?.availableBalance || 0)) ===
-      BigInt(0);
+  const isDisableStakeButton = isLoadingValidators || tokenBalances.isLoading;
   const { data: generatedBlocks } = useBlocks({
     config: { params: { generatorAddress: address } },
   });
+
+  const hasTokenBalance = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => BigInt(availableBalance) > STAKE_LIMIT
+  );
 
   const {
     data: { height: currentHeight },
@@ -76,7 +80,7 @@ const ValidatorProfile = ({ history }) => {
         isBanned,
         pomHeight: punishmentPeriods ? punishmentPeriods[punishmentPeriods.length - 1] : 0,
         readMore: () => {
-          const url = 'https://lisk.com/blog/development/lisk-staking-process';
+          const url = 'https://lisk.com/blog/posts/lisk-staking-process';
           window.open(url, 'rel="noopener noreferrer"');
         },
       });
@@ -86,6 +90,7 @@ const ValidatorProfile = ({ history }) => {
   }, [address, validator, currentHeight]);
 
   const isMyProfile = address === currentAddress;
+
   if (!validator.address && !isLoadingValidators) {
     toast.info("This user isn't a validator");
     history.goBack();
@@ -100,15 +105,17 @@ const ValidatorProfile = ({ history }) => {
           isMyProfile ? (
             t('My validator profile')
           ) : (
-            <WalletVisualWithAddress
-              copy
-              size={50}
-              address={address}
-              accountName={validator.name}
-              detailsClassName={styles.accountSummary}
-              truncate={false}
-              publicKey={validator.publicKey}
-            />
+            <DialogLink component="accountDetails" data={{ address }}>
+              <WalletVisualWithAddress
+                copy
+                size={50}
+                address={address}
+                accountName={validator.name}
+                className={styles.walletVisualWrapper}
+                detailsClassName={styles.accountSummary}
+                truncate={false}
+              />
+            </DialogLink>
           )
         }
         onGoBack={() => history.push(routes.validators.path)}
@@ -120,6 +127,7 @@ const ValidatorProfile = ({ history }) => {
               address={address}
               isBanned={isBanned}
               isDisabled={isDisableStakeButton}
+              hasTokenBalance={hasTokenBalance}
             />
           </div>
         </div>
@@ -128,7 +136,7 @@ const ValidatorProfile = ({ history }) => {
         isLoading={isLoadingValidators}
         className={`${grid.row} ${styles.statsContainer} stats-container`}
       >
-        <DetailsView data={validator} isMyProfile={isMyProfile} address={address} />
+        <DetailsView data={validator} isMyProfile={isMyProfile} />
         <PerformanceView data={{ ...validator, producedBlocks: generatedBlocks?.meta?.total }} />
       </Box>
       <ValidatorStakesView address={address} />

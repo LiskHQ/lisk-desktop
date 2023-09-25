@@ -33,7 +33,7 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
 
 export const applications = (
   state = initialState.applications,
-  { type, app, apps, chainId, network }
+  { type, app, apps, chainId, network, currentName, newName }
 ) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
@@ -47,6 +47,16 @@ export const applications = (
         }),
         { ...state }
       );
+    }
+
+    case actionTypes.deleteNetworkInApplications: {
+      delete state[network];
+      return { ...state };
+    }
+
+    case actionTypes.updateNetworkNameInApplications: {
+      const { [currentName]: oldName, ...rest } = state;
+      return { ...rest, [newName]: { ...oldName } };
     }
 
     case actionTypes.deleteApplicationByChainId: {

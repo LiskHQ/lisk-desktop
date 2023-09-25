@@ -8,7 +8,6 @@ import {
   calculateUnlockedAmount,
   getLockedPendingUnlocks,
   calculateBalanceLockedInStakes,
-  extractAddressFromPassphrase,
   calculateRemainingAndSignedMembers,
 } from './account';
 
@@ -76,12 +75,6 @@ describe('Utils: Account', () => {
     it('should return the address corresponding to a (binary) public key', () => {
       const binaryPublicKey = Buffer.from(publicKey, 'hex');
       expect(extractAddressFromPublicKey(binaryPublicKey)).toEqual(address);
-    });
-  });
-
-  describe('extractAddressFromPassphrase', () => {
-    it('should return the address corresponding to a passphrase', () => {
-      expect(extractAddressFromPassphrase(passphrase)).toEqual(address);
     });
   });
 

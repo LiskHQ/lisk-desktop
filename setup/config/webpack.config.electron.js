@@ -1,4 +1,5 @@
 const { resolve } = require('path');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
 
@@ -26,6 +27,11 @@ const config = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      LISK_ENABLE_DEV_TOOL: JSON.parse(process.env.ENABLE_DEV_TOOL || true),
+    }),
+  ],
 };
 
 module.exports = merge(baseConfig, config);

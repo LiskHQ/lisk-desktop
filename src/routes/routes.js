@@ -130,10 +130,6 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  editAccount: {
-    isPrivate: true,
-    forbiddenTokens: [],
-  },
   send: {
     isPrivate: true,
     forbiddenTokens: [],
@@ -178,6 +174,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  hardwareAccountManagerModal: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   stakingQueue: {
     isPrivate: true,
     forbiddenTokens: [],
@@ -202,15 +202,15 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  multisigAccountDetails: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   signMultiSignTransaction: {
     isPrivate: true,
     forbiddenTokens: [],
   },
   validatorPerformance: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  accountDetails: {
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -247,7 +247,6 @@ export const modals = {
   removeApplicationFlow: {
     isPrivate: false,
     forbiddenTokens: [],
-    requiredParams: ['chainId'],
   },
   connectionProposal: {
     isPrivate: false,
@@ -275,6 +274,14 @@ export const modals = {
   },
   changeCommission: {
     isPrivate: true,
+    forbiddenTokens: [],
+  },
+  noTokenBalance: {
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
+  NoAccountView: {
+    isPrivate: false,
     forbiddenTokens: [],
   },
 };

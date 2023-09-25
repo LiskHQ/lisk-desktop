@@ -24,6 +24,10 @@
 
   & .input {
     margin: 5px 0 0;
+
+    & + span {
+      margin-top: 30px;
+    }
   }
 
   & .feedback {
@@ -46,5 +50,11 @@
   & button {
     margin-top: 24px;
     width: 100%;
+  }
+}
+
+.inputWrapper {
+  & > span > span {
+    top: 29px !important;
   }
 }

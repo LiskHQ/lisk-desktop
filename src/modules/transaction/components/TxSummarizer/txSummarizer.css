@@ -136,6 +136,11 @@
   min-width: 360px !important;
 }
 
+.boxFooterProp {
+  display: flex;
+  flex-direction: column !important;
+}
+
 .errorLabel {
   padding: 4px 8px;
   border-radius: 4px;

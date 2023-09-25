@@ -2,31 +2,29 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import { PrimaryButton } from '@theme/buttons';
 import Box from '@theme/box';
 import DownloadJSON from '@common/components/DownloadJSON/DownloadJSON';
 import BoxContent from '@theme/box/content';
-import classNames from 'classnames';
 import styles from './SetPasswordSuccess.css';
 
 function SetPasswordSuccess({ onClose, encryptedPhrase, headerText, contentText, buttonText }) {
   const { t } = useTranslation();
   const onContinue = () => onClose();
-  const accountName = encryptedPhrase.metadata.name;
+  const { metadata: { name: accountName, address, isHw } = {} } = encryptedPhrase || {};
   const appendAccountName = `-${accountName}`;
-  const address = encryptedPhrase.metadata.address;
   const fileName = `${address}${accountName ? appendAccountName : ''}-lisk-account`;
-  const isHw = encryptedPhrase.metadata.isHW;
 
   return (
     <Box className={styles.container}>
       <BoxContent className={styles.content}>
         <h1>{headerText || t("Perfect! You're all set")}</h1>
         {isHw ? (
-          <p className={classNames(styles.subheader, styles.mgb16)}>{t('Successfully edited')}</p>
+          <p className={classNames(styles.subHeader, styles.mgb16)}>{t('Successfully edited')}</p>
         ) : (
           <>
-            <p className={styles.subheader}>
+            <p className={styles.subHeader}>
               {contentText ||
                 t(
                   'You can now download your encrypted secret recovery phrase and use it to add your account on other devices.'

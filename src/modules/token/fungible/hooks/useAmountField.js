@@ -31,17 +31,17 @@ const useAmountField = (initialValue, balance = '0', token) => {
 
   const getAmountFeedbackAndError = (value, maxAmount = balance) => {
     const checklist = [
-      'NEGATIVE_AMOUNT',
+      'FORMAT',
       'MAX_ACCURACY',
+      'NEGATIVE_AMOUNT',
       'INSUFFICIENT_FUNDS',
       'MIN_BALANCE',
-      'FORMAT',
     ];
     let { message: feedback } = validateAmount({
       amount: value,
       token,
       accountBalance: maxAmount,
-      checklist: [...checklist, 'MIN_BALANCE'],
+      checklist: [...checklist],
     });
 
     if (!feedback && BigInt(maxAmount) < BigInt(convertToBaseDenom(value, token))) {
@@ -56,7 +56,7 @@ const useAmountField = (initialValue, balance = '0', token) => {
 
   useEffect(() => {
     setAmountField(getAmountFieldState(initialValue, getAmountFeedbackAndError));
-  }, [initialValue]);
+  }, [initialValue, token]);
 
   const onAmountInputChange = ({ value: amount }, maxAmount) => {
     const { leadingPoint, maxDecimals } = regex.amount[i18n.language];

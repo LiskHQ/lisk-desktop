@@ -6,6 +6,38 @@ import * as reactRedux from 'react-redux';
 import wallets from '@tests/constants/wallets';
 import AddAccountByFile from './AddAccountByFile';
 
+const mockOnPostMessage = jest.fn();
+const mockOnTerminate = jest.fn();
+class WorkerMock {
+  constructor(stringUrl) {
+    this.url = stringUrl;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  set onmessage(fn) {
+    const data = {
+      error: null,
+      result: {
+        recoveryPhrase:
+          'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
+        privateKey: wallets.genesis.summary.privateKey,
+      },
+    };
+
+    fn({ data });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  postMessage(msg) {
+    mockOnPostMessage(msg);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  terminate() {
+    mockOnTerminate();
+  }
+}
+
 const mockHistory = {
   location: {
     pathname: '',
@@ -39,6 +71,10 @@ jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue
   })
 );
 
+beforeAll(() => {
+  window.Worker = WorkerMock;
+});
+
 beforeEach(() => {
   smartRender(AddAccountByFile, null, { history: mockHistory });
 });
@@ -62,7 +98,7 @@ describe('Add account by file flow', () => {
 
     expect(screen.getByText('Enter your account password')).toBeTruthy();
     expect(
-      screen.getByText('Please enter your account password to backup the secret recovery phrase.')
+      screen.getByText('Please enter your account password to restore this account.')
     ).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.name)).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.address)).toBeTruthy();

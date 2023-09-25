@@ -5,15 +5,9 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import TxComposer from '@transaction/components/TxComposer';
-import {
-  convertCommissionToNumber,
-  checkCommissionValidity,
-  checkCommissionIncreaseLocked,
-} from '@pos/validator/utils';
+import { convertCommissionToNumber } from '@pos/validator/utils';
 import { useCurrentCommissionPercentage } from '@pos/validator/hooks/useCurrentCommissionPercentage';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
-import moment from 'moment/moment';
-import { useCommissionChangeDate } from '@pos/validator/components/ChangeCommission/Form/hooks/useCommissionChangeDate';
 import { usePosConstants } from '@pos/validator/hooks/queries';
 import styles from './ChangeCommissionForm.css';
 
@@ -40,7 +34,6 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
-  const { date: commissionChangeDate } = useCommissionChangeDate();
 
   useEffect(() => {
     if (currentCommission && currentCommission !== newCommission.value) {
@@ -74,17 +67,11 @@ export const ChangeCommissionForm = ({ prevState, nextStep }) => {
   const checkCommissionFeedback = (value) => {
     let inputFeedback;
     const newCommissionParam = convertCommissionToNumber(value);
-    const isNewCommissionValid = checkCommissionValidity(value, currentCommission);
 
     if (value.split('.')[1]?.length > 2) {
       inputFeedback = t('Input decimal places limited to 2');
     } else if (!(newCommissionParam >= 0 && newCommissionParam <= 10000)) {
       inputFeedback = t('Commission range is invalid');
-    } else if (checkCommissionIncreaseLocked(commissionChangeDate, value, currentCommission)) {
-      const timeCanUpdate = moment().to(commissionChangeDate, true);
-      inputFeedback = t(`You can only increase commission in ${timeCanUpdate}`);
-    } else if (!isNewCommissionValid) {
-      inputFeedback = t('You cannot increase commission more than 5%');
     }
     return { feedback: inputFeedback, numericValue: newCommissionParam };
   };

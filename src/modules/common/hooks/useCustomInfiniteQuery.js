@@ -7,7 +7,7 @@ export const useCustomInfiniteQuery = ({ keys, config, options = {}, client = de
   const [{ chainID }] = useCurrentApplication();
 
   return useInfiniteQuery(
-    [...keys, chainID, config],
+    [...keys, chainID, config, client.host],
     async ({ pageParam }) =>
       client.call({
         ...config,

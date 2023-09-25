@@ -4,15 +4,18 @@ import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from '@auth/__fixtures__';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
-import { /* mountWithQueryAndProps,  */ smartRender } from 'src/utils/testHelpers';
+import { smartRender } from 'src/utils/testHelpers';
 import * as hwManager from '@transaction/utils/hwManager';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockBlocks } from '@block/__fixtures__';
-import { signTransaction } from '@transaction/api';
+import * as transactionApi from '@transaction/api';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransactionEstimateFees';
+import useSettings from '@settings/hooks/useSettings';
+
 import {
   usePosConstants,
   useSentStakes,
@@ -24,6 +27,8 @@ import { useNetworkStatus } from '@network/hooks/queries';
 import { mockNetworkStatus } from '@network/__fixtures__';
 import UnlockBalanceForm from '.';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
+
+const mockToggleSetting = jest.fn();
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
@@ -43,6 +48,8 @@ jest.mock('../../hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@pos/validator/hooks/queries');
 jest.mock('@network/hooks/queries/useNetworkStatus');
+jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
+jest.mock('@settings/hooks/useSettings');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
@@ -67,6 +74,10 @@ describe('Unlock LSK modal', () => {
   useSentStakes.mockReturnValue({ data: mockSentStakes });
   useUnlocks.mockReturnValue({ data: mockUnlocks });
   useNetworkStatus.mockReturnValue({ data: mockNetworkStatus });
+  useSettings.mockReturnValue({
+    mainChainNetwork: { name: 'devnet' },
+    toggleSetting: mockToggleSetting,
+  });
 
   const nextStep = jest.fn();
 
@@ -135,16 +146,47 @@ describe('Unlock LSK modal', () => {
       txSignatureError: null,
     },
   };
+  const mockEstimateFeeResponse = {
+    data: {
+      transaction: {
+        fee: {
+          tokenID: '0400000000000000',
+          minimum: '5104000',
+        },
+      },
+    },
+    meta: {
+      breakdown: {
+        fee: {
+          minimum: {
+            byteFee: '96000',
+            additionalFees: {},
+          },
+        },
+      },
+    },
+  };
+
   const transactionJSON = {
     module: 'pos',
     command: 'unlock',
     params: {},
     nonce: '0',
-    fee: '0',
+    fee: mockEstimateFeeResponse.data.transaction.fee.minimum,
     senderPublicKey: 'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535',
     signatures: [],
   };
   const config = { renderType: 'mount', queryClient: true, store: true, storeInfo: store };
+
+  beforeAll(() => {
+    jest.spyOn(transactionApi, 'dryRunTransaction').mockResolvedValue([]);
+    useTransactionEstimateFees.mockReturnValue({
+      data: mockEstimateFeeResponse,
+      isFetching: false,
+      isFetched: true,
+      error: false,
+    });
+  });
 
   beforeEach(() => {
     wrapper = smartRender(UnlockBalanceForm, props, config).wrapper;
@@ -163,7 +205,7 @@ describe('Unlock LSK modal', () => {
 
   it('fires balanceUnlocked action with selected fee', async () => {
     const tx = { id: 1 };
-    signTransaction.mockImplementation(
+    transactionApi.signTransaction.mockImplementation(
       () =>
         new Promise((resolve) => {
           resolve(tx);
@@ -176,24 +218,42 @@ describe('Unlock LSK modal', () => {
       wrapper.update();
     });
     await flushPromises();
+    const feeToken = {
+      availableBalance: '1000000000',
+      chainName: 'Lisk',
+      lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+      symbol: 'LSK',
+      tokenID: '0000000100000000',
+    };
     expect(props.nextStep).toBeCalledWith({
       transactionJSON,
       formProps: {
         composedFees: [
           {
             title: 'Transaction',
-            value: '0 LSK',
-            components: [],
+            label: 'transactionFee',
+            token: feeToken,
+            value: '-',
+            components: [
+              {
+                type: 'bytesFee',
+                value: 96000n,
+                feeToken,
+              },
+            ],
           },
           {
             title: 'Message',
-            value: '0 LSK',
+            value: '-',
+            label: 'messageFee',
+            token: feeToken,
             isHidden: true,
             components: [],
           },
         ],
         isFormValid: true,
         moduleCommand: 'pos:unlock',
+        enableMinimumBalanceFeedback: true,
         fields: {
           token: mockTokensBalance.data[0],
         },
@@ -202,12 +262,28 @@ describe('Unlock LSK modal', () => {
       fees: [
         {
           title: 'Transaction',
-          value: '0 LSK',
-          components: [],
+          value: '-',
+          label: 'transactionFee',
+          token: feeToken,
+          components: [
+            {
+              type: 'bytesFee',
+              value: 96000n,
+              feeToken: {
+                availableBalance: '1000000000',
+                chainName: 'Lisk',
+                lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+                symbol: 'LSK',
+                tokenID: '0000000100000000',
+              },
+            },
+          ],
         },
         {
           title: 'Message',
-          value: '0 LSK',
+          value: '-',
+          label: 'messageFee',
+          token: feeToken,
           isHidden: true,
           components: [],
         },
@@ -217,45 +293,96 @@ describe('Unlock LSK modal', () => {
   });
 
   it('calls nextStep when clicked on confirm', async () => {
-    wrapper.find('.confirm-btn button').simulate('click');
+    wrapper.find('.confirm-btn').at(0).simulate('click');
+
+    await flushPromises();
+    const feeToken = {
+      availableBalance: '1000000000',
+      chainName: 'Lisk',
+      lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+      symbol: 'LSK',
+      tokenID: '0000000100000000',
+    };
+
     expect(props.nextStep).toBeCalledWith(
       expect.objectContaining({
-        transactionJSON,
+        fees: [
+          {
+            components: [
+              {
+                feeToken,
+                type: 'bytesFee',
+                value: 96000n,
+              },
+            ],
+            title: 'Transaction',
+            token: feeToken,
+            label: 'transactionFee',
+            value: '-',
+          },
+          {
+            components: [],
+            isHidden: true,
+            title: 'Message',
+            value: '-',
+            label: 'messageFee',
+            token: feeToken,
+          },
+        ],
         formProps: {
           composedFees: [
             {
+              components: [
+                {
+                  feeToken: {
+                    availableBalance: '1000000000',
+                    chainName: 'Lisk',
+                    lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+                    symbol: 'LSK',
+                    tokenID: '0000000100000000',
+                  },
+                  type: 'bytesFee',
+                  value: 96000n,
+                },
+              ],
               title: 'Transaction',
-              value: '0 LSK',
-              components: [],
+              token: feeToken,
+              label: 'transactionFee',
+              value: '-',
             },
             {
-              title: 'Message',
-              value: '0 LSK',
-              isHidden: true,
               components: [],
+              isHidden: true,
+              title: 'Message',
+              value: '-',
+              label: 'messageFee',
+              token: feeToken,
             },
           ],
+          enableMinimumBalanceFeedback: true,
+          fields: {
+            token: {
+              availableBalance: '1000000000',
+              chainName: 'Lisk',
+              lockedBalances: [{ amount: '10000000000', moduleID: '5' }],
+              symbol: 'LSK',
+              tokenID: '0000000100000000',
+            },
+          },
           isFormValid: true,
           moduleCommand: 'pos:unlock',
-          fields: {
-            token: mockTokensBalance.data[0],
-          },
           unlockedAmount: 455000000000,
         },
-        fees: [
-          {
-            title: 'Transaction',
-            value: '0 LSK',
-            components: [],
-          },
-          {
-            title: 'Message',
-            value: '0 LSK',
-            isHidden: true,
-            components: [],
-          },
-        ],
         selectedPriority: { selectedIndex: 1 },
+        transactionJSON: {
+          command: 'unlock',
+          fee: '5104000',
+          module: 'pos',
+          nonce: '0',
+          params: {},
+          senderPublicKey: 'cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535',
+          signatures: [],
+        },
       })
     );
   });

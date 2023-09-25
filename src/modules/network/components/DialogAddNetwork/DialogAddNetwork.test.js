@@ -1,26 +1,46 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { smartRender } from 'src/utils/testHelpers';
+import { toast } from 'react-toastify';
 import useSettings from '@settings/hooks/useSettings';
+import networks from '@network/configuration/networks';
+import { useNetworkCheck } from '@network/components/DialogAddNetwork/utils';
 import DialogAddNetwork from './DialogAddNetwork';
 
 jest.mock('@settings/hooks/useSettings');
+const mockSetValue = jest.fn();
+useSettings.mockReturnValue({
+  setValue: mockSetValue,
+  customNetworks: [],
+});
+
+jest.mock('react-toastify', () => ({
+  ...jest.requireActual('react-toastify'),
+  toast: { info: jest.fn() },
+}));
+
+jest.mock('@network/components/DialogAddNetwork/utils', () => ({
+  ...jest.requireActual('@network/components/DialogAddNetwork/utils'),
+  useNetworkCheck: jest.fn(() => ({
+    isNetworkOK: true,
+    isOnchainOK: true,
+    isOffchainOK: true,
+  })),
+}));
 
 describe('DialogAddNetwork', () => {
   const config = {
     renderType: 'render',
-    historyInfo: {},
+    historyInfo: {
+      goBack: jest.fn(),
+    },
+    queryClient: true,
   };
-  const mockSetValue = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('renders properly', () => {
-    useSettings.mockReturnValue({
-      setValue: mockSetValue,
-      customNetworks: [],
-    });
     smartRender(DialogAddNetwork, null, config);
 
     expect(screen.getAllByText('Add network')[0]).toBeInTheDocument();
@@ -32,34 +52,28 @@ describe('DialogAddNetwork', () => {
   });
 
   it('adds a new network if the inputs are valid', async () => {
-    useSettings.mockReturnValue({
-      setValue: mockSetValue,
-      customNetworks: [],
-    });
     smartRender(DialogAddNetwork, null, config);
 
     fireEvent.change(screen.getByTestId('name'), { target: { value: 'custom_network' } });
     fireEvent.change(screen.getByTestId('serviceUrl'), {
       target: { value: 'http://localhost:8080' },
     });
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button', { name: 'Add network' }));
     await waitFor(() => {
-      expect(screen.getByText('Success: Network added')).toBeInTheDocument();
+      expect(toast.info).toBeCalled();
+      expect(config.historyInfo.goBack).toBeCalled();
     });
   });
 
   it('throws errors if the inputs are invalid', async () => {
-    useSettings.mockReturnValue({
-      setValue: mockSetValue,
-      customNetworks: [],
-    });
     smartRender(DialogAddNetwork, null, config);
 
     fireEvent.change(screen.getByTestId('name'), { target: { value: '123*custom&$network' } });
     fireEvent.change(screen.getByTestId('serviceUrl'), {
       target: { value: 'localhost:9901' },
     });
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button', { name: 'Add network' }));
+
     await waitFor(() => {
       expect(screen.getByText('Invalid network name')).toBeInTheDocument();
       expect(screen.getByText('Invalid URL')).toBeInTheDocument();
@@ -78,6 +92,7 @@ describe('DialogAddNetwork', () => {
           isAvailable: true,
         },
       ],
+      mainChainNetwork: networks.devnet,
     });
     smartRender(DialogAddNetwork, null, config);
 
@@ -87,7 +102,9 @@ describe('DialogAddNetwork', () => {
     });
     fireEvent.click(screen.getByRole('button'));
     await waitFor(() => {
-      expect(screen.getByText('Network name or serviceUrl already exists.')).toBeInTheDocument();
+      expect(
+        screen.getByText('Name & ServiceUrl & WsServiceUrl already exists.')
+      ).toBeInTheDocument();
     });
   });
 
@@ -99,14 +116,15 @@ describe('DialogAddNetwork', () => {
           name: 'custom_network_one',
           label: 'custom_network_one',
           serviceUrl: 'http://custom-network-service.com',
-          wsServiceUrl: 'http://custom-network-service.com',
           isAvailable: true,
         },
       ],
+      mainChainNetwork: networks.devnet,
     });
     const updatedConfig = {
       ...config,
       historyInfo: {
+        goBack: jest.fn(),
         location: {
           search:
             'modal=dialogAddNetwork&name=custom_network_one&serviceUrl=http://custom-network-service.com',
@@ -123,8 +141,29 @@ describe('DialogAddNetwork', () => {
     });
     fireEvent.click(screen.getByRole('button'));
     await waitFor(() => {
-      expect(mockSetValue).toHaveBeenCalledTimes(1);
-      expect(screen.getByText('Success: Network edited')).toBeInTheDocument();
+      expect(toast.info).toBeCalled();
+      expect(updatedConfig.historyInfo.goBack).toBeCalled();
+    });
+  });
+
+  it('should show retry button if network url fails to fetch', async () => {
+    useNetworkCheck.mockReturnValue({
+      isNetworkOK: false,
+      isOnchainOK: false,
+      isOffchainOK: false,
+      isError: true,
+      isLoading: false,
+    });
+    smartRender(DialogAddNetwork, null, config);
+
+    fireEvent.change(screen.getByTestId('name'), { target: { value: 'test' } });
+    fireEvent.change(screen.getByTestId('serviceUrl'), {
+      target: { value: 'https://www.failedrequest.com' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Add network' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Retry')).toBeInTheDocument();
     });
   });
 });

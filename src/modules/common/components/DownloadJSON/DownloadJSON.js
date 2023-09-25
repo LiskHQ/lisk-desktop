@@ -15,7 +15,7 @@ function DownloadJSON({ encryptedPhrase, fileName }) {
   return (
     <>
       <div className={styles.downloadLisk}>
-        <Icon name="fileOutline" />
+        <Icon name="filePlain" />
         <p className="option-value">{`${fileName}.json`}</p>
       </div>
       <div className={styles.downloadButton}>

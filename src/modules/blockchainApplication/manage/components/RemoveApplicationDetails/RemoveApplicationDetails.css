@@ -15,18 +15,16 @@
 }
 
 .headerContainer {
-  --content-font: 'gilroy';
-
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 14px;
-  font-family: var(--content-font);
+  font-family: var(--heading-font);
 
   & > p {
-    font-size: 20px;
+    font-size: 28px;
     font-weight: 600;
     color: var(--color-maastricht-blue);
     margin-top: 32px;
@@ -69,9 +67,7 @@
 
 .chainNameWrapper {
   & > span {
-    --content-font: 'gilroy';
-
-    font-family: var(--content-font);
+    font-family: var(--heading-font);
     font-size: 28px;
     font-weight: 700;
     color: var(--color-maastricht-blue);
@@ -144,7 +140,7 @@
 
 .actionsRow {
   width: 100%;
-  padding: 32px;
+  padding: 24px;
   padding-top: 0px;
   box-sizing: border-box;
   flex-direction: row;
@@ -155,7 +151,7 @@
 
 .footerDetailsRow {
   width: 100%;
-  padding: 32px;
+  padding: 24px;
   box-sizing: border-box;
   flex-direction: row;
   column-gap: 10px;
@@ -184,7 +180,7 @@
     border-radius: 40px;
   }
 
-  & .active {
+  & .activated {
     background-color: #00d5631a;
     color: var(--color-jade-green);
   }

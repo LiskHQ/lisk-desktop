@@ -4,9 +4,14 @@ import { mountWithQueryClient, mountWithQueryAndProps } from 'src/utils/testHelp
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransactionEstimateFees';
 import * as encodingUtils from '../../utils/encoding';
 import TxComposer from './index';
 
+jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
+jest.mock('@token/fungible/hooks/queries/useTokenBalances');
 jest.mock('@network/hooks/useCommandsSchema');
 jest.spyOn(encodingUtils, 'fromTransactionJSON').mockImplementation((tx) => tx);
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -22,6 +27,10 @@ jest.mock('@liskhq/lisk-client', () => ({
     getBytes: jest.fn().mockReturnValue({ length: 50 }),
   },
 }));
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('TxComposer', () => {
   const props = {
@@ -42,12 +51,43 @@ describe('TxComposer', () => {
     },
   };
 
+  const mockEstimateFeeResponse = {
+    data: {
+      transaction: {
+        fee: {
+          tokenID: '0400000000000000',
+          minimum: '5104000',
+        },
+      },
+    },
+    meta: {
+      breakdown: {
+        fee: {
+          minimum: {
+            byteFee: '96000',
+            additionalFees: {},
+          },
+        },
+      },
+    },
+  };
+
+  useTransactionEstimateFees.mockReturnValue({
+    data: mockEstimateFeeResponse,
+    isFetching: false,
+    isFetched: true,
+    error: false,
+    isLoadingFee: false,
+    feeEstimateError: false,
+  });
+
   useCommandSchema.mockReturnValue({
     moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
     ),
   });
+  useTokenBalances.mockReturnValue({ data: mockAppsTokens });
 
   it('should provide feedback when form is invalid', () => {
     const newProps = {
@@ -99,9 +139,6 @@ describe('TxComposer', () => {
     };
     const wrapper = mountWithQueryAndProps(TxComposer, newProps, state);
     expect(wrapper.find('TransactionPriority')).toExist();
-    expect(wrapper.find('Feedback').text()).toEqual(
-      'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
-    );
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);
   });
 
@@ -125,5 +162,66 @@ describe('TxComposer', () => {
     expect(wrapper.find('.confirm-btn')).toExist();
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(false);
     expect(wrapper.find('.confirm-btn').at(0).props().children).toEqual('Continue to stake');
+  });
+
+  it('should render transaction form when useTransactionEstimateFees hook errors', () => {
+    const newProps = {
+      ...props,
+      buttonTitle: 'Continue to summary',
+      formProps: {
+        isFormValid: true,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+        fields: { token: { availableBalance: 10000000000000 } },
+        sendingChain: { chainID: '1' },
+        recipientChain: { chainID: '2' },
+      },
+      commandParams: {},
+    };
+
+    useTransactionEstimateFees.mockReturnValue({
+      error: {
+        response: { data: { message: 'Failed to estimate fees.' } },
+      },
+      isFetching: false,
+      isFetched: true,
+      isLoading: false,
+    });
+
+    const wrapper = mountWithQueryClient(TxComposer, newProps);
+    expect(wrapper.find('TransactionPriority')).toExist();
+    expect(wrapper.find('Feedback').html()).toEqual(null);
+    expect(wrapper.find('.confirm-btn')).toExist();
+    expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);
+    expect(wrapper.find('.confirm-btn').at(0).props().children).toEqual('Continue to summary');
+  });
+
+  it('should have its continue button to be disabled', () => {
+    const newProps = {
+      ...props,
+      buttonTitle: 'Continue to summary',
+      formProps: {
+        isFormValid: true,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+        fields: { token: { availableBalance: 10000000000000 } },
+        sendingChain: { chainID: '1' },
+        recipientChain: { chainID: '2' },
+      },
+      commandParams: {},
+    };
+
+    useTransactionEstimateFees.mockReturnValue({
+      data: mockEstimateFeeResponse,
+      isFetching: true,
+      isFetched: true,
+      error: false,
+      feeEstimateError: true,
+    });
+
+    const wrapper = mountWithQueryClient(TxComposer, newProps);
+    expect(wrapper.find('TransactionPriority')).toExist();
+    expect(wrapper.find('Feedback').html()).toEqual(null);
+    expect(wrapper.find('.confirm-btn')).toExist();
+    expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);
+    expect(wrapper.find('.confirm-btn').at(0).props().children).toEqual('Continue to summary');
   });
 });

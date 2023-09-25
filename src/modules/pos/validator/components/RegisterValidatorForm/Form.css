@@ -3,7 +3,7 @@
 .wrapper {
   box-sizing: border-box;
   width: 100%;
-  padding: 20px;
+  padding: var(--horizontal-modal-padding-l);
   padding-bottom: 0;
   display: flex;
   flex-direction: column;
@@ -13,15 +13,14 @@
   & .header {
     & h2 {
       color: var(--color-black);
-      font-size: var(--font-size-h5);
+      font-size: var(--font-size-h3);
       font-weight: var(--font-weight-bold);
       margin: 0;
     }
   }
 
   & .container {
-    padding-right: 0;
-    padding-left: 0;
+    padding: 24px 0;
 
     & > .description {
       @mixin contentLargest;
@@ -51,7 +50,11 @@
       @mixin contentNormal bold;
 
       color: var(--color-maastricht-blue);
-      margin: 22px 0 10px;
+      margin: 16px 0 8px;
+
+      &:first-child {
+        margin-top: 0;
+      }
     }
 
     & .input {

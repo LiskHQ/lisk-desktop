@@ -7,6 +7,7 @@ import DialogLink from 'src/theme/dialog/link';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks';
 import { useGetInitializationFees } from '@token/fungible/hooks/queries';
+import { useFees } from '@transaction/hooks/queries/useFees';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import MigrationDetails from '../MigrationDetails';
@@ -16,9 +17,10 @@ const AccountsComparison = ({ t }) => {
   useDeprecatedAccount();
   useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
+  const { data: fees } = useFees();
   const { isAccountInitialized, initializationFees } = useGetInitializationFees({
     address: wallet.summary?.address,
-    tokenID: wallet.token?.[0]?.tokenID,
+    tokenID: fees?.data?.feeTokenID,
   });
   const additionalByteFee = BigInt(1000000);
   const extraCommandFee = BigInt(initializationFees?.userAccount || 0) + additionalByteFee;
@@ -112,7 +114,7 @@ const AccountsComparison = ({ t }) => {
           </li>
         </ul>
       </section>
-      <DialogLink component="reclaimBalance" data={{ tokenID: wallet.token?.[0]?.tokenID }}>
+      <DialogLink component="reclaimBalance" data={{ tokenID: fees?.data?.feeTokenID }}>
         <PrimaryButton className={styles.button} disabled={!isInitializedAndHasEnoughBalance}>
           {t('Continue')}
         </PrimaryButton>

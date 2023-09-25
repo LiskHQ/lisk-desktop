@@ -28,6 +28,7 @@ const getInputClass = ({ className, dark, icon, isMasked, status }) =>
   [
     styles.input,
     status === 'error' && styles.error,
+    status === 'pending' && styles.pending,
     isMasked && styles.mask,
     className,
     icon && styles.withIcon,
@@ -102,6 +103,7 @@ const Input = forwardRef(
           {status === 'pending' && (
             <Spinner
               className={`${styles.loading} ${styles.status} node-connection-loading-spinner`}
+              data-testid="input-spinner"
             />
           )}
           {statusIconNameMap[status] && (

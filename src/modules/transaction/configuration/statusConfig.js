@@ -46,6 +46,16 @@ export const statusMessages = (t) => ({
     title: t('Transaction aborted on device'),
     message: t('You have cancelled the transaction on your hardware wallet.'),
   },
+  [txStatusTypes.hwMemorySizeLimitRejection]: {
+    title: t('Transaction rejected'),
+    message: t(
+      'Your ledger device cannot process this transaction due to device size limitation. Please connect a ledger device with a larger memory size or add your account to Lisk Desktop to complete this transaction.'
+    ),
+  },
+  [txStatusTypes.hwCannotOpenPath]: {
+    title: t('Account could not be found on device'),
+    message: t('Please re-import your account.'),
+  },
   [txStatusTypes.hwDisconnected]: {
     title: t('Device disconnected'),
     message: t('You have disconnected the device'),
@@ -56,14 +66,23 @@ export const statusMessages = (t) => ({
   },
 });
 
-const getErrorMessage = (data, paramSchema) => {
+const getErrorMessage = (transaction, paramSchema, errorMessage) => {
+  let transactionJSON;
   try {
-    LiskTransaction.validateTransaction(data, paramSchema);
+    LiskTransaction.validateTransaction(transaction, paramSchema);
 
-    return toTransactionJSON(data, paramSchema);
+    transactionJSON = toTransactionJSON(transaction, paramSchema);
   } catch (error) {
-    return data;
+    return JSON.stringify({
+      transaction,
+      error: errorMessage,
+    });
   }
+
+  return {
+    transaction: transactionJSON,
+    error: errorMessage,
+  };
 };
 
 /**
@@ -77,8 +96,8 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
   const paramSchema = options?.moduleCommandSchemas[moduleCommand];
 
   // Signature errors
-  if (transactions.txSignatureError) {
-    const txSignatureErrorMsg = transactions.txSignatureError.message;
+  if (transactions.txSignatureError || transactions.signedTransaction?.errors) {
+    const txSignatureErrorMsg = transactions.txSignatureError?.message;
     const hwTxStatusType = transactions.txSignatureError?.hwTxStatusType;
     if (hwTxStatusType) {
       return {
@@ -87,9 +106,13 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
       };
     }
 
+    const message =
+      transactions.signedTransaction?.message ||
+      getErrorMessage(transactions.txSignatureError.transaction, paramSchema, txSignatureErrorMsg);
+
     return {
       code: txStatusTypes.signatureError,
-      message: JSON.stringify(getErrorMessage(transactions.txSignatureError, paramSchema)),
+      message,
     };
   }
 
@@ -97,7 +120,11 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
   if (transactions.txBroadcastError) {
     return {
       code: txStatusTypes.broadcastError,
-      message: JSON.stringify(getErrorMessage(transactions.txBroadcastError, paramSchema)),
+      message: getErrorMessage(
+        transactions.txBroadcastError.transaction,
+        transactions.txBroadcastError.paramsSchema || paramSchema,
+        transactions.txBroadcastError.error
+      ),
     };
   }
 

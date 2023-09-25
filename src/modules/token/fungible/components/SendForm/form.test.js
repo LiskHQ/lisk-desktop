@@ -12,6 +12,10 @@ import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManag
 import { useCurrentAccount } from '@account/hooks';
 import { mockAppTokens } from '@tests/fixtures/token';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransactionEstimateFees';
+import useSettings from '@settings/hooks/useSettings';
+import { useAuth } from '@auth/hooks/queries/useAuth';
+import * as transactionApi from '@transaction/api';
 import {
   mockAppsTokens,
   mockTokensBalance,
@@ -21,7 +25,9 @@ import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/
 import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
+import { waitFor } from '@testing-library/react';
 import useFiatRates from 'src/modules/common/hooks/useFiatRates';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
 import useMessageField from '../../hooks/useMessageField';
 import Form from './SendForm';
 import {
@@ -38,6 +44,29 @@ const mockSetAccount = jest.fn();
 const mockSetApplication = jest.fn();
 const mockToken = mockAppsTokens.data[0];
 const mockCurrentApplication = mockManagedApplications[0];
+const mockEstimateFeeResponse = {
+  data: {
+    transaction: {
+      fee: {
+        tokenID: '0400000000000000',
+        minimum: '5104000',
+      },
+    },
+  },
+  meta: {
+    breakdown: {
+      fee: {
+        minimum: {
+          byteFee: '96000',
+          additionalFees: {},
+        },
+      },
+    },
+  },
+};
+
+jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
+jest.mock('@settings/hooks/useSettings');
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('@account/hooks/useCurrentAccount');
@@ -46,6 +75,8 @@ jest.mock('../../hooks');
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.mock('@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore');
 jest.mock('src/modules/common/hooks/useFiatRates');
+jest.mock('@auth/hooks/queries/useAuth');
+jest.spyOn(transactionApi, 'dryRunTransaction').mockResolvedValue([]);
 
 describe('Form', () => {
   let props;
@@ -60,7 +91,9 @@ describe('Form', () => {
   });
   useApplicationManagement.mockReturnValue({
     setApplication: mockSetApplication,
-    applications: mockManagedApplications,
+    applications: mockManagedApplications.map((app, index) =>
+      index === 0 ? { ...app, chainID: '00010000' } : app
+    ),
   });
 
   useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
@@ -82,6 +115,17 @@ describe('Form', () => {
   });
   useGetMinimumMessageFee.mockReturnValue({ data: { data: { fee: 5000000 } } });
   useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
+  useTransactionEstimateFees.mockReturnValue({
+    data: mockEstimateFeeResponse,
+    isFetching: false,
+    isFetched: true,
+    error: false,
+  });
+  useAuth.mockReturnValue({ data: mockAuth });
+  useSettings.mockReturnValue({
+    mainChainNetwork: { name: 'devnet' },
+    toggleSetting: jest.fn(),
+  });
 
   beforeEach(() => {
     bookmarks = {
@@ -167,8 +211,11 @@ describe('Form', () => {
     await flushPromises();
 
     expect(wrapper.find('.confirm-btn').at(0)).not.toBeDisabled();
-    wrapper.find('.confirm-btn').at(0).simulate('click');
-    expect(props.nextStep).toHaveBeenCalled();
+    wrapper.find('.confirm-btn').at(1).simulate('click');
+
+    await waitFor(() => {
+      expect(props.nextStep).toHaveBeenCalled();
+    });
   });
 
   it('submit button should be disabled', async () => {

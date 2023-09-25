@@ -2,7 +2,7 @@ import localeHandler from './localeHandler';
 import menu from '../menu';
 import process from './process';
 import { IPC_OPEN_URL } from '../../../src/const/ipcGlobal';
-import { WHITE_LISTED_DOMAIN } from '../utils';
+import { isUrlAllowed } from '../utils';
 
 const win = {
   browser: null,
@@ -29,7 +29,7 @@ const win = {
     });
 
     // Enables DevTools
-    const { LISK_ENABLE_DEV_TOOL, DEBUG } = process.env();
+    const { DEBUG } = process.env();
 
     if (LISK_ENABLE_DEV_TOOL || DEBUG) {
       win.browser.devtools = true;
@@ -88,12 +88,12 @@ const win = {
       }
     });
 
+    // eslint-disable-next-line max-statements
     const handleRedirect = (e, url) => {
       try {
-        const isAllowedUrl = WHITE_LISTED_DOMAIN.includes(new URL(url).hostname);
+        const isValid = isUrlAllowed(url);
 
-        if (!isAllowedUrl) return e.preventDefault();
-
+        if (!isValid) return e.preventDefault();
         if (url !== win.browser.webContents.getURL()) {
           e.preventDefault();
           electron.shell.openExternal(url);
@@ -101,6 +101,7 @@ const win = {
 
         return null;
       } catch {
+        e.preventDefault();
         return null;
       }
     };

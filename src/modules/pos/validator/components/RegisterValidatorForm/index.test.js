@@ -6,6 +6,8 @@ import { mockAuth } from 'src/modules/auth/__fixtures__';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
+import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransactionEstimateFees';
+import useSettings from '@settings/hooks/useSettings';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
@@ -13,6 +15,26 @@ import RegisterValidatorForm from '.';
 import { usePosConstants } from '../../hooks/queries';
 
 const mockCurrentAccount = mockSavedAccounts[0];
+const mockEstimateFeeResponse = {
+  data: {
+    transaction: {
+      fee: {
+        tokenID: '0400000000000000',
+        minimum: '5104000',
+      },
+    },
+  },
+  meta: {
+    breakdown: {
+      fee: {
+        minimum: {
+          byteFee: '96000',
+          additionalFees: {},
+        },
+      },
+    },
+  },
+};
 
 jest.mock('../../hooks/queries/usePosConstants');
 jest.mock('@token/fungible/hooks/queries/useTokenBalances');
@@ -41,6 +63,8 @@ jest.mock('@network/hooks/useCommandsSchema', () => ({
   }),
 }));
 jest.mock('@pos/validator/hooks/usePosToken');
+jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
+jest.mock('@settings/hooks/useSettings');
 
 const genKey = {
   value: keys.genKey,
@@ -86,6 +110,17 @@ describe('RegisterValidatorForm', () => {
       })),
     },
     isLoading: false,
+  });
+  useTransactionEstimateFees.mockReturnValue({
+    data: mockEstimateFeeResponse,
+    isFetching: false,
+    isFetched: true,
+    error: false,
+  });
+
+  useSettings.mockReturnValue({
+    mainChainNetwork: { name: 'devnet' },
+    toggleSetting: jest.fn(),
   });
 
   afterEach(() => {

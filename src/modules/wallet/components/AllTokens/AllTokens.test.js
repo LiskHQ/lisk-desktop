@@ -109,6 +109,26 @@ describe('AllTokens', () => {
     useFilter.mockReturnValue({ filters: {}, setFilter });
 
     renderWithRouter(AllTokens, props);
+    await waitFor(() => {
+      expect(screen.queryByTestId('search-token')).toBeFalsy();
+    });
+  });
+
+  it('should display search field if available token balance is greater than 10', async () => {
+    const setFilter = jest.fn();
+    const props = {
+      history,
+    };
+
+    useTokenBalances.mockReturnValue({
+      data: { data: new Array(10).fill(mergedTokensData[0]) },
+      isLoading: false,
+      isSuccess: true,
+      isFetched: true,
+    });
+    useFilter.mockReturnValue({ filters: {}, setFilter });
+
+    renderWithRouter(AllTokens, props);
 
     fireEvent.change(screen.getByTestId('search-token'), { target: { value: 'test' } });
 

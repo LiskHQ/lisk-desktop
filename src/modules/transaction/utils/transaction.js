@@ -117,7 +117,7 @@ const downloadJSON = (data, name) => {
  * to open up room for the mandatory ones
  * @returns {array} the trimmed array of signatures
  */
-export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
+const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
   const skip = hasSenderSignature ? 1 : 0;
   const firstOptional = skip + mandatoryKeysNo;
   let cleared = false;
@@ -157,7 +157,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
   return signedTransaction;
 };
 
-const signMessageSignature = (chainIDBuffer, transaction, privateKeyBuffer, messageSignature) => {
+const getUnsignedBytes = (transaction, messageSchema) => {
   const message = {
     mandatoryKeys: transaction.params.mandatoryKeys,
     optionalKeys: transaction.params.optionalKeys,
@@ -166,56 +166,70 @@ const signMessageSignature = (chainIDBuffer, transaction, privateKeyBuffer, mess
     nonce: transaction.nonce,
   };
 
-  const data = codec.codec.encode(messageSignature, message);
-  return cryptography.ed.signData(MESSAGE_TAG_MULTISIG_REG, chainIDBuffer, data, privateKeyBuffer);
+  return codec.codec.encode(messageSchema, message);
+};
+
+const getAccountKeys = (account) => {
+  const keys = {
+    mandatoryKeys: account.mandatoryKeys
+      .map((k) => (Buffer.isBuffer(k) ? k : Buffer.from(k, 'hex')))
+      .sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB)),
+    optionalKeys: account.optionalKeys
+      .map((k) => (Buffer.isBuffer(k) ? k : Buffer.from(k, 'hex')))
+      .sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB)),
+  };
+
+  return keys.mandatoryKeys.concat(keys.optionalKeys);
+};
+
+const insertSignature = (signatures, signature, accountKeys, currentAccountPubKey) => {
+  for (let i = 0; i < accountKeys.length; i += 1) {
+    if (accountKeys[i].equals(currentAccountPubKey)) {
+      signatures[i] = signature;
+    } else if (signatures[i] === undefined) {
+      signatures[i] = Buffer.alloc(0);
+    }
+  }
+
+  return signatures;
 };
 
 // eslint-disable-next-line max-statements
 const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, options) => {
   const moduleCommand = joinModuleAndCommand(transaction);
-  const isGroupRegistration = moduleCommand === registerMultisignature;
+  const isRegisterMultisignature = moduleCommand === registerMultisignature;
   const chainIDBuffer = Buffer.from(chainID, 'hex');
   const privateKeyBuffer = privateKey ? Buffer.from(privateKey, 'hex') : Buffer.alloc(0);
-  const publicKeyBuffer = Buffer.from(wallet.summary.publicKey, 'hex');
+  const currentAccountPubKey = Buffer.from(wallet.summary.publicKey, 'hex');
+  const areAllMembersSigned =
+    isRegisterMultisignature &&
+    transaction.params.signatures.filter(
+      (sig) => sig.length !== 64 || Buffer.from(sig).equals(Buffer.alloc(64))
+    ).length === 0 &&
+    transaction.params.signatures.length ===
+      transaction.params.mandatoryKeys.length + transaction.params.optionalKeys.length;
 
   // Sign the params if tx is a group registration and the current account is a member
-  if (isGroupRegistration) {
-    const members = [
-      ...transaction.params.mandatoryKeys.sort((publicKeyA, publicKeyB) =>
-        publicKeyA.compare(publicKeyB)
-      ),
-      ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) =>
-        publicKeyA.compare(publicKeyB)
-      ),
-    ];
-
-    const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
-
-    if (senderIndex > -1) {
-      const { messageSchema } = options;
-      const memberSignature = signMessageSignature(
-        chainIDBuffer,
-        transaction,
-        privateKeyBuffer,
-        messageSchema
-      );
-
-      const signatures = [...Array(members.length).keys()].map((index) => {
-        if (index === senderIndex) return memberSignature;
-
-        if (!transaction.params.signatures[index] || !transaction.params.signatures[index].length) {
-          return Buffer.alloc(64);
-        }
-        return transaction.params.signatures[index];
-      });
-      transaction.params.signatures = signatures;
-    }
+  if (isRegisterMultisignature && !areAllMembersSigned) {
+    const unsignedBytes = getUnsignedBytes(transaction, options.messageSchema);
+    const signature = cryptography.ed.signData(
+      MESSAGE_TAG_MULTISIG_REG,
+      chainIDBuffer,
+      unsignedBytes,
+      privateKeyBuffer
+    );
+    const accountKeys = getAccountKeys(transaction.params);
+    transaction.params.signatures = insertSignature(
+      transaction.params.signatures,
+      signature,
+      accountKeys,
+      currentAccountPubKey
+    );
   }
 
   // Sign the tx only if the account is the initiator of the tx
-
   const { mandatoryKeys, optionalKeys, numberOfSignatures } = wallet.keys;
-  const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;
+  const isSender = Buffer.compare(transaction.senderPublicKey, currentAccountPubKey) === 0;
   const multiSigStatus = getTransactionSignatureStatus(
     {
       mandatoryKeys,
@@ -225,8 +239,10 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
     transaction
   );
   if (
-    (isSender && isGroupRegistration && multiSigStatus === signatureCollectionStatus.fullySigned) ||
-    (isSender && !isGroupRegistration)
+    (isSender &&
+      isRegisterMultisignature &&
+      multiSigStatus === signatureCollectionStatus.fullySigned) ||
+    (isSender && !isRegisterMultisignature)
   ) {
     try {
       const res = transactions.signTransactionWithPrivateKey(
@@ -245,9 +261,16 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey, o
 };
 
 // eslint-disable-next-line max-statements
-const signTransactionUsingHW = async (wallet, schema, chainID, transaction) => {
+const signTransactionUsingHW = async (
+  wallet,
+  schema,
+  chainID,
+  transaction,
+  senderAccount,
+  options
+) => {
   const [error, signedTransaction] = await to(
-    signTransactionByHW({ wallet, chainID, transaction, schema })
+    signTransactionByHW({ wallet, chainID, transaction, schema, senderAccount, options })
   );
 
   if (error) {
@@ -268,7 +291,7 @@ export const sign = async (
   options
 ) => {
   if (wallet.metadata?.isHW) {
-    return signTransactionUsingHW(wallet, schema, chainID, transaction);
+    return signTransactionUsingHW(wallet, schema, chainID, transaction, senderAccount, options);
   }
 
   if (options?.txInitiatorAccount?.numberOfSignatures > 0) {
@@ -374,18 +397,18 @@ const normalizeTransactionsStatisticsParams = (period) => {
  */
 const normalizeNumberRange = (distributions) => {
   const values = {
-    '0.001_0.01': '0 - 10 LSK',
-    '0.01_0.1': '0 - 10 LSK',
-    '0.1_1': '0 - 10 LSK',
-    '1_10': '0 - 10 LSK',
-    '10_100': '11 - 100 LSK',
-    '100_1000': '101 - 1000 LSK',
-    '1000_10000': '1001 - 10,000 LSK',
-    '10000_100000': '10,001 - 100,000 LSK',
-    '100000_1000000': '100,001 - 1,000,000 LSK',
-    '1000000_10000000': '1,000,001 - 10,000,000 LSK',
-    '10000000_100000000': '10,000,001 - 100,000,000 LSK',
-    '100000000_1000000000': '100,000,001 - 1,000,000,000 LSK',
+    '0.001_0.01': '0 - 10',
+    '0.01_0.1': '0 - 10',
+    '0.1_1': '0 - 10',
+    '1_10': '0 - 10',
+    '10_100': '11 - 100',
+    '100_1000': '101 - 1000',
+    '1000_10000': '1001 - 10,000',
+    '10000_100000': '10,001 - 100,000',
+    '100000_1000000': '100,001 - 1,000,000',
+    '1000000_10000000': '1,000,001 - 10,000,000',
+    '10000000_100000000': '10,000,001 - 100,000,000',
+    '100000000_1000000000': '100,000,001 - 1,000,000,000',
   };
   return Object.keys(distributions).reduce((acc, item) => {
     acc[values[item]] = (acc[values[item]] || 0) + distributions[item];
@@ -394,12 +417,15 @@ const normalizeNumberRange = (distributions) => {
 };
 
 export {
-  getTotalSpendingAmount,
-  downloadJSON,
   containsTransactionType,
-  normalizeTransactionParams,
-  signMultisigTransaction,
+  downloadJSON,
+  getTotalSpendingAmount,
+  getUnsignedBytes,
   getNumberOfSignatures,
+  getAccountKeys,
+  insertSignature,
   normalizeTransactionsStatisticsParams,
   normalizeNumberRange,
+  normalizeTransactionParams,
+  signMultisigTransaction,
 };

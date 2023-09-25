@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
+import { smartRender } from 'src/utils/testHelpers';
 import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
@@ -11,7 +11,8 @@ import { mockAuth } from '@auth/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks';
-import { useGetInitializationFees, useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTransactionEstimateFees } from '@transaction/hooks/queries/useTransactionEstimateFees';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Summary from '.';
 
@@ -26,6 +27,7 @@ jest.mock('@transaction/api');
 jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('@transaction/utils/hwManager');
 jest.mock('@token/fungible/hooks/queries');
+jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');
 
 const transactionBaseFees = {
   Low: 156,
@@ -39,6 +41,27 @@ const response = {
   id: 'tx-id',
 };
 
+const mockEstimateFeeResponse = {
+  data: {
+    transaction: {
+      fee: {
+        tokenID: '0400000000000000',
+        minimum: '5147764',
+      },
+    },
+  },
+  meta: {
+    breakdown: {
+      fee: {
+        minimum: {
+          byteFee: '96000',
+          additionalFees: {},
+        },
+      },
+    },
+  },
+};
+
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
 hwManager.signTransactionByHW.mockResolvedValue(response);
 
@@ -49,7 +72,13 @@ useCommandSchema.mockReturnValue({
   ),
 });
 useTokenBalances.mockReturnValue({ data: mockAppsTokens, isLoading: false });
-useGetInitializationFees.mockReturnValue({ initializationFees: { userAccount: 5000000 } });
+
+useTransactionEstimateFees.mockReturnValue({
+  data: mockEstimateFeeResponse,
+  isFetching: false,
+  isFetched: true,
+  error: false,
+});
 
 describe('Reclaim balance Summary', () => {
   const wallet = { info: { LSK: accounts.non_migrated } };
@@ -63,7 +92,9 @@ describe('Reclaim balance Summary', () => {
   const props = {
     nextStep: jest.fn(),
     history: {
+      push: jest.fn(),
       goBack: jest.fn(),
+      location: { search: '' },
     },
     t: (key) => key,
     wallet: wallet.info.LSK,
@@ -72,13 +103,19 @@ describe('Reclaim balance Summary', () => {
     balanceReclaimed: jest.fn(),
     selectedPriority: { title: 'Normal', value: 1 },
   };
+  const config = {
+    queryClient: true,
+    store: true,
+    storeInfo: state,
+    renderType: 'mount',
+    historyInfo: props.history,
+  };
 
   useAuth.mockReturnValue({ data: mockAuth });
 
   it('should render summary component', () => {
     // Arrange
-    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
-
+    const { wrapper } = smartRender(Summary, props, config);
     // Act
     const html = wrapper.html();
 
@@ -92,7 +129,7 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to next page when continue button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
+    const { wrapper } = smartRender(Summary, props, config);
     wrapper.find('button.confirm-button').simulate('click');
 
     // Act
@@ -114,7 +151,6 @@ describe('Reclaim balance Summary', () => {
         },
         senderPublicKey: accounts.non_migrated.summary.publicKey,
         fee: '5147764',
-        id: '',
         nonce: accounts.non_migrated.sequence.nonce,
         signatures: [],
       },
@@ -124,7 +160,7 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to previous page when cancel button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
+    const { wrapper } = smartRender(Summary, props, config);
     wrapper.find('button.cancel-button').simulate('click');
 
     // Act

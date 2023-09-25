@@ -1,0 +1,53 @@
+
+@import '../../../../../setup/react/app/mixins.css';
+
+.entireBalanceWarning {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  border-radius: 5px;
+  margin-top: 6px;
+  padding: 8px;
+
+  & > img {
+    width: 20px;
+    margin-right: 10px;
+  }
+
+  & > span {
+    @mixin contentSmall normal;
+
+    color: var(--color-constant-zodiac-blue);
+  }
+
+  & > .closeBtn {
+    align-items: center;
+    cursor: pointer;
+    height: 12px;
+    right: 22px;
+    position: absolute;
+
+    &::before,
+    &::after {
+      background-color: currentColor;
+      color: var(--color-constant-zodiac-blue);
+      content: '';
+      height: 13px;
+      position: absolute;
+      width: 1px;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+}
