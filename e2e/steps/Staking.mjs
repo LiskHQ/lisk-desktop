@@ -21,8 +21,12 @@ Then(
     await expect(
       fixture.page.getByTestId('stake-form-wrapper').filter({ hasText: 'Staking queue' })
     ).toBeVisible();
-    await expect(fixture.page.getByText(validatorName, { exact: true })).toBeVisible();
-    await expect(fixture.page.getByText(amount, { exact: true })).toBeVisible();
+    await expect(
+      fixture.page.getByTestId('stake-form-wrapper').filter({ hasText: validatorName })
+    ).toBeVisible();
+    await expect(
+      fixture.page.getByTestId('stake-form-wrapper').filter({ hasText: amount })
+    ).toBeVisible();
   }
 );
 
