@@ -10,7 +10,7 @@ Then('I go to page {string}', async (pageName) => {
 
 Given(
   'I add an account with passphrase {string} password {string} name {string}',
-  async (passphrase, password, name) => {
+  async (passphrase, password, name, customDerivationInfo) => {
     const returnUrl = fixture.page.url();
     await fixture.page.goto(`${process.env.PW_BASE_URL}${routes.wallet}`);
     await fixture.page.getByText('Add account', { exact: true }).click();
@@ -22,6 +22,10 @@ Given(
       await fixture.page
         .getByTestId(`recovery-${index}`)
         .type(`${phrases[index]}${phrases.length === 12 ? '' : ' '}`);
+    }
+    if (customDerivationInfo) {
+      const customDerivationPath = customDerivationInfo.replace('Custom derivation path ', '');
+      await fixture.page.getByTestId('custom-derivation-path').fill(customDerivationPath);
     }
 
     await fixture.page.getByText('Continue to set password', { exact: true }).click();
