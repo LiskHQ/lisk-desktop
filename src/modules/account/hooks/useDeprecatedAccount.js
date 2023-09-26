@@ -19,7 +19,6 @@ const defaultAccount = {
     isValidator: false,
     isMultisignature: false,
   },
-  // @todo same here.
   token: {
     balance: '0',
     tokenID: '00000000',
