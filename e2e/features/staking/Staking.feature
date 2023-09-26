@@ -1,5 +1,6 @@
 Feature: Staking
   Background: Add an account and navigate to validators
+    Given I wait for "1 seconds"
     Given I add an account with passphrase "attract squeeze option inflict dynamic end evoke love proof among random blanket table pumpkin general impose access toast undo extend fun employ agree dash" password "Password@1" name "genesis_50"
       """
       Custom derivation path m/44'/134'/50'
@@ -83,4 +84,4 @@ Feature: Staking
   Scenario: View stakes
     Given I click on a button with text "Stakes"
     Then I should see "Stake amount"
-    Then I should see 1 stakes in stakes list
+    Then I should see 2 stakes in stakes list
