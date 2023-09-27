@@ -77,7 +77,7 @@ pipeline {
 									cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
 									cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
 									yarn run build
-									nohup npx serve -l 8081 ./app/build
+									nohup npx serve -l 8081 ./app/build >serve.out 2>serve.err &
 									
 									# lisk-core
 									npm i -g lisk-core
