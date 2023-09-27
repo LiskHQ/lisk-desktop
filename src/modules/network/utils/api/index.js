@@ -15,7 +15,7 @@ export const getNetworkStatus = ({ baseUrl }) =>
   });
 
 const getServiceUrl = ({ name, address = networks[networkKeys.mainnet].serviceUrl }) => {
-  if ([networkKeys.mainnet, networkKeys.testNet].includes(name)) {
+  if ([networkKeys.mainnet, networkKeys.testnet].includes(name)) {
     return networks[name].serviceUrl;
   }
   return address;
