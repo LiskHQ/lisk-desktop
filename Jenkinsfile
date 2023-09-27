@@ -73,6 +73,13 @@ pipeline {
 							withEnv(["REACT_APP_MSW=true"]) {
 								wrap([$class: 'Xvfb']) {
 									sh '''
+									# run lisk-desktop
+									cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
+									cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
+									yarn run build
+									npx serve -l 8081 ./app/build
+									
+
 									# lisk-core
 									npm i -g lisk-core
 									rm -rf ~/.lisk/
