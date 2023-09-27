@@ -15,6 +15,7 @@ BeforeAll(async function () {
       '--disable-web-security',
       '--allow-running-insecure-content',
       '--unsafely-treat-insecure-origin-as-secure',
+      '--headless=new',
     ],
   });
 });
