@@ -41,6 +41,9 @@ pipeline {
 					cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
 					cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
 					yarn run build
+
+					# localy serve build
+					nohup npx serve -l 8081 ./app/build >serve.out 2>serve.err &
 					'''
 				}
 				stash includes: 'app/build/', name: 'build'
@@ -72,13 +75,7 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							withEnv(["REACT_APP_MSW=true"]) {
 								wrap([$class: 'Xvfb']) {
-									sh '''
-									# run lisk-desktop
-									cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
-									cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-									yarn run build
-									nohup npx serve -l 8081 ./app/build >serve.out 2>serve.err &
-									
+									sh '''									
 									# lisk-core
 									npm i -g lisk-core
 									rm -rf ~/.lisk/
