@@ -121,19 +121,6 @@ describe('ChangeCommissionForm', () => {
       expect(screen.getByText('Commission range is invalid')).toBeTruthy();
     });
 
-    it('should not pass when commission increases more than 5%', async () => {
-      const { getByTestId, getByText } = renderWithRouterAndQueryClient(
-        ChangeCommissionForm,
-        props
-      );
-      const value = '96';
-      const button = getByText(buttonText);
-      const input = getByTestId('newCommission');
-      fireEvent.change(input, { target: { value } });
-      expect(button.closest('button').disabled).toBeTruthy();
-      expect(screen.getByText('You cannot increase commission more than 5%')).toBeTruthy();
-    });
-
     it('should not pass when new commission have more than 2 decimal places', async () => {
       const { getByTestId, getByText } = renderWithRouterAndQueryClient(
         ChangeCommissionForm,

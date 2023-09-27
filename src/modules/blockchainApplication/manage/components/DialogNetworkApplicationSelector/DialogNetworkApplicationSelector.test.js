@@ -37,6 +37,7 @@ useApplicationManagement.mockReturnValue({
 useSettings.mockReturnValue({
   customNetworks: [],
   mainChainNetwork: networks[DEFAULT_NETWORK],
+  setValue: jest.fn(),
 });
 
 describe('ModalNetworkApplicationSelector', () => {

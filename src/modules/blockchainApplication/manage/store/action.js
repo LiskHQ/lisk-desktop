@@ -43,6 +43,17 @@ export const deleteApplication = (chainId, network) => ({
   network,
 });
 
+export const deleteNetworkInApplications = (network) => ({
+  type: actionTypes.deleteNetworkInApplications,
+  network,
+});
+
+export const updateNetworkNameInApplications = (currentName, newName) => ({
+  type: actionTypes.updateNetworkNameInApplications,
+  currentName,
+  newName
+});
+
 /**
  * Trigger this action to set current blockchain application
  *
