@@ -37,8 +37,8 @@ Given(
         exact: true,
       })
       .click();
-    await fixture.page.getByText('Save Account', { exact: true }).click();
-    await fixture.page.goto(`${returnUrl}`);
+    await fixture.page.getByText('Save Account', { exact: true }).click({ timeout: 1000 });
+    await fixture.page.getByText('Continue to wallet', { exact: true }).click({ timeout: 1000 });
   }
 );
 
