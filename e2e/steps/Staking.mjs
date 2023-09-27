@@ -7,6 +7,18 @@ Then('I should see {int} validators in table', async (number) => {
   await expect(fixture.page.getByTestId('validator-row')).toHaveCount(number);
 });
 
+Then('I should select a random validator and see their details', async () => {
+  const randomValidatorIndex = Math.floor(Math.random() * 101);
+  const validatorRow = fixture.page.getByTestId('validator-row').nth(randomValidatorIndex);
+  const randomValidatorName = await validatorRow.locator('.validator-name').innerText();
+  await validatorRow.click();
+  await expect(fixture.page.locator('.details-container')).toContainText(randomValidatorName);
+  await expect(fixture.page.getByText('Details', { exact: true })).toBeVisible();
+  await expect(fixture.page.getByText('Performance', { exact: true })).toBeVisible();
+  await expect(fixture.page.getByText('Last generated at', { exact: true })).toBeVisible();
+  await expect(fixture.page.getByText('Blocks generated', { exact: true })).toBeVisible();
+});
+
 Then('I should see {string} validator details', async (validatorName) => {
   await expect(fixture.page.locator('.details-container')).toContainText(validatorName);
   await expect(fixture.page.getByText('Details', { exact: true })).toBeVisible();
