@@ -11,7 +11,6 @@ Then('I go to page {string}', async (pageName) => {
 Given(
   'I add an account with passphrase {string} password {string} name {string}',
   async (passphrase, password, name, customDerivationInfo) => {
-    const returnUrl = fixture.page.url();
     await fixture.page.goto(`${process.env.PW_BASE_URL}${routes.wallet}`);
     await fixture.page.getByText('Add account', { exact: true }).click();
     await fixture.page.getByText('Secret recovery phrase', { exact: true }).click();
