@@ -5,7 +5,7 @@ export const NETWORKS = {
   },
   customNode: {
     name: 'customNode',
-    serviceUrl: 'http://localhost:9901',
+    serviceUrl: 'http://127.0.0.1:9901',
   },
 };
 
