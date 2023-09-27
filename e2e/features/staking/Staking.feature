@@ -9,7 +9,7 @@ Feature: Staking
     And I wait for "1 seconds"
 
   Scenario: Validators should be displayed on the page
-    Then I should see 101 validators in table
+    Then I should see 103 validators in table
 
   Scenario: Validators can be randomly selected
     Then I should select a random validator and see their details
