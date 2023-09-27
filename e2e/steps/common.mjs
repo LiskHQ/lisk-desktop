@@ -5,7 +5,7 @@ import routes from '../fixtures/routes.mjs';
 import { fixture } from '../fixtures/page.mjs';
 
 Then('I go to page {string}', async function (pageName) {
-  await fixture.page.goto(`${process.env.PW_BASE_URL}/${pageName}`);
+  await fixture.page.goto(`${process.env.PW_BASE_URL}${pageName}`);
 });
 
 Given(
@@ -80,7 +80,7 @@ Then('I should see an image with alt text {string}', async function (altText) {
 });
 
 Then('I should be redirected to route: {string}', async function (route) {
-  await expect(fixture.page.url()).toBe(`${process.env.PW_BASE_URL}/${route}`);
+  await expect(fixture.page.url()).toBe(`${process.env.PW_BASE_URL}${route}`);
 });
 
 Then('button with text {string} should be disabled', async function (textContent) {
