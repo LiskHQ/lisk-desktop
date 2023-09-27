@@ -34,7 +34,7 @@ const networks = {
     label: 'Devnet',
     serviceUrl: 'http://devnet-service.liskdev.net:9901',
     wsServiceUrl: 'ws://devnet-service.liskdev.net:9901',
-    isAvailable: true,
+    isAvailable: false,
   },
   [networkKeys.testnet]: {
     name: networkKeys.testnet,
