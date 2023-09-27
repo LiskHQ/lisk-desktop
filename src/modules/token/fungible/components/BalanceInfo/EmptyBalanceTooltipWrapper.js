@@ -10,7 +10,7 @@ const getMessage = (networkName) => {
   switch (networkName) {
     case networkKeys.mainnet:
       return 'Purchase LSK from an exchange, or request LSK from another Lisk user through the wallet panel.';
-    case networkKeys.testNet:
+    case networkKeys.testnet:
       return 'Request LSK from the Lisk Testnet faucet, or request LSK from another Lisk user through the wallet panel.';
     case networkKeys.customNode:
       return 'Request LSK from a faucet account, or request LSK from another Lisk user through the wallet panel.';
