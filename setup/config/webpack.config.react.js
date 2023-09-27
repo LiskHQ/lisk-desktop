@@ -103,6 +103,7 @@ const config = {
     }),
     new DefinePlugin({
       VERSION: `"${bundleVersion}"`,
+      REACT_APP_DEFAULT_NETWORK: `"${process.env.DEFAULT_NETWORK}"`,
     }),
     new StyleLintPlugin({
       context: `${path.resolve(__dirname, '../../src')}`,
