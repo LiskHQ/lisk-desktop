@@ -1,12 +1,12 @@
 .ClaimRewardsForm {
-  padding: 20px 20px 0 20px;
+  padding: 24px 24px 0 24px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 
   & .title {
-    font-size: var(--font-size-h5);
+    font-size: var(--font-size-h3);
     font-weight: var(--font-weight-bold);
     color: var(--color-content-light);
     margin: 0;

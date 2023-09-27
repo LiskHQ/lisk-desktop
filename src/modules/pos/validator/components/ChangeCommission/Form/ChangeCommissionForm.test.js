@@ -121,19 +121,6 @@ describe('ChangeCommissionForm', () => {
       expect(screen.getByText('Commission range is invalid')).toBeTruthy();
     });
 
-    it('should not pass when commission increases more than 5%', async () => {
-      const { getByTestId, getByText } = renderWithRouterAndQueryClient(
-        ChangeCommissionForm,
-        props
-      );
-      const value = '96';
-      const button = getByText(buttonText);
-      const input = getByTestId('newCommission');
-      fireEvent.change(input, { target: { value } });
-      expect(button.closest('button').disabled).toBeTruthy();
-      expect(screen.getByText('You cannot increase commission more than 5%')).toBeTruthy();
-    });
-
     it('should not pass when new commission have more than 2 decimal places', async () => {
       const { getByTestId, getByText } = renderWithRouterAndQueryClient(
         ChangeCommissionForm,
@@ -158,25 +145,57 @@ describe('ChangeCommissionForm', () => {
       fireEvent.change(input, { target: { value } });
       fireEvent.click(button);
 
+      const feeToken = { availableBalance: 40000000, chainID: '04000000', symbol: 'LSK' };
+
       await waitFor(() => {
         expect(nextStep).toHaveBeenCalledWith(
           expect.objectContaining({
             fees: [
               {
-                components: [{ type: 'bytesFee', value: 96000n }],
+                components: [
+                  {
+                    feeToken,
+                    type: 'bytesFee',
+                    value: 96000n,
+                  },
+                ],
                 title: 'Transaction',
-                value: '0 LSK',
+                token: feeToken,
+                label: 'transactionFee',
+                value: '-',
               },
-              { components: [], isHidden: true, title: 'Message', value: '0 LSK' },
+              {
+                components: [],
+                isHidden: true,
+                title: 'Message',
+                value: '-',
+                token: feeToken,
+                label: 'messageFee',
+              },
             ],
             formProps: {
               composedFees: [
                 {
-                  components: [{ type: 'bytesFee', value: 96000n }],
+                  components: [
+                    {
+                      feeToken: { availableBalance: 40000000, chainID: '04000000', symbol: 'LSK' },
+                      type: 'bytesFee',
+                      value: 96000n,
+                    },
+                  ],
                   title: 'Transaction',
-                  value: '0 LSK',
+                  value: '-',
+                  token: feeToken,
+                  label: 'transactionFee',
                 },
-                { components: [], isHidden: true, title: 'Message', value: '0 LSK' },
+                {
+                  components: [],
+                  isHidden: true,
+                  title: 'Message',
+                  value: '-',
+                  token: feeToken,
+                  label: 'messageFee',
+                },
               ],
               fields: {
                 newCommission: '30.00',

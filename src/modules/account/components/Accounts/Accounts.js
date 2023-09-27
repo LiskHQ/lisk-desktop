@@ -1,33 +1,40 @@
 import React, { useEffect } from 'react';
-
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import WalletList from '@wallet/components/walletList';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { useFilter } from '@common/hooks';
-import { useAppsMetaTokens, useTokenSummary } from '@token/fungible/hooks/queries';
-import { useFees } from '@transaction/hooks/queries';
+import { useNetworkSupportedTokens, useTokenSummary } from '@token/fungible/hooks/queries';
 import Overview from '../Overview/overview';
 import styles from './accounts.css';
 
 const Accounts = () => {
-  const { data: fees } = useFees();
-  const tokenID = fees?.data?.feeTokenID;
+  const [currentApplication] = useCurrentApplication();
+  const networkSupportedTokens = useNetworkSupportedTokens(currentApplication);
+  const tokenID = networkSupportedTokens.data?.[0]?.tokenID;
   const { data: tokenSummary } = useTokenSummary();
   const { filters, setFilter } = useFilter({ tokenID });
-  const { data: tokenData } = useAppsMetaTokens();
+
+  const selectedToken = networkSupportedTokens.data?.find(
+    (tokens) => tokens.tokenID === filters.tokenID
+  );
 
   useEffect(() => {
     setFilter('tokenID', tokenID);
-  }, [fees?.data?.feeTokenID]);
+  }, [networkSupportedTokens.isFetched, currentApplication]);
 
   return (
     <Box main className="accounts-box">
       <BoxHeader>
-        <Overview tokenData={tokenData} setFilter={setFilter} />
+        <Overview
+          selectedToken={selectedToken}
+          tokenData={networkSupportedTokens}
+          setFilter={setFilter}
+        />
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <WalletList tokenData={tokenData} tokenSummary={tokenSummary} filters={filters} />
+        <WalletList tokenSummary={tokenSummary} selectedToken={selectedToken} filters={filters} />
       </BoxContent>
     </Box>
   );

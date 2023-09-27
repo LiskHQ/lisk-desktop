@@ -1,3 +1,5 @@
+import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
+
 const selectActiveToken = (state) => state.token.active;
 const selectLSKAddress = (state) =>
   state.wallet.info ? state.wallet.info.LSK.summary.address : undefined;
@@ -11,6 +13,23 @@ const selectActiveTokenAccount = (state) => {
     loginType: state.wallet.loginType,
   };
 };
+
+const selectCurrentAccountWithSigningData = (state) => {
+  if (state.account?.current?.hw) {
+    const currentHWDevice = selectCurrentHWDevice(state);
+    const accountWithUpdatedHw = {
+      ...state.account?.current,
+      hw: {
+        ...currentHWDevice,
+      },
+    };
+
+    return accountWithUpdatedHw;
+  }
+
+  return selectActiveTokenAccount(state);
+};
+
 const selectAccountBalance = (
   state // @todo account has multiple balance now
 ) => (state.wallet.info ? state.wallet.info[state.token.active].summary.balance : undefined);
@@ -35,4 +54,5 @@ export {
   selectModuleCommandSchemas,
   selectBookmarks,
   selectCurrentBlockchainApplication,
+  selectCurrentAccountWithSigningData,
 };

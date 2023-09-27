@@ -80,7 +80,7 @@ const Overview = ({ isWalletRoute, history }) => {
         isBanned,
         pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
         readMore: () => {
-          const url = 'https://lisk.com/blog/development/lisk-staking-process';
+          const url = 'https://lisk.com/blog/posts/lisk-staking-process';
           window.open(url, 'rel="noopener noreferrer"');
         },
       });
@@ -104,7 +104,7 @@ const Overview = ({ isWalletRoute, history }) => {
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
-        <DialogLink component="accountDetails">
+        <DialogLink component="accountDetails" data={{ address }}>
           <WalletVisualWithAddress
             copy
             size={50}
@@ -128,7 +128,11 @@ const Overview = ({ isWalletRoute, history }) => {
           </div>
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
             <DialogLink
-              data={{ message: t('There are no tokens to send at this moment.') }}
+              data={
+                !hasTokenWithBalance
+                  ? { message: t('There are no tokens to send at this moment.') }
+                  : {}
+              }
               component={hasTokenWithBalance ? 'send' : 'noTokenBalance'}
             >
               <PrimaryButton>{t('Send')}</PrimaryButton>

@@ -13,6 +13,11 @@
   }
 }
 
+.selectDropdownProp {
+  max-height: 260px;
+  overflow: auto;
+}
+
 .sortingColumn {
   cursor: pointer;
 }
@@ -74,6 +79,10 @@
 
 .header {
   background-color: var(--color-body-bg);
+
+  & h1 {
+    font-size: var(--font-size-h3);
+  }
 }
 
 .loadLatestBtnWrapper {

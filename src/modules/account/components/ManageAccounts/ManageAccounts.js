@@ -9,8 +9,6 @@ import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import { useSelector } from 'react-redux';
-import {selectHWAccounts} from '@hardwareWallet/store/selectors/hwSelectors';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
@@ -29,7 +27,6 @@ export const ManageAccountsContent = ({
   const [showRemove, setShowRemove] = useState(false);
   const [showTruncate, setTruncate] = useState(truncate);
   const title = customTitle ?? t('Manage accounts');
-  const hwAccounts = useSelector(selectHWAccounts);
 
   const queryParams = new URLSearchParams(search);
   const referrer = queryParams.get('referrer');
@@ -57,7 +54,7 @@ export const ManageAccountsContent = ({
       </div>
       <Box className={styles.accountListWrapper}>
         <>
-          {[...accounts, ...hwAccounts].map((account) => (
+          {accounts.map((account) => (
             <AccountRow
               key={account.metadata.address}
               account={account}

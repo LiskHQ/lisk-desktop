@@ -16,9 +16,10 @@ import {
 } from '@transaction/utils';
 import { dryRunTransaction } from '@transaction/api';
 import { getTotalSpendingAmount } from '@transaction/utils/transaction';
-import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { PrimaryButton } from 'src/theme/buttons';
 import { useCommandSchema } from 'src/modules/network/hooks';
 import Feedback from './Feedback';
@@ -49,9 +50,8 @@ const TxComposer = ({
     },
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
-  const { symbol: tokenSymbol = '' } = formProps.fields.token || {};
   const { fields } = formProps;
-  const [customFee, setCustomFee] = useState();
+  const [customFee, setCustomFee] = useState({});
   const [feedback, setFeedBack] = useState(formProps.feedback);
   const [isRunningDryRun, setIsRunningDryRun] = useState(false);
   const [
@@ -81,6 +81,7 @@ const TxComposer = ({
     isFetched = true,
     isLoading: isLoadingFee,
     feeEstimateError,
+    feeTokenID,
   } = useTransactionFee({
     selectedPriority,
     transactionJSON,
@@ -88,6 +89,17 @@ const TxComposer = ({
     senderAddress: address,
     extraCommandFee: formProps.extraCommandFee,
   });
+
+  const { data: { data: feeTokens } = {} } = useTokenBalances({
+    config: { params: { tokenID: feeTokenID, limit: 1 } },
+    options: { enabled: !!feeTokenID },
+  });
+  const { data: { data: messageFeeTokens } = {} } = useTokenBalances({
+    config: { params: { tokenID: messageFeeTokenID, limit: 1 } },
+    options: { enabled: !!messageFeeTokenID },
+  });
+  const feeToken = feeTokens?.[0];
+  const messageFeeToken = messageFeeTokens?.[0];
 
   if (isFetched && fields?.sendingChain?.chainID !== fields?.recipientChain?.chainID) {
     transactionJSON.params = {
@@ -119,8 +131,16 @@ const TxComposer = ({
   }, [selectedPriority, transactionJSON.params]);
 
   useEffect(() => {
+    setFeedBack(null);
+  }, [formProps.fields]);
+
+  useEffect(() => {
     setFeedBack(formProps.feedback);
   }, [formProps.feedback]);
+
+  useEffect(() => {
+    setCustomFee({});
+  }, [minimumFee, messageFee]);
 
   const minRequiredBalance =
     BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
@@ -128,29 +148,38 @@ const TxComposer = ({
   const composedFees = [
     {
       title: 'Transaction',
+      label: 'transactionFee',
+      token: feeToken,
       value: getFeeStatus({
-        fee: Number(convertFromBaseDenom(transactionFee, formProps.fields.token)),
-        tokenSymbol,
-        customFee,
+        fee: Number(convertFromBaseDenom(transactionFee, feeToken)),
+        tokenSymbol: feeToken?.symbol,
+        customFee: customFee.value?.transactionFee
+          ? { value: customFee.value?.transactionFee }
+          : null,
       }),
-      components,
+      components: components.map((component) => ({
+        ...component,
+        feeToken,
+      })),
     },
     {
       title: 'Message',
+      label: 'messageFee',
+      token: messageFeeToken,
       value: getFeeStatus({
-        fee: Number(
-          convertFromBaseDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
-        ),
-        tokenSymbol,
-        customFee,
+        fee: Number(convertFromBaseDenom(transactionJSON.params.messageFee || 0, messageFeeToken)),
+        tokenSymbol: messageFeeToken?.symbol,
+        customFee: customFee.value?.messageFee ? { value: customFee.value?.messageFee } : null,
       }),
       isHidden: !transactionJSON.params.messageFee,
       components: [],
     },
   ];
-
   formProps.composedFees = composedFees;
-  transactionJSON.fee = transactionFee;
+  // eslint-disable-next-line no-extra-boolean-cast
+  transactionJSON.fee = !!customFee.value?.transactionFee
+    ? convertToBaseDenom(customFee.value.transactionFee, feeToken)
+    : transactionFee;
 
   // eslint-disable-next-line max-statements
   const onSubmit = async () => {
@@ -184,11 +213,10 @@ const TxComposer = ({
     <Box className={className}>
       {children}
       <TransactionPriority
-        token={formProps.fields?.token}
+        token={feeToken}
         fee={transactionFee}
         minFee={minimumFee}
         customFee={customFee}
-        moduleCommand={formProps.moduleCommand}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
@@ -197,6 +225,8 @@ const TxComposer = ({
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
         minRequiredBalance={minRequiredBalance}
+        computedMinimumFees={{ transactionFee: minimumFee, messageFee }}
+        formProps={formProps}
       />
       <Feedback
         feedback={feedback}
@@ -211,7 +241,9 @@ const TxComposer = ({
           disabled={
             !formProps.isFormValid ||
             minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0) ||
-            !isFetched
+            !isFetched ||
+            !!feeEstimateError ||
+            isLoadingFee
           }
         >
           {buttonTitle ?? t('Continue')}

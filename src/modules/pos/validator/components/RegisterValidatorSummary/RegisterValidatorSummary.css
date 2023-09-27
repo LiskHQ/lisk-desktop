@@ -1,9 +1,14 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .summaryContainer {
+  margin-bottom: 0px;
+
   & > header {
-    padding-left: 20px !important;
-    padding-right: var(--horizontal-padding-l) !important;
+    padding: var(--horizontal-modal-padding-l) !important;
+
+    & h2 {
+      font-size: var(--font-size-h3) !important;
+    }
   }
 
   & > footer {
@@ -13,7 +18,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 0px !important;
+    margin-bottom: 24px;
+    padding-bottom: 0px !important;
   }
 
   & .confirmBtn,

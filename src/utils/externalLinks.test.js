@@ -64,7 +64,12 @@ describe('externalLinks', () => {
     };
 
     externalLinks.init();
-    callbacks[IPC_OPEN_URL]({}, 'lisk://wallet?modal=send&recipient=lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp&amount=1&token=0200000000000000&recipientChain=02000000');
-    expect(history.push).toHaveBeenCalledWith('?modal=send&recipient=lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp&amount=1&token=0200000000000000&recipientChain=02000000');
+    callbacks[IPC_OPEN_URL](
+      {},
+      'lisk://wallet?modal=send&recipient=lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp&amount=1&token=0200000000000000&recipientChain=02000000'
+    );
+    expect(history.push).toHaveBeenCalledWith(
+      '?modal=send&recipient=lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp&amount=1&token=0200000000000000&recipientChain=02000000'
+    );
   });
 });

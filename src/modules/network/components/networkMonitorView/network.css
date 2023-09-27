@@ -7,6 +7,9 @@
   font-weight: var(--font-weight-bold);
   line-height: var(--font-size-large);
   color: var(--color-maastricht-blue);
+  font-size: var(--font-size-h3);
+  margin-top: var(--horizontal-modal-padding-l);
+  margin-bottom: var(--horizontal-modal-padding-l);
 }
 
 .height {

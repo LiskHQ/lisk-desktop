@@ -18,7 +18,7 @@ const AddApplicationSearch = ({
     <div className={`${grid.row} ${styles.filterWrapper}`}>
       <div className={styles.filterHolder}>
         <Input
-          icon={<Icon className={styles.searchIcon} name="searchActive" />}
+          icon={<Icon className={styles.searchIcon} name="searchFilter" />}
           className={styles.chainSearch}
           name="application-filter"
           value={searchValue}

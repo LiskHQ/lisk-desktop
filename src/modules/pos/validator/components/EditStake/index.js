@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable complexity */
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -17,22 +18,27 @@ import WalletVisual from '@wallet/components/walletVisual';
 import routes from 'src/routes/routes';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WarnPunishedValidator from '@pos/validator/components/WarnPunishedValidator';
+import { usePosExpectedSharedRewards } from '@pos/reward/hooks/queries/useStakingRewards';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
+import CategorySwitch from '@wallet/components/RegisterMultisigForm/CategorySwitch';
+import { useDebounce } from '@search/hooks/useDebounce';
+import Spinner from 'src/theme/Spinner/Spinner';
+import Tooltip from 'src/theme/Tooltip/tooltip';
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
 import { useValidators, useSentStakes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
-import { convertCommissionToPercentage } from '../../utils';
+import { getRewardsSharedInPercentage, convertCommissionToPercentage } from '../../utils';
 import { useStakesRetrieved } from '../../store/actions/staking';
 import usePosToken from '../../hooks/usePosToken';
 
 const getTitles = (t) => ({
   edit: {
     title: t('Edit stake'),
-    description: t('After changing your Stake amount, it will be added to the staking queue.'),
+    description: t('Edit your stake by modifying stake amount or removing existing stake.'),
   },
   add: {
     title: t('Add to staking queue'),
@@ -41,6 +47,11 @@ const getTitles = (t) => ({
     ),
   },
 });
+
+const REWARD_DURATIONS = {
+  monthly: 'MONTHLY',
+  yearly: 'YEARLY',
+};
 
 // eslint-disable-next-line max-statements
 const EditStake = ({ history, stakeEdited, network, staking }) => {
@@ -60,8 +71,10 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
 
   const [maxAmount, setMaxAmount] = useState(0);
   const [isForm, setIsForm] = useState(true);
+  const [selectedDuration, setSelectedDuration] = useState(REWARD_DURATIONS.monthly);
 
-  const [address] = selectSearchParamValue(history.location.search, ['validatorAddress']);
+  const address =
+    selectSearchParamValue(history.location.search, 'validatorAddress') || currentAddress;
 
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address } },
@@ -96,6 +109,26 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
   );
   const mode = validatorStake || staking[address] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
+
+  const isMonthly = selectedDuration === REWARD_DURATIONS.monthly;
+  const queryConfig = {
+    options: {
+      enabled: !!validator.address && !stakeAmount.error && Number(stakeAmount.value) > 0,
+    },
+    config: {
+      params: {
+        validatorAddress: validator.address,
+        stake: convertToBaseDenom(stakeAmount.value, token),
+        validatorReward: '0',
+      },
+    },
+  };
+
+  const debouncedQueryConfig = useDebounce(queryConfig, 500);
+  const { data: expectedReward, isFetching: isFetchingRewards } = usePosExpectedSharedRewards(
+    debouncedQueryConfig,
+    isMonthly
+  );
 
   useEffect(() => {
     getMaxAmount({
@@ -142,12 +175,16 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
 
   const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
   const subTitles = {
-    edit: t('After changing your stake amount, it will be added to the staking queue.'),
+    edit: t('Edit your stake by modifying stake amount or removing existing stake.'),
     add: titles.description,
   };
   const headerTitles = {
     edit: t('Edit Stake'),
     add: titles.title,
+  };
+
+  const handleSelectDuration = ({ target: { value } }) => {
+    setSelectedDuration(value);
   };
 
   return (
@@ -171,18 +208,18 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <WalletVisual size={40} address={address} />
                 <p>{validator.name}</p>
                 <p>{validator.address}</p>
+                <p>
+                  {t('Validator commission: ')}
+                  <span>{convertCommissionToPercentage(validator.commission)}%</span>
+                </p>
+              </BoxInfoText>
+              <label className={styles.fieldGroup}>
                 <p className={styles.availableBalance}>
                   <span>{t('Available balance: ')}</span>
                   <span>
                     <TokenAmount token={token} val={token.availableBalance} />
                   </span>
                 </p>
-                <p>
-                  {t('Commission: ')}
-                  <span>{convertCommissionToPercentage(validator.commission)}%</span>
-                </p>
-              </BoxInfoText>
-              <label className={styles.fieldGroup}>
                 <AmountField
                   token={token}
                   amount={stakeAmount}
@@ -201,6 +238,35 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                   <span className={styles.space} />
                 </>
               )}
+              <div className={styles.durationSelect}>
+                <div>
+                  <span>{t('You will get')}</span>
+                  <CategorySwitch
+                    value={selectedDuration}
+                    onChangeCategory={handleSelectDuration}
+                    categories={[
+                      { value: REWARD_DURATIONS.monthly, label: t('Monthly') },
+                      { value: REWARD_DURATIONS.yearly, label: t('Yearly') },
+                    ]}
+                  />
+                  <span>:</span>
+                </div>
+                {!isFetchingRewards ? (
+                  <TokenAmount val={expectedReward?.data.reward || 0} token={token} />
+                ) : (
+                  <Spinner />
+                )}
+              </div>
+              <div className={styles.durationSelect}>
+                <span>
+                  {t('Shared rewards')}
+                  <Tooltip size="s" position="right">
+                    <p>{t('Total rewards shared by the \nvalidator for the amount staked.')}</p>
+                  </Tooltip>{' '}
+                  :
+                </span>
+                <span>{getRewardsSharedInPercentage(validator.commission)}%</span>
+              </div>
             </>
           )}
         </BoxContent>

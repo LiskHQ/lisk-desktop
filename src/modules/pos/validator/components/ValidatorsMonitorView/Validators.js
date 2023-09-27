@@ -58,7 +58,7 @@ const ValidatorActionButton = ({ address, isValidator }) => {
 const ValidatorsMonitor = ({ watchList }) => {
   const { t } = useTranslation();
   const timeout = useRef();
-  const { filters, setFilter } = useFilter({});
+  const { filters, setFilter } = useFilter();
   const [activeDetailTab, setActiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
   const [search, setSearch] = useState('');
@@ -191,7 +191,7 @@ const ValidatorsMonitor = ({ watchList }) => {
           {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
           <span className={activeTab === 'stakes' ? 'hidden' : ''}>
             <Input
-              icon={<Icon className={styles.searchIcon} name="searchActive" />}
+              icon={<Icon className={styles.searchIcon} name="searchFilter" />}
               onChange={handleFilter}
               value={search}
               className={`${styles.filterValidators} filter-by-name`}

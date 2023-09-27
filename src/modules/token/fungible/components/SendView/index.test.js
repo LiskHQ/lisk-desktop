@@ -38,7 +38,9 @@ jest.mock('@libs/wcm/hooks/useSession', () => ({
 
 useApplicationManagement.mockReturnValue({
   setApplication: mockSetApplication,
-  applications: mockManagedApplications,
+  applications: mockManagedApplications.map((app, index) =>
+    index === 0 ? { ...app, chainID: '00010000' } : app
+  ),
 });
 
 useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);

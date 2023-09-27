@@ -55,7 +55,7 @@ export const AddressWithName = ({ address, name }) => (
 );
 
 export const TransactionStatus = ({ status }) => (
-  <div className={styles.statusWrapper}>
+  <div className={`${styles.statusWrapper} ${grid['col-xs-7']}`}>
     <span className={`${styles.transactionStatus} ${styles[status]}`}>{status}</span>
   </div>
 );

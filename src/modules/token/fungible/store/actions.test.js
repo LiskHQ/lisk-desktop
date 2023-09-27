@@ -5,7 +5,10 @@ import actionTypes from '@transaction/store/actionTypes';
 import wallets from '@tests/constants/wallets';
 import { convertStringToBinary } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { tokensTransferred } from './actions';
+import { mockTokensBalance } from '../__fixtures__';
 
 jest.mock('@transaction/utils/hwManager');
 
@@ -38,9 +41,14 @@ describe('actions: transactions', () => {
         passphrase: state.wallet.passphrase,
       },
     });
+    const moduleCommandSchemas = mockCommandParametersSchemas.data.commands.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    );
+    const { privateKey } = wallets.genesis.summary;
 
     // TODO: Unskip this test once SDK is updated to next alpha
-    it.skip('should dispatch tokensTransferredSuccess action if there are no errors', async () => {
+    it.only('should dispatch tokensTransferredSuccess action if there are no errors', async () => {
       // Arrange
       const data = {
         fee: 141000,
@@ -70,8 +78,31 @@ describe('actions: transactions', () => {
         id: expect.any(Object),
       };
 
+      const formProps = {
+        isValid: true,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+        composedFees: { Transaction: '1 LSK', CCM: '1 LSK', Initialisation: '1 LSK' },
+        fields: {
+          sendingChain: mockBlockchainAppMeta.data[0],
+          recipientChain: mockBlockchainAppMeta.data[0],
+          token: mockTokensBalance.data[0],
+          recipient: {
+            address: wallets.genesis.summary.address,
+            title: 'test title',
+          },
+        },
+      };
+
       // Act
-      await tokensTransferred(data)(dispatch, getState);
+      await tokensTransferred(
+        formProps,
+        tx,
+        privateKey,
+        undefined,
+        activeAccount,
+        moduleCommandSchemas
+      )(dispatch, getState);
+
       const expectedAction = {
         type: actionTypes.transactionCreatedSuccess,
         data: tx,

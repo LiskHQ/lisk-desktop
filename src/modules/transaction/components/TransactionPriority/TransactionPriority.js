@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { MODULE_COMMANDS_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Tooltip from 'src/theme/Tooltip';
 import styles from './TransactionPriority.css';
 import FeesViewer from './FeeViewer';
@@ -13,9 +12,6 @@ const getRelevantPriorityOptions = (options) =>
 const TransactionPriority = ({
   t,
   token,
-  moduleCommand,
-  minFee,
-  setCustomFee,
   priorityOptions,
   selectedPriority,
   setSelectedPriority,
@@ -25,19 +21,34 @@ const TransactionPriority = ({
   composedFees,
   customFee,
   minRequiredBalance,
+  formProps,
+  computedMinimumFees,
+  setCustomFee = () => {},
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const [inputValue, setInputValue] = useState();
+  const [inputValues, setInputValues] = useState({});
+  const previousFeeRef = useRef({ customFee, inputValues });
 
-  const maxFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
+  if (customFee.value) {
+    previousFeeRef.current = {
+      customFee,
+      inputValues,
+    };
+  }
 
+  // eslint-disable-next-line max-statements
   const onClickPriority = (e) => {
     e.preventDefault();
     const selectedIndex = Number(e.target.value);
-    if (setCustomFee && selectedIndex !== CUSTOM_FEE_INDEX) {
-      setCustomFee(undefined);
-      setInputValue(undefined);
+
+    if (selectedIndex !== CUSTOM_FEE_INDEX) {
+      setCustomFee({});
+      setInputValues({});
+    } else {
+      setCustomFee(previousFeeRef.current.customFee);
+      setInputValues(previousFeeRef.current.inputValues);
     }
+
     setSelectedPriority({ item: priorityOptions[selectedIndex], index: selectedIndex });
     if (showEditIcon) {
       setShowEditIcon(false);
@@ -48,8 +59,8 @@ const TransactionPriority = ({
     () => getRelevantPriorityOptions(priorityOptions),
     [priorityOptions, token]
   );
-
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
+
   const displayedFees = composedFees
     .filter((fee) => !fee?.isHidden)
     .reduce((acc, curr) => ({ ...acc, [curr.title]: true }), {});
@@ -74,7 +85,7 @@ const TransactionPriority = ({
               priority.title = priority.value === 0 ? 'Normal' : 'Low';
             } else if (index === 3) {
               // Custom fee option
-              disabled = priority.value === 0 && !loadError;
+              disabled = !formProps.isFormValid;
             } else {
               // Medium and high fee option
               disabled = priority.value === 0 || loadError;
@@ -135,7 +146,7 @@ const TransactionPriority = ({
                       {{minFee}} {{tokenSymbol}}. If you don't know what fee to pay, choose
                       one of the provided transaction priorities.
                     `,
-                  { minFee, tokenSymbol: token.symbol }
+                  { minFee: computedMinimumFees.transactionFee, tokenSymbol: token?.symbol }
                 )}
               </p>
             </Tooltip>
@@ -144,15 +155,13 @@ const TransactionPriority = ({
         <FeesViewer
           isLoading={isLoading}
           isCustom={isCustom}
-          onInputFee={setInputValue}
-          feeValue={inputValue}
-          maxFee={maxFee}
-          minFee={minFee}
+          onInputFee={setInputValues}
+          feeValue={inputValues}
           fees={composedFees}
           setCustomFee={setCustomFee}
           customFee={customFee}
-          token={token}
           minRequiredBalance={minRequiredBalance}
+          computedMinimumFees={computedMinimumFees}
         />
       </div>
     </div>
@@ -170,7 +179,6 @@ TransactionPriority.propTypes = {
   priorityOptions: PropTypes.array.isRequired,
   selectedPriority: PropTypes.number,
   setSelectedPriority: PropTypes.func,
-  moduleCommand: PropTypes.string,
   className: PropTypes.string,
 };
 

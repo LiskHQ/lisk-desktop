@@ -9,6 +9,7 @@ import { Input } from 'src/theme';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useFilter } from 'src/modules/common/hooks';
 import Skeleton from 'src/modules/common/components/skeleton';
+import Icon from '@theme/Icon';
 import StakerRow from './StakerRow';
 import tableHeader from './StakersTableHeader';
 import styles from './ValidatorProfile.css';
@@ -55,12 +56,13 @@ const ValidatorStakesView = ({ address }) => {
           {(stakers.length > 0 || !!searchInput) && (
             <span>
               <Input
+                icon={<Icon className={styles.searchIcon} name="searchFilter" />}
                 onChange={handleFilter}
                 value={searchInput}
                 name="addressFilter"
-                className="filter-by-address"
+                className={`${styles.stakesFilter} filter-by-address`}
                 size="m"
-                placeholder={t('Search by name or address...')}
+                placeholder={t('Search by name or address')}
               />
             </span>
           )}

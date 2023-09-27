@@ -40,6 +40,8 @@ import verifyMessageSuccess from '@setup/react/assets/images/illustrations/verif
 import verifyMessageSuccessDark from '@setup/react/assets/images/illustrations/verify-message-success-dark.svg';
 import registrationSuccess from '@setup/react/assets/images/illustrations/registration-success.svg';
 import registrationSuccessDark from '@setup/react/assets/images/illustrations/registration-success-dark.svg';
+import accountCreationSuccess from '@setup/react/assets/images/illustrations/account-creation-success.svg';
+import accountCreationSuccessDark from '@setup/react/assets/images/illustrations/account-creation-success-dark.svg';
 import multisignaturePartialSuccess from '@setup/react/assets/images/illustrations/multisignature-partial-success.svg';
 import multisignaturePartialSuccessDark from '@setup/react/assets/images/illustrations/multisignature-partial-success-dark.svg';
 import registerMultisignatureSuccess from '@setup/react/assets/images/illustrations/multisignature-success.svg';
@@ -49,6 +51,7 @@ import registerMultisignatureErrorDark from '@setup/react/assets/images/illustra
 import reclaimTokensIntro from '@setup/react/assets/images/illustrations/reclaim-tokens-intro.svg';
 import hwLedgerConfirm from '@setup/react/assets/images/illustrations/hw-ledger-confirm.svg';
 import hwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
+import hwDataRejection from '@setup/react/assets/images/illustrations/hw-data-rejection.svg';
 import hwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
 import hwReconnection from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect.svg';
 import hwReconnectionDark from '@setup/react/assets/images/illustrations/hardware-wallet-reconnect-dark.svg';
@@ -107,6 +110,8 @@ export const illustrations = {
   verifyMessageSuccess,
   registrationSuccess,
   registrationSuccessDark,
+  accountCreationSuccess,
+  accountCreationSuccessDark,
   emptyWalletDark,
   pageNotFoundDark,
   errorBoundaryPageDark,
@@ -132,6 +137,7 @@ export const illustrations = {
   hwRejectionDark,
   hwReconnection,
   hwReconnectionDark,
+  hwDataRejection,
   addApplicationSuccess,
   validatorRegistrationSuccess,
   validatorRegistrationError,

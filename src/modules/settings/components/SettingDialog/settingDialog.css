@@ -5,14 +5,20 @@
   overflow-y: scroll;
 
   & .wrapper {
+    margin-bottom: 0;
+
     & > header {
-      padding-left: var(--horizontal-padding-l);
-      padding-right: var(--horizontal-padding-l);
+      padding-left: var(--horizontal-modal-padding-l);
+      padding-right: var(--horizontal-modal-padding-l);
+
+      & h1 {
+        font-size: var(--font-size-h3);
+      }
     }
   }
 
   & .content {
-    padding: 0 var(--horizontal-padding-l);
+    padding: 0 var(--horizontal-modal-padding-l) var(--horizontal-modal-padding-l);
 
     & h2 {
       @mixin contentLargest bold;

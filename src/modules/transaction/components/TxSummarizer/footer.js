@@ -1,5 +1,6 @@
 // istanbul ignore file
 import React, { useMemo } from 'react';
+import classNames from 'classnames';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import BoxFooter from 'src/theme/box/footer';
 import { useAuth } from 'src/modules/auth/hooks/queries';
@@ -47,7 +48,10 @@ const Footer = ({ confirmButton, cancelButton, footerClassName, t }) => {
   const isMultisignature = !!numberOfSignatures;
 
   return (
-    <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
+    <BoxFooter
+      className={classNames(footerClassName, 'summary-footer', styles.boxFooterProp)}
+      direction="horizontal"
+    >
       {isHW && !isAppOpen && (
         <div className={styles.errorLabel}>
           <span>{t('Open the Lisk app on Ledger device to continue')}</span>

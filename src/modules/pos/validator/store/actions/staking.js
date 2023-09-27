@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import to from 'await-to-js';
-import { selectActiveTokenAccount } from 'src/redux/selectors';
+import { selectCurrentAccountWithSigningData } from 'src/redux/selectors';
 import { signTransaction } from '@transaction/api';
 import txActionTypes from '@transaction/store/actionTypes';
 import { joinModuleAndCommand } from '@transaction/utils';
@@ -64,9 +64,7 @@ export const stakesSubmitted =
   (_, transactionJSON, privateKey, __, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
-    const wallet = state.account?.current?.hw
-      ? state.account.current
-      : selectActiveTokenAccount(state);
+    const wallet = selectCurrentAccountWithSigningData(state);
 
     const [error, tx] = await to(
       signTransaction({
@@ -124,9 +122,7 @@ const signAndDispatchTransaction = async (
   senderAccount
 ) => {
   const state = getState();
-  const wallet = state.account?.current?.hw
-    ? state.account.current
-    : selectActiveTokenAccount(state);
+  const wallet = selectCurrentAccountWithSigningData(state);
 
   const [error, tx] = await to(
     signTransaction({

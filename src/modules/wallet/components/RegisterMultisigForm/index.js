@@ -80,7 +80,10 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
   const [currentAccount] = useCurrentAccount();
   const [currentApplication] = useCurrentApplication();
   const { data: tokens } = useTokenBalances(currentApplication);
-  const defaultToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+  const defaultToken = useMemo(
+    () => tokens?.data?.find(({ chainID }) => chainID === currentApplication.chainID) || {},
+    [tokens]
+  );
 
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
     const mandatory = members

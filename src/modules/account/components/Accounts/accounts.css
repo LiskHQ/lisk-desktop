@@ -1,3 +1,9 @@
+.header {
+  & h1 {
+    font-size: var(--font-size-h3) !important;
+  }
+}
+
 .filterWrapper {
   display: flex;
   align-items: center;
@@ -56,9 +62,11 @@
   min-width: 250px !important;
   padding-top: 22px !important;
   padding-bottom: 22px !important;
+  height: 48px !important;
 }
 
 .searchIcon {
   display: flex;
   top: 50% !important;
+  left: 12px !important;
 }

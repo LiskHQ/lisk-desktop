@@ -1,11 +1,19 @@
 import React from 'react';
+import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
 import { getModuleCommandTitle } from 'src/modules/transaction/utils/moduleCommand';
 import Select from 'src/theme/Select';
 import { useCommandSchema } from '@network/hooks';
 import styles from './filters.css';
 
-const SelectFilter = ({ label, placeholder, filters, name, updateCustomFilters }) => {
+const SelectFilter = ({ 
+  className,
+  classNameDropdown,
+  label,
+  placeholder,
+  filters,
+  name,
+  updateCustomFilters, }) => {
   const { moduleCommandSchemas, isLoading } = useCommandSchema();
 
   if (isLoading) return null;
@@ -26,9 +34,10 @@ const SelectFilter = ({ label, placeholder, filters, name, updateCustomFilters }
   };
 
   return (
-    <div className={styles.fieldGroup}>
+    <div className={classNames(styles.fieldGroup, className)}>
       <span className={styles.fieldLabel}>{label}</span>
       <Select
+        classNameDropdown={classNameDropdown}
         placeholder={placeholder}
         options={options}
         selected={filters[name] || ''}

@@ -56,6 +56,10 @@
   background-color: var(--color-white);
   z-index: 1;
 
+  &::after {
+    height: 0 !important;
+  }
+
   & > div:last-child {
     justify-content: flex-start;
   }

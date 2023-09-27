@@ -202,10 +202,6 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  multisigAccountDetails: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   signMultiSignTransaction: {
     isPrivate: true,
     forbiddenTokens: [],

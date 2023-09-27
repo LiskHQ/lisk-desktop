@@ -7,11 +7,14 @@ import { mockBlocks } from '@block/__fixtures__';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
+import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks/useCurrentApplication';
 import { mockTransactions } from '../../__fixtures__';
 import { useTransactions } from '../../hooks/queries';
 import TransactionMonitorList from './TransactionMonitorList';
 
 const mockFetchNextPage = jest.fn();
+const mockSetApplication = jest.fn();
 const mockAddUpdate = jest.fn();
 const mockToggleSort = jest.fn();
 const originalQuerySelector = document.querySelector;
@@ -23,7 +26,7 @@ jest.mock('react-i18next', () => ({
 }));
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
+  useSelector: jest.fn(() => ({})),
 }));
 jest.mock('src/modules/common/hooks', () => ({
   useSort: jest.fn(() => ({
@@ -32,8 +35,8 @@ jest.mock('src/modules/common/hooks', () => ({
 }));
 jest.mock('../../hooks/queries');
 jest.mock('@block/hooks/queries/useLatestBlock');
-
 jest.mock('@token/fungible/hooks/queries');
+jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 
 afterEach(() => {
   useSelector.mockClear();
@@ -85,6 +88,7 @@ describe('Transactions monitor page', () => {
 
   useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
+  useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
 
   it('should render transactions list', () => {
     let wrapper = shallow(<TransactionMonitorList {...props} />);

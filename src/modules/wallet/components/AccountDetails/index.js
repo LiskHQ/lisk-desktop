@@ -58,9 +58,7 @@ const AccountDetails = () => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
   const { accounts } = useAccounts();
-  const queryAddress =
-    selectSearchParamValue(history.location.search, 'validatorAddress') ||
-    selectSearchParamValue(history.location.search, 'address');
+  const queryAddress = selectSearchParamValue(history.location.search, 'address');
   const address = queryAddress || currentAccount.metadata?.address;
   const { data: authData, isLoading: authLoading } = useAuth({
     config: { params: { address } },
@@ -180,7 +178,7 @@ const AccountDetails = () => {
             <div className={styles.accountName}>
               {readMode ? (
                 <>
-                  <h3>{authData?.meta?.name || currentAccount.metadata?.name}</h3>
+                  <h3>{queryAddress ? authData?.meta?.name : currentAccount.metadata?.name}</h3>
                   {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
                   {!authLoading && !queryAddress && (
                     <Icon name="edit" onClick={(e) => setMode(e)} />

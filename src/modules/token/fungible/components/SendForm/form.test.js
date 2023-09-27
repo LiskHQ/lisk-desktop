@@ -91,7 +91,9 @@ describe('Form', () => {
   });
   useApplicationManagement.mockReturnValue({
     setApplication: mockSetApplication,
-    applications: mockManagedApplications,
+    applications: mockManagedApplications.map((app, index) =>
+      index === 0 ? { ...app, chainID: '00010000' } : app
+    ),
   });
 
   useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);

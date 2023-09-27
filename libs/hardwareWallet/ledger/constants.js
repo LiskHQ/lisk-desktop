@@ -9,4 +9,10 @@ export const LEDGER_HW_IPC_CHANNELS = {
   RESET_LEDGER_IPC_QUEUE: 'RESET_LEDGER_IPC_QUEUE',
   GET_CONNECTED_DEVICES: 'GET_CONNECTED_DEVICES',
 };
+export const LEDGER_CUSTOM_ERRORS = {
+  openDevicePath: {
+    return_code: 1,
+    match: 'cannot open device with path',
+  },
+};
 export const CHECK_STATUS_INTERVAL = 4000;
