@@ -10,19 +10,13 @@ setDefaultTimeout(10000);
 
 BeforeAll(async function () {
   browser = await playwright.chromium.launch({
-    headless: false,
-    args: [
-      '--disable-web-security',
-      '--allow-running-insecure-content',
-      '--unsafely-treat-insecure-origin-as-secure',
-      '--headless=new',
-    ],
+    headless: true,
+    args: ['--headless=new'],
   });
 });
 
 Before(async function () {
   context = await browser.newContext({
-    ignoreHTTPSErrors: true,
     permissions: ['clipboard-read', 'clipboard-write'],
   });
   const newPage = await context.newPage();
