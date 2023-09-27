@@ -5,7 +5,7 @@ import routes from '../fixtures/routes.mjs';
 import { fixture } from '../fixtures/page.mjs';
 
 Then('I go to page {string}', async (pageName) => {
-  await fixture.page.goto(`${process.env.PW_BASE_URL}/${pageName}`);
+  await fixture.page.goto(`${process.env.PW_BASE_URL}${pageName}`);
 });
 
 Given(
