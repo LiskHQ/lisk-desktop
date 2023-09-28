@@ -18,10 +18,10 @@ Feature: Staking
     Then I should select a random validator and see their details
 
   Scenario: Stake validator then unstake validator - Edit stake
-    When I do a global search for "genesis_11"
+    When I do a global search for "genesis_21"
     And I wait for "1 seconds"
     Given I click on an element with testId "validators-content"
-    Then I should see "genesis_11" validator details
+    Then I should see "genesis_21" validator details
     Given I click on a button with text "Stake validator"
     Then I should see "Add to staking queue"
     Then button with text "Confirm" should be disabled
@@ -31,7 +31,7 @@ Feature: Staking
     Then I should see "Stake added to queue"
     Then I should see "Continue staking"
     When I click on a button with text "Go to the staking queue"
-    Then I should see staking queue details for validator "genesis_11" with amount "10 LSK"
+    Then I should see staking queue details for validator "genesis_21" with amount "10 LSK"
     And I wait for "1 seconds"
     When I click on a button with text "Continue"
     And I click on a button with text "Confirm"
@@ -50,7 +50,7 @@ Feature: Staking
     Then I should see "Stake added to queue"
     Then I should see "Continue staking"
     When I click on a button with text "Go to the staking queue"
-    Then I should see staking queue details for validator "genesis_11" with amount "100 LSK"
+    Then I should see staking queue details for validator "genesis_21" with amount "100 LSK"
     And I wait for "1 seconds"
     When I click on a button with text "Continue"
     And I click on a button with text "Confirm"
