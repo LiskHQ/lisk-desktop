@@ -56,7 +56,7 @@ Feature: Staking
     And I click on a button with text "Confirm"
     When I type "Password@1" in "password"
     And I click on a button with text "Continue"
-    And I wait for "1 seconds"
+    And I wait for "2 seconds"
     Then I should see staking confirmation details with amount "100 LSK"
 
   Scenario: Unstake validator - Remove stake
