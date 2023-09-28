@@ -37,7 +37,11 @@ Given(
 );
 
 Given('I click on a button with text {string}', async function (buttonText) {
-  await fixture.page.getByText(buttonText, { exact: true }).click();
+  await fixture.page.getByRole('button', { name: buttonText }).click();
+});
+
+Given('I click on a button with exact text {string}', async function (buttonText) {
+  await fixture.page.getByRole('button', { name: buttonText, exact: true }).click();
 });
 
 Then('Clipboard should contain {string}', async function (clipboardText) {
@@ -51,6 +55,10 @@ Given('I click on a button with testId {string}', async function (testId) {
 
 Given('I click on text {string}', async function (text) {
   await fixture.page.getByText(text).click();
+});
+
+Given('I click on exact text {string}', async function (text) {
+  await fixture.page.getByText(text, { exact: true }).click();
 });
 
 Given('I wait for {string}', async (timeout) => {
@@ -84,11 +92,11 @@ Then('I should be redirected to route: {string}', async function (route) {
 });
 
 Then('button with text {string} should be disabled', async function (textContent) {
-  await expect(fixture.page.getByText(textContent, { exact: true })).toBeDisabled();
+  await expect(fixture.page.getByRole('button', { name: textContent })).toBeDisabled();
 });
 
 Then('button with text {string} should be enabled', async function (textContent) {
-  await expect(fixture.page.getByText(textContent, { exact: true })).not.toBeDisabled();
+  await expect(fixture.page.getByRole('button', { name: textContent })).not.toBeDisabled();
 });
 
 // eslint-disable-next-line max-statements
@@ -174,6 +182,14 @@ Then(
   }
 );
 
+Then('I click on img with alt text {string} next to text {string}', async function (altText, text) {
+  await fixture.page.getByText(text, { exact: true }).locator('..').locator('..').getByAltText(altText).click();
+});
+
+Then('I hover over {string}', async function (text) {
+  await fixture.page.getByText(text, { exact: true }).hover();
+});
+
 Then('Element {string} should contain class {string}', async function (testId, className) {
   const regex = new RegExp(className);
   await expect(fixture.page.getByTestId(testId)).toHaveClass(regex);
@@ -181,7 +197,7 @@ Then('Element {string} should contain class {string}', async function (testId, c
 
 Then('Element {string} should not contain class {string}', async function (testId, className) {
   const selector = await fixture.page.getByTestId(testId);
-  const classList = await selector.evaluate(el => [...el.classList]);
+  const classList = await selector.evaluate((el) => [...el.classList]);
   const hasClassname = classList.find((classItem) => classItem.includes(className));
 
   await expect(hasClassname).toBeFalsy();
