@@ -61,6 +61,6 @@ Then('I should see unstaking confirmation details with amount {string}', async (
   await expect(fixture.page.getByText('Back to stakes', { exact: true })).toBeVisible();
 });
 
-Then('I should see at least {int} stakes in stakes list', async (stakesCount) => {
-  await expect(fixture.page.locator('.transaction-event-row')).toBeGreaterThanOrEqual(stakesCount);
+Then('I should see {int} stakes in stakes list', async (stakesCount) => {
+  await expect(fixture.page.locator('.transaction-event-row')).toHaveCount(stakesCount);
 });
