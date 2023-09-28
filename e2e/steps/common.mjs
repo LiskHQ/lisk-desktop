@@ -1,5 +1,5 @@
 /* eslint-disable new-cap */
-import { Given, Then } from '@cucumber/cucumber';
+import { Given, Then, When } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import routes from '../fixtures/routes.mjs';
 import { fixture } from '../fixtures/page.mjs';
@@ -196,4 +196,8 @@ Then('Element {string} should not contain class {string}', async (testId, classN
   const hasClassname = classList.find((classItem) => classItem.includes(className));
 
   await expect(hasClassname).toBeFalsy();
+});
+
+When('I do a global search for {string}', async (searchValue) => {
+  fixture.page.getByTestId('searchText').fill(searchValue);
 });
