@@ -30,9 +30,6 @@ const selectCurrentAccountWithSigningData = (state) => {
   return selectActiveTokenAccount(state);
 };
 
-const selectAccountBalance = (
-  state // @todo account has multiple balance now
-) => (state.wallet.info ? state.wallet.info[state.token.active].summary.balance : undefined);
 const selectSettings = (state) => state.settings;
 const selectNetwork = (state) => state.network;
 const selectNetworkName = (state) => state.network.name;
@@ -49,7 +46,6 @@ export {
   selectTransactions,
   selectLSKAddress,
   selectActiveTokenAccount,
-  selectAccountBalance,
   selectNetworkName,
   selectModuleCommandSchemas,
   selectBookmarks,
