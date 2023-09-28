@@ -1,3 +1,5 @@
+import { DEFAULT_NETWORK } from 'src/const/config';
+
 export const networkKeys = {
   mainnet: 'mainnet',
   alphanet: 'alphanet',
@@ -45,9 +47,10 @@ const networks = {
   },
   [networkKeys.customNode]: {
     name: networkKeys.customNode,
-    label: 'Custom Service Node',
+    label: networkKeys.customNode,
     serviceUrl: 'http://localhost:9901',
     wsServiceUrl: 'ws://localhost:9901',
+    isAvailable: DEFAULT_NETWORK === networkKeys.customNode,
   },
 };
 

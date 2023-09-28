@@ -37,7 +37,7 @@ pipeline {
 		stage('build') {
 			steps {
 				nvm(getNodejsVersion()) {
-					withEnv(["DEFAULT_NETWORK=testnet"]) {
+					withEnv(["DEFAULT_NETWORK=customNode"]) {
 						sh '''
 						cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
 						cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
@@ -77,7 +77,7 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							withEnv(["REACT_APP_MSW=true"]) {
 								wrap([$class: 'Xvfb']) {
-									sh '''									
+									sh '''
 									# lisk-core
 									npm i -g lisk-core
 									rm -rf ~/.lisk/
