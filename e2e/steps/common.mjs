@@ -4,41 +4,53 @@ import { expect } from '@playwright/test';
 import routes from '../fixtures/routes.mjs';
 import { fixture } from '../fixtures/page.mjs';
 
+const initAccountSetup = async (passphrase) => {
+  await fixture.page.goto(`${process.env.PW_BASE_URL}${routes.wallet}`);
+  await fixture.page.getByText('Add account', { exact: true }).click();
+  await fixture.page.getByText('Secret recovery phrase', { exact: true }).click();
+
+  const phrases = passphrase.split(' ');
+  for (let index = 0; index < phrases.length; index++) {
+    // eslint-disable-next-line no-await-in-loop
+    await fixture.page
+      .getByTestId(`recovery-${index}`)
+      .type(`${phrases[index]}${phrases.length === 12 ? '' : ' '}`);
+  }
+};
+
+const completeAccountSetup = async (password, name) => {
+  const returnUrl = fixture.page.url();
+  await fixture.page.getByText('Continue to set password', { exact: true }).click();
+  await fixture.page.getByTestId('password').fill(password);
+  await fixture.page.getByTestId('cPassword').fill(password);
+  await fixture.page.getByTestId('accountName').fill(name);
+  await fixture.page
+    .getByText('I agree to store my encrypted secret recovery phrase on this device.', {
+      exact: true,
+    })
+    .click();
+  await fixture.page.getByText('Save Account', { exact: true }).click({ timeout: 1000 });
+  await fixture.page.goto(`${returnUrl}`);
+};
+
 Then('I go to page {string}', async (pageName) => {
   await fixture.page.goto(`${process.env.PW_BASE_URL}${pageName}`);
 });
 
 Given(
   'I add an account with passphrase {string} password {string} name {string}',
-  async (passphrase, password, name, customDerivationInfo) => {
-    const returnUrl = fixture.page.url();
-    await fixture.page.goto(`${process.env.PW_BASE_URL}${routes.wallet}`);
-    await fixture.page.getByText('Add account', { exact: true }).click();
-    await fixture.page.getByText('Secret recovery phrase', { exact: true }).click();
+  async (passphrase, password, name) => {
+    await initAccountSetup(passphrase);
+    await completeAccountSetup(password, name);
+  }
+);
 
-    const phrases = passphrase.split(' ');
-    for (let index = 0; index < phrases.length; index++) {
-      // eslint-disable-next-line no-await-in-loop
-      await fixture.page
-        .getByTestId(`recovery-${index}`)
-        .type(`${phrases[index]}${phrases.length === 12 ? '' : ' '}`);
-    }
-    if (customDerivationInfo) {
-      const customDerivationPath = customDerivationInfo.replace('Custom derivation path ', '');
-      await fixture.page.getByTestId('custom-derivation-path').fill(customDerivationPath);
-    }
-
-    await fixture.page.getByText('Continue to set password', { exact: true }).click();
-    await fixture.page.getByTestId('password').fill(password);
-    await fixture.page.getByTestId('cPassword').fill(password);
-    await fixture.page.getByTestId('accountName').fill(name);
-    await fixture.page
-      .getByText('I agree to store my encrypted secret recovery phrase on this device.', {
-        exact: true,
-      })
-      .click();
-    await fixture.page.getByText('Save Account', { exact: true }).click({ timeout: 1000 });
-    await fixture.page.goto(`${returnUrl}`);
+Given(
+  'I add an account with passphrase {string} password {string} name {string} custom derivation path {string}',
+  async (passphrase, password, name, customDerivationPath) => {
+    await initAccountSetup(passphrase);
+    await fixture.page.getByTestId('custom-derivation-path').fill(customDerivationPath);
+    await completeAccountSetup(password, name);
   }
 );
 
