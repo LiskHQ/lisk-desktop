@@ -344,6 +344,8 @@ module.exports = {
     PRODUCTION: true,
     TEST: true,
     VERSION: '',
+    REACT_APP_DEFAULT_NETWORK: 'undefined',
+    LISK_ENABLE_DEV_TOOL: false,
   },
   coverageReporters: process.env.ON_JENKINS ? ['text', 'lcov', 'cobertura'] : ['html', 'json'],
   reporters: [
