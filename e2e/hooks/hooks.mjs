@@ -1,7 +1,7 @@
 import { BeforeAll, AfterAll, Before, After, setDefaultTimeout, Status } from '@cucumber/cucumber';
 import playwright from 'playwright';
 import { fixture } from '../fixtures/page.mjs';
-import { NETWORKS } from '../fixtures/networks.mjs';
+import { BASE_NETWORK } from '../fixtures/networks.mjs';
 
 let browser;
 let context;
@@ -23,8 +23,8 @@ Before(async function () {
   const newPage = await context.newPage();
   await newPage.goto(`${process.env.PW_BASE_URL}`);
 
-  const networkName = 'devnet';
-  const serviceUrl = NETWORKS.devnet.serviceUrl;
+  const networkName = BASE_NETWORK.name;
+  const serviceUrl = BASE_NETWORK.serviceUrl;
   await newPage.getByTestId('network-application-trigger').click();
   await newPage.getByText('Add network').click();
 
