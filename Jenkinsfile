@@ -43,7 +43,7 @@ pipeline {
 						cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
 						yarn run build
 
-						# localy serve build
+						# locally serve build
 						nohup npx serve -l 8081 ./app/build >serve.out 2>serve.err &
 						'''
 					}
