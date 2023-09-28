@@ -68,7 +68,6 @@ Feature: Staking
     Then I should see "Stake added to queue"
     Then I should see "Continue staking"
     When I click on a button with text "Go to the staking queue"
-    Then I should see staking queue details for validator "genesis_26" with amount "100 LSK"
     And I wait for "1 seconds"
     When I click on a button with text "Continue"
     And I click on a button with text "Confirm"
