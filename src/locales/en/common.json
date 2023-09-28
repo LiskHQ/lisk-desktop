@@ -683,7 +683,7 @@
   "This transaction was initiated from another application for signature request.": "This transaction was initiated from another application for signature request.",
   "This validator has been permanently banned": "This validator has been permanently banned",
   "This validator is among the first 101 validators by validator weight.": "This validator is among the first 101 validators by validator weight.",
-  "This validator is among the first 101 validators in validator weight ranking.": "This validator is among the first 101 validators in validator weight ranking.",
+  "This validator is among the first {{roundLength}} validators in validator weight ranking.": "This validator is among the first {{roundLength}} validators in validator weight ranking.",
   "This validator will be punished in upcoming rounds": "This validator will be punished in upcoming rounds",
   "To": "To",
   "To application": "To application",
