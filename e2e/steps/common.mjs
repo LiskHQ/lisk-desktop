@@ -4,33 +4,32 @@ import { expect } from '@playwright/test';
 import routes from '../fixtures/routes.mjs';
 import { fixture } from '../fixtures/page.mjs';
 
-const initAccountSetup = async (passphrase) => {
-  await fixture.page.goto(`${process.env.PW_BASE_URL}${routes.wallet}`);
-  await fixture.page.getByText('Add account', { exact: true }).click();
-  await fixture.page.getByText('Secret recovery phrase', { exact: true }).click();
+const initAccountSetup = async (passphrase, browserFixture) => {
+  await browserFixture.page.goto(`${process.env.PW_BASE_URL}${routes.wallet}`);
+  await browserFixture.page.getByText('Add account', { exact: true }).click();
+  await browserFixture.page.getByText('Secret recovery phrase', { exact: true }).click();
 
   const phrases = passphrase.split(' ');
   for (let index = 0; index < phrases.length; index++) {
     // eslint-disable-next-line no-await-in-loop
-    await fixture.page
+    await browserFixture.page
       .getByTestId(`recovery-${index}`)
       .type(`${phrases[index]}${phrases.length === 12 ? '' : ' '}`);
   }
 };
 
-const completeAccountSetup = async (password, name) => {
-  const returnUrl = fixture.page.url();
-  await fixture.page.getByText('Continue to set password', { exact: true }).click();
-  await fixture.page.getByTestId('password').fill(password);
-  await fixture.page.getByTestId('cPassword').fill(password);
-  await fixture.page.getByTestId('accountName').fill(name);
-  await fixture.page
+const completeAccountSetup = async (password, name, browserFixture) => {
+  await browserFixture.page.getByText('Continue to set password', { exact: true }).click();
+  await browserFixture.page.getByTestId('password').fill(password);
+  await browserFixture.page.getByTestId('cPassword').fill(password);
+  await browserFixture.page.getByTestId('accountName').fill(name);
+  await browserFixture.page
     .getByText('I agree to store my encrypted secret recovery phrase on this device.', {
       exact: true,
     })
     .click();
-  await fixture.page.getByText('Save Account', { exact: true }).click({ timeout: 1000 });
-  await fixture.page.goto(`${returnUrl}`);
+  await browserFixture.page.getByText('Save Account', { exact: true }).click({ timeout: 1000 });
+  await browserFixture.page.getByRole('button', { name: 'Continue to wallet' }).click();
 };
 
 Then('I go to page {string}', async (pageName) => {
@@ -40,17 +39,17 @@ Then('I go to page {string}', async (pageName) => {
 Given(
   'I add an account with passphrase {string} password {string} name {string}',
   async (passphrase, password, name) => {
-    await initAccountSetup(passphrase);
-    await completeAccountSetup(password, name);
+    await initAccountSetup(passphrase, fixture);
+    await completeAccountSetup(password, name, fixture);
   }
 );
 
 Given(
   'I add an account with passphrase {string} password {string} name {string} custom derivation path {string}',
   async (passphrase, password, name, customDerivationPath) => {
-    await initAccountSetup(passphrase);
+    await initAccountSetup(passphrase, fixture);
     await fixture.page.getByTestId('custom-derivation-path').fill(customDerivationPath);
-    await completeAccountSetup(password, name);
+    await completeAccountSetup(password, name, fixture);
   }
 );
 
