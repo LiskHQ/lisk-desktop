@@ -92,7 +92,7 @@ Then('I should be redirected to route: {string}', async function (route) {
 });
 
 Then('I should see {string} modal', async function (modalName) {
-  const modalPath =  `modal=${modalName}`
+  const modalPath = `modal=${modalName}`;
   await expect(fixture.page.url()).toContain(modalPath);
 });
 
@@ -188,7 +188,12 @@ Then(
 );
 
 Then('I click on img with alt text {string} next to text {string}', async function (altText, text) {
-  await fixture.page.getByText(text, { exact: true }).locator('..').locator('..').getByAltText(altText).click();
+  await fixture.page
+    .getByText(text, { exact: true })
+    .locator('..')
+    .locator('..')
+    .getByAltText(altText)
+    .click();
 });
 
 Then('I hover over {string}', async function (text) {
