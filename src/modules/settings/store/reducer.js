@@ -1,5 +1,4 @@
 import { persistReducer } from 'redux-persist';
-import { deepMergeObj } from 'src/utils/helpers';
 import { storage } from 'src/redux/store';
 import networks from '@network/configuration/networks';
 import { DEFAULT_NETWORK } from 'src/const/config';
@@ -33,7 +32,7 @@ export const initialState = {
 const settings = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.settingsUpdated:
-      return deepMergeObj(state, action.data);
+      return { ...state, ...action.data };
     case actionTypes.settingsReset:
       return {
         ...state,

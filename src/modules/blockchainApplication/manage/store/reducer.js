@@ -33,7 +33,7 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
 
 export const applications = (
   state = initialState.applications,
-  { type, app, apps, chainId, network, currentName, newName }
+  { type, app, apps, chainId, network, currentName, newName, networks }
 ) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
@@ -49,8 +49,10 @@ export const applications = (
       );
     }
 
-    case actionTypes.deleteNetworkInApplications: {
-      delete state[network];
+    case actionTypes.deleteNetworksInApplications: {
+      networks.forEach((networkToDelete) => {
+        delete state[networkToDelete];
+      });
       return { ...state };
     }
 

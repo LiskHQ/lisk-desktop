@@ -11,7 +11,7 @@ import { OutlineButton, PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { immutableDeleteFromArrayById } from 'src/utils/immutableUtils';
-import { deleteNetworkInApplications } from '@blockchainApplication/manage/store/action';
+import { deleteNetworksInApplications } from '@blockchainApplication/manage/store/action';
 import { useDispatch } from 'react-redux';
 import styles from './DialogRemoveNetwork.css';
 
@@ -29,7 +29,7 @@ const DialogRemoveNetwork = () => {
   const onConfirm = () => {
     const modifiedCustomNetworks = immutableDeleteFromArrayById(customNetworks, 'name', name);
     setValue(modifiedCustomNetworks);
-    dispatch(deleteNetworkInApplications(name));
+    dispatch(deleteNetworksInApplications([name]));
     removeSearchParamsFromUrl(history, ['modal'], true);
     toast.info(t(`Network removed "${name}"`), { position: 'bottom-right' });
   };
