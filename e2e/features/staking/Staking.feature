@@ -44,24 +44,25 @@ Feature: Staking
     Given I click on a button with text "Edit stake"
     Then I should see "Edit stake"
     Then button with text "Confirm" should be disabled
-    When I type "100" in "stake"
+    When I type "30" in "stake"
     Then button with text "Confirm" should be enabled
     Given I click on a button with text "Confirm"
     Then I should see "Stake added to queue"
     Then I should see "Continue staking"
     When I click on a button with text "Go to the staking queue"
-    Then I should see staking queue details for validator "genesis_25" with amount "100 LSK"
+    Then I should see staking queue details for validator "genesis_25" with amount "30 LSK"
     And I wait for "1 seconds"
     When I click on a button with text "Continue"
     And I click on a button with text "Confirm"
     When I type "Password@1" in "password"
     And I click on a button with text "Continue"
+    Then I should see unstaking confirmation details with amount "20 LSK"
 
   Scenario: Unstake validator - Remove stake
-    When I do a global search for "genesis_25"
+    When I do a global search for "genesis_22"
     And I wait for "1 seconds"
     Given I click on an element with testId "validators-content"
-    Then I should see "genesis_25" validator details
+    Then I should see "genesis_22" validator details
     Given I click on a button with text "Edit stake"
     Then I should see "Edit stake"
     Given I click on a button with text "Remove stake"
