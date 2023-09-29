@@ -10,6 +10,7 @@ import {
 import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { Client } from 'src/utils/api/client';
+import { useReduxStateModifier } from 'src/utils/useReduxStateModifier';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
 
 export const ApplicationBootstrapContext = createContext({
@@ -80,6 +81,7 @@ const ApplicationBootstrap = ({ children }) => {
   ]);
 
   useLedgerDeviceListener();
+  useReduxStateModifier();
 
   return (
     <ApplicationBootstrapContext.Provider

@@ -68,10 +68,10 @@ describe('BlockchainApplication reducer', () => {
       expect(changedState).not.toHaveProperty(actionData.chainId);
     });
 
-    it('should delete network in applications', async () => {
+    it('should delete networks in applications', async () => {
       const actionData = {
-        type: actionTypes.deleteNetworkInApplications,
-        network: 'devnet',
+        type: actionTypes.deleteNetworksInApplications,
+        networks: ['devnet'],
       };
 
       const changedState = applications(
