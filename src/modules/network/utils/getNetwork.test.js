@@ -9,7 +9,7 @@ describe('Utils: getNetwork', () => {
       { label: 'Betanet', name: 'betanet' },
       { label: 'Devnet', name: 'devnet' },
       { label: 'Testnet', name: 'testnet' },
-      { label: 'customNode', name: 'customNode' },
+      { label: 'CustomNode', name: 'customNode' },
     ];
 
     it('returns names and labels', () => {

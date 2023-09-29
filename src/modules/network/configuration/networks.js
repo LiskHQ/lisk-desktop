@@ -47,7 +47,7 @@ const networks = {
   },
   [networkKeys.customNode]: {
     name: networkKeys.customNode,
-    label: networkKeys.customNode,
+    label: 'CustomNode',
     serviceUrl: 'http://localhost:9901',
     wsServiceUrl: 'ws://localhost:9901',
     isAvailable: DEFAULT_NETWORK === networkKeys.customNode,

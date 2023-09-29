@@ -13,7 +13,7 @@ Feature: Network Management
     And I click on a button with text "Add network"
     Then I should see 'Custom network added "custom_devnet"'
 
-  Scenario: Edit network
+  Scenario: Edit custom network
     Given I click on a button with testId "selected-menu-item"
     And I hover over "custom_devnet"
     And I click on img with alt text "edit" next to text "custom_devnet"
@@ -35,7 +35,7 @@ Feature: Network Management
     And I click on exact text "custom_devnet"
     Then "custom_devnet" should be selected in "Switch network" dropdown
 
-  Scenario: Error message when adding an existing network
+  Scenario: Error message when a wrong serviceUrl is inputted
     Given I click on text "Add network"
     Then I should be redirected to route: 'wallet?modal=dialogAddNetwork'
     And button with text "Add network" should be disabled
