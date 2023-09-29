@@ -48,7 +48,7 @@ pipeline {
                             }
                         }
                         stash includes: 'app/build/', name: 'build'
-                    }
+                    },
 					"E2E": {
 						nvm(getNodejsVersion()) {
                             withEnv(["DEFAULT_NETWORK=customNode", "BUILD_NAME=buildE2E"]) {
