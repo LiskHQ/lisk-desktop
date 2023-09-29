@@ -51,7 +51,7 @@ pipeline {
                     }
 					"E2E": {
 						nvm(getNodejsVersion()) {
-                            withEnv(["DEFAULT_NETWORK=customNode", "BUILD_NAME= ../../app/buildE2E"]) {
+                            withEnv(["DEFAULT_NETWORK=customNode", "BUILD_NAME=buildE2E"]) {
                                 sh '''
                                 cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
                                 cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
