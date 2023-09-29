@@ -47,7 +47,7 @@ pipeline {
                                 '''
                             }
                         }
-                        stash includes: 'app/build/', name: 'build',
+                        stash includes: 'app/build/', name: 'build'
                     }
 					"E2E": {
 						nvm(getNodejsVersion()) {
@@ -62,7 +62,7 @@ pipeline {
                                 '''
                             }
 						}
-						stash includes: 'app/buildE2E/', name: 'buildE2E',
+						stash includes: 'app/buildE2E/', name: 'buildE2E'
 					},
                 )
 			}
