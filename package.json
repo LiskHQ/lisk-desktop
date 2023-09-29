@@ -39,8 +39,8 @@
     "format": "prettier --write '**/*'",
     "install:electron:dependencies": "cd ./app && yarn && cd ..",
     "analyze:bundles": "webpack  --config ./setup/config/webpack.config.analyze",
-    "copy:files": "cpx \"./setup/react/{index.html,assets/**/*}\" \"./app/${BUILD_NAME:-build}/\"",
-    "clean:build": "rm -rf app/${BUILD_NAME:-build}",
+    "copy:files": "cpx \"./setup/react/{index.html,assets/**/*}\" \"./app/${BUILD_NAME}/\"",
+    "clean:build": "rm -rf app/${BUILD_NAME}",
     "clean:dist": "rm -rf dist",
     "postinstall": "patch-package && electron-builder install-app-deps",
     "cucumber:playwright:open": "cucumber-js test -c cucumber.js"
