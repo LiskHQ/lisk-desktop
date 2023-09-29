@@ -36,19 +36,35 @@ pipeline {
 		}
 		stage('build') {
 			steps {
-				nvm(getNodejsVersion()) {
-					withEnv(["DEFAULT_NETWORK=customNode"]) {
-						sh '''
-						cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
-						cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-						yarn run build
+                parallel (
+                    "prod": {
+                        nvm(getNodejsVersion()) {
+                            withEnv(["DEFAULT_NETWORK=testnet"]) {
+                                sh '''
+                                cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
+                                cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
+                                yarn run build
+                                '''
+                            }
+                        }
+                        stash includes: 'app/build/', name: 'build',
+                    }
+					"E2E": {
+						nvm(getNodejsVersion()) {
+                            withEnv(["DEFAULT_NETWORK=customNode", "BUILD_NAME= ../../app/buildE2E"]) {
+                                sh '''
+                                cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
+                                cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
+                                yarn run build
 
-						# locally serve build
-						nohup npx serve -l 8081 ./app/build >serve.out 2>serve.err &
-						'''
-					}
-				}
-				stash includes: 'app/build/', name: 'build'
+                                # locally serve build
+                                nohup npx serve -l 8081 ./app/buildE2E >serve.out 2>serve.err &
+                                '''
+                            }
+						}
+						stash includes: 'app/buildE2E/', name: 'buildE2E',
+					},
+                )
 			}
 		}
 		stage('deploy') {
