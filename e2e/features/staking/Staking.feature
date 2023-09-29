@@ -75,9 +75,9 @@ Feature: Staking
     When I type "Password@1" in "password"
     And I click on a button with text "Continue"
     And I wait for "1 seconds"
-    Then I should see unstaking confirmation details with amount "100 LSK"
+    Then I should see unstaking confirmation details with amount "30 LSK"
 
   Scenario: View stakes
     Given I click on a button with text "Stakes"
     Then I should see "Stake amount"
-    Then I should see 6 stakes in stakes list
+    Then I should see 2 stakes in stakes list
