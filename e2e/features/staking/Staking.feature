@@ -18,10 +18,10 @@ Feature: Staking
     Then I should select a random validator and see their details
 
   Scenario: Stake validator then unstake validator - Edit stake
-    When I do a global search for "genesis_27"
+    When I do a global search for "genesis_28"
     And I wait for "1 seconds"
     Given I click on an element with testId "validators-content"
-    Then I should see "genesis_27" validator details
+    Then I should see "genesis_28" validator details
     Given I click on a button with text "Stake validator"
     Then I should see "Add to staking queue"
     Then button with text "Confirm" should be disabled
@@ -31,7 +31,7 @@ Feature: Staking
     Then I should see "Stake added to queue"
     Then I should see "Continue staking"
     When I click on a button with text "Go to the staking queue"
-    Then I should see staking queue details for validator "genesis_27" with amount "10 LSK"
+    Then I should see staking queue details for validator "genesis_28" with amount "10 LSK"
     And I wait for "1 seconds"
     When I click on a button with text "Continue"
     And I click on a button with text "Confirm"
@@ -50,7 +50,7 @@ Feature: Staking
     Then I should see "Stake added to queue"
     Then I should see "Continue staking"
     When I click on a button with text "Go to the staking queue"
-    Then I should see staking queue details for validator "genesis_26" with amount "30 LSK"
+    Then I should see staking queue details for validator "genesis_28" with amount "30 LSK"
     And I wait for "1 seconds"
     When I click on a button with text "Continue"
     And I click on a button with text "Confirm"
@@ -59,10 +59,10 @@ Feature: Staking
     Then I should see unstaking confirmation details with amount "20 LSK"
 
   Scenario: Unstake validator - Remove stake
-    When I do a global search for "genesis_26"
+    When I do a global search for "genesis_28"
     And I wait for "1 seconds"
     Given I click on an element with testId "validators-content"
-    Then I should see "genesis_26" validator details
+    Then I should see "genesis_28" validator details
     Given I click on a button with text "Edit stake"
     Then I should see "Edit stake"
     Given I click on a button with text "Remove stake"
