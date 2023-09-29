@@ -3,7 +3,7 @@ Feature: Network Management
     Given I go to page "wallet"
     And I wait for "1 seconds"
     And I click on a button with text "customNode"
-    Then "customNode" should be selected in "Switch network" dropdown
+    Then "CustomNode" should be selected in "Switch network" dropdown
     Given I click on text "Add network"
     Then I should be redirected to route: 'wallet?modal=dialogAddNetwork'
     And button with text "Add network" should be disabled
