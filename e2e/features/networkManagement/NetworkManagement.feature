@@ -9,16 +9,14 @@ Feature: Network Management
     And button with text "Add network" should be disabled
     Given I type "custom_devnet" in "name"
     And I type "http://devnet-service.liskdev.net:9901" in "serviceUrl"
+    And I type "ws://devnet-service.liskdev.net:9901" in "wsServiceUrl"
     And I wait for "1 seconds"
     And I click on a button with text "Add network"
     Then I should see 'Custom network added "custom_devnet"'
 
-  Scenario: Edit custom network
-    Given I click on a button with testId "selected-menu-item"
-    And I hover over "custom_devnet"
-    And I click on img with alt text "edit" next to text "custom_devnet"
-    Then I should see "Edit network"
-    Given I type "edited_custom_devnet" in "name"
+  Scenario: Edit network name
+    Given I open edit network modal for network "custom_devnet"
+    And I type "edited_custom_devnet" in "name"
     And I click on a button with text "Save network"
     Then I should see 'Custom network edited "edited_custom_devnet"'
 
