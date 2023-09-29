@@ -5,7 +5,7 @@ Feature: Network Management
     And I click on a button with text "customNode"
     Then "CustomNode" should be selected in "Switch network" dropdown
     Given I click on text "Add network"
-    Then I should be redirected to route: 'wallet?modal=dialogAddNetwork'
+    Then I should see "dialogAddNetwork" modal
     And button with text "Add network" should be disabled
     Given I type "custom_devnet" in "name"
     And I type "http://devnet-service.liskdev.net:9901" in "serviceUrl"

@@ -91,6 +91,11 @@ Then('I should be redirected to route: {string}', async function (route) {
   await expect(fixture.page.url()).toBe(`${process.env.PW_BASE_URL}/${route}`);
 });
 
+Then('I should see {string} modal', async function (modalName) {
+  const modalPath =  `modal=${modalName}`
+  await expect(fixture.page.url()).toContain(modalPath);
+});
+
 Then('button with text {string} should be disabled', async function (textContent) {
   await expect(fixture.page.getByRole('button', { name: textContent })).toBeDisabled();
 });
