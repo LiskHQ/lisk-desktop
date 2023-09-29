@@ -39,7 +39,7 @@ pipeline {
                 parallel (
                     "prod": {
                         nvm(getNodejsVersion()) {
-                            withEnv(["DEFAULT_NETWORK=testnet", "BUILD_NAME=build"]) {
+                            withEnv(["DEFAULT_NETWORK=testnet"]) {
                                 sh '''
                                 cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
                                 cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
