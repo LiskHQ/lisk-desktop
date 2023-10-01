@@ -49,7 +49,12 @@ const ValidatorActionButton = ({ address, isValidator }) => {
       data={{ message: t('Token balance is not enough to register a validator.') }}
       component={hasTokenBalances ? 'registerValidator' : 'noTokenBalance'}
     >
-      <PrimaryButton className="register-validator">{t('Register validator')}</PrimaryButton>
+      <PrimaryButton
+        className="register-validator"
+        disabled={tokenBalances.isLoading || isValidator}
+      >
+        {t('Register validator')}
+      </PrimaryButton>
     </DialogLink>
   );
 };
@@ -173,7 +178,11 @@ const ValidatorsMonitor = ({ watchList }) => {
                 <SecondaryButton>{t('Stakes')}</SecondaryButton>
               </Link>
             )}
-            <ValidatorActionButton isValidator={isValidator} address={address} />
+            <ValidatorActionButton
+              isValidator={isValidator}
+              isLoadingValidators
+              address={address}
+            />
           </div>
         </div>
       </BoxHeader>
