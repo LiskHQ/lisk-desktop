@@ -67,6 +67,7 @@ const Overview = ({ isWalletRoute, history }) => {
   );
 
   const host = wallet.summary?.address ?? '';
+  const accountName = !!searchAddress && searchAddress !== currentAddress ? validator.name : name;
 
   const showWarning = () => {
     if (
@@ -109,7 +110,7 @@ const Overview = ({ isWalletRoute, history }) => {
             copy
             size={50}
             address={authData?.meta?.address}
-            accountName={!searchAddress ? name : validator.name}
+            accountName={accountName}
             className={styles.walletVisualWrapper}
             detailsClassName={styles.accountSummary}
             truncate={false}
