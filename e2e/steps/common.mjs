@@ -181,7 +181,7 @@ Then('Element {string} should contain class {string}', async function (testId, c
 
 Then('Element {string} should not contain class {string}', async function (testId, className) {
   const selector = await fixture.page.getByTestId(testId);
-  const classList = await selector.evaluate(el => [...el.classList]);
+  const classList = await selector.evaluate((el) => [...el.classList]);
   const hasClassname = classList.find((classItem) => classItem.includes(className));
 
   await expect(hasClassname).toBeFalsy();

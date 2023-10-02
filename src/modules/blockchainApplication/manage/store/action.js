@@ -51,7 +51,7 @@ export const deleteNetworksInApplications = (networks) => ({
 export const updateNetworkNameInApplications = (currentName, newName) => ({
   type: actionTypes.updateNetworkNameInApplications,
   currentName,
-  newName
+  newName,
 });
 
 /**
