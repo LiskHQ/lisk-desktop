@@ -6,14 +6,15 @@ import Select from 'src/theme/Select';
 import { useCommandSchema } from '@network/hooks';
 import styles from './filters.css';
 
-const SelectFilter = ({ 
+const SelectFilter = ({
   className,
   classNameDropdown,
   label,
   placeholder,
   filters,
   name,
-  updateCustomFilters, }) => {
+  updateCustomFilters,
+}) => {
   const { moduleCommandSchemas, isLoading } = useCommandSchema();
 
   if (isLoading) return null;
