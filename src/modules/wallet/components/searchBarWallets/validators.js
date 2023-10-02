@@ -16,7 +16,7 @@ const Validators = ({
     <header className={`${styles.header} validators-header`}>
       <label>{t('Account')}</label>
     </header>
-    <div className={`${styles.content} validators-content`}>
+    <div className={`${styles.content} validators-content`} data-testid="validators-content">
       {validators.map((validator, index) => (
         <div
           key={index}
