@@ -71,8 +71,8 @@ const AccountDetails = () => {
     nonce = 0,
   } = authData?.data || emptyKeys;
   const { name = '', publicKey = '' } = authData?.meta ?? {};
-  const accountName =
-    queryAddress === currentAccount.metadata?.address ? currentAccount.metadata?.name : name;
+  const isMyAccount = queryAddress === currentAccount.metadata?.address;
+  const accountName = isMyAccount ? currentAccount.metadata?.name : name;
   const appendAccountName = `-${accountName}`;
   const fileName = `${address}${accountName ? appendAccountName : ''}-lisk-account`;
   const truncatedFilename = `${truncateAddress(fileName)}.json`;
@@ -183,10 +183,8 @@ const AccountDetails = () => {
                 <>
                   <h3>{accountName}</h3>
                   {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
-                  {!authLoading && !queryAddress && (
-                    <Icon name="edit" onClick={(e) => setMode(e)} />
-                  )}
-                  {!queryAddress && currentAccount.metadata.isHW && (
+                  {!authLoading && isMyAccount && <Icon name="edit" onClick={(e) => setMode(e)} />}
+                  {isMyAccount && currentAccount.metadata.isHW && (
                     <Icon name="hardwareWalletIcon" />
                   )}
                 </>
@@ -223,7 +221,7 @@ const AccountDetails = () => {
                 </>
               )}
             </div>
-            {!queryAddress && !currentAccount.metadata.isHW && (
+            {isMyAccount && !currentAccount.metadata.isHW && (
               <div className={styles.infoRow}>
                 <span className={styles.title}>{t('Backup account')}: </span>
                 <Icon name="filePlain" />
