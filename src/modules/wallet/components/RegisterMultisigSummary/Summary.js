@@ -16,6 +16,7 @@ const Summary = ({
   transactionJSON,
   transactions,
   multisigTransactionSigned,
+  authQuery,
 }) => {
   const [sender] = useCurrentAccount();
   const { txInitiatorAccount } = useTxInitiatorAccount({
@@ -32,6 +33,8 @@ const Summary = ({
       ),
     [transactionJSON]
   );
+
+  const numberOfSignaturesOnAccount = authQuery.data?.data?.numberOfSignatures;
 
   const onConfirmAction = useMemo(
     () => ({
@@ -90,7 +93,9 @@ const Summary = ({
         transactionJSON={transactionJSON}
       >
         <div className={styles.header}>
-          <h5 className={styles.title}>{t('Register multisignature account')}</h5>
+          <h5 className={styles.title}>
+            {t(`${numberOfSignaturesOnAccount > 0 ? 'Editi' : 'Register'} multisignature account`)}
+          </h5>
         </div>
         <ProgressBar current={2} />
       </TransactionSummary>

@@ -70,7 +70,7 @@ export const validateState = ({
 };
 
 // eslint-disable-next-line max-statements
-const Form = ({ nextStep, prevState = {}, onNext }) => {
+const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
   const { t } = useTranslation();
   const [numberOfSignatures, setNumberOfSignatures] = useState(() =>
     getInitialSignaturesState(prevState)
@@ -145,6 +145,24 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
     }
   }, [numberOfSignatures]);
 
+  useEffect(() => {
+    const numberOfSignaturesOnAccount = authQuery.data?.data?.numberOfSignatures;
+
+    if (authQuery.isFetched && authQuery.data && numberOfSignaturesOnAccount > 1) {
+      const mandatoryMembers = authQuery.data.data.mandatoryKeys.map((key) => ({
+        isMandatory: true,
+        publicKey: key,
+      }));
+      const optionalMembers = authQuery.data.data.optionalKeys.map((key) => ({
+        isMandatory: false,
+        publicKey: key,
+      }));
+
+      setNumberOfSignatures(numberOfSignaturesOnAccount);
+      setMembers([...mandatoryMembers, optionalMembers]);
+    }
+  }, [authQuery.isFetching]);
+
   const feedback = useMemo(
     () =>
       validateState({
@@ -173,6 +191,8 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
     signatures: initializeDefaultSignatures(mandatoryKeys, optionalKeys),
   };
 
+  const numberofSignatureOnAccount = authQuery?.data?.data.numberOfSignatures;
+
   return (
     <section className={styles.wrapper}>
       <TxComposer
@@ -183,7 +203,9 @@ const Form = ({ nextStep, prevState = {}, onNext }) => {
       >
         <>
           <BoxHeader className={styles.header}>
-            <h2>{t('Register multisignature account')}</h2>
+            <h2>
+              {t(`${numberofSignatureOnAccount > 1 ? 'Edit' : 'Register'} multisignature account`)}
+            </h2>
           </BoxHeader>
           <BoxContent className={styles.container}>
             <ProgressBar current={1} />
