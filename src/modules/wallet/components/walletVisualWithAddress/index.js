@@ -18,7 +18,9 @@ import styles from './walletVisualWithAddress.css';
 
 const AccountName = ({ isMultisig, name }) => (
   <div className={styles.accountName}>
-    <p className="accountName">{name}</p>
+    <p className="accountName" data-testid={name}>
+      {name}
+    </p>
     {isMultisig && name && <Icon name="multisigKeys" />}
   </div>
 );
@@ -33,7 +35,7 @@ const AccountAddress = ({
   isMultisig,
 }) => (
   <div className={`${styles.address} accountAddress`}>
-    <span>{truncate ? truncatedAddress : transformedAddress}</span>
+    <span data-testid={address}>{truncate ? truncatedAddress : transformedAddress}</span>
     {copy ? (
       <CopyToClipboard
         value={address}

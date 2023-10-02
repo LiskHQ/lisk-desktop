@@ -142,7 +142,7 @@ export const ValidatorDetails = () => {
             {watched ? t('Remove from watched') : t('Add to watched')}
           </p>
         </Tooltip>
-        <div className={`${styles.validatorDetails}`}>
+        <div className={styles.validatorDetails}>
           <Tooltip
             noArrow
             tooltipClassName={styles.summaryTooltipContainer}
@@ -161,7 +161,9 @@ export const ValidatorDetails = () => {
             />
           </Tooltip>
           <div>
-            <p className={styles.validatorName}>{data.name}</p>
+            <p className={`${styles.validatorName} validator-name`} data-testid={data.name}>
+              {data.name}
+            </p>
             <p className={styles.validatorAddress}>{truncateAddress(data.address)}</p>
           </div>
         </div>

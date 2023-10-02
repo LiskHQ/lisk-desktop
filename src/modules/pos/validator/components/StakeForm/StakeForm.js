@@ -236,7 +236,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
   const commandParams = { stakes: normalizedStakes };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid="stake-form-wrapper">
       <TxComposer
         onComposed={onComposed}
         onConfirm={onConfirm}
