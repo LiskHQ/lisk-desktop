@@ -6,7 +6,13 @@ import to from 'await-to-js';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';
-import { ERROR_EVENTS, EVENT_DATA_RESULT, TransactionExecutionResult } from '../constants';
+import {
+  ERROR_EVENTS,
+  TOKEN_EVENT_DATA_RESULT,
+  VALIDATOR_EVENT_DATA_RESULT,
+  TransactionExecutionResult,
+} from '../constants';
+import { MODULE_COMMANDS_NAME_MAP } from '../configuration/moduleCommand';
 
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
@@ -68,24 +74,26 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
   });
 };
 
-const getEventDataResultError = (events) => {
+const getEventDataResultError = (events, moduleCommand) => {
   const event = events?.find((e) => e.data?.result && e.data?.result !== 0);
 
   if (event) {
-    return EVENT_DATA_RESULT[event.data.result];
+    return moduleCommand === MODULE_COMMANDS_NAME_MAP.registerValidator
+      ? VALIDATOR_EVENT_DATA_RESULT[event.data.result]
+      : TOKEN_EVENT_DATA_RESULT[event.data.result];
   }
 
   return 'Transaction dry run failed with errors, hence aborting next step.';
 };
 
-const getDryRunErrors = (events) => {
+const getDryRunErrors = (events, moduleCommand) => {
   const event = events?.find((e) => ERROR_EVENTS[e.name]);
 
   if (event) {
     return ERROR_EVENTS[event.name];
   }
 
-  return getEventDataResultError(events);
+  return getEventDataResultError(events, moduleCommand);
 };
 
 /**
@@ -113,7 +121,12 @@ export const dryRunTransaction = async ({
   let errorMessage = error?.message || response?.data?.errorMessage;
 
   if (!isOk && !errorMessage) {
-    errorMessage = getDryRunErrors(response?.data?.events);
+    const moduleCommand = joinModuleAndCommand({
+      module: transaction.module,
+      command: transaction.command,
+    });
+
+    errorMessage = getDryRunErrors(response?.data?.events, moduleCommand);
   }
 
   return {
