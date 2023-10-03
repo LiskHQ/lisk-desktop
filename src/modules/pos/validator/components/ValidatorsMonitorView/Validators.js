@@ -180,7 +180,7 @@ const ValidatorsMonitor = ({ watchList }) => {
             )}
             <ValidatorActionButton
               isValidator={isValidator}
-              isLoadingValidators
+              isLoadingValidators={isLoadingValidators}
               address={address}
             />
           </div>
