@@ -36,3 +36,10 @@ export const VALIDATOR_EVENT_DATA_RESULT = {
   3: 'The BLS key has already been registered in the chain, please check and add a valid BLS key.',
   4: 'Invalid proof of possession for the given BLS key, please check and add a valid proof of possession.',
 };
+
+export const POS_EVENT_DATA_RESULT = {
+  1: 'Failed to stake for an unregistered validator.',
+  2: 'The unstaking attempt failed due to parameters that were not valid.',
+  3: 'Failed due to an excessive number of stakes being unlocked.',
+  4: 'Failed to stake due to exceeding the staking limit.',
+};

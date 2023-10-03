@@ -24,7 +24,7 @@ export const getTransactionBaseFees = (network) =>
     path: httpPaths.fees,
     searchParams: {},
     network,
-  }).then((response) => {
+  })?.then((response) => {
     const { feeEstimatePerByte } = response.data;
 
     return {
@@ -78,12 +78,19 @@ const getEventDataResultError = (events, moduleCommand) => {
   const event = events?.find((e) => e.data?.result && e.data?.result !== 0);
 
   if (event) {
-    return moduleCommand === MODULE_COMMANDS_NAME_MAP.registerValidator
-      ? VALIDATOR_EVENT_DATA_RESULT[event.data.result]
-      : TOKEN_EVENT_DATA_RESULT[event.data.result];
+    switch (moduleCommand) {
+      case MODULE_COMMANDS_NAME_MAP.transfer || MODULE_COMMANDS_NAME_MAP.transferCrossChain:
+        return TOKEN_EVENT_DATA_RESULT[event.data.result];
+      case MODULE_COMMANDS_NAME_MAP.registerValidator:
+        return VALIDATOR_EVENT_DATA_RESULT[event.data.result];
+      case MODULE_COMMANDS_NAME_MAP.stake || MODULE_COMMANDS_NAME_MAP.unlock:
+        return TOKEN_EVENT_DATA_RESULT[event.data.result];
+      default:
+        return `Transaction dry run failed for module: ${event.module}, name: ${event.name} and result: ${event.data.result}, hence aborting next step.`;
+    }
   }
 
-  return 'Transaction dry run failed with errors, hence aborting next step.';
+  return 'Transaction dry run failed with no events, hence aborting next step.';
 };
 
 const getDryRunErrors = (events, moduleCommand) => {
