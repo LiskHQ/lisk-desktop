@@ -11,6 +11,7 @@ import {
   TOKEN_EVENT_DATA_RESULT,
   VALIDATOR_EVENT_DATA_RESULT,
   TransactionExecutionResult,
+  POS_EVENT_DATA_RESULT,
 } from '../constants';
 import { MODULE_COMMANDS_NAME_MAP } from '../configuration/moduleCommand';
 
@@ -84,7 +85,7 @@ const getEventDataResultError = (events, moduleCommand) => {
       case MODULE_COMMANDS_NAME_MAP.registerValidator:
         return VALIDATOR_EVENT_DATA_RESULT[event.data.result];
       case MODULE_COMMANDS_NAME_MAP.stake || MODULE_COMMANDS_NAME_MAP.unlock:
-        return TOKEN_EVENT_DATA_RESULT[event.data.result];
+        return POS_EVENT_DATA_RESULT[event.data.result];
       default:
         return `Transaction dry run failed for module: ${event.module}, name: ${event.name} and result: ${event.data.result}, hence aborting next step.`;
     }
