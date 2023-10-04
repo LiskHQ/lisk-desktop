@@ -37,56 +37,6 @@
   }
 }
 
-/* stake */
-
-.infoContainer {
-  display: flex;
-
-  & .infoColumn {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding-bottom: 16px;
-  }
-}
-
-.txFeeContainer {
-  display: flex;
-  border-top: 1px solid var(--color-very-light-gray);
-  padding-top: 16px;
-
-  & .infoColumn {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding-bottom: 16px;
-  }
-
-  & .infoValue {
-    font-weight: var(--font-weight-semi-bold);
-  }
-}
-
-.contentHeading {
-  @mixin contentLarge semi-bold;
-
-  color: var(--color-maastricht-blue);
-}
-
-.infoTitle {
-  @mixin contentNormal normal;
-
-  margin-bottom: 10px;
-  color: var(--color-maastricht-blue);
-}
-
-.infoValue {
-  @mixin contentNormal;
-
-  font-size: 16px;
-  color: var(--color-maastricht-blue);
-}
-
 .stakeItems {
   display: flex;
   flex-wrap: wrap;
@@ -243,8 +193,4 @@
     padding-bottom: 5px;
     margin-left: 10px;
   }
-}
-
-.totalReward {
-  color: var(--color-ultramarine-blue);
 }
