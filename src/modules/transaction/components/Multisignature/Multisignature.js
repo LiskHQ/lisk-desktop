@@ -57,7 +57,7 @@ const ErrorActions = ({ t, status, message, network, application }) => (
   </a>
 );
 
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line max-statements, complexity
 const Multisignature = ({
   transactions,
   title,
@@ -107,7 +107,6 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
-
   useEffect(() => () => clearTimeout(ref.current), []);
 
   return (
@@ -135,17 +134,17 @@ const Multisignature = ({
           />
         ) : null}
         {status.code !== txStatusTypes.broadcastSuccess &&
-        status.code !== txStatusTypes.broadcastError ? (
-          <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
-            <span className={styles.buttonContent}>
-              <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />
-              {t(copied ? 'Copied' : 'Copy')}
-            </span>
-          </SecondaryButton>
-        ) : null}
-        {status.code === txStatusTypes.multisigSignatureSuccess ? (
+          status.code !== txStatusTypes.broadcastError && (
+            <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
+              <span className={styles.buttonContent}>
+                <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />
+                {t(copied ? 'Copied' : 'Copy')}
+              </span>
+            </SecondaryButton>
+          )}
+        {(status.code === txStatusTypes.multisigSignatureSuccess) && (
           <FullySignedActions onDownload={onDownload} t={t} onSend={onSend} />
-        ) : null}
+        )}
         {status.code === txStatusTypes.multisigSignaturePartialSuccess ? (
           <PartiallySignedActions onDownload={onDownload} t={t} />
         ) : null}

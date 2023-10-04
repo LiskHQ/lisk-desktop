@@ -281,6 +281,7 @@ const signTransactionUsingHW = async (
   return { ...signedTransaction, id };
 };
 
+// eslint-disable-next-line max-statements
 export const sign = async (
   wallet,
   schema,
@@ -290,11 +291,28 @@ export const sign = async (
   senderAccount,
   options
 ) => {
+  const moduleCommand = joinModuleAndCommand(transaction);
   if (wallet.metadata?.isHW) {
     return signTransactionUsingHW(wallet, schema, chainID, transaction, senderAccount, options);
   }
 
-  if (options?.txInitiatorAccount?.numberOfSignatures > 0) {
+  const isMultiSignatureAccount = options?.txInitiatorAccount?.numberOfSignatures > 0;
+  const isRegisterMultisignature =
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const paramSignatures = transaction.params.signatures;
+  const areParamsSignaturesFullySigned =
+    isMultiSignatureAccount &&
+    paramSignatures?.filter((sig) => sig.length !== 64 || Buffer.from(sig).equals(Buffer.alloc(64)))
+      .length === 0 &&
+    paramSignatures?.length ===
+      transaction.params.mandatoryKeys?.length + transaction.params.optionalKeys?.length;
+
+  const isEditRegisterMultiSignature = isRegisterMultisignature && isMultiSignatureAccount;
+
+  if (
+    (isMultiSignatureAccount && !isRegisterMultisignature) ||
+    (isEditRegisterMultiSignature && areParamsSignaturesFullySigned)
+  ) {
     return signMultisigUsingPrivateKey(
       schema,
       chainID,

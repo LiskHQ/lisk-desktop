@@ -94,7 +94,7 @@ const Summary = ({
       >
         <div className={styles.header}>
           <h5 className={styles.title}>
-            {t(`${numberOfSignaturesOnAccount > 0 ? 'Editi' : 'Register'} multisignature account`)}
+            {t(`${numberOfSignaturesOnAccount > 1 ? 'Edit' : 'Register'} multisignature account`)}
           </h5>
         </div>
         <ProgressBar current={2} />

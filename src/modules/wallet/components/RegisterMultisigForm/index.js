@@ -159,7 +159,7 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
       }));
 
       setNumberOfSignatures(numberOfSignaturesOnAccount);
-      setMembers([...mandatoryMembers, optionalMembers]);
+      setMembers([...mandatoryMembers, ...optionalMembers]);
     }
   }, [authQuery.isFetching]);
 
@@ -192,6 +192,7 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
   };
 
   const numberofSignatureOnAccount = authQuery?.data?.data.numberOfSignatures;
+  const isEditMultisignatureMembers = numberofSignatureOnAccount > 1;
 
   return (
     <section className={styles.wrapper}>
@@ -204,7 +205,7 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
         <>
           <BoxHeader className={styles.header}>
             <h2>
-              {t(`${numberofSignatureOnAccount > 1 ? 'Edit' : 'Register'} multisignature account`)}
+              {t(`${isEditMultisignatureMembers ? 'Edit' : 'Register'} multisignature account`)}
             </h2>
           </BoxHeader>
           <BoxContent className={styles.container}>
@@ -237,7 +238,9 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
                   t={t}
                   {...member}
                   index={i}
-                  showDeleteIcon={members.length > numberOfSignatures}
+                  showDeleteIcon={
+                    members.length > numberOfSignatures || isEditMultisignatureMembers
+                  }
                   onChangeMember={changeMember}
                   onDeleteMember={deleteMember}
                 />

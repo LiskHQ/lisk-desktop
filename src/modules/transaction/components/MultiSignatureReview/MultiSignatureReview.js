@@ -58,17 +58,27 @@ const InfoColumn = ({ title, children, className }) => (
   </div>
 );
 
-const MultiSignatureReview = ({ t, members, fee, numberOfSignatures, token }) => (
+const MultiSignatureReview = ({
+  t,
+  members,
+  fee,
+  numberOfSignatures,
+  token,
+  isMultisignature,
+  isRegisterMultisigature,
+}) => (
   <>
     <Members members={members} t={t} />
-    <div className={styles.infoContainer}>
-      <InfoColumn title={t('Required signatures')} className="info-numberOfSignatures">
-        {numberOfSignatures}
-      </InfoColumn>
-      <InfoColumn title={t('Fees')} className="info-fee">
-        <TokenAmount val={fee} token={token} />
-      </InfoColumn>
-    </div>
+    {!isMultisignature && isRegisterMultisigature && (
+      <div className={styles.infoContainer}>
+        <InfoColumn title={t('Required signatures')} className="info-numberOfSignatures">
+          {numberOfSignatures}
+        </InfoColumn>
+        <InfoColumn title={t('Fees')} className="info-fee">
+          <TokenAmount val={fee} token={token} />
+        </InfoColumn>
+      </div>
+    )}
   </>
 );
 

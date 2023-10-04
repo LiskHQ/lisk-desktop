@@ -33,8 +33,19 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
     const paramsSignature = transaction.params.signatures.filter(
       (s) => s.toString('hex') !== Buffer.alloc(64).toString('hex')
     );
+    const keys = getKeys({
+      senderAccount,
+      transaction,
+      isRegisterMultisignature: false,
+    });
+    const required = getNumbersOfSignaturesRequired({
+      keys,
+      transaction,
+      isRegisterMultisignature: false,
+    });
+    const alreadySigned = getNonEmptySignatures(transaction, false).length;
 
-    if (paramsSignature.length !== numberOfSignatures) {
+    if (paramsSignature.length !== numberOfSignatures || required > alreadySigned) {
       return signatureCollectionStatus.partiallySigned;
     }
     if (paramsSignature.length === numberOfSignatures && transaction.signatures.length > 0) {
