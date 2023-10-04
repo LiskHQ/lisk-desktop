@@ -22,10 +22,10 @@ const useTransactionPriority = () => {
   useEffect(() => {
     setLoading(true);
     getTransactionBaseFees(network)
-      .then(setBaseFees)
+      ?.then(setBaseFees)
       .catch(setPrioritiesLoadError)
       .finally(() => setLoading(false));
-  }, []);
+  }, [network]);
 
   const selectTransactionPriority = ({ item, index }) => {
     setSelectedPriority({

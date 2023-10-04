@@ -75,9 +75,9 @@ const normalizeTransactionParams = (params, token) =>
   }, {});
 
 /**
- * Get the total spending amount for a given module command
+ * Get transaction amount in total for a given module command
  */
-const getTotalSpendingAmount = ({ module, command, params = {} }) => {
+const getTransactionAmount = ({ module, command, params = {} }) => {
   const moduleCommand = joinModuleAndCommand({ module, command });
 
   if (Object.keys(params).length === 0) {
@@ -419,7 +419,7 @@ const normalizeNumberRange = (distributions) => {
 export {
   containsTransactionType,
   downloadJSON,
-  getTotalSpendingAmount,
+  getTransactionAmount,
   getUnsignedBytes,
   getNumberOfSignatures,
   getAccountKeys,

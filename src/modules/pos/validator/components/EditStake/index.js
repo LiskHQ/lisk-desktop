@@ -240,7 +240,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
               )}
               <div className={styles.durationSelect}>
                 <div>
-                  <span>{t('You will get')}</span>
+                  <span>{t('Estimated reward')}</span>
                   <CategorySwitch
                     value={selectedDuration}
                     onChangeCategory={handleSelectDuration}
