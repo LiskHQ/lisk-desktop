@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
   activeToken: selectActiveToken(state),
   transactions: state.transactions,
   account: selectActiveTokenAccount(state),
-  network: state.network.networks[state.token.active], // @todo normalize this
+  network: state.network.networks[state.token.active],
   application: selectCurrentBlockchainApplication(state),
 });
 

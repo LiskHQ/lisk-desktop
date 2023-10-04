@@ -187,9 +187,9 @@ const BlockDetails = ({ height, id, history }) => {
         </BoxHeader>
         <BoxContent className={styles.content}>
           {activeTab === 'transactions' ? (
-            <Transactions blockId={id} />
+            <Transactions blockId={blocks?.data?.[0].id || id} />
           ) : (
-            <TransactionEvents blockID={id} />
+            <TransactionEvents blockId={blocks?.data?.[0].id || id} />
           )}
         </BoxContent>
       </Box>

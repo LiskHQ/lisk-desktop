@@ -1,0 +1,48 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.infoContainer {
+  display: flex;
+
+  & .infoColumn {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 16px;
+  }
+}
+
+.totalReward {
+  color: var(--color-ultramarine-blue);
+}
+
+.contentHeading {
+  @mixin contentLarge semi-bold;
+
+  color: var(--color-maastricht-blue);
+}
+
+.stakeItems {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  margin-top: 9px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-very-light-gray);
+  row-gap: 10px;
+  column-gap: 10px;
+  flex-direction: column;
+}
+
+.infoTitle {
+  @mixin contentNormal normal;
+
+  margin-bottom: 10px;
+  color: var(--color-maastricht-blue);
+}
+
+.infoValue {
+  @mixin contentNormal;
+
+  font-size: 16px;
+  color: var(--color-maastricht-blue);
+}

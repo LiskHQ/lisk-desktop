@@ -78,10 +78,4 @@ const Summary = ({ balanceReclaimed, nextStep, wallet, t, fees }) => {
   );
 };
 
-// istanbul ignore next
-const areEqual = (
-  prevProps,
-  nextProps // @todo account has multiple balance now
-) => prevProps.wallet.summary.balance === nextProps.wallet.summary.balance;
-
-export default React.memo(Summary, areEqual);
+export default Summary;

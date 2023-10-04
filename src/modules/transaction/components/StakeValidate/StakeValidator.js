@@ -3,7 +3,7 @@ import usePosToken from 'src/modules/pos/validator/hooks/usePosToken';
 import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import Tooltip from 'src/theme/Tooltip';
 import StakeItem from '../StakeItem';
-import styles from '../TransactionInfo/TransactionInfo.css'; // @todo create dedicated css file for this component
+import styles from './StakeValidator.css';
 
 const ItemList = ({ items, heading, rewards }) => {
   const { token } = usePosToken();

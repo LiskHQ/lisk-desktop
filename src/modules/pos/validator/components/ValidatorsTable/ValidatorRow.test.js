@@ -5,9 +5,12 @@ import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
 import ValidatorRow from './ValidatorRow';
+import { usePosConstants } from '../../hooks/queries';
+import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
 jest.mock('src/redux/actions');
 jest.mock('@pos/validator/hooks/usePosToken');
+jest.mock('../../hooks/queries/usePosConstants');
 
 let wrapper;
 const props = {
@@ -38,6 +41,7 @@ const props = {
 };
 
 usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
+usePosConstants.mockReturnValue({ data: mockPosConstants });
 
 describe('ValidatorRow', () => {
   it('adds validators to watch list when watch icon is clicked', () => {

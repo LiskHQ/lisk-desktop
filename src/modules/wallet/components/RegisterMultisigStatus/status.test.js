@@ -27,8 +27,7 @@ describe('Multisignature Status component', () => {
     fee: '207000n',
   };
 
-  // @todo reinstate by #4506
-  it.skip('passes correct props to TxBroadcaster when partial signed transaction', () => {
+  it('passes correct props to TxBroadcaster when partial signed transaction', () => {
     const propsWithSignedTx = {
       ...props,
       account: accounts.multiSig,
@@ -52,10 +51,10 @@ describe('Multisignature Status component', () => {
     expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
-      status: { code: 'MULTISIG_SIGNATURE_SUCCESS' },
-      title: 'The transaction is now fully signed',
+      status: { code: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS' },
+      title: 'Your signature was successful',
       message:
-        'Now you can send it to the network. You may also copy or download it, if you wish to send the transaction using another device later.',
+        'You can download or copy the transaction and share it with other members.',
       className: 'content',
     });
   });
