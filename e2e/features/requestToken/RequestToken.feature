@@ -3,7 +3,7 @@ Feature: Request Token
     Given I add an account with passphrase "peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" password "Password1$" name "test_acc"
     And I go to page "wallet"
     And I wait for "1 seconds"
-    And I click on a button with text "Request"
+    And I click on a button with exact text "Request"
     Then I should see "Request tokens"
     And "lisk_mainchain" should be selected in "Recipient application" dropdown
     And "Lisk" should be selected in "Token" dropdown
