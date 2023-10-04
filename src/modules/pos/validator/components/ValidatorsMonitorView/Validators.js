@@ -178,11 +178,7 @@ const ValidatorsMonitor = ({ watchList }) => {
                 <SecondaryButton>{t('Stakes')}</SecondaryButton>
               </Link>
             )}
-            <ValidatorActionButton
-              isValidator={isValidator}
-              isLoadingValidators={isLoadingValidators}
-              address={address}
-            />
+            <ValidatorActionButton isValidator={isValidator} address={address} />
           </div>
         </div>
       </BoxHeader>
