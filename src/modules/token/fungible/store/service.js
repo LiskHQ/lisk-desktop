@@ -17,7 +17,7 @@ export const pricesRetrieved = () => (dispatch, getState) => {
   const activeToken = tokenMap.LSK.key;
 
   return getPrices({ network })
-    .then(({ data }) => {
+    ?.then(({ data }) => {
       const priceTickerReduced = data.reduce(tickerReducer, {});
       dispatch({
         type: actionTypes.pricesRetrieved,

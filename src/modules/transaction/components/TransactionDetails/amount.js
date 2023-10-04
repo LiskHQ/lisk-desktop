@@ -1,5 +1,5 @@
 import React from 'react';
-import { getTotalSpendingAmount } from '@transaction/utils/transaction';
+import { getTransactionAmount } from '@transaction/utils/transaction';
 import DiscreetMode from 'src/modules/common/components/discreetMode';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import TokenAmount from '@token/fungible/components/tokenAmount';
@@ -18,7 +18,7 @@ const Amount = ({ t }) => {
     <ValueAndLabel label={t('Amount')} className={styles.amount}>
       <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
         <span className="tx-amount">
-          <TokenAmount val={getTotalSpendingAmount(transaction)} token={token} />
+          <TokenAmount val={getTransactionAmount(transaction)} token={token} />
         </span>
       </DiscreetMode>
     </ValueAndLabel>
