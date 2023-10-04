@@ -179,7 +179,7 @@ const SendForm = (props) => {
   }, [mainChainApplication, currentApplication]);
 
   return (
-    <section className={styles.wrapper}>
+    <section className={styles.wrapper} data-testid="send-form-wrapper">
       <TxComposer
         onComposed={onComposed}
         onConfirm={onConfirm}

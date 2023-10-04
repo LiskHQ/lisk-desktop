@@ -1,12 +1,9 @@
 /* eslint-disable new-cap, prefer-arrow-callback */
 import { Given, Then, When } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
-import routes from '../fixtures/routes.mjs';
 import { fixture } from '../fixtures/page.mjs';
 
 const initAccountSetup = async function (passphrase, browserFixture) {
-  await browserFixture.page.goto(`${process.env.PW_BASE_URL}${routes.wallet}`);
-  await browserFixture.page.getByText('Add account', { exact: true }).click();
   await browserFixture.page.getByText('Secret recovery phrase', { exact: true }).click();
 
   const phrases = passphrase.split(' ');
@@ -68,6 +65,10 @@ Then('Clipboard should contain {string}', async function (clipboardText) {
 
 Given('I click on an element with testId {string}', async function (testId) {
   await fixture.page.getByTestId(testId).click();
+});
+
+Given('I click on an element with class {string}', async function (className) {
+  await fixture.page.locator(`.${className}`).click();
 });
 
 Given('I click on text {string}', async function (text) {

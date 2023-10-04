@@ -1,5 +1,7 @@
 Feature: Request Token
   Background: Add an account and navigate to wallet
+    Then I go to page "wallet"
+    And I click on exact text "Add account"
     Given I add an account with passphrase "peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" password "Password1$" name "test_acc"
     And I go to page "wallet"
     And I wait for "1 seconds"
@@ -24,9 +26,9 @@ Feature: Request Token
 
   Scenario: Request token should generate a copy link with message
     Given I type "10" in "amount"
-    Then button with text "Copy link" should be enabled
+    Then button with exact text "Copy link" should be enabled
     And Element 'qrContainer' should not contain class 'disabled'
-    Given I click on a button with text "Add message (Optional)"
+    Given I click on a button with exact text "Add message (Optional)"
     And I type "hello" in "reference-field"
-    And I click on a button with text "Copy link"
+    And I click on a button with exact text "Copy link"
     Then Clipboard should contain "lisk://wallet?modal=send&recipient=lskm9syv4wrjcjczpegz65zqxhk2cp9dkejs5wbjb&amount=10&reference=hello&token=0400000000000000&recipientChain=04000000"

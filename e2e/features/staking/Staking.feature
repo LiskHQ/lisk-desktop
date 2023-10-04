@@ -1,6 +1,8 @@
 # Feature: Staking
 #   Background: Add an account and navigate to validators
 #     Given I wait for "1 seconds"
+#     Then I go to page "wallet"
+#     And I click on exact text "Add account"
 #     Given I add an account with passphrase "attract squeeze option inflict dynamic end evoke love proof among random blanket table pumpkin general impose access toast undo extend fun employ agree dash" password "Password@1" name "genesis_60" custom derivation path "m/44'/134'/60'"
 #     And I go to page "validators"
 #     And I wait for "1 seconds"
