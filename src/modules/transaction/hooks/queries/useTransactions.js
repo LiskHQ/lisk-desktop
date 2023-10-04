@@ -47,7 +47,6 @@ export const useTransactions = ({
   const invalidateData = useCallback(async () => {
     setHasUpdate(false);
     await queryClient.invalidateQueries(TRANSACTIONS);
-    // @todo invalid this transaction by specific unique query with config
   }, [queryClient, setHasUpdate]);
 
   function getIsEnabled() {

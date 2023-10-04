@@ -110,7 +110,6 @@ export const validateAmount = ({
       ),
       fn: () => {
         const amountInBase = convertToBaseDenom(numeral(amount).value(), token);
-        // TODO: this minimum balance logic should be replaced by actual fee (transaction + cross chain transfer) as one can make 0 balance for an account in Lisk v4
         return MIN_ACCOUNT_BALANCE > BigInt(accountBalance) - BigInt(amountInBase);
       },
     },

@@ -21,7 +21,6 @@ import { useAuth } from '@auth/hooks/queries';
 import routes from 'src/routes/routes';
 import styles from './overview.css';
 
-// @Todo: this should be remove as sdk would provide this data
 // 6: blocks per minute, 60: minutes, 24: hours
 const numOfBlockPerDay = 24 * 60 * 6;
 

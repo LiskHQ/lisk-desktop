@@ -18,7 +18,7 @@ const initialState = {
   txSignatureError: null,
   txBroadcastError: null,
 };
-// @TODO needs care and attention
+
 // eslint-disable-next-line complexity
 const transactions = (state = initialState, action) => {
   // eslint-disable-line complexity
