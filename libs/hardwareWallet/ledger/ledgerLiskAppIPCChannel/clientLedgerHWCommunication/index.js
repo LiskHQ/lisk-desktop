@@ -10,7 +10,6 @@ const {
   GET_SIGNED_MESSAGE,
 } = LEDGER_HW_IPC_CHANNELS;
 
-// TODO: remove when server have a queuing system
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

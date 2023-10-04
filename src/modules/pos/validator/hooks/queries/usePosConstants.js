@@ -15,7 +15,6 @@ export const usePosConstants = ({ config: customConfig = {}, options } = {}) => 
     ...customConfig,
   };
 
-  // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
   return useCustomQuery({
     keys: [POS_CONSTANTS],
     config,

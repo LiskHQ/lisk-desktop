@@ -5,6 +5,8 @@ import { screen } from '@testing-library/react';
 import { mockValidators } from '../../__fixtures__';
 import ValidatorSummary from './ValidatorSummary';
 import { convertCommissionToPercentage } from '../../utils';
+import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
+import { usePosConstants } from '../../hooks/queries';
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
@@ -12,6 +14,8 @@ jest.mock('react-i18next', () => ({
     t: jest.fn().mockImplementation((t) => t),
   }),
 }));
+
+jest.mock('../../hooks/queries/usePosConstants');
 
 describe('ValidatorSummary', () => {
   let wrapper;
@@ -22,6 +26,8 @@ describe('ValidatorSummary', () => {
     lastGeneratedTime: 23293993234,
   };
 
+  usePosConstants.mockReturnValue({ data: mockPosConstants });
+
   beforeEach(() => {
     jest.clearAllMocks();
     wrapper = renderWithRouter(ValidatorSummary, props);
@@ -30,7 +36,7 @@ describe('ValidatorSummary', () => {
   it('should display properly', () => {
     expect(
       screen.getByText(
-        'This validator is among the first 101 validators in validator weight ranking.'
+        'This validator is among the first {{roundLength}} validators in validator weight ranking.'
       )
     ).toBeTruthy();
     expect(screen.getByText('Commission :')).toBeTruthy();
@@ -52,5 +58,21 @@ describe('ValidatorSummary', () => {
       </MemoryRouter>
     );
     expect(screen.getByText('Stake')).toHaveAttribute('disabled');
+  });
+
+  it('should return - when roundLength is not available', () => {
+    usePosConstants.mockReturnValue({ data: {} });
+
+    wrapper.rerender(
+      <MemoryRouter>
+        <ValidatorSummary {...props} />
+      </MemoryRouter>
+    );
+
+    expect(
+      screen.getByText(
+        'This validator is among the first {{roundLength}} validators in validator weight ranking.'
+      )
+    ).toBeTruthy();
   });
 });
