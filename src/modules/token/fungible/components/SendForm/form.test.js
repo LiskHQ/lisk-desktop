@@ -347,8 +347,8 @@ describe('Form', () => {
       await flushPromises();
       wrapper.update();
 
-      expect(wrapper.find('.amount Feedback')).toHaveText(
-        'Provided amount is higher than your current balance.'
+      expect(wrapper.find('.form.feedback')).toHaveText(
+        'The provided amount exceeds the available balance {{availableBalance}} {{token}}, so the maximum usable balance is {{usableBalance}} {{token}}.'
       );
     });
 
@@ -362,8 +362,8 @@ describe('Form', () => {
       });
       wrapper.update();
 
-      expect(wrapper.find('.amount Feedback')).toHaveText(
-        'Provided amount will result in a wallet with less than the minimum balance.'
+      expect(wrapper.find('.form.feedback')).toHaveText(
+        'The provided amount exceeds the available balance {{availableBalance}} {{token}}, so the maximum usable balance is {{usableBalance}} {{token}}.'
       );
       expect(wrapper.find('.confirm-btn').at(0)).toBeDisabled();
     });
