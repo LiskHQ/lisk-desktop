@@ -25,7 +25,12 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, h
 
   return (
     <DialogLink
-      data={{ message: t('Token balance is not enough to stake a validator.') }}
+      data={{
+        validatorAddress: address,
+        ...(!hasTokenBalance && {
+          message: t('Token balance is not enough to stake a validator.'),
+        }),
+      }}
       component={hasTokenBalance ? 'editStake' : 'noTokenBalance'}
     >
       {isEdit ? (
@@ -33,7 +38,9 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, h
           {t('Edit stake')}
         </SecondaryButton>
       ) : (
-        <PrimaryButton disabled={isDisabled || isBanned}>{t('Stake validator')}</PrimaryButton>
+        <PrimaryButton disabled={isDisabled || isBanned || sentStakesLoading}>
+          {t('Stake validator')}
+        </PrimaryButton>
       )}
     </DialogLink>
   );
