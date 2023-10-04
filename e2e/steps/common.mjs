@@ -61,6 +61,11 @@ Given('I click on a button with exact text {string}', async function (buttonText
   await fixture.page.getByRole('button', { name: buttonText, exact: true }).click();
 });
 
+Given('I click on a button with exact text {string} inside of testId {string}', async function (buttonText, testId) {
+  const selector = await fixture.page.getByTestId(testId);
+  await selector.getByRole('button', { name: buttonText, exact: true }).click();
+});
+
 Then('Clipboard should contain {string}', async function (clipboardText) {
   const text = await fixture.page.evaluate('navigator.clipboard.readText()');
   expect(text).toContain(clipboardText);
@@ -232,4 +237,9 @@ Then('Element {string} should not contain class {string}', async function (testI
 
 When('I do a global search for {string}', async function (searchValue) {
   fixture.page.getByTestId('searchText').fill(searchValue);
+});
+
+Then('I should see text {string} in a sibling to element with text {string}', async function (text, siblingText) {
+  const selector = await fixture.page.getByText(siblingText).locator('..');
+  await expect(selector.getByText(text)).toBeVisible();
 });
