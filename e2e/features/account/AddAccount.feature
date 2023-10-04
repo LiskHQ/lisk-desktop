@@ -4,20 +4,20 @@ Feature: AddAccount
     And I wait for "1 seconds"
     Then I should see "Welcome to Lisk"
     And I should see "If you are new to the Lisk ecosystem, create an account by clicking on the “Create account”. If you have an account, then add it to your wallet by clicking on “Add account”."
-    Given I click on a button with text "Add account"
+    Given I click on exact text "Add account"
     Then I should be redirected to route: "account/add"
     And I should see "Add your account"
     And I should see "Choose an option to add your account to Lisk wallet."
 
   Scenario: Add account by passphrase with custom derivation path
-    Given I click on a button with text "Secret recovery phrase"
+    Given I click on exact text "Secret recovery phrase"
     Then I should be redirected to route: "account/add/secret-recovery"
     And I should see "Add your account"
     And I should see "Enter your secret recovery phrase to manage your account."
     And I should see "Secret recovery phrase (12-24 mnemonic phrases supported)"
     And custom derivation path input field should be "enabled"
     And button with text 'Continue to set password' should be disabled
-    Given I click on a button with text "Go back"
+    Given I click on exact text "Go back"
     Then I should be redirected to route: "account/add"
     Given I click on a button with text "Secret recovery phrase"
     And I fill in mnemonic phrases 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready'
