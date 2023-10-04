@@ -183,7 +183,7 @@ const AccountDetails = () => {
                 <>
                   <h3>{accountName}</h3>
                   {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
-                  {!authLoading && isMyAccount && <Icon name="edit" onClick={(e) => setMode(e)} />}
+                  {!authLoading && isMyAccount && <Icon name="edit" onClick={setMode} />}
                   {isMyAccount && currentAccount.metadata.isHW && (
                     <Icon name="hardwareWalletIcon" />
                   )}
