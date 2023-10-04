@@ -21,7 +21,7 @@ Feature: Network Management
     Then I should see 'Custom network edited "edited_custom_devnet"'
 
   Scenario: Delete network
-    Given I click on a button with testId "selected-menu-item"
+    Given I click on an element with testId "selected-menu-item"
     And I hover over "custom_devnet"
     And I click on img with alt text "deleteIcon" next to text "custom_devnet"
     Then I should see "Remove network?"
@@ -29,7 +29,7 @@ Feature: Network Management
     Then I should see 'Network removed "custom_devnet"'
 
   Scenario: Switch network
-    Given I click on a button with testId "selected-menu-item"
+    Given I click on an element with testId "selected-menu-item"
     And I click on exact text "custom_devnet"
     Then "custom_devnet" should be selected in "Switch network" dropdown
 
