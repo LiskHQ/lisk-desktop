@@ -144,7 +144,7 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
         (sig) => sig.compare(Buffer.alloc(64)) > 0
       ).length;
     }
-
+    console.log('>>>', nonEmptySignatures, numberOfSignatures);
     if (
       nonEmptySignatures < numberOfSignatures ||
       (isMultisignature &&
