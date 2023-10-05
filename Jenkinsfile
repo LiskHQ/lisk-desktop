@@ -91,6 +91,13 @@ pipeline {
 									make -C lisk-service build
 									make -C lisk-service up
 
+									# logs
+									cat lisk-core.out
+									echo "===== core error ===="
+									cat lisk-core.err
+									echo "======== service ======="
+									docker ps
+
 									# wait for service to be up and running
 									sleep 10
 									set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
