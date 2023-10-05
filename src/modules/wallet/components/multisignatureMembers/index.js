@@ -1,10 +1,9 @@
 import React from 'react';
-
 import Tooltip from '@theme/Tooltip/tooltip';
 import WalletVisual from '../walletVisual';
 import { truncateAddress } from '../../utils/account';
-
 import styles from './styles.css';
+import classNames from 'classnames';
 
 const Member = ({ member, i, t, size }) => (
   <div className={`${styles.memberInfo} member-info`} data-testid="member-info">
@@ -88,21 +87,28 @@ export const SignedAndRemainingMembers = ({
   className,
   t,
 }) => (
-  <div className={`${styles.membersContainer} ${className}`}>
-    <div>
-      <p className={styles.label}>{t('Signed')}</p>
-      {signed.map((member, i) => (
-        <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />
-      ))}
-    </div>
-    <div>
-      <p className={styles.label}>
-        <span>{t('Remaining')}</span>
-        <span className="tx-remaining-members">{` ${needed}/${required}`}</span>
-      </p>
-      {remaining.map((member, i) => (
-        <Member member={member} key={`registerMultiSignature-members-list-${i}-remaining`} t={t} />
-      ))}
+  <div className={classNames(styles.wrapper, className)}>
+    <p>Transaction root signatures</p>
+    <div className={`${styles.membersContainer}`}>
+      <div>
+        <p className={styles.label}>{t('Signed')}</p>
+        {signed.map((member, i) => (
+          <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />
+        ))}
+      </div>
+      <div>
+        <p className={styles.label}>
+          <span>{t('Remaining')}</span>
+          <span className="tx-remaining-members">{` ${needed}/${required}`}</span>
+        </p>
+        {remaining.map((member, i) => (
+          <Member
+            member={member}
+            key={`registerMultiSignature-members-list-${i}-remaining`}
+            t={t}
+          />
+        ))}
+      </div>
     </div>
   </div>
 );

@@ -23,7 +23,7 @@ import {
   Module,
   Nonce,
   GenericParams,
-  TransactionSignedAndRemainingMembersList,
+  SignedAndRemainingSignatureList,
 } from 'src/modules/transaction/components/TransactionDetails';
 import styles from './layoutSchema.css';
 
@@ -101,7 +101,7 @@ export const LayoutSchema = {
       NumberOfSignatures,
       Fee,
       SignedAndRemainingMembersList,
-      TransactionSignedAndRemainingMembersList,
+      SignedAndRemainingSignatureList,
     ],
     className: styles.multiSigRegisterPreview,
   },

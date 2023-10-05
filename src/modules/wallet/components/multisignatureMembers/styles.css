@@ -1,5 +1,10 @@
 @import '../../../../../setup/react/app/mixins.css';
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .membersContainer {
   max-height: 440px;
   overflow-y: auto;
