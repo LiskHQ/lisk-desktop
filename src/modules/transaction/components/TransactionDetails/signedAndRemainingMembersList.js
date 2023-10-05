@@ -39,6 +39,7 @@ const SignedAndRemainingMembersList = ({ t }) => {
       needed={needed}
       required={required}
       className={styles.signedAndRemainingMembersList}
+      title="Multisignature params signature"
       t={t}
     />
   );

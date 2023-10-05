@@ -14,7 +14,6 @@ export const getMultiSignatureStatus = ({
   senderAccount,
   account,
   currentAccount,
-  // transactionJSON,
   moduleCommandSchemas,
   transactions,
   ...rest
@@ -30,14 +29,6 @@ export const getMultiSignatureStatus = ({
   const isMember = showSignButton(senderAccount, account, transactionJSON);
   const signatureStatus = getTransactionSignatureStatus(senderAccount, transactionJSON);
 
-  console.log(
-    '%%$$$',
-    moduleCommandSchemas,
-    transactions,
-    signatureStatus,
-    transactionJSON,
-    currentAccount.metadata.pubkey
-  );
   const canSenderSignTx =
     transactionJSON.senderPublicKey === currentAccount.metadata.pubkey &&
     signatureStatus === signatureCollectionStatus.fullySigned;

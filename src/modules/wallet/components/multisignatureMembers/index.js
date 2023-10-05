@@ -1,9 +1,9 @@
 import React from 'react';
 import Tooltip from '@theme/Tooltip/tooltip';
+import classNames from 'classnames';
 import WalletVisual from '../walletVisual';
 import { truncateAddress } from '../../utils/account';
 import styles from './styles.css';
-import classNames from 'classnames';
 
 const Member = ({ member, i, t, size }) => (
   <div className={`${styles.memberInfo} member-info`} data-testid="member-info">
@@ -86,9 +86,10 @@ export const SignedAndRemainingMembers = ({
   required,
   className,
   t,
+  title,
 }) => (
   <div className={classNames(styles.wrapper, className)}>
-    <p>Transaction root signatures</p>
+    <p>{title}</p>
     <div className={`${styles.membersContainer}`}>
       <div>
         <p className={styles.label}>{t('Signed')}</p>

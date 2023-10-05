@@ -16,8 +16,6 @@ const SignedAndRemainingSignatureList = ({ t }) => {
   const required = keys.numberOfSignatures;
   const needed = required - signed.length;
 
-  console.log('>>>>>', signed, remaining, needed, required);
-
   return (
     <SignedAndRemainingMembers
       signed={signed}
@@ -25,6 +23,7 @@ const SignedAndRemainingSignatureList = ({ t }) => {
       needed={needed}
       required={required}
       className={styles.signedAndRemainingSignatureList}
+      title="Signatures"
       t={t}
     />
   );

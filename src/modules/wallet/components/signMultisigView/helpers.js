@@ -87,7 +87,16 @@ export const showSignButton = (senderAccount, account, transaction) => {
   let mandatoryKeys = [];
   let optionalKeys = [];
 
-  if (isRegisterMultisignature) {
+  const isInitatorAccountMultiSig = senderAccount.numberOfSignatures > 1;
+
+  if (isRegisterMultisignature && isInitatorAccountMultiSig) {
+    mandatoryKeys = [
+      ...new Set([...transaction.params.mandatoryKeys, ...senderAccount.keys?.mandatoryKeys]),
+    ];
+    optionalKeys = [
+      ...new Set([...transaction.params.optionalKeys, ...senderAccount.keys?.optionalKeys]),
+    ];
+  } else if (isRegisterMultisignature && !isInitatorAccountMultiSig) {
     mandatoryKeys = transaction.params.mandatoryKeys;
     optionalKeys = transaction.params.optionalKeys;
   } else {

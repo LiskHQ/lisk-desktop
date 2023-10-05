@@ -8,7 +8,7 @@ import CustomTransactionInfo from './CustomTransactionInfo';
 
 const Members = ({ members, t }) => (
   <section>
-    <label>{t('Members')}</label>
+    <label>{t('Existing members')}</label>
     <div className={styles.membersContainer}>
       {members.map((member, i) => (
         <div className={styles.memberInfo} key={i + 1}>
