@@ -45,7 +45,7 @@
 }
 
 .online {
-  background-color: #25ca95;
+  background-color: var(--color-success);
 }
 
 .offline {

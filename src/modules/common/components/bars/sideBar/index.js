@@ -12,17 +12,20 @@ import SidebarToggle from '@settings/components/SidebarToggle';
 import styles from './sideBar.css';
 import menuLinks from './menuLinks';
 
-const Inner = ({ data, pathname, sideBarExpanded }) => {
+const Inner = ({ data, pathname, notification, sideBarExpanded }) => {
   let status = '';
   if (pathname && pathname === data.path) {
     status = 'Active';
   }
+  const className = notification ? styles.notification : '';
   return (
     <span className={styles.holder}>
       <span className={styles.iconWrapper}>
         <Icon name={`${data.icon}${status}`} className={styles.icon} />
+        {!sideBarExpanded && <span className={`${className} ${styles.collapsedNotification}`} />}
       </span>
       {sideBarExpanded && <span className={styles.label}>{data.label}</span>}
+      {sideBarExpanded && <span className={className} />}
     </span>
   );
 };
@@ -47,7 +50,7 @@ const MenuLink = ({ data, pathname, sideBarExpanded, disabled }) => {
       activeClassName={styles.selected}
       exact={routes[data.id].exact}
     >
-      <Inner data={data} pathname={pathname} sideBarExpanded={sideBarExpanded} />
+      <Inner data={data} pathname={pathname} sideBarExpanded={sideBarExpanded} notification />
     </NavLink>
   );
 };

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
+import { toast } from 'react-toastify';
 import { Input } from 'src/theme';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
@@ -78,6 +79,22 @@ const ValidatorsMonitor = ({ watchList }) => {
     config: { params: { address } },
   });
   const isValidator = validators?.data?.length > 0 && !isLoadingValidators;
+  const notification = true;
+  const notificationStyles = notification ? styles.notification : '';
+  if (notification) {
+    toast.info(
+      <div className={styles.rewardInfo}>
+        <p>You have an unclaimed reward of your stakes.</p>
+        <DialogLink component="claimRewardsView" className={styles.rewardLink}>
+          Claim rewards
+        </DialogLink>
+      </div>,
+      {
+        autoClose: false,
+        closeButton: <span className={`${styles.closeBtn} dialog-close-button`} />,
+      }
+    );
+  }
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -175,7 +192,10 @@ const ValidatorsMonitor = ({ watchList }) => {
           <div className={grid['col-md-4']}>
             {!!address && (
               <Link to={routes.sentStakes.path}>
-                <SecondaryButton>{t('Stakes')}</SecondaryButton>
+                <SecondaryButton>
+                  {t('Stakes')}
+                  <span className={notificationStyles} />
+                </SecondaryButton>
               </Link>
             )}
             <ValidatorActionButton isValidator={isValidator} address={address} />
