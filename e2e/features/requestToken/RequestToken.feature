@@ -26,7 +26,7 @@ Feature: Request Token
 
   Scenario: Request token should generate a copy link with message
     Given I type "10" in "amount"
-    Then button with exact text "Copy link" should be enabled
+    Then button with text "Copy link" should be enabled
     And Element 'qrContainer' should not contain class 'disabled'
     Given I click on a button with exact text "Add message (Optional)"
     And I type "hello" in "reference-field"

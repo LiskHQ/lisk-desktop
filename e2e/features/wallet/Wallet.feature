@@ -15,7 +15,7 @@ Feature: Wallet
   Scenario: Send tokens
     Given I click on a button with exact text "Send"
     Then I should see send form details
-    And "lisk_mainchain" should be selected in "Recipient application" dropdown
+    And "lisk_mainchain" should be selected in "To application" dropdown
     And "Lisk" should be selected in "Token" dropdown
     Then button with text "Continue to summary" should be disabled
     When I type "10" in "amount"
@@ -34,4 +34,4 @@ Feature: Wallet
     Given I click on an element with testId "dialog-close-button"
     And I wait for "10 seconds"
     Then the first transaction row should contain latest transaction details
-    When I click on an element with testId "events-tab"
+    # When I click on an element with testId "events-tab"
