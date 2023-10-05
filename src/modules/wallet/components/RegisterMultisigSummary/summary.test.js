@@ -87,6 +87,17 @@ describe('Multisignature Summary component', () => {
       moduleCommand: 'auth:registerMultisignature',
       fields: { token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' } },
     },
+    authQuery: {
+      isFetching: false,
+      isFetched: true,
+      data: {
+        data: {
+          numberOfSignatures: 1,
+          mandatoryKeys: [],
+          optionalKeys: [],
+        },
+      },
+    },
   };
 
   beforeEach(() => {
