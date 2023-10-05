@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { regex } from 'src/const/regex';
 import { validateAmount } from 'src/utils/validators';
-import { convertToBaseDenom } from '../utils/helpers';
 
 let loaderTimeout = null;
 
@@ -27,26 +26,17 @@ const getAmountFieldState = (initialValue, getAmountFeedbackAndError) =>
       };
 
 const useAmountField = (initialValue, balance = '0', token) => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   const getAmountFeedbackAndError = (value, maxAmount = balance) => {
-    const checklist = [
-      'FORMAT',
-      'MAX_ACCURACY',
-      'NEGATIVE_AMOUNT',
-      'INSUFFICIENT_FUNDS',
-      'MIN_BALANCE',
-    ];
-    let { message: feedback } = validateAmount({
+    const checklist = ['FORMAT', 'MAX_ACCURACY', 'NEGATIVE_AMOUNT'];
+    const { message: feedback } = validateAmount({
       amount: value,
       token,
       accountBalance: maxAmount,
       checklist: [...checklist],
     });
 
-    if (!feedback && BigInt(maxAmount) < BigInt(convertToBaseDenom(value, token))) {
-      feedback = t('Provided amount is higher than your current balance.');
-    }
     return { error: !!feedback, feedback };
   };
 

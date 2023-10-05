@@ -36,19 +36,35 @@ pipeline {
 		}
 		stage('build') {
 			steps {
-				nvm(getNodejsVersion()) {
-					withEnv(["DEFAULT_NETWORK=testnet"]) {
-						sh '''
-						cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
-						cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-						yarn run build
+                parallel (
+                    "prod": {
+                        nvm(getNodejsVersion()) {
+                            withEnv(["DEFAULT_NETWORK=testnet", "BUILD_NAME=build"]) {
+                                sh '''
+                                cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
+                                cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
+                                yarn run build
+                                '''
+                            }
+                        }
+                        stash includes: 'app/build/', name: 'build'
+                    },
+					"E2E": {
+						nvm(getNodejsVersion()) {
+                            withEnv(["DEFAULT_NETWORK=customNode", "BUILD_NAME=buildE2E"]) {
+                                sh '''
+                                cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
+                                cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
+                                yarn run build
 
-						# localy serve build
-						nohup npx serve -l 8081 ./app/build >serve.out 2>serve.err &
-						'''
-					}
-				}
-				stash includes: 'app/build/', name: 'build'
+                                # locally serve build
+                                nohup npx serve -l 8081 ./app/buildE2E >serve.out 2>serve.err &
+                                '''
+                            }
+						}
+						stash includes: 'app/buildE2E/', name: 'buildE2E'
+					},
+                )
 			}
 		}
 		stage('deploy') {
@@ -77,9 +93,9 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							withEnv(["REACT_APP_MSW=true"]) {
 								wrap([$class: 'Xvfb']) {
-									sh '''									
+									sh '''
 									# lisk-core
-									npm i -g lisk-core
+									npm i -g lisk-core@^4.0.0-rc.3
 									rm -rf ~/.lisk/
 									# lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
 									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 --config ./e2e/artifacts/config.json --overwrite-config >lisk-core.out 2>lisk-core.err &
@@ -91,12 +107,12 @@ pipeline {
 									make -C lisk-service build
 									make -C lisk-service up
 
-									# logs
-									cat lisk-core.out
-									echo "===== core error ===="
-									cat lisk-core.err
-									echo "======== service ======="
-									docker ps
+									## logs
+									# cat lisk-core.out
+									# echo "===== core error ===="
+									# cat lisk-core.err
+									# echo "======== service ======="
+									# docker ps
 
 									# wait for service to be up and running
 									sleep 10

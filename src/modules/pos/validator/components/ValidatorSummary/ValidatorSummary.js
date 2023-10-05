@@ -11,10 +11,13 @@ import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './ValidatorSummary.css';
 import { convertCommissionToPercentage } from '../../utils';
+import { usePosConstants } from '../../hooks/queries';
 
 const ValidatorSummary = ({ validator, status, weight }) => {
   const { address, name, rank, commission, nextAllocatedTime } = validator;
   const { t } = useTranslation();
+  const { data: posConstants } = usePosConstants();
+  const roundLength = posConstants?.data?.roundLength || '-';
 
   return (
     <Box className={styles.wrapper}>
@@ -36,8 +39,12 @@ const ValidatorSummary = ({ validator, status, weight }) => {
         </div>
       </BoxHeader>
       <BoxContent>
-        {/* @Todo: the value of roundLength should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */}
-        <p>{t('This validator is among the first 101 validators in validator weight ranking.')}</p>
+        <p>
+          {t(
+            'This validator is among the first {{roundLength}} validators in validator weight ranking.',
+            { roundLength }
+          )}
+        </p>
         <div className={styles.summaryDetails}>
           <div>
             <span>

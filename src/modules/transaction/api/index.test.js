@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import { getTotalSpendingAmount } from '@transaction/utils/transaction';
+import { getTransactionAmount } from '@transaction/utils/transaction';
 import http from 'src/utils/api/http';
 import moduleCommandSchemas from '@tests/constants/schemas';
 import accounts from '@tests/constants/wallets';
@@ -35,7 +35,7 @@ describe('API: LSK Transactions', () => {
     fee: '0',
   };
 
-  describe('getTotalSpendingAmount', () => {
+  describe('getTransactionAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
         module: 'token',
@@ -43,7 +43,7 @@ describe('API: LSK Transactions', () => {
         params: { amount: '100000000' },
       };
 
-      expect(getTotalSpendingAmount(tx)).toEqual(tx.params.amount);
+      expect(getTransactionAmount(tx)).toEqual(tx.params.amount);
     });
 
     it('should return amount of stakes in Beddows', () => {
@@ -65,7 +65,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTotalSpendingAmount(tx)).toEqual('200000000');
+      expect(getTransactionAmount(tx)).toEqual('200000000');
     });
   });
 

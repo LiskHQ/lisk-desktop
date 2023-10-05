@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { getTotalSpendingAmount } from '@transaction/utils/transaction';
+import { getTransactionAmount } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -24,8 +24,8 @@ import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import TransactionAmount from '../TransactionAmount';
 
-export const ID = ({ address, isWallet }) => {
-  const { data } = useContext(TransactionRowContext);
+export const ID = ({ isWallet }) => {
+  const { data, address } = useContext(TransactionRowContext);
   return (
     <span className={styles.txId}>
       {isWallet && (
@@ -151,14 +151,14 @@ export const Amount = () => {
           showRounded
           recipient={data.params.recipientAddress}
           moduleCommand={data.moduleCommand}
-          amount={getTotalSpendingAmount(data)}
+          amount={getTransactionAmount(data)}
         />
       </span>
     );
   }
   return (
     <span className={styles.amount}>
-      <TokenAmount val={getTotalSpendingAmount(data)} token={token} />
+      <TokenAmount val={getTransactionAmount(data)} token={token} />
       <span className={`${styles.fee} hideOnLargeViewPort`}>
         <TokenAmount val={data.fee} token={token} />
       </span>
