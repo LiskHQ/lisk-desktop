@@ -17,7 +17,7 @@ const Status = ({ account, transactions, t, authQuery }) => {
     <section className={`${styles.wrapper} transaction-status`}>
       <div className={styles.header}>
         <h1>
-          {t(`${numberOfSignaturesOnAccount > 0 ? 'Edit' : 'Register'} multisignature account`)}
+          {t(`${numberOfSignaturesOnAccount > 1 ? 'Edit' : 'Register'} multisignature account`)}
         </h1>
       </div>
       <ProgressBar current={4} />

@@ -148,8 +148,7 @@ describe('Multisignature Summary component', () => {
 
   it('Should be in edit mode', () => {
     smartRender(Summary, { ...props, authQuery: { data: { data: { numberOfSignatures: 3 } } } });
-
-    expect(screen.getByText('Edit multisignature account'));
+    expect(screen.getByText('Edit multisignature account')).toBeTruthy();
   });
 
   it('Should not call props.nextStep when signedTransaction is empty', () => {

@@ -160,4 +160,19 @@ describe('Multisignature Status component', () => {
       className: 'content',
     });
   });
+
+  it('Should be in edit mode', () => {
+    const customProp = {
+      ...props,
+      authQuery: { data: { data: { numberOfSignatures: 3 } } },
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: null,
+        signedTransaction: {},
+      },
+    };
+
+    const wrapper = shallow(<Status {...customProp} />);
+    expect(wrapper.find('div.header')).toHaveText('Edit multisignature account');
+  });
 });
