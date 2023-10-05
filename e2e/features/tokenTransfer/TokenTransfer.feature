@@ -24,7 +24,7 @@ Feature: Token Transfer
     Given I type "1" in "amount"
     And I type "lskguo9kqnea2zsfo3a6qppozsxsg92nuuma3p7ad" in "recipient"
     And I click on a button with exact text "Continue to summary"
-    And I click on a button with exact text "Send"
+    And I click on a button with exact text "Send" inside of testId "dialog-container"
     Then I should see "Enter your account password"
     And button with text "Confirm and Sign" should be disabled
     Given I type "Password@1" in "password"
