@@ -16,6 +16,17 @@ describe('Multisignature Status component', () => {
       txSignatureError: null,
       signedTransaction: { signatures: ['123', '987'] },
     },
+    authQuery: {
+      isFetching: false,
+      isFetched: true,
+      data: {
+        data: {
+          numberOfSignatures: 1,
+          mandatoryKeys: [],
+          optionalKeys: [],
+        },
+      },
+    },
     account: accounts.genesis,
   };
 
@@ -53,8 +64,7 @@ describe('Multisignature Status component', () => {
       illustration: 'registerMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS' },
       title: 'Your signature was successful',
-      message:
-        'You can download or copy the transaction and share it with other members.',
+      message: 'You can download or copy the transaction and share it with other members.',
       className: 'content',
     });
   });
