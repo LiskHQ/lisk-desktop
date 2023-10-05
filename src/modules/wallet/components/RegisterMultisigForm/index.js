@@ -191,7 +191,7 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
     signatures: initializeDefaultSignatures(mandatoryKeys, optionalKeys),
   };
 
-  const numberofSignatureOnAccount = authQuery?.data?.data.numberOfSignatures;
+  const numberofSignatureOnAccount = authQuery.data?.data.numberOfSignatures;
   const isEditMultisignatureMembers = numberofSignatureOnAccount > 1;
 
   return (
