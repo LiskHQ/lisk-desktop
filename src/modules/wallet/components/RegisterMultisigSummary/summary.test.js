@@ -146,6 +146,12 @@ describe('Multisignature Summary component', () => {
     expect(screen.getByText('0.02 LSK')).toBeInTheDocument();
   });
 
+  it('Should be in edit mode', () => {
+    smartRender(Summary, { ...props, authQuery: { data: { data: { numberOfSignatures: 3 } } } });
+
+    expect(screen.getByText('Edit multisignature account'));
+  });
+
   it('Should not call props.nextStep when signedTransaction is empty', () => {
     jest.clearAllMocks();
 

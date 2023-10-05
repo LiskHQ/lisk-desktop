@@ -37,11 +37,8 @@ export const accountMenu = ({
         }
       : {},
     icon: 'multiSignatureOutline',
-    label: `${
-      authData?.data?.numberOfSignatures > 0 || hasNetworkError || isLoadingNetwork
-        ? 'Edit'
-        : 'Register'
-    } multisignature account`,
+    isHidden: hasNetworkError || isLoadingNetwork,
+    label: `${authData?.data?.numberOfSignatures > 0 ? 'Edit' : 'Register'} multisignature account`,
   },
   {
     component: 'removeSelectedAccount',
