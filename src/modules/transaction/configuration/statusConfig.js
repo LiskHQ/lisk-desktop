@@ -134,7 +134,7 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
     const isRegisterMultisignature =
       moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
     const isMultisignature = account?.summary?.isMultisignature || options.isMultisignature;
-    const isInitatorAccountMultiSig = account.numberOfSignatures > 0;
+    const isInitatorAccountMultiSig = account?.numberOfSignatures > 0;
     let nonEmptySignatures = transactions.signedTransaction.signatures.filter(
       (sig) => sig.length > 0
     ).length;
