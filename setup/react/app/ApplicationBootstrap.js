@@ -13,7 +13,7 @@ import { useCurrentAccount } from 'src/modules/account/hooks';
 import { Client } from 'src/utils/api/client';
 import { useReduxStateModifier } from 'src/utils/useReduxStateModifier';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
-import { useTransactionEvents } from 'src/modules/transaction/hooks/queries';
+import { useRewardsClaimable } from 'src/modules/pos/reward/hooks/queries';
 
 export const ApplicationBootstrapContext = createContext({
   hasNetworkError: false,
@@ -86,8 +86,8 @@ const ApplicationBootstrap = ({ children }) => {
 
   useLedgerDeviceListener();
   useReduxStateModifier();
-  const { data: transactionEventData, error: transactionEventError } = useTransactionEvents({
-    config: { params: { senderAddress: accountAddress, name: 'rewardsAssigned' } },
+  const { data: rewardsData } = useRewardsClaimable({
+    config: { params: { address: accountAddress } },
     options: { enabled: !!accountAddress },
   });
 
@@ -100,8 +100,7 @@ const ApplicationBootstrap = ({ children }) => {
           (networkStatus.isFetching && !networkStatus.data),
         error: networkStatus.error || blockchainAppsMeta.error,
         refetchNetwork: blockchainAppsMeta.refetch,
-        events: transactionEventData,
-        eventError: transactionEventError,
+        appEvents: { transactions: { rewards: rewardsData?.data ?? [] } },
       }}
     >
       {children}

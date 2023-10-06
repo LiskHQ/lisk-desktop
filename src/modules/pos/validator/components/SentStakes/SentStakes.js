@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
 import Heading from 'src/modules/common/components/Heading';
 import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
@@ -33,10 +34,20 @@ function ClaimRewardsDialogButton({ address }) {
   const hasClaimableRewards =
     rewardsClaimable?.data?.length &&
     rewardsClaimable?.data?.reduce((acc, curr) => BigInt(curr.reward) + acc, BigInt(0)) > BigInt(0);
+  const {
+    appEvents: {
+      transactions: { rewards },
+    },
+  } = useContext(ApplicationBootstrapContext);
+  const notification = rewards.length;
+  const notificationStyles = notification ? styles.notification : '';
 
   return (
     <DialogLink component="claimRewardsView">
-      <SecondaryButton disabled={!hasClaimableRewards}>{t('Claim rewards')}</SecondaryButton>
+      <SecondaryButton disabled={!hasClaimableRewards}>
+        {t('Claim rewards')}
+        <span className={notificationStyles} />
+      </SecondaryButton>
     </DialogLink>
   );
 }

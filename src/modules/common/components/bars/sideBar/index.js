@@ -30,7 +30,7 @@ const Inner = ({ data, pathname, notification, sideBarExpanded }) => {
   );
 };
 
-const MenuLink = ({ data, pathname, sideBarExpanded, disabled }) => {
+const MenuLink = ({ data, pathname, sideBarExpanded, events, disabled }) => {
   if (data.modal) {
     const className = `${styles.item} ${disabled ? `${styles.disabled} disabled` : ''}`;
     return (
@@ -41,6 +41,9 @@ const MenuLink = ({ data, pathname, sideBarExpanded, disabled }) => {
   }
 
   const className = `${styles.item} ${disabled ? `${styles.disabled} disabled` : ''}`;
+  const {
+    transactions: { rewards },
+  } = events;
 
   return (
     <NavLink
@@ -50,7 +53,12 @@ const MenuLink = ({ data, pathname, sideBarExpanded, disabled }) => {
       activeClassName={styles.selected}
       exact={routes[data.id].exact}
     >
-      <Inner data={data} pathname={pathname} sideBarExpanded={sideBarExpanded} notification />
+      <Inner
+        data={data}
+        pathname={pathname}
+        sideBarExpanded={sideBarExpanded}
+        notification={rewards.length && data.id === 'validators'}
+      />
     </NavLink>
   );
 };
@@ -62,7 +70,8 @@ const SideBar = ({ t, location }) => {
   const [currentAccount] = useCurrentAccount();
   const isLoggedOut = Object.keys(currentAccount).length === 0;
   const sideBarExpanded = useSelector((state) => state.settings.sideBarExpanded);
-  const { hasNetworkError, isLoadingNetwork } = useContext(ApplicationBootstrapContext);
+  const { hasNetworkError, isLoadingNetwork, appEvents } = useContext(ApplicationBootstrapContext);
+
   return (
     <nav
       className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}
@@ -85,6 +94,7 @@ const SideBar = ({ t, location }) => {
                   pathname={location.pathname}
                   data={item}
                   sideBarExpanded={sideBarExpanded}
+                  events={appEvents}
                   disabled={
                     (isLoggedOut && modals[item.id]?.isPrivate) ||
                     location.pathname === routes.reclaim.path ||
