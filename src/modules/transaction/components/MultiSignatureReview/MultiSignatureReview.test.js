@@ -30,15 +30,22 @@ describe('Multisignature Review component', () => {
     isRegisterMultisigature: true,
   };
 
-  beforeEach(() => {
-    wrapper = mountWithRouter(Review, props);
-  });
-
   useTokenBalances.mockReturnValue({ data: mockAppsTokens });
 
   it('Should render properly', () => {
+    wrapper = mountWithRouter(Review, props);
+
     expect(wrapper).toContainMatchingElements(props.members.length, '.member-info');
     expect(wrapper.find('.infoColumn.info-numberOfSignatures')).toHaveText('Required signatures2');
     expect(wrapper.find('.infoColumn.info-fee')).toHaveText('Fees0.02 LSK');
+  });
+
+  it('Should render properly when editing register multi-signature transaction', () => {
+    wrapper = mountWithRouter(Review, {
+      ...props,
+      isRegisterMultisigature: true,
+      isMultisignature: true,
+    });
+    expect(wrapper.find('.membersContainer > p:first-child')).toHaveText('Registering members');
   });
 });
