@@ -10,7 +10,7 @@ const version = require('../../package.json').version;
 const config = {
   mode: 'production',
   output: {
-    path: resolve(__dirname, '../../app/build'),
+    path: resolve(__dirname, `../../app/${process.env.BUILD_NAME || 'build'}`),
     filename: 'bundle.[name].[contenthash].js',
   },
   optimization: {

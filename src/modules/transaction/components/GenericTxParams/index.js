@@ -2,11 +2,6 @@ import React from 'react';
 import { getSpaceSeparated } from '@transaction/utils/helpers';
 import styles from './genericTxParams.css';
 
-// @todo As a next step, we can estimate data type, and for:
-// address/publicKey -> show avatar and address/publicKey
-// amount -> normalize and display the token name next ot it
-// timestamp -> show correct date
-// At some point we can even adapt the components under TransactionDetails.
 const PrimaryValue = ({ value }) => {
   let data = typeof value === 'boolean' ? value.toString() : value;
   if (!data) {

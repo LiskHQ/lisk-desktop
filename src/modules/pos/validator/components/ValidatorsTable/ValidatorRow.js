@@ -41,6 +41,7 @@ const ValidatorRow = ({ data, className, activeTab, watchList, setActiveTab }) =
     <Link
       className={`${className} validator-row ${styles.container} ${activeStyle} ${validatorStyles.tableRow}`}
       to={`${routes.validatorProfile.path}?validatorAddress=${data.address}`}
+      data-testid="validator-row"
     >
       <ValidatorRowContext.Provider
         value={{

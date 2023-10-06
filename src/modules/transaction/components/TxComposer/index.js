@@ -15,7 +15,7 @@ import {
   splitModuleAndCommand,
 } from '@transaction/utils';
 import { dryRunTransaction } from '@transaction/api';
-import { getTotalSpendingAmount } from '@transaction/utils/transaction';
+import { getTransactionAmount } from '@transaction/utils/transaction';
 import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
@@ -142,8 +142,6 @@ const TxComposer = ({
     setCustomFee({});
   }, [minimumFee, messageFee]);
 
-  const minRequiredBalance =
-    BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
   const { recipientChain, sendingChain } = formProps;
   const composedFees = [
     {
@@ -180,6 +178,11 @@ const TxComposer = ({
   transactionJSON.fee = !!customFee.value?.transactionFee
     ? convertToBaseDenom(customFee.value.transactionFee, feeToken)
     : transactionFee;
+
+  const availableBalance = BigInt(formProps.fields?.token?.availableBalance || 0);
+  const transactionAmount = BigInt(getTransactionAmount(transactionJSON));
+  const spendingBalance = transactionAmount + BigInt(transactionJSON.fee);
+  const amountAndBalances = { transactionAmount, availableBalance, spendingBalance };
 
   // eslint-disable-next-line max-statements
   const onSubmit = async () => {
@@ -224,14 +227,15 @@ const TxComposer = ({
         loadError={prioritiesLoadError}
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
-        minRequiredBalance={minRequiredBalance}
+        minRequiredBalance={spendingBalance}
         computedMinimumFees={{ transactionFee: minimumFee, messageFee }}
         formProps={formProps}
       />
       <Feedback
         feedback={feedback}
-        minRequiredBalance={formProps.enableMinimumBalanceFeedback && minRequiredBalance.toString()}
-        token={formProps.enableMinimumBalanceFeedback && (formProps.fields?.token || {})}
+        amountAndBalances={amountAndBalances}
+        enableMinimumBalanceFeedback={formProps.enableMinimumBalanceFeedback}
+        token={formProps.fields?.token}
       />
       <BoxFooter>
         <PrimaryButton
@@ -240,7 +244,7 @@ const TxComposer = ({
           isLoading={isRunningDryRun}
           disabled={
             !formProps.isFormValid ||
-            minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0) ||
+            spendingBalance > availableBalance ||
             !isFetched ||
             !!feeEstimateError ||
             isLoadingFee

@@ -1,4 +1,3 @@
-// @todo: this should be re-instated when the issue with lisk-client is fixed
 /* istanbul ignore file */
 import { to } from 'await-to-js';
 import { selectCurrentAccountWithSigningData } from 'src/redux/selectors';

@@ -152,7 +152,6 @@ module.exports = {
     'src/modules/pos/validator/store/reducers/staking.js',
     'src/modules/transaction/components/TransactionResult/illustrationsMap.js',
     'src/modules/transaction/components/Regular/Regular.js',
-    'src/modules/token/fungible/components/BalanceInfo/EmptyBalanceTooltipWrapper.js',
     'src/modules/wallet/utils/api/index.js',
     'src/modules/transaction/utils/hwManager/index.js',
     'src/modules/transaction/utils/transactionDetailsHelper.js',
@@ -344,6 +343,8 @@ module.exports = {
     PRODUCTION: true,
     TEST: true,
     VERSION: '',
+    REACT_APP_DEFAULT_NETWORK: 'undefined',
+    LISK_ENABLE_DEV_TOOL: false,
   },
   coverageReporters: process.env.ON_JENKINS ? ['text', 'lcov', 'cobertura'] : ['html', 'json'],
   reporters: [

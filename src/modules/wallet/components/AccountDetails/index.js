@@ -63,10 +63,7 @@ const AccountDetails = () => {
   const { data: authData, isLoading: authLoading } = useAuth({
     config: { params: { address } },
   });
-  const accountName = currentAccount.metadata?.name;
-  const appendAccountName = `-${accountName}`;
-  const fileName = `${address}${accountName ? appendAccountName : ''}-lisk-account`;
-  const truncatedFilename = `${truncateAddress(fileName)}.json`;
+
   const {
     numberOfSignatures,
     optionalKeys,
@@ -74,6 +71,12 @@ const AccountDetails = () => {
     nonce = 0,
   } = authData?.data || emptyKeys;
   const { name = '', publicKey = '' } = authData?.meta ?? {};
+  const isMyAccount = queryAddress === currentAccount.metadata?.address;
+  const accountName = isMyAccount ? currentAccount.metadata?.name : name;
+  const appendAccountName = `-${accountName}`;
+  const fileName = `${address}${accountName ? appendAccountName : ''}-lisk-account`;
+  const truncatedFilename = `${truncateAddress(fileName)}.json`;
+
   const { data: validatorData } = useValidators({
     config: { params: { address } },
     options: { enabled: !!name },
@@ -178,12 +181,10 @@ const AccountDetails = () => {
             <div className={styles.accountName}>
               {readMode ? (
                 <>
-                  <h3>{queryAddress ? authData?.meta?.name : currentAccount.metadata?.name}</h3>
+                  <h3>{accountName}</h3>
                   {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
-                  {!authLoading && !queryAddress && (
-                    <Icon name="edit" onClick={(e) => setMode(e)} />
-                  )}
-                  {!queryAddress && currentAccount.metadata.isHW && (
+                  {!authLoading && isMyAccount && <Icon name="edit" onClick={setMode} />}
+                  {isMyAccount && currentAccount.metadata.isHW && (
                     <Icon name="hardwareWalletIcon" />
                   )}
                 </>
@@ -220,7 +221,7 @@ const AccountDetails = () => {
                 </>
               )}
             </div>
-            {!queryAddress && !currentAccount.metadata.isHW && (
+            {isMyAccount && !currentAccount.metadata.isHW && (
               <div className={styles.infoRow}>
                 <span className={styles.title}>{t('Backup account')}: </span>
                 <Icon name="filePlain" />

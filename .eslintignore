@@ -2,6 +2,5 @@ dist
 node_modules
 coverage
 app/build
+app/buildE2E
 app/build-testnet
-
-
