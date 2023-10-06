@@ -16,6 +16,8 @@ const SignedAndRemainingSignatureList = ({ t }) => {
   const required = keys.numberOfSignatures;
   const needed = required - signed.length;
 
+  if (signed.length === 0 && remaining.length === 0 && required === 0) return null;
+
   return (
     <SignedAndRemainingMembers
       signed={signed}
