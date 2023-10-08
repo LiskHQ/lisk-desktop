@@ -1,13 +1,17 @@
 import React, { useEffect, useMemo } from 'react';
 import { isEmpty } from 'src/utils/helpers';
+import { useDispatch } from 'react-redux';
 import { useCurrentAccount } from '@account/hooks';
 import { useAuth } from '@auth/hooks/queries';
+import { fromTransactionJSON, joinModuleAndCommand } from '@transaction/utils';
+import actionTypes from '@transaction/store/actionTypes';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import { useCommandSchema } from '@network/hooks';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
 
+// eslint-disable-next-line max-statements
 const Summary = ({
   t,
   prevStep,
@@ -19,6 +23,7 @@ const Summary = ({
   authQuery,
 }) => {
   const [sender] = useCurrentAccount();
+  const dispatch = useDispatch();
   const { txInitiatorAccount } = useTxInitiatorAccount({
     senderPublicKey: transactionJSON.senderPublicKey,
   });
@@ -53,7 +58,19 @@ const Summary = ({
           });
 
         if (!isSenderMember) {
-          actionFunction();
+          dispatch({
+            type: actionTypes.transactionSigned,
+            data: fromTransactionJSON(
+              transactionJSON,
+              moduleCommandSchemas[joinModuleAndCommand(transactionJSON)]
+            ),
+          });
+          nextStep({
+            formProps,
+            transactionJSON,
+            sender,
+            actionFunction,
+          });
         } else {
           nextStep({
             formProps,
@@ -76,6 +93,7 @@ const Summary = ({
   };
 
   useEffect(() => {
+    console.log('>>>>>', transactions, isSenderMember);
     if (!isEmpty(transactions.signedTransaction) && !isSenderMember) {
       nextStep({ formProps, transactionJSON, sender }, 2);
     }

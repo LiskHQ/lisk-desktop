@@ -148,7 +148,7 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
   useEffect(() => {
     const numberOfSignaturesOnAccount = authQuery.data?.data?.numberOfSignatures;
 
-    if (authQuery.isFetched && authQuery.data && numberOfSignaturesOnAccount > 1) {
+    if (authQuery.isFetched && authQuery.data && numberOfSignaturesOnAccount > 0) {
       const mandatoryMembers = authQuery.data.data.mandatoryKeys.map((key) => ({
         isMandatory: true,
         publicKey: key,
@@ -192,7 +192,7 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
   };
 
   const numberofSignatureOnAccount = authQuery.data?.data.numberOfSignatures;
-  const isEditMultisignatureMembers = numberofSignatureOnAccount > 1;
+  const isEditMultisignatureMembers = numberofSignatureOnAccount > 0;
 
   return (
     <section className={styles.wrapper}>
