@@ -9,6 +9,7 @@ import TxComposer from '@transaction/components/TxComposer';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
+import { isEmpty } from 'src/utils/helpers';
 
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import { MAX_MULTI_SIG_MEMBERS, DEFAULT_SIGNATURE_BYTE_SIZE } from '../../configuration/constants';
@@ -146,6 +147,12 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
   }, [numberOfSignatures]);
 
   useEffect(() => {
+    if (!isEmpty(getInitialMembersState(prevState))) {
+      setMembers(getInitialMembersState(prevState));
+      setNumberOfSignatures(getInitialSignaturesState(prevState));
+      return;
+    }
+
     const numberOfSignaturesOnAccount = authQuery.data?.data?.numberOfSignatures;
 
     if (authQuery.isFetched && authQuery.data && numberOfSignaturesOnAccount > 0) {
