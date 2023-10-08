@@ -85,7 +85,7 @@ describe('Multisignature editor component', () => {
       data: {
         data: {
           numberOfSignatures: 1,
-          mandatoryKeys: [],
+          mandatoryKeys: [wallets.genesis.summary.publicKey, wallets.mainnet_guy.summary.publicKey],
           optionalKeys: [],
         },
       },
@@ -137,6 +137,20 @@ describe('Multisignature editor component', () => {
   });
 
   it('delete icon is only visible if required signatures < members.length', () => {
+    wrapper = mountWithQueryClient(Form, {
+      ...props,
+      authQuery: {
+        isFetching: false,
+        isFetched: true,
+        data: {
+          data: {
+            numberOfSignatures: 0,
+            mandatoryKeys: [],
+            optionalKeys: [],
+          },
+        },
+      },
+    });
     expect(wrapper).not.toContainMatchingElement('.delete-icon');
     for (let i = 0; i < 3; ++i) {
       wrapper.find('.add-new-members').at(0).simulate('click');
@@ -153,6 +167,21 @@ describe('Multisignature editor component', () => {
   });
 
   it('props.nextStep is called when the CTA is clicked', async () => {
+    wrapper = mountWithQueryClient(Form, {
+      ...props,
+      authQuery: {
+        isFetching: false,
+        isFetched: true,
+        data: {
+          data: {
+            numberOfSignatures: 0,
+            mandatoryKeys: [],
+            optionalKeys: [],
+          },
+        },
+      },
+    });
+
     wrapper
       .find('input.msign-pk-input')
       .at(0)
@@ -194,6 +223,21 @@ describe('Multisignature editor component', () => {
   });
 
   it('should be able to change the number of signatures', async () => {
+    wrapper = mountWithQueryClient(Form, {
+      ...props,
+      authQuery: {
+        isFetching: false,
+        isFetched: true,
+        data: {
+          data: {
+            numberOfSignatures: 0,
+            mandatoryKeys: [],
+            optionalKeys: [],
+          },
+        },
+      },
+    });
+
     props.nextStep.mockReset();
     wrapper
       .find('.multisignature-editor-input input')
@@ -263,14 +307,14 @@ describe('validateState', () => {
     const pbk4 = wallets.validator.summary.publicKey;
     const params = {
       ...commonParam,
-      mandatoryKeys: [pbk, pbk2, pbk3,],
+      mandatoryKeys: [pbk, pbk2, pbk3],
       optionalKeys: [pbk4],
       numberOfSignatures: 2,
     };
     const error = 'Number of signatures must be above {{num}}.';
     expect(validateState(params).messages).toContain(error);
   });
-  
+
   it('should return error if duplicate public key is used', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {
