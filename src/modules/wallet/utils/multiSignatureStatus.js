@@ -1,10 +1,12 @@
-import { signatureCollectionStatus } from 'src/modules/transaction/configuration/txStatus';
-import { joinModuleAndCommand, toTransactionJSON } from 'src/modules/transaction/utils';
+import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import { joinModuleAndCommand, toTransactionJSON } from '@transaction/utils';
 import { isEmpty } from 'src/utils/helpers';
 import {
   getTransactionSignatureStatus,
   showSignButton,
 } from '../components/signMultisigView/helpers';
+import { calculateRemainingAndSignedMembers } from './account';
 
 /**
  * Get required statuses for a given multi-signature transaction
@@ -33,5 +35,36 @@ export const getMultiSignatureStatus = ({
     transactionJSON.senderPublicKey === currentAccount.metadata.pubkey &&
     signatureStatus === signatureCollectionStatus.fullySigned;
 
-  return { isMember, signatureStatus, canSenderSignTx };
+  // eslint-disable-next-line max-statements
+  const canCurrentMemberSign = () => {
+    const isRegisterMultisignature =
+      joinModuleAndCommand(transactionJSON) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+
+    const isInitatorAccountMultiSig = senderAccount.numberOfSignatures > 1;
+
+    const transactionKeys = {
+      optionalKeys: transactionJSON.params.optionalKeys,
+      mandatoryKeys: transactionJSON.params.mandatoryKeys,
+      numberOfSignatures: transactionJSON.params.numberOfSignatures,
+    };
+    const { remaining: paramsTxSignaturesRemaining } = calculateRemainingAndSignedMembers(
+      transactionKeys,
+      transactionJSON,
+      true
+    );
+
+    if (isRegisterMultisignature && isInitatorAccountMultiSig && paramsTxSignaturesRemaining.length > 0) {
+      const { optionalKeys, mandatoryKeys } = transactionJSON.params;
+      return [...optionalKeys, ...mandatoryKeys].includes(account.summary.publicKey);
+    }
+
+    return isMember;
+  };
+
+  return {
+    isMember,
+    signatureStatus,
+    canSenderSignTx,
+    canCurrentMemberSign: canCurrentMemberSign(),
+  };
 };
