@@ -7,11 +7,13 @@ export const accountMenu = ({
   hasNetworkError,
   isLoadingNetwork,
   hasAvailableTokenBalance,
+  address,
 }) => [
   {
     component: 'accountDetails',
     icon: 'profileOutline',
     label: 'Account details',
+    data: { address },
   },
   {
     component: 'switchAccount',
