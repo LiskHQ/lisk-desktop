@@ -20,6 +20,7 @@ export const ApplicationBootstrapContext = createContext({
   isLoadingNetwork: false,
   error: {},
   refetchNetwork: () => {},
+  appEvents: { transactions: { rewards: {} } },
 });
 
 const ApplicationBootstrap = ({ children }) => {

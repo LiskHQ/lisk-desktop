@@ -1,6 +1,6 @@
 /* eslint-disable max-lines, max-statements, complexity */
 /* istanbul ignore file */
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { convertToBaseDenom } from '@token/fungible/utils/helpers';
@@ -16,7 +16,6 @@ import Table from '@theme/table';
 import { dryRunTransaction } from '@transaction/api';
 import { useCommandSchema } from '@network/hooks';
 import routes from 'src/routes/routes';
-import client from 'src/utils/api/client';
 import { STAKE_LIMIT } from '../../consts';
 import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';
@@ -235,31 +234,6 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
     },
   };
   const commandParams = { stakes: normalizedStakes };
-
-  const rewardsCheck = (tx) => {
-    const transactionData = tx.data[0];
-    const senderAddress = transactionData.sender.address;
-    const transactionType = transactionData.moduleCommand;
-    const isUserTransaction = senderAddress === currentAccount.metadata.address;
-    const isStakeOrRewardsTransaction =
-      transactionType === MODULE_COMMANDS_NAME_MAP.stake ||
-      transactionType === MODULE_COMMANDS_NAME_MAP.claimRewards;
-    if (isUserTransaction && isStakeOrRewardsTransaction) {
-      // call claimable rewards endpoint
-    }
-  };
-
-  useEffect(() => {
-    if (client.socket) {
-      /* istanbul ignore next */
-      client.socket.on('new.transactions', rewardsCheck);
-    }
-    return () => {
-      if (client.socket) {
-        client.socket.off('new.transactions', rewardsCheck);
-      }
-    };
-  }, []);
 
   return (
     <div className={styles.wrapper} data-testid="stake-form-wrapper">
