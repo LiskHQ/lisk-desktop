@@ -150,7 +150,8 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
       (isMultisignature &&
         nonEmptySignatures === numberOfSignatures &&
         !options.canSenderSignTx &&
-        isRegisterMultisignature)
+        isRegisterMultisignature &&
+        !isInitatorAccountMultiSig)
     ) {
       return { code: txStatusTypes.multisigSignaturePartialSuccess };
     }

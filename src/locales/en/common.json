@@ -367,6 +367,8 @@
   "Maxmind": "Maxmind",
   "Medium": "Medium",
   "Members": "Members",
+  "Members have fully signed.": "Members have fully signed.",
+  "Members have partially signed.": "Members have partially signed.",
   "Message": "Message",
   "Message (Optional)": "Message (Optional)",
   "Message Fee": "Message Fee",

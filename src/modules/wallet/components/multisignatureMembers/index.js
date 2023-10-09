@@ -1,6 +1,7 @@
 import React from 'react';
 import Tooltip from '@theme/Tooltip/tooltip';
 import classNames from 'classnames';
+import Icon from 'src/theme/Icon';
 import WalletVisual from '../walletVisual';
 import { truncateAddress } from '../../utils/account';
 import styles from './styles.css';
@@ -89,8 +90,25 @@ export const SignedAndRemainingMembers = ({
   title,
 }) => (
   <div className={classNames(styles.wrapper, className)}>
-    <p>{title}</p>
-    <div className={`${styles.membersContainer}`}>
+    <p>
+      {title}
+      <Tooltip
+        size="s"
+        position="right"
+        content={<Icon name={remaining.length === 0 ? 'okIcon' : 'transactionStatusPending'} />}
+      >
+        <p>
+          {remaining.length === 0
+            ? t('Members have fully signed.')
+            : t('Members have partially signed.')}
+        </p>
+      </Tooltip>
+    </p>
+    <div
+      className={classNames(styles.membersContainer, {
+        [styles.fullySigned]: remaining.length === 0,
+      })}
+    >
       <div>
         <p className={styles.label}>{t('Signed')}</p>
         {signed.map((member, i) => (

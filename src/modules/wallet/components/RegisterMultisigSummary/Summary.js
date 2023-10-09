@@ -93,7 +93,6 @@ const Summary = ({
   };
 
   useEffect(() => {
-    console.log('>>>>>', transactions, isSenderMember);
     if (!isEmpty(transactions.signedTransaction) && !isSenderMember) {
       nextStep({ formProps, transactionJSON, sender }, 2);
     }
