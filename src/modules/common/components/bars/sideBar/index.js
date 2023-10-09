@@ -57,7 +57,9 @@ const MenuLink = ({ data, pathname, sideBarExpanded, events, disabled }) => {
         data={data}
         pathname={pathname}
         sideBarExpanded={sideBarExpanded}
-        notification={rewards.length && data.id === 'validators'}
+        notification={
+          rewards.length && BigInt(rewards[0]?.reward || 0) > BigInt(0) && data.id === 'validators'
+        }
       />
     </NavLink>
   );

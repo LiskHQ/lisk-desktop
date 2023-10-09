@@ -85,7 +85,7 @@ const ValidatorsMonitor = ({ watchList }) => {
       transactions: { rewards },
     },
   } = useContext(ApplicationBootstrapContext);
-  const notification = rewards.length;
+  const notification = rewards.length && BigInt(rewards[0]?.reward || 0) > BigInt(0);
   const notificationStyles = notification ? styles.notification : '';
 
   useEffect(() => {

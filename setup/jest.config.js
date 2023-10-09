@@ -105,7 +105,6 @@ module.exports = {
     'src/theme/dialog/link.js',
     'src/modules/settings/components/networkSelector/networkSelector.js',
     'src/modules/common/components/customRoute/index.js',
-    'src/modules/common/components/bars/sideBar/index.js',
     'src/modules/common/components/bars/topBar/navigationButtons.js',
     'src/modules/update/detail/info/newReleaseDialog/index.js',
     'src/modules/transaction/components/TransactionInfo/',
