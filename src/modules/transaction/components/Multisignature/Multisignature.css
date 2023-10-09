@@ -44,6 +44,21 @@
     width: 210px;
     margin-top: var(--horizontal-padding-l);
   }
+
+  & .requiredAccountSection {
+    margin-top: 14px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+
+    & .requiredAccountTitle {
+      margin: 24px 0 8px 0;
+      font-size: 14px;
+      color: var(--color-slate-gray);
+    }
+  }
 }
 
 .primaryActions {
@@ -55,13 +70,22 @@
   align-items: center;
   margin-top: 20px;
 
+  & .buttonContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   & .copy,
+  & .switchAccountBtn,
   & .download {
-    width: 160px;
+    width: 184px;
     flex-shrink: 0;
     margin: 0 10px;
+    padding: 0 22px;
 
-    & img {
+    & img,
+    & svg {
       vertical-align: middle;
       margin-right: 10px;
     }

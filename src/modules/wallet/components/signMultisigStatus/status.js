@@ -13,7 +13,7 @@ import styles from './styles.css';
 import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 
 // eslint-disable-next-line max-statements
-const Status = ({ transactions, t, transactionJSON }) => {
+const Status = ({ transactions, t, transactionJSON, reset }) => {
   const [currentAccount] = useCurrentAccount();
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
 
@@ -50,7 +50,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
     <section>
       <Box className={styles.boxContainer}>
         <header>
-          <h1>{t('Sign multisignature transaction')}</h1>
+          <h1>{t('Sign multisignature transaction....')}</h1>
           <p>
             {t(
               'If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.'
@@ -65,6 +65,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
             illustration="signMultisignature"
             className={styles.content}
             status={status}
+            reset={reset}
           />
         </BoxContent>
       </Box>
