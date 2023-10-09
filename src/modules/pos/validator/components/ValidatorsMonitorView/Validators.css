@@ -1,15 +1,5 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
-.notification {
-  background-color: var(--color-notification);
-  height: 13px;
-  width: 13px;
-  border-radius: 50%;
-  position: absolute;
-  right: -8px;
-  top: -5px;
-}
-
 .closeBtn {
   align-items: center;
   box-sizing: border-box;

@@ -135,12 +135,11 @@
   height: 0;
 }
 
-.notification {
-  background-color: var(--color-notification);
+.badge {
   height: 8px;
   width: 8px;
-  border-radius: 50%;
   margin: auto 12px auto auto;
+  position: static;
 }
 
 .collapsedNotification {

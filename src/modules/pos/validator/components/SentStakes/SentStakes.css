@@ -65,13 +65,3 @@
   background-color: var(--color-white);
   z-index: 1;
 }
-
-.notification {
-  background-color: var(--color-notification);
-  height: 13px;
-  width: 13px;
-  border-radius: 50%;
-  position: absolute;
-  right: -8px;
-  top: -5px;
-}

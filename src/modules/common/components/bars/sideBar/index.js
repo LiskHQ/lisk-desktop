@@ -9,23 +9,25 @@ import Icon from 'src/theme/Icon';
 import { selectActiveToken } from 'src/redux/selectors';
 import DialogLink from 'src/theme/dialog/link';
 import SidebarToggle from '@settings/components/SidebarToggle';
+import Badge from '../../badge';
 import styles from './sideBar.css';
 import menuLinks from './menuLinks';
 
-const Inner = ({ data, pathname, notification, sideBarExpanded }) => {
+const Inner = ({ data, pathname, hasNotification, sideBarExpanded }) => {
   let status = '';
   if (pathname && pathname === data.path) {
     status = 'Active';
   }
-  const className = notification ? styles.notification : '';
+  const className = hasNotification ? styles.badge : '';
+
   return (
     <span className={styles.holder}>
       <span className={styles.iconWrapper}>
         <Icon name={`${data.icon}${status}`} className={styles.icon} />
-        {!sideBarExpanded && <span className={`${className} ${styles.collapsedNotification}`} />}
+        {!sideBarExpanded && <Badge className={`${className} ${styles.collapsedNotification}`} />}
       </span>
       {sideBarExpanded && <span className={styles.label}>{data.label}</span>}
-      {sideBarExpanded && <span className={className} />}
+      {sideBarExpanded && !!hasNotification && <Badge className={className} />}
     </span>
   );
 };
@@ -57,7 +59,7 @@ const MenuLink = ({ data, pathname, sideBarExpanded, events, disabled }) => {
         data={data}
         pathname={pathname}
         sideBarExpanded={sideBarExpanded}
-        notification={
+        hasNotification={
           rewards.length && BigInt(rewards[0]?.reward || 0) > BigInt(0) && data.id === 'validators'
         }
       />

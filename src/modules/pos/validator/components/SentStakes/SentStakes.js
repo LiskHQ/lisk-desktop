@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Heading from 'src/modules/common/components/Heading';
+import Heading from '@common/components/Heading';
 import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
@@ -14,6 +14,7 @@ import StakesCount from '@pos/validator/components/StakesCount';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { useMyTransactions } from '@transaction/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import Badge from '@common/components/badge';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
@@ -33,13 +34,12 @@ function ClaimRewardsDialogButton({ address }) {
   const hasClaimableRewards =
     rewardsClaimable?.data?.length &&
     rewardsClaimable?.data?.reduce((acc, curr) => BigInt(curr.reward) + acc, BigInt(0)) > BigInt(0);
-  const notificationStyles = hasClaimableRewards ? styles.notification : '';
 
   return (
     <DialogLink component="claimRewardsView">
       <SecondaryButton disabled={!hasClaimableRewards}>
         {t('Claim rewards')}
-        {hasClaimableRewards && <span className={notificationStyles} data-testid="notification" />}
+        {hasClaimableRewards && <Badge />}
       </SecondaryButton>
     </DialogLink>
   );

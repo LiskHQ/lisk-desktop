@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import { toast } from 'react-toastify';
 import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
+import Badge from '@common/components/badge';
 import { Input } from 'src/theme';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
@@ -86,7 +87,6 @@ const ValidatorsMonitor = ({ watchList }) => {
     },
   } = useContext(ApplicationBootstrapContext);
   const notification = rewards.length && BigInt(rewards[0]?.reward || 0) > BigInt(0);
-  const notificationStyles = notification ? styles.notification : '';
 
   useEffect(() => {
     if (notification) {
@@ -203,7 +203,7 @@ const ValidatorsMonitor = ({ watchList }) => {
               <Link to={routes.sentStakes.path}>
                 <SecondaryButton>
                   {t('Stakes')}
-                  <span className={notificationStyles} />
+                  {!!notification && <Badge />}
                 </SecondaryButton>
               </Link>
             )}
