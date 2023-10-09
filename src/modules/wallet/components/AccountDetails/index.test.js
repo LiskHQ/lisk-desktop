@@ -10,12 +10,24 @@ import { truncateAddress } from '../../utils/account';
 import AccountDetails from '.';
 
 const currentAccount = mockSavedAccounts[0];
+const mockHistory = {
+  location: {
+    search: '?address=lsk3ay4z7wqjczbo5ogcqxgxx23xyacxmycwxfh4d',
+  },
+  push: jest.fn(),
+  goBack: jest.fn(),
+};
 
 jest.mock('@auth/hooks/queries/useAuth');
 jest.mock('@hardwareWallet/store/actions');
 jest.mock('@pos/validator/hooks/queries/useValidators');
 jest.mock('@transaction/utils/transaction', () => ({
   downloadJSON: jest.fn(),
+}));
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => mockHistory,
+  useLocation: jest.fn().mockReturnValue({ search: '/' }),
 }));
 
 const config = {

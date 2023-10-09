@@ -95,7 +95,7 @@ pipeline {
 								wrap([$class: 'Xvfb']) {
 									sh '''
 									# lisk-core
-									npm i -g lisk-core
+									npm i -g lisk-core@^4.0.0-rc.3
 									rm -rf ~/.lisk/
 									# lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
 									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 --config ./e2e/artifacts/config.json --overwrite-config >lisk-core.out 2>lisk-core.err &
@@ -106,6 +106,13 @@ pipeline {
 									echo LISK_APP_WS=ws://host.docker.internal:7887 >>lisk-service/.env
 									make -C lisk-service build
 									make -C lisk-service up
+
+									## logs
+									# cat lisk-core.out
+									# echo "===== core error ===="
+									# cat lisk-core.err
+									# echo "======== service ======="
+									# docker ps
 
 									# wait for service to be up and running
 									sleep 10
