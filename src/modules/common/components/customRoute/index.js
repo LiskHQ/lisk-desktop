@@ -7,7 +7,6 @@ import Piwik from 'src/utils/piwik';
 import routes from 'src/routes/routes';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import { useCheckLegacyAccount } from '@legacy/hooks/queries';
-import useSettings from '@settings/hooks/useSettings';
 import { useTranslation } from 'react-i18next';
 import ErrorBoundary from './errorBoundary';
 
@@ -22,13 +21,8 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, histo
   const { isMigrated } = useCheckLegacyAccount(pubkey);
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
-  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   Piwik.tracking(history, token);
-
-  if (!mainChainNetwork && path !== routes.selectNetwork.path) {
-    return <Redirect to={routes.selectNetwork.path} />;
-  }
 
   if (forbiddenTokens.indexOf(token.active) !== -1) {
     return <Redirect to={routes.wallet.path} />;

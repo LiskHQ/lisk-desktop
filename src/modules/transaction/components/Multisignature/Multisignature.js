@@ -39,7 +39,7 @@ export const FullySignedActions = ({ t, onDownload, onSend }) => (
   </>
 );
 
-const ErrorActions = ({ t, status, message, network }) => (
+const ErrorActions = ({ t, status, message, network, application }) => (
   <a
     className="report-error-link"
     href={getErrorReportMailto({
@@ -48,6 +48,7 @@ const ErrorActions = ({ t, status, message, network }) => (
       networkIdentifier: network.networkIdentifier,
       serviceUrl: network.serviceUrl,
       liskCoreVersion: network.networkVersion,
+      application,
     })}
     target="_top"
     rel="noopener noreferrer"
@@ -56,7 +57,7 @@ const ErrorActions = ({ t, status, message, network }) => (
   </a>
 );
 
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line max-statements, complexity
 const Multisignature = ({
   transactions,
   title,
@@ -70,6 +71,7 @@ const Multisignature = ({
   transactionBroadcasted,
   network,
   moduleCommandSchemas,
+  application,
 }) => {
   const [copied, setCopied] = useState(false);
   const ref = useRef();
@@ -105,7 +107,6 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
-
   useEffect(() => () => clearTimeout(ref.current), []);
 
   return (
@@ -124,13 +125,19 @@ const Multisignature = ({
           </PrimaryButton>
         ) : null}
         {status.code === txStatusTypes.broadcastError ? (
-          <ErrorActions message={message} network={network} status={status} t={t} />
+          <ErrorActions
+            message={message}
+            network={network}
+            status={status}
+            t={t}
+            application={application}
+          />
         ) : null}
         {status.code !== txStatusTypes.broadcastSuccess &&
         status.code !== txStatusTypes.broadcastError ? (
           <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
             <span className={styles.buttonContent}>
-              <Icon name={copied ? 'transactionStatusSuccess' : 'copy'} />
+              <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />
               {t(copied ? 'Copied' : 'Copy')}
             </span>
           </SecondaryButton>

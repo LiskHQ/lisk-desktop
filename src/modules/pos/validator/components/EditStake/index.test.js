@@ -15,6 +15,7 @@ import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockTokensBalance, mockAppsTokens } from '@token/fungible/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
+import { usePosExpectedSharedRewards } from '@pos/reward/hooks/queries/useStakingRewards';
 import useFiatRates from 'src/modules/common/hooks/useFiatRates';
 import EditStake from './index';
 import { useValidators, useSentStakes, usePosConstants } from '../../hooks/queries';
@@ -48,6 +49,10 @@ jest.mock('../../hooks/queries', () => ({
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@pos/validator/hooks/usePosToken');
+jest.mock('@pos/reward/hooks/queries/useStakingRewards', () => ({
+  ...jest.requireActual('@pos/reward/hooks/queries/useStakingRewards'),
+  usePosExpectedSharedRewards: jest.fn(),
+}));
 jest.mock('src/modules/common/hooks/useFiatRates');
 
 describe('EditStake', () => {
@@ -65,7 +70,7 @@ describe('EditStake', () => {
     },
   };
   const props = {
-    history: { location: { search: `?address=${validatorAddress}` }, push: jest.fn() },
+    history: { location: { search: `?validatorAddress=${validatorAddress}` }, push: jest.fn() },
     stakeEdited: jest.fn(),
     network: {},
     staking: {},
@@ -73,7 +78,7 @@ describe('EditStake', () => {
   const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
   const updatedProps = {
     ...props,
-    history: { ...props.history, location: { search: `?address=${address}` } },
+    history: { ...props.history, location: { search: `?validatorAddress=${address}` } },
   };
 
   beforeEach(() => {
@@ -89,6 +94,11 @@ describe('EditStake', () => {
       token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' },
     });
     useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
+    usePosExpectedSharedRewards.mockReturnValue({
+      data: {
+        data: { reward: '0' },
+      },
+    });
   });
 
   it('should properly render add stake form', () => {
@@ -101,8 +111,9 @@ describe('EditStake', () => {
     expect(screen.getByText(validator.address)).toBeTruthy();
     expect(screen.getByText(validator.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
+    expect(screen.getByText('Validator commission:')).toBeTruthy();
+    expect(screen.getByText('Shared rewards :')).toBeTruthy();
     expect(screen.getByText('Available balance:')).toBeTruthy();
-    expect(screen.getByText('Commission:')).toBeTruthy();
     expect(
       screen.getByText(`${convertCommissionToPercentage(validator.commission)}%`)
     ).toBeTruthy();
@@ -162,7 +173,7 @@ describe('EditStake', () => {
 
     expect(screen.getByText('Edit Stake')).toBeTruthy();
     expect(
-      screen.getByText('After changing your stake amount, it will be added to the staking queue.')
+      screen.getByText('Edit your stake by modifying stake amount or removing existing stake.')
     ).toBeTruthy();
     expect(screen.getByText('Stake amount')).toBeTruthy();
 
@@ -194,7 +205,7 @@ describe('EditStake', () => {
 
     expect(screen.getByText('Edit Stake')).toBeTruthy();
     expect(
-      screen.getByText('After changing your stake amount, it will be added to the staking queue.')
+      screen.getByText('Edit your stake by modifying stake amount or removing existing stake.')
     ).toBeTruthy();
     expect(screen.getByText('Stake amount')).toBeTruthy();
 
@@ -230,12 +241,15 @@ describe('EditStake', () => {
     };
     const customProps = {
       ...props,
-      history: { ...props.history, location: { search: `?address=${stakedValidatorAddress}` } },
+      history: {
+        ...props.history,
+        location: { search: `?validatorAddress=${stakedValidatorAddress}` },
+      },
       staking: stakingValues,
     };
 
     delete window.location;
-    window.location = new URL(`http://localhost/?address=${stakedValidatorAddress}`);
+    window.location = new URL(`http://localhost/?validatorAddress=${stakedValidatorAddress}`);
 
     usePosToken.mockReturnValue({
       token: { ...mockAppsTokens.data[0], availableBalance: '500000000' },
@@ -297,19 +311,23 @@ describe('EditStake', () => {
     });
 
     it('should return an error if inputted amount is not a multiple of 10', async () => {
+      usePosToken.mockReturnValue({
+        token: { ...mockAppsTokens.data[0], availableBalance: '10000000000' },
+      });
+
       renderWithRouterAndStoreAndQueryClient(EditStake, customProps, { staking: stakingValues });
 
       expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
 
       const stakingField = screen.getByTestId('stake');
-      fireEvent.change(stakingField, { target: { value: 10.11 } });
+      fireEvent.change(stakingField, { target: { value: 8.11 } });
 
       await waitFor(() => {
         expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');
         expect(screen.queryByText(`You can only stake in multiplies of 10 LSK.`)).toBeTruthy();
       });
 
-      fireEvent.change(stakingField, { target: { value: 15 } });
+      fireEvent.change(stakingField, { target: { value: 9 } });
 
       await waitFor(() => {
         expect(screen.queryByText('Confirm')).toHaveAttribute('disabled');

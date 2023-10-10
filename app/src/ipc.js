@@ -10,6 +10,7 @@ const RESPONSE = 'RESPONSE';
 const GET_SIGNED_MESSAGE = 'GET_SIGNED_MESSAGE';
 const GET_SIGNED_TRANSACTION = 'GET_SIGNED_TRANSACTION';
 const GET_PUB_KEY = 'GET_PUB_KEY';
+const GET_MULTIPLE_ADDRESSES = 'GET_MULTIPLE_ADDRESSES';
 const RESET_LEDGER_IPC_QUEUE = 'RESET_LEDGER_IPC_QUEUE';
 const GET_CONNECTED_DEVICES = 'GET_CONNECTED_DEVICES';
 const LEDGER_HW_HID_EVENT = 'LEDGER_HW_HID_EVENT';
@@ -53,6 +54,9 @@ contextBridge.exposeInMainWorld('ipc', {
   [`${GET_PUB_KEY}.${REQUEST}`]: (title) => {
     ipcRenderer.send(`${GET_PUB_KEY}.${REQUEST}`, title);
   },
+  [`${GET_MULTIPLE_ADDRESSES}.${REQUEST}`]: (title) => {
+    ipcRenderer.send(`${GET_MULTIPLE_ADDRESSES}.${REQUEST}`, title);
+  },
   [`${GET_SIGNED_MESSAGE}.${REQUEST}`]: (title) => {
     ipcRenderer.send(`${GET_SIGNED_MESSAGE}.${REQUEST}`, title);
   },
@@ -73,6 +77,11 @@ contextBridge.exposeInMainWorld('ipc', {
   },
   [`${GET_PUB_KEY}.${RESPONSE}`]: (func) => {
     ipcRenderer.once(`${GET_PUB_KEY}.${RESPONSE}`, (event, ...args) => {
+      func(event, ...args);
+    });
+  },
+  [`${GET_MULTIPLE_ADDRESSES}.${RESPONSE}`]: (func) => {
+    ipcRenderer.once(`${GET_MULTIPLE_ADDRESSES}.${RESPONSE}`, (event, ...args) => {
       func(event, ...args);
     });
   },

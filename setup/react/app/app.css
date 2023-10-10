@@ -87,7 +87,7 @@ body {
 .toastBody {
   float: right;
   clear: both;
-  background-color: #1c1c1c;
+  background-color: var(--color-maastricht-blue);
   border-radius: var(--border-radius-box);
   min-height: 30px;
   line-height: 30px;
@@ -120,7 +120,6 @@ body {
     & + .bodyWrapper {
       & .mainBox {
         box-sizing: border-box;
-        padding: 0 24px;
       }
     }
   }
@@ -133,7 +132,6 @@ body {
 
   .mainBox {
     box-sizing: border-box;
-    padding: 0 24px;
   }
 }
 

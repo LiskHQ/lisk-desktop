@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
+const { SubresourceIntegrityPlugin } = require('webpack-subresource-integrity');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
 const version = require('../../package.json').version;
@@ -9,7 +10,7 @@ const version = require('../../package.json').version;
 const config = {
   mode: 'production',
   output: {
-    path: resolve(__dirname, '../../app/build'),
+    path: resolve(__dirname, `../../app/${process.env.BUILD_NAME || 'build'}`),
     filename: 'bundle.[name].[contenthash].js',
   },
   optimization: {
@@ -30,6 +31,10 @@ const config = {
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(true),
       VERSION: JSON.stringify(version),
+    }),
+    new SubresourceIntegrityPlugin({
+      hashFuncNames: ['sha256'],
+      enabled: true,
     }),
   ],
 };

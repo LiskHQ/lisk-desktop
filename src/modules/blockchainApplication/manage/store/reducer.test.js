@@ -68,6 +68,19 @@ describe('BlockchainApplication reducer', () => {
       expect(changedState).not.toHaveProperty(actionData.chainId);
     });
 
+    it('should delete networks in applications', async () => {
+      const actionData = {
+        type: actionTypes.deleteNetworksInApplications,
+        networks: ['devnet'],
+      };
+
+      const changedState = applications(
+        { devnet: applicationsMap, betanet: applicationsMap },
+        actionData
+      );
+      expect(changedState).toEqual({ betanet: applicationsMap });
+    });
+
     it('should return list of applications with the newly added applications', async () => {
       const newApplication1 = mockApplicationsManage[0];
       const newApplication2 = mockApplicationsManage[1];

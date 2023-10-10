@@ -1,7 +1,7 @@
 import { to } from 'await-to-js';
 import { signTransaction } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
-import { selectActiveTokenAccount } from 'src/redux/selectors';
+import { selectCurrentAccountWithSigningData } from 'src/redux/selectors';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
 
 export const balanceReclaimed =
@@ -11,9 +11,7 @@ export const balanceReclaimed =
     // Collect data
     //
     const state = getState();
-    const wallet = state.account?.current?.hw
-      ? state.account.current
-      : selectActiveTokenAccount(state);
+    const wallet = selectCurrentAccountWithSigningData(state);
 
     //
     // Create the transaction

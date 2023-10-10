@@ -3,7 +3,7 @@
   border-radius: 16px;
   background-color: var(--color-white);
   max-width: 1058px;
-  margin: 84px auto 0 auto;
+  margin: 84px auto;
 
   & h1,
   & h2,

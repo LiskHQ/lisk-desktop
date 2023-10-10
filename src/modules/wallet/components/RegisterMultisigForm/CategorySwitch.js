@@ -1,39 +1,30 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import styles from './styles.css';
 
-const CategorySwitch = ({ changeCategory, isMandatory, index }) => {
-  const { t } = useTranslation();
-  return (
-    <div className={styles.categoryWrapper} onChange={changeCategory}>
-      <input
-        type="radio"
-        id={`mandatory-${index}`}
-        name={`member-category-${index}`}
-        value="mandatory"
-        defaultChecked={isMandatory}
-      />
-      <label
-        htmlFor={`mandatory-${index}`}
-        className={`mandatory select-mandatory ${styles.memberCategory} mandatory-toggle`}
-      >
-        {t('Mandatory')}
-      </label>
-      <input
-        type="radio"
-        id={`optional-${index}`}
-        name={`member-category-${index}`}
-        value="optional"
-        defaultChecked={!isMandatory}
-      />
-      <label
-        htmlFor={`optional-${index}`}
-        className={`optional select-optional ${styles.memberCategory} mandatory-toggle`}
-      >
-        {t('Optional')}
-      </label>
-    </div>
-  );
-};
+const CategorySwitch = ({ onChangeCategory, categories = [], value, index = 0 }) => (
+  <div className={styles.categoryWrapper}>
+    {categories.map((category, i) => (
+      <React.Fragment key={i}>
+        <input
+          key={`input-${category.value}-${index + i}`}
+          type="radio"
+          id={`${category.value}-${index + i}`}
+          name={`${category.label}-${index + i}`}
+          value={category.value}
+          checked={value === category.value}
+          onChange={onChangeCategory}
+          className={`select-${category.value}-input`}
+        />
+        <label
+          key={`label-${category.value}-${index + i}`}
+          htmlFor={`${category.value}-${index + i}`}
+          className={`${category.value} select-${category.value} ${styles.memberCategory} mandatory-toggle`}
+        >
+          {category.label}
+        </label>
+      </React.Fragment>
+    ))}
+  </div>
+);
 
 export default CategorySwitch;

@@ -44,7 +44,7 @@ describe('useNetworkSupportedTokens', () => {
             patternTokenIDs: [],
           },
         };
-        return res(ctx.json(response));
+        return res(ctx.json({ data: response }));
       })
     );
 

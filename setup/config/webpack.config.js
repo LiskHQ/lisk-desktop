@@ -113,6 +113,7 @@ const config = {
     ],
   },
   optimization: {
+    realContentHash: true,
     splitChunks: {
       chunks: 'all',
     },

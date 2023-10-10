@@ -84,6 +84,7 @@ or "warn/action" ineastd of "red/green"
   --header-padding: 0 32px;
   --vertical-padding-l: 15px;
   --horizontal-padding-l: 20px;
+  --horizontal-modal-padding-l: 24px;
   --horizontal-padding-xl: 30px;
   --vertical-padding-m: 11px;
   --horizontal-padding-m: 16px;
@@ -210,6 +211,7 @@ or "warn/action" ineastd of "red/green"
   --color-edit-button-background: var(--color-ghost-white);
   --color-edit-button-border: var(--color-very-light-gray);
   --color-json-view-bg: var(--color-ghost-white);
+  --color-notification: #00da71;
 
   /*************************
         Box

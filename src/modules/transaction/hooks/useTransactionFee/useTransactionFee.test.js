@@ -69,6 +69,7 @@ describe('useTransactionFee', () => {
       isLoading: false,
       messageFee: 0n,
       messageFeeTokenID: undefined,
+      feeTokenID: '0400000000000000',
       minimumFee: 5147764n,
       transactionFee: '5147764',
     });

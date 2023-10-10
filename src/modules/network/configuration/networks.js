@@ -1,3 +1,5 @@
+import { DEFAULT_NETWORK } from 'src/const/config';
+
 export const networkKeys = {
   mainnet: 'mainnet',
   alphanet: 'alphanet',
@@ -34,20 +36,21 @@ const networks = {
     label: 'Devnet',
     serviceUrl: 'http://devnet-service.liskdev.net:9901',
     wsServiceUrl: 'ws://devnet-service.liskdev.net:9901',
-    isAvailable: true,
+    isAvailable: false,
   },
   [networkKeys.testnet]: {
     name: networkKeys.testnet,
     label: 'Testnet',
     serviceUrl: 'https://testnet-service.lisk.com',
     wsServiceUrl: 'wss://testnet-service.lisk.com',
-    isAvailable: false,
+    isAvailable: true,
   },
   [networkKeys.customNode]: {
     name: networkKeys.customNode,
-    label: 'Custom Service Node',
+    label: 'CustomNode',
     serviceUrl: 'http://localhost:9901',
     wsServiceUrl: 'ws://localhost:9901',
+    isAvailable: DEFAULT_NETWORK === networkKeys.customNode,
   },
 };
 

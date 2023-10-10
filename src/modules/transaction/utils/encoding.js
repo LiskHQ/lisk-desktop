@@ -2,7 +2,6 @@ import { codec, cryptography } from '@liskhq/lisk-client';
 import { trimBigintString } from './helpers';
 import { joinModuleAndCommand } from './moduleCommand';
 
-// TODO: Use from service endpoint/elements
 export const baseTransactionSchema = {
   $id: '/lisk/baseTransaction',
   type: 'object',

@@ -75,9 +75,9 @@ const normalizeTransactionParams = (params, token) =>
   }, {});
 
 /**
- * Get the total spending amount for a given module command
+ * Get transaction amount in total for a given module command
  */
-const getTotalSpendingAmount = ({ module, command, params = {} }) => {
+const getTransactionAmount = ({ module, command, params = {} }) => {
   const moduleCommand = joinModuleAndCommand({ module, command });
 
   if (Object.keys(params).length === 0) {
@@ -281,6 +281,7 @@ const signTransactionUsingHW = async (
   return { ...signedTransaction, id };
 };
 
+// eslint-disable-next-line max-statements
 export const sign = async (
   wallet,
   schema,
@@ -290,11 +291,28 @@ export const sign = async (
   senderAccount,
   options
 ) => {
+  const moduleCommand = joinModuleAndCommand(transaction);
   if (wallet.metadata?.isHW) {
     return signTransactionUsingHW(wallet, schema, chainID, transaction, senderAccount, options);
   }
 
-  if (options?.txInitiatorAccount?.numberOfSignatures > 0) {
+  const isMultiSignatureAccount = options?.txInitiatorAccount?.numberOfSignatures > 0;
+  const isRegisterMultisignature =
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const paramSignatures = transaction.params.signatures;
+  const areParamsSignaturesFullySigned =
+    isMultiSignatureAccount &&
+    paramSignatures?.filter((sig) => sig.length !== 64 || Buffer.from(sig).equals(Buffer.alloc(64)))
+      .length === 0 &&
+    paramSignatures?.length ===
+      transaction.params.mandatoryKeys?.length + transaction.params.optionalKeys?.length;
+
+  const isEditRegisterMultiSignature = isRegisterMultisignature && isMultiSignatureAccount;
+
+  if (
+    (isMultiSignatureAccount && !isRegisterMultisignature) ||
+    (isEditRegisterMultiSignature && areParamsSignaturesFullySigned)
+  ) {
     return signMultisigUsingPrivateKey(
       schema,
       chainID,
@@ -397,18 +415,18 @@ const normalizeTransactionsStatisticsParams = (period) => {
  */
 const normalizeNumberRange = (distributions) => {
   const values = {
-    '0.001_0.01': '0 - 10 LSK',
-    '0.01_0.1': '0 - 10 LSK',
-    '0.1_1': '0 - 10 LSK',
-    '1_10': '0 - 10 LSK',
-    '10_100': '11 - 100 LSK',
-    '100_1000': '101 - 1000 LSK',
-    '1000_10000': '1001 - 10,000 LSK',
-    '10000_100000': '10,001 - 100,000 LSK',
-    '100000_1000000': '100,001 - 1,000,000 LSK',
-    '1000000_10000000': '1,000,001 - 10,000,000 LSK',
-    '10000000_100000000': '10,000,001 - 100,000,000 LSK',
-    '100000000_1000000000': '100,000,001 - 1,000,000,000 LSK',
+    '0.001_0.01': '0 - 10',
+    '0.01_0.1': '0 - 10',
+    '0.1_1': '0 - 10',
+    '1_10': '0 - 10',
+    '10_100': '11 - 100',
+    '100_1000': '101 - 1000',
+    '1000_10000': '1001 - 10,000',
+    '10000_100000': '10,001 - 100,000',
+    '100000_1000000': '100,001 - 1,000,000',
+    '1000000_10000000': '1,000,001 - 10,000,000',
+    '10000000_100000000': '10,000,001 - 100,000,000',
+    '100000000_1000000000': '100,000,001 - 1,000,000,000',
   };
   return Object.keys(distributions).reduce((acc, item) => {
     acc[values[item]] = (acc[values[item]] || 0) + distributions[item];
@@ -419,7 +437,7 @@ const normalizeNumberRange = (distributions) => {
 export {
   containsTransactionType,
   downloadJSON,
-  getTotalSpendingAmount,
+  getTransactionAmount,
   getUnsignedBytes,
   getNumberOfSignatures,
   getAccountKeys,

@@ -31,6 +31,18 @@ const getFilterFields = (t) => [
     name: 'height',
     type: 'integer',
   },
+  {
+    label: t('Module'),
+    placeholder: t('e.g. pos'),
+    name: 'module',
+    type: 'text',
+  },
+  {
+    label: t('Name'),
+    placeholder: t('e.g. RewardsAssigned'),
+    name: 'name',
+    type: 'text',
+  },
 ];
 
 const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet, hasFilter }) => {

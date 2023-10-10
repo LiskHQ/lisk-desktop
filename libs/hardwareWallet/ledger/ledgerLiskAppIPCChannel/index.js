@@ -9,12 +9,14 @@ import {
   getConnectedDevices,
   getSignedMessage,
   getSignedTransaction,
+  getMultipleAddresses,
 } from './serverLedgerHWCommunication';
 
 const {
   GET_CONNECTED_DEVICES,
   GET_SIGNED_MESSAGE,
   GET_PUB_KEY,
+  GET_MULTIPLE_ADDRESSES,
   GET_SIGNED_TRANSACTION,
   RESET_LEDGER_IPC_QUEUE,
 } = LEDGER_HW_IPC_CHANNELS;
@@ -37,6 +39,12 @@ export const ledgerLiskAppIPCChannel = () => {
   createIpcMainChannel(GET_PUB_KEY, async (data) => {
     const id = `${GET_PUB_KEY}-${Date.now()}`;
     const result = await getSequentiallyQueuedData(myq, id, () => getPubKey(data));
+    return result;
+  });
+
+  createIpcMainChannel(GET_MULTIPLE_ADDRESSES, async (data) => {
+    const id = `${GET_MULTIPLE_ADDRESSES}-${Date.now()}`;
+    const result = await getSequentiallyQueuedData(myq, id, () => getMultipleAddresses(data));
     return result;
   });
 

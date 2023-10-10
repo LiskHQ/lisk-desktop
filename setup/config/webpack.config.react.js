@@ -1,11 +1,10 @@
-const { resolve } = require('path');
+const path = require('path');
 const { ContextReplacementPlugin, DefinePlugin, ProvidePlugin } = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineChunkHtmlPlugin = require('inline-chunk-html-plugin');
 const fs = require('fs');
-const path = require('path');
 const reactToolboxVariables = require('./reactToolbox.config');
 const I18nScannerPlugin = require('../../scripts/i18n/i18n-scanner');
 const bundleVersion = require('../../package.json').version;
@@ -88,14 +87,15 @@ const postCssLoader = {
 const config = {
   mode: 'development',
   entry: {
-    app: `${resolve(__dirname, '../react')}/main.js`,
-    head: `${resolve(__dirname, '../react/assets/css')}/styles.head.css`,
+    app: `${path.resolve(__dirname, '../react')}/main.js`,
+    head: `${path.resolve(__dirname, '../react/assets/css')}/styles.head.css`,
   },
   devtool: 'source-map',
   devServer: {
     port: 8080,
     historyApiFallback: true,
   },
+  output: { crossOriginLoading: 'anonymous' },
   plugins: [
     new ProvidePlugin({
       process: 'process/browser.js',
@@ -103,9 +103,10 @@ const config = {
     }),
     new DefinePlugin({
       VERSION: `"${bundleVersion}"`,
+      REACT_APP_DEFAULT_NETWORK: `"${process.env.DEFAULT_NETWORK}"`,
     }),
     new StyleLintPlugin({
-      context: `${resolve(__dirname, '../../src')}`,
+      context: `${path.resolve(__dirname, '../../src')}`,
       files: '**/*.css',
       config: stylelintrc,
     }),
@@ -114,7 +115,7 @@ const config = {
       chunkFilename: '[name].css',
     }),
     new HtmlWebpackPlugin({
-      template: `${resolve(__dirname, '../react/index.html')}`,
+      template: `${path.resolve(__dirname, '../react/index.html')}`,
       VERSION: bundleVersion,
       inject: false,
       excludeChunks: ['head'],

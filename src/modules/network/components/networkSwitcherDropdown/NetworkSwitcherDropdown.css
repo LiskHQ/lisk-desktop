@@ -16,41 +16,6 @@
       color: var(--color-zodiac-blue);
       margin-bottom: 16px;
     }
-
-    & .networkItem {
-      font-weight: var(--font-weight-normal) !important;
-      font-size: var(--font-size-h6);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px !important;
-      color: var(--color-content-light) !important;
-      width: calc(100% - 32px) !important;
-      border-radius: 8px !important;
-
-      &.selected {
-        background-color: var(--color-network-selected-background);
-      }
-
-      & .networkIcons {
-        & > :not(:last-child) {
-          margin-right: 10px;
-        }
-
-        & .modifyIcons {
-          display: none;
-        }
-      }
-
-      &:hover {
-        & .modifyIcons {
-          display: inline;
-          cursor: pointer;
-          vertical-align: top;
-        }
-      }
-    }
   }
 
   & .connectionFailedBlock {
@@ -95,7 +60,7 @@
   }
 }
 
-.menuSelect .networkItem {
+.menuSelect .networkItemProp {
   font-family: var(--content-font) !important;
   background-color: unset !important;
   font-weight: var(--font-weight-normal);

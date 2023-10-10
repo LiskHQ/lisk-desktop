@@ -134,3 +134,15 @@
   width: 0;
   height: 0;
 }
+
+.badge {
+  height: 8px;
+  width: 8px;
+  margin: auto 12px auto auto;
+  position: static;
+}
+
+.collapsedNotification {
+  position: absolute;
+  right: -4px;
+}

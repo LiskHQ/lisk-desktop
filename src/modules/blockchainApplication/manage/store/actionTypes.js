@@ -4,6 +4,8 @@ const actionTypes = {
   deleteApplicationByChainId: 'DELETE_APPLICATION_BY_CHAIN_ID',
   setCurrentApplication: 'SET_CURRENT_APPLICATION',
   setApplications: 'SET_APPLICATIONS',
+  deleteNetworksInApplications: 'DELETE_NETWORKS_IN_APPLICATIONS',
+  updateNetworkNameInApplications: 'UPDATE_NETWORK_NAME_IN_APPLICATIONS',
 };
 
 export default actionTypes;

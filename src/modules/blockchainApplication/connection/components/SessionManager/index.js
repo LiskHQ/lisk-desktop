@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { useSession } from '@libs/wcm/hooks/useSession';
+import DialogLink from '@theme/dialog/link';
+import { useAccounts } from '@account/hooks';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -16,20 +17,22 @@ const SessionManager = () => {
   const history = useHistory();
   const { sessions, disconnect, hasLoaded } = useSession();
   const { t } = useTranslation();
-
-  const addApplication = () => {
-    addSearchParamsToUrl(history, { modal: 'connectionProposal' });
-  };
+  const { accounts } = useAccounts();
 
   return (
     <Box main isLoading={!hasLoaded} className={`${styles.wrapper} pairings-list-box`}>
       <div className={styles.addButtonWrapper}>
-        <PrimaryButton className="add-button" onClick={addApplication}>
-          <span className={styles.buttonContent}>
-            <Icon name="plus" />
-            <span>{t('Connect Wallet')}</span>
-          </span>
-        </PrimaryButton>
+        <DialogLink
+          history={history}
+          component={accounts.length > 0 ? 'connectionProposal' : 'NoAccountView'}
+        >
+          <PrimaryButton className="add-button">
+            <span className={styles.buttonContent}>
+              <Icon name="plus" />
+              <span>{t('Connect Wallet')}</span>
+            </span>
+          </PrimaryButton>
+        </DialogLink>
       </div>
       <BoxContent className={`${styles.content} pairings-list`}>
         <Table

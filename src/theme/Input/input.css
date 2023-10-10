@@ -181,6 +181,10 @@
     color: var(--color-burnt-sienna);
   }
 
+  &.pending {
+    padding-right: 41px !important;
+  }
+
   &::placeholder {
     color: var(--color-blue-gray);
   }

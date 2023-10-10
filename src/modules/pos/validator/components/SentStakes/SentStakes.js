@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Heading from 'src/modules/common/components/Heading';
+import Heading from '@common/components/Heading';
 import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
@@ -14,6 +14,7 @@ import StakesCount from '@pos/validator/components/StakesCount';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { useMyTransactions } from '@transaction/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import Badge from '@common/components/badge';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
@@ -36,15 +37,16 @@ function ClaimRewardsDialogButton({ address }) {
 
   return (
     <DialogLink component="claimRewardsView">
-      <SecondaryButton disabled={!hasClaimableRewards}>{t('Claim rewards')}</SecondaryButton>
+      <SecondaryButton disabled={!hasClaimableRewards}>
+        {t('Claim rewards')}
+        {hasClaimableRewards && <Badge />}
+      </SecondaryButton>
     </DialogLink>
   );
 }
 
-function UnlockDialogButton({ address }) {
+function UnlockDialogButton({ hasUnlocks }) {
   const { t } = useTranslation();
-  const { data: unlocks } = useUnlocks({ config: { params: { address } } });
-  const hasUnlocks = unlocks?.data?.pendingUnlocks?.length > 0;
 
   return (
     <DialogLink component="lockedBalance">
@@ -57,10 +59,10 @@ const SentStakes = ({ history }) => {
   const { t } = useTranslation();
   const stakerAddress = useStakerAddress(history.location.search);
   const { token } = usePosToken({ address: stakerAddress });
-  const { refetch } = useSentStakes({
+  const sentStakes = useSentStakes({
     config: { params: { address: stakerAddress } },
   });
-
+  const unlocks = useUnlocks({ config: { params: { address: stakerAddress } } });
   const { data: pooledTransactionsData } = useMyTransactions({
     config: {
       params: {
@@ -72,9 +74,12 @@ const SentStakes = ({ history }) => {
     },
   });
 
+  const hasUnlocks = unlocks?.data?.data?.pendingUnlocks?.length > 0;
+
   useEffect(() => {
     if (pooledTransactionsData?.meta?.total > 1) {
-      refetch();
+      sentStakes.refetch();
+      unlocks.refetch();
     }
   }, [pooledTransactionsData?.meta?.total]);
 
@@ -90,7 +95,7 @@ const SentStakes = ({ history }) => {
             <StakesCount className={styles.stakesCountProp} address={stakerAddress} />
             <div className={styles.actionButtons}>
               <ClaimRewardsDialogButton address={stakerAddress} />
-              <UnlockDialogButton address={stakerAddress} />
+              <UnlockDialogButton hasUnlocks={hasUnlocks} />
             </div>
           </div>
         </Heading>

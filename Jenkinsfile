@@ -8,8 +8,8 @@ pipeline {
 		ansiColor('xterm')
 	}
 	parameters {
-		string(name: 'CORE_VERSION', defaultValue: '4.0.0-beta.4')
-		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.7.0-beta.3')
+		string(name: 'CORE_VERSION', defaultValue: '4.0.0-rc.3')
+		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'release/0.7.0')
 	}
 	stages {
 		stage('install') {
@@ -36,14 +36,35 @@ pipeline {
 		}
 		stage('build') {
 			steps {
-				nvm(getNodejsVersion()) {
-					sh '''
-					cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
-					cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-					yarn run build
-					'''
-				}
-				stash includes: 'app/build/', name: 'build'
+                parallel (
+                    "prod": {
+                        nvm(getNodejsVersion()) {
+                            withEnv(["DEFAULT_NETWORK=testnet", "BUILD_NAME=build"]) {
+                                sh '''
+                                cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
+                                cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
+                                yarn run build
+                                '''
+                            }
+                        }
+                        stash includes: 'app/build/', name: 'build'
+                    },
+					"E2E": {
+						nvm(getNodejsVersion()) {
+                            withEnv(["DEFAULT_NETWORK=customNode", "BUILD_NAME=buildE2E"]) {
+                                sh '''
+                                cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
+                                cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
+                                yarn run build
+
+                                # locally serve build
+                                nohup npx serve -l 8081 ./app/buildE2E >serve.out 2>serve.err &
+                                '''
+                            }
+						}
+						stash includes: 'app/buildE2E/', name: 'buildE2E'
+					},
+                )
 			}
 		}
 		stage('deploy') {
@@ -74,9 +95,9 @@ pipeline {
 								wrap([$class: 'Xvfb']) {
 									sh '''
 									# lisk-core
-									npm i -g lisk-core
+									npm i -g lisk-core@^4.0.0-rc.3
 									rm -rf ~/.lisk/
-									lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
+									# lisk-core blockchain:import --force ./e2e/artifacts/blockchain.tar.gz
 									nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 --config ./e2e/artifacts/config.json --overwrite-config >lisk-core.out 2>lisk-core.err &
 									echo $! >lisk-core.pid
 
@@ -86,13 +107,20 @@ pipeline {
 									make -C lisk-service build
 									make -C lisk-service up
 
+									## logs
+									# cat lisk-core.out
+									# echo "===== core error ===="
+									# cat lisk-core.err
+									# echo "======== service ======="
+									# docker ps
+
 									# wait for service to be up and running
 									sleep 10
 									set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
 									curl --verbose http://127.0.0.1:9901/api/v3/network/status
 									curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
-									PW_BASE_URL=https://jenkins.lisk.com/test/${JOB_NAME%/*}/${BRANCH_NAME%/*}/# \
+									PW_BASE_URL=http://127.0.0.1:8081/# \
 									yarn run cucumber:playwright:open
 									'''
 								}
@@ -109,7 +137,7 @@ pipeline {
 			}
 			post {
 				failure {
-					archiveArtifacts artifacts: 'cucumber-report.html', allowEmptyArchive: true
+					archiveArtifacts artifacts: 'e2e/assets/', allowEmptyArchive: true
 				}
 				always {
 					sh '''

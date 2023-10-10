@@ -1,14 +1,18 @@
 /* eslint-disable complexity */
 /* istanbul ignore file */
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
+import { toast } from 'react-toastify';
+import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
+import Badge from '@common/components/badge';
 import { Input } from 'src/theme';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import BoxTabs from '@theme/tabs';
 import useFilter from '@common/hooks/useFilter';
 import DialogLink from '@theme/dialog/link';
@@ -27,6 +31,7 @@ import styles from './Validators.css';
 
 const ValidatorActionButton = ({ address, isValidator }) => {
   const { t } = useTranslation();
+  const tokenBalances = useTokenBalances({ options: { enabled: !isValidator || !address } });
 
   if (!address) return null;
 
@@ -38,9 +43,21 @@ const ValidatorActionButton = ({ address, isValidator }) => {
     );
   }
 
+  const hasTokenBalances = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => !!BigInt(availableBalance)
+  );
+
   return (
-    <DialogLink component="registerValidator">
-      <PrimaryButton className="register-validator">{t('Register validator')}</PrimaryButton>
+    <DialogLink
+      data={{ message: t('Token balance is not enough to register a validator.') }}
+      component={hasTokenBalances ? 'registerValidator' : 'noTokenBalance'}
+    >
+      <PrimaryButton
+        className="register-validator"
+        disabled={tokenBalances.isLoading || isValidator}
+      >
+        {t('Register validator')}
+      </PrimaryButton>
     </DialogLink>
   );
 };
@@ -49,7 +66,7 @@ const ValidatorActionButton = ({ address, isValidator }) => {
 const ValidatorsMonitor = ({ watchList }) => {
   const { t } = useTranslation();
   const timeout = useRef();
-  const { filters, setFilter } = useFilter({});
+  const { filters, setFilter } = useFilter();
   const [activeDetailTab, setActiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
   const [search, setSearch] = useState('');
@@ -64,6 +81,29 @@ const ValidatorsMonitor = ({ watchList }) => {
     config: { params: { address } },
   });
   const isValidator = validators?.data?.length > 0 && !isLoadingValidators;
+  const {
+    appEvents: {
+      transactions: { rewards },
+    },
+  } = useContext(ApplicationBootstrapContext);
+  const notification = rewards.length && BigInt(rewards[0]?.reward || 0) > BigInt(0);
+
+  useEffect(() => {
+    if (notification) {
+      toast.info(
+        <div className={styles.rewardInfo}>
+          <p>You have an unclaimed reward of your stakes.</p>
+          <DialogLink component="claimRewardsView" className={styles.rewardLink}>
+            Claim rewards
+          </DialogLink>
+        </div>,
+        {
+          autoClose: false,
+          closeButton: <span className={`${styles.closeBtn} dialog-close-button`} />,
+        }
+      );
+    }
+  }, [rewards]);
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -161,7 +201,10 @@ const ValidatorsMonitor = ({ watchList }) => {
           <div className={grid['col-md-4']}>
             {!!address && (
               <Link to={routes.sentStakes.path}>
-                <SecondaryButton>{t('Stakes')}</SecondaryButton>
+                <SecondaryButton>
+                  {t('Stakes')}
+                  {!!notification && <Badge />}
+                </SecondaryButton>
               </Link>
             )}
             <ValidatorActionButton isValidator={isValidator} address={address} />
@@ -182,12 +225,12 @@ const ValidatorsMonitor = ({ watchList }) => {
           {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
           <span className={activeTab === 'stakes' ? 'hidden' : ''}>
             <Input
-              icon={<Icon className={styles.searchIcon} name="searchActive" />}
+              icon={<Icon className={styles.searchIcon} name="searchFilter" />}
               onChange={handleFilter}
               value={search}
               className={`${styles.filterValidators} filter-by-name`}
               size="m"
-              placeholder={t('Search by name')}
+              placeholder={t('Search by name or address')}
             />
           </span>
         </BoxHeader>

@@ -6,10 +6,10 @@ const {
   RESET_LEDGER_IPC_QUEUE,
   GET_SIGNED_TRANSACTION,
   GET_PUB_KEY,
+  GET_MULTIPLE_ADDRESSES,
   GET_SIGNED_MESSAGE,
 } = LEDGER_HW_IPC_CHANNELS;
 
-// TODO: remove when server have a queuing system
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -42,6 +42,15 @@ export const getPubKey = async (devicePath, accountIndex, showOnDevice) => {
   });
 
   return pubKey;
+};
+
+export const getMultipleAddresses = async (devicePath, accountIndexes) => {
+  const addressesAndPubkeys = await executeIPCCommand(GET_MULTIPLE_ADDRESSES, {
+    devicePath,
+    accountIndexes,
+  });
+
+  return addressesAndPubkeys;
 };
 
 export const resetLedgerIPCQueue = async () => {

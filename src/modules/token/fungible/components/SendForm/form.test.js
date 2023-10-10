@@ -76,7 +76,7 @@ jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationM
 jest.mock('@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore');
 jest.mock('src/modules/common/hooks/useFiatRates');
 jest.mock('@auth/hooks/queries/useAuth');
-jest.spyOn(transactionApi, 'dryRun').mockResolvedValue([]);
+jest.spyOn(transactionApi, 'dryRunTransaction').mockResolvedValue([]);
 
 describe('Form', () => {
   let props;
@@ -91,7 +91,9 @@ describe('Form', () => {
   });
   useApplicationManagement.mockReturnValue({
     setApplication: mockSetApplication,
-    applications: mockManagedApplications,
+    applications: mockManagedApplications.map((app, index) =>
+      index === 0 ? { ...app, chainID: '00010000' } : app
+    ),
   });
 
   useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
@@ -345,8 +347,8 @@ describe('Form', () => {
       await flushPromises();
       wrapper.update();
 
-      expect(wrapper.find('.amount Feedback')).toHaveText(
-        'Provided amount is higher than your current balance.'
+      expect(wrapper.find('.form.feedback')).toHaveText(
+        'The provided amount exceeds the available balance {{availableBalance}} {{token}}, so the maximum usable balance is {{usableBalance}} {{token}}.'
       );
     });
 
@@ -360,8 +362,8 @@ describe('Form', () => {
       });
       wrapper.update();
 
-      expect(wrapper.find('.amount Feedback')).toHaveText(
-        'Provided amount will result in a wallet with less than the minimum balance.'
+      expect(wrapper.find('.form.feedback')).toHaveText(
+        'The provided amount exceeds the available balance {{availableBalance}} {{token}}, so the maximum usable balance is {{usableBalance}} {{token}}.'
       );
       expect(wrapper.find('.confirm-btn').at(0)).toBeDisabled();
     });

@@ -16,6 +16,17 @@ describe('Multisignature Status component', () => {
       txSignatureError: null,
       signedTransaction: { signatures: ['123', '987'] },
     },
+    authQuery: {
+      isFetching: false,
+      isFetched: true,
+      data: {
+        data: {
+          numberOfSignatures: 1,
+          mandatoryKeys: [],
+          optionalKeys: [],
+        },
+      },
+    },
     account: accounts.genesis,
   };
 
@@ -27,8 +38,7 @@ describe('Multisignature Status component', () => {
     fee: '207000n',
   };
 
-  // @todo reinstate by #4506
-  it.skip('passes correct props to TxBroadcaster when partial signed transaction', () => {
+  it('passes correct props to TxBroadcaster when partial signed transaction', () => {
     const propsWithSignedTx = {
       ...props,
       account: accounts.multiSig,
@@ -52,10 +62,9 @@ describe('Multisignature Status component', () => {
     expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
-      status: { code: 'MULTISIG_SIGNATURE_SUCCESS' },
-      title: 'The transaction is now fully signed',
-      message:
-        'Now you can send it to the network. You may also copy or download it, if you wish to send the transaction using another device later.',
+      status: { code: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS' },
+      title: 'Your signature was successful',
+      message: 'You can download or copy the transaction and share it with other members.',
       className: 'content',
     });
   });
@@ -95,7 +104,7 @@ describe('Multisignature Status component', () => {
     expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
-      status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ error: 'error:test' }) },
       title: 'Transaction failed',
       message: 'An error occurred while signing your transaction. Please try again.',
       className: 'content',
@@ -106,9 +115,12 @@ describe('Multisignature Status component', () => {
     const propsWithError = {
       ...props,
       transactions: {
-        txBroadcastError: { message: 'error:test' },
+        ...props.transactions,
+        txBroadcastError: {
+          error: 'error:test',
+          transaction: props.transactions.signedTransaction,
+        },
         txSignatureError: null,
-        signedTransaction: {},
       },
     };
 
@@ -116,7 +128,13 @@ describe('Multisignature Status component', () => {
     expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
-      status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      status: {
+        code: 'BROADCAST_ERROR',
+        message: JSON.stringify({
+          transaction: props.transactions.signedTransaction,
+          error: 'error:test',
+        }),
+      },
       title: 'Transaction failed',
       message: 'An error occurred while sending your transaction to the network. Please try again.',
       className: 'content',
@@ -141,5 +159,20 @@ describe('Multisignature Status component', () => {
       title: 'Transaction submitted',
       className: 'content',
     });
+  });
+
+  it('Should be in edit mode', () => {
+    const customProp = {
+      ...props,
+      authQuery: { data: { data: { numberOfSignatures: 3 } } },
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: null,
+        signedTransaction: {},
+      },
+    };
+
+    const wrapper = shallow(<Status {...customProp} />);
+    expect(wrapper.find('div.header')).toHaveText('Edit multisignature account');
   });
 });

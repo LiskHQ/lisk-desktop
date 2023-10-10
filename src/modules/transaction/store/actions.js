@@ -1,10 +1,9 @@
 import { to } from 'await-to-js';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
-import { selectActiveTokenAccount } from 'src/redux/selectors';
+import { selectCurrentAccountWithSigningData } from 'src/redux/selectors';
 import { selectCurrentApplicationChainID } from '@blockchainApplication/manage/store/selectors';
-import { TransactionExecutionResult } from '@transaction/constants';
 import actionTypes from './actionTypes';
-import { broadcast, dryRun, signTransaction } from '../api';
+import { broadcast, dryRunTransaction, signTransaction } from '../api';
 import { joinModuleAndCommand, signMultisigTransaction } from '../utils';
 import { fromTransactionJSON, toTransactionJSON } from '../utils/encoding';
 
@@ -42,13 +41,18 @@ export const transactionBroadcasted =
     const paramsSchema = moduleCommandSchemas[moduleCommand];
     let broadcastErrorMessage;
 
-    const [error, dryRunResult] = await to(dryRun({ transaction, serviceUrl, paramsSchema }));
+    const { isOk, errorMessage } = await dryRunTransaction({
+      paramsSchema,
+      transaction,
+      skipVerify: false,
+      strict: true,
+    });
 
-    if (dryRunResult?.data?.result === TransactionExecutionResult.OK) {
+    if (isOk) {
       const [broadcastError, broadcastResult] = await to(
         broadcast({ transaction, serviceUrl, moduleCommandSchemas })
       );
-      broadcastErrorMessage = broadcastError?.message;
+      broadcastErrorMessage = broadcastError?.response?.data?.message || broadcastError?.message;
 
       if (!broadcastResult?.data?.error && !broadcastError) {
         const transactionJSON = toTransactionJSON(transaction, paramsSchema);
@@ -62,18 +66,12 @@ export const transactionBroadcasted =
       }
     }
 
-    const transactionErrorMessage =
-      error?.message ||
-      broadcastErrorMessage ||
-      (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
-        ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
-        : dryRunResult?.data?.errorMessage);
-
     dispatch({
       type: actionTypes.broadcastedTransactionError,
       data: {
-        error: transactionErrorMessage,
+        error: broadcastErrorMessage || errorMessage,
         transaction,
+        paramsSchema,
       },
     });
 
@@ -96,9 +94,7 @@ export const multisigTransactionSigned =
   }) =>
   async (dispatch, getState) => {
     const state = getState();
-    const wallet = state.account?.current?.hw
-      ? state.account.current
-      : selectActiveTokenAccount(state);
+    const wallet = selectCurrentAccountWithSigningData(state);
     const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
     const options = {
       messageSchema: messagesSchemas[formProps.moduleCommand],
@@ -148,12 +144,15 @@ export const signatureSkipped =
   };
 
 export const transactionSigned =
-  (formProps, transactionJSON, privateKey, _, senderAccount) => async (dispatch) => {
+  (formProps, transactionJSON, privateKey, _, senderAccount) => async (dispatch, getState) => {
     const { schema, chainID } = formProps;
+    const state = getState();
+    const wallet = selectCurrentAccountWithSigningData(state);
+
     const [error, tx] = await to(
       signTransaction({
         transactionJSON,
-        wallet: senderAccount,
+        wallet,
         schema,
         chainID,
         privateKey,

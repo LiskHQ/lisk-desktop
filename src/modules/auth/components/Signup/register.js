@@ -24,12 +24,12 @@ const Register = ({ account, token }) => {
 
   const [isStepSetPasswordForm, setIsStepSetPasswordForm] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState({});
-  const { suggestionAccounts } = useCreateAccounts(strength);
+  const { accounts } = useCreateAccounts(strength);
   const [, setCurrentAccount] = useCurrentAccount();
   const { setAccount } = useAccounts();
 
   const onSetPassword = (encryptedAccount) => {
-    setCurrentAccount(encryptedAccount);
+    setCurrentAccount(encryptedAccount, null, false);
     setAccount(encryptedAccount);
     multiStepRef.current?.next();
   };
@@ -61,7 +61,7 @@ const Register = ({ account, token }) => {
         onChange={onMultiStepChange}
       >
         <ChooseAvatar
-          accounts={suggestionAccounts}
+          accounts={accounts}
           selected={selectedAccount}
           handleSelectAvatar={handleSelectAvatar}
         />
@@ -71,6 +71,7 @@ const Register = ({ account, token }) => {
           recoveryPhrase={{ value: selectedAccount.passphrase }}
           customDerivationPath={defaultDerivationPath}
           onSubmit={onSetPassword}
+          isLegacyAccount={false}
         />
         <AccountCreated account={selectedAccount} />
       </MultiStep>

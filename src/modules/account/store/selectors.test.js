@@ -20,4 +20,12 @@ describe('Auth selector', () => {
 
     expect(selectAccounts(state)).toEqual(list);
   });
+
+  it('Should return empty array if no accounts', async () => {
+    const state = {
+      account: {},
+    };
+
+    expect(selectAccounts(state)).toEqual([]);
+  });
 });

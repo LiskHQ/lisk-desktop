@@ -50,6 +50,16 @@
 
     & > div:first-child {
       height: fit-content;
+
+      & .stakesFilter {
+        min-width: 250px;
+        border-radius: 40px;
+      }
+
+      & .searchIcon {
+        margin-top: 5px;
+        margin-left: -5px;
+      }
     }
   }
 
@@ -70,6 +80,12 @@
       grid-column: 1/5;
       margin-top: -15px;
       border-top: none;
+    }
+  }
+
+  & .walletVisualWrapper {
+    & div > div {
+      cursor: pointer;
     }
   }
 
@@ -230,6 +246,7 @@
 
           & .rewardContainer {
             width: 100%;
+            white-space: pre;
           }
 
           & .separator {

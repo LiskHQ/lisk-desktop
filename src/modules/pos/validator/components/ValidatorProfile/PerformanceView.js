@@ -139,7 +139,7 @@ const PerformanceView = ({ data }) => {
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
           <Item title={t('Last generated block height')} icon="productivity">
-            {data?.lastGeneratedHeight ? (
+            {data?.lastGeneratedHeight && data?.generatedBlocks > 0 ? (
               <NavLink
                 to={`${routes.block.path}?height=${data.lastGeneratedHeight}`}
                 className={styles.performanceValue}

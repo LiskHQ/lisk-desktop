@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
 import { LiskApp } from '@zondax/ledger-lisk';
-import { getDevicesFromPaths, getLedgerAccount } from './utils';
+import { getCustomErrorCode, getDevicesFromPaths, getLedgerAccount } from './utils';
 
 const isHexString = (data) => {
   if (typeof data !== 'string') {
@@ -30,6 +30,23 @@ export async function getPubKey({ devicePath, accountIndex, showOnDevice }) {
   }
 }
 
+export async function getMultipleAddresses({ devicePath, accountIndexes }) {
+  let transport;
+  try {
+    transport = await TransportNodeHid.open(devicePath);
+    const liskLedger = new LiskApp(transport);
+    const response = await liskLedger.getMultipleAddresses(accountIndexes);
+    await transport?.close();
+    if (response?.error_message === 'No errors') {
+      return response?.addr;
+    }
+    return Promise.reject(response.return_code);
+  } catch (error) {
+    await transport?.close();
+    return Promise.reject(error);
+  }
+}
+
 export async function getSignedTransaction({ devicePath, accountIndex, unsignedMessage }) {
   let transport;
   try {
@@ -47,7 +64,7 @@ export async function getSignedTransaction({ devicePath, accountIndex, unsignedM
     return Promise.reject(response.return_code);
   } catch (error) {
     if (transport && transport.close) await transport.close();
-    return Promise.reject(error);
+    return Promise.reject(getCustomErrorCode(error) || error);
   }
 }
 
@@ -60,9 +77,13 @@ export async function getSignedMessage({ devicePath, accountIndex, unsignedMessa
     const message = isHexString(unsignedMessage)
       ? Buffer.from(unsignedMessage, 'hex')
       : Buffer.from(unsignedMessage);
-    const signature = await liskLedger.signMessage(ledgerAccount.derivePath(), message);
+    const response = await liskLedger.signMessage(ledgerAccount.derivePath(), message);
     await transport?.close();
-    return signature;
+
+    if (response?.error_message === 'No errors') {
+      return response;
+    }
+    return Promise.reject(response.return_code);
   } catch (error) {
     if (transport) await transport.close();
     return Promise.reject(error);

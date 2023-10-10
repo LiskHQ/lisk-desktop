@@ -16,10 +16,16 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, extraCommandFe
     options: { enabled: isFormValid && !!transactionJSON },
   });
 
+  if (transactionFee?.error) {
+    return { feeEstimateError: transactionFee?.error?.response?.data?.message };
+  }
+
   const { data: { transaction } = {}, meta = {} } = transactionFee?.data || {};
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const initializationFee =
-    meta.breakdown?.fee?.minimum?.additionalFees?.userAccountInitializationFee || 0;
+    meta.breakdown?.fee?.minimum?.additionalFees?.userAccountInitializationFee ||
+    meta.breakdown?.fee?.minimum?.additionalFees?.escrowAccountInitializationFee ||
+    0;
   const minimumFee = BigInt(transaction?.fee?.minimum || 0);
   const messageFee = BigInt(transaction?.params?.messageFee?.amount || 0);
 
@@ -54,6 +60,7 @@ export const useTransactionFee = ({ isFormValid, transactionJSON, extraCommandFe
     components,
     minimumFee,
     messageFee,
+    feeTokenID: transaction?.fee?.tokenID,
     messageFeeTokenID: transaction?.params?.messageFee?.tokenID,
     isLoading: transactionFee?.isFetching,
     isFetched: transactionFee?.isFetched,

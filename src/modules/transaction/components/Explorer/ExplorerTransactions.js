@@ -22,7 +22,7 @@ const Transactions = ({ activeToken, address }) => {
     data: { height: currentBlockHeight },
   } = useLatestBlock();
   const { sort, toggleSort } = useSort({ defaultSort: 'timestamp:desc' });
-  const { filters, clearFilters, applyFilters } = useFilter({});
+  const { filters, clearFilters, applyFilters } = useFilter();
   const { data: tokens } = useTokenBalances();
   const token = tokens?.data?.[0] || {};
 

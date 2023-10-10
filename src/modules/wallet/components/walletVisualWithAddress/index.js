@@ -11,20 +11,17 @@ import {
 import { truncateAddress, truncateTransactionID } from '@wallet/utils/account';
 import { getModuleCommandTitle } from '@transaction/utils/moduleCommand';
 import Icon from 'src/theme/Icon';
-import DialogLink from 'src/theme/dialog/link';
 import Tooltip from 'src/theme/Tooltip';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
 
-const AccountName = ({ isMultisig, address, name }) => (
+const AccountName = ({ isMultisig, name }) => (
   <div className={styles.accountName}>
-    <p className="accountName">{name}</p>
-    {isMultisig && name && (
-      <DialogLink component="multisigAccountDetails" data={{ address }}>
-        <Icon name="multisigKeys" />
-      </DialogLink>
-    )}
+    <p className="accountName" data-testid={name}>
+      {name}
+    </p>
+    {isMultisig && name && <Icon name="multisigKeys" />}
   </div>
 );
 
@@ -38,7 +35,7 @@ const AccountAddress = ({
   isMultisig,
 }) => (
   <div className={`${styles.address} accountAddress`}>
-    <span>{truncate ? truncatedAddress : transformedAddress}</span>
+    <span data-testid={address}>{truncate ? truncatedAddress : transformedAddress}</span>
     {copy ? (
       <CopyToClipboard
         value={address}
@@ -47,11 +44,7 @@ const AccountAddress = ({
         className={styles.copyIcon}
       />
     ) : null}
-    {isMultisig && !name && (
-      <DialogLink component="multisigAccountDetails" data={{ address }}>
-        <Icon name="multisigKeys" />
-      </DialogLink>
-    )}
+    {isMultisig && !name && <Icon name="multisigKeys" />}
   </div>
 );
 
@@ -111,7 +104,7 @@ const WalletVisualWithAddress = ({
             <div>
               <WalletVisual address={address} size={size} />
               <div className={`${styles.detailsWrapper} ${detailsClassName || ''}`}>
-                <AccountName name={accountName} address={address} isMultisig={isMultisig} />
+                <AccountName name={accountName} isMultisig={isMultisig} />
                 <AccountAddress
                   address={address}
                   truncate={truncate}

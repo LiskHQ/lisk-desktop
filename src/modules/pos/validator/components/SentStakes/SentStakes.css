@@ -50,6 +50,10 @@
 
   & button {
     padding: 0px 45px !important;
+
+    &:first-child:hover {
+      color: var(--color-black);
+    }
   }
 }
 

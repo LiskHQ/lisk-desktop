@@ -102,7 +102,7 @@ describe('Sent token Status', () => {
       illustration: 'default',
       status: {
         code: 'SIGNATURE_ERROR',
-        message: JSON.stringify({ message: 'error:test' }),
+        message: JSON.stringify({ error: 'error:test' }),
       },
       title: 'Transaction failed',
       message: 'An error occurred while signing your transaction. Please try again.',
@@ -112,16 +112,10 @@ describe('Sent token Status', () => {
   it('passes correct props to TxBroadcaster when transaction broadcast fails', () => {
     const propsWithError = {
       ...props,
-      recipientAccount: { data: accounts.validator_candidate },
-      rawTx: {
-        params: {
-          recipient: { address: accounts.validator_candidate.summary.address },
-        },
-      },
       transactions: {
-        txBroadcastError: signedTransaction,
+        ...props.transactions,
+        txBroadcastError: { error: 'error:test', transaction: signedTransaction },
         txSignatureError: null,
-        signedTransaction: {},
       },
     };
 
@@ -130,7 +124,7 @@ describe('Sent token Status', () => {
       illustration: 'default',
       status: {
         code: 'BROADCAST_ERROR',
-        message: JSON.stringify(signedTransaction),
+        message: JSON.stringify({ transaction: signedTransaction, error: 'error:test' }),
       },
       title: 'Transaction failed',
       message: 'An error occurred while sending your transaction to the network. Please try again.',

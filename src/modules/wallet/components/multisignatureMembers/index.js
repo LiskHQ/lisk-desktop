@@ -1,8 +1,9 @@
 import React from 'react';
-
+import Tooltip from '@theme/Tooltip/tooltip';
+import classNames from 'classnames';
+import Icon from 'src/theme/Icon';
 import WalletVisual from '../walletVisual';
 import { truncateAddress } from '../../utils/account';
-
 import styles from './styles.css';
 
 const Member = ({ member, i, t, size }) => (
@@ -19,13 +20,40 @@ const Member = ({ member, i, t, size }) => (
   </div>
 );
 
-const Members = ({ members, t, className, size }) => {
+const Members = ({
+  members,
+  numberOfSignatures,
+  t,
+  className,
+  size,
+  showSignatureCount = false,
+}) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
   const rightColumn = members.slice(sliceIndex, members.length);
   return (
     <div className={`${styles.membersContainer} ${className}`}>
-      <p className={styles.title}>{t('Members')}</p>
+      <div className={styles.label}>
+        <p>{t('Members')}:</p>
+        {showSignatureCount && !!numberOfSignatures && (
+          <p className={styles.signatureInfo}>
+            <span>{t('Required signatures')} </span>
+            <Tooltip
+              size="m"
+              className={styles.tooltipWrapper}
+              tooltipClassName={`${styles.tooltipContainer}`}
+              position="left"
+            >
+              <p>
+                {t(
+                  'Number of signatures required to approve any outgoing transactions from this account.'
+                )}
+              </p>
+            </Tooltip>
+            <span>: {numberOfSignatures}</span>
+          </p>
+        )}
+      </div>
       <div>
         {leftColumn.map((member, i) => (
           <Member
@@ -59,22 +87,47 @@ export const SignedAndRemainingMembers = ({
   required,
   className,
   t,
+  title,
 }) => (
-  <div className={`${styles.membersContainer} ${className}`}>
-    <div>
-      <p className={styles.label}>{t('Signed')}</p>
-      {signed.map((member, i) => (
-        <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />
-      ))}
-    </div>
-    <div>
-      <p className={styles.label}>
-        <span>{t('Remaining')}</span>
-        <span className="tx-remaining-members">{` ${needed}/${required}`}</span>
-      </p>
-      {remaining.map((member, i) => (
-        <Member member={member} key={`registerMultiSignature-members-list-${i}-remaining`} t={t} />
-      ))}
+  <div className={classNames(styles.wrapper, className)}>
+    <p>
+      {title}
+      <Tooltip
+        size="s"
+        position="right"
+        content={<Icon name={remaining.length === 0 ? 'okIcon' : 'transactionStatusPending'} />}
+      >
+        <p>
+          {remaining.length === 0
+            ? t('Members have fully signed.')
+            : t('Members have partially signed.')}
+        </p>
+      </Tooltip>
+    </p>
+    <div
+      className={classNames(styles.membersContainer, {
+        [styles.fullySigned]: remaining.length === 0,
+      })}
+    >
+      <div>
+        <p className={styles.label}>{t('Signed')}</p>
+        {signed.map((member, i) => (
+          <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />
+        ))}
+      </div>
+      <div>
+        <p className={styles.label}>
+          <span>{t('Remaining')}</span>
+          <span className="tx-remaining-members">{` ${needed}/${required}`}</span>
+        </p>
+        {remaining.map((member, i) => (
+          <Member
+            member={member}
+            key={`registerMultiSignature-members-list-${i}-remaining`}
+            t={t}
+          />
+        ))}
+      </div>
     </div>
   </div>
 );

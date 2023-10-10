@@ -5,11 +5,10 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { kFormatter } from 'src/utils/helpers';
-import { useCurrentAccount } from '@account/hooks';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { chartStyles } from 'src/modules/common/components/charts/chartConfig';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { getModuleCommandTitle } from '@transaction/utils/moduleCommand';
+import { useAppsMetaTokens } from '@token/fungible/hooks/queries';
 import { useTheme } from '@theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from '@theme/box';
@@ -124,12 +123,8 @@ const Overview = () => {
   const [params, setParams] = useState({ limit: 7, interval: 'day' });
   const [activeTab, setActiveTab] = useState('week');
   const colorPalette = getColorPalette(useTheme());
-  // Fallback token for transaction statistics
-  const [{ metadata: { address } = {} }] = useCurrentAccount();
-  const { data: tokens } = useTokenBalances({
-    config: { params: { address } },
-  });
-  const token = tokens?.data?.[0] || {};
+  const { data: tokenData } = useAppsMetaTokens();
+  const token = tokenData?.data?.[0];
 
   const { data: txStatsData } = useTransactionStatistics({ config: { params } });
   const txStats = txStatsData?.data ?? {
@@ -140,11 +135,11 @@ const Overview = () => {
 
   const distributionByType = formatDistributionByValues(txStats.distributionByType);
   const distributionByAmount = normalizeNumberRange(
-    txStats.distributionByAmount?.[token.tokenID] ?? {}
+    txStats.distributionByAmount?.[token?.tokenID] ?? {}
   );
   const { txCountList, txVolumeList, txDateList } =
-    Object.keys(txStats.timeline).length > 0 && txStats.timeline[token.tokenID]
-      ? txStats.timeline[token.tokenID].reduce(
+    Object.keys(txStats.timeline).length > 0 && txStats.timeline[token?.tokenID]
+      ? txStats.timeline[token?.tokenID].reduce(
           (acc, item) => ({
             txCountList: [...acc.txCountList, item.transactionCount],
             txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
@@ -232,7 +227,7 @@ const Overview = () => {
           </div>
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
-          <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
+          <h2 className={styles.title}>{t(`Amount per transaction (${token?.symbol})`)}</h2>
           <div className={styles.graph}>
             <div>
               <GuideTooltip>
@@ -265,12 +260,18 @@ const Overview = () => {
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
           <div className={styles.top}>
-            <h2 className={styles.title}>{t('Number of transactions / Volume (LSK)')}</h2>
+            <h2 className={styles.title}>
+              {t(`Number of transactions / Volume (${token?.symbol})`)}
+            </h2>
             <aside className={styles.legends}>
               <h5 className={`${styles.legend} ${styles.volume}`}>
                 <span>{t('Volume')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The aggregated LSK volume transferred over the selected time period.')}</p>
+                  <p>
+                    {t(
+                      `The aggregated ${token?.symbol} volume transferred over the selected time period.`
+                    )}
+                  </p>
                 </Tooltip>
               </h5>
               <h5 className={`${styles.legend} ${styles.number}`}>

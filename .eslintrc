@@ -4,7 +4,9 @@
   "plugins": ["import", "babel", "jest", "prettier"],
   "globals": {
     "ipc": true,
-    "PRODUCTION": true
+    "LISK_ENABLE_DEV_TOOL": true,
+    "PRODUCTION": true,
+    "REACT_APP_DEFAULT_NETWORK": true
   },
   "env": {
     "es2020": true,

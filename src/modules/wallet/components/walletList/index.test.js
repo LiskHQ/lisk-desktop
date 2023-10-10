@@ -36,7 +36,7 @@ const props = {
       ],
     },
   },
-  filters: {},
+  filters: { tokenID: '0000000100000000' },
 };
 
 describe('WalletTable', () => {
@@ -44,5 +44,11 @@ describe('WalletTable', () => {
     smartRender(WalletTable, props, config);
 
     expect(screen.getAllByTestId('wallets-row')).toHaveLength(20);
+  });
+
+  it('renders properly without accounts', () => {
+    smartRender(WalletTable, { ...props, filters: {} }, config);
+
+    expect(screen.queryAllByTestId('wallets-row')).toHaveLength(0);
   });
 });

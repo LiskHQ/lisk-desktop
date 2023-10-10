@@ -1,33 +1,39 @@
-import { REQUEST, RESPONSE } from '@libs/hardwareWallet/ledger/constants';
+import { LEDGER_CUSTOM_ERRORS, REQUEST, RESPONSE } from '@libs/hardwareWallet/ledger/constants';
 import { errorCodeToString } from '@zondax/ledger-lisk/dist/common';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 
 const IPC = window.ipc;
 
-class IPCLedgerError extends Error {
+export const IPC_LEDGER_ERROR_NAME = 'IPCLedgerError';
+
+export class IPCLedgerError extends Error {
   constructor({ message, hwTxStatusType }) {
     super(message);
     this.message = message;
     this.hwTxStatusType = hwTxStatusType;
     this.stack = new Error(message).stack;
-    this.name = 'IPCLedgerError';
+    this.name = IPC_LEDGER_ERROR_NAME;
   }
 }
 
 const getErrorMessage = (code) => {
   const errors = {
+    [LEDGER_CUSTOM_ERRORS.openDevicePath.return_code]: LEDGER_CUSTOM_ERRORS.openDevicePath.match,
     65535: 'Device is disconnected',
     28161: 'Lisk app is not open',
     27014: 'Transaction rejected',
+    27011: 'Data to sign is too large',
   };
   return errors[code] || errorCodeToString(code);
 };
 
 const getHWTxStatusType = (code) => {
   const hwTxStatusTypes = {
+    [LEDGER_CUSTOM_ERRORS.openDevicePath.return_code]: txStatusTypes.hwCannotOpenPath,
     65535: txStatusTypes.hwDisconnected,
     28161: txStatusTypes.hwLiskAppClosed,
     27014: txStatusTypes.hwRejected,
+    27011: txStatusTypes.hwMemorySizeLimitRejection,
   };
   return hwTxStatusTypes[code];
 };

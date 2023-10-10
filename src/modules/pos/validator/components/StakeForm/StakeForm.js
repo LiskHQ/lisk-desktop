@@ -11,13 +11,11 @@ import {
 } from '@transaction/utils';
 import BoxContent from '@theme/box/content';
 import TxComposer from '@transaction/components/TxComposer';
-import { useCurrentAccount } from 'src/modules/account/hooks';
+import { useCurrentAccount } from '@account/hooks';
 import Table from '@theme/table';
-import to from 'await-to-js';
-import { dryRun } from 'src/modules/transaction/api';
-import useSettings from 'src/modules/settings/hooks/useSettings';
+import { dryRunTransaction } from '@transaction/api';
+import { useCommandSchema } from '@network/hooks';
 import routes from 'src/routes/routes';
-import { useCommandSchema } from 'src/modules/network/hooks';
 import { STAKE_LIMIT } from '../../consts';
 import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';
@@ -129,28 +127,19 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
   return { messages, error: !!messages.length };
 };
 
-const getRewards = async ({
-  moduleCommandSchemas,
-  transactionJSON,
-  mainChainNetwork,
-  currentAccount,
-}) => {
+const getRewards = async ({ moduleCommandSchemas, transactionJSON, currentAccount }) => {
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const paramsSchema = moduleCommandSchemas[moduleCommand];
   const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
 
-  const [error, dryRunResult] = await to(
-    dryRun({
-      paramsSchema,
-      transaction,
-      skipVerify: true,
-      serviceUrl: mainChainNetwork.serviceUrl,
-    })
-  );
+  const { isOk, errorMessage, response } = await dryRunTransaction({
+    paramsSchema,
+    transaction,
+  });
 
-  if (error) return { error };
+  if (!isOk && errorMessage) return { error: errorMessage };
 
-  const rewards = dryRunResult.data.events.reduce(
+  const rewards = response?.data?.events?.reduce(
     (result, event) => {
       const { name, data, module } = event;
       if (
@@ -175,7 +164,7 @@ const getRewards = async ({
 const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, posToken }) => {
   const [fee, setFee] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [dryRunError, setDryrunError] = useState();
+  const [dryRunError, setDryRunError] = useState();
   const changedStakes = Object.keys(stakes)
     .filter((address) => stakes[address].unconfirmed !== stakes[address].confirmed)
     .map((address) => ({ address, ...stakes[address] }));
@@ -188,7 +177,6 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
   const { token } = usePosToken();
   const [currentAccount] = useCurrentAccount();
   const { moduleCommandSchemas } = useCommandSchema();
-  const { mainChainNetwork } = useSettings('mainChainNetwork');
 
   const feedback = validateStakes(
     stakes,
@@ -207,10 +195,9 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
         transactionJSON,
         moduleCommandSchemas,
         currentAccount,
-        mainChainNetwork,
       });
       setIsLoading(false);
-      setDryrunError(error);
+      setDryRunError(error);
 
       if (error) return;
 
@@ -249,7 +236,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
   const commandParams = { stakes: normalizedStakes };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid="stake-form-wrapper">
       <TxComposer
         onComposed={onComposed}
         onConfirm={onConfirm}

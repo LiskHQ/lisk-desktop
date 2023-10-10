@@ -9,14 +9,18 @@ import {
 } from '@blockchainApplication/manage/hooks';
 import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import { Client } from 'src/utils/api/client';
+import { useReduxStateModifier } from 'src/utils/useReduxStateModifier';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
+import { useRewardsClaimable } from 'src/modules/pos/reward/hooks/queries';
 
 export const ApplicationBootstrapContext = createContext({
   hasNetworkError: false,
   isLoadingNetwork: false,
   error: {},
   refetchNetwork: () => {},
+  appEvents: { transactions: { rewards: {} } },
 });
 
 const ApplicationBootstrap = ({ children }) => {
@@ -24,6 +28,8 @@ const ApplicationBootstrap = ({ children }) => {
   const [isFirstTimeLoading, setIsFirstTimeLoading] = useState(true);
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { setApplications } = useApplicationManagement();
+  const [currentAccount] = useCurrentAccount();
+  const accountAddress = currentAccount?.metadata?.address;
   const queryClient = useRef();
 
   queryClient.current = new Client({ http: mainChainNetwork?.serviceUrl });
@@ -80,6 +86,11 @@ const ApplicationBootstrap = ({ children }) => {
   ]);
 
   useLedgerDeviceListener();
+  useReduxStateModifier();
+  const { data: rewardsData } = useRewardsClaimable({
+    config: { params: { address: accountAddress } },
+    options: { enabled: !!accountAddress },
+  });
 
   return (
     <ApplicationBootstrapContext.Provider
@@ -90,6 +101,7 @@ const ApplicationBootstrap = ({ children }) => {
           (networkStatus.isFetching && !networkStatus.data),
         error: networkStatus.error || blockchainAppsMeta.error,
         refetchNetwork: blockchainAppsMeta.refetch,
+        appEvents: { transactions: { rewards: rewardsData?.data ?? [] } },
       }}
     >
       {children}

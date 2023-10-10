@@ -5,7 +5,6 @@ import { externalLinks } from './externalLinks';
 
 jest.mock('src/utils/history', () => ({
   push: jest.fn(),
-  replace: jest.fn(),
 }));
 
 describe('externalLinks', () => {
@@ -15,7 +14,6 @@ describe('externalLinks', () => {
 
   beforeEach(() => {
     ipc[IPC_OPEN_URL].mockClear();
-    history.replace.mockReset();
     history.push.mockReset();
   });
 
@@ -31,7 +29,7 @@ describe('externalLinks', () => {
     expect(ipc[IPC_OPEN_URL]).toHaveBeenCalled();
   });
 
-  it('opens url', () => {
+  it('does not open any url', () => {
     const callbacks = {};
     window.ipc = {
       [IPC_OPEN_URL]: (callback) => {
@@ -41,10 +39,10 @@ describe('externalLinks', () => {
 
     externalLinks.init();
     callbacks[IPC_OPEN_URL]({}, 'lisk://register');
-    expect(history.replace).toHaveBeenCalledWith(routes.register.path);
+    expect(history.push).not.toHaveBeenCalledWith(routes.register.path);
   });
 
-  it('opens send modal without query params', () => {
+  it('does not open the send modal without query params', () => {
     const callbacks = {};
     window.ipc = {
       [IPC_OPEN_URL]: (callback) => {
@@ -54,7 +52,7 @@ describe('externalLinks', () => {
 
     externalLinks.init();
     callbacks[IPC_OPEN_URL]({}, 'lisk://wallet');
-    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=send');
+    expect(history.push).not.toHaveBeenCalledWith('/wallet?modal=send');
   });
 
   it('opens send modal with query params', () => {
@@ -66,20 +64,12 @@ describe('externalLinks', () => {
     };
 
     externalLinks.init();
-    callbacks[IPC_OPEN_URL]({}, 'lisk://wallet?recipient=1L&amount=100');
-    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=send&recipient=1L&amount=100');
-  });
-
-  it('opens staking queue modal', () => {
-    const callbacks = {};
-    window.ipc = {
-      [IPC_OPEN_URL]: (callback) => {
-        callbacks[IPC_OPEN_URL] = callback;
-      },
-    };
-
-    externalLinks.init();
-    callbacks[IPC_OPEN_URL]({}, 'lisk://stake?stakes=validator');
-    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=StakingQueue&stakes=validator');
+    callbacks[IPC_OPEN_URL](
+      {},
+      'lisk://wallet?modal=send&recipient=lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp&amount=1&token=0200000000000000&recipientChain=02000000'
+    );
+    expect(history.push).toHaveBeenCalledWith(
+      '?modal=send&recipient=lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp&amount=1&token=0200000000000000&recipientChain=02000000'
+    );
   });
 });

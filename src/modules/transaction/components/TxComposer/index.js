@@ -1,6 +1,7 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useAuth } from '@auth/hooks/queries';
@@ -13,19 +14,18 @@ import {
   joinModuleAndCommand,
   splitModuleAndCommand,
 } from '@transaction/utils';
-import { dryRun } from '@transaction/api';
-import { getTotalSpendingAmount } from '@transaction/utils/transaction';
-import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
+import { dryRunTransaction } from '@transaction/api';
+import { getTransactionAmount } from '@transaction/utils/transaction';
+import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/helpers';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
+import { useTokenBalances } from '@token/fungible/hooks/queries';
 import { PrimaryButton } from 'src/theme/buttons';
-import to from 'await-to-js';
 import { useCommandSchema } from 'src/modules/network/hooks';
-import useSettings from 'src/modules/settings/hooks/useSettings';
 import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
-import { TransactionExecutionResult } from '../../constants';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
+import { emptyTransactionsData } from '../../store/actions';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
@@ -40,7 +40,7 @@ const TxComposer = ({
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const { t } = useTranslation();
   const { moduleCommandSchemas } = useCommandSchema();
-  const { mainChainNetwork } = useSettings('mainChainNetwork');
+  const reduxDispatch = useDispatch();
 
   useSchemas();
   useDeprecatedAccount();
@@ -50,9 +50,8 @@ const TxComposer = ({
     },
   ] = useCurrentAccount();
   const { data: auth } = useAuth({ config: { params: { address } } });
-  const { symbol: tokenSymbol = '' } = formProps.fields.token || {};
   const { fields } = formProps;
-  const [customFee, setCustomFee] = useState();
+  const [customFee, setCustomFee] = useState({});
   const [feedback, setFeedBack] = useState(formProps.feedback);
   const [isRunningDryRun, setIsRunningDryRun] = useState(false);
   const [
@@ -74,13 +73,15 @@ const TxComposer = ({
   };
 
   const {
-    minimumFee,
-    components,
-    transactionFee,
+    minimumFee = BigInt(0),
+    components = [],
+    transactionFee = BigInt(0),
     messageFeeTokenID,
     messageFee,
-    isFetched,
+    isFetched = true,
     isLoading: isLoadingFee,
+    feeEstimateError,
+    feeTokenID,
   } = useTransactionFee({
     selectedPriority,
     transactionJSON,
@@ -89,6 +90,17 @@ const TxComposer = ({
     extraCommandFee: formProps.extraCommandFee,
   });
 
+  const { data: { data: feeTokens } = {} } = useTokenBalances({
+    config: { params: { tokenID: feeTokenID, limit: 1 } },
+    options: { enabled: !!feeTokenID },
+  });
+  const { data: { data: messageFeeTokens } = {} } = useTokenBalances({
+    config: { params: { tokenID: messageFeeTokenID, limit: 1 } },
+    options: { enabled: !!messageFeeTokenID },
+  });
+  const feeToken = feeTokens?.[0];
+  const messageFeeToken = messageFeeTokens?.[0];
+
   if (isFetched && fields?.sendingChain?.chainID !== fields?.recipientChain?.chainID) {
     transactionJSON.params = {
       ...transactionJSON.params,
@@ -96,6 +108,16 @@ const TxComposer = ({
       messageFeeTokenID,
     };
   }
+
+  useEffect(() => {
+    reduxDispatch(emptyTransactionsData());
+  }, []);
+
+  useEffect(() => {
+    if (feeEstimateError) {
+      setFeedBack([feeEstimateError]);
+    }
+  }, [feeEstimateError]);
 
   useEffect(() => {
     if (typeof onComposed === 'function') {
@@ -109,38 +131,58 @@ const TxComposer = ({
   }, [selectedPriority, transactionJSON.params]);
 
   useEffect(() => {
+    setFeedBack(null);
+  }, [formProps.fields]);
+
+  useEffect(() => {
     setFeedBack(formProps.feedback);
   }, [formProps.feedback]);
 
-  const minRequiredBalance =
-    BigInt(transactionFee) + BigInt(getTotalSpendingAmount(transactionJSON));
+  useEffect(() => {
+    setCustomFee({});
+  }, [minimumFee, messageFee]);
+
   const { recipientChain, sendingChain } = formProps;
   const composedFees = [
     {
       title: 'Transaction',
+      label: 'transactionFee',
+      token: feeToken,
       value: getFeeStatus({
-        fee: Number(convertFromBaseDenom(transactionFee, formProps.fields.token)),
-        tokenSymbol,
-        customFee,
+        fee: Number(convertFromBaseDenom(transactionFee, feeToken)),
+        tokenSymbol: feeToken?.symbol,
+        customFee: customFee.value?.transactionFee
+          ? { value: customFee.value?.transactionFee }
+          : null,
       }),
-      components,
+      components: components.map((component) => ({
+        ...component,
+        feeToken,
+      })),
     },
     {
       title: 'Message',
+      label: 'messageFee',
+      token: messageFeeToken,
       value: getFeeStatus({
-        fee: Number(
-          convertFromBaseDenom(transactionJSON.params.messageFee || 0, formProps.fields.token)
-        ),
-        tokenSymbol,
-        customFee,
+        fee: Number(convertFromBaseDenom(transactionJSON.params.messageFee || 0, messageFeeToken)),
+        tokenSymbol: messageFeeToken?.symbol,
+        customFee: customFee.value?.messageFee ? { value: customFee.value?.messageFee } : null,
       }),
       isHidden: !transactionJSON.params.messageFee,
       components: [],
     },
   ];
-
   formProps.composedFees = composedFees;
-  transactionJSON.fee = transactionFee;
+  // eslint-disable-next-line no-extra-boolean-cast
+  transactionJSON.fee = !!customFee.value?.transactionFee
+    ? convertToBaseDenom(customFee.value.transactionFee, feeToken)
+    : transactionFee;
+
+  const availableBalance = BigInt(formProps.fields?.token?.availableBalance || 0);
+  const transactionAmount = BigInt(getTransactionAmount(transactionJSON));
+  const spendingBalance = transactionAmount + BigInt(transactionJSON.fee);
+  const amountAndBalances = { transactionAmount, availableBalance, spendingBalance };
 
   // eslint-disable-next-line max-statements
   const onSubmit = async () => {
@@ -150,24 +192,14 @@ const TxComposer = ({
     const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
 
     if (joinModuleAndCommand(transactionJSON) !== MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
-      const [error, dryRunResult] = await to(
-        dryRun({
-          paramsSchema,
-          transaction,
-          skipVerify: true,
-          serviceUrl: mainChainNetwork.serviceUrl,
-        })
-      );
+      const { isOk, errorMessage } = await dryRunTransaction({
+        paramsSchema,
+        transaction,
+      });
 
-      const transactionErrorMessage =
-        error?.message ||
-        (dryRunResult?.data?.result === TransactionExecutionResult.FAIL
-          ? dryRunResult?.data?.events.map((e) => e.name).join(', ')
-          : dryRunResult?.data?.errorMessage);
-
-      if (transactionErrorMessage) {
+      if (!isOk && errorMessage) {
         setIsRunningDryRun(false);
-        return setFeedBack(transactionErrorMessage);
+        return setFeedBack([errorMessage]);
       }
     }
 
@@ -184,11 +216,10 @@ const TxComposer = ({
     <Box className={className}>
       {children}
       <TransactionPriority
-        token={formProps.fields?.token}
+        token={feeToken}
         fee={transactionFee}
         minFee={minimumFee}
-        customFee={customFee ? customFee.value : undefined}
-        moduleCommand={formProps.moduleCommand}
+        customFee={customFee}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
@@ -196,11 +227,15 @@ const TxComposer = ({
         loadError={prioritiesLoadError}
         isLoading={loadingPriorities || isLoadingFee}
         composedFees={composedFees}
+        minRequiredBalance={spendingBalance}
+        computedMinimumFees={{ transactionFee: minimumFee, messageFee }}
+        formProps={formProps}
       />
       <Feedback
         feedback={feedback}
-        minRequiredBalance={formProps.enableMinimumBalanceFeedback && minRequiredBalance.toString()}
-        token={formProps.enableMinimumBalanceFeedback && (formProps.fields?.token || {})}
+        amountAndBalances={amountAndBalances}
+        enableMinimumBalanceFeedback={formProps.enableMinimumBalanceFeedback}
+        token={formProps.fields?.token}
       />
       <BoxFooter>
         <PrimaryButton
@@ -209,8 +244,10 @@ const TxComposer = ({
           isLoading={isRunningDryRun}
           disabled={
             !formProps.isFormValid ||
-            minRequiredBalance > BigInt(formProps.fields?.token?.availableBalance || 0) ||
-            !isFetched
+            spendingBalance > availableBalance ||
+            !isFetched ||
+            !!feeEstimateError ||
+            isLoadingFee
           }
         >
           {buttonTitle ?? t('Continue')}

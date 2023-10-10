@@ -1,6 +1,10 @@
 @import '../../../../../setup/react/app/mixins.css';
 
 .wrapper {
+  & header > h2 {
+    font-size: var(--font-size-h3) !important;
+  }
+
   & .content {
     width: 100%;
     display: flex;

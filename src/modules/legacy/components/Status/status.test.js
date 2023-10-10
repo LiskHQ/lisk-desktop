@@ -5,6 +5,7 @@ import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import { useCommandSchema } from '@network/hooks';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import { legacyReclaimLSK, getTransactionObject } from '@tests/fixtures/transactions';
 import Status from './Status';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
@@ -19,7 +20,7 @@ describe('Status', () => {
     balance: 1e20,
     transactions: {
       confirmed: [],
-      signedTransaction: {},
+      signedTransaction: { ...getTransactionObject(legacyReclaimLSK) },
       txSignatureError: null,
       txBroadcastError: null,
     },
@@ -75,7 +76,7 @@ describe('Status', () => {
     expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
-      status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ error: 'error:test' }) },
       title: 'Transaction failed',
       className: 'content',
     });
@@ -85,9 +86,12 @@ describe('Status', () => {
     const propsWithError = {
       ...props,
       transactions: {
-        txBroadcastError: { message: 'error:test' },
+        ...props.transactions,
+        txBroadcastError: {
+          error: 'error:test',
+          transaction: props.transactions.signedTransaction,
+        },
         txSignatureError: null,
-        signedTransaction: {},
       },
     };
 
@@ -95,7 +99,10 @@ describe('Status', () => {
     expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
-      status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      status: {
+        code: 'BROADCAST_ERROR',
+        message: { error: 'error:test', transaction: legacyReclaimLSK },
+      },
       title: 'Reclaim LSK tokens failed',
       className: 'content',
     });

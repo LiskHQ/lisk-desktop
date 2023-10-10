@@ -15,20 +15,20 @@
   }
 
   & .header {
-    --content-font: 'gilroy';
-
     display: block;
     padding-top: 8px;
     padding-bottom: 15px;
     height: auto;
     color: var(--color-maastricht-blue);
-    font-family: var(--content-font);
+    font-family: var(--heading-font);
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
 
     & > div:first-of-type {
       margin-bottom: 8px;
+      font-size: var(--font-size-h3);
+      padding: 12px 0;
     }
   }
 }

@@ -6,7 +6,7 @@ import { onApprove, onReject } from '../utils/sessionHandlers';
 import { EVENTS, STATUS, ERROR_CASES } from '../constants/lifeCycle';
 import { useEvents } from './useEvents';
 
-export const useSession = () => {
+export const useSession = ({ isEnabled = true } = {}) => {
   const [hasLoaded, setHasLoaded] = useState(false);
   const {
     events,
@@ -119,12 +119,12 @@ export const useSession = () => {
   );
 
   useEffect(() => {
-    if (signClient?.session && !hasLoaded) {
+    if (signClient?.session && !hasLoaded && isEnabled) {
       (async () => {
         await loadSessions();
       })();
     }
-  }, [signClient, sessions]);
+  }, [signClient, sessions, isEnabled]);
 
   return {
     hasLoaded,

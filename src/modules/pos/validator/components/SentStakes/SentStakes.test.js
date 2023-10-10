@@ -44,7 +44,7 @@ describe('SentStakes', () => {
     data: getMockValidators(config.params?.address),
   }));
   useSentStakes.mockReturnValue({ data: mockSentStakes, refetch: mockRefetchSentStakes });
-  useUnlocks.mockReturnValue({ data: mockUnlocks });
+  useUnlocks.mockReturnValue({ data: mockUnlocks, refetch: jest.fn() });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
 
   it('should display properly', async () => {
@@ -106,5 +106,11 @@ describe('SentStakes', () => {
     useSentStakes.mockReturnValue({ data: mockSentStakes, refetch: mockRefetchSentStakes });
     renderWithRouterAndQueryClient(SentStakes, props);
     expect(mockRefetchSentStakes).toHaveBeenCalledTimes(1);
+  });
+
+  it('displays no notification if there are no claimable rewards', () => {
+    useRewardsClaimable.mockReturnValue({ data: {} });
+    renderWithRouterAndQueryClient(SentStakes, props);
+    expect(screen.queryByTestId('notification')).not.toBeInTheDocument();
   });
 });

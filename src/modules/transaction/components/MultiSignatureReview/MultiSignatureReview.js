@@ -1,7 +1,6 @@
 import React from 'react';
 import { truncateAddress } from '@wallet/utils/account';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './MultiSignatureReview.css';
 
@@ -26,13 +25,16 @@ const Member = ({ member, i, t }) => (
   </div>
 );
 
-const Members = ({ members = [], t }) => {
+const Members = ({ members = [], t, isMultisignature, isRegisterMultisigature }) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
   const rightColumn = members.slice(sliceIndex, members.length);
+
   return (
     <div className={styles.membersContainer}>
-      <p>{t('Members')}</p>
+      <p>
+        {isMultisignature && isRegisterMultisigature ? t('Registering members') : t('Members')}
+      </p>
       <div>
         {leftColumn.map((member, i) => (
           <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />
@@ -59,13 +61,23 @@ const InfoColumn = ({ title, children, className }) => (
   </div>
 );
 
-const MultiSignatureReview = ({ t, members, fee, numberOfSignatures }) => {
-  const { data: tokens } = useTokenBalances();
-  const token = tokens?.data?.[0] || {};
-
-  return (
-    <>
-      <Members members={members} t={t} />
+const MultiSignatureReview = ({
+  t,
+  members,
+  fee,
+  numberOfSignatures,
+  token,
+  isMultisignature,
+  isRegisterMultisigature,
+}) => (
+  <>
+    <Members
+      isMultisignature={isMultisignature}
+      isRegisterMultisigature={isRegisterMultisigature}
+      members={members}
+      t={t}
+    />
+    {!isMultisignature && isRegisterMultisigature && (
       <div className={styles.infoContainer}>
         <InfoColumn title={t('Required signatures')} className="info-numberOfSignatures">
           {numberOfSignatures}
@@ -74,8 +86,8 @@ const MultiSignatureReview = ({ t, members, fee, numberOfSignatures }) => {
           <TokenAmount val={fee} token={token} />
         </InfoColumn>
       </div>
-    </>
-  );
-};
+    )}
+  </>
+);
 
 export default MultiSignatureReview;

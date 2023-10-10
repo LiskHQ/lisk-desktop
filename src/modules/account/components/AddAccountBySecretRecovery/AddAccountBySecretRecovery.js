@@ -1,6 +1,8 @@
 /* eslint-disable max-statements */
 import React, { useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectSettings } from 'src/redux/selectors';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import SetPasswordForm from 'src/modules/auth/components/SetPasswordForm/SetPasswordForm';
 import MultiStep from 'src/modules/common/components/MultiStep';
@@ -18,6 +20,7 @@ const AddAccountBySecretRecovery = () => {
   const [recoveryPhrase, setRecoveryPhrase] = useState(null);
   const [customDerivationPath, setCustomDerivationPath] = useState(defaultDerivationPath);
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
+  const { enableAccessToLegacyAccounts } = useSelector(selectSettings);
   const { setAccount } = useAccounts();
 
   const queryParams = new URLSearchParams(search);
@@ -31,7 +34,7 @@ const AddAccountBySecretRecovery = () => {
 
   /* istanbul ignore next */
   const onSetPassword = (account) => {
-    setCurrentAccount(account);
+    setCurrentAccount(account, null, false);
     setAccount(account);
     multiStepRef?.current?.next();
   };
@@ -49,6 +52,7 @@ const AddAccountBySecretRecovery = () => {
           recoveryPhrase={recoveryPhrase}
           customDerivationPath={customDerivationPath}
           onSubmit={onSetPassword}
+          isLegacyAccount={enableAccessToLegacyAccounts}
         />
         <SetPasswordSuccess encryptedPhrase={currentAccount} onClose={onPasswordSetComplete} />
       </MultiStep>

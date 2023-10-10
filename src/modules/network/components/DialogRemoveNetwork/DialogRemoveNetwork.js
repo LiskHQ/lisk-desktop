@@ -7,10 +7,12 @@ import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
-import { PrimaryButton, OutlineButton } from '@theme/buttons';
+import { OutlineButton, PrimaryButton } from '@theme/buttons';
 import useSettings from '@settings/hooks/useSettings';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { immutableDeleteFromArrayById } from 'src/utils/immutableUtils';
+import { deleteNetworksInApplications } from '@blockchainApplication/manage/store/action';
+import { useDispatch } from 'react-redux';
 import styles from './DialogRemoveNetwork.css';
 
 const DialogRemoveNetwork = () => {
@@ -18,6 +20,7 @@ const DialogRemoveNetwork = () => {
   const { t } = useTranslation();
   const { name, serviceUrl } = parseSearchParams(history.location.search);
   const { customNetworks, setValue } = useSettings('customNetworks');
+  const dispatch = useDispatch();
 
   const onCancel = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
@@ -26,6 +29,7 @@ const DialogRemoveNetwork = () => {
   const onConfirm = () => {
     const modifiedCustomNetworks = immutableDeleteFromArrayById(customNetworks, 'name', name);
     setValue(modifiedCustomNetworks);
+    dispatch(deleteNetworksInApplications([name]));
     removeSearchParamsFromUrl(history, ['modal'], true);
     toast.info(t(`Network removed "${name}"`), { position: 'bottom-right' });
   };

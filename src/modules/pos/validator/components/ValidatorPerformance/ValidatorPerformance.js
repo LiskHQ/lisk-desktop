@@ -29,7 +29,7 @@ const ValidatorPerformance = ({ history }) => {
   const { punishmentPeriods, status, consecutiveMissedBlocks } = data[0];
   const headerTitle = {
     punished: 'Punishment details',
-    banned: 'Ban details',
+    banned: 'Banned details',
   };
 
   return (

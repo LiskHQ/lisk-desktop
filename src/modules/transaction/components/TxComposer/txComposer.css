@@ -10,8 +10,8 @@
   margin-bottom: 5px;
   box-sizing: border-box;
   opacity: 0;
-  animation: fadeIn 200ms 1 forwards ease;
-  animation-delay: 200ms;
+  animation: fadeIn 500ms 1 forwards ease;
+  animation-delay: 500ms;
 
   & span {
     @mixin contentNormal;

@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import routes from 'src/routes/routes';
 import { useCurrentAccount } from '@account/hooks';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { useRewardsClaimable } from '@pos/reward/hooks/queries';
+import { mockRewardsClaimable } from '@pos/reward/__fixtures__';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import SideBar from './index';
 
@@ -12,7 +14,8 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
 }));
 
-jest.mock('@account/hooks/useCurrentAccount.js');
+jest.mock('@account/hooks/useCurrentAccount');
+jest.mock('@pos/reward/hooks/queries/useRewardsClaimable');
 
 describe('SideBar', () => {
   let mockAppState;
@@ -20,6 +23,7 @@ describe('SideBar', () => {
   beforeEach(() => {
     useCurrentAccount.mockReturnValue([mockCurrentAccount]);
     useSelector.mockImplementation((callback) => callback(mockAppState));
+    useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimable });
   });
 
   afterEach(() => {
@@ -58,6 +62,13 @@ describe('SideBar', () => {
 
   it('renders 7 menu items elements', () => {
     expect(wrapper).toContainMatchingElements(7, 'a');
+  });
+
+  it('shows sidebar toggle info on hover', () => {
+    wrapper.simulate('mouseenter');
+    expect(wrapper.find('SidebarToggle').exists()).toBeTruthy();
+    wrapper.simulate('mouseleave');
+    expect(wrapper.find('SidebarToggle').exists()).toBeFalsy();
   });
 
   describe('renders 7 menu items', () => {

@@ -49,6 +49,12 @@ describe('TransactionResult RequestedTxStatus', () => {
     transactionBroadcasted: jest.fn(),
     resetTransactionResult: jest.fn(),
     account: accounts.multiSig,
+    application: {
+      chainName: 'lisk',
+      chainID: '04000000',
+      networkType: 'devnet',
+      serviceURLs: [{ http: 'http://devnet-service.liskdev.net:9901' }],
+    },
   };
   const transaction = {
     module: 'token',

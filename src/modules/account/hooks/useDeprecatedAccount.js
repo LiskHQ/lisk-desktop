@@ -13,16 +13,14 @@ const defaultAccount = {
     address: '',
     publicKey: '',
     legacyAddress: '',
-    // @todo Replace mock balance value once we have the balance in the account store
-    balance: '10000000000000',
+    balance: '0',
     username: '',
     isMigrated: true,
     isValidator: false,
     isMultisignature: false,
   },
-  // @todo same here.
   token: {
-    balance: '10000000000000',
+    balance: '0',
     tokenID: '00000000',
   },
   sequence: {
@@ -146,7 +144,10 @@ export const useDeprecatedAccount = (accountInfo) => {
     data: legacy,
     isLoading: isLegacyLoading,
     isSuccess: isLegacySuccess,
-  } = useLegacy({ config: { params: { publicKey: pubkey } } });
+  } = useLegacy({
+    config: { params: { publicKey: pubkey } },
+    options: { enabled: !!pubkey },
+  });
   useEffect(() => {
     if (!isLegacySuccess) {
       return;

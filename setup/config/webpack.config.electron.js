@@ -1,4 +1,5 @@
 const { resolve } = require('path');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
 
@@ -8,7 +9,7 @@ const config = {
     main: `${resolve(__dirname, '../../app/src')}/main.js`,
   },
   output: {
-    path: resolve(__dirname, '../../app/build'),
+    path: resolve(__dirname, `../../app/${process.env.BUILD_NAME || 'build'}`),
     filename: '[name].js',
   },
   target: 'electron-main',
@@ -26,6 +27,11 @@ const config = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      LISK_ENABLE_DEV_TOOL: JSON.parse(process.env.ENABLE_DEV_TOOL || true),
+    }),
+  ],
 };
 
 module.exports = merge(baseConfig, config);

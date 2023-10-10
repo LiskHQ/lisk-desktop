@@ -44,7 +44,7 @@ export const convertFromBaseDenom = (amount, token = defaultTokenMeta) => {
  */
 export const convertToBaseDenom = (amount, token = defaultTokenMeta) => {
   // eslint-disable-next-line no-restricted-globals
-  if (isNaN(amount)) return '0';
+  if (amount && isNaN(amount.toString())) return '0';
 
   const decimals = getTokenDecimals(token);
 

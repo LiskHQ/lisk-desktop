@@ -3,13 +3,8 @@ import { MAX_MULTI_SIG_MEMBERS } from '../../configuration/constants';
 
 const validators = [
   {
-    pattern: (_, optional) => optional.length === 1,
-    message: (t) =>
-      t('Either change the optional member to mandatory or define more optional members.'),
-  },
-  {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length === 0 && optional.length === signatures,
+      mandatory.length === 0 && (optional.length === signatures || optional.length > 0),
     message: (t) => t('All members can not be optional. Consider changing them to mandatory.'),
   },
   {
@@ -19,7 +14,7 @@ const validators = [
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 && optional.length > 0 && signatures <= mandatory.length,
+      mandatory.length > 0 && optional.length > 0 && signatures < mandatory.length,
     message: (t, mandatory) =>
       t(
         t('Number of signatures must be above {{num}}.', {

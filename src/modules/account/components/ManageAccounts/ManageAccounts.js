@@ -2,7 +2,6 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
-import Spinner from 'src/theme/Spinner';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from 'src/theme/dialog/dialog';
@@ -10,9 +9,6 @@ import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import useHWAccounts from '@hardwareWallet/hooks/useHWAccounts';
-import { useSelector } from 'react-redux';
-import { selectCurrentHWDevice } from '@hardwareWallet/store/selectors/hwSelectors';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
@@ -28,14 +24,9 @@ export const ManageAccountsContent = ({
   const { t } = useTranslation();
   const { accounts } = useAccounts();
   const [currentAccount, setAccount] = useCurrentAccount();
-  const currentHWDevice = useSelector(selectCurrentHWDevice);
   const [showRemove, setShowRemove] = useState(false);
   const [showTruncate, setTruncate] = useState(truncate);
   const title = customTitle ?? t('Manage accounts');
-  const { accounts: hwAccounts, isLoadingHWAccounts } = useHWAccounts();
-  const hwAccountsToShow = currentHWDevice?.path
-    ? hwAccounts
-    : hwAccounts.filter((account) => !account.metadata.isNew);
 
   const queryParams = new URLSearchParams(search);
   const referrer = queryParams.get('referrer');
@@ -63,7 +54,7 @@ export const ManageAccountsContent = ({
       </div>
       <Box className={styles.accountListWrapper}>
         <>
-          {[...accounts, ...hwAccountsToShow].map((account) => (
+          {accounts.map((account) => (
             <AccountRow
               key={account.metadata.address}
               account={account}
@@ -75,12 +66,6 @@ export const ManageAccountsContent = ({
           ))}
         </>
       </Box>
-      {isLoadingHWAccounts && (
-        <div className={styles.loaderWrapper}>
-          <Spinner className={styles.spinner} />
-          <span>{t('Loading hardware wallet accounts…')}</span>
-        </div>
-      )}
       {showRemove ? (
         <OutlineButton
           className={`${styles.button} ${styles.addAccountBtn}`}

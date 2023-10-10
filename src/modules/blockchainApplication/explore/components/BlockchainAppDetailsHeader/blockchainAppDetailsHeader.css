@@ -102,6 +102,7 @@
   }
 
   & > span {
+    font-family: var(--heading-font);
     font-size: 28px;
     font-weight: 700;
     color: var(--color-maastricht-blue);

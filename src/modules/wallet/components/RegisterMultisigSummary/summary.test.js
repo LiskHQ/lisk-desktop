@@ -85,6 +85,18 @@ describe('Multisignature Summary component', () => {
     },
     formProps: {
       moduleCommand: 'auth:registerMultisignature',
+      fields: { token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' } },
+    },
+    authQuery: {
+      isFetching: false,
+      isFetched: true,
+      data: {
+        data: {
+          numberOfSignatures: 1,
+          mandatoryKeys: [],
+          optionalKeys: [],
+        },
+      },
     },
   };
 
@@ -132,6 +144,11 @@ describe('Multisignature Summary component', () => {
         props.transactionJSON.params.optionalKeys.length
     );
     expect(screen.getByText('0.02 LSK')).toBeInTheDocument();
+  });
+
+  it('Should be in edit mode', () => {
+    smartRender(Summary, { ...props, authQuery: { data: { data: { numberOfSignatures: 3 } } } });
+    expect(screen.getByText('Edit multisignature account')).toBeTruthy();
   });
 
   it('Should not call props.nextStep when signedTransaction is empty', () => {
