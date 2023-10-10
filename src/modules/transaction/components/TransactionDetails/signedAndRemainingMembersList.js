@@ -39,6 +39,7 @@ const SignedAndRemainingMembersList = ({ t }) => {
       needed={needed}
       required={required}
       className={styles.signedAndRemainingMembersList}
+      title={isMultisignatureRegistration ? t('Multisignature params signatures') : t('Members')}
       t={t}
     />
   );

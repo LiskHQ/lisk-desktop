@@ -26,7 +26,9 @@ const Status = ({ transactions, t, transactionJSON, reset }) => {
     transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 0;
 
   const { canSenderSignTx } = useMultiSignatureStatus({
+    transactions,
     transactionJSON,
+    moduleCommandSchemas,
     currentAccount,
     senderAccount: txInitiatorAccount,
     account: {

@@ -131,24 +131,27 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
   // signature success
   if (!isEmpty(transactions.signedTransaction)) {
     const numberOfSignatures = getNumberOfSignatures(account, transactions.signedTransaction);
+    const isRegisterMultisignature =
+      moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+    const isMultisignature = account?.summary?.isMultisignature || options.isMultisignature;
+    const isInitatorAccountMultiSig = account?.numberOfSignatures > 0;
     let nonEmptySignatures = transactions.signedTransaction.signatures.filter(
       (sig) => sig.length > 0
     ).length;
 
-    if (moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
+    if (isRegisterMultisignature && !isInitatorAccountMultiSig) {
       nonEmptySignatures = transactions.signedTransaction.params.signatures.filter(
         (sig) => sig.compare(Buffer.alloc(64)) > 0
       ).length;
     }
-
-    const isMultisignature = account?.summary?.isMultisignature || options.isMultisignature;
 
     if (
       nonEmptySignatures < numberOfSignatures ||
       (isMultisignature &&
         nonEmptySignatures === numberOfSignatures &&
         !options.canSenderSignTx &&
-        moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature)
+        isRegisterMultisignature &&
+        !isInitatorAccountMultiSig)
     ) {
       return { code: txStatusTypes.multisigSignaturePartialSuccess };
     }

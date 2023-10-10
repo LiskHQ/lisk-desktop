@@ -171,7 +171,6 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
-
   useEffect(() => () => clearTimeout(ref.current), []);
 
   return (

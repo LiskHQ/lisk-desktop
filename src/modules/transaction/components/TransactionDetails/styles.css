@@ -162,6 +162,10 @@
   grid-area: signedAndRemainingMembersList;
 }
 
+.signedAndRemainingSignatureList {
+  grid-area: signedAndRemainingSignatureList;
+}
+
 .genericParams {
   grid-area: genericParams;
   padding-top: var(--vertical-padding-m);
