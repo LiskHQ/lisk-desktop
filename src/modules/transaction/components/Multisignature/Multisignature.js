@@ -12,7 +12,7 @@ import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleComma
 import Icon from 'src/theme/Icon';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import { calculateRemainingAndSignedMembers, truncateAddress } from '@wallet/utils/account';
-import { ReactComponent as SwtichIcon } from '@setup/react/assets/images/icons/switch-icon.svg';
+import { ReactComponent as SwitchIcon } from '@setup/react/assets/images/icons/switch-icon.svg';
 import WarningNotification from '@common/components/warningNotification';
 import AccountRow from '@account/components/AccountRow';
 import classNames from 'classnames';
@@ -57,7 +57,7 @@ export const PartiallySignedActions = ({
           onClick={handleSwitchAccount}
         >
           <span className={styles.buttonContent}>
-            <SwtichIcon />
+            <SwitchIcon />
             {t('Switch Account')}
           </span>
         </PrimaryButton>
