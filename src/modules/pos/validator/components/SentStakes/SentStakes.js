@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Heading from 'src/modules/common/components/Heading';
+import Heading from '@common/components/Heading';
 import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
@@ -14,6 +14,7 @@ import StakesCount from '@pos/validator/components/StakesCount';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { useMyTransactions } from '@transaction/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import Badge from '@common/components/badge';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
@@ -36,7 +37,10 @@ function ClaimRewardsDialogButton({ address }) {
 
   return (
     <DialogLink component="claimRewardsView">
-      <SecondaryButton disabled={!hasClaimableRewards}>{t('Claim rewards')}</SecondaryButton>
+      <SecondaryButton disabled={!hasClaimableRewards}>
+        {t('Claim rewards')}
+        {hasClaimableRewards && <Badge />}
+      </SecondaryButton>
     </DialogLink>
   );
 }
