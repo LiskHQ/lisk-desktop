@@ -135,13 +135,18 @@ const Multisignature = ({
   });
 
   const isRegisterMultisignature =
-    transactionJSON.params?.mandatoryKeys?.length !== transactionJSON.signatures?.length &&
+    transactionJSON.params?.mandatoryKeys?.length + transactionJSON.params?.optionalKeys?.length !==
+      transactionJSON.signatures?.length &&
     joinModuleAndCommand(transactionJSON) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   const { remaining } = calculateRemainingAndSignedMembers(
     isRegisterMultisignature
       ? {
-          optionalKeys: transactionJSON.params.optionalKeys,
+          optionalKeys: [
+            ...new Set(
+              immutableArrayMerge(transactionJSON.params.optionalKeys, authData?.data?.optionalKeys)
+            ),
+          ],
           mandatoryKeys: [
             ...new Set(
               immutableArrayMerge(
@@ -151,14 +156,22 @@ const Multisignature = ({
             ),
           ],
         }
-      : { mandatoryKeys: authData?.data?.mandatoryKeys },
+      : {
+          optionalKeys: authData?.data?.optionalKeys,
+          mandatoryKeys: authData?.data?.mandatoryKeys,
+        },
     transactionJSON,
     isRegisterMultisignature
   );
 
-  const nextAccountToSign = accounts.find((account) =>
-    remaining.some((remainingAccount) => account.metadata.address === remainingAccount.address)
-  );
+  const nextAccountToSign =
+    isRegisterMultisignature && remaining?.length === 0
+      ? originatorAccount
+      : accounts.find((account) =>
+          remaining.some(
+            (remainingAccount) => account.metadata.address === remainingAccount.address
+          )
+        );
 
   const onCopy = () => {
     setCopied(true);
@@ -194,7 +207,7 @@ const Multisignature = ({
     <div className={`${styles.wrapper} ${className}`}>
       <Illustration name={getIllustration(status.code, 'signMultisignature')} />
       <h6 className="result-box-header">{title}</h6>
-      <p className="transaction-status body-message">{message}</p>
+      {!nextAccountToSign && <p className="transaction-status body-message">{message}</p>}
       {nextAccountToSign && (
         <div className={styles.requiredAccountSection}>
           <WarningNotification
