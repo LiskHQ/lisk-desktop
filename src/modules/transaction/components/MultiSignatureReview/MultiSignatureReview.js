@@ -25,13 +25,16 @@ const Member = ({ member, i, t }) => (
   </div>
 );
 
-const Members = ({ members = [], t }) => {
+const Members = ({ members = [], t, isMultisignature, isRegisterMultisigature }) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
   const rightColumn = members.slice(sliceIndex, members.length);
+
   return (
     <div className={styles.membersContainer}>
-      <p>{t('Members')}</p>
+      <p>
+        {isMultisignature && isRegisterMultisigature ? t('Registering members') : t('Members')}
+      </p>
       <div>
         {leftColumn.map((member, i) => (
           <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />
@@ -58,17 +61,32 @@ const InfoColumn = ({ title, children, className }) => (
   </div>
 );
 
-const MultiSignatureReview = ({ t, members, fee, numberOfSignatures, token }) => (
+const MultiSignatureReview = ({
+  t,
+  members,
+  fee,
+  numberOfSignatures,
+  token,
+  isMultisignature,
+  isRegisterMultisigature,
+}) => (
   <>
-    <Members members={members} t={t} />
-    <div className={styles.infoContainer}>
-      <InfoColumn title={t('Required signatures')} className="info-numberOfSignatures">
-        {numberOfSignatures}
-      </InfoColumn>
-      <InfoColumn title={t('Fees')} className="info-fee">
-        <TokenAmount val={fee} token={token} />
-      </InfoColumn>
-    </div>
+    <Members
+      isMultisignature={isMultisignature}
+      isRegisterMultisigature={isRegisterMultisigature}
+      members={members}
+      t={t}
+    />
+    {!isMultisignature && isRegisterMultisigature && (
+      <div className={styles.infoContainer}>
+        <InfoColumn title={t('Required signatures')} className="info-numberOfSignatures">
+          {numberOfSignatures}
+        </InfoColumn>
+        <InfoColumn title={t('Fees')} className="info-fee">
+          <TokenAmount val={fee} token={token} />
+        </InfoColumn>
+      </div>
+    )}
   </>
 );
 

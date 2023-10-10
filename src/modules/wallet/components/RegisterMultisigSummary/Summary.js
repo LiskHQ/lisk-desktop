@@ -1,13 +1,17 @@
 import React, { useEffect, useMemo } from 'react';
 import { isEmpty } from 'src/utils/helpers';
+import { useDispatch } from 'react-redux';
 import { useCurrentAccount } from '@account/hooks';
 import { useAuth } from '@auth/hooks/queries';
+import { fromTransactionJSON, joinModuleAndCommand } from '@transaction/utils';
+import actionTypes from '@transaction/store/actionTypes';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import { useCommandSchema } from '@network/hooks';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
 
+// eslint-disable-next-line max-statements
 const Summary = ({
   t,
   prevStep,
@@ -16,8 +20,10 @@ const Summary = ({
   transactionJSON,
   transactions,
   multisigTransactionSigned,
+  authQuery,
 }) => {
   const [sender] = useCurrentAccount();
+  const dispatch = useDispatch();
   const { txInitiatorAccount } = useTxInitiatorAccount({
     senderPublicKey: transactionJSON.senderPublicKey,
   });
@@ -32,6 +38,8 @@ const Summary = ({
       ),
     [transactionJSON]
   );
+
+  const numberOfSignaturesOnAccount = authQuery.data?.data?.numberOfSignatures;
 
   const onConfirmAction = useMemo(
     () => ({
@@ -50,7 +58,19 @@ const Summary = ({
           });
 
         if (!isSenderMember) {
-          actionFunction();
+          dispatch({
+            type: actionTypes.transactionSigned,
+            data: fromTransactionJSON(
+              transactionJSON,
+              moduleCommandSchemas[joinModuleAndCommand(transactionJSON)]
+            ),
+          });
+          nextStep({
+            formProps,
+            transactionJSON,
+            sender,
+            actionFunction,
+          });
         } else {
           nextStep({
             formProps,
@@ -90,7 +110,9 @@ const Summary = ({
         transactionJSON={transactionJSON}
       >
         <div className={styles.header}>
-          <h5 className={styles.title}>{t('Register multisignature account')}</h5>
+          <h5 className={styles.title}>
+            {t(`${numberOfSignaturesOnAccount > 1 ? 'Edit' : 'Register'} multisignature account`)}
+          </h5>
         </div>
         <ProgressBar current={2} />
       </TransactionSummary>

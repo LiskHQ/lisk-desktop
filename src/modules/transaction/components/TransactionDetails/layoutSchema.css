@@ -186,7 +186,8 @@
     "sender sender"
     "numberOfSignatures fee"
     "members members"
-    "signedAndRemainingMembersList signedAndRemainingMembersList";
+    "signedAndRemainingMembersList signedAndRemainingMembersList"
+    "signedAndRemainingSignatureList signedAndRemainingSignatureList";
 }
 
 .reportValidatorMisbehavior {

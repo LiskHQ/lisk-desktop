@@ -2,7 +2,7 @@ import React from 'react';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import MultiSignatureReview from '../MultiSignatureReview';
 
-const RegisterMultisignatureGroup = ({ t, transactionJSON, formProps }) => {
+const RegisterMultisignatureGroup = ({ t, transactionJSON, formProps, account }) => {
   const mandatory = transactionJSON.params.mandatoryKeys.map((item) => ({
     address: extractAddressFromPublicKey(item),
     publicKey: item,
@@ -21,6 +21,8 @@ const RegisterMultisignatureGroup = ({ t, transactionJSON, formProps }) => {
       token={formProps.fields.token}
       members={[...mandatory, ...optional]}
       numberOfSignatures={transactionJSON.params.numberOfSignatures}
+      isMultisignature={account.summary.isMultisignature}
+      isRegisterMultisigature
     />
   );
 };
