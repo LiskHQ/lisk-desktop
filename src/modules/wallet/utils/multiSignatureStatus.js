@@ -47,13 +47,16 @@ export const getMultiSignatureStatus = ({
       mandatoryKeys: transactionJSON.params.mandatoryKeys,
       numberOfSignatures: transactionJSON.params.numberOfSignatures,
     };
-    const { remaining: paramsTxSignaturesRemaining } = calculateRemainingAndSignedMembers(
-      transactionKeys,
-      transactionJSON,
-      true
-    );
 
-    if (isRegisterMultisignature && isInitatorAccountMultiSig && paramsTxSignaturesRemaining.length > 0) {
+    if (isRegisterMultisignature && isInitatorAccountMultiSig) {
+      const { remaining: paramsTxSignaturesRemaining } = calculateRemainingAndSignedMembers(
+        transactionKeys,
+        transactionJSON,
+        true
+      );
+
+      if (paramsTxSignaturesRemaining.length === 0) return isMember;
+
       const { optionalKeys, mandatoryKeys } = transactionJSON.params;
       return [...optionalKeys, ...mandatoryKeys].includes(account.summary.publicKey);
     }
