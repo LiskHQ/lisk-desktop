@@ -79,6 +79,24 @@
         }
       }
 
+      & .infoTooltipWrapper {
+        display: flex;
+
+        & img {
+          margin: 0 0 0 8px;
+        }
+
+        & .infoTooltip {
+          left: calc(-100% + 60px);
+
+          & > span {
+            color: var(--color-tooltip-bg) !important;
+            top: 55% !important;
+            left: -9px !important;
+          }
+        }
+      }
+
       & > form {
         margin: 12px 0;
 
