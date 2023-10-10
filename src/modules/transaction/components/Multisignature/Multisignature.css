@@ -17,7 +17,8 @@
   }
 
   & > h6 {
-    font-weight: var(--font-weight-semi-bold);
+    font-weight: var(--font-weight-very-bold);
+    font-size: 28px;
     margin: 20px 0 0;
     color: var(--color-maastricht-blue);
   }
@@ -41,7 +42,7 @@
   }
 
   & > img {
-    width: 210px;
+    width: 120px;
     margin-top: var(--horizontal-padding-l);
   }
 
