@@ -134,17 +134,17 @@ const Multisignature = ({
           />
         ) : null}
         {status.code !== txStatusTypes.broadcastSuccess &&
-          status.code !== txStatusTypes.broadcastError && (
-            <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
-              <span className={styles.buttonContent}>
-                <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />
-                {t(copied ? 'Copied' : 'Copy')}
-              </span>
-            </SecondaryButton>
-          )}
-        {(status.code === txStatusTypes.multisigSignatureSuccess) && (
+        status.code !== txStatusTypes.broadcastError ? (
+          <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
+            <span className={styles.buttonContent}>
+              <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />
+              {t(copied ? 'Copied' : 'Copy')}
+            </span>
+          </SecondaryButton>
+        ) : null}
+        {status.code === txStatusTypes.multisigSignatureSuccess ? (
           <FullySignedActions onDownload={onDownload} t={t} onSend={onSend} />
-        )}
+        ) : null}
         {status.code === txStatusTypes.multisigSignaturePartialSuccess ? (
           <PartiallySignedActions onDownload={onDownload} t={t} />
         ) : null}

@@ -39,7 +39,7 @@ const SignedAndRemainingMembersList = ({ t }) => {
       needed={needed}
       required={required}
       className={styles.signedAndRemainingMembersList}
-      title={isMultisignatureRegistration ? 'Multisignature params signatures' : 'Members'}
+      title={isMultisignatureRegistration ? t('Multisignature params signatures') : t('Members')}
       t={t}
     />
   );
