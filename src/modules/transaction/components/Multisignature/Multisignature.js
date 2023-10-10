@@ -57,7 +57,7 @@ const ErrorActions = ({ t, status, message, network, application }) => (
   </a>
 );
 
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line max-statements, complexity
 const Multisignature = ({
   transactions,
   title,
@@ -107,7 +107,6 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
-
   useEffect(() => () => clearTimeout(ref.current), []);
 
   return (

@@ -1,11 +1,26 @@
 @import '../../../../../setup/react/app/mixins.css';
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  & > p:first-child > div:first-child {
+    margin-bottom: -4px;
+    margin-left: 7px;
+  }
+}
+
 .membersContainer {
   max-height: 440px;
   overflow-y: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  width: 100%;
+
+  &.fullySigned {
+    opacity: 0.5;
+  }
 
   & p {
     @mixin contentNormal bold;

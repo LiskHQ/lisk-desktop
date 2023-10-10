@@ -25,7 +25,7 @@ const Summary = ({ t, transactionJSON, formProps, account, nextStep, history, ne
     senderPublicKey: transactionJSON.senderPublicKey,
   });
 
-  const { isMember, signatureStatus, canSenderSignTx } = useMultiSignatureStatus({
+  const { signatureStatus, canSenderSignTx, canCurrentMemberSign } = useMultiSignatureStatus({
     transactionJSON,
     account,
     currentAccount,
@@ -47,7 +47,7 @@ const Summary = ({ t, transactionJSON, formProps, account, nextStep, history, ne
   };
 
   const showFeedback =
-    !(isMember || canSenderSignTx) ||
+    !(canCurrentMemberSign || canSenderSignTx) ||
     (signatureStatus === signatureCollectionStatus.fullySigned && !canSenderSignTx) ||
     (signatureStatus === signatureCollectionStatus.occupiedByOptionals && !canSenderSignTx);
 
@@ -85,13 +85,17 @@ const Summary = ({ t, transactionJSON, formProps, account, nextStep, history, ne
         </Box>
       </BoxContent>
 
-      {((isMember &&
+      {((canCurrentMemberSign &&
         signatureStatus !== signatureCollectionStatus.fullySigned &&
         signatureStatus !== signatureCollectionStatus.occupiedByOptionals) ||
         canSenderSignTx) && <ActionBar t={t} history={history} nextButton={nextButton} />}
 
       {showFeedback ? (
-        <Feedback t={t} isMember={isMember || canSenderSignTx} signatureStatus={signatureStatus} />
+        <Feedback
+          t={t}
+          isMember={canCurrentMemberSign || canSenderSignTx}
+          signatureStatus={signatureStatus}
+        />
       ) : null}
     </Box>
   );

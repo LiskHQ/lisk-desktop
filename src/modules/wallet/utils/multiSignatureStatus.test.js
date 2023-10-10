@@ -1,6 +1,7 @@
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import accounts from '@tests/constants/wallets';
 import { getMultiSignatureStatus } from './multiSignatureStatus';
+import * as accountUtils from './account';
 
 const mockCurrentAccount = mockSavedAccounts[0];
 
@@ -13,8 +14,8 @@ describe('TxSignatureCollector', () => {
     nonce: '1',
     signatures: [''],
     params: {
-      mandatoryKeys: ['mandatory-1'],
-      optionalKeys: ['public-1'],
+      mandatoryKeys: [accounts.genesis.publicKey],
+      optionalKeys: [accounts.multiSig.summary.publicKey],
       signatures: [],
     },
   };
@@ -68,5 +69,47 @@ describe('TxSignatureCollector', () => {
     });
 
     expect(canSenderSignTx).toBeTruthy();
+  });
+
+  it('should return canCurrentMemberSign as false if there are remaning memebers to sign', () => {
+    const currentAccount = {
+      ...mockCurrentAccount,
+      metadata: { pubkey: transactionJSON.senderPublicKey },
+    };
+    transactionJSON.params.signatures = ['', ''];
+
+    jest.spyOn(accountUtils, 'calculateRemainingAndSignedMembers').mockReturnValue({
+      remaining: [''],
+    });
+
+    const { canCurrentMemberSign } = getMultiSignatureStatus({
+      senderAccount: { ...senderAccount, numberOfSignatures: 2 },
+      account,
+      transactionJSON,
+      currentAccount,
+    });
+
+    expect(canCurrentMemberSign).toBeFalsy();
+  });
+
+  it('should return canCurrentMemberSign as false if there are no remaning memebers to sign', () => {
+    const currentAccount = {
+      ...mockCurrentAccount,
+      metadata: { pubkey: transactionJSON.senderPublicKey },
+    };
+    transactionJSON.params.signatures = ['', ''];
+
+    jest.spyOn(accountUtils, 'calculateRemainingAndSignedMembers').mockReturnValue({
+      remaining: [],
+    });
+
+    const { canCurrentMemberSign } = getMultiSignatureStatus({
+      senderAccount: { ...senderAccount, numberOfSignatures: 2 },
+      account,
+      transactionJSON,
+      currentAccount,
+    });
+
+    expect(canCurrentMemberSign).toBeFalsy();
   });
 });

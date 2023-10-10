@@ -5,6 +5,7 @@ import { truncateAddress, truncateAccountName } from '@wallet/utils/account';
 import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useAuth } from '@auth/hooks/queries';
 import AccountManagementDropdown from './AccountManagementDropdown';
 
 const mockCurrentAccount = mockSavedAccounts[0];
@@ -14,8 +15,12 @@ jest.mock('../../../account/hooks/useCurrentAccount.js', () => ({
 }));
 
 jest.mock('@token/fungible/hooks/queries/useTokenBalances');
+jest.mock('@auth/hooks/queries/useAuth');
 
 describe('AccountManagementDropdown', () => {
+  useAuth.mockReturnValue({
+    data: {},
+  });
   useTokenBalances.mockReturnValue({
     data: {
       data: [{ name: 'Lisk', symbol: 'LSK', availableBalance: 0, ...mockAppsTokens.data[0] }],
@@ -75,5 +80,20 @@ describe('AccountManagementDropdown', () => {
     fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
     fireEvent.click(screen.getByText('Backup account'));
     expect(screen.getByText('Register multisignature account')).toBeVisible();
+  });
+
+  it('Should have edit register multisignature enabled', () => {
+    useAuth.mockReturnValue({
+      data: { data: { numberOfSignatures: 3 } },
+    });
+
+    const props = {
+      currentAccount: mockHWAccounts[0],
+      onMenuClick: mockOnMenuClick,
+    };
+    renderWithRouterAndQueryClient(AccountManagementDropdown, props);
+    fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
+    fireEvent.click(screen.getByText('Backup account'));
+    expect(screen.getByText('Edit multisignature account')).toBeVisible();
   });
 });

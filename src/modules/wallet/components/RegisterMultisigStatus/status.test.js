@@ -16,6 +16,17 @@ describe('Multisignature Status component', () => {
       txSignatureError: null,
       signedTransaction: { signatures: ['123', '987'] },
     },
+    authQuery: {
+      isFetching: false,
+      isFetched: true,
+      data: {
+        data: {
+          numberOfSignatures: 1,
+          mandatoryKeys: [],
+          optionalKeys: [],
+        },
+      },
+    },
     account: accounts.genesis,
   };
 
@@ -53,8 +64,7 @@ describe('Multisignature Status component', () => {
       illustration: 'registerMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS' },
       title: 'Your signature was successful',
-      message:
-        'You can download or copy the transaction and share it with other members.',
+      message: 'You can download or copy the transaction and share it with other members.',
       className: 'content',
     });
   });
@@ -149,5 +159,20 @@ describe('Multisignature Status component', () => {
       title: 'Transaction submitted',
       className: 'content',
     });
+  });
+
+  it('Should be in edit mode', () => {
+    const customProp = {
+      ...props,
+      authQuery: { data: { data: { numberOfSignatures: 3 } } },
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: null,
+        signedTransaction: {},
+      },
+    };
+
+    const wrapper = shallow(<Status {...customProp} />);
+    expect(wrapper.find('div.header')).toHaveText('Edit multisignature account');
   });
 });
