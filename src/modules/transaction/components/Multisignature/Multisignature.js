@@ -17,6 +17,7 @@ import WarningNotification from '@common/components/warningNotification';
 import AccountRow from '@account/components/AccountRow';
 import classNames from 'classnames';
 import { useAuth } from '@auth/hooks/queries';
+import { immutableArrayMerge } from 'src/utils/immutableUtils';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
 
@@ -133,10 +134,26 @@ const Multisignature = ({
     options: { enabled: !!originatorAccount?.metadata?.address },
   });
 
+  const isRegisterMultisignature =
+    transactionJSON.params?.mandatoryKeys?.length !== transactionJSON.signatures?.length &&
+    joinModuleAndCommand(transactionJSON) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+
   const { remaining } = calculateRemainingAndSignedMembers(
-    { mandatoryKeys: authData?.data?.mandatoryKeys },
+    isRegisterMultisignature
+      ? {
+          optionalKeys: transactionJSON.params.optionalKeys,
+          mandatoryKeys: [
+            ...new Set(
+              immutableArrayMerge(
+                transactionJSON.params.mandatoryKeys,
+                authData?.data?.mandatoryKeys
+              )
+            ),
+          ],
+        }
+      : { mandatoryKeys: authData?.data?.mandatoryKeys },
     transactionJSON,
-    false
+    isRegisterMultisignature
   );
 
   const nextAccountToSign = accounts.find((account) =>
