@@ -82,15 +82,15 @@ export const FullySignedActions = ({ t, onDownload, onSend }) => (
   </>
 );
 
-const ErrorActions = ({ t, status, message, network, application }) => (
+export const ErrorActions = ({ t, status, message, network, application }) => (
   <a
     className="report-error-link"
     href={getErrorReportMailto({
       error: status?.message,
       errorMessage: message,
-      networkIdentifier: network.networkIdentifier,
-      serviceUrl: network.serviceUrl,
-      liskCoreVersion: network.networkVersion,
+      networkIdentifier: network?.networkIdentifier,
+      serviceUrl: network?.serviceUrl,
+      liskCoreVersion: network?.networkVersion,
       application,
     })}
     target="_top"

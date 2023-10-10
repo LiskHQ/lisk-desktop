@@ -5,6 +5,8 @@ import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
+import { ErrorActions } from '@transaction/components/Multisignature/Multisignature';
+import blockchainApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
 import Multisignature, { FullySignedActions, PartiallySignedActions } from '.';
 import { toTransactionJSON } from '../../utils/encoding';
 
@@ -137,5 +139,16 @@ describe('TransactionResult Multisignature', () => {
       props.transactions.signedTransaction,
       props.moduleCommandSchemas
     );
+  });
+
+  it('should props.broadcastError', () => {
+    const wrapper = mountWithQueryClient(Multisignature, {
+      ...props,
+      application: blockchainApplicationsManage[0],
+      status: {
+        code: txStatusTypes.broadcastError,
+      },
+    });
+    expect(wrapper.find(ErrorActions)).toExist();
   });
 });
