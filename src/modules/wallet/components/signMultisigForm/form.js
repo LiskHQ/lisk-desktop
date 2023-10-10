@@ -16,8 +16,8 @@ import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
 
 // eslint-disable-next-line max-statements
-const Form = ({ t, nextStep, initialTransactionJSON }) => {
-  const [transaction, setTransaction] = useState(initialTransactionJSON);
+const Form = ({ t, nextStep }) => {
+  const [transaction, setTransaction] = useState();
   const [error, setError] = useState();
   const { moduleCommandSchemas, isError, isFetching } = useCommandSchema();
   // @todo Once the transactions are refactored and working, we should
@@ -68,7 +68,6 @@ const Form = ({ t, nextStep, initialTransactionJSON }) => {
             value={transaction}
             error={error}
             onError={handleJsonInputError}
-            isDisabled={!!initialTransactionJSON}
           />
         </BoxContent>
         <BoxFooter className={styles.footer}>
