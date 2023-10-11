@@ -21,7 +21,16 @@ const AccountName = ({ isMultisig, name }) => (
     <p className="accountName" data-testid={name}>
       {name}
     </p>
-    {isMultisig && name && <Icon name="multisigKeys" />}
+    {isMultisig && name && (
+      <Tooltip
+        position="right"
+        size="maxContent"
+        tooltipClassName={styles.infoTooltip}
+        content={<Icon name="multisigKeys" />}
+      >
+        <span>Multisignature account</span>
+      </Tooltip>
+    )}
   </div>
 );
 
@@ -44,7 +53,16 @@ const AccountAddress = ({
         className={styles.copyIcon}
       />
     ) : null}
-    {isMultisig && !name && <Icon name="multisigKeys" />}
+    {isMultisig && !name && (
+      <Tooltip
+        position="right"
+        size="maxContent"
+        tooltipClassName={styles.infoTooltip}
+        content={<Icon name="multisigKeys" />}
+      >
+        <span>Multisignature account</span>
+      </Tooltip>
+    )}
   </div>
 );
 
