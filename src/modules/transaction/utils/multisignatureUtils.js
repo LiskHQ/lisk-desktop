@@ -32,7 +32,7 @@ function getRemainingRootMembers(transactionJSON, txInitiatorAccount) {
 }
 
 function getRemainingMember(members, getAccountByPublicKey) {
-  let remainingMember = {};
+  let remainingMember = null;
   members.find(({ publicKey }) => {
     const account = getAccountByPublicKey(publicKey);
     if (account) {
