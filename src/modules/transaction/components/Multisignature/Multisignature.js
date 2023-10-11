@@ -16,7 +16,7 @@ import { ReactComponent as SwitchIcon } from '@setup/react/assets/images/icons/s
 import WarningNotification from '@common/components/warningNotification';
 import AccountRow from '@account/components/AccountRow';
 import classNames from 'classnames';
-import { getNextAccountToSign } from '@transaction/utils/multisignature';
+import { getNextAccountToSign } from '@transaction/utils/multisignatureUtils';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
