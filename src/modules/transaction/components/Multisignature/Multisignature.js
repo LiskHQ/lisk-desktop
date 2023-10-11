@@ -16,7 +16,6 @@ import { ReactComponent as SwitchIcon } from '@setup/react/assets/images/icons/s
 import WarningNotification from '@common/components/warningNotification';
 import AccountRow from '@account/components/AccountRow';
 import classNames from 'classnames';
-import { useAuth } from '@auth/hooks/queries';
 import { getNextAccountToSign } from '@transaction/utils/multisignature';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
@@ -121,19 +120,10 @@ const Multisignature = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const ref = useRef();
-  const { accounts, getAccountByPublicKey } = useAccounts();
+  const { getAccountByPublicKey } = useAccounts();
   const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
   const paramSchema = moduleCommandSchemas[moduleCommand];
   const transactionJSON = toTransactionJSON(transactions.signedTransaction, paramSchema);
-
-  const originatorAccount = accounts.find(
-    (account) => account.metadata.pubkey === transactionJSON.senderPublicKey
-  );
-
-  const { data: authData } = useAuth({
-    config: { params: { address: originatorAccount?.metadata?.address } },
-    options: { enabled: !!originatorAccount?.metadata?.address },
-  });
 
   const { txInitiatorAccount } = useTxInitiatorAccount({
     senderPublicKey: transactionJSON.senderPublicKey,
@@ -144,8 +134,6 @@ const Multisignature = ({
     transactionJSON,
     txInitiatorAccount,
   });
-
-  console.log('authData', authData);
 
   const onCopy = () => {
     setCopied(true);
