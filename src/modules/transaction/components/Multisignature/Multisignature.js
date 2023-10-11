@@ -11,12 +11,13 @@ import { downloadJSON, joinModuleAndCommand, toTransactionJSON } from '@transact
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import Icon from 'src/theme/Icon';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
-import { calculateRemainingAndSignedMembers, truncateAddress } from '@wallet/utils/account';
+import { truncateAddress } from '@wallet/utils/account';
 import { ReactComponent as SwitchIcon } from '@setup/react/assets/images/icons/switch-icon.svg';
 import WarningNotification from '@common/components/warningNotification';
 import AccountRow from '@account/components/AccountRow';
 import classNames from 'classnames';
 import { useAuth } from '@auth/hooks/queries';
+import { getNextAccountToSign } from '@transaction/utils/multisignature';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
@@ -138,64 +139,13 @@ const Multisignature = ({
     senderPublicKey: transactionJSON.senderPublicKey,
   });
 
-  let nextAccountToSign = null;
-
-  const isRegisterMultisignature =
-    transactionJSON.params?.mandatoryKeys?.length + transactionJSON.params?.optionalKeys?.length !==
-      transactionJSON.signatures?.length &&
-    joinModuleAndCommand(transactionJSON) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
-
-  const isMultiSignatureAccount = txInitiatorAccount?.numberOfSignatures > 0;
-  const isEditRegisterMultiSignature = isRegisterMultisignature && isMultiSignatureAccount;
-
-  const accountKeys = {
-    optionalKeys: authData?.data?.optionalKeys || [],
-    mandatoryKeys: authData?.data?.optionalKeys || [],
-    numberOfSignatures: authData?.data?.numberOfSignatures || 0,
-  };
-  const transactionParamKeys = {
-    optionalKeys: transactionJSON.params.optionalKeys || [],
-    mandatoryKeys: transactionJSON.params.mandatoryKeys || [],
-    numberOfSignatures: transactionJSON.params.numberOfSignatures || 0,
-  };
-
-  const { remaining: remainingTxParamMembers = [] } = isRegisterMultisignature
-    ? calculateRemainingAndSignedMembers(transactionParamKeys, transactionJSON, true)
-    : {};
-
-  const {
-    remaining: remainingRootMembers,
-  } = () => calculateRemainingAndSignedMembers(accountKeys, transactionJSON, false);
-
-  if (isEditRegisterMultiSignature && remainingTxParamMembers.length > 0) {
-    remainingTxParamMembers.find((pubkey) => {
-      const account = getAccountByPublicKey(pubkey);
-      if (account) {
-        nextAccountToSign = account;
-        return true;
-      }
-
-      return false;
-    });
-  } else if (remainingTxParamMembers.length === 0 && remainingRootMembers.length > 0) {
-    remainingRootMembers.find((pubkey) => {
-      const account = getAccountByPublicKey(pubkey);
-      if (account) {
-        nextAccountToSign = account;
-        return true;
-      }
-
-      return false;
-    });
-  }
-  console.log('next member to sign:', {
-    nextAccountToSign,
-    isRegisterMultisignature,
-    isMultiSignatureAccount,
-    isEditRegisterMultiSignature,
-    accountKeys,
-    transactionParamKeys,
+  const nextAccountToSign = getNextAccountToSign({
+    getAccountByPublicKey,
+    transactionJSON,
+    txInitiatorAccount,
   });
+
+  console.log('authData', authData);
 
   const onCopy = () => {
     setCopied(true);
