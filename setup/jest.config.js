@@ -293,6 +293,7 @@ module.exports = {
     'src/modules/account/components/SwitchAccount/SwitchAccount.js',
     'src/modules/account/components/RemoveSelectedAccountFlow/RemoveSelectedAccountFlow.js',
     'src/modules/blockchainApplication/connection/components/RequestView/RequestView.js',
+    'src/modules/transaction/utils/multisignatureUtils.js',
     'src/modules/hardwareWallet/store/actions/devicesActions.js',
     '/src/modules/hardwareWallet/store/reducers/devicesReducer.js',
     'src/modules/pos/validator/components/ClaimRewardsView/index.js',
