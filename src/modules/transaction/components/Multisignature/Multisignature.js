@@ -216,7 +216,7 @@ const Multisignature = ({
               <span>
                 {t('A required signatory account')}{' '}
                 <b>
-                  ({nextAccountToSign?.metadata?.name} -
+                  ({nextAccountToSign?.metadata?.name} -{' '}
                   {truncateAddress(nextAccountToSign?.metadata?.address)})
                 </b>{' '}
                 {t(
