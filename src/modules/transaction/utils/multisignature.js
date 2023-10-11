@@ -2,6 +2,50 @@ import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { calculateRemainingAndSignedMembers } from '@wallet/utils/account';
 
+function getRemainingTxParamMembers(transactionJSON, isRegisterMultisignature) {
+  const transactionParamKeys = {
+    optionalKeys: transactionJSON.params.optionalKeys || [],
+    mandatoryKeys: transactionJSON.params.mandatoryKeys || [],
+    numberOfSignatures: transactionJSON.params.numberOfSignatures || 0,
+  };
+
+  const { remaining: remainingTxParamMembers = [] } = isRegisterMultisignature
+    ? calculateRemainingAndSignedMembers(transactionParamKeys, transactionJSON, true)
+    : {};
+  return remainingTxParamMembers;
+}
+
+function getRemainingRootMembers(transactionJSON, txInitiatorAccount) {
+  const accountKeys = {
+    optionalKeys: txInitiatorAccount?.keys?.optionalKeys || [],
+    mandatoryKeys: txInitiatorAccount?.keys?.mandatoryKeys || [],
+    numberOfSignatures: txInitiatorAccount?.keys?.numberOfSignatures || 0,
+  };
+
+  const { remaining: remainingRootMembers = [] } = calculateRemainingAndSignedMembers(
+    accountKeys,
+    transactionJSON,
+    false
+  );
+
+  return remainingRootMembers;
+}
+
+function getRemainingMember(members, getAccountByPublicKey) {
+  let remainingMember = {};
+  members.find(({ publicKey }) => {
+    const account = getAccountByPublicKey(publicKey);
+    if (account) {
+      remainingMember = account;
+      return true;
+    }
+
+    return false;
+  });
+
+  return remainingMember;
+}
+
 // eslint-disable-next-line complexity,max-statements
 export const getNextAccountToSign = ({
   getAccountByPublicKey,
@@ -16,61 +60,31 @@ export const getNextAccountToSign = ({
   const isMultiSignatureAccount = txInitiatorAccount?.numberOfSignatures > 0;
   const isEditRegisterMultiSignature = isRegisterMultisignature && isMultiSignatureAccount;
 
-  const accountKeys = {
-    optionalKeys: txInitiatorAccount?.keys?.optionalKeys || [],
-    mandatoryKeys: txInitiatorAccount?.keys?.mandatoryKeys || [],
-    numberOfSignatures: txInitiatorAccount?.keys?.numberOfSignatures || 0,
-  };
-  const transactionParamKeys = {
-    optionalKeys: transactionJSON.params.optionalKeys || [],
-    mandatoryKeys: transactionJSON.params.mandatoryKeys || [],
-    numberOfSignatures: transactionJSON.params.numberOfSignatures || 0,
-  };
-
-  const { remaining: remainingTxParamMembers = [] } = isRegisterMultisignature
-    ? calculateRemainingAndSignedMembers(transactionParamKeys, transactionJSON, true)
-    : {};
-
-  const { remaining: remainingRootMembers = [] } = calculateRemainingAndSignedMembers(
-    accountKeys,
+  const remainingTxParamMembers = getRemainingTxParamMembers(
     transactionJSON,
-    false
+    isRegisterMultisignature
   );
+  const remainingRootMembers = getRemainingRootMembers(transactionJSON, txInitiatorAccount);
 
-  if (isEditRegisterMultiSignature && remainingTxParamMembers.length > 0) {
-    remainingTxParamMembers.find(({ publicKey }) => {
-      const account = getAccountByPublicKey(publicKey);
-      if (account) {
-        nextAccountToSign = account;
-        return true;
-      }
+  const hasRemainingSignaturesForNonMultiSigAccount =
+    isRegisterMultisignature && !isMultiSignatureAccount && remainingTxParamMembers.length > 0;
 
-      return false;
-    });
+  const canInitiatorAccountSign =
+    isRegisterMultisignature &&
+    !isMultiSignatureAccount &&
+    remainingTxParamMembers.length === 0 &&
+    transactionJSON.signatures.length === 0;
+
+  if (
+    (isEditRegisterMultiSignature && remainingTxParamMembers.length > 0) ||
+    hasRemainingSignaturesForNonMultiSigAccount
+  ) {
+    nextAccountToSign = getRemainingMember(remainingTxParamMembers, getAccountByPublicKey);
   } else if (remainingTxParamMembers.length === 0 && remainingRootMembers.length > 0) {
-    remainingRootMembers.find(({ publicKey }) => {
-      const account = getAccountByPublicKey(publicKey);
-      if (account) {
-        nextAccountToSign = account;
-        return true;
-      }
-
-      return false;
-    });
+    nextAccountToSign = getRemainingMember(remainingRootMembers, getAccountByPublicKey);
+  } else if (canInitiatorAccountSign) {
+    nextAccountToSign = getAccountByPublicKey(txInitiatorAccount.summary.publicKey);
   }
-
-  console.log('next member to sign:', {
-    nextAccountToSign,
-    isRegisterMultisignature,
-    isMultiSignatureAccount,
-    isEditRegisterMultiSignature,
-    accountKeys,
-    transactionParamKeys,
-    txInitiatorAccount,
-    remainingTxParamMembers,
-    remainingRootMembers,
-    transactionJSON,
-  });
 
   return nextAccountToSign;
 };
