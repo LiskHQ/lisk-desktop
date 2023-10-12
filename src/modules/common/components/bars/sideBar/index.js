@@ -24,7 +24,9 @@ const Inner = ({ data, pathname, hasNotification, sideBarExpanded }) => {
     <span className={styles.holder}>
       <span className={styles.iconWrapper}>
         <Icon name={`${data.icon}${status}`} className={styles.icon} />
-        {!sideBarExpanded && <Badge className={`${className} ${styles.collapsedNotification}`} />}
+        {!sideBarExpanded && !!hasNotification && (
+          <Badge className={`${className} ${styles.collapsedNotification}`} />
+        )}
       </span>
       {sideBarExpanded && <span className={styles.label}>{data.label}</span>}
       {sideBarExpanded && !!hasNotification && <Badge className={className} />}
