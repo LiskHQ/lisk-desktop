@@ -170,25 +170,23 @@ const Multisignature = ({
       <Illustration name={getIllustration(status.code, 'signMultisignature')} />
       <h6 className="result-box-header">{title}</h6>
       {!nextAccountToSign && <p className="transaction-status body-message">{message}</p>}
-      {nextAccountToSign && (
+      {nextAccountToSign && status.code !== txStatusTypes.multisigSignatureSuccess && (
         <div className={styles.requiredAccountSection}>
-          {status.code !== txStatusTypes.multisigSignatureSuccess && (
-            <WarningNotification
-              isVisible
-              message={
-                <span>
-                  {t('A required signatory account')}{' '}
-                  <b>
-                    ({nextAccountToSign?.metadata?.name} -{' '}
-                    {truncateAddress(nextAccountToSign?.metadata?.address)})
-                  </b>{' '}
-                  {t(
-                    'to complete this transaction has been found on your Lisk Desktop. Please click on “Switch account” to complete this transaction.'
-                  )}
-                </span>
-              }
-            />
-          )}
+          <WarningNotification
+            isVisible
+            message={
+              <span>
+                {t('A required signatory account')}{' '}
+                <b>
+                  ({nextAccountToSign?.metadata?.name} -{' '}
+                  {truncateAddress(nextAccountToSign?.metadata?.address)})
+                </b>{' '}
+                {t(
+                  'to complete this transaction has been found on your Lisk Desktop. Please click on “Switch account” to complete this transaction.'
+                )}
+              </span>
+            }
+          />
           <h4 className={styles.requiredAccountTitle}>{t('Required account')}</h4>
           <AccountRow className={classNames(styles.accountRow)} account={nextAccountToSign} />
         </div>
