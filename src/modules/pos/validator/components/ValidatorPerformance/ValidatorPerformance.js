@@ -13,7 +13,7 @@ import styles from './styles.css';
 
 const ValidatorPerformance = ({ history }) => {
   const { t } = useTranslation();
-  const address = parseSearchParams(history.location.search).address;
+  const address = parseSearchParams(history.location.search).validatorAddress;
   const {
     isLoading,
     data: { data } = {},
