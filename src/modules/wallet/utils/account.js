@@ -155,7 +155,7 @@ export const calculateRemainingAndSignedMembers = (
   const signed = [];
   const remaining = [];
 
-  mandatoryKeys.forEach((key, index) => {
+  mandatoryKeys?.forEach((key, index) => {
     const value = {
       publicKey: key,
       mandatory: true,
@@ -169,7 +169,7 @@ export const calculateRemainingAndSignedMembers = (
     }
   });
 
-  optionalKeys.forEach((key, index) => {
+  optionalKeys?.forEach((key, index) => {
     const value = {
       publicKey: key,
       mandatory: false,

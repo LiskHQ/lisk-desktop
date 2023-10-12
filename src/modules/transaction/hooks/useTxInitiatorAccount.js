@@ -3,10 +3,11 @@ import { useAuth } from '@auth/hooks/queries';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 const useTxInitiatorAccount = ({ senderPublicKey }) => {
-  const txInitiatorAddress = extractAddressFromPublicKey(senderPublicKey);
+  const txInitiatorAddress = senderPublicKey && extractAddressFromPublicKey(senderPublicKey);
 
   const { data, isLoading } = useAuth({
     config: { params: { address: txInitiatorAddress } },
+    options: { enabled: !!txInitiatorAddress },
   });
 
   const txInitiatorAccount = useMemo(

@@ -104,7 +104,7 @@ body {
 }
 
 .toastText {
-  color: var(--color-strong-mystic);
+  color: var(--color-white);
   font-family: var(--content-font);
 }
 

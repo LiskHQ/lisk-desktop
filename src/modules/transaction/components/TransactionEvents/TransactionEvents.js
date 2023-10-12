@@ -53,7 +53,11 @@ const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet
     height: '',
   });
 
-  const params = { ...filters, senderAddress: address };
+  const params = {
+    ...filters,
+    ...(address && { topic: address }),
+    ...(transactionID && { topic: transactionID }),
+  };
 
   const {
     data: transactionEvents,

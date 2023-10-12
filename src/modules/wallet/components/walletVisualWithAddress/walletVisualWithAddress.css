@@ -62,3 +62,11 @@
     padding-right: 8px;
   }
 }
+
+.infoTooltip {
+  & > span {
+    color: var(--color-tooltip-bg) !important;
+    top: 55% !important;
+    left: -9px !important;
+  }
+}
