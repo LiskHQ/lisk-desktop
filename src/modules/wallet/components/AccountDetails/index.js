@@ -301,7 +301,7 @@ const AccountDetails = () => {
                 <div className={styles.row}>
                   <div className={styles.detailsWrapper}>
                     <span className={styles.title}>{t('Rank')}: </span>
-                    <span>#{validatorData?.data[0].rank}</span>
+                    <span>#{validatorData?.data[0]?.rank}</span>
                   </div>
                 </div>
               </div>

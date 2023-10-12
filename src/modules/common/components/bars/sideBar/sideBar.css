@@ -144,5 +144,6 @@
 
 .collapsedNotification {
   position: absolute;
-  right: -4px;
+  right: -11px;
+  top: 23px;
 }
