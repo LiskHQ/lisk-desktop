@@ -18,18 +18,17 @@ const Inner = ({ data, pathname, hasNotification, sideBarExpanded }) => {
   if (pathname && pathname === data.path) {
     status = 'Active';
   }
-  const className = hasNotification ? styles.badge : '';
 
   return (
     <span className={styles.holder}>
       <span className={styles.iconWrapper}>
         <Icon name={`${data.icon}${status}`} className={styles.icon} />
         {!sideBarExpanded && !!hasNotification && (
-          <Badge className={`${className} ${styles.collapsedNotification}`} />
+          <Badge className={`${styles.badge} ${styles.collapsedNotification}`} />
         )}
       </span>
       {sideBarExpanded && <span className={styles.label}>{data.label}</span>}
-      {sideBarExpanded && !!hasNotification && <Badge className={className} />}
+      {sideBarExpanded && !!hasNotification && <Badge className={styles.badge} />}
     </span>
   );
 };
