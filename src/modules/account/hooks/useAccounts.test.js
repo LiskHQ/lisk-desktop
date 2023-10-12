@@ -52,8 +52,8 @@ describe('useAccount hook', () => {
 
   it('Should return specific account selected by pubkey', async () => {
     const { getAccountByPublicKey } = result.current;
-    const address = mockSavedAccounts[0].metadata.pubkey;
-    const account = getAccountByPublicKey(address);
+    const pubkey = mockSavedAccounts[0].metadata.pubkey;
+    const account = getAccountByPublicKey(pubkey);
     expect(account).toMatchObject(mockSavedAccounts[0]);
   });
 
