@@ -60,7 +60,7 @@ class MultiStep extends React.Component {
 
   reset() {
     this.prev({ reset: true });
-    this.props.onChange?.();
+    this.props.onChange?.(this.state);
   }
 
   render() {

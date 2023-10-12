@@ -12,6 +12,7 @@ const UploadJSONInput = ({
   label,
   prefixLabel,
   placeholderText,
+  isDisabled = false,
 }) => {
   const { t } = useTranslation();
 
@@ -43,6 +44,7 @@ const UploadJSONInput = ({
       'application/JSON': ['.json'],
     },
     noClick: true,
+    disabled: isDisabled,
   });
 
   return (
@@ -52,6 +54,7 @@ const UploadJSONInput = ({
         <label className={styles.fileInputBtn}>
           {label}
           <input
+            disabled={isDisabled}
             role="button"
             className={`${styles.input} clickableFileInput`}
             type="file"
@@ -67,6 +70,7 @@ const UploadJSONInput = ({
         }`}
       >
         <textarea
+          disabled={isDisabled}
           onPaste={onPaste}
           onChange={onPaste}
           value={value && !error ? JSON.stringify(value) : ''}

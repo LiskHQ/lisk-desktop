@@ -4,6 +4,10 @@
   display: flex;
   flex-direction: column;
 
+  & .title {
+    color: var(--color-maastricht-blue);
+  }
+
   & > p:first-child > div:first-child {
     margin-bottom: -4px;
     margin-left: 7px;
