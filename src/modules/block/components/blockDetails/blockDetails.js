@@ -189,7 +189,7 @@ const BlockDetails = ({ height, id, history }) => {
           {activeTab === 'transactions' ? (
             <Transactions blockId={blocks?.data?.[0].id || id} />
           ) : (
-            <TransactionEvents blockId={blocks?.data?.[0].id || id} />
+            <TransactionEvents blockID={blocks?.data?.[0].id || id} />
           )}
         </BoxContent>
       </Box>
