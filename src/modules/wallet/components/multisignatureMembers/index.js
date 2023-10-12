@@ -90,7 +90,7 @@ export const SignedAndRemainingMembers = ({
   title,
 }) => (
   <div className={classNames(styles.wrapper, className)}>
-    <p>
+    <p className={styles.title}>
       {title}
       <Tooltip
         size="s"
