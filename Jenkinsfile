@@ -55,7 +55,7 @@ pipeline {
                                 sh '''
                                 cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
                                 cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
-                                yarn run build
+                                yarn run build:e2e
 
                                 # locally serve build
                                 nohup npx serve -l 8081 ./app/buildE2E >serve.out 2>serve.err &
