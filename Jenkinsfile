@@ -120,7 +120,7 @@ pipeline {
 								npm install
 								./bin/run --help
 								./bin/run blockchain import --force ./e2e/artifacts/enevti-core/blockchain.tar.gz
-								nohup ./bin/run start --network=devnet --api-ws --api-host=0.0.0.0 --api-host=8887 >enevti-core.out 2>enevti-core.err &
+								nohup ./bin/run start --network=devnet --api-ws --api-host=0.0.0.0 --api-port=8887 >enevti-core.out 2>enevti-core.err &
 								echo $! >enevti-core.pid
 
 								# enevti-service
