@@ -97,12 +97,12 @@ pipeline {
 								withEnv(["ENEVTI_SERVICE_FILE_PATH=enevti-service", "USE_NOHUP=true", "CORE=enevti", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
 									sh '''
 									# enevti-core
-									. ./e2e/scripts/run-core.sh
+									sh ./e2e/scripts/run-core.sh
 									'''
 
 									sh '''
 									# enevti-service
-									. ./e2e/scripts/run-service.sh 
+									sh ./e2e/scripts/run-service.sh 
 
 									# enevti service and core logs (for debug purpose only)
 									cat enevti-core.out &
@@ -124,12 +124,12 @@ pipeline {
 								withEnv(["LISK_SERVICE_FILE_PATH=lisk-service", "USE_NOHUP=true", "CORE=lisk", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
 									sh '''
 									# lisk-core
-									. ./e2e/scripts/run-core.sh
+									sh ./e2e/scripts/run-core.sh
 									'''
 
 									sh '''
 									# lisk-service
-									. lisk-desktop/e2e/scripts/run-service.sh 
+									sh lisk-desktop/e2e/scripts/run-service.sh 
 
 									# lisk service and core logs (for debug purpose only)
 									cat lisk-core.out &
