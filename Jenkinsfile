@@ -125,8 +125,8 @@ pipeline {
 								withEnv(["LISK_SERVICE_FILE_PATH=lisk-service", "USE_NOHUP=true", "CORE=lisk", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
 									sh '''
 									# lisk-core
-									cd lisk-desktop
-									source e2e/scripts/run-core.sh
+									ls -a
+									source ./e2e/scripts/run-core.sh
 									'''
 
 									sh '''
