@@ -98,7 +98,6 @@ pipeline {
 									sh '''
 									# enevti-core
 									ls -a
-									cd lisk-desktop
 									source e2e/scripts/run-core.sh
 									'''
 
