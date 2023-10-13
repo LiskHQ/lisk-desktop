@@ -1,9 +1,9 @@
 import React from 'react';
-
 import Tooltip from '@theme/Tooltip/tooltip';
+import classNames from 'classnames';
+import Icon from 'src/theme/Icon';
 import WalletVisual from '../walletVisual';
 import { truncateAddress } from '../../utils/account';
-
 import styles from './styles.css';
 
 const Member = ({ member, i, t, size }) => (
@@ -87,22 +87,47 @@ export const SignedAndRemainingMembers = ({
   required,
   className,
   t,
+  title,
 }) => (
-  <div className={`${styles.membersContainer} ${className}`}>
-    <div>
-      <p className={styles.label}>{t('Signed')}</p>
-      {signed.map((member, i) => (
-        <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />
-      ))}
-    </div>
-    <div>
-      <p className={styles.label}>
-        <span>{t('Remaining')}</span>
-        <span className="tx-remaining-members">{` ${needed}/${required}`}</span>
-      </p>
-      {remaining.map((member, i) => (
-        <Member member={member} key={`registerMultiSignature-members-list-${i}-remaining`} t={t} />
-      ))}
+  <div className={classNames(styles.wrapper, className)}>
+    <p className={styles.title}>
+      {title}
+      <Tooltip
+        size="s"
+        position="right"
+        content={<Icon name={remaining.length === 0 ? 'okIcon' : 'transactionStatusPending'} />}
+      >
+        <p>
+          {remaining.length === 0
+            ? t('Members have fully signed.')
+            : t('Members have partially signed.')}
+        </p>
+      </Tooltip>
+    </p>
+    <div
+      className={classNames(styles.membersContainer, {
+        [styles.fullySigned]: remaining.length === 0,
+      })}
+    >
+      <div>
+        <p className={styles.label}>{t('Signed')}</p>
+        {signed.map((member, i) => (
+          <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />
+        ))}
+      </div>
+      <div>
+        <p className={styles.label}>
+          <span>{t('Remaining')}</span>
+          <span className="tx-remaining-members">{` ${needed}/${required}`}</span>
+        </p>
+        {remaining.map((member, i) => (
+          <Member
+            member={member}
+            key={`registerMultiSignature-members-list-${i}-remaining`}
+            t={t}
+          />
+        ))}
+      </div>
     </div>
   </div>
 );

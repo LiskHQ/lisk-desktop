@@ -18,6 +18,7 @@ import BoxContent from '@theme/box/content';
 import BoxInfoText from '@theme/box/infoText';
 import Dialog from '@theme/dialog/dialog';
 import Icon from '@theme/Icon';
+import Tooltip from '@theme/Tooltip';
 import { Input } from 'src/theme';
 import { TertiaryButton } from '@theme/buttons';
 import { updateCurrentAccount, updateAccount } from '@account/store/action';
@@ -182,10 +183,28 @@ const AccountDetails = () => {
               {readMode ? (
                 <>
                   <h3>{accountName}</h3>
-                  {numberOfSignatures > 0 && <Icon name="multisigKeys" />}
+                  {numberOfSignatures > 0 && (
+                    <Tooltip
+                      position="right"
+                      size="maxContent"
+                      className={styles.infoTooltipWrapper}
+                      tooltipClassName={styles.infoTooltip}
+                      content={<Icon name="multisigKeys" />}
+                    >
+                      <span>Multisignature account</span>
+                    </Tooltip>
+                  )}
                   {!authLoading && isMyAccount && <Icon name="edit" onClick={setMode} />}
                   {isMyAccount && currentAccount.metadata.isHW && (
-                    <Icon name="hardwareWalletIcon" />
+                    <Tooltip
+                      position="right"
+                      size="maxContent"
+                      className={styles.infoTooltipWrapper}
+                      tooltipClassName={styles.infoTooltip}
+                      content={<Icon name="hardwareWalletIcon" />}
+                    >
+                      <span>Hardware wallet account</span>
+                    </Tooltip>
                   )}
                 </>
               ) : (
@@ -282,7 +301,7 @@ const AccountDetails = () => {
                 <div className={styles.row}>
                   <div className={styles.detailsWrapper}>
                     <span className={styles.title}>{t('Rank')}: </span>
-                    <span>#{validatorData?.data[0].rank}</span>
+                    <span>#{validatorData?.data[0]?.rank}</span>
                   </div>
                 </div>
               </div>

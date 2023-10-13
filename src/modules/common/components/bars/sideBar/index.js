@@ -9,25 +9,31 @@ import Icon from 'src/theme/Icon';
 import { selectActiveToken } from 'src/redux/selectors';
 import DialogLink from 'src/theme/dialog/link';
 import SidebarToggle from '@settings/components/SidebarToggle';
+import Badge from '../../badge';
 import styles from './sideBar.css';
 import menuLinks from './menuLinks';
 
-const Inner = ({ data, pathname, sideBarExpanded }) => {
+const Inner = ({ data, pathname, hasNotification, sideBarExpanded }) => {
   let status = '';
   if (pathname && pathname === data.path) {
     status = 'Active';
   }
+
   return (
     <span className={styles.holder}>
       <span className={styles.iconWrapper}>
         <Icon name={`${data.icon}${status}`} className={styles.icon} />
+        {!sideBarExpanded && !!hasNotification && (
+          <Badge className={`${styles.badge} ${styles.collapsedNotification}`} />
+        )}
       </span>
       {sideBarExpanded && <span className={styles.label}>{data.label}</span>}
+      {sideBarExpanded && !!hasNotification && <Badge className={styles.badge} />}
     </span>
   );
 };
 
-const MenuLink = ({ data, pathname, sideBarExpanded, disabled }) => {
+const MenuLink = ({ data, pathname, sideBarExpanded, events, disabled }) => {
   if (data.modal) {
     const className = `${styles.item} ${disabled ? `${styles.disabled} disabled` : ''}`;
     return (
@@ -38,6 +44,9 @@ const MenuLink = ({ data, pathname, sideBarExpanded, disabled }) => {
   }
 
   const className = `${styles.item} ${disabled ? `${styles.disabled} disabled` : ''}`;
+  const {
+    transactions: { rewards },
+  } = events;
 
   return (
     <NavLink
@@ -47,7 +56,14 @@ const MenuLink = ({ data, pathname, sideBarExpanded, disabled }) => {
       activeClassName={styles.selected}
       exact={routes[data.id].exact}
     >
-      <Inner data={data} pathname={pathname} sideBarExpanded={sideBarExpanded} />
+      <Inner
+        data={data}
+        pathname={pathname}
+        sideBarExpanded={sideBarExpanded}
+        hasNotification={
+          rewards.length && BigInt(rewards[0]?.reward || 0) > BigInt(0) && data.id === 'validators'
+        }
+      />
     </NavLink>
   );
 };
@@ -59,7 +75,8 @@ const SideBar = ({ t, location }) => {
   const [currentAccount] = useCurrentAccount();
   const isLoggedOut = Object.keys(currentAccount).length === 0;
   const sideBarExpanded = useSelector((state) => state.settings.sideBarExpanded);
-  const { hasNetworkError, isLoadingNetwork } = useContext(ApplicationBootstrapContext);
+  const { hasNetworkError, isLoadingNetwork, appEvents } = useContext(ApplicationBootstrapContext);
+
   return (
     <nav
       className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}
@@ -82,6 +99,7 @@ const SideBar = ({ t, location }) => {
                   pathname={location.pathname}
                   data={item}
                   sideBarExpanded={sideBarExpanded}
+                  events={appEvents}
                   disabled={
                     (isLoggedOut && modals[item.id]?.isPrivate) ||
                     location.pathname === routes.reclaim.path ||

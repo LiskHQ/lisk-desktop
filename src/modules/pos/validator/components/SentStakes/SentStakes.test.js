@@ -107,4 +107,10 @@ describe('SentStakes', () => {
     renderWithRouterAndQueryClient(SentStakes, props);
     expect(mockRefetchSentStakes).toHaveBeenCalledTimes(1);
   });
+
+  it('displays no notification if there are no claimable rewards', () => {
+    useRewardsClaimable.mockReturnValue({ data: {} });
+    renderWithRouterAndQueryClient(SentStakes, props);
+    expect(screen.queryByTestId('notification')).not.toBeInTheDocument();
+  });
 });

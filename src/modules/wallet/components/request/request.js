@@ -125,7 +125,7 @@ const Request = () => {
             amount: target.value,
             locale: i18n.language,
             token: selectedToken,
-            checklist: ['MAX_ACCURACY', 'FORMAT'],
+            checklist: ['MAX_ACCURACY', 'FORMAT', 'NEGATIVE_AMOUNT'],
           }).message
         : byteCount > maxMessageLength;
     let feedback = '';

@@ -14,7 +14,7 @@ const validators = [
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 && optional.length > 0 && signatures <= mandatory.length,
+      mandatory.length > 0 && optional.length > 0 && signatures < mandatory.length,
     message: (t, mandatory) =>
       t(
         t('Number of signatures must be above {{num}}.', {

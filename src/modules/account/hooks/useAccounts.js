@@ -19,10 +19,14 @@ export function useAccounts() {
   const getAccountByAddress = (address) =>
     accounts.find((account) => account.metadata.address === address);
 
+  const getAccountByPublicKey = (pubkey) =>
+    accounts.find((account) => account.metadata.pubkey === pubkey);
+
   return {
     accounts,
     setAccount,
     deleteAccountByAddress,
+    getAccountByPublicKey,
     getAccountByAddress,
   };
 }

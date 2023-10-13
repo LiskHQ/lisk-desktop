@@ -38,6 +38,7 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
       {accountMenu({
         authData,
         isHW,
+        address,
         hasNetworkError,
         isLoadingNetwork,
         hasAvailableTokenBalance: tokenBalances.data?.data?.some(
