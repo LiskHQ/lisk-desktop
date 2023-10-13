@@ -76,7 +76,7 @@
       "target": "nsis",
       "publisherName": "Lisk Stiftung",
       "sign": "./scripts/sign.js",
-      "keyPairAlias": "key_480054267"
+      "certificateSubjectName": "key_480054267"
     },
     "mac": {
       "hardenedRuntime": true,
