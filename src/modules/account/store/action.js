@@ -21,6 +21,12 @@ export const addAccount = (encryptedAccount) => ({
   encryptedAccount,
 });
 
+export const setAccountNonce = (address, nonce) => ({
+  type: actionTypes.addAccount,
+  address,
+  nonce,
+});
+
 export const updateAccount = ({ encryptedAccount, accountDetail }) => ({
   type: actionTypes.updateAccount,
   encryptedAccount,

@@ -1,8 +1,8 @@
 import { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAccounts } from '@account/store/selectors';
+import { selectAccounts, selectAccountNonce } from '@account/store/selectors';
 import { selectHWAccounts } from '@hardwareWallet/store/selectors/hwSelectors';
-import { addAccount, deleteAccount } from '../store/action';
+import { addAccount, deleteAccount, setAccountNonce } from '../store/action';
 
 // eslint-disable-next-line
 export function useAccounts() {
@@ -22,11 +22,20 @@ export function useAccounts() {
   const getAccountByPublicKey = (pubkey) =>
     accounts.find((account) => account.metadata.pubkey === pubkey);
 
+  const setNonceByAccount = useCallback(
+    (address, nonce) => dispatch(setAccountNonce(address, nonce)),
+    []
+  );
+
+  const getNonceByAccount = (address) => useSelector(selectAccountNonce)[address];
+
   return {
     accounts,
     setAccount,
     deleteAccountByAddress,
     getAccountByPublicKey,
     getAccountByAddress,
+    setNonceByAccount,
+    getNonceByAccount,
   };
 }

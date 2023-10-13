@@ -58,14 +58,25 @@ export const list = (state = {}, { type, encryptedAccount, accountDetail, addres
   }
 };
 
+export const localNonce = (state = {}, { type, address, nonce }) => {
+  switch (type) {
+    case actionTypes.setAccountNonce:
+      state[address] = nonce;
+      return state;
+
+    default:
+      return state;
+  }
+};
+
 const persistConfig = {
   key: 'account',
   storage,
-  whitelist: ['list', 'current'], // only navigation will be persisted
+  whitelist: ['list', 'current', 'localNonce'], // only navigation will be persisted
   blacklist: [],
 };
 
-const accountReducer = combineReducers({ current, list });
+const accountReducer = combineReducers({ current, list, localNonce });
 
 // eslint-disable-next-line import/prefer-default-export
 export const account = persistReducer(persistConfig, accountReducer);
