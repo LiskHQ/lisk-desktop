@@ -84,7 +84,7 @@ pipeline {
 						     targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
 			}
 		}
-		stage('test') {
+		stage('chain-setup') {
 			steps {
 				parallel (
 					//service and core setup
@@ -144,33 +144,42 @@ pipeline {
 							}
 						}
 					},
+				)
+			}
+		}
+		stage('tests') {
+			steps {
+				parallel (
 					// jest
 					"unit": {
 						nvm(getNodejsVersion()) {
 							sh 'ON_JENKINS=true yarn run test'
 						}
 					},
+					// e2e
+					"e2e": {
+						sh '''
+						# playwright invocation
+						# wait for lisk-service to be up and running
+						sleep 10
+						set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
+						
+						# wait for enevti-service to be up and running
+						set -e; while [[ $(curl -s --fail http://127.0.0.1:9902/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
+						
+						# check lisk-serivce network status and blocks
+						curl --verbose http://127.0.0.1:9901/api/v3/network/status
+						curl --verbose http://127.0.0.1:9901/api/v3/blocks
+
+						# check enevti-serivce network status and blocks
+						curl --verbose http://127.0.0.1:9902/api/v3/network/status
+						curl --verbose http://127.0.0.1:9902/api/v3/blocks
+
+						PW_BASE_URL=http://127.0.0.1:8081/# \
+						yarn run cucumber:playwright:open
+						'''
+					}
 				)
-				sh '''
-				# playwright invocation
-				# wait for lisk-service to be up and running
-				sleep 10
-				set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
-				
-				# wait for enevti-service to be up and running
-				set -e; while [[ $(curl -s --fail http://127.0.0.1:9902/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
-				
-				# check lisk-serivce network status and blocks
-				curl --verbose http://127.0.0.1:9901/api/v3/network/status
-				curl --verbose http://127.0.0.1:9901/api/v3/blocks
-
-				# check enevti-serivce network status and blocks
-				curl --verbose http://127.0.0.1:9902/api/v3/network/status
-				curl --verbose http://127.0.0.1:9902/api/v3/blocks
-
-				PW_BASE_URL=http://127.0.0.1:8081/# \
-				yarn run cucumber:playwright:open
-				'''
 
 			}
 			post {
