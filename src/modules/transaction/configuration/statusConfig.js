@@ -2,6 +2,7 @@
 import { transactions as LiskTransaction } from '@liskhq/lisk-client';
 import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
+import { calculateRemainingAndSignedMembers } from '@wallet/utils/account';
 import { getNumberOfSignatures, joinModuleAndCommand, toTransactionJSON } from '../utils';
 import { MODULE_COMMANDS_NAME_MAP } from './moduleCommand';
 
@@ -85,6 +86,24 @@ const getErrorMessage = (transaction, paramSchema, errorMessage) => {
   };
 };
 
+function getHasRemainingMandatorySignatures(signedTransaction, walletKeys) {
+  const transactionSignaturesAsStrings = signedTransaction.signatures.map((signature) =>
+    signature.toString('hex')
+  );
+
+  const moduleCommand = joinModuleAndCommand(signedTransaction);
+  const isMultisignatureRegistration =
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+
+  const { remaining } = calculateRemainingAndSignedMembers(
+    walletKeys,
+    { ...signedTransaction, signatures: transactionSignaturesAsStrings },
+    isMultisignatureRegistration
+  );
+
+  return remaining.some(({ mandatory }) => mandatory);
+}
+
 /**
  * Defines the Status of the broadcasted tx.
  */
@@ -135,6 +154,12 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
       moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
     const isMultisignature = account?.summary?.isMultisignature || options.isMultisignature;
     const isInitatorAccountMultiSig = account?.numberOfSignatures > 0;
+
+    const hasRemainingMandatorySignatures = getHasRemainingMandatorySignatures(
+      transactions.signedTransaction,
+      account.keys
+    );
+
     let nonEmptySignatures = transactions.signedTransaction.signatures.filter(
       (sig) => sig.length > 0
     ).length;
@@ -146,6 +171,7 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
     }
 
     if (
+      hasRemainingMandatorySignatures ||
       nonEmptySignatures < numberOfSignatures ||
       (isMultisignature &&
         nonEmptySignatures === numberOfSignatures &&
