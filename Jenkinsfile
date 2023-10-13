@@ -97,6 +97,7 @@ pipeline {
 								withEnv(["ENEVTI_SERVICE_FILE_PATH=enevti-service", "USE_NOHUP=true", "CORE=enevti", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
 									sh '''
 									# enevti-core
+									ls -a
 									cd lisk-desktop
 									source e2e/scripts/run-core.sh
 									'''
