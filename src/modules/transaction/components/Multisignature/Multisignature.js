@@ -17,6 +17,7 @@ import WarningNotification from '@common/components/warningNotification';
 import AccountRow from '@account/components/AccountRow';
 import classNames from 'classnames';
 import { getNextAccountToSign } from '@transaction/utils/multisignatureUtils';
+import generateUniqueId from 'src/utils/generateUniqueId';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
@@ -28,15 +29,18 @@ export const PartiallySignedActions = ({
   transactionJSON,
   reset,
 }) => {
-  const [, setCurrentAccount] = useCurrentAccount();
+  const [currentAccount, setCurrentAccount] = useCurrentAccount();
 
   const handleSwitchAccount = () => {
     const stringifiedTransaction = encodeURIComponent(JSON.stringify(transactionJSON));
+    const uniqueUrlIdToPreventHashError = generateUniqueId();
     setCurrentAccount(
       nextAccountToSign,
-      `/wallet?modal=signMultiSignTransaction&stringifiedTransaction=${stringifiedTransaction}`,
+      `/wallet?modal=signMultiSignTransaction&prevAccount=${currentAccount.metadata.address}&uniqueId=${uniqueUrlIdToPreventHashError}`,
       true,
-      { stringifiedTransaction }
+      {
+        stringifiedTransaction,
+      }
     );
     reset?.();
   };

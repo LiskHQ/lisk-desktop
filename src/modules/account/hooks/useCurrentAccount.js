@@ -19,7 +19,8 @@ export function useCurrentAccount() {
     (stake) => stake.confirmed !== stake.unconfirmed
   );
 
-  const setAccount = (encryptedAccount, referrer, redirect = true) => {
+  // eslint-disable-next-line max-statements
+  const setAccount = (encryptedAccount, referrer, redirect = true, urlState) => {
     // clear stakes list during login or accounts switch
     if (pendingStakes.length) {
       const onCancel = /* istanbul ignore next */ () =>
@@ -40,7 +41,17 @@ export function useCurrentAccount() {
     } else {
       dispatch(setCurrentAccount(encryptedAccount));
       if (redirect) {
-        history.push(referrer || routes.wallet.path);
+        if (urlState) {
+          const relativeUrlPath = referrer || routes.wallet.path;
+          const { pathname, search } = new URL(relativeUrlPath, window.location.origin);
+          history.push({
+            pathname,
+            search,
+            state: urlState,
+          });
+        } else {
+          history.push(referrer || routes.wallet.path);
+        }
       }
     }
   };
