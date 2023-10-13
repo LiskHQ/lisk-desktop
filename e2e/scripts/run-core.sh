@@ -12,7 +12,7 @@ if [ $CORE == "enevti" ]
     rm -rf ~/.enevti
     cd ../enevti-core
     npm install
-    ./bin/run blockchain import --force ../lisk-desktop/e2e/artifacts/enevti-core/blockchain.tar.gz
+    ./bin/run blockchain:import --force ../lisk-desktop/e2e/artifacts/enevti-core/blockchain.tar.gz
 
     if [ ! -z "$USE_NOHUP" ]
       then
