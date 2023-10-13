@@ -98,12 +98,12 @@ pipeline {
 									sh '''
 									# enevti-core
 									ls -a
-									source e2e/scripts/run-core.sh
+									source ./e2e/scripts/run-core.sh
 									'''
 
 									sh '''
 									# enevti-service
-									source lisk-desktop/e2e/scripts/run-service.sh 
+									source .e2e/scripts/run-service.sh 
 
 									# enevti service and core logs (for debug purpose only)
 									cat enevti-core.out &
