@@ -157,7 +157,7 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
 
     const hasRemainingMandatorySignatures = getHasRemainingMandatorySignatures(
       transactions.signedTransaction,
-      account.keys
+      account?.keys
     );
 
     let nonEmptySignatures = transactions.signedTransaction.signatures.filter(
