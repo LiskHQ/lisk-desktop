@@ -1,56 +1,5 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
-.closeBtn {
-  align-items: center;
-  box-sizing: border-box;
-  color: var(--color-ultramarine-blue);
-  cursor: pointer;
-  display: flex;
-  height: 12px;
-  width: 12px;
-  justify-content: center;
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 4;
-
-  &::before,
-  &::after {
-    background-color: currentColor;
-    color: inherit;
-    content: '';
-    height: 19px;
-    position: absolute;
-    width: 3px;
-    border-radius: 3px;
-  }
-
-  &::before {
-    transform: rotate(45deg);
-  }
-
-  &::after {
-    transform: rotate(-45deg);
-  }
-}
-
-.rewardInfo {
-  & p {
-    margin-top: 8px;
-    margin-bottom: 0;
-    font-size: 16px;
-    font-weight: var(--font-weight-normal);
-    line-height: 20px;
-  }
-
-  .rewardLink {
-    margin-top: 11px;
-    margin-bottom: 0;
-    color: var(--color-ultramarine-blue);
-    font-size: 15px;
-  }
-}
-
 .validatorDetails {
   display: flex;
   flex-direction: row;
