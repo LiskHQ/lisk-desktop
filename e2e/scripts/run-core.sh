@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # spin up enevti core
 if [ $CORE == "enevti" ]
   then

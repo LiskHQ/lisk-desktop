@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 if [[ -z $ENEVTI_SERVICE_FILE_PATH ]] && [[ -z $LISK_SERVICE_FILE_PATH  ]]
   then
     echo "Please provide either of the following envs: ENEVTI_SERVICE_FILE_PATH or LISK_SERVICE_FILE_PATH"
