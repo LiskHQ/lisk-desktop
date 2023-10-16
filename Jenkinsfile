@@ -72,23 +72,21 @@ pipeline {
 							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
 						}
 						nvm(getNodejsVersion()) {
-							wrap([$class: 'Xvfb']) {
-								withEnv(["LISK_SERVICE_FILE_PATH=lisk-service", "USE_NOHUP=true", "CORE=lisk", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
-									// lisk-core
-									sh('./e2e/scripts/run-core.sh')
+							withEnv(["LISK_SERVICE_FILE_PATH=lisk-service", "USE_NOHUP=true", "CORE=lisk", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
+								// lisk-core
+								sh('./e2e/scripts/run-core.sh')
 
-									// lisk-service
-									sh('./e2e/scripts/run-core.sh')
+								// lisk-service
+								sh('./e2e/scripts/run-core.sh')
 
-									sh '''
-									# lisk service and core logs (for debug purpose only)
-									cat lisk-core.out &
-									echo "===== lisk-core errors ===="
-									cat lisk-core.err &
-									echo "======== lisk docker process ======="
-									docker ps
-									'''
-								}
+								sh '''
+								# lisk service and core logs (for debug purpose only)
+								cat lisk-core.out &
+								echo "===== lisk-core errors ===="
+								cat lisk-core.err &
+								echo "======== lisk docker process ======="
+								docker ps
+								'''
 							}
 						}
 					},
