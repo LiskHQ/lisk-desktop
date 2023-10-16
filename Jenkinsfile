@@ -191,14 +191,12 @@ pipeline {
 					cat lisk-core.out
 					cat lisk-core.err
 					
-					# kill enevti-core process
-					kill $( cat enevti-core.pid ) || true
-					sleep 10
-					kill -9 $( cat enevti-core.pid ) || true
-					cat enevti-core.out
-					cat enevti-core.err
-
-					rm /tmp/.X0-lock
+					## kill enevti-core process
+					# kill $( cat enevti-core.pid ) || true
+					# sleep 10
+					# kill -9 $( cat enevti-core.pid ) || true
+					# cat enevti-core.out
+					# cat enevti-core.err
 					'''
 				}
 			}
