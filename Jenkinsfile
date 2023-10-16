@@ -95,15 +95,13 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							wrap([$class: 'Xvfb']) {
 								withEnv(["ENEVTI_SERVICE_FILE_PATH=enevti-service", "USE_NOHUP=true", "CORE=enevti", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
-									sh '''
-									# enevti-core
-									sh ./e2e/scripts/run-core.sh
-									'''
+									// enevti-core
+									sh('./e2e/scripts/run-core.sh')
+
+									// enevti-service
+									sh('./e2e/scripts/run-service.sh')
 
 									sh '''
-									# enevti-service
-									sh ./e2e/scripts/run-service.sh 
-
 									# enevti service and core logs (for debug purpose only)
 									cat enevti-core.out &
 									echo "===== enevti-core error ===="
@@ -122,15 +120,13 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							wrap([$class: 'Xvfb']) {
 								withEnv(["LISK_SERVICE_FILE_PATH=lisk-service", "USE_NOHUP=true", "CORE=lisk", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
-									sh '''
-									# lisk-core
-									sh ./e2e/scripts/run-core.sh
-									'''
+									// lisk-core
+									sh('./e2e/scripts/run-core.sh')
+
+									// lisk-service
+									sh('./e2e/scripts/run-core.sh')
 
 									sh '''
-									# lisk-service
-									sh lisk-desktop/e2e/scripts/run-service.sh 
-
 									# lisk service and core logs (for debug purpose only)
 									cat lisk-core.out &
 									echo "===== lisk-core errors ===="
