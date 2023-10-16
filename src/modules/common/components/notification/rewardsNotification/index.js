@@ -16,7 +16,7 @@ const RewardsNotification = () => {
     if (notification) {
       toast.info(
         <div className={styles.rewardInfo}>
-          <p>You have an unclaimed reward of your stakes.</p>
+          <p>You have an unclaimed reward for your stakes.</p>
           <DialogLink component="claimRewardsView" className={styles.rewardLink}>
             Claim rewards
           </DialogLink>
