@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # spin up enevti core
-if [ $CORE == "enevti" ]
+if [[ $CORE == "enevti" ]]
   then
-    if [ ! -d "../enevti-core" ]
+    if [[ ! -d "../enevti-core" ]]
       then
         curl -O https://lisk-qa.ams3.digitaloceanspaces.com/enevti-core-desktop.tar.gz
         tar -xf enevti-core-desktop.tar.gz
@@ -15,7 +15,7 @@ if [ $CORE == "enevti" ]
     npm install
     ./bin/run blockchain:import --force ../lisk-desktop/e2e/artifacts/enevti-core/blockchain.tar.gz
 
-    if [ ! -z "$USE_NOHUP" ]
+    if [[ ! -z "$USE_NOHUP" ]]
       then
         nohup ./bin/run start --network=devnet --api-ws --api-host=0.0.0.0 --api-port=8887 >enevti-core.out 2>enevti-core.err &
         echo $! >enevti-core.pid
@@ -25,7 +25,7 @@ if [ $CORE == "enevti" ]
 fi
 
 # spin up lisk core
-if [ $CORE == "lisk" ]
+if [[ $CORE == "lisk" ]]
   then
     if [ ! command -v lisk-core &> /dev/null ]
       then
@@ -35,7 +35,7 @@ if [ $CORE == "lisk" ]
     rm -rf ~/.lisk
     lisk-core blockchain:import --force ../lisk-desktop/e2e/artifacts/lisk-core/blockchain.tar.gz
 
-    if [ ! -z "$USE_NOHUP" ]
+    if [[ ! -z "$USE_NOHUP" ]]
       then
         nohup lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 --config ./e2e/artifacts/lisk-core/config.json --overwrite-config >lisk-core.out 2>lisk-core.err &
         echo $! >lisk-core.pid
