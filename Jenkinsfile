@@ -66,54 +66,8 @@ pipeline {
 						}
 						stash includes: 'app/buildE2E/', name: 'buildE2E'
 					},
-                )
-			}
-		}
-		stage('deploy') {
-			agent { node { label 'explorer-www' } }
-			steps {
-					unstash 'build'
-					sh '''
-					mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME
-					rsync -axl --delete $WORKSPACE/app/build/ /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
-					rm -rf $WORKSPACE/app/build
-					'''
-					githubNotify context: 'Jenkins test deployment',
-						     description: 'Commit was deployed to test',
-						     status: 'SUCCESS',
-						     targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
-			}
-		}
-		stage('chain-setup') {
-			steps {
-				parallel (
 					//service and core setup
-					"enevti-service-core-setup": {
-						dir('enevti-service') {
-							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
-						}
-						nvm(getNodejsVersion()) {
-							wrap([$class: 'Xvfb']) {
-								withEnv(["ENEVTI_SERVICE_FILE_PATH=enevti-service", "USE_NOHUP=true", "CORE=enevti", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
-									// enevti-core
-									sh('./e2e/scripts/run-core.sh')
-
-									// enevti-service
-									sh('./e2e/scripts/run-service.sh')
-
-									sh '''
-									# enevti service and core logs (for debug purpose only)
-									cat enevti-core.out &
-									echo "===== enevti-core error ===="
-									cat enevti-core.err &
-									echo "======== enevti docker process ======="
-									docker ps
-									'''
-								}
-							}
-						}
-					},
-					"lisk-service-core-setup": {
+					"lisk-setup": {
 						dir('lisk-service') {
 							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
 						}
@@ -138,9 +92,106 @@ pipeline {
 							}
 						}
 					},
-				)
+					"enevti-setup": {
+						dir('enevti-service') {
+							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
+						}
+						nvm(getNodejsVersion()) {
+							wrap([$class: 'Xvfb']) {
+								withEnv(["ENEVTI_SERVICE_FILE_PATH=enevti-service", "USE_NOHUP=true", "CORE=enevti", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
+									// enevti-core
+									sh('./e2e/scripts/run-core.sh')
+
+									// enevti-service
+									sh('./e2e/scripts/run-service.sh')
+
+									sh '''
+									# enevti service and core logs (for debug purpose only)
+									cat enevti-core.out &
+									echo "===== enevti-core error ===="
+									cat enevti-core.err &
+									echo "======== enevti docker process ======="
+									docker ps
+									'''
+								}
+							}
+						}
+					},
+                )
 			}
 		}
+		stage('deploy') {
+			agent { node { label 'explorer-www' } }
+			steps {
+					unstash 'build'
+					sh '''
+					mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME
+					rsync -axl --delete $WORKSPACE/app/build/ /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
+					rm -rf $WORKSPACE/app/build
+					'''
+					githubNotify context: 'Jenkins test deployment',
+						     description: 'Commit was deployed to test',
+						     status: 'SUCCESS',
+						     targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
+			}
+		}
+		// stage('chain-setup') {
+		// 	steps {
+		// 		parallel (
+		// 			//service and core setup
+		// 			"enevti-service-core-setup": {
+		// 				dir('enevti-service') {
+		// 					checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
+		// 				}
+		// 				nvm(getNodejsVersion()) {
+		// 					wrap([$class: 'Xvfb']) {
+		// 						withEnv(["ENEVTI_SERVICE_FILE_PATH=enevti-service", "USE_NOHUP=true", "CORE=enevti", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
+		// 							// enevti-core
+		// 							sh('./e2e/scripts/run-core.sh')
+
+		// 							// enevti-service
+		// 							sh('./e2e/scripts/run-service.sh')
+
+		// 							sh '''
+		// 							# enevti service and core logs (for debug purpose only)
+		// 							cat enevti-core.out &
+		// 							echo "===== enevti-core error ===="
+		// 							cat enevti-core.err &
+		// 							echo "======== enevti docker process ======="
+		// 							docker ps
+		// 							'''
+		// 						}
+		// 					}
+		// 				}
+		// 			},
+		// 			"lisk-service-core-setup": {
+		// 				dir('lisk-service') {
+		// 					checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
+		// 				}
+		// 				nvm(getNodejsVersion()) {
+		// 					wrap([$class: 'Xvfb']) {
+		// 						withEnv(["LISK_SERVICE_FILE_PATH=lisk-service", "USE_NOHUP=true", "CORE=lisk", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
+		// 							// lisk-core
+		// 							sh('./e2e/scripts/run-core.sh')
+
+		// 							// lisk-service
+		// 							sh('./e2e/scripts/run-core.sh')
+
+		// 							sh '''
+		// 							# lisk service and core logs (for debug purpose only)
+		// 							cat lisk-core.out &
+		// 							echo "===== lisk-core errors ===="
+		// 							cat lisk-core.err &
+		// 							echo "======== lisk docker process ======="
+		// 							docker ps
+		// 							'''
+		// 						}
+		// 					}
+		// 				}
+		// 			},
+		// 		)
+		// 	}
+		// }
 		stage('tests') {
 			steps {
 				parallel (
