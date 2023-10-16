@@ -20,9 +20,6 @@ pipeline {
 						yarn --cwd app && yarn
 						'''
 				}
-				dir('lisk-service') {
-					checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
-				}
 			}
 		}
 		stage('lint') {
@@ -71,16 +68,12 @@ pipeline {
 					},
 					//service and core setup
 					"lisk-setup": {
-						// dir('lisk-service') {
-						// 	checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
-						// }
+						dir('lisk-service') {
+							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
+						}
 						nvm(getNodejsVersion()) {
 							wrap([$class: 'Xvfb']) {
 								withEnv(["LISK_SERVICE_FILE_PATH=lisk-service", "USE_NOHUP=true", "CORE=lisk", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
-									sh '''
-									ls -a
-									cp -r lisk-service enevti-service
-									'''
 									// lisk-core
 									sh('./e2e/scripts/run-core.sh')
 
@@ -100,15 +93,12 @@ pipeline {
 						}
 					},
 					"enevti-setup": {
-						// dir('enevti-service') {
-						// 	checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
-						// }
+						dir('enevti-service') {
+							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
+						}
 						nvm(getNodejsVersion()) {
 							wrap([$class: 'Xvfb']) {
 								withEnv(["ENEVTI_SERVICE_FILE_PATH=enevti-service", "USE_NOHUP=true", "CORE=enevti", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
-									sh '''
-									ls -a
-									'''
 									// enevti-core
 									sh('./e2e/scripts/run-core.sh')
 
