@@ -95,23 +95,21 @@ pipeline {
 							checkout([$class: 'GitSCM', branches: [[name: params.SERVICE_BRANCH_NAME ]], userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
 						}
 						nvm(getNodejsVersion()) {
-							wrap([$class: 'Xvfb']) {
-								withEnv(["ENEVTI_SERVICE_FILE_PATH=enevti-service", "USE_NOHUP=true", "CORE=enevti", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
-									// enevti-core
-									sh('./e2e/scripts/run-core.sh')
+							withEnv(["ENEVTI_SERVICE_FILE_PATH=enevti-service", "USE_NOHUP=true", "CORE=enevti", "GITHUB_APP_REGISTRY_REPO_BRANCH=jenkins-deployment"]) {
+								// enevti-core
+								sh('./e2e/scripts/run-core.sh')
 
-									// enevti-service
-									sh('./e2e/scripts/run-service.sh')
+								// enevti-service
+								sh('./e2e/scripts/run-service.sh')
 
-									sh '''
-									# enevti service and core logs (for debug purpose only)
-									cat enevti-core.out &
-									echo "===== enevti-core error ===="
-									cat enevti-core.err &
-									echo "======== enevti docker process ======="
-									docker ps
-									'''
-								}
+								sh '''
+								# enevti service and core logs (for debug purpose only)
+								cat enevti-core.out &
+								echo "===== enevti-core error ===="
+								cat enevti-core.err &
+								echo "======== enevti docker process ======="
+								docker ps
+								'''
 							}
 						}
 					},
@@ -144,27 +142,29 @@ pipeline {
 					},
 					// e2e
 					"e2e": {
-						nvm(getNodejsVersion()) {
-							sh '''
-							# playwright invocation
-							# wait for lisk-service to be up and running
-							sleep 10
-							set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
-							
-							# wait for enevti-service to be up and running
-							set -e; while [[ $(curl -s --fail http://127.0.0.1:9902/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
-							
-							# check lisk-serivce network status and blocks
-							curl --verbose http://127.0.0.1:9901/api/v3/network/status
-							curl --verbose http://127.0.0.1:9901/api/v3/blocks
+						wrap([$class: 'Xvfb']) {
+							nvm(getNodejsVersion()) {
+								sh '''
+								# playwright invocation
+								# wait for lisk-service to be up and running
+								sleep 10
+								set -e; while [[ $(curl -s --fail http://127.0.0.1:9901/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
+								
+								# wait for enevti-service to be up and running
+								set -e; while [[ $(curl -s --fail http://127.0.0.1:9902/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
+								
+								# check lisk-serivce network status and blocks
+								curl --verbose http://127.0.0.1:9901/api/v3/network/status
+								curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
-							# check enevti-serivce network status and blocks
-							curl --verbose http://127.0.0.1:9902/api/v3/network/status
-							curl --verbose http://127.0.0.1:9902/api/v3/blocks
+								# check enevti-serivce network status and blocks
+								curl --verbose http://127.0.0.1:9902/api/v3/network/status
+								curl --verbose http://127.0.0.1:9902/api/v3/blocks
 
-							PW_BASE_URL=http://127.0.0.1:8081/# \
-							yarn run cucumber:playwright:open
-							'''
+								PW_BASE_URL=http://127.0.0.1:8081/# \
+								yarn run cucumber:playwright:open
+								'''
+							}
 						}
 					}
 				)
