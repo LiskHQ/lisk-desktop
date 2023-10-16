@@ -18,7 +18,7 @@ describe('RewardsNotification', () => {
     smartRender(Component);
 
     await waitFor(() => {
-      expect(screen.getByText('You have an unclaimed reward of your stakes.')).toBeVisible();
+      expect(screen.getByText('You have an unclaimed reward for your stakes.')).toBeVisible();
     });
   });
 
@@ -35,7 +35,7 @@ describe('RewardsNotification', () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText('You have an unclaimed reward of your stakes.')
+        screen.queryByText('You have an unclaimed reward for your stakes.')
       ).not.toBeInTheDocument();
     });
   });
