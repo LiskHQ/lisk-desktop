@@ -1,10 +1,12 @@
 import React, { useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
 import DialogLink from '@theme/dialog/link';
 import styles from './styles.css';
 
 const RewardsNotification = () => {
+  const { t } = useTranslation();
   const {
     appEvents: {
       transactions: { rewards },
@@ -16,9 +18,9 @@ const RewardsNotification = () => {
     if (notification) {
       toast.info(
         <div className={styles.rewardInfo}>
-          <p>You have an unclaimed reward for your stakes.</p>
+          <p>{t('You have an unclaimed reward for your stakes.')}</p>
           <DialogLink component="claimRewardsView" className={styles.rewardLink}>
-            Claim rewards
+            {t('Claim rewards')}
           </DialogLink>
         </div>,
         {
