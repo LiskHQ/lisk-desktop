@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 const getRewardsClaimableHeader = (t) => [
   {
     title: t && t('Name'),
-    classList: `${grid['col-xs-5']}`,
+    classList: `${grid['col-xs-4']}`,
   },
   {
     title: t && t('Token'),
@@ -11,7 +11,7 @@ const getRewardsClaimableHeader = (t) => [
   },
   {
     title: t && t('Reward amount'),
-    classList: `${grid['col-xs-3']}`,
+    classList: `${grid['col-xs-4']}`,
   },
   {
     title: t && t('Fiat'),
