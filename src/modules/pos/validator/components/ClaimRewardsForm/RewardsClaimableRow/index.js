@@ -3,25 +3,43 @@ import classNames from 'classnames';
 import { convertFromBaseDenom, getLogo } from '@token/fungible/utils/helpers';
 import Converter from '@common/components/converter';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import { useValidators } from '@pos/validator/hooks/queries';
+import { ValidatorWalletVisual } from '@pos/validator/components/SentStakesRow/components';
 import styles from './RewardsClaimableRow.css';
 
-const RewardsClaimableRow = ({ data: token, rewardsClaimableHeader }) => {
-  const { tokenName, logo, reward, symbol } = token;
-  const logoUrl = getLogo({ logo });
+const RewardsClaimableRow = ({ data: validatorsWithTokenData, rewardsClaimableHeader }) => {
+  const { validatorAddress, tokenName, logo, amount, symbol } = validatorsWithTokenData;
+
+  const { data: validators, isLoading: isLoadingValidators } = useValidators({
+    config: { params: { address: validatorAddress } },
+  });
+  const { name } = !isLoadingValidators ? validators.data[0] : {};
 
   return (
     <div className={classNames(styles.RewardsClaimableRow)}>
-      <div className={classNames(styles.logoContainer, rewardsClaimableHeader[0].classList)}>
-        <img className={styles.logo} src={logoUrl} />
+      <div
+        className={classNames(
+          styles.validatorWalletVisualContainer,
+          rewardsClaimableHeader[0].classList
+        )}
+      >
+        <ValidatorWalletVisual
+          className={styles.validatorWalletVisualProp}
+          name={name}
+          address={validatorAddress}
+        />
+      </div>
+      <div className={classNames(styles.logoContainer, rewardsClaimableHeader[1].classList)}>
+        <img className={styles.logo} src={getLogo({ logo })} />
         <span className={styles.tokenName}>{tokenName}</span>
       </div>
-      <div className={classNames(rewardsClaimableHeader[1].classList)}>
-        <TokenAmount val={reward} token={token} />
-      </div>
       <div className={classNames(rewardsClaimableHeader[2].classList)}>
+        <TokenAmount val={amount} token={validatorsWithTokenData} />
+      </div>
+      <div className={classNames(rewardsClaimableHeader[3].classList)}>
         <Converter
           className={styles.fiatBalance}
-          value={convertFromBaseDenom(reward, token)}
+          value={convertFromBaseDenom(amount, validatorsWithTokenData)}
           tokenSymbol={symbol}
         />
       </div>

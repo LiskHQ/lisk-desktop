@@ -115,7 +115,7 @@
     margin: 0 0 8px 0;
   }
 
-  & p ~ span {
+  & span {
     @mixin contentLarge;
 
     color: var(--color-slate-gray);
