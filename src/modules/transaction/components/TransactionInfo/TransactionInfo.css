@@ -194,3 +194,7 @@
     margin-left: 10px;
   }
 }
+
+.warning {
+  vertical-align: bottom;
+}

@@ -7,6 +7,7 @@ import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from '@auth/components/EnterPasswordForm';
 import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
+import useNonceSync from '@auth/hooks/useNonceSync';
 import HWSigning from '@hardwareWallet/components/HWSigning/HWSigning';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand } from '../../utils';
@@ -50,6 +51,7 @@ const TxSignatureCollector = ({
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const isRegisterMultisignature =
     moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const { incrementNonce } = useNonceSync();
   const txVerification = (privateKey = undefined, publicKey = undefined) => {
     /**
      * Non-multisignature account
@@ -104,8 +106,12 @@ const TxSignatureCollector = ({
     });
   };
 
-  const onEnterPasswordSuccess = ({ privateKey }) =>
+  const onEnterPasswordSuccess = ({ privateKey }) => {
+    if (isTransactionAuthor) {
+      incrementNonce();
+    }
     txVerification(privateKey, currentAccount?.metadata.pubkey);
+  };
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {

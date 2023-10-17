@@ -1,18 +1,20 @@
 import React from 'react';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
-import { TertiaryButton } from 'src/theme/buttons';
-import BoxContent from 'src/theme/box/content';
-import Illustration from 'src/modules/common/components/illustration';
-import Tooltip from 'src/theme/Tooltip';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import Box from '@theme/box';
+import BoxHeader from '@theme/box/header';
+import { TertiaryButton } from '@theme/buttons';
+import BoxContent from '@theme/box/content';
+import Illustration from '@common/components/illustration';
+import Tooltip from '@theme/Tooltip';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import Icon from 'src/theme/Icon';
+import Icon from '@theme/Icon';
+import useNonceSync from '@auth/hooks/useNonceSync';
 import TransactionInfo from '../TransactionInfo';
 import Footer from './footer';
 import styles from './txSummarizer.css';
 import FeeSummarizer from './FeeSummarizer';
 
+// eslint-disable-next-line complexity
 const TxSummarizer = ({
   title,
   children,
@@ -32,6 +34,10 @@ const TxSummarizer = ({
   hasNoTopCancelButton,
   noFeeStatus,
 }) => {
+  const { accountNonce } = useNonceSync();
+  const isTransactionAuthor = transactionJSON.senderPublicKey === wallet.summary.publicKey;
+  const isNonceEqual = transactionJSON.nonce === String(accountNonce);
+  const nonceWarning = isTransactionAuthor && !isNonceEqual;
   const fee = !(
     wallet.summary.isMultisignature ||
     formProps.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
@@ -75,6 +81,7 @@ const TxSummarizer = ({
           transactionJSON={transactionJSON}
           account={wallet}
           isMultisignature={wallet.summary.isMultisignature}
+          nonceWarning={nonceWarning}
         />
         {!noFeeStatus && !!fee && (
           <section>
@@ -99,6 +106,16 @@ const TxSummarizer = ({
               </div>
             </div>
           </section>
+        )}
+        {nonceWarning && (
+          <div className={styles.nonceWarning}>
+            <Icon name="warningYellow" />
+            <p>
+              Please ensure to send the previously initiated transactions. Check the transaction
+              sequence, and broadcast them only after they have been fully signed, in their original
+              order.
+            </p>
+          </div>
         )}
       </BoxContent>
       <Footer

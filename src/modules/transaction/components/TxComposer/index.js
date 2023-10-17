@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
-import { useAuth } from '@auth/hooks/queries';
+import useNonceSync from '@auth/hooks/useNonceSync';
 import { useCurrentAccount } from '@account/hooks';
-import Box from 'src/theme/box';
-import BoxFooter from 'src/theme/box/footer';
+import Box from '@theme/box';
+import BoxFooter from '@theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import {
   fromTransactionJSON,
@@ -20,8 +20,8 @@ import { convertFromBaseDenom, convertToBaseDenom } from '@token/fungible/utils/
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { useTransactionFee } from '@transaction/hooks/useTransactionFee';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
-import { PrimaryButton } from 'src/theme/buttons';
-import { useCommandSchema } from 'src/modules/network/hooks';
+import { PrimaryButton } from '@theme/buttons';
+import { useCommandSchema } from '@network/hooks';
 import Feedback from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
@@ -49,7 +49,7 @@ const TxComposer = ({
       metadata: { pubkey, address },
     },
   ] = useCurrentAccount();
-  const { data: auth } = useAuth({ config: { params: { address } } });
+  const { accountNonce } = useNonceSync();
   const { fields } = formProps;
   const [customFee, setCustomFee] = useState({});
   const [feedback, setFeedBack] = useState(formProps.feedback);
@@ -65,7 +65,7 @@ const TxComposer = ({
   const transactionJSON = {
     module,
     command,
-    nonce: auth?.data?.nonce,
+    nonce: String(accountNonce),
     fee: 0,
     senderPublicKey: pubkey,
     params: commandParams,

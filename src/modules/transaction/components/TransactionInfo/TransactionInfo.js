@@ -3,6 +3,7 @@ import { withTranslation } from 'react-i18next';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
+import Icon from '@theme/Icon';
 import styles from './TransactionInfo.css';
 import CustomTransactionInfo from './CustomTransactionInfo';
 import { joinModuleAndCommand } from '../../utils';
@@ -37,6 +38,7 @@ const TransactionInfo = ({
   date,
   token,
   summaryInfo,
+  nonceWarning,
 }) => {
   const isRegisterMultisignature =
     joinModuleAndCommand(transactionJSON) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
@@ -71,7 +73,10 @@ const TransactionInfo = ({
               <label>{date || '-'}</label>
             </div>
             <div className={styles.col}>
-              <label>{t('Nonce')}</label>
+              <label>
+                {t('Nonce')}{' '}
+                {nonceWarning && <Icon name="warningYellow" className={styles.warning} />}
+              </label>
               <label>{BigInt(transactionJSON.nonce).toString()}</label>
             </div>
           </section>
