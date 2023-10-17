@@ -22,7 +22,7 @@ export const addAccount = (encryptedAccount) => ({
 });
 
 export const setAccountNonce = (address, nonce) => ({
-  type: actionTypes.addAccount,
+  type: actionTypes.setAccountNonce,
   address,
   nonce,
 });

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback /* useMemo */ } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { useCurrentAccount, useAccounts } from '@account/hooks';
@@ -25,17 +25,22 @@ const useNonceSync = () => {
   const config = useAuthConfig(customConfig);
   const authData = queryClient.getQueryData([AUTH, chainID, config, baseUrl]);
   const onChainNonce = authData?.data.nonce;
+  const [accountNonce, setAccountNonce] = useState(onChainNonce);
 
   // Store nonce by address in account
-  const handleLocalNonce = useCallback((currentNonce) => {
+  const handleLocalNonce = (currentNonce) => {
     let localNonce = parseInt(currentAccountNonce ?? 0, 10);
     if (localNonce < currentNonce) {
       localNonce = currentNonce;
     }
     setNonceByAccount(currentAccount.metadata.address, localNonce);
 
-    return localNonce;
-  }, []);
+    setAccountNonce(localNonce);
+  };
+
+  useEffect(() => {
+    handleLocalNonce(parseInt(onChainNonce, 10));
+  }, [onChainNonce]);
 
   // Call incrementNonce after transaction signing
   const incrementNonce = useCallback(() => {
@@ -43,8 +48,6 @@ const useNonceSync = () => {
     localNonce += 1;
     setNonceByAccount(currentAccount.metadata.address, localNonce);
   }, []);
-
-  const accountNonce = useMemo(() => handleLocalNonce(parseInt(onChainNonce, 10)), [onChainNonce]);
 
   return { accountNonce, incrementNonce };
 };
