@@ -10,10 +10,10 @@ import styles from './RewardsClaimableRow.css';
 const RewardsClaimableRow = ({ data: validatorsWithTokenData, rewardsClaimableHeader }) => {
   const { validatorAddress, tokenName, logo, amount, symbol } = validatorsWithTokenData;
 
-  const { data: validators, isLoading: isLoadingValidators } = useValidators({
+  const { data: validators } = useValidators({
     config: { params: { address: validatorAddress } },
   });
-  const { name } = !isLoadingValidators ? validators.data[0] : {};
+  const { name } = validators?.data?.[0] || {};
 
   return (
     <div className={classNames(styles.RewardsClaimableRow)}>
