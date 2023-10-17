@@ -9,7 +9,7 @@ import { useCurrentAccount } from '@account/hooks';
 import getRewardsClaimableHeader from '@pos/validator/components/ClaimRewardsForm/utils/getRewardsClaimableHeader';
 import RewardsClaimableRow from '@pos/validator/components/ClaimRewardsForm/RewardsClaimableRow';
 import Table from '@theme/table';
-import { useValidatorRewardsWithToken } from '@pos/reward/hooks/queries/useValidatorRewardsWithToken';
+import { useValidatorRewardsWithToken } from '@pos/reward/hooks/queries';
 import { usePosConstants } from '../../hooks/queries';
 import styles from './ClaimRewardsForm.css';
 

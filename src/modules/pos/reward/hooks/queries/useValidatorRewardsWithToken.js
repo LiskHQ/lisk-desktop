@@ -11,12 +11,13 @@ import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleComma
 import { getRewards } from '@pos/validator/components/StakeForm/StakeForm';
 
 export const useValidatorRewardsWithToken = () => {
+  const [validatorRewardsWithToken, setValidatorRewardsWithToken] = useState();
+  const [isLoading, setIsLoading] = useState(null);
   const [
     {
       metadata: { pubkey, address },
     },
   ] = useCurrentAccount();
-  const [validatorRewardsWithToken, setValidatorRewardsWithToken] = useState();
   const { moduleCommandSchemas } = useCommandSchema();
   const { data: auth } = useAuth({ config: { params: { address } } });
   const authNounce = auth?.data?.nonce;
@@ -29,6 +30,7 @@ export const useValidatorRewardsWithToken = () => {
     }
 
     (async () => {
+      setIsLoading(true);
       const [module, command] = splitModuleAndCommand(MODULE_COMMANDS_NAME_MAP.claimRewards);
 
       const transactionJSON = {
@@ -52,8 +54,9 @@ export const useValidatorRewardsWithToken = () => {
       const validatorsWithTokenData = await transformToken(validators);
 
       setValidatorRewardsWithToken(validatorsWithTokenData);
+      setIsLoading(false);
     })();
   }, [moduleCommandSchemas, authNounce, address, pubkey]);
 
-  return { validatorRewardsWithToken };
+  return { validatorRewardsWithToken, isLoading };
 };
