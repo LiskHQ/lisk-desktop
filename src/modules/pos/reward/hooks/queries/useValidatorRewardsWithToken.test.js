@@ -20,7 +20,7 @@ useCommandSchema.mockReturnValue({
 });
 
 describe('useValidatorRewardsWithToken', () => {
-  it('Should ', async () => {
+  it('Should toggle load when finished loading validators', async () => {
     const { result, waitFor } = renderHook(() => useValidatorRewardsWithToken(), { wrapper });
     await waitFor(() => result.current.isLoading === false);
     expect(result.current.isLoading).toEqual(false);
