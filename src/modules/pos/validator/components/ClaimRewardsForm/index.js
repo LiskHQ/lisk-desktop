@@ -83,7 +83,7 @@ const ClaimRewardsForm = ({ nextStep }) => {
         currentAccountAddress: address,
       });
       const { total, ...validatorHashMap } = rewardResponse?.rewards || {};
-      const validators = validatorHashMap && Object.values(validatorHashMap);
+      const validators = Object.values(validatorHashMap);
 
       const validatorsWithTokenData = await transformToken(validators);
 
