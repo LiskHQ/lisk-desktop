@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper';
 import { useCurrentAccount } from '@account/hooks';
 import Overview from '@wallet/components/overview/overviewManager';
 import Box from '@theme/box';
@@ -12,7 +10,7 @@ import BoxContent from '@theme/box/content';
 import Transactions from '@transaction/components/Explorer';
 import TransactionEvents from '@transaction/components/TransactionEvents';
 import { selectActiveToken, selectSettings, selectTransactions } from 'src/redux/selectors';
-import InfoBanner from '@common/components/infoBanner/infoBanner';
+import SwippableInfoBanner from '@common/components/infoBanner/swippableInfoBanner';
 import banners from './banners';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -31,10 +29,6 @@ export default function AccountOverview({ address: searchAddress }) {
       metadata: { address: currentAddress },
     },
   ] = useCurrentAccount();
-  const [sliderVisibility, setSliderVisibility] = useState(
-    !localStorage.getItem('walletPageBanner')
-  );
-  const handleSliderBannerClose = () => setSliderVisibility(!sliderVisibility);
 
   const tabs = {
     tabs: [
@@ -56,39 +50,7 @@ export default function AccountOverview({ address: searchAddress }) {
 
   return (
     <section>
-      {sliderVisibility && (
-        <Swiper
-          pagination={{ clickable: true }}
-          navigation
-          modules={[Pagination, Navigation]}
-          loop
-          slidesPerView="auto"
-          spaceBetween={20}
-          className={styles.bannerSwiper}
-        >
-          {banners.map((bannerInfo, index) => {
-            const { infoMessage, infoDescription, illustrationName, infoLink, infoLinkText } =
-              bannerInfo;
-            return (
-              <SwiperSlide key={index}>
-                <InfoBanner
-                  t={t}
-                  name="walletPageBanner"
-                  className={styles.bannerWrapper}
-                  infoLabel={t('New')}
-                  infoMessage={infoMessage(t)}
-                  infoDescription={infoDescription(t)}
-                  illustrationName={illustrationName}
-                  handleSliderBannerClose={handleSliderBannerClose}
-                  infoLink={infoLink}
-                  infoLinkText={infoLinkText}
-                  show
-                />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      )}
+      <SwippableInfoBanner banners={banners} />
       <Overview
         isWalletRoute
         activeToken={activeToken}

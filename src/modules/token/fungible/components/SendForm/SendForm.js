@@ -169,7 +169,7 @@ const SendForm = (props) => {
     };
     sendFormProps.moduleCommand = MODULE_COMMANDS_NAME_MAP.transferCrossChain;
   }
-
+  console.log('>>>>', mainChainApplication, currentApplication);
   const toApplications = useMemo(() => {
     if (mainChainApplication.chainID !== currentApplication.chainID) {
       return [mainChainApplication, ...applications];

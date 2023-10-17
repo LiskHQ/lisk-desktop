@@ -16,17 +16,21 @@ import BoxTabs from '@theme/tabs';
 import useFilter from '@common/hooks/useFilter';
 import DialogLink from '@theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
-import InfoBanner from '@common/components/infoBanner/infoBanner';
 import Icon from '@theme/Icon';
+import { INFO_BANNERS } from '@common/constants';
 import { ROUND_LENGTH } from '@pos/validator/consts';
 import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
+import SwippableInfoBanner from '@common/components/infoBanner/swippableInfoBanner';
 import ValidatorsOverview from '../Overview/ValidatorsOverview';
 import GeneratingDetails from '../Overview/GeneratingDetails';
 import ValidatorsTable from '../ValidatorsTable';
 import LatestStakes from '../LatestStakes';
 import { useValidators } from '../../hooks/queries';
 import styles from './Validators.css';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 const ValidatorActionButton = ({ address, isValidator }) => {
   const { t } = useTranslation();
@@ -163,16 +167,9 @@ const ValidatorsMonitor = ({ watchList }) => {
 
   return (
     <Box>
-      <InfoBanner
-        t={t}
-        name="validatorsPageBanner"
-        infoLabel={t('New')}
-        infoMessage={t('Introducing proof of stake')}
-        infoDescription={t(
-          'Enhancing the blockchain consensus mechanism with PoS, and providing increased decentralization, scalability, and energy efficiency, empowering users to participate in securing the network, and earning rewards based on their token holdings.'
-        )}
-        illustrationName="proofOfStake"
-        show
+      <SwippableInfoBanner
+        className={styles.swippableBanner}
+        banners={[INFO_BANNERS.liskMigration, INFO_BANNERS.proofOfStake]}
       />
       <BoxHeader className={`${styles.validatorPageWrapper}`}>
         <div className={grid.row}>
