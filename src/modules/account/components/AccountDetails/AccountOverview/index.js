@@ -12,9 +12,6 @@ import TransactionEvents from '@transaction/components/TransactionEvents';
 import { selectActiveToken, selectSettings, selectTransactions } from 'src/redux/selectors';
 import SwippableInfoBanner from '@common/components/infoBanner/swippableInfoBanner';
 import banners from './banners';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 import styles from './AccountOverview.css';
 
 // eslint-disable-next-line max-statements
@@ -50,7 +47,7 @@ export default function AccountOverview({ address: searchAddress }) {
 
   return (
     <section>
-      <SwippableInfoBanner banners={banners} />
+      <SwippableInfoBanner banners={banners} name="walletPageBanner" />
       <Overview
         isWalletRoute
         activeToken={activeToken}

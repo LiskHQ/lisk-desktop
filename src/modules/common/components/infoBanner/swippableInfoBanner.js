@@ -10,10 +10,8 @@ import 'swiper/css/navigation';
 import styles from './infoBanner.css';
 import InfoBanner from './infoBanner';
 
-function SwippableInfoBanner({ banners, className }) {
-  const [sliderVisibility, setSliderVisibility] = useState(
-    !localStorage.getItem('walletPageBanner')
-  );
+function SwippableInfoBanner({ banners, className, name }) {
+  const [sliderVisibility, setSliderVisibility] = useState(!localStorage.getItem(name));
   const handleSliderBannerClose = () => setSliderVisibility(!sliderVisibility);
   const { t } = useTranslation();
 
@@ -29,14 +27,20 @@ function SwippableInfoBanner({ banners, className }) {
         className={classNames(styles.bannerSwiper, className)}
       >
         {banners.map((bannerInfo, index) => {
-          const { infoMessage, infoDescription, illustrationName, infoLink, infoLinkText, infoLabel } =
-            bannerInfo;
+          const {
+            infoMessage,
+            infoDescription,
+            illustrationName,
+            infoLink,
+            infoLinkText,
+            infoLabel,
+          } = bannerInfo;
 
           return (
             <SwiperSlide key={index}>
               <InfoBanner
                 t={t}
-                name="walletPageBanner"
+                name={name}
                 className={styles.bannerWrapper}
                 infoLabel={infoLabel?.(t) || t('New')}
                 infoMessage={infoMessage(t)}

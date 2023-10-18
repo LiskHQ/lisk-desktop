@@ -28,9 +28,6 @@ import ValidatorsTable from '../ValidatorsTable';
 import LatestStakes from '../LatestStakes';
 import { useValidators } from '../../hooks/queries';
 import styles from './Validators.css';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 
 const ValidatorActionButton = ({ address, isValidator }) => {
   const { t } = useTranslation();
@@ -170,6 +167,7 @@ const ValidatorsMonitor = ({ watchList }) => {
       <SwippableInfoBanner
         className={styles.swippableBanner}
         banners={[INFO_BANNERS.liskMigration, INFO_BANNERS.proofOfStake]}
+        name="validatorsPageBanner"
       />
       <BoxHeader className={`${styles.validatorPageWrapper}`}>
         <div className={grid.row}>

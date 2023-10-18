@@ -1,4 +1,4 @@
-const { default: routes } = require('src/routes/routes');
+import routes from 'src/routes/routes';
 
 export const INFO_BANNERS = {
   liskMigration: {

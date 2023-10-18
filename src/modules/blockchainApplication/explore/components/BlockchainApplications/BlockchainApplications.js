@@ -13,7 +13,7 @@ const BlockchainApplications = ({ applications, statistics, applyFilters, filter
 
   return (
     <div className={styles.wrapper}>
-      <SwippableInfoBanner banners={banners} />
+      <SwippableInfoBanner banners={banners} name="blockchainApplicationsPageBanner" />
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
           <TabsContainer name="main-tabs" activeTab="blockchainApplications">
