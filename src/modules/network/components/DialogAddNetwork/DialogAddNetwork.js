@@ -48,7 +48,6 @@ const DialogAddNetwork = () => {
   });
   const formValues = watch();
   const networkCheck = useNetworkCheck(formValues.serviceUrl);
-  const isNetworkUrlOk = networkCheck.isOffchainOK && networkCheck.isOnchainOK;
 
   async function onTryNetworkUrl() {
     networkCheck.refetch();
