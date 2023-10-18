@@ -1,6 +1,6 @@
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import actionTypes from './actionTypes';
-import { list, current } from './reducer';
+import { list, current, localNonce } from './reducer';
 
 describe('Auth reducer', () => {
   it('Should return encryptedAccount if setCurrentAccount action type is triggered', async () => {
@@ -81,5 +81,17 @@ describe('Auth reducer', () => {
     };
     expect(list(defaultState, actionData)).toEqual({});
     expect(current(mockSavedAccounts[0], actionData)).toEqual(mockSavedAccounts[0]);
+  });
+
+  it('Should not remove current account when deleting not current account', async () => {
+    const actionData = {
+      type: actionTypes.setAccountNonce,
+      address: mockSavedAccounts[1].metadata.address,
+      nonce: 1,
+    };
+    const expectedState = {
+      [mockSavedAccounts[1].metadata.address]: 1,
+    };
+    expect(localNonce({}, actionData)).toEqual(expectedState);
   });
 });

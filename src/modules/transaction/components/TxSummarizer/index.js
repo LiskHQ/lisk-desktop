@@ -34,9 +34,9 @@ const TxSummarizer = ({
   hasNoTopCancelButton,
   noFeeStatus,
 }) => {
-  const { accountNonce } = useNonceSync();
+  const { onChainNonce } = useNonceSync();
   const isTransactionAuthor = transactionJSON.senderPublicKey === wallet.summary.publicKey;
-  const isNonceEqual = transactionJSON.nonce === String(accountNonce);
+  const isNonceEqual = transactionJSON.nonce === String(onChainNonce);
   const nonceWarning = isTransactionAuthor && !isNonceEqual;
   const fee = !(
     wallet.summary.isMultisignature ||

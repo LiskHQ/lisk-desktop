@@ -61,8 +61,10 @@ export const list = (state = {}, { type, encryptedAccount, accountDetail, addres
 export const localNonce = (state = {}, { type, address, nonce }) => {
   switch (type) {
     case actionTypes.setAccountNonce:
-      state[address] = nonce;
-      return state;
+      return {
+        ...state,
+        [address]: nonce,
+      };
 
     default:
       return state;

@@ -12,13 +12,13 @@ const useNonceSync = () => {
   const [currentApplication] = useCurrentApplication();
   const [currentAccount] = useCurrentAccount();
   const { setNonceByAccount, getNonceByAccount } = useAccounts();
-  const currentAccountNonce = getNonceByAccount(currentAccount.metadata.address);
+  const currentAccountAddress = currentAccount.metadata.address;
+  const currentAccountNonce = getNonceByAccount(currentAccountAddress);
   const { mainChainNetwork } = useSettings('mainChainNetwork');
   const chainID = currentApplication.chainID;
-  const address = currentAccount.metadata.address;
   const customConfig = {
     params: {
-      address,
+      address: currentAccountAddress,
     },
   };
   const baseUrl = mainChainNetwork?.serviceUrl;
@@ -33,7 +33,7 @@ const useNonceSync = () => {
     if (localNonce < currentNonce) {
       localNonce = currentNonce;
     }
-    setNonceByAccount(currentAccount.metadata.address, localNonce);
+    setNonceByAccount(currentAccountAddress, localNonce);
 
     setAccountNonce(localNonce);
   };
@@ -46,10 +46,10 @@ const useNonceSync = () => {
   const incrementNonce = useCallback(() => {
     let localNonce = currentAccountNonce ?? 0;
     localNonce += 1;
-    setNonceByAccount(currentAccount.metadata.address, localNonce);
+    setNonceByAccount(currentAccountAddress, localNonce);
   }, []);
 
-  return { accountNonce, incrementNonce };
+  return { accountNonce, onChainNonce, incrementNonce };
 };
 
 export default useNonceSync;
