@@ -153,11 +153,11 @@ pipeline {
 								# wait for enevti-service to be up and running
 								set -e; while [[ $(curl -s --fail http://127.0.0.1:9902/api/v3/index/status | jq '.data.percentageIndexed') != 100 ]]; do echo waiting; sleep 10; done; set +e
 								
-								# check lisk-serivce network status and blocks
+								# check lisk-service network status and blocks
 								curl --verbose http://127.0.0.1:9901/api/v3/network/status
 								curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
-								# check enevti-serivce network status and blocks
+								# check enevti-service network status and blocks
 								curl --verbose http://127.0.0.1:9902/api/v3/network/status
 								curl --verbose http://127.0.0.1:9902/api/v3/blocks
 

@@ -42,4 +42,5 @@ if [[ $CORE == "lisk" ]]
       else
         lisk-core start --network=devnet --api-ws --api-host=0.0.0.0 --config ./e2e/artifacts/lisk-core/config.json --overwrite-config
     fi
-fi							
+fi
+					
