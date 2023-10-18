@@ -683,7 +683,7 @@
   "This account does not have any staker for the given address.": "This account does not have any staker for the given address.",
   "This account does not have any stakers.": "This account does not have any stakers.",
   "This account will no longer be stored on this device.{{text}}": "This account will no longer be stored on this device.{{text}}",
-  "This announcement is intended for all validators and node operators, please make sure to correctly migrate your nodes to the new network, in order to not miss any blocks after the network hard fork.": "This announcement is intended for all validators and node operators, please make sure to correctly migrate your nodes to the new network, in order to not miss any blocks after the network hard fork.",
+  "This announcement is intended for all validators and node operators. Please ensure that you correctly migrate your nodes to the new network to avoid missing any blocks after the network hard fork.": "This announcement is intended for all validators and node operators. Please ensure that you correctly migrate your nodes to the new network to avoid missing any blocks after the network hard fork.",
   "This avatar will be linked to your new Lisk address.": "This avatar will be linked to your new Lisk address.",
   "This is a legacy account and can not be used on this network.": "This is a legacy account and can not be used on this network.",
   "This is a request from wallet connect to establish session with Lisk Desktop, please review the following information carefully before approving.": "This is a request from wallet connect to establish session with Lisk Desktop, please review the following information carefully before approving.",
