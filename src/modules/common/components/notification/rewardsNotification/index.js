@@ -5,6 +5,8 @@ import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstr
 import DialogLink from '@theme/dialog/link';
 import styles from './styles.css';
 
+const CloseButton = () => <span className={`${styles.closeBtn} dialog-close-button`} />;
+
 const RewardsNotification = () => {
   const { t } = useTranslation();
   const {
@@ -26,7 +28,7 @@ const RewardsNotification = () => {
         {
           autoClose: false,
           draggable: false,
-          closeButton: <span className={`${styles.closeBtn} dialog-close-button`} />,
+          closeButton: <CloseButton />,
           toastId: 'claimRewards',
         }
       );
