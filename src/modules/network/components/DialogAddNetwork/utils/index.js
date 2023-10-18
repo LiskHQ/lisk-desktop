@@ -109,7 +109,7 @@ export function useNetworkCheck(serviceUrl) {
     client,
   });
 
-  const serviceUrls = blockchainAppsMeta.data?.data[0]?.serviceURLs;
+  const serviceUrls = blockchainAppsMeta?.data?.data[0]?.serviceURLs;
   const { validServiceUrl, isLoading } = useValidServiceUrl(serviceUrls);
   const hasValidServiceUrl = !!validServiceUrl;
 
