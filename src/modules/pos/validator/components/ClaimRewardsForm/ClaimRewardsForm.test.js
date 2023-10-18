@@ -2,10 +2,10 @@ import { smartRender } from 'src/utils/testHelpers';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from '@account/hooks';
-import { mockRewardsClaimableWithToken } from '@pos/reward/__fixtures__';
+import { mockValidatorRewardsWithToken } from '@pos/reward/__fixtures__';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
-import { useRewardsClaimable } from '@pos/reward/hooks/queries';
+import { useValidatorRewardsWithToken } from '@pos/reward/hooks/queries';
 import * as transactionApi from '@transaction/api';
 import useFiatRates from '@common/hooks/useFiatRates';
 import { convertFromBaseDenom } from 'src/modules/token/fungible/utils/helpers';
@@ -58,7 +58,9 @@ jest.spyOn(transactionApi, 'dryRunTransaction').mockResolvedValue([]);
 describe('ClaimRewardsForm', () => {
   const usdRate = '0.9699';
   useCurrentAccount.mockReturnValue([mockSavedAccounts[0]]);
-  useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimableWithToken });
+  useValidatorRewardsWithToken.mockReturnValue({
+    validatorRewardsWithToken: mockValidatorRewardsWithToken,
+  });
   useTransactionPriority.mockImplementation(() => [
     { selectedIndex: 1 },
     () => {},
@@ -116,10 +118,10 @@ describe('ClaimRewardsForm', () => {
         'Below are the details of your reward balances, once you click "Claim rewards" the rewarded tokens will be added to your wallet.'
       )
     ).toBeTruthy();
-    mockRewardsClaimableWithToken.data.forEach(({ tokenName, symbol, reward }) => {
+    mockValidatorRewardsWithToken.forEach(({ tokenName, symbol, amount }) => {
       expect(screen.getAllByText(tokenName)[0]).toBeTruthy();
       expect(
-        screen.getAllByText(`${convertFromBaseDenom(reward, mockAppsTokens.data[0])} ${symbol}`)[0]
+        screen.getAllByText(`${convertFromBaseDenom(amount, mockAppsTokens.data[0])} ${symbol}`)[0]
       ).toBeTruthy();
     });
     expect(screen.getByRole('button', { name: 'Claim rewards' })).toBeTruthy();

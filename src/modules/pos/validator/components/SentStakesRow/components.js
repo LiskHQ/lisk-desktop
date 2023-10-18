@@ -8,8 +8,8 @@ import DialogLink from 'src/theme/dialog/link';
 import classNames from 'classnames';
 import styles from './SentStakesRow.css';
 
-export const ValidatorWalletVisual = ({ address, name }) => (
-  <div className={`${styles.addressWrapper} ${grid['col-xs-3']}`}>
+export const ValidatorWalletVisual = ({ className, address, name }) => (
+  <div className={classNames(className, styles.addressWrapper, grid['col-xs-3'])}>
     <Link to={`${routes.explorer.path}?address=${address}`}>
       <WalletVisualWithAddress size={40} address={address} accountName={name} />
     </Link>
