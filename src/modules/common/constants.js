@@ -2,15 +2,15 @@ const { default: routes } = require('src/routes/routes');
 
 export const INFO_BANNERS = {
   liskMigration: {
-    infoMessage: (t) => t('Lisk V4 Migration'),
+    infoMessage: (t) => t('Lisk v4 Migration'),
     infoLabel: (t) => t('Announcement'),
     infoDescription: (t) =>
       t(
-        'Please make sure to correctly migrate your nodes to the new network, in order to not miss any blocks after the network hard fork.'
+        'This announcement is intended for all validators and node operators, please make sure to correctly migrate your nodes to the new network, in order to not miss any blocks after the network hard fork.'
       ),
     illustrationName: 'liskMigrationIllustration',
     infoLink: 'https://lisk.com/documentation/lisk-core/v4/management/migration.html',
-    infoLinkText: 'Read guide',
+    infoLinkText: 'Migration guide',
   },
   proofOfStake: {
     infoMessage: (t) => t('Introducing proof of stake'),
