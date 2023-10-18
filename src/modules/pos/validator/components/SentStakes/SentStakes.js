@@ -39,7 +39,7 @@ function ClaimRewardsDialogButton({ address }) {
     <DialogLink component="claimRewardsView">
       <SecondaryButton disabled={!hasClaimableRewards}>
         {t('Claim rewards')}
-        {hasClaimableRewards && <Badge />}
+        {!!hasClaimableRewards && <Badge />}
       </SecondaryButton>
     </DialogLink>
   );
