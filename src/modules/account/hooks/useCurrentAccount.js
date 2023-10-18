@@ -19,8 +19,11 @@ export function useCurrentAccount() {
     (stake) => stake.confirmed !== stake.unconfirmed
   );
 
-  const setAccount = (encryptedAccount, referrer, redirect = true) => {
+  // eslint-disable-next-line max-statements
+  const setAccount = (encryptedAccount, referrer, redirect = true, urlState) => {
     // clear stakes list during login or accounts switch
+    const relativeUrlPath = referrer || routes.wallet.path;
+
     if (pendingStakes.length) {
       const onCancel = /* istanbul ignore next */ () =>
         removeSearchParamsFromUrl(history, ['modal']);
@@ -28,7 +31,7 @@ export function useCurrentAccount() {
         dispatch(setCurrentAccount(encryptedAccount));
 
         dispatch(stakesReset());
-        history.push(referrer || routes.wallet.path);
+        history.push(relativeUrlPath);
       };
       const state = createConfirmSwitchState({
         mode: 'pendingStakes',
@@ -40,7 +43,16 @@ export function useCurrentAccount() {
     } else {
       dispatch(setCurrentAccount(encryptedAccount));
       if (redirect) {
-        history.push(referrer || routes.wallet.path);
+        if (urlState) {
+          const { pathname, search } = new URL(relativeUrlPath, window.location.origin);
+          history.push({
+            pathname,
+            search,
+            state: urlState,
+          });
+        } else {
+          history.push(relativeUrlPath);
+        }
       }
     }
   };

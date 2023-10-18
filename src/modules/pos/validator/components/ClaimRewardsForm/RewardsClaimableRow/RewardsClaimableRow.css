@@ -9,6 +9,12 @@
     margin-bottom: 0;
   }
 
+  & .validatorWalletVisualContainer {
+    & .validatorWalletVisualProp {
+      padding: 0;
+    }
+  }
+
   & .logoContainer {
     display: flex;
     align-items: center;
