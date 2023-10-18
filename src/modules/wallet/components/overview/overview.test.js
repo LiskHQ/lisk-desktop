@@ -1,6 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokenBalances } from '@token/fungible/hooks/queries';
@@ -62,12 +63,14 @@ describe('Overview', () => {
     useValidators.mockReturnValue({ data: mockValidators });
     useBlocks.mockReturnValue({ data: mockBlocks });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
-
+    const queryClient = new QueryClient();
     render(
-      <MemoryRouter>
-        <FlashMessageHolder />
-        <Overview {...props} />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <FlashMessageHolder />
+          <Overview {...props} />
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     expect(screen.getByText('Request')).toBeTruthy();
