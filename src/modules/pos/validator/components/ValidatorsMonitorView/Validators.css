@@ -322,3 +322,7 @@ header {
   border-radius: 30px;
   min-width: 250px !important;
 }
+
+.swippableBanner {
+  width: 100%;
+}

@@ -1,3 +1,7 @@
+.wrapper {
+  width: 100%;
+}
+
 .welcomeView {
   padding: 24px;
   border-radius: 16px;

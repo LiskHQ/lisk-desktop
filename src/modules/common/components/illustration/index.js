@@ -82,6 +82,7 @@ import emptyTransactionsIllustration from '@setup/react/assets/images/illustrati
 import emptyValidatorsIllustration from '@setup/react/assets/images/illustrations/emptyStates/validators-empty-illustration.svg';
 import emptyWalletConnectionsIllustration from '@setup/react/assets/images/illustrations/emptyStates/wallet-connections-illustration.svg';
 import emptyStakingQueueIllustration from '@setup/react/assets/images/illustrations/emptyStates/staking-queue-empty-illustration.svg';
+import liskMigrationIllustration from '@setup/react/assets/images/illustrations/lisk_migration_illustration.svg';
 
 export const illustrations = {
   welcomeLiskValidators,
@@ -165,6 +166,7 @@ export const illustrations = {
   emptyValidatorsIllustration,
   emptyWalletConnectionsIllustration,
   emptyStakingQueueIllustration,
+  liskMigrationIllustration
 };
 
 const Illustration = ({ name, className, noTheme, ...props }) => {
