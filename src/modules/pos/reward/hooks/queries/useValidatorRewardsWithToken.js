@@ -20,12 +20,12 @@ export const useValidatorRewardsWithToken = () => {
   ] = useCurrentAccount();
   const { moduleCommandSchemas } = useCommandSchema();
   const { data: auth } = useAuth({ config: { params: { address } } });
-  const authNounce = auth?.data?.nonce;
+  const authNonce = auth?.data?.nonce;
   const createMetaConfig = useAppsMetaTokensConfig();
   const transformToken = addTokensMetaData({ createMetaConfig, client: defaultClient });
 
   useEffect(() => {
-    if (isEmpty(moduleCommandSchemas) || !authNounce || !address || !pubkey) {
+    if (isEmpty(moduleCommandSchemas) || !authNonce || !address || !pubkey) {
       return;
     }
 
@@ -36,7 +36,7 @@ export const useValidatorRewardsWithToken = () => {
       const transactionJSON = {
         module,
         command,
-        nonce: authNounce,
+        nonce: authNonce,
         fee: 100000000,
         senderPublicKey: pubkey,
         params: {},
@@ -56,7 +56,7 @@ export const useValidatorRewardsWithToken = () => {
       setValidatorRewardsWithToken(validatorsWithTokenData);
       setIsLoading(false);
     })();
-  }, [moduleCommandSchemas, authNounce, address, pubkey]);
+  }, [moduleCommandSchemas, authNonce, address, pubkey]);
 
   return { validatorRewardsWithToken, isLoading };
 };
