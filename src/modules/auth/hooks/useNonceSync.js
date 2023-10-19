@@ -23,7 +23,7 @@ const useNonceSync = () => {
   const serviceUrl = mainChainNetwork?.serviceUrl;
   const config = useAuthConfig(customConfig);
   const authData = queryClient.getQueryData([AUTH, chainID, config, serviceUrl]);
-  const onChainNonce = BigInt(authData?.data.nonce || 0);
+  const onChainNonce = authData?.data?.nonce ? BigInt(authData?.data.nonce) : '0';
 
   const [accountNonce, setAccountNonce] = useState(onChainNonce);
   const currentAccountNonce = getNonceByAccount(currentAccountAddress);
@@ -31,7 +31,7 @@ const useNonceSync = () => {
   // Store nonce by address in accounts store
   const handleLocalNonce = (currentNonce) => {
     const storedNonce = BigInt(currentAccountNonce || 0);
-    const localNonce = accountNonce < currentNonce ? currentNonce : storedNonce;
+    const localNonce = storedNonce < currentNonce ? currentNonce : storedNonce;
     setNonceByAccount(currentAccountAddress, localNonce.toString());
 
     setAccountNonce(localNonce.toString());

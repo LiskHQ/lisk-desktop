@@ -27,7 +27,7 @@ describe('useNonceSync', () => {
       getNonceByAccount: jest.fn().mockReturnValue(3),
     });
     const { result } = renderHook(() => useNonceSync(), { wrapper });
-    expect(result.current.accountNonce).toEqual(3);
+    expect(result.current.accountNonce).toEqual('3');
     result.current.incrementNonce();
     expect(mockSetNonceByAccount).toHaveBeenCalled();
   });
@@ -40,7 +40,7 @@ describe('useNonceSync', () => {
       getNonceByAccount: jest.fn().mockReturnValue(undefined),
     });
     const { result } = renderHook(() => useNonceSync(), { wrapper });
-    expect(result.current.accountNonce).toEqual(0);
+    expect(result.current.accountNonce).toEqual('0');
   });
 
   it("updates local nonce if it's less than on-chain nonce", () => {
@@ -53,6 +53,6 @@ describe('useNonceSync', () => {
       getNonceByAccount: jest.fn().mockReturnValue(1),
     });
     const { result } = renderHook(() => useNonceSync(), { wrapper });
-    expect(result.current.accountNonce).toEqual(2);
+    expect(result.current.accountNonce).toEqual('2');
   });
 });
