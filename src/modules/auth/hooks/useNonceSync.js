@@ -13,7 +13,6 @@ const useNonceSync = () => {
   const [currentAccount] = useCurrentAccount();
   const { setNonceByAccount, getNonceByAccount } = useAccounts();
   const currentAccountAddress = currentAccount.metadata.address;
-  const currentAccountNonce = getNonceByAccount(currentAccountAddress);
   const { mainChainNetwork } = useSettings('mainChainNetwork');
   const chainID = currentApplication.chainID;
   const customConfig = {
@@ -21,32 +20,31 @@ const useNonceSync = () => {
       address: currentAccountAddress,
     },
   };
-  const baseUrl = mainChainNetwork?.serviceUrl;
+  const serviceUrl = mainChainNetwork?.serviceUrl;
   const config = useAuthConfig(customConfig);
-  const authData = queryClient.getQueryData([AUTH, chainID, config, baseUrl]);
-  const onChainNonce = authData?.data.nonce;
+  const authData = queryClient.getQueryData([AUTH, chainID, config, serviceUrl]);
+  const onChainNonce = BigInt(authData?.data.nonce || 0);
+
   const [accountNonce, setAccountNonce] = useState(onChainNonce);
+  const currentAccountNonce = getNonceByAccount(currentAccountAddress);
 
   // Store nonce by address in accounts store
   const handleLocalNonce = (currentNonce) => {
-    let localNonce = parseInt(currentAccountNonce || 0, 10);
-    if (localNonce < currentNonce) {
-      localNonce = currentNonce;
-    }
-    setNonceByAccount(currentAccountAddress, localNonce);
+    const storedNonce = BigInt(currentAccountNonce || 0);
+    const localNonce = accountNonce < currentNonce ? currentNonce : storedNonce;
+    setNonceByAccount(currentAccountAddress, localNonce.toString());
 
-    setAccountNonce(localNonce);
+    setAccountNonce(localNonce.toString());
   };
 
   useEffect(() => {
-    handleLocalNonce(parseInt(onChainNonce, 10));
+    handleLocalNonce(onChainNonce);
   }, [onChainNonce]);
 
   // Call incrementNonce after transaction signing
   const incrementNonce = useCallback(() => {
-    let localNonce = currentAccountNonce;
-    localNonce += 1;
-    setNonceByAccount(currentAccountAddress, localNonce);
+    const localNonce = BigInt(currentAccountNonce) + BigInt(1);
+    setNonceByAccount(currentAccountAddress, localNonce.toString());
   }, []);
 
   return { accountNonce, onChainNonce, incrementNonce };

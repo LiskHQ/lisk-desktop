@@ -36,7 +36,7 @@ const TxSummarizer = ({
 }) => {
   const { onChainNonce } = useNonceSync();
   const isTransactionAuthor = transactionJSON.senderPublicKey === wallet.summary.publicKey;
-  const isNonceEqual = transactionJSON.nonce === String(onChainNonce);
+  const isNonceEqual = transactionJSON.nonce === onChainNonce;
   const nonceWarning = isTransactionAuthor && !isNonceEqual;
   const fee = !(
     wallet.summary.isMultisignature ||
@@ -111,9 +111,9 @@ const TxSummarizer = ({
           <div className={styles.nonceWarning}>
             <Icon name="warningYellow" />
             <p>
-              Please ensure to send the previously initiated transactions. Check the transaction
-              sequence, and broadcast them only after they have been fully signed, in their original
-              order.
+              {t(
+                'Please ensure to send the previously initiated transactions. Check the transaction sequence, and broadcast them only after they have been fully signed, in their original order.'
+              )}
             </p>
           </div>
         )}
