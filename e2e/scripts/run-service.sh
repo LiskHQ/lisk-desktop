@@ -25,8 +25,8 @@ if [[ ! -z $ENEVTI_SERVICE_FILE_PATH ]]
 
     echo LISK_APP_WS=ws://host.docker.internal:8887 >>${ENEVTI_SERVICE_FILE_PATH}/.env
     echo PORT=9902 >>${ENEVTI_SERVICE_FILE_PATH}/.env
-    sed -i '' 's/4222:4222/2224:4222/g' "${ENEVTI_SERVICE_FILE_PATH}/docker-compose.yml"
-    sed -i '' 's/SERVICE_BROKER=nats:\/\/nats:4222/SERVICE_BROKER=nats:\/\/nats:2224/g' ${ENEVTI_SERVICE_FILE_PATH}/docker-compose.yml
+    sed -i'' -e 's/4222:4222/2224:4222/g' "${ENEVTI_SERVICE_FILE_PATH}/docker-compose.yml"
+    sed -i'' -e 's/SERVICE_BROKER=nats:\/\/nats:4222/SERVICE_BROKER=nats:\/\/nats:2224/g' ${ENEVTI_SERVICE_FILE_PATH}/docker-compose.yml
 
     make -C ${ENEVTI_SERVICE_FILE_PATH} build
     make -C ${ENEVTI_SERVICE_FILE_PATH} up
