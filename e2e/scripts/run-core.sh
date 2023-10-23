@@ -2,6 +2,7 @@
 # spin up enevti core
 if [[ $CORE == "enevti" ]]
   then
+    rm -rf ../enevti-core
     if [[ ! -d "../enevti-core" ]]
       then
         curl -O https://lisk-qa.ams3.digitaloceanspaces.com/enevti-core-desktop.tar.gz
