@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { cryptography } from '@liskhq/lisk-client';
 import { TertiaryButton } from '@theme/buttons';
 import { useCommandSchema } from '@network/hooks';
 import Icon from '@theme/Icon';
@@ -10,7 +11,7 @@ import { useCurrentAccount } from '@account/hooks';
 import useNonceSync from '@auth/hooks/useNonceSync';
 import HWSigning from '@hardwareWallet/components/HWSigning/HWSigning';
 import styles from './txSignatureCollector.css';
-import { joinModuleAndCommand } from '../../utils';
+import { joinModuleAndCommand, fromTransactionJSON, encodeTransaction } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
@@ -107,8 +108,13 @@ const TxSignatureCollector = ({
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) => {
+    // const { signatures, id, ...rest } = transactionJSON;
+    const paramsSchema = moduleCommandSchemas[moduleCommand];
+    const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
+    const buffer = encodeTransaction(transaction, paramsSchema);
+    const transactionHex = cryptography.utils.hash(buffer).toString('hex');
     if (isTransactionAuthor) {
-      incrementNonce();
+      incrementNonce(transactionHex);
     }
     txVerification(privateKey, currentAccount?.metadata.pubkey);
   };

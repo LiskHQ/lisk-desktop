@@ -23,11 +23,15 @@ export function useAccounts() {
     accounts.find((account) => account.metadata.pubkey === pubkey);
 
   const setNonceByAccount = useCallback(
-    (address, nonce) => dispatch(setAccountNonce(address, nonce)),
+    (address, nonce, transactionHex) => dispatch(setAccountNonce(address, nonce, transactionHex)),
     []
   );
 
-  const getNonceByAccount = (address) => useSelector(selectAccountNonce)[address];
+  const getNonceByAccount = (address) => {
+    const accountNonceMap = useSelector(selectAccountNonce)[address] ?? {};
+    const nonceList = Object.values(accountNonceMap).length ? Object.values(accountNonceMap) : [0];
+    return Math.max(...nonceList);
+  };
 
   return {
     accounts,
