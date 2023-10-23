@@ -83,15 +83,40 @@ describe('Auth reducer', () => {
     expect(current(mockSavedAccounts[0], actionData)).toEqual(mockSavedAccounts[0]);
   });
 
-  it('Should not remove current account when deleting not current account', async () => {
+  it('Should set account nonce with required details', async () => {
+    const txHex = 'a24f94966cf213deb90854c41cf1f27906135b7001a49e53a9722ebf5fc67481';
+    const actionData = {
+      type: actionTypes.setAccountNonce,
+      address: mockSavedAccounts[1].metadata.address,
+      nonce: 1,
+      transactionHex: txHex,
+    };
+    const expectedState = {
+      [mockSavedAccounts[1].metadata.address]: {
+        [txHex]: 1,
+      },
+    };
+    expect(localNonce({}, actionData)).toEqual(expectedState);
+  });
+
+  it('Should return existing or default account nonce if no transaction hex is passed', async () => {
+    const txHex = 'a24f94966cf213deb90854c41cf1f27906135b7001a49e53a9722ebf5fc67481';
     const actionData = {
       type: actionTypes.setAccountNonce,
       address: mockSavedAccounts[1].metadata.address,
       nonce: 1,
     };
     const expectedState = {
-      [mockSavedAccounts[1].metadata.address]: 1,
+      [mockSavedAccounts[1].metadata.address]: {
+        [txHex]: 1,
+        undefined: 1,
+      },
     };
-    expect(localNonce({}, actionData)).toEqual(expectedState);
+    const existingState = {
+      [mockSavedAccounts[1].metadata.address]: {
+        [txHex]: 1,
+      },
+    };
+    expect(localNonce(existingState, actionData)).toEqual(expectedState);
   });
 });
