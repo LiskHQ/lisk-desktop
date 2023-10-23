@@ -8,8 +8,8 @@ Feature: Network Management
     Then I should see "dialogAddNetwork" modal
     And button with text "Add network" should be disabled
     Given I type "custom_devnet" in "name"
-    And I type "http://devnet-service.liskdev.net:9901" in "serviceUrl"
-    And I type "ws://devnet-service.liskdev.net:9901" in "wsServiceUrl"
+    And I type "http://127.0.0.1:9901" in "serviceUrl"
+    And I type "ws://127.0.0.1:9901" in "wsServiceUrl"
     And I wait for "1 seconds"
     And I click on a button with text "Add network"
     Then I should see 'Custom network added "custom_devnet"'
@@ -38,7 +38,7 @@ Feature: Network Management
     Then I should be redirected to route: 'wallet?modal=dialogAddNetwork'
     And button with text "Add network" should be disabled
     Given I type "custom_devnet" in "name"
-    And I type "http://devnet-service.liskdev.net:9901" in "serviceUrl"
+    And I type "http://127.0.0.1:9901" in "serviceUrl"
     And I click on a button with text "Add network"
     Then I should see "Name & ServiceUrl already exists."
 
