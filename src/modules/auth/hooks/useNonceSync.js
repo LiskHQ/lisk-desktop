@@ -23,10 +23,10 @@ const useNonceSync = () => {
   const serviceUrl = mainChainNetwork?.serviceUrl;
   const config = useAuthConfig(customConfig);
   const authData = queryClient.getQueryData([AUTH, chainID, config, serviceUrl]);
-  const onChainNonce = authData?.data?.nonce ? BigInt(authData?.data.nonce) : '0';
+  const onChainNonce = authData?.data?.nonce ? BigInt(authData?.data.nonce) : BigInt('0');
   const authNonce = typeof onChainNonce === 'bigint' ? onChainNonce.toString() : onChainNonce;
 
-  const [accountNonce, setAccountNonce] = useState(onChainNonce);
+  const [accountNonce, setAccountNonce] = useState(onChainNonce.toString());
   const currentAccountNonce = getNonceByAccount(currentAccountAddress);
 
   // Store nonce by address in accounts store
@@ -44,7 +44,7 @@ const useNonceSync = () => {
 
   // Call incrementNonce after transaction signing
   const incrementNonce = useCallback((transactionHex) => {
-    const localNonce = BigInt(Math.max(currentAccountNonce, accountNonce)) + BigInt(1);
+    const localNonce = BigInt(Math.max(currentAccountNonce, Number(accountNonce))) + BigInt(1);
     setNonceByAccount(currentAccountAddress, localNonce.toString(), transactionHex);
   }, []);
 

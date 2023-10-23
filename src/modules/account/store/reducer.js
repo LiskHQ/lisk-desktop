@@ -66,7 +66,10 @@ export const localNonce = (state = {}, { type, address, nonce, transactionHex })
       }
       return {
         ...state,
-        [address]: nonce,
+        [address]: {
+          ...state[address],
+          [transactionHex]: nonce,
+        },
       };
 
     default:
