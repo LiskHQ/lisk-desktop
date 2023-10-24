@@ -1,4 +1,4 @@
-import { cryptography } from '@liskhq/lisk-client';
+import { cryptography, codec } from '@liskhq/lisk-client';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { smartRender } from 'src/utils/testHelpers';
 import { useCurrentAccount } from 'src/modules/account/hooks';
@@ -94,6 +94,7 @@ jest.mock('@account/hooks', () => ({
   })),
 }));
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
+jest.spyOn(codec.codec, 'encode');
 
 const config = {
   queryClient: true,
@@ -140,6 +141,7 @@ describe('TxSignatureCollector', () => {
     nextStep: jest.fn(),
     statusInfo: {},
   };
+  const txHex = 'a24f94966cf213deb90854c41cf1f27906135b7001a49e53a9722ebf5fc67481';
 
   useCommandSchema.mockReturnValue({
     moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
@@ -152,6 +154,7 @@ describe('TxSignatureCollector', () => {
     txInitiatorAccount: { ...mockAuth.data, ...mockAuth.meta, keys: { ...mockAuth.data } },
     isLoading: false,
   });
+  codec.codec.encode.mockReturnValue(txHex);
 
   beforeEach(() => {
     jest.clearAllMocks();

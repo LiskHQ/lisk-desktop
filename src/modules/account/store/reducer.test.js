@@ -105,11 +105,11 @@ describe('Auth reducer', () => {
       type: actionTypes.setAccountNonce,
       address: mockSavedAccounts[1].metadata.address,
       nonce: 1,
+      transactionHex: txHex,
     };
     const expectedState = {
       [mockSavedAccounts[1].metadata.address]: {
         [txHex]: 1,
-        undefined: 1,
       },
     };
     const existingState = {
