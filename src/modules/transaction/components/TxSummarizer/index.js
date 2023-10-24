@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
@@ -34,10 +34,18 @@ const TxSummarizer = ({
   hasNoTopCancelButton,
   noFeeStatus,
 }) => {
+  const [modifiedTransactionJSON, setModifiedTransactionJSON] = useState(transactionJSON);
   const { onChainNonce } = useNonceSync();
   const isTransactionAuthor = transactionJSON.senderPublicKey === wallet.summary.publicKey;
-  const isNonceEqual = transactionJSON.nonce === onChainNonce;
+  const isNonceEqual = modifiedTransactionJSON.nonce === onChainNonce;
   const nonceWarning = isTransactionAuthor && !isNonceEqual;
+  const canResetNonce = nonceWarning && !transactionJSON.signatures.length;
+  const resetTxNonce = () => {
+    setModifiedTransactionJSON({
+      ...transactionJSON,
+      nonce: onChainNonce,
+    });
+  };
   const fee = !(
     wallet.summary.isMultisignature ||
     formProps.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
@@ -78,10 +86,12 @@ const TxSummarizer = ({
           token={token}
           summaryInfo={summaryInfo}
           formProps={formProps}
-          transactionJSON={transactionJSON}
+          transactionJSON={modifiedTransactionJSON}
           account={wallet}
           isMultisignature={wallet.summary.isMultisignature}
           nonceWarning={nonceWarning}
+          canResetNonce={canResetNonce}
+          resetTxNonce={resetTxNonce}
         />
         {!noFeeStatus && !!fee && (
           <section>

@@ -197,4 +197,9 @@
 
 .warning {
   vertical-align: bottom;
+  margin-right: 5px;
+}
+
+.reset {
+  vertical-align: unset;
 }

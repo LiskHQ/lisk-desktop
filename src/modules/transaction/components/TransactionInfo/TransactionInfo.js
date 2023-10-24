@@ -39,6 +39,8 @@ const TransactionInfo = ({
   token,
   summaryInfo,
   nonceWarning,
+  canResetNonce,
+  resetTxNonce,
 }) => {
   const isRegisterMultisignature =
     joinModuleAndCommand(transactionJSON) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
@@ -76,6 +78,9 @@ const TransactionInfo = ({
               <label>
                 {t('Nonce')}{' '}
                 {nonceWarning && <Icon name="warningYellow" className={styles.warning} />}
+                {canResetNonce && (
+                  <Icon name="refresh" className={styles.reset} onClick={resetTxNonce} />
+                )}
               </label>
               <label>{BigInt(transactionJSON.nonce).toString()}</label>
             </div>

@@ -43,7 +43,7 @@ const useNonceSync = () => {
     handleLocalNonce(onChainNonce);
   }, [onChainNonce]);
 
-  // Call incrementNonce after transaction signing
+  // Increment nonce after transaction signing
   const incrementNonce = useCallback((transactionHex) => {
     const localNonce = BigInt(Math.max(currentAccountNonce, Number(accountNonce))) + BigInt(1);
     setNonceByAccount(currentAccountAddress, localNonce.toString(), transactionHex);
