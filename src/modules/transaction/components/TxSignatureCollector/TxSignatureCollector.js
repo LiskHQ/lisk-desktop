@@ -108,7 +108,6 @@ const TxSignatureCollector = ({
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) => {
-    // const { signatures, id, ...rest } = transactionJSON;
     const paramsSchema = moduleCommandSchemas[moduleCommand];
     const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
     const buffer = encodeTransaction(transaction, paramsSchema);

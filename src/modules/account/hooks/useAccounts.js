@@ -9,6 +9,7 @@ export function useAccounts() {
   const dispatch = useDispatch();
   const accountsObject = useSelector(selectAccounts);
   const hwAccounts = useSelector(selectHWAccounts);
+  const nonceMap = useSelector(selectAccountNonce);
   const setAccount = useCallback((account) => dispatch(addAccount(account)), []);
   const deleteAccountByAddress = useCallback((address) => dispatch(deleteAccount(address)), []);
 
@@ -28,8 +29,9 @@ export function useAccounts() {
   );
 
   const getNonceByAccount = (address) => {
-    const accountNonceMap = useSelector(selectAccountNonce)[address] ?? {};
-    const nonceList = Object.values(accountNonceMap).length ? Object.values(accountNonceMap) : [0];
+    const accountNonceMap = nonceMap[address] ?? {};
+    const accountNonceValues = Object.values(accountNonceMap);
+    const nonceList = accountNonceValues.length ? accountNonceValues : [0];
     return Math.max(...nonceList);
   };
 

@@ -33,9 +33,10 @@ const useNonceSync = () => {
   const handleLocalNonce = (currentNonce) => {
     const storedNonce = BigInt(currentAccountNonce || 0);
     const localNonce = storedNonce < currentNonce ? currentNonce : storedNonce;
-    setNonceByAccount(currentAccountAddress, localNonce.toString());
+    const localNonceStr = localNonce.toString();
+    setNonceByAccount(currentAccountAddress, localNonceStr, 'defaultNonce');
 
-    setAccountNonce(localNonce.toString());
+    setAccountNonce(localNonceStr);
   };
 
   useEffect(() => {
