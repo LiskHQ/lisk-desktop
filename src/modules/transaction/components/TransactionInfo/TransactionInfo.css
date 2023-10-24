@@ -201,5 +201,5 @@
 }
 
 .reset {
-  vertical-align: unset;
+  cursor: pointer;
 }

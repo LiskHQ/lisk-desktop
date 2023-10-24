@@ -202,6 +202,7 @@ import liskIcon from '@setup/react/assets/images/icons/lisk-icon.svg';
 import initialiseIcon from '@setup/react/assets/images/icons/initialise-icon.svg';
 import initialiseRegistration from '@setup/react/assets/images/icons/initialise-registration.svg';
 import warningYellow from '@setup/react/assets/images/icons/warning-yellow.svg';
+import reset from '@setup/react/assets/images/icons/reset.svg';
 import linkIcon from '@setup/react/assets/images/icons/link-icon.svg';
 import refresh from '@setup/react/assets/images/icons/refresh.svg';
 import refreshActive from '@setup/react/assets/images/icons/refresh-active.svg';
@@ -427,6 +428,7 @@ export const icons = {
   initialiseIcon,
   initialiseRegistration,
   warningYellow,
+  reset,
   linkIcon,
   arrowRightWithStroke,
   arrowRightWithStrokeDark,

@@ -39,7 +39,7 @@ const TxSummarizer = ({
   const isTransactionAuthor = transactionJSON.senderPublicKey === wallet.summary.publicKey;
   const isNonceEqual = modifiedTransactionJSON.nonce === onChainNonce;
   const nonceWarning = isTransactionAuthor && !isNonceEqual;
-  const canResetNonce = nonceWarning && !transactionJSON.signatures.length;
+  const canResetNonce = nonceWarning && !transactionJSON?.signatures.length;
   const resetTxNonce = () => {
     setModifiedTransactionJSON({
       ...transactionJSON,
