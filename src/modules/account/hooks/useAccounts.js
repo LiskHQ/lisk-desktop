@@ -2,7 +2,7 @@ import { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAccounts, selectAccountNonce } from '@account/store/selectors';
 import { selectHWAccounts } from '@hardwareWallet/store/selectors/hwSelectors';
-import { addAccount, deleteAccount, setAccountNonce } from '../store/action';
+import { addAccount, deleteAccount, resetAccountNonce, setAccountNonce } from '../store/action';
 
 // eslint-disable-next-line
 export function useAccounts() {
@@ -35,6 +35,8 @@ export function useAccounts() {
     return Math.max(...nonceList);
   };
 
+  const resetNonceByAccount = (address) => dispatch(resetAccountNonce(address));
+
   return {
     accounts,
     setAccount,
@@ -43,5 +45,6 @@ export function useAccounts() {
     getAccountByAddress,
     setNonceByAccount,
     getNonceByAccount,
+    resetNonceByAccount,
   };
 }

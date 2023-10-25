@@ -28,6 +28,11 @@ export const setAccountNonce = (address, nonce, transactionHex) => ({
   transactionHex,
 });
 
+export const resetAccountNonce = (address) => ({
+  type: actionTypes.resetAccountNonce,
+  address,
+});
+
 export const updateAccount = ({ encryptedAccount, accountDetail }) => ({
   type: actionTypes.updateAccount,
   encryptedAccount,

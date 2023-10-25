@@ -11,7 +11,7 @@ const useNonceSync = () => {
   const queryClient = useQueryClient();
   const [currentApplication] = useCurrentApplication();
   const [currentAccount] = useCurrentAccount();
-  const { setNonceByAccount, getNonceByAccount } = useAccounts();
+  const { setNonceByAccount, getNonceByAccount, resetNonceByAccount } = useAccounts();
   const currentAccountAddress = currentAccount.metadata.address;
   const { mainChainNetwork } = useSettings('mainChainNetwork');
   const chainID = currentApplication.chainID;
@@ -49,7 +49,12 @@ const useNonceSync = () => {
     setNonceByAccount(currentAccountAddress, localNonce.toString(), transactionHex);
   }, []);
 
-  return { accountNonce, onChainNonce: authNonce, incrementNonce };
+  const resetNonce = () => {
+    resetNonceByAccount(currentAccountAddress);
+    setNonceByAccount(currentAccountAddress, onChainNonce, 'defaultNonce');
+  };
+
+  return { accountNonce, onChainNonce: authNonce, incrementNonce, resetNonce };
 };
 
 export default useNonceSync;

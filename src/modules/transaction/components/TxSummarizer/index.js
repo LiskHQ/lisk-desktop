@@ -35,7 +35,7 @@ const TxSummarizer = ({
   noFeeStatus,
 }) => {
   const [modifiedTransactionJSON, setModifiedTransactionJSON] = useState(transactionJSON);
-  const { onChainNonce } = useNonceSync();
+  const { onChainNonce, resetNonce } = useNonceSync();
   const isTransactionAuthor = transactionJSON.senderPublicKey === wallet.summary.publicKey;
   const isNonceEqual = modifiedTransactionJSON.nonce === onChainNonce;
   const nonceWarning = isTransactionAuthor && !isNonceEqual;
@@ -47,6 +47,7 @@ const TxSummarizer = ({
       ...transactionJSON,
       nonce: onChainNonce,
     });
+    resetNonce();
   };
 
   const fee = !(
