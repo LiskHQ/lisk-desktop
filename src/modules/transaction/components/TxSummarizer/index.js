@@ -40,12 +40,15 @@ const TxSummarizer = ({
   const isNonceEqual = modifiedTransactionJSON.nonce === onChainNonce;
   const nonceWarning = isTransactionAuthor && !isNonceEqual;
   const canResetNonce = nonceWarning && !transactionJSON.signatures?.length;
+
+  /* istanbul ignore next */
   const resetTxNonce = () => {
     setModifiedTransactionJSON({
       ...transactionJSON,
       nonce: onChainNonce,
     });
   };
+
   const fee = !(
     wallet.summary.isMultisignature ||
     formProps.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature

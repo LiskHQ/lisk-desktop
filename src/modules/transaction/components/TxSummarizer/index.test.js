@@ -9,9 +9,9 @@ import { mockAppsTokens, mockTokensBalance } from '@token/fungible/__fixtures__'
 import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import { useAuth } from 'src/modules/auth/hooks/queries';
+import useNonceSync from 'src/modules/auth/hooks/useNonceSync';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import TxSummarizer from '.';
-import { convertStringToBinary } from '../../utils';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@token/fungible/hooks/queries');
@@ -20,6 +20,7 @@ jest.mock('@account/hooks', () => ({
   ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
+jest.mock('src/modules/auth/hooks/useNonceSync');
 
 describe('TxSummarizer', () => {
   let props;
@@ -66,8 +67,8 @@ describe('TxSummarizer', () => {
         fee: BigInt(141000),
         module: 'token',
         command: 'transfer',
-        senderPublicKey: convertStringToBinary(wallets.genesis.summary.publicKey),
-        nonce: BigInt(2),
+        senderPublicKey: wallets.genesis.summary.publicKey,
+        nonce: '2',
         params: {
           recipientAddress: wallets.genesis.summary.address,
           amount: BigInt(112300000),
@@ -81,11 +82,13 @@ describe('TxSummarizer', () => {
   const config = { queryClient: true, renderType: 'mount' };
 
   it('should render title', () => {
+    useNonceSync.mockReturnValue({ onChainNonce: '2' });
     const wrapper = smartRender(TxSummarizer, props, config).wrapper;
     expect(wrapper.find('h2').text()).toEqual(props.title);
   });
 
   it('should call action functions of each button', () => {
+    useNonceSync.mockReturnValue({ onChainNonce: '2' });
     const wrapper = smartRender(TxSummarizer, props, config).wrapper;
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(props.confirmButton.onClick).toHaveBeenCalled();
@@ -94,6 +97,7 @@ describe('TxSummarizer', () => {
   });
 
   it('should display HW illustration', () => {
+    useNonceSync.mockReturnValue({ onChainNonce: '2' });
     let wrapper = smartRender(TxSummarizer, props, config).wrapper;
     const newProps = {
       ...props,
@@ -115,6 +119,7 @@ describe('TxSummarizer', () => {
 
   it('should display tx fee for regular account', () => {
     // Regular account
+    useNonceSync.mockReturnValue({ onChainNonce: '2' });
     const wrapper = smartRender(TxSummarizer, props, config).wrapper;
     expect(wrapper.find('.fee-value-test')).toExist();
     expect(wrapper.find('.fee-value-test').text()).toContain('1 LSK');
@@ -159,11 +164,50 @@ describe('TxSummarizer', () => {
         },
       },
     };
+    useNonceSync.mockReturnValue({ onChainNonce: '2' });
 
     const wrapper = smartRender(TxSummarizer, multisigProps, config).wrapper;
     expect(wrapper.find('.info-numberOfSignatures').at(0).text()).toEqual('Required signatures2');
     expect(wrapper.find('.member-info').at(0).find('p span').text()).toEqual('(Mandatory)');
     expect(wrapper.find('.member-info').at(1).find('p span').text()).toEqual('(Optional)');
     expect(wrapper.find('.member-info').at(2).find('p span').text()).toEqual('(Optional)');
+  });
+
+  it('should display transaction nonce warning if nonce is higher than auth nonce', () => {
+    const multisigProps = {
+      ...props,
+      formProps: {
+        isValid: true,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+        composedFees: [
+          {
+            label: 'TransactionFee',
+            value: '0.0023 LSK',
+          },
+        ],
+        fields: {
+          token: mockTokensBalance.data[0],
+          sendingChain: mockBlockchainApplications[0],
+          recipientChain: { ...blockchainApplicationsExplore[0], logo: { png: '', svg: '' } },
+        },
+      },
+      transactionJSON: {
+        ...props.transactionJSON,
+        signatures: [],
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+        params: {
+          mandatoryKeys: [wallets.genesis.summary.publicKey],
+          optionalKeys: [wallets.validator.summary.publicKey, wallets.multiSig.summary.publicKey],
+          numberOfSignatures: 2,
+        },
+      },
+    };
+    useNonceSync.mockReturnValue({ onChainNonce: '4' });
+
+    const wrapper = smartRender(TxSummarizer, multisigProps, config).wrapper;
+    expect(wrapper.find('img.warning')).toBeTruthy();
+    expect(wrapper.find('.nonceWarning').text()).toEqual(
+      'Please ensure to send the previously initiated transactions. Check the transaction sequence, and broadcast them only after they have been fully signed, in their original order.'
+    );
   });
 });

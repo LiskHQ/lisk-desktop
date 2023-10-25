@@ -79,7 +79,7 @@ const TransactionInfo = ({
                 {t('Nonce')}{' '}
                 {nonceWarning && <Icon name="warningYellow" className={styles.warning} />}
                 {canResetNonce && (
-                  <Icon name="refresh" className={styles.reset} onClick={resetTxNonce} />
+                  <Icon name="reset" className={styles.reset} onClick={resetTxNonce} />
                 )}
               </label>
               <label>{BigInt(transactionJSON.nonce).toString()}</label>
