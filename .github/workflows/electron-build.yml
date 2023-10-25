@@ -23,14 +23,6 @@ jobs:
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
 
-      - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v1
-        # Only install Snapcraft on Ubuntu
-        if: startsWith(matrix.os, 'ubuntu')
-        with:
-          # Log in to Snap Store
-          snapcraft_token: ${{ secrets.snapcraft_token }}
-
       - name: Prepare for mac os app notarization
         if: startsWith(matrix.os, 'macos')
         # Import Apple API key for app notarization on macOS
