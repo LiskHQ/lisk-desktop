@@ -23,10 +23,8 @@ export function useAccounts() {
   const getAccountByPublicKey = (pubkey) =>
     accounts.find((account) => account.metadata.pubkey === pubkey);
 
-  const setNonceByAccount = useCallback(
-    (address, nonce, transactionHex) => dispatch(setAccountNonce(address, nonce, transactionHex)),
-    []
-  );
+  const setNonceByAccount = (address, nonce, transactionHex) =>
+    dispatch(setAccountNonce(address, nonce, transactionHex));
 
   const getNonceByAccount = (address) => {
     const accountNonceMap = nonceMap[address] ?? {};
