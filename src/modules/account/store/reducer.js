@@ -75,7 +75,7 @@ export const localNonce = (state = {}, { type, address, nonce, transactionHex })
     case actionTypes.resetAccountNonce:
       return {
         ...state,
-        [address]: {},
+        [address]: { defaultNonce: nonce },
       };
 
     default:

@@ -50,8 +50,7 @@ const useNonceSync = () => {
   }, []);
 
   const resetNonce = () => {
-    resetNonceByAccount(currentAccountAddress);
-    setNonceByAccount(currentAccountAddress, onChainNonce, 'defaultNonce');
+    resetNonceByAccount(currentAccountAddress, authNonce);
   };
 
   return { accountNonce, onChainNonce: authNonce, incrementNonce, resetNonce };

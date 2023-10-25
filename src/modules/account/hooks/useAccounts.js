@@ -35,7 +35,8 @@ export function useAccounts() {
     return Math.max(...nonceList);
   };
 
-  const resetNonceByAccount = (address) => dispatch(resetAccountNonce(address));
+  const resetNonceByAccount = (address, onChainNonce) =>
+    dispatch(resetAccountNonce(address, onChainNonce));
 
   return {
     accounts,
