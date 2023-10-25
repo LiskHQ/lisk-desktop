@@ -458,6 +458,7 @@
   "Please click on “Switch to signing account” ": "Please click on “Switch to signing account” ",
   "Please confirm the transaction on your {{deviceModel}}": "Please confirm the transaction on your {{deviceModel}}",
   "Please drop the JSON here.": "Please drop the JSON here.",
+  "Please ensure to send the previously initiated transactions. Check the transaction sequence, and broadcast them only after they have been fully signed, in their original order.": "Please ensure to send the previously initiated transactions. Check the transaction sequence, and broadcast them only after they have been fully signed, in their original order.",
   "Please enter a valid blockchain app URI.": "Please enter a valid blockchain app URI.",
   "Please enter a valid bls key value": "Please enter a valid bls key value",
   "Please enter a valid generator key value": "Please enter a valid generator key value",

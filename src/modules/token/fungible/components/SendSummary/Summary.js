@@ -14,10 +14,11 @@ const Summary = ({
 }) => {
   const onConfirmAction = {
     label: t('Send'),
-    onClick: () => {
+    onClick: (modifiedTransactionJSON) => {
+      /* istanbul ignore next */
       nextStep({
         formProps,
-        transactionJSON,
+        transactionJSON: modifiedTransactionJSON || transactionJSON,
         selectedPriority,
         actionFunction: tokensTransferred,
       });

@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { smartRender } from 'src/utils/testHelpers';
 import wallets from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useAuth } from '@auth/hooks/queries';
@@ -9,7 +8,12 @@ import { mockAuth } from 'src/modules/auth/__fixtures__';
 import Summary from './UnlockBalanceSummary';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
+const config = {
+  queryClient: true,
+  renderType: 'mount',
+};
 jest.mock('@account/hooks', () => ({
+  ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
 jest.mock('@auth/hooks/queries');
@@ -59,7 +63,7 @@ describe('Locked balance Summary', () => {
   usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
 
   it('renders properly Summary component', () => {
-    const wrapper = mount(<Summary {...props} />);
+    const wrapper = smartRender(Summary, props, config).wrapper;
     expect(wrapper).toContainMatchingElement('.address-label');
     expect(wrapper).toContainMatchingElement('.amount-label');
     expect(wrapper).toContainMatchingElement('button.confirm-button');
@@ -67,14 +71,14 @@ describe('Locked balance Summary', () => {
   });
 
   it('go to prev page when click Go back button', () => {
-    const wrapper = mount(<Summary {...props} />);
+    const wrapper = smartRender(Summary, props, config).wrapper;
     expect(props.prevStep).not.toBeCalled();
     wrapper.find('button.cancel-button').simulate('click');
     expect(props.prevStep).toBeCalled();
   });
 
   it('submit transaction and action function when click in confirm button', () => {
-    const wrapper = mount(<Summary {...props} />);
+    const wrapper = smartRender(Summary, props, config).wrapper;
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({

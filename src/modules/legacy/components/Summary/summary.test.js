@@ -20,6 +20,7 @@ const mockedCurrentAccount = mockSavedAccounts[0];
 
 jest.mock('@auth/hooks/queries/useAuth');
 jest.mock('@account/hooks', () => ({
+  ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
 
