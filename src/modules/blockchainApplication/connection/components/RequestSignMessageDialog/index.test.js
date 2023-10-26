@@ -48,6 +48,8 @@ useCurrentAccount.mockReturnValue([mockCurrentAccount, mockSetCurrentAccount]);
 useAccounts.mockReturnValue({
   getAccountByAddress: () => mockSavedAccounts[0],
   accounts: mockSavedAccounts,
+  setNonceByAccount: jest.fn(),
+  getNonceByAccount: () => 1,
 });
 
 useBlockchainApplicationMeta.mockReturnValue({
