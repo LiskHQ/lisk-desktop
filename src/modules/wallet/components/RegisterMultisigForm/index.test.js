@@ -41,6 +41,7 @@ const mockEstimateFeeResponse = {
 };
 
 jest.mock('@account/hooks', () => ({
+  ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
 }));
 jest.mock('@transaction/hooks/queries/useTransactionEstimateFees');

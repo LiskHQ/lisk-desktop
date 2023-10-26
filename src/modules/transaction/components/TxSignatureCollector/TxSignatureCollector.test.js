@@ -1,7 +1,6 @@
-import React from 'react';
-import { cryptography } from '@liskhq/lisk-client';
-import { screen, render, fireEvent, waitFor } from '@testing-library/react';
-import { renderWithStore, renderWithRouterAndStore } from 'src/utils/testHelpers';
+import { cryptography, codec } from '@liskhq/lisk-client';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { smartRender } from 'src/utils/testHelpers';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
@@ -90,9 +89,18 @@ jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount, mockSetCurrentAccount]),
   useAccounts: jest.fn(() => ({
     getAccountByAddress: jest.fn().mockReturnValue(mockCurrentAccount),
+    getNonceByAccount: jest.fn().mockReturnValue(2),
+    setNonceByAccount: jest.fn(),
   })),
 }));
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
+jest.spyOn(codec.codec, 'encode');
+
+const config = {
+  queryClient: true,
+  store: true,
+  storeInfo: mockAppState,
+};
 
 beforeAll(() => {
   window.Worker = WorkerMock;
@@ -133,6 +141,7 @@ describe('TxSignatureCollector', () => {
     nextStep: jest.fn(),
     statusInfo: {},
   };
+  const txHex = 'a24f94966cf213deb90854c41cf1f27906135b7001a49e53a9722ebf5fc67481';
 
   useCommandSchema.mockReturnValue({
     moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
@@ -145,6 +154,7 @@ describe('TxSignatureCollector', () => {
     txInitiatorAccount: { ...mockAuth.data, ...mockAuth.meta, keys: { ...mockAuth.data } },
     isLoading: false,
   });
+  codec.codec.encode.mockReturnValue(txHex);
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -152,7 +162,7 @@ describe('TxSignatureCollector', () => {
   });
 
   it('should render password input fit not used with HW', () => {
-    renderWithStore(TxSignatureCollector, props, mockAppState);
+    smartRender(TxSignatureCollector, props, config);
     expect(screen.getByText('Enter your account password')).toBeInTheDocument();
     expect(
       screen.getByText('Please enter your account password to sign this transaction.')
@@ -180,8 +190,9 @@ describe('TxSignatureCollector', () => {
         isHW: true,
       },
     };
+    const updatedConfig = { ...config, storeInfo: mockDisconnectedAppState };
     useCurrentAccount.mockReturnValue([mockHWAcct, mockSetCurrentAccount]);
-    renderWithRouterAndStore(TxSignatureCollector, props, mockDisconnectedAppState);
+    smartRender(TxSignatureCollector, props, updatedConfig);
     expect(screen.getByText('Reconnect to hardware wallet')).toBeInTheDocument();
   });
 
@@ -199,8 +210,9 @@ describe('TxSignatureCollector', () => {
         isHW: true,
       },
     };
+    const updatedConfig = { ...config, storeInfo: mockConnectedAppState };
     useCurrentAccount.mockReturnValue([mockHWAcct, mockSetCurrentAccount]);
-    renderWithRouterAndStore(TxSignatureCollector, props, mockConnectedAppState);
+    smartRender(TxSignatureCollector, props, updatedConfig);
     expect(
       screen.getByText('Please confirm the transaction on your Ledger S Plus')
     ).toBeInTheDocument();
@@ -230,8 +242,9 @@ describe('TxSignatureCollector', () => {
         isHW: true,
       },
     };
+    const updatedConfig = { ...config, storeInfo: mockConnectedAppState };
     useCurrentAccount.mockReturnValue([mockHWAcct, mockSetCurrentAccount]);
-    renderWithStore(TxSignatureCollector, props, mockConnectedAppState);
+    smartRender(TxSignatureCollector, props, updatedConfig);
     expect(props.actionFunction).toHaveBeenCalled();
   });
 
@@ -244,7 +257,7 @@ describe('TxSignatureCollector', () => {
         command: 'registerMultisignature',
       },
     };
-    renderWithStore(TxSignatureCollector, formProps, mockAppState);
+    smartRender(TxSignatureCollector, formProps, config);
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
       target: { value: 'DeykUBjUn7uZHYv!' },
     });
@@ -255,7 +268,7 @@ describe('TxSignatureCollector', () => {
   });
 
   it('should call action function on continue button click', async () => {
-    renderWithStore(TxSignatureCollector, props, mockAppState);
+    smartRender(TxSignatureCollector, props, config);
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
       target: { value: 'DeykUBjUn7uZHYv!' },
     });
@@ -269,7 +282,7 @@ describe('TxSignatureCollector', () => {
 
   it('should call action function if no keys', async () => {
     useAuth.mockReturnValue({ isLoading: false });
-    renderWithStore(TxSignatureCollector, props, mockAppState);
+    smartRender(TxSignatureCollector, props, config);
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
       target: { value: 'DeykUBjUn7uZHYv!' },
     });
@@ -280,7 +293,7 @@ describe('TxSignatureCollector', () => {
   });
 
   it('should call action function on continue button click', async () => {
-    renderWithStore(TxSignatureCollector, props, mockAppState);
+    smartRender(TxSignatureCollector, props, config);
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
       target: { value: 'DeykUBjUn7uZHYv!' },
     });
@@ -298,7 +311,7 @@ describe('TxSignatureCollector', () => {
         txSignatureError: 'error',
       },
     };
-    render(<TxSignatureCollector {...errorProps} />);
+    smartRender(TxSignatureCollector, errorProps, config);
     expect(props.nextStep).toHaveBeenCalled();
   });
 
@@ -310,7 +323,7 @@ describe('TxSignatureCollector', () => {
         signedTransaction: { id: '123', signatures: [] },
       },
     };
-    renderWithStore(TxSignatureCollector, signedTransactionProps, mockAppState);
+    smartRender(TxSignatureCollector, signedTransactionProps, config);
     expect(props.nextStep).toHaveBeenCalled();
   });
 });

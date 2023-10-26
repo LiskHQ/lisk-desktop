@@ -1,5 +1,5 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
+import { smartRender } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import wallets from '@tests/constants/wallets';
@@ -8,10 +8,10 @@ import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from '@auth/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import usePosToken from '@pos/validator/hooks/usePosToken';
-import { mount } from 'enzyme';
 import ClaimRewardsSummary from './index';
 
 jest.mock('@account/hooks', () => ({
+  ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], jest.fn()]),
 }));
 jest.mock('@auth/hooks/queries');
@@ -56,24 +56,25 @@ describe('ClaimRewardsSummary', () => {
   useAuth.mockReturnValue({ data: mockAuth });
   usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
   useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimableWithToken });
+  const config = { queryClient: true /*  renderType: 'mount' */ };
 
   it('should display properly', async () => {
-    render(<ClaimRewardsSummary {...props} />);
+    smartRender(ClaimRewardsSummary, props, config);
 
     expect(screen.getByText('Confirm')).toBeTruthy();
   });
 
   it('should go to prev page when click Go back button', () => {
-    const wrapper = mount(<ClaimRewardsSummary {...props} />);
+    smartRender(ClaimRewardsSummary, props, config);
     expect(props.prevStep).not.toBeCalled();
-    wrapper.find('button.cancel-button').simulate('click');
+    fireEvent.click(screen.getByAltText('arrowLeftTailed'));
     expect(props.prevStep).toBeCalled();
   });
 
   it('should submit transaction and action function when click in confirm button', () => {
-    const wrapper = mount(<ClaimRewardsSummary {...props} />);
+    smartRender(ClaimRewardsSummary, props, config);
     expect(props.nextStep).not.toBeCalled();
-    wrapper.find('button.confirm-button').simulate('click');
+    fireEvent.click(screen.getByText('Confirm'));
     expect(props.nextStep).toBeCalledWith({
       actionFunction: props.claimedRewards,
       formProps: props.formProps,

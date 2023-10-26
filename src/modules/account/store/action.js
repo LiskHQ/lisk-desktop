@@ -21,6 +21,19 @@ export const addAccount = (encryptedAccount) => ({
   encryptedAccount,
 });
 
+export const setAccountNonce = (address, nonce, transactionHex) => ({
+  type: actionTypes.setAccountNonce,
+  address,
+  nonce,
+  transactionHex,
+});
+
+export const resetAccountNonce = (address, onChainNonce) => ({
+  type: actionTypes.resetAccountNonce,
+  address,
+  nonce: onChainNonce,
+});
+
 export const updateAccount = ({ encryptedAccount, accountDetail }) => ({
   type: actionTypes.updateAccount,
   encryptedAccount,
