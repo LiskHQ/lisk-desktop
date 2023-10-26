@@ -2,12 +2,14 @@
 # spin up enevti core
 if [[ $CORE == "enevti" ]]
   then
+    rm -rf ../enevti-core
     if [[ ! -d "../enevti-core" ]]
       then
         curl -O https://lisk-qa.ams3.digitaloceanspaces.com/enevti-core-desktop.tar.gz
         tar -xf enevti-core-desktop.tar.gz
         mv -f enevti-core ../enevti-core
         rm -rf enevti-core-desktop.tar.gz
+        rm -rf ../enevti-core/node_modules ../enevti-core/package-lock.json
         npm --prefix ../enevti-core i && npm run --prefix ../enevti-core build
     fi
 
