@@ -10,6 +10,7 @@
   & .detailsWrapper {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     margin-left: 10px;
     color: var(--color-content-light);
   }
