@@ -67,7 +67,10 @@ const AddAccountFormContainer = ({
         <form onSubmit={onFormSubmit}>
           <div className={styles.inputFields}>
             <fieldset>
-              <label>{t('Secret recovery phrase (12-24 mnemonic phrases supported)')}</label>
+              <label>
+                <span>{t('Secret recovery phrase ')}</span>
+                <span className={styles.notice}>{t('(12-24 mnemonic phrases supported)')}</span>
+              </label>
               <PassphraseInput
                 inputsLength={passphraseArray?.length > 12 ? 24 : 12}
                 maxInputsLength={24}
@@ -84,7 +87,7 @@ const AddAccountFormContainer = ({
               type="submit"
               disabled={!passphrase.isValid || isSubmitDisabled}
             >
-              {t('Continue to set password')}
+              {t('Continue')}
             </PrimaryButton>
             <Link
               className={`${styles.backLink} signin-hwWallet-button`}

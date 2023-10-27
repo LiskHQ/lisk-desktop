@@ -5,6 +5,7 @@
 
   & > div:first-child > div:first-child {
     display: flex;
+    align-items: center;
   }
 
   & .detailsWrapper {
