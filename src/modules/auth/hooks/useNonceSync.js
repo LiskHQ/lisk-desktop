@@ -1,33 +1,21 @@
-import { useEffect, useState, useCallback } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
-import { useCurrentAccount, useAccounts } from '@account/hooks';
-import useSettings from '@settings/hooks/useSettings';
-import { AUTH } from 'src/const/queries';
-import { useAuthConfig } from './queries';
+import { useCallback, useEffect, useState } from 'react';
+import { useAccounts, useCurrentAccount } from '@account/hooks';
+import { useAuth } from './queries';
 
 // eslint-disable-next-line max-statements
 const useNonceSync = () => {
-  const queryClient = useQueryClient();
-  const [currentApplication] = useCurrentApplication();
-  const [currentAccount] = useCurrentAccount();
   const { setNonceByAccount, getNonceByAccount, resetNonceByAccount } = useAccounts();
+  const [currentAccount] = useCurrentAccount();
   const currentAccountAddress = currentAccount.metadata.address;
-  const { mainChainNetwork } = useSettings('mainChainNetwork');
-  const chainID = currentApplication.chainID;
-  const customConfig = {
-    params: {
-      address: currentAccountAddress,
-    },
-  };
-  const serviceUrl = mainChainNetwork?.serviceUrl;
-  const config = useAuthConfig(customConfig);
-  const authData = queryClient.getQueryData([AUTH, chainID, config, serviceUrl]);
+  const currentAccountNonce = getNonceByAccount(currentAccountAddress);
+
+  const { data: authData } = useAuth({
+    config: { params: { address: currentAccountAddress } },
+  });
   const onChainNonce = authData?.data?.nonce ? BigInt(authData?.data.nonce) : BigInt('0');
-  const authNonce = typeof onChainNonce === 'bigint' ? onChainNonce.toString() : onChainNonce;
 
   const [accountNonce, setAccountNonce] = useState(onChainNonce.toString());
-  const currentAccountNonce = getNonceByAccount(currentAccountAddress);
+  const authNonce = typeof onChainNonce === 'bigint' ? onChainNonce.toString() : onChainNonce;
 
   // Store nonce by address in accounts store
   const handleLocalNonce = (currentNonce) => {
