@@ -194,12 +194,12 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     >
       <Box>
         <BoxHeader>
-          <h1>{!isForm ? t('Stake added to queue') : headerTitles[mode]}</h1>
+          <h1>{!isForm ? t('Stake added') : headerTitles[mode]}</h1>
         </BoxHeader>
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
-            <span>
-              {!isForm ? t('Your stake has been added to your staking queue') : subTitles[mode]}
+            <span className={styles.subtitle}>
+              {!isForm ? t('Stake has been added to your staking queue') : subTitles[mode]}
             </span>
           </BoxInfoText>
           {isForm && (
@@ -209,7 +209,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <p>{validator.name}</p>
                 <p>{validator.address}</p>
                 <p>
-                  {t('Validator commission: ')}
+                  {t('Commission :')}{' '}
                   <span>{convertCommissionToPercentage(validator.commission)}%</span>
                 </p>
               </BoxInfoText>
@@ -226,7 +226,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                   onChange={setStakeAmount}
                   maxAmount={{ value: maxAmount }}
                   displayConverter
-                  label={t('Stake amount')}
+                  label={t(`Stake amount (${token.symbol})`)}
                   labelClassname={`${styles.fieldLabel}`}
                   placeholder={t('Enter stake amount')}
                   name="stake"
@@ -240,7 +240,7 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
               )}
               <div className={styles.durationSelect}>
                 <div>
-                  <span>{t('Estimated reward')}</span>
+                  <span>{t('You will get')}</span>
                   <CategorySwitch
                     value={selectedDuration}
                     onChangeCategory={handleSelectDuration}

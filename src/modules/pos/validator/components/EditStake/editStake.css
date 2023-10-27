@@ -18,8 +18,12 @@
 .wrapper {
   max-width: 477px;
   width: calc(100% - var(--horizontal-margin));
-  padding: 0 var(--horizontal-padding-l);
+  padding: 0 var(--horizontal-modal-padding-l);
   overflow: auto;
+
+  & > div {
+    margin-bottom: 0;
+  }
 
   &.confirmWrapper {
     max-width: 425px !important;
@@ -27,16 +31,26 @@
 
   & footer {
     margin: 0px !important;
+    margin-bottom: 24px !important;
     width: 100% !important;
     row-gap: 16px;
   }
 
   & .noPadding {
-    padding: 0 0 var(--horizontal-padding-l) 0;
+    padding: 0 0 var(--horizontal-modal-padding-l) 0;
+
+    & .subtitle {
+      font-size: var(--paragraph-font-size-l);
+      text-align: center;
+    }
 
     & > div {
       display: flex;
       justify-content: center;
+
+      &:first-child {
+        margin-bottom: 16px;
+      }
     }
 
     & > label ~ div {
@@ -52,6 +66,7 @@
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+    padding-bottom: 16px !important;
 
     & > h1 {
       font-size: var(--font-size-h3) !important;
@@ -64,26 +79,28 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 0px !important;
+    margin-bottom: 16px;
 
     & > p:nth-child(2) {
       @mixin contentLargest bold;
 
       margin: 8px 0px;
+      font-size: var(--subtitle-font-size-s);
       color: var(--color-content-light);
     }
 
     & > p:nth-child(3) {
       color: var(--color-blue-gray) !important;
       margin-top: -3px;
-      margin-bottom: 5px;
+      margin-bottom: 8px !important;
 
       &,
       & ~ p {
-        @mixin contentNormal;
+        @mixin contentNormal semi-bold;
 
         margin-top: 0px;
-        margin-bottom: 5px;
+        margin-bottom: 0px;
+        font-size: var(--paragraph-font-size-s);
       }
     }
 
@@ -98,6 +115,7 @@
 
   & button.confirmButton {
     width: 100%;
+    margin-top: 0 !important;
   }
 }
 
@@ -113,6 +131,7 @@
   position: absolute;
   top: -6px;
   right: 0px;
+  font-size: var(--paragraph-font-size-s);
 
   & > span {
     color: var(--color-blue-gray) !important;
@@ -122,15 +141,19 @@
     @mixin contentSmall semi-bold;
 
     color: var(--color-ultramarine-blue) !important;
+    font-size: var(--paragraph-font-size-s);
   }
 }
 
 .fieldGroup {
   position: relative;
-  margin-top: 3px;
 
   & > label {
     margin-bottom: 8px;
+
+    & div > span {
+      font-size: var(--paragraph-font-size-s);
+    }
   }
 }
 
