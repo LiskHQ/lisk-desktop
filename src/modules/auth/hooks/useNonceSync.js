@@ -16,6 +16,7 @@ const useNonceSync = () => {
 
   const [accountNonce, setAccountNonce] = useState(onChainNonce.toString());
   const authNonce = typeof onChainNonce === 'bigint' ? onChainNonce.toString() : onChainNonce;
+  const isMultiSig = authData?.data?.numberOfSignatures > 0;
 
   // Store nonce by address in accounts store
   const handleLocalNonce = (currentNonce) => {
@@ -28,20 +29,33 @@ const useNonceSync = () => {
   };
 
   useEffect(() => {
-    handleLocalNonce(onChainNonce);
-  }, [onChainNonce]);
+    if (isMultiSig) {
+      handleLocalNonce(onChainNonce);
+    }
+  }, [onChainNonce, isMultiSig]);
 
   // Increment nonce after transaction signing
-  const incrementNonce = useCallback((transactionHex) => {
-    const localNonce = BigInt(Math.max(currentAccountNonce, Number(accountNonce))) + BigInt(1);
-    setNonceByAccount(currentAccountAddress, localNonce.toString(), transactionHex);
-  }, []);
+  const incrementNonce = useCallback(
+    (transactionHex) => {
+      if (isMultiSig) {
+        const localNonce = BigInt(Math.max(currentAccountNonce, Number(accountNonce))) + BigInt(1);
+        setNonceByAccount(currentAccountAddress, localNonce.toString(), transactionHex);
+      }
+    },
+    [isMultiSig]
+  );
 
   const resetNonce = () => {
-    resetNonceByAccount(currentAccountAddress, authNonce);
+    if (isMultiSig) {
+      resetNonceByAccount(currentAccountAddress, authNonce);
+    }
   };
 
-  return { accountNonce, onChainNonce: authNonce, incrementNonce, resetNonce };
+  if (isMultiSig) {
+    return { accountNonce, onChainNonce: authNonce, incrementNonce, resetNonce };
+  }
+
+  return { accountNonce: authNonce, onChainNonce: authNonce, incrementNonce, resetNonce };
 };
 
 export default useNonceSync;
