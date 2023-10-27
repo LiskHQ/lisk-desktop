@@ -17,6 +17,7 @@ const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@auth/hooks/queries');
 jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('@account/hooks', () => ({
+  ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
 
@@ -100,6 +101,8 @@ describe('Multisignature Summary component', () => {
     },
   };
 
+  const config = { queryClient: true };
+
   beforeEach(() => {
     hwManager.signTransactionByHW.mockResolvedValue({});
   });
@@ -114,7 +117,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should call props.nextStep', async () => {
-    smartRender(Summary, props);
+    smartRender(Summary, props, config);
     await waitFor(() => {
       fireEvent.click(screen.getByText('Sign'));
     });
@@ -130,7 +133,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should call props.prevStep', async () => {
-    smartRender(Summary, props);
+    smartRender(Summary, props, config);
     await waitFor(() => {
       fireEvent.click(screen.getByText('Edit'));
     });
@@ -138,7 +141,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should render properly', () => {
-    smartRender(Summary, props);
+    smartRender(Summary, props, config);
     expect(screen.queryAllByTestId('member-info').length).toEqual(
       props.transactionJSON.params.mandatoryKeys.length +
         props.transactionJSON.params.optionalKeys.length
@@ -147,7 +150,11 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should be in edit mode', () => {
-    smartRender(Summary, { ...props, authQuery: { data: { data: { numberOfSignatures: 3 } } } });
+    smartRender(
+      Summary,
+      { ...props, authQuery: { data: { data: { numberOfSignatures: 3 } } } },
+      config
+    );
     expect(screen.getByText('Edit multisignature account')).toBeTruthy();
   });
 
@@ -161,7 +168,7 @@ describe('Multisignature Summary component', () => {
         signedTransaction: {},
       },
     };
-    smartRender(Summary, newProps);
+    smartRender(Summary, newProps, config);
     expect(props.nextStep).not.toHaveBeenCalledWith();
   });
 });

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { cryptography } from '@liskhq/lisk-client';
 import { TertiaryButton } from '@theme/buttons';
 import { useCommandSchema } from '@network/hooks';
 import Icon from '@theme/Icon';
@@ -7,9 +8,10 @@ import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from '@auth/components/EnterPasswordForm';
 import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
+import useNonceSync from '@auth/hooks/useNonceSync';
 import HWSigning from '@hardwareWallet/components/HWSigning/HWSigning';
 import styles from './txSignatureCollector.css';
-import { joinModuleAndCommand } from '../../utils';
+import { joinModuleAndCommand, fromTransactionJSON, encodeTransaction } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
@@ -50,6 +52,7 @@ const TxSignatureCollector = ({
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const isRegisterMultisignature =
     moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const { incrementNonce } = useNonceSync();
   const txVerification = (privateKey = undefined, publicKey = undefined) => {
     /**
      * Non-multisignature account
@@ -104,8 +107,16 @@ const TxSignatureCollector = ({
     });
   };
 
-  const onEnterPasswordSuccess = ({ privateKey }) =>
+  const onEnterPasswordSuccess = ({ privateKey }) => {
+    const paramsSchema = moduleCommandSchemas[moduleCommand];
+    const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
+    const buffer = encodeTransaction(transaction, paramsSchema);
+    const transactionHex = cryptography.utils.hash(buffer).toString('hex');
+    if (isTransactionAuthor) {
+      incrementNonce(transactionHex);
+    }
     txVerification(privateKey, currentAccount?.metadata.pubkey);
+  };
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {
