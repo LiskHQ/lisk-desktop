@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
+import { useMemo } from 'react';
 import { Client } from 'src/utils/api/client';
 import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { useDebounce } from 'src/modules/search/hooks/useDebounce';
-import { isEmpty } from 'src/utils/helpers';
+import { useValidServiceUrl } from '@blockchainApplication/manage/hooks/useValidServiceUrl';
 
 export const DEFAULT_NETWORK_FORM_STATE = {
   name: '',
@@ -50,41 +49,6 @@ export function getDuplicateNetworkFields(newNetwork, networks, networkToExclude
   }, {});
 
   return Object.keys(result).length > 0 ? result : undefined;
-}
-
-export async function isNetworkUrlSuccess(fetchUrl, successBaseUrlToReturn) {
-  try {
-    await axios({ url: fetchUrl, timeout: 4000 });
-    return successBaseUrlToReturn;
-  } catch (error) {
-    return false;
-  }
-}
-
-export function useValidServiceUrl(serviceURLs) {
-  const [validServiceUrl, setValidServiceUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      if (!isEmpty(serviceURLs)) {
-        setIsLoading(true);
-        const promises = [];
-        for (let i = 0; i < serviceURLs.length; i++) {
-          const baseServiceUrl = serviceURLs[i]?.http;
-          promises.push(
-            isNetworkUrlSuccess(`${baseServiceUrl}/api/v3/index/status`, baseServiceUrl)
-          );
-        }
-        const responses = await Promise.all(promises);
-        const serviceUrl = responses.find((response) => response);
-        setValidServiceUrl(serviceUrl);
-        setIsLoading(false);
-      }
-    })();
-  }, [serviceURLs]);
-
-  return { validServiceUrl, isLoading };
 }
 
 /* istanbul ignore next */

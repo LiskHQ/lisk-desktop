@@ -14,6 +14,7 @@ import { Client } from 'src/utils/api/client';
 import { useReduxStateModifier } from 'src/utils/useReduxStateModifier';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
 import { useRewardsClaimable } from 'src/modules/pos/reward/hooks/queries';
+import { useValidServiceUrl } from 'src/modules/blockchainApplication/manage/hooks/useValidServiceUrl';
 
 export const ApplicationBootstrapContext = createContext({
   hasNetworkError: false,
@@ -52,6 +53,9 @@ const ApplicationBootstrap = ({ children }) => {
     client: queryClient.current,
   });
 
+  const serviceUrls = blockchainAppsMeta?.data?.data[0]?.serviceURLs;
+  const { validServiceUrl } = useValidServiceUrl(serviceUrls);
+
   const mainChainApplication = blockchainAppsMeta.data?.data?.find(
     ({ chainID }) => chainID === networkStatus?.data?.data?.chainID
   );
@@ -61,17 +65,32 @@ const ApplicationBootstrap = ({ children }) => {
     !!mainChainNetwork;
 
   useEffect(() => {
-    if (mainChainApplication) {
+    if (mainChainApplication && validServiceUrl) {
       const refreshedCurrentApplication = blockchainAppsMeta?.data?.data?.find(
         ({ chainID }) => chainID === currentApplication?.chainID
       );
       const networkCode = mainChainApplication.chainID.match(/^\d{4}/g)[0];
-      const currentAppToSet =
+      const currentAppToSelect =
         refreshedCurrentApplication?.chainID?.indexOf(networkCode) === 0
           ? refreshedCurrentApplication
           : mainChainApplication;
 
-      setCurrentApplication(currentAppToSet);
+      const currentApplicationWithValidServiceUrlAtTheTop = {
+        ...currentAppToSelect,
+        serviceURLs: currentAppToSelect.serviceURLs.sort((a, b) => {
+          const nameA = a.http === validServiceUrl;
+          const nameB = b.http === validServiceUrl;
+          if (nameA && nameB) {
+            return 0;
+          }
+          if (nameA) {
+            return -1;
+          }
+          return 1;
+        }),
+      };
+
+      setCurrentApplication(currentApplicationWithValidServiceUrlAtTheTop);
       setApplications([mainChainApplication]);
     }
 
@@ -83,6 +102,7 @@ const ApplicationBootstrap = ({ children }) => {
     blockchainAppsMeta.isFetched,
     blockchainAppsMeta.isError,
     blockchainAppsMeta.isLoading,
+    validServiceUrl,
   ]);
 
   useLedgerDeviceListener();
