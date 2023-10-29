@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { getTransactionAmount } from '@transaction/utils/transaction';
+import { /* getTransactionAmount, */ getTransactionValue } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -22,7 +22,7 @@ import { getValidatorDetailsClass } from '@pos/validator/components/ValidatorsTa
 import styles from './row.css';
 import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
-import TransactionAmount from '../TransactionAmount';
+// import TransactionAmount from '../TransactionAmount';
 
 export const ID = ({ isWallet }) => {
   const { data, address } = useContext(TransactionRowContext);
@@ -54,13 +54,20 @@ export const Type = () => {
   return <span className={styles.type}>{formatTransactionType(data.moduleCommand)}</span>;
 };
 
-export const ValidatorDetails = () => {
-  const { data, activeTab } = useContext(TransactionRowContext);
+export const ValidatorDetails = ({ isWallet }) => {
+  const { data, activeTab, address } = useContext(TransactionRowContext);
 
   return (
     <span className={getValidatorDetailsClass(activeTab)}>
       <div className={styles.validatorColumn}>
         <div className={`${styles.validatorDetails}`}>
+          {isWallet && (
+            <Icon
+              name={
+                data.sender.address === address ? 'sentTransactionIcon' : 'receivedTransactionIcon'
+              }
+            />
+          )}
           <WalletVisual address={data.sender.address} />
           <div>
             <p className={styles.validatorName}>{data.sender.name}</p>
@@ -72,7 +79,7 @@ export const ValidatorDetails = () => {
   );
 };
 
-export const Sender = () => <ValidatorDetails />;
+export const Sender = ({ isWallet }) => <ValidatorDetails isWallet={isWallet} />;
 
 export const Recipient = () => {
   const { data, avatarSize } = useContext(TransactionRowContext);
@@ -140,30 +147,8 @@ export const Date = ({ t }) => {
 };
 
 export const Amount = () => {
-  const { data, layout, activeToken, host, token } = useContext(TransactionRowContext);
-
-  if (layout !== 'full') {
-    return (
-      <span>
-        <TransactionAmount
-          host={host}
-          token={activeToken}
-          showRounded
-          recipient={data.params.recipientAddress}
-          moduleCommand={data.moduleCommand}
-          amount={getTransactionAmount(data)}
-        />
-      </span>
-    );
-  }
-  return (
-    <span className={styles.amount}>
-      <TokenAmount val={getTransactionAmount(data)} token={token} />
-      <span className={`${styles.fee} hideOnLargeViewPort`}>
-        <TokenAmount val={data.fee} token={token} />
-      </span>
-    </span>
-  );
+  const { data, token } = useContext(TransactionRowContext);
+  return <span className={styles.amount}>{getTransactionValue(data, token)}</span>;
 };
 
 export const Fee = ({ t }) => {
