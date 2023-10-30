@@ -8,6 +8,7 @@ import useNonceSync from './useNonceSync';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 const mockSetNonceByAccount = jest.fn();
+const mockResetNonceByAccount = jest.fn();
 
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
@@ -56,6 +57,20 @@ describe('useNonceSync', () => {
     });
     const { result } = renderHook(() => useNonceSync(), { wrapper });
     expect(result.current.accountNonce).toEqual('2');
+  });
+
+  it("updates local nonce if it's less than on-chain nonce", () => {
+    const mockModifiedMockAuth = { data: { ...mockAuthMultiSig.data, nonce: '2' } };
+    useAuth.mockReturnValue({ data: mockModifiedMockAuth });
+    useAccounts.mockReturnValue({
+      accounts: mockedCurrentAccount,
+      setNonceByAccount: mockSetNonceByAccount,
+      resetNonceByAccount: mockResetNonceByAccount,
+      getNonceByAccount: jest.fn().mockReturnValue(3),
+    });
+    const { result } = renderHook(() => useNonceSync(), { wrapper });
+    result.current.resetNonce();
+    expect(mockResetNonceByAccount).toHaveBeenCalled();
   });
 
   it("updates local nonce if it's less than on-chain nonce", () => {
