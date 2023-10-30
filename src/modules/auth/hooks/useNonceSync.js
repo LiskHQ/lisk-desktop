@@ -33,7 +33,7 @@ const useNonceSync = () => {
 
   useEffect(() => {
     if (isMultiSig) {
-      handleLocalNonce(onChainNonce, networkChainIDKey);
+      handleLocalNonce(onChainNonce);
     }
   }, [onChainNonce, isMultiSig, networkChainIDKey]);
 
