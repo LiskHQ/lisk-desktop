@@ -27,7 +27,7 @@
 .amount {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-start !important;
 
   & > .fee {
     font-family: var(--content-font);
@@ -98,6 +98,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  & > img {
+    margin-right: 10px;
+  }
 
   & > div {
     display: flex;

@@ -1,6 +1,6 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useNetworkSupportedTokens, useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { mockBlocks } from '@block/__fixtures__';
@@ -18,6 +18,7 @@ jest.mock('@token/fungible/hooks/queries');
 useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
 useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
+useNetworkSupportedTokens.mockReturnValue({ data: mockAppsTokens.data });
 
 describe('BlockDetails page', () => {
   let wrapper;
