@@ -2,7 +2,7 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import moment from 'moment';
 import accounts from '@tests/constants/wallets';
 import { truncateAddress } from '@wallet/utils/account';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useNetworkSupportedTokens, useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import Row from '.';
 import { mockTransactions } from '../../__fixtures__';
@@ -56,6 +56,7 @@ const transfer = {
 
 jest.mock('@token/fungible/hooks/queries');
 useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
+useNetworkSupportedTokens.mockReturnValue({ data: mockAppsTokens.data });
 
 describe('Transaction Row', () => {
   const t = (str) => str;
@@ -99,7 +100,7 @@ describe('Transaction Row', () => {
         layout: 'hosted',
       };
       const wrapper = mountWithRouter(Row, props, {});
-      expect(wrapper.find('Sender')).toHaveLength(0);
+      expect(wrapper.find('Sender')).toHaveLength(1);
     });
   });
 

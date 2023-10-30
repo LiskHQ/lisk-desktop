@@ -25,6 +25,7 @@ const mockCurrentApplication = mockApplications[3];
 const mockSetApplication = jest.fn();
 
 jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
   useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
   useDispatch: () => mockDispatch,
 }));

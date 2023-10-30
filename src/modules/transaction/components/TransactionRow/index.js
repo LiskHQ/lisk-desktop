@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useNetworkSupportedTokens } from '@token/fungible/hooks/queries';
 import routes from 'src/routes/routes';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
@@ -24,8 +24,11 @@ const TransactionRow = ({
 }) => {
   const Layout = LayoutSchema[layout] || LayoutSchema.default;
   const [currentApplication] = useCurrentApplication();
-  const { data: tokens } = useTokenBalances();
-  const token = tokens?.data?.find(({ chainID }) => chainID === currentApplication.chainID) || {};
+  const networkSupportedTokens = useNetworkSupportedTokens(currentApplication);
+
+  const token =
+    networkSupportedTokens.data?.find(({ chainID }) => chainID === currentApplication.chainID) ||
+    {};
 
   return (
     <Link
