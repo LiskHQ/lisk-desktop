@@ -14,7 +14,7 @@ export default (changeSort, t) => [
   },
   {
     title: t('Height'),
-    classList: `${grid['col-xs-2']} ${styles.transactionFeeCell}`,
+    classList: `${grid['col-xs-1']} ${styles.transactionFeeCell}`,
     sort: {
       fn: changeSort,
       key: 'height',
@@ -22,7 +22,11 @@ export default (changeSort, t) => [
   },
   {
     title: t('Type'),
-    classList: `${grid['col-xs-3']} ${grid['col-md-3']}`,
+    classList: `${grid['col-xs-2']} ${grid['col-md-2']}`,
+  },
+  {
+    title: t('Value'),
+    classList: `${grid['col-xs-2']} ${grid['col-md-2']}`,
   },
   {
     title: t('Date'),

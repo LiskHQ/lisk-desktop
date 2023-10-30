@@ -25,8 +25,9 @@ import { splitModuleAndCommand } from '../../utils';
 const TransactionDetails = () => {
   const { search } = useLocation();
   const transactionID = parseSearchParams(search).transactionID;
+  const showParams = JSON.parse(parseSearchParams(search).showParams || 'false');
   const { t } = useTranslation();
-  const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
+  const [isParamsCollapsed, setIsParamsCollapsed] = useState(showParams);
   const { data: fees } = useFees();
   const feeTokenID = fees?.data?.feeTokenID;
   const { data: token } = useAppsMetaTokens({
@@ -139,12 +140,14 @@ const TransactionDetails = () => {
                 onToggleJsonView: () => setIsParamsCollapsed((state) => !state),
               }}
             />
-            <div
-              data-testid="transaction-param-json-viewer"
-              className={`${styles.jsonContainer} ${!isParamsCollapsed ? styles.shrink : ''}`}
-            >
-              <ReactJson name={false} src={transactionData.params} theme={jsonViewerTheme} />
-            </div>
+            {!isLoading && (
+              <div
+                data-testid="transaction-param-json-viewer"
+                className={`${styles.jsonContainer} ${!isParamsCollapsed ? styles.shrink : ''}`}
+              >
+                <ReactJson name={false} src={transactionData.params} theme={jsonViewerTheme} />
+              </div>
+            )}
           </BoxContent>
         </Box>
         <Box isLoading={isLoading} className={styles.container}>
