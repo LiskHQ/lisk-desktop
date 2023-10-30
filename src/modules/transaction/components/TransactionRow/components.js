@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { /* getTransactionAmount, */ getTransactionValue } from '@transaction/utils/transaction';
+import { getTransactionValue } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -22,7 +22,6 @@ import { getValidatorDetailsClass } from '@pos/validator/components/ValidatorsTa
 import styles from './row.css';
 import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
-// import TransactionAmount from '../TransactionAmount';
 
 export const ID = ({ isWallet }) => {
   const { data, address } = useContext(TransactionRowContext);
