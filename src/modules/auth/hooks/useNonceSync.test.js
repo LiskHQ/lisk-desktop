@@ -3,7 +3,7 @@ import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useAuth } from '@auth/hooks/queries';
 import { useAccounts } from 'src/modules/account/hooks';
-import { mockAuthMultiSig } from '@auth/__fixtures__';
+import { mockAuth, mockAuthMultiSig } from '@auth/__fixtures__';
 import useNonceSync from './useNonceSync';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -16,6 +16,10 @@ jest.mock('@account/hooks/useAccounts');
 jest.mock('@auth/hooks/queries/useAuth');
 
 describe('useNonceSync', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders properly', async () => {
     const mockModifiedMockAuth = { data: { ...mockAuthMultiSig.data, nonce: '3' } };
     useAuth.mockReturnValue({ data: mockModifiedMockAuth });
@@ -52,5 +56,17 @@ describe('useNonceSync', () => {
     });
     const { result } = renderHook(() => useNonceSync(), { wrapper });
     expect(result.current.accountNonce).toEqual('2');
+  });
+
+  it("updates local nonce if it's less than on-chain nonce", () => {
+    const mockModifiedMockAuth = { data: { ...mockAuth.data, nonce: '2' } };
+    useAuth.mockReturnValue({ data: mockModifiedMockAuth });
+    useAccounts.mockReturnValue({
+      accounts: mockedCurrentAccount,
+      setNonceByAccount: mockSetNonceByAccount,
+      getNonceByAccount: jest.fn().mockReturnValue(1),
+    });
+    renderHook(() => useNonceSync(), { wrapper });
+    expect(mockSetNonceByAccount).toHaveBeenCalledTimes(0);
   });
 });
