@@ -24,7 +24,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, headerText, contentText,
           <p className={classNames(styles.subHeader, styles.mgb16)}>{t('Successfully edited')}</p>
         ) : (
           <>
-            <p className={styles.subHeader}>
+            <p className={classNames(styles.subHeader, styles.mgb12)}>
               {contentText ||
                 t(
                   'You can now download your encrypted secret recovery phrase and use it to add your account on other devices.'

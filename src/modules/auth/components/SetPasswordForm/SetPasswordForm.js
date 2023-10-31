@@ -9,7 +9,6 @@ import Input from '@theme/Input';
 import { PrimaryButton, TertiaryButton } from '@theme/buttons';
 import CheckBox from '@theme/CheckBox';
 import Tooltip from '@theme/Tooltip';
-import Icon from '@theme/Icon';
 import { regex } from 'src/const/regex';
 import { useAccounts } from '@account/hooks';
 import styles from './SetPasswordForm.css';
@@ -118,12 +117,7 @@ function SetPasswordForm({
     <div data-testid="setPasswordFormContainer" className={styles.container}>
       <div className={`${styles.titleHolder} ${grid['col-xs-12']}`}>
         <div className={grid.row}>
-          <div className={grid['col-xs-1']}>
-            <TertiaryButton onClick={() => prevStep()}>
-              <Icon name="arrowLeftTailed" />
-            </TertiaryButton>
-          </div>
-          <div className={grid['col-xs-11']}>
+          <div className={grid['col-xs-12']}>
             <h1>{t('Set up your account password')}</h1>
           </div>
         </div>
@@ -185,11 +179,12 @@ function SetPasswordForm({
           <PrimaryButton
             isLoading={isLoading}
             type="submit"
-            style={{ width: '100%' }}
+            className={styles.submitButton}
             disabled={isButtonDisabled}
           >
             {t('Save Account')}
           </PrimaryButton>
+          <TertiaryButton onClick={() => prevStep()}>{t('Go back')}</TertiaryButton>
         </div>
       </form>
     </div>

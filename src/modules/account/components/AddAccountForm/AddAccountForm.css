@@ -37,13 +37,15 @@
 
     display: flex;
     justify-content: center;
-    margin: 0 0 10px;
+    margin: 0 0 16px;
+    font-size: var(--font-size-h3);
+    line-height: var(--font-size-h3);
   }
 
   & > p {
     @mixin contentLargest;
 
-    color: var(--color-black);
+    color: var(--color-slate-gray);
     margin: 0;
     letter-spacing: 1px;
   }
@@ -75,6 +77,11 @@
     & > label {
       margin-bottom: 7px;
       color: var(--color-maastricht-blue);
+      font-size: var(--font-size-small-secondary);
+
+      & .notice {
+        color: var(--color-ultramarine-blue);
+      }
     }
   }
 
