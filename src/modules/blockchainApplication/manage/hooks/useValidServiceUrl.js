@@ -13,7 +13,7 @@ async function isNetworkUrlSuccess(fetchUrl, successBaseUrlToReturn) {
 
 export function useValidServiceUrl(serviceURLs) {
   const [validServiceUrl, setValidServiceUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!!serviceURLs);
 
   useEffect(() => {
     (async () => {

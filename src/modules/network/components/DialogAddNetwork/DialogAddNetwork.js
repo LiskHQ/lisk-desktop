@@ -170,7 +170,10 @@ const DialogAddNetwork = () => {
             />
             <PrimaryButton
               disabled={
-                !isDirty || !networkCheck.isNetworkOK || networkCheck.isFetching || networkCheck.isError
+                !isDirty ||
+                !networkCheck.isNetworkOK ||
+                networkCheck.isFetching ||
+                networkCheck.isError
               }
               type="submit"
               className={`${styles.button}`}
