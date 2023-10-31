@@ -3,6 +3,7 @@
 .wrapper {
   & header > h2 {
     font-size: var(--font-size-h3) !important;
+    line-height: var(--font-size-h3) !important;
   }
 
   & .content {

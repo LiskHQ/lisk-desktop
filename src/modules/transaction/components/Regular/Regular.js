@@ -75,12 +75,12 @@ const Regular = ({
         ? children({ transactions, network, account, status, illustration })
         : children}
       {successTypes.includes(status.code) && !noBackButton && (
-        <PrimaryButton
+        <TertiaryButton
           className={`${styles.backToWallet} back-to-wallet-button`}
           onClick={onSuccessClick || goToWallet}
         >
           {successButtonText || t('Back to wallet')}
-        </PrimaryButton>
+        </TertiaryButton>
       )}
       {isTxStatusError(status.code) ? (
         <>
