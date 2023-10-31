@@ -1,16 +1,28 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { isEmpty } from 'src/utils/helpers';
+import { Client } from 'src/utils/api/client';
 
 async function isNetworkUrlSuccess(fetchUrl, successBaseUrlToReturn) {
   try {
-    await axios({ url: fetchUrl, timeout: 4000 });
+    const client = new Client({ http: fetchUrl });
+    await client.rest();
     return successBaseUrlToReturn;
   } catch (error) {
     return false;
   }
 }
 
+export async function resolveApiValidity(serviceURLs) {
+  const promises = [];
+  for (let i = 0; i < serviceURLs.length; i++) {
+    const baseServiceUrl = serviceURLs[i]?.http;
+    promises.push(isNetworkUrlSuccess(`${baseServiceUrl}/api/v3/index/status`, baseServiceUrl));
+  }
+  const responses = await Promise.all(promises);
+  return responses.find((response) => response);
+}
+
+/* istanbul ignore next */
 export function useValidServiceUrl(serviceURLs) {
   const [validServiceUrl, setValidServiceUrl] = useState('');
   const [isLoading, setIsLoading] = useState(!!serviceURLs);
@@ -19,15 +31,7 @@ export function useValidServiceUrl(serviceURLs) {
     (async () => {
       if (!isEmpty(serviceURLs)) {
         setIsLoading(true);
-        const promises = [];
-        for (let i = 0; i < serviceURLs.length; i++) {
-          const baseServiceUrl = serviceURLs[i]?.http;
-          promises.push(
-            isNetworkUrlSuccess(`${baseServiceUrl}/api/v3/index/status`, baseServiceUrl)
-          );
-        }
-        const responses = await Promise.all(promises);
-        const serviceUrl = responses.find((response) => response);
+        const serviceUrl = await resolveApiValidity(serviceURLs);
         setValidServiceUrl(serviceUrl);
         setIsLoading(false);
       }
