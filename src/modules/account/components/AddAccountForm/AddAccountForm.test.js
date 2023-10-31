@@ -25,10 +25,10 @@ describe('AddAccountForm', () => {
     expect(
       screen.getByText('Enter your secret recovery phrase to manage your account.')
     ).toBeTruthy();
-    expect(screen.getByText('Continue to set password')).toBeTruthy();
+    expect(screen.getByText('Continue')).toBeTruthy();
     expect(screen.getByText('Go back')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('Continue to set password'));
+    fireEvent.click(screen.getByText('Continue'));
     expect(props.onAddAccount).not.toBeCalled();
   });
 
@@ -43,7 +43,7 @@ describe('AddAccountForm', () => {
     });
 
     fireEvent(inputField, pasteEvent);
-    fireEvent.click(screen.getByText('Continue to set password'));
+    fireEvent.click(screen.getByText('Continue'));
     expect(props.onAddAccount).toBeCalled();
   });
 
@@ -73,7 +73,7 @@ describe('AddAccountForm', () => {
     });
 
     fireEvent(inputField, pasteEvent);
-    fireEvent.click(screen.getByText('Continue to set password'));
+    fireEvent.click(screen.getByText('Continue'));
     expect(props.onAddAccount).not.toBeCalled();
   });
 
@@ -92,7 +92,7 @@ describe('AddAccountForm', () => {
       },
     });
     fireEvent(passphraseInput1, pasteEvent);
-    expect(screen.queryByText('Continue to set password')).toHaveAttribute('disabled');
+    expect(screen.queryByText('Continue')).toHaveAttribute('disabled');
   });
 
   it('should trigger add account if derivation path and passphrase is correct', () => {
@@ -116,7 +116,7 @@ describe('AddAccountForm', () => {
     });
     fireEvent(passphraseInput1, pasteEvent);
 
-    fireEvent.click(screen.getByText('Continue to set password'));
+    fireEvent.click(screen.getByText('Continue'));
 
     expect(props.onAddAccount).toHaveBeenCalledWith(
       { value: passphrase, isValid: true },
