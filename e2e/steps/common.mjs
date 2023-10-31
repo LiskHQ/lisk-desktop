@@ -19,7 +19,7 @@ const initAccountSetup = async function (passphrase, browserFixture) {
 };
 
 const completeAccountSetup = async function (password, name, browserFixture) {
-  await browserFixture.page.getByText('Continue to set password', { exact: true }).click();
+  await browserFixture.page.getByText('Continue', { exact: true }).click();
   await browserFixture.page.getByTestId('password').fill(password);
   await browserFixture.page.getByTestId('cPassword').fill(password);
   await browserFixture.page.getByTestId('accountName').fill(name);

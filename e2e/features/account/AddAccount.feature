@@ -16,7 +16,7 @@ Feature: AddAccount
     And I should see "Enter your secret recovery phrase to manage your account."
     And I should see "Secret recovery phrase (12-24 mnemonic phrases supported)"
     And custom derivation path input field should be "enabled"
-    And button with text 'Continue to set password' should be disabled
+    And button with text 'Continue' should be disabled
     Given I click on exact text "Go back"
     Then I should be redirected to route: "account/add"
     Given I click on a button with text "Secret recovery phrase"
