@@ -13,8 +13,8 @@ import { useCurrentAccount } from 'src/modules/account/hooks';
 import { Client } from 'src/utils/api/client';
 import { useReduxStateModifier } from 'src/utils/useReduxStateModifier';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
+import { useValidServiceUrl } from '@blockchainApplication/manage/hooks/useValidServiceUrl';
 import { useRewardsClaimable } from 'src/modules/pos/reward/hooks/queries';
-import { useValidServiceUrl } from 'src/modules/blockchainApplication/manage/hooks/useValidServiceUrl';
 
 export const ApplicationBootstrapContext = createContext({
   hasNetworkError: false,
