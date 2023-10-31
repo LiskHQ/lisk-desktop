@@ -75,7 +75,7 @@ const makeSubmitActive = () => {
 
 describe('Set Password Form validation should work', () => {
   it('returns to previous page if the back button is clicked', () => {
-    fireEvent.click(screen.getByAltText('arrowLeftTailed'));
+    fireEvent.click(screen.getByText('Go back'));
     expect(props.prevStep).toHaveBeenCalled();
   });
 
