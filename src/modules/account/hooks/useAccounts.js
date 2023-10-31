@@ -23,18 +23,18 @@ export function useAccounts() {
   const getAccountByPublicKey = (pubkey) =>
     accounts.find((account) => account.metadata.pubkey === pubkey);
 
-  const setNonceByAccount = (address, nonce, transactionHex) =>
-    dispatch(setAccountNonce(address, nonce, transactionHex));
+  const setNonceByAccount = (address, nonce, transactionHex, networkChainIDKey) =>
+    dispatch(setAccountNonce(address, nonce, transactionHex, networkChainIDKey));
 
-  const getNonceByAccount = (address) => {
-    const accountNonceMap = nonceMap[address] ?? {};
+  const getNonceByAccount = (address, networkChainIDKey) => {
+    const accountNonceMap = nonceMap[address]?.[networkChainIDKey] ?? {};
     const accountNonceValues = Object.values(accountNonceMap);
     const nonceList = accountNonceValues.length ? accountNonceValues : [0];
     return Math.max(...nonceList);
   };
 
-  const resetNonceByAccount = (address, onChainNonce) =>
-    dispatch(resetAccountNonce(address, onChainNonce));
+  const resetNonceByAccount = (address, onChainNonce, networkChainIDKey) =>
+    dispatch(resetAccountNonce(address, onChainNonce, networkChainIDKey));
 
   return {
     accounts,

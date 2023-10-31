@@ -58,26 +58,35 @@ export const list = (state = {}, { type, encryptedAccount, accountDetail, addres
   }
 };
 
-export const localNonce = (state = {}, { type, address, nonce, transactionHex }) => {
+export const localNonce = (
+  state = {},
+  { type, address, nonce, transactionHex, networkChainIDKey }
+) => {
   switch (type) {
-    case actionTypes.setAccountNonce:
-      if (state[address]?.[transactionHex]) {
+    case actionTypes.setAccountNonce: {
+      const pendingTransactions = state[address]?.[networkChainIDKey];
+      if (pendingTransactions?.[transactionHex]) {
         return state;
       }
+
       return {
         ...state,
         [address]: {
-          ...state[address],
-          [transactionHex]: nonce,
+          [networkChainIDKey]: {
+            ...pendingTransactions,
+            [transactionHex]: nonce,
+          },
         },
       };
-
-    case actionTypes.resetAccountNonce:
+    }
+    case actionTypes.resetAccountNonce: {
       return {
         ...state,
-        [address]: { defaultNonce: nonce },
+        [address]: {
+          [networkChainIDKey]: { defaultNonce: nonce },
+        },
       };
-
+    }
     default:
       return state;
   }

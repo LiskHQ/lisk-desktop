@@ -5,7 +5,7 @@ import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { mockBlocks } from '@block/__fixtures__';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useNetworkSupportedTokens, useTokenBalances } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks/useCurrentApplication';
@@ -90,6 +90,7 @@ describe('Transactions monitor page', () => {
   };
 
   useTokenBalances.mockReturnValue({ data: mockAppsTokens.data[0] });
+  useNetworkSupportedTokens.mockReturnValue({ data: mockAppsTokens.data });
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
   useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
   useCommandSchema.mockReturnValue({

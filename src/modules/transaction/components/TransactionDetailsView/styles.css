@@ -70,6 +70,10 @@
   box-sizing: border-box;
   font-size: var(--paragraph-font-size-s);
 
+  & > div:first-child {
+    overflow-x: auto;
+  }
+
   &.shrink {
     display: none;
   }

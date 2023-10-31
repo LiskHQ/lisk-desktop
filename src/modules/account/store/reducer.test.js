@@ -1,6 +1,10 @@
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
 import actionTypes from './actionTypes';
 import { list, current, localNonce } from './reducer';
+
+const { chainID, chainName } = mockApplications[0];
+const networkChainIDKey = `${chainName}:${chainID}`;
 
 describe('Auth reducer', () => {
   it('Should return encryptedAccount if setCurrentAccount action type is triggered', async () => {
@@ -90,10 +94,13 @@ describe('Auth reducer', () => {
       address: mockSavedAccounts[1].metadata.address,
       nonce: 1,
       transactionHex: txHex,
+      networkChainIDKey,
     };
     const expectedState = {
       [mockSavedAccounts[1].metadata.address]: {
-        [txHex]: 1,
+        [networkChainIDKey]: {
+          [txHex]: 1,
+        },
       },
     };
     expect(localNonce({}, actionData)).toEqual(expectedState);
@@ -106,15 +113,21 @@ describe('Auth reducer', () => {
       address: mockSavedAccounts[1].metadata.address,
       nonce: 1,
       transactionHex: txHex,
+      networkChainIDKey,
     };
     const expectedState = {
       [mockSavedAccounts[1].metadata.address]: {
-        [txHex]: 1,
+        [networkChainIDKey]: {
+          [txHex]: 1,
+        },
       },
     };
+
     const existingState = {
       [mockSavedAccounts[1].metadata.address]: {
-        [txHex]: 1,
+        [networkChainIDKey]: {
+          [txHex]: 1,
+        },
       },
     };
     expect(localNonce(existingState, actionData)).toEqual(expectedState);
