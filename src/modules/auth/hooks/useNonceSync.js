@@ -1,59 +1,65 @@
-import { useEffect, useState, useCallback } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useCallback, useEffect, useState } from 'react';
+import { useAccounts, useCurrentAccount } from '@account/hooks';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
-import { useCurrentAccount, useAccounts } from '@account/hooks';
-import useSettings from '@settings/hooks/useSettings';
-import { AUTH } from 'src/const/queries';
-import { useAuthConfig } from './queries';
+import { useAuth } from './queries';
 
 // eslint-disable-next-line max-statements
 const useNonceSync = () => {
-  const queryClient = useQueryClient();
-  const [currentApplication] = useCurrentApplication();
-  const [currentAccount] = useCurrentAccount();
   const { setNonceByAccount, getNonceByAccount, resetNonceByAccount } = useAccounts();
+  const [{ chainID, chainName }] = useCurrentApplication();
+  const networkChainIDKey = `${chainName}:${chainID}`;
+  const [currentAccount] = useCurrentAccount();
   const currentAccountAddress = currentAccount.metadata.address;
-  const { mainChainNetwork } = useSettings('mainChainNetwork');
-  const chainID = currentApplication.chainID;
-  const customConfig = {
-    params: {
-      address: currentAccountAddress,
-    },
-  };
-  const serviceUrl = mainChainNetwork?.serviceUrl;
-  const config = useAuthConfig(customConfig);
-  const authData = queryClient.getQueryData([AUTH, chainID, config, serviceUrl]);
+
+  const { data: authData } = useAuth({
+    config: { params: { address: currentAccountAddress } },
+  });
   const onChainNonce = authData?.data?.nonce ? BigInt(authData?.data.nonce) : BigInt('0');
-  const authNonce = typeof onChainNonce === 'bigint' ? onChainNonce.toString() : onChainNonce;
 
   const [accountNonce, setAccountNonce] = useState(onChainNonce.toString());
-  const currentAccountNonce = getNonceByAccount(currentAccountAddress);
+  const authNonce = typeof onChainNonce === 'bigint' ? onChainNonce.toString() : onChainNonce;
+  const isMultiSig = authData?.data?.numberOfSignatures > 0;
 
   // Store nonce by address in accounts store
   const handleLocalNonce = (currentNonce) => {
+    const currentAccountNonce = getNonceByAccount(currentAccountAddress, networkChainIDKey);
     const storedNonce = BigInt(currentAccountNonce || 0);
     const localNonce = storedNonce < currentNonce ? currentNonce : storedNonce;
     const localNonceStr = localNonce.toString();
-    setNonceByAccount(currentAccountAddress, localNonceStr, 'defaultNonce');
+    setNonceByAccount(currentAccountAddress, localNonceStr, 'defaultNonce', networkChainIDKey);
 
     setAccountNonce(localNonceStr);
   };
 
   useEffect(() => {
-    handleLocalNonce(onChainNonce);
-  }, [onChainNonce]);
+    if (isMultiSig) {
+      handleLocalNonce(onChainNonce);
+    }
+  }, [onChainNonce, isMultiSig, networkChainIDKey]);
 
   // Increment nonce after transaction signing
-  const incrementNonce = useCallback((transactionHex) => {
-    const localNonce = BigInt(Math.max(currentAccountNonce, Number(accountNonce))) + BigInt(1);
-    setNonceByAccount(currentAccountAddress, localNonce.toString(), transactionHex);
-  }, []);
+  const incrementNonce = useCallback(
+    (transactionHex) => {
+      if (isMultiSig) {
+        const currentAccountNonce = getNonceByAccount(currentAccountAddress, networkChainIDKey);
+        const localNonce = BigInt(Math.max(currentAccountNonce, Number(accountNonce))) + BigInt(1);
+        setNonceByAccount(currentAccountAddress, localNonce.toString(), transactionHex, networkChainIDKey);
+      }
+    },
+    [isMultiSig, networkChainIDKey]
+  );
 
   const resetNonce = () => {
-    resetNonceByAccount(currentAccountAddress, authNonce);
+    if (isMultiSig) {
+      resetNonceByAccount(currentAccountAddress, authNonce, networkChainIDKey);
+    }
   };
 
-  return { accountNonce, onChainNonce: authNonce, incrementNonce, resetNonce };
+  if (isMultiSig) {
+    return { accountNonce, onChainNonce: authNonce, incrementNonce, resetNonce };
+  }
+
+  return { accountNonce: authNonce, onChainNonce: authNonce, incrementNonce, resetNonce };
 };
 
 export default useNonceSync;
