@@ -4,12 +4,6 @@ import * as queryHooks from '../../hooks/queries/useRegistrations';
 import { useRegistrations } from '../../hooks/queries';
 import Registrations from './Registrations';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key) => key,
-  }),
-}));
-
 jest.spyOn(queryHooks, 'useRegistrations');
 
 describe('Registrations', () => {

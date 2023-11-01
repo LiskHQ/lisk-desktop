@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import { cryptography } from '@liskhq/lisk-client';
 import Illustration from 'src/modules/common/components/illustration';
 import routes from 'src/routes/routes';
@@ -197,12 +197,12 @@ const Multisignature = ({
       )}
       <div className={styles.primaryActions}>
         {status.code === txStatusTypes.broadcastSuccess && !noBackButton ? (
-          <PrimaryButton
+          <TertiaryButton
             className={`${styles.backToWallet} back-to-wallet-button`}
             onClick={goToWallet}
           >
             {t('Back to wallet')}
-          </PrimaryButton>
+          </TertiaryButton>
         ) : null}
         {status.code === txStatusTypes.broadcastError ? (
           <ErrorActions

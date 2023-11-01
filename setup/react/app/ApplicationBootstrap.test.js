@@ -11,6 +11,7 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__/mockBlockchainAppMeta';
 import useSettings from '@settings/hooks/useSettings';
 import networks from '@network/configuration/networks';
+import { useValidServiceUrl } from '@blockchainApplication/manage/hooks/useValidServiceUrl';
 import { smartRender } from 'src/utils/testHelpers';
 import ApplicationBootstrap from './ApplicationBootstrap';
 
@@ -19,6 +20,7 @@ jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationM
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@settings/hooks/useSettings');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
+jest.mock('@blockchainApplication/manage/hooks/useValidServiceUrl');
 
 const props = {
   children: <span>testing</span>,
@@ -54,7 +56,9 @@ describe('ApplicationBootstrap', () => {
     isLoading: false,
     isError: undefined,
   });
+
   useNetworkStatus.mockReturnValue({ data: mockNetworkStatus });
+  useValidServiceUrl.mockReturnValue({validServiceUrl: mockBlockchainAppMeta.data[0].serviceURLs[0].http})
 
   it('Should set main chain application for the selected network', async () => {
     smartRender(ApplicationBootstrap, props, renderConfig);

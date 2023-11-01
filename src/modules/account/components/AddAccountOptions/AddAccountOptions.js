@@ -55,7 +55,7 @@ const AddAccountOptions = () => {
                 />
               ))}
             </div>
-            <div>
+            <div className={styles.footer}>
               {t('Don’t have a Lisk account yet?')}{' '}
               <DropdownButton
                 className={`${styles.dropdownWrapper} input-with-dropdown-dropdown`}
