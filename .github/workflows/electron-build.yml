@@ -54,21 +54,13 @@ jobs:
         if: startsWith(matrix.os, 'desktop-build')
         run: npm install -g cpx
 
-      - name: Build/release Electron app
+      - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack:win
-        env:
-          # windows cert credentials
-          windows_certs: ${{ secrets.windows_certs }}
-          windows_certs_password: ${{ secrets.windows_certs_password }}
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.github_token }}
-        
 
-      - name: Build/release Electron app
+      - name: Build and pack mac app
         if: startsWith(matrix.os, 'macos')
         uses: samuelmeuli/action-electron-builder@v1
         env:
@@ -86,4 +78,3 @@ jobs:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
-
