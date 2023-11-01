@@ -53,11 +53,12 @@ jobs:
       - name: Build/release Electron app
         if: startsWith(matrix.os, 'desktop-build')
         uses: samuelmeuli/action-electron-builder@v1
+        with:
+          build_script_name: build:windows
         env:
           # windows cert credentials
           windows_certs: ${{ secrets.windows_certs }}
           windows_certs_password: ${{ secrets.windows_certs_password }}
-        build_script_name: build:windows
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
