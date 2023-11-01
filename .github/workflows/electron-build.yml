@@ -59,22 +59,17 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack:win
-        env:
           github_token: ${{ secrets.github_token }}
 
       - name: Build and pack mac app
         if: startsWith(matrix.os, 'macos')
         uses: samuelmeuli/action-electron-builder@v1
+        with:
+          build_script_name: pack
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
+          github_token: ${{ secrets.github_token }}
         env:
           # macOS notarization API key
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
-        with:
-          # windows cert credentials
-          windows_certs: ${{ secrets.windows_certs }}
-          windows_certs_password: ${{ secrets.windows_certs_password }}
-
-          # windows cert credentials
-          mac_certs: ${{ secrets.mac_certs }}
-          mac_certs_password: ${{ secrets.mac_certs_password }}
-          github_token: ${{ secrets.github_token }}
