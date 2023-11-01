@@ -22,7 +22,6 @@
     "start": "cross-env DEBUG=true && yarn rebuild && electron ./app/",
     "rebuild": "electron-rebuild -m app/node_modules/node-hid && electron-rebuild -m app/node_modules/usb",
     "build": "yarn clean:build && yarn copy:files && yarn build:prod && yarn build:electron",
-    "build:windows": "yarn clean:build:windows && yarn copy:files && yarn build:prod && yarn build:electron", 
     "build:e2e": "yarn clean:build:e2e && yarn copy:files:e2e && yarn build:prod && yarn build:electron",
     "build:prod": "cross-env NODE_OPTIONS='--openssl-legacy-provider' webpack --config ./setup/config/webpack.config.prod",
     "build:electron": "cross-env NODE_OPTIONS='--openssl-legacy-provider' webpack --config ./setup/config/webpack.config.electron",
