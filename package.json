@@ -31,7 +31,7 @@
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux --x64 --publish onTag",
     "pack": "yarn && yarn build && yarn clean:dist && yarn dist",
-    "pack:win": "cmd /c yarn && yarn install:electron:dependencies && yarn clean:build && yarn copy:files && yarn build:prod && yarn build:electron && yarn clean:dist && yarn dist:win",
+    "pack:win": "cmd /c yarn && yarn install:electron:dependencies && yarn clean:build:windows && yarn copy:files && yarn build:prod && yarn build:electron && yarn clean:dist && yarn dist:win",
     "test": "jest --config ./setup/jest.config.js",
     "test:live": "yarn test -- --watch",
     "cypress:open": "cypress open --project tests/cypress",

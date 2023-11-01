@@ -50,11 +50,15 @@ jobs:
           mkdir -p ~/private_keys/
           echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
 
+      - name: Install cpx
+        if: startsWith(matrix.os, 'desktop-build')
+        run: npm install -g cpx
+
       - name: Build/release Electron app
         if: startsWith(matrix.os, 'desktop-build')
         uses: samuelmeuli/action-electron-builder@v1
         with:
-          build_script_name: build:windows
+          build_script_name: pack:win
         env:
           # windows cert credentials
           windows_certs: ${{ secrets.windows_certs }}
