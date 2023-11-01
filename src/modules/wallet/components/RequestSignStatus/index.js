@@ -9,7 +9,7 @@ import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import Illustration from '@common/components/illustration';
 import styles from './styles.css';
 
-const errorData = (t) => ({
+export const requestErrorData = (t) => ({
   error: true,
   illustration: 'transactionError',
   title: t('Transaction signature failure'),
@@ -18,7 +18,7 @@ const errorData = (t) => ({
   ),
 });
 
-const successData = (t) => ({
+export const requestSuccessData = (t) => ({
   error: false,
   illustration: 'transactionSuccess',
   title: t('Transaction signature successful'),
@@ -36,8 +36,8 @@ const RequestSignStatus = (props) => {
 
   const data =
     !transactions.txSignatureError && transactions.signedTransaction?.signatures?.length
-      ? successData(t)
-      : errorData(t);
+      ? requestSuccessData(t)
+      : requestErrorData(t);
 
   const onCopy = () => {
     setCopied(true);

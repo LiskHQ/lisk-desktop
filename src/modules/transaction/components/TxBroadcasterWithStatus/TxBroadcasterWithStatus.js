@@ -18,6 +18,7 @@ const TxBroadcasterWithStatus = ({
   transactions,
   t,
   prevStep,
+  ...props
 }) => {
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
@@ -33,6 +34,7 @@ const TxBroadcasterWithStatus = ({
         title={template.title}
         message={template.message}
         onRetry={isBroadcastError ? () => prevStep({ step: 0 }) : undefined}
+        {...props}
       />
     </div>
   );

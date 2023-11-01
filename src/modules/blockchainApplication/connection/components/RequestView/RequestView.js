@@ -4,7 +4,7 @@ import MultiStep from '@common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
 import Summary from '@wallet/components/RequestSignSummary';
-import Status from '@wallet/components/RequestSignStatus';
+import TxBroadcasterWithStatus from "@transaction/components/TxBroadcasterWithStatus";
 import RequestSummary from '../RequestSummary';
 import styles from './requestView.css';
 
@@ -29,7 +29,7 @@ const RequestView = ({ history }) => {
         <RequestSummary history={history} />
         <Summary />
         <TxSignatureCollector confirmText="Confirm and sign" />
-        <Status history={history} />
+        <TxBroadcasterWithStatus history={history} />
       </MultiStep>
     </Dialog>
   );

@@ -1,0 +1,14 @@
+.NextAccountToSign {
+  margin-top: 14px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.requiredAccountTitle {
+  margin: 24px 0 8px 0;
+  font-size: 14px;
+  color: var(--color-slate-gray);
+}

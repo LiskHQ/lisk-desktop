@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { useCommandSchema } from '@network/hooks';
+import RequestSignStatus from '@wallet/components/RequestSignStatus';
 import RegularTxStatus from '../Regular';
 import MultisignatureTxStatus from '../Multisignature';
-import RequestedTxStatus from '../RequestedTxStatus';
 
 // eslint-disable-next-line max-statements
 const TxBroadcaster = (props) => {
@@ -21,10 +21,10 @@ const TxBroadcaster = (props) => {
         props.account.summary.isMultisignature ||
         props.account.summary.publicKey !==
           props.transactions.signedTransaction?.senderPublicKey?.toString('hex'));
-    if (props.location.search?.includes('request')) {
-      setTxType('requested');
-    } else if (isMultisig) {
+    if (isMultisig) {
       setTxType('isMultisig');
+    } else if (props.location.search?.includes('request')) {
+      setTxType('requested');
     } else {
       setTxType('regular');
     }
@@ -36,7 +36,7 @@ const TxBroadcaster = (props) => {
    */
 
   if (txType === 'requested') {
-    return <RequestedTxStatus moduleCommandSchemas={moduleCommandSchemas} {...props} />;
+    return <RequestSignStatus moduleCommandSchemas={moduleCommandSchemas} {...props} />;
   }
 
   if (txType === 'regular') {

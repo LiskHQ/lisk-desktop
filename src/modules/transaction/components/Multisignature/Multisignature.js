@@ -10,17 +10,16 @@ import copyToClipboard from 'copy-to-clipboard';
 import { downloadJSON, joinModuleAndCommand, toTransactionJSON } from '@transaction/utils';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import Icon from 'src/theme/Icon';
-import { useAccounts, useCurrentAccount } from '@account/hooks';
-import { truncateAddress } from '@wallet/utils/account';
+import { useCurrentAccount } from '@account/hooks';
 import { ReactComponent as SwitchIcon } from '@setup/react/assets/images/icons/switch-icon.svg';
-import WarningNotification from '@common/components/warningNotification';
-import AccountRow from '@account/components/AccountRow';
-import classNames from 'classnames';
-import { getNextAccountToSign } from '@transaction/utils/multisignatureUtils';
 import generateUniqueId from 'src/utils/generateUniqueId';
+import { NextAccountToSign } from 'src/modules/transaction/components/NextAccountToSign';
+import { useNextAccountToSign } from '@transaction/components/NextAccountToSign/utils';
+import { useTranslation } from 'react-i18next';
+import { useSession } from '@libs/wcm/hooks/useSession';
+import { requestSuccessData } from '@wallet/components/RequestSignStatus';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
-import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
 export const PartiallySignedActions = ({
   onDownload,
@@ -28,6 +27,7 @@ export const PartiallySignedActions = ({
   t,
   transactionJSON,
   reset,
+  isWalletConnectRequest,
 }) => {
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
 
@@ -36,7 +36,7 @@ export const PartiallySignedActions = ({
     const uniqueUrlIdToPreventHashError = generateUniqueId();
     setCurrentAccount(
       nextAccountToSign,
-      `/wallet?modal=signMultiSignTransaction&prevAccount=${currentAccount.metadata.address}&uniqueId=${uniqueUrlIdToPreventHashError}`,
+      `/wallet?modal=signMultiSignTransaction&prevAccount=${currentAccount.metadata.address}&uniqueId=${uniqueUrlIdToPreventHashError}&requestViewWalletConnect=${isWalletConnectRequest}`,
       true,
       {
         stringifiedTransaction,
@@ -70,22 +70,34 @@ export const PartiallySignedActions = ({
   );
 };
 
-export const FullySignedActions = ({ t, onDownload, onSend }) => (
-  <>
-    <SecondaryButton
-      className={`${styles.download} ${styles.secondary} download-button`}
-      onClick={onDownload}
-    >
-      <span className={styles.buttonContent}>
-        <Icon name="download" />
-        {t('Download')}
-      </span>
-    </SecondaryButton>
-    <PrimaryButton className={`${styles.download} send-button`} onClick={onSend}>
-      <span className={styles.buttonContent}>{t('Send')}</span>
-    </PrimaryButton>
-  </>
-);
+export const FullySignedActions = ({ t, onDownload, onSend, isWalletConnectRequest }) => {
+  const { sessionRequest } = useSession();
+
+  return (
+    <>
+      {!isWalletConnectRequest ? (
+        <>
+          <SecondaryButton
+            className={`${styles.download} ${styles.secondary} download-button`}
+            onClick={onDownload}
+          >
+            <span className={styles.buttonContent}>
+              <Icon name="download" />
+              {t('Download')}
+            </span>
+          </SecondaryButton>
+          <PrimaryButton className={`${styles.download} send-button`} onClick={onSend}>
+            <span className={styles.buttonContent}>{t('Send')}</span>
+          </PrimaryButton>
+        </>
+      ) : (
+        <a href={sessionRequest.peer.metadata.url} target="_blank" rel="noopener noreferrer">
+          <PrimaryButton>{t('Return to application')}</PrimaryButton>
+        </a>
+      )}
+    </>
+  );
+};
 
 export const ErrorActions = ({ t, status, message, network, application }) => (
   <a
@@ -105,6 +117,40 @@ export const ErrorActions = ({ t, status, message, network, application }) => (
   </a>
 );
 
+function CopyButton({ transactionJSON, transactions, isWalletConnectRequest }) {
+  const ref = useRef();
+  const { t } = useTranslation();
+  const [copied, setCopied] = useState(false);
+  const { respond } = useSession();
+
+  const onCopy = () => {
+    setCopied(true);
+    if (isWalletConnectRequest) {
+      const signatures = transactions.signedTransaction?.signatures.map((sig) =>
+        sig.toString('hex')
+      );
+      const payload = JSON.stringify(signatures?.[0]);
+      copyToClipboard(payload);
+      // inform to the application
+      respond({ payload });
+    } else {
+      copyToClipboard(JSON.stringify(transactionJSON));
+    }
+    ref.current = setTimeout(() => setCopied(false), 1000);
+  };
+
+  useEffect(() => () => clearTimeout(ref.current), []);
+
+  return (
+    <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
+      <span className={styles.buttonContent}>
+        <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />
+        {t(copied ? 'Copied' : 'Copy')}
+      </span>
+    </SecondaryButton>
+  );
+}
+
 // eslint-disable-next-line max-statements, complexity
 const Multisignature = ({
   transactions,
@@ -121,29 +167,14 @@ const Multisignature = ({
   moduleCommandSchemas,
   application,
   reset,
+  location,
 }) => {
-  const [copied, setCopied] = useState(false);
-  const ref = useRef();
-  const { getAccountByPublicKey } = useAccounts();
+  const isWalletConnectRequest = location.search?.includes('request');
   const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
   const paramSchema = moduleCommandSchemas[moduleCommand];
   const transactionJSON = toTransactionJSON(transactions.signedTransaction, paramSchema);
 
-  const { txInitiatorAccount } = useTxInitiatorAccount({
-    senderPublicKey: transactionJSON.senderPublicKey,
-  });
-
-  const nextAccountToSign = getNextAccountToSign({
-    getAccountByPublicKey,
-    transactionJSON,
-    txInitiatorAccount,
-  });
-
-  const onCopy = () => {
-    setCopied(true);
-    copyToClipboard(JSON.stringify(transactionJSON));
-    ref.current = setTimeout(() => setCopied(false), 1000);
-  };
+  const { nextAccountToSign } = useNextAccountToSign({ transactionJSON });
 
   const onDownload = () => {
     const filePrefix =
@@ -167,33 +198,20 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
-  useEffect(() => () => clearTimeout(ref.current), []);
+
+  const successMultiOrWalletConnectMessage = !isWalletConnectRequest
+    ? message
+    : requestSuccessData(t).description;
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <Illustration name={getIllustration(status.code, 'signMultisignature')} />
       <h6 className="result-box-header">{title}</h6>
-      {!nextAccountToSign && <p className="transaction-status body-message">{message}</p>}
+      {!nextAccountToSign && (
+        <p className="transaction-status body-message">{successMultiOrWalletConnectMessage}</p>
+      )}
       {nextAccountToSign && status.code !== txStatusTypes.multisigSignatureSuccess && (
-        <div className={styles.requiredAccountSection}>
-          <WarningNotification
-            isVisible
-            message={
-              <span>
-                {t('A required signatory account')}{' '}
-                <b>
-                  ({nextAccountToSign?.metadata?.name} -{' '}
-                  {truncateAddress(nextAccountToSign?.metadata?.address)})
-                </b>{' '}
-                {t(
-                  'to complete this transaction has been found on your Lisk Desktop. Please click on “Switch account” to complete this transaction.'
-                )}
-              </span>
-            }
-          />
-          <h4 className={styles.requiredAccountTitle}>{t('Required account')}</h4>
-          <AccountRow className={classNames(styles.accountRow)} account={nextAccountToSign} />
-        </div>
+        <NextAccountToSign nextAccountToSign={nextAccountToSign} />
       )}
       <div className={styles.primaryActions}>
         {status.code === txStatusTypes.broadcastSuccess && !noBackButton ? (
@@ -216,15 +234,19 @@ const Multisignature = ({
         {status.code !== txStatusTypes.broadcastSuccess &&
           status.code !== txStatusTypes.broadcastError &&
           !nextAccountToSign && (
-            <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
-              <span className={styles.buttonContent}>
-                <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />
-                {t(copied ? 'Copied' : 'Copy')}
-              </span>
-            </SecondaryButton>
+            <CopyButton
+              transactionJSON={transactionJSON}
+              transactions={transactions}
+              isWalletConnectRequest={isWalletConnectRequest}
+            />
           )}
         {status.code === txStatusTypes.multisigSignatureSuccess && (
-          <FullySignedActions onDownload={onDownload} t={t} onSend={onSend} />
+          <FullySignedActions
+            onDownload={onDownload}
+            t={t}
+            onSend={onSend}
+            isWalletConnectRequest={isWalletConnectRequest}
+          />
         )}
         {status.code === txStatusTypes.multisigSignaturePartialSuccess && (
           <PartiallySignedActions
@@ -233,6 +255,7 @@ const Multisignature = ({
             t={t}
             transactionJSON={transactionJSON}
             reset={reset}
+            isWalletConnectRequest={isWalletConnectRequest}
           />
         )}
       </div>
