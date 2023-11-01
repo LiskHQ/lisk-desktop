@@ -129,7 +129,7 @@ function CopyButton({ transactionJSON, transactions, isWalletConnectRequest }) {
       const signatures = transactions.signedTransaction?.signatures.map((sig) =>
         sig.toString('hex')
       );
-      const payload = JSON.stringify(signatures?.[0]);
+      const payload = JSON.stringify(signatures);
       copyToClipboard(payload);
       // inform to the application
       respond({ payload });
