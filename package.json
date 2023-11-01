@@ -46,7 +46,7 @@
     "copy:files:e2e": "cpx \"./setup/react/{index.html,assets/**/*}\" \"./app/${BUILD_NAME}/\"",
     "clean:build:e2e": "rm -rf app/${BUILD_NAME}",
     "clean:dist": "rm -rf dist",
-    "clean:dist:win": "rmdir /s /q "dist"",
+    "clean:dist:win": "rmdir /s /q \"dist\"",
     "postinstall": "patch-package && electron-builder install-app-deps",
     "cucumber:playwright:open": "cucumber-js test -c cucumber.js"
   },
