@@ -59,6 +59,8 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack:win
+        env:
+          github_token: ${{ secrets.github_token }}
 
       - name: Build and pack mac app
         if: startsWith(matrix.os, 'macos')
@@ -75,3 +77,4 @@ jobs:
           # windows cert credentials
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
+          github_token: ${{ secrets.github_token }}
