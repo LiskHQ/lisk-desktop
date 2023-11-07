@@ -15,10 +15,12 @@ import styles from './Overview.css';
 
 const Overview = ({ totalBlocks, t }) => {
   const colorPalette = getColorPalette(useTheme());
-  const { data: validators } = useValidators({ config: { params: { limit: 1 } } });
+  const { data: standbyValidators } = useValidators({
+    config: { params: { limit: 1, status: 'standby' } },
+  });
   const { data: generatorsData } = useGenerators({ config: { params: { limit: 103 } } });
   const { data: transactions } = useTransactions({ config: { params: { limit: 1 } } });
-  const validatorsCount = validators?.meta.total ?? 0;
+  const standbyValidatorsCount = standbyValidators?.meta.total ?? 0;
   const generatorsCount = generatorsData?.meta.total ?? 0;
   const transactionsCount = transactions?.meta.total ?? 0;
   const doughnutChartData = {
@@ -26,7 +28,7 @@ const Overview = ({ totalBlocks, t }) => {
     datasets: [
       {
         label: 'validators',
-        data: [generatorsCount, validatorsCount - generatorsCount],
+        data: [generatorsCount, standbyValidatorsCount],
       },
     ],
   };
@@ -48,7 +50,7 @@ const Overview = ({ totalBlocks, t }) => {
     <Box className={styles.wrapper}>
       <BoxContent className={styles.content}>
         <div className={styles.column}>
-          {typeof validatorsCount === 'number' ? (
+          {typeof standbyValidatorsCount === 'number' ? (
             <>
               <div className={styles.chartBox}>
                 <h2 className={styles.title}>{t('Total validators')}</h2>
