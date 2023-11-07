@@ -38,6 +38,7 @@ const RewardsClaimableRow = ({ data: validatorsWithTokenData, rewardsClaimableHe
       </div>
       <div className={classNames(rewardsClaimableHeader[3].classList)}>
         <Converter
+          emptyPlaceholder="-"
           className={styles.fiatBalance}
           value={convertFromBaseDenom(amount, validatorsWithTokenData)}
           tokenSymbol={symbol}
