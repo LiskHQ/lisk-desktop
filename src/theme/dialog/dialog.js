@@ -25,7 +25,10 @@ const Dialog = ({
   const onBackClick = () => history.goBack();
 
   return (
-    <div className={`${styles.wrapper} ${className ?? ''} ${size ? styles[size] : ''}`}>
+    <div
+      data-testid="dialog-container"
+      className={`${styles.wrapper} ${className ?? ''} ${size ? styles[size] : ''}`}
+    >
       {hasBack && (
         <Icon
           name={customBackBtn ?? 'arrowLeftTailed'}

@@ -19,7 +19,7 @@
   & h5.boxHeading {
     display: inline-block;
     font-weight: var(--font-weight-bold);
-    line-height: var(--font-size-large);
+    line-height: var(--font-size-h3);
     color: var(--color-maastricht-blue);
     font-size: var(--font-size-h3);
   }

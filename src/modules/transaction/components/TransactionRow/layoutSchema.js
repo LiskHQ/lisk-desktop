@@ -10,12 +10,11 @@ import {
   Status,
   ValidatorDetails,
   Round,
-  Fee,
 } from './components';
 import styles from './schemas.css';
 
-const hosted = [ID, Height, Type, Date, Fee, Status];
-const full = [ID, Sender, Height, Type, Date, Status];
+const hosted = [Sender, Type, Amount, Date, Height, Status];
+const full = [ID, Sender, Height, Type, Amount, Date, Status];
 const minimal = [Counterpart, Amount];
 const stake = [ValidatorDetails, Date, Round, Params];
 

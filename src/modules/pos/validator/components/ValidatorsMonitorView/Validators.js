@@ -1,10 +1,12 @@
 /* eslint-disable complexity */
 /* istanbul ignore file */
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
+import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
+import Badge from '@common/components/badge';
 import { Input } from 'src/theme';
 import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
@@ -14,11 +16,12 @@ import BoxTabs from '@theme/tabs';
 import useFilter from '@common/hooks/useFilter';
 import DialogLink from '@theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
-import InfoBanner from '@common/components/infoBanner/infoBanner';
 import Icon from '@theme/Icon';
+import { INFO_BANNERS } from '@common/constants';
 import { ROUND_LENGTH } from '@pos/validator/consts';
 import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
+import SwippableInfoBanner from '@common/components/infoBanner/swippableInfoBanner';
 import ValidatorsOverview from '../Overview/ValidatorsOverview';
 import GeneratingDetails from '../Overview/GeneratingDetails';
 import ValidatorsTable from '../ValidatorsTable';
@@ -78,6 +81,12 @@ const ValidatorsMonitor = ({ watchList }) => {
     config: { params: { address } },
   });
   const isValidator = validators?.data?.length > 0 && !isLoadingValidators;
+  const {
+    appEvents: {
+      transactions: { rewards },
+    },
+  } = useContext(ApplicationBootstrapContext);
+  const notification = rewards.length && BigInt(rewards[0]?.reward || 0) > BigInt(0);
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -155,16 +164,10 @@ const ValidatorsMonitor = ({ watchList }) => {
 
   return (
     <Box>
-      <InfoBanner
-        t={t}
+      <SwippableInfoBanner
+        className={styles.swippableBanner}
+        banners={[INFO_BANNERS.liskMigration, INFO_BANNERS.proofOfStake]}
         name="validatorsPageBanner"
-        infoLabel={t('New')}
-        infoMessage={t('Introducing proof of stake')}
-        infoDescription={t(
-          'Enhancing the blockchain consensus mechanism with PoS, and providing increased decentralization, scalability, and energy efficiency, empowering users to participate in securing the network, and earning rewards based on their token holdings.'
-        )}
-        illustrationName="proofOfStake"
-        show
       />
       <BoxHeader className={`${styles.validatorPageWrapper}`}>
         <div className={grid.row}>
@@ -175,7 +178,10 @@ const ValidatorsMonitor = ({ watchList }) => {
           <div className={grid['col-md-4']}>
             {!!address && (
               <Link to={routes.sentStakes.path}>
-                <SecondaryButton>{t('Stakes')}</SecondaryButton>
+                <SecondaryButton>
+                  {t('Stakes')}
+                  {!!notification && <Badge />}
+                </SecondaryButton>
               </Link>
             )}
             <ValidatorActionButton isValidator={isValidator} address={address} />

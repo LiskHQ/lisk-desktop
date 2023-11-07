@@ -1,4 +1,5 @@
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import wallets from '@tests/constants/wallets';
 import { getTransactionStatus } from './statusConfig';
 import { txStatusTypes } from './txStatus';
 
@@ -74,10 +75,13 @@ describe('Transaction signature status', () => {
   });
 
   it('should return transaction status for fully signed transaction', () => {
-    const account = {};
+    const account = { summary: { isMultisignature: true } };
     const transactions = {
       txSignatureError: null,
-      signedTransaction,
+      signedTransaction: {
+        ...signedTransaction,
+        signatures: [...signedTransaction.signatures, wallets.genesis.summary.publicKey],
+      },
     };
     const isMultisignature = true;
     const status = getTransactionStatus(account, transactions, {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import Icon from '@theme/Icon';
 import Illustration from '@common/components/illustration';
@@ -48,7 +49,9 @@ const InfoBanner = ({
       />
       <div className={styles.content}>
         <div className={styles.label}>
-          <span>{infoLabel}</span>
+          <span className={classNames({ [styles[infoLabel.toLowerCase()]]: true })}>
+            {infoLabel}
+          </span>
         </div>
         <div className={`${styles.slides} slides`}>
           <section className={`${className || ''} ${styles.active}`}>

@@ -5,11 +5,13 @@
 
   & > div:first-child > div:first-child {
     display: flex;
+    align-items: center;
   }
 
   & .detailsWrapper {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     margin-left: 10px;
     color: var(--color-content-light);
   }
@@ -60,5 +62,13 @@
   & > span:first-child {
     color: var(--color-blue-gray);
     padding-right: 8px;
+  }
+}
+
+.infoTooltip {
+  & > span {
+    color: var(--color-tooltip-bg) !important;
+    top: 55% !important;
+    left: -9px !important;
   }
 }

@@ -1,11 +1,12 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import copyToClipboard from 'copy-to-clipboard';
 import * as txUtils from '@transaction/utils/transaction';
 import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
+import { ErrorActions } from '@transaction/components/Multisignature/Multisignature';
+import blockchainApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
 import Multisignature, { FullySignedActions, PartiallySignedActions } from '.';
 import { toTransactionJSON } from '../../utils/encoding';
 
@@ -82,35 +83,32 @@ describe('TransactionResult Multisignature', () => {
   toTransactionJSON.mockReturnValue(transaction);
 
   it('should render properly', () => {
-    const wrapper = mount(<Multisignature {...props} />);
+    const wrapper = mountWithQueryClient(Multisignature, props);
     expect(wrapper.find('.test-class')).toExist();
     expect(wrapper.find('.result-box-header')).toHaveText(props.title);
     expect(wrapper.find('.body-message')).toHaveText(props.message);
   });
 
   it('should navigate to wallet', () => {
-    const wrapper = mount(
-      <Multisignature
-        {...props}
-        status={{
-          code: txStatusTypes.broadcastSuccess,
-        }}
-      />
-    );
+    const wrapper = mountWithQueryClient(Multisignature, {
+      ...props,
+      status: {
+        code: txStatusTypes.broadcastSuccess,
+      },
+    });
+
     wrapper.find('.back-to-wallet-button').at(0).simulate('click');
     expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
   });
 
   it('should call correct functions when copy and download buttons are clicked', () => {
     const downloadJSONSpy = jest.spyOn(txUtils, 'downloadJSON');
-    const wrapper = mount(
-      <Multisignature
-        {...props}
-        status={{
-          code: txStatusTypes.multisigSignaturePartialSuccess,
-        }}
-      />
-    );
+    const wrapper = mountWithQueryClient(Multisignature, {
+      ...props,
+      status: {
+        code: txStatusTypes.multisigSignaturePartialSuccess,
+      },
+    });
     const transactionJSON = toTransactionJSON(
       props.transactions.signedTransaction,
       props.moduleCommandSchemas['token:transfer']
@@ -128,14 +126,12 @@ describe('TransactionResult Multisignature', () => {
   });
 
   it('should props.transactionBroadcasted', () => {
-    const wrapper = mount(
-      <Multisignature
-        {...props}
-        status={{
-          code: txStatusTypes.multisigSignatureSuccess,
-        }}
-      />
-    );
+    const wrapper = mountWithQueryClient(Multisignature, {
+      ...props,
+      status: {
+        code: txStatusTypes.multisigSignatureSuccess,
+      },
+    });
     expect(wrapper.find(FullySignedActions)).toExist();
     expect(wrapper.find(PartiallySignedActions)).not.toExist();
     wrapper.find('.send-button').at(0).simulate('click');
@@ -143,5 +139,16 @@ describe('TransactionResult Multisignature', () => {
       props.transactions.signedTransaction,
       props.moduleCommandSchemas
     );
+  });
+
+  it('should props.broadcastError', () => {
+    const wrapper = mountWithQueryClient(Multisignature, {
+      ...props,
+      application: blockchainApplicationsManage[0],
+      status: {
+        code: txStatusTypes.broadcastError,
+      },
+    });
+    expect(wrapper.find(ErrorActions)).toExist();
   });
 });

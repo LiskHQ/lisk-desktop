@@ -1,6 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { mountWithRouterAndStore } from 'src/utils/testHelpers';
+import { smartRender } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -10,8 +8,10 @@ import Summary from './RegisterValidatorSummary';
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@auth/hooks/queries');
 jest.mock('@account/hooks', () => ({
+  ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
+const config = { renderType: 'mount', queryClient: true };
 
 describe('Validator Registration Summary', () => {
   const props = {
@@ -58,7 +58,7 @@ describe('Validator Registration Summary', () => {
   useAuth.mockReturnValue({ data: mockAuth });
 
   it('renders properly Summary component', () => {
-    const wrapper = mount(<Summary {...props} />);
+    const wrapper = smartRender(Summary, props, config).wrapper;
     expect(wrapper).toContainMatchingElement('.username-label');
     expect(wrapper).toContainMatchingElement('.username');
     expect(wrapper).toContainMatchingElement('.address');
@@ -67,14 +67,14 @@ describe('Validator Registration Summary', () => {
   });
 
   it('go to prev page when click Go back button', () => {
-    const wrapper = mount(<Summary {...props} />);
+    const wrapper = smartRender(Summary, props, config).wrapper;
     expect(props.prevStep).not.toBeCalled();
     wrapper.find('button.cancel-button').simulate('click');
     expect(props.prevStep).toBeCalled();
   });
 
   it('submit user data when click in confirm button', () => {
-    const wrapper = mountWithRouterAndStore(Summary, props, {}, {});
+    const wrapper = smartRender(Summary, props, config).wrapper;
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({

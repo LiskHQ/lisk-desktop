@@ -7,15 +7,18 @@ import { selectModuleCommandSchemas } from 'src/redux/selectors';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
 
-const Status = ({ account, transactions, t }) => {
+const Status = ({ account, transactions, t, authQuery }) => {
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
+  const numberOfSignaturesOnAccount = authQuery.data?.data?.numberOfSignatures;
 
   return (
     <section className={`${styles.wrapper} transaction-status`}>
       <div className={styles.header}>
-        <h1>{t('Register multisignature account')}</h1>
+        <h1>
+          {t(`${numberOfSignaturesOnAccount > 1 ? 'Edit' : 'Register'} multisignature account`)}
+        </h1>
       </div>
       <ProgressBar current={4} />
       <TxBroadcaster

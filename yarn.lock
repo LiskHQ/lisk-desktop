@@ -1622,18 +1622,19 @@
   optionalDependencies:
     global-agent "^3.0.0"
 
-"@electron/notarize@^1.2.3":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@electron/notarize/-/notarize-1.2.4.tgz#a7d38773f4cad40df111a5edc64037e5d768ea1e"
-  integrity sha512-W5GQhJEosFNafewnS28d3bpQ37/s91CDWqxVchHfmv2dQSTWpOzNlUVQwYzC1ay5bChRV/A9BTL68yj0Pa+TSg==
+"@electron/notarize@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@electron/notarize/-/notarize-2.1.0.tgz#76aaec10c8687225e8d0a427cc9df67611c46ff3"
+  integrity sha512-Q02xem1D0sg4v437xHgmBLxI2iz/fc0D4K7fiVWHa/AnW8o7D751xyKNXgziA6HrTOme9ul1JfWN5ark8WH1xA==
   dependencies:
     debug "^4.1.1"
     fs-extra "^9.0.1"
+    promise-retry "^2.0.1"
 
-"@electron/osx-sign@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@electron/osx-sign/-/osx-sign-1.0.4.tgz#8e91442846471636ca0469426a82b253b9170151"
-  integrity sha512-xfhdEcIOfAZg7scZ9RQPya1G1lWo8/zMCwUXAulq0SfY7ONIW+b9qGyKdMyuMctNYwllrIS+vmxfijSfjeh97g==
+"@electron/osx-sign@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@electron/osx-sign/-/osx-sign-1.0.5.tgz#0af7149f2fce44d1a8215660fd25a9fb610454d8"
+  integrity sha512-k9ZzUQtamSoweGQDV2jILiRIHUu7lYlJ3c6IEmjv1hC17rclE+eb9U+f6UFlOOETo0JzY1HNlXy4YOlCvl+Lww==
   dependencies:
     compare-version "^0.1.2"
     debug "^4.3.4"
@@ -1641,19 +1642,6 @@
     isbinaryfile "^4.0.8"
     minimist "^1.2.6"
     plist "^3.0.5"
-
-"@electron/universal@1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@electron/universal/-/universal-1.3.4.tgz#bccd94b635d7c85eeed5eabba457eb4ed2be2777"
-  integrity sha512-BdhBgm2ZBnYyYRLRgOjM5VHkyFItsbggJ0MHycOjKWdFGYwK97ZFXH54dTvUWEfha81vfvwr5On6XBjt99uDcg==
-  dependencies:
-    "@electron/asar" "^3.2.1"
-    "@malept/cross-spawn-promise" "^1.1.0"
-    debug "^4.3.1"
-    dir-compare "^3.0.0"
-    fs-extra "^9.0.1"
-    minimatch "^3.0.4"
-    plist "^3.0.4"
 
 "@electron/universal@1.4.1":
   version "1.4.1"
@@ -2140,47 +2128,47 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@liskhq/lisk-api-client@^6.0.0-rc.0":
-  version "6.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-api-client/-/lisk-api-client-6.0.0-rc.0.tgz#349aa76a75ff5fbb22b308696619b913b9cb157f"
-  integrity sha512-MfKIEWIZYTeJpnl9r3Uck50Zs4qkUR2eaKac/3AsmFAn7t7CoXURIO3rJQITDzbHE30ifHQD+18BQpMay7BwLQ==
+"@liskhq/lisk-api-client@^6.0.0-rc.4":
+  version "6.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-api-client/-/lisk-api-client-6.0.0-rc.4.tgz#3681fe72cf7e2b594fafa09dca629ae76e9fb69f"
+  integrity sha512-bMDiDjAAk74nWqjLeA+pdQLn3y7GMsWjhTgmVkN8bNTZptiCAFz7QITPrmpjevzBoXCUS/8ne/SpCvmrob9w6A==
   dependencies:
-    "@liskhq/lisk-codec" "^0.4.0-rc.0"
-    "@liskhq/lisk-cryptography" "^4.0.0-rc.0"
-    "@liskhq/lisk-transactions" "^6.0.0-rc.0"
-    "@liskhq/lisk-validator" "^0.8.0-rc.0"
+    "@liskhq/lisk-codec" "^0.4.0-rc.2"
+    "@liskhq/lisk-cryptography" "^4.0.0-rc.2"
+    "@liskhq/lisk-transactions" "^6.0.0-rc.2"
+    "@liskhq/lisk-validator" "^0.8.0-rc.2"
     isomorphic-ws "4.0.1"
     ws "8.11.0"
     zeromq "6.0.0-beta.6"
 
-"@liskhq/lisk-client@6.0.0-rc.0":
-  version "6.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-client/-/lisk-client-6.0.0-rc.0.tgz#d756a4ee40142551242413656280ffaa88b41636"
-  integrity sha512-fMt/YWL+ZlIf3wMIQTiVKU6w2TsnCodFUKjo/WvrJP7ocbAcM9jp/x55iF1MymEXhv8fGOfG1CeHZBolgZLf/g==
+"@liskhq/lisk-client@6.0.0-rc.4":
+  version "6.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-client/-/lisk-client-6.0.0-rc.4.tgz#e611eee3ca58d990c840a3c59cc0527ca6bf9ecf"
+  integrity sha512-1YCuVBv8lRiv09BW0x4qgrpOXNHAHEGVxpJRlOGkKc9GovgslzCVE/StOAjJx7KStYgwFAgEV1LRvLUM6hffLQ==
   dependencies:
-    "@liskhq/lisk-api-client" "^6.0.0-rc.0"
-    "@liskhq/lisk-codec" "^0.4.0-rc.0"
-    "@liskhq/lisk-cryptography" "^4.0.0-rc.0"
+    "@liskhq/lisk-api-client" "^6.0.0-rc.4"
+    "@liskhq/lisk-codec" "^0.4.0-rc.2"
+    "@liskhq/lisk-cryptography" "^4.0.0-rc.2"
     "@liskhq/lisk-passphrase" "^4.0.0-rc.0"
-    "@liskhq/lisk-transactions" "^6.0.0-rc.0"
-    "@liskhq/lisk-tree" "^0.4.0-rc.0"
+    "@liskhq/lisk-transactions" "^6.0.0-rc.2"
+    "@liskhq/lisk-tree" "^0.4.0-rc.2"
     "@liskhq/lisk-utils" "^0.4.0-rc.0"
-    "@liskhq/lisk-validator" "^0.8.0-rc.0"
+    "@liskhq/lisk-validator" "^0.8.0-rc.2"
     buffer "6.0.3"
 
-"@liskhq/lisk-codec@^0.4.0-rc.0":
-  version "0.4.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-codec/-/lisk-codec-0.4.0-rc.0.tgz#4de4a40968a9019855d648b675f89e7cb93c05dc"
-  integrity sha512-aQHKdvhGP8Z0O8paMVy2VpuB2s7jnznWsMma6cv6wILRYGvqs+JQbzsBvsMn8p8jFOpnHsGdfikZhWrodKAJoQ==
+"@liskhq/lisk-codec@^0.4.0-rc.2":
+  version "0.4.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-codec/-/lisk-codec-0.4.0-rc.2.tgz#f7ef7a91c94c0c5f295ece70543bfa1a14c51005"
+  integrity sha512-LoIIaXfEOi3Fa/UnuiSRLTYPu0fnFQ8S68f6WBqvOcorkB9VzcUphBDdG/a+7H6qgC+CkxlLJRHmM7pfkC/fyg==
   dependencies:
-    "@liskhq/lisk-cryptography" "^4.0.0-rc.0"
+    "@liskhq/lisk-cryptography" "^4.0.0-rc.2"
     "@liskhq/lisk-utils" "^0.4.0-rc.0"
-    "@liskhq/lisk-validator" "^0.8.0-rc.0"
+    "@liskhq/lisk-validator" "^0.8.0-rc.2"
 
-"@liskhq/lisk-cryptography@^4.0.0-rc.0":
-  version "4.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-cryptography/-/lisk-cryptography-4.0.0-rc.0.tgz#0cf5e1b8f67116c8ff258e62d5da3d23a5cef185"
-  integrity sha512-OIqxD9oNcY2OlFNkI+Ay3Mex+EEt3AcmDFKpkshGBieuMvZzgfOAupPfaB3L36q6pMxGHpRc9Nzz6VQt0vNCYQ==
+"@liskhq/lisk-cryptography@^4.0.0-rc.2":
+  version "4.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-cryptography/-/lisk-cryptography-4.0.0-rc.2.tgz#042191f8c02834388157469015b73318df097964"
+  integrity sha512-kxHQ1fGiOC5WaqRRKaJJIOI6EqljyYZuDl7zg+Ihwz36ZDTRtGNLpUCA8+1GPYBwRghp2QobRibUBZh649Hh5A==
   dependencies:
     "@liskhq/lisk-passphrase" "^4.0.0-rc.0"
     buffer-reverse "1.0.1"
@@ -2194,21 +2182,21 @@
   dependencies:
     bip39 "3.0.3"
 
-"@liskhq/lisk-transactions@^6.0.0-rc.0":
-  version "6.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-transactions/-/lisk-transactions-6.0.0-rc.0.tgz#a2d2526f0096bcc402c313fc40453657c6d02442"
-  integrity sha512-iPaFfYSEB2wZs2J4nw0cRNdsz8zup5rJaUgaNrxm5oSwIfjsaqj2sRYoWqqdE46AJ108mjl2zQtWKwIjoyv/RA==
+"@liskhq/lisk-transactions@^6.0.0-rc.2":
+  version "6.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-transactions/-/lisk-transactions-6.0.0-rc.2.tgz#14c97f87dae1fe486ca99b9e47e076eb85f4ec62"
+  integrity sha512-bZesojzU2uTX8pW0kyYyVfRk69PJZo6OJM9/gTu4sxRvcbFQKelpEFAPDLQBcLyihNL2SGwufgDyCMDyzVy73A==
   dependencies:
-    "@liskhq/lisk-codec" "^0.4.0-rc.0"
-    "@liskhq/lisk-cryptography" "^4.0.0-rc.0"
-    "@liskhq/lisk-validator" "^0.8.0-rc.0"
+    "@liskhq/lisk-codec" "^0.4.0-rc.2"
+    "@liskhq/lisk-cryptography" "^4.0.0-rc.2"
+    "@liskhq/lisk-validator" "^0.8.0-rc.2"
 
-"@liskhq/lisk-tree@^0.4.0-rc.0":
-  version "0.4.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-tree/-/lisk-tree-0.4.0-rc.0.tgz#c9e23163f696b00df4242edb5426f7565c2a12c0"
-  integrity sha512-yrfu3XBsMOS391tPeLCjO2D98uboG2ALfJbFqHZFs8SpviEEnSSIkBCx4O1M0TA+vvhXyD/pfTITVRo3zG1OnA==
+"@liskhq/lisk-tree@^0.4.0-rc.2":
+  version "0.4.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-tree/-/lisk-tree-0.4.0-rc.2.tgz#5e4aeb2074050ea1658965bc72a7596a7cd3afe7"
+  integrity sha512-ym6Kz8D3jkYT+2qna3jqiHFNzKxuUeFOIb4iCn4VqSscsOqapxfGKQU9jtYt0yTciCHVh5Ogijrv+AZB4SQsgA==
   dependencies:
-    "@liskhq/lisk-cryptography" "^4.0.0-rc.0"
+    "@liskhq/lisk-cryptography" "^4.0.0-rc.2"
     "@liskhq/lisk-utils" "^0.4.0-rc.0"
 
 "@liskhq/lisk-utils@^0.4.0-rc.0":
@@ -2218,12 +2206,12 @@
   dependencies:
     lodash.clonedeep "4.5.0"
 
-"@liskhq/lisk-validator@^0.8.0-rc.0":
-  version "0.8.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-validator/-/lisk-validator-0.8.0-rc.0.tgz#fb136717f71ce35c7937d79d3b857d26195ff8c8"
-  integrity sha512-ymKW2eRw4KVBXJLN7co2iJv9WmkytL4IyxXiwJq5xvSzAN/YIx7NYViT8WCcGmUA/ryd55kwdKX/9kKkhafiDw==
+"@liskhq/lisk-validator@^0.8.0-rc.2":
+  version "0.8.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-validator/-/lisk-validator-0.8.0-rc.2.tgz#4c81e83027c5c832f7a2915ce0bdc79614387707"
+  integrity sha512-b4V0z2TlOxEosAKpxgR/lgobvpw5Lc2/ZAuBxDuwlvuXh5WSoz+VaPMf2Ry7N9TQwXtvHx3MO8chraJN+F5bEg==
   dependencies:
-    "@liskhq/lisk-cryptography" "^4.0.0-rc.0"
+    "@liskhq/lisk-cryptography" "^4.0.0-rc.2"
     ajv "8.1.0"
     ajv-formats "2.1.1"
     debug "4.3.4"
@@ -4100,16 +4088,16 @@ app-builder-bin@4.0.0:
   resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-4.0.0.tgz#1df8e654bd1395e4a319d82545c98667d7eed2f0"
   integrity sha512-xwdG0FJPQMe0M0UA4Tz0zEB8rBJTRA5a476ZawAqiBkMv16GRK5xpXThOjMaEOFnZ6zabejjG4J3da0SXG63KA==
 
-app-builder-lib@24.6.3:
-  version "24.6.3"
-  resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-24.6.3.tgz#5fe7027ec81ea35d5875a6e193c95cbb932eaa2e"
-  integrity sha512-++0Zp7vcCHfXMBGVj7luFxpqvMPk5mcWeTuw7OK0xNAaNtYQTTN0d9YfWRsb1MvviTOOhyHeULWz1CaixrdrDg==
+app-builder-lib@24.6.4:
+  version "24.6.4"
+  resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-24.6.4.tgz#5bf77dd89d3ee557bc615b9ddfaf383f3e51577b"
+  integrity sha512-m9931WXb83teb32N0rKg+ulbn6+Hl8NV5SUpVDOVz9MWOXfhV6AQtTdftf51zJJvCQnQugGtSqoLvgw6mdF/Rg==
   dependencies:
     "7zip-bin" "~5.1.1"
     "@develar/schema-utils" "~2.6.5"
-    "@electron/notarize" "^1.2.3"
-    "@electron/osx-sign" "^1.0.4"
-    "@electron/universal" "1.3.4"
+    "@electron/notarize" "2.1.0"
+    "@electron/osx-sign" "1.0.5"
+    "@electron/universal" "1.4.1"
     "@malept/flatpak-bundler" "^0.4.0"
     "@types/fs-extra" "9.0.13"
     async-exit-hook "^2.0.1"
@@ -7101,12 +7089,12 @@ dlv@^1.1.0:
   resolved "https://registry.yarnpkg.com/dlv/-/dlv-1.1.3.tgz#5c198a8a11453596e751494d49874bc7732f2e79"
   integrity sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==
 
-dmg-builder@24.6.3:
-  version "24.6.3"
-  resolved "https://registry.yarnpkg.com/dmg-builder/-/dmg-builder-24.6.3.tgz#508a9516e30b294d18ec466ce3f61b496aa40c0b"
-  integrity sha512-O7KNT7OKqtV54fMYUpdlyTOCP5DoPuRMLqMTgxxV2PO8Hj/so6zOl5o8GTs8pdDkeAhJzCFOUNB3BDhgXbUbJg==
+dmg-builder@24.6.4:
+  version "24.6.4"
+  resolved "https://registry.yarnpkg.com/dmg-builder/-/dmg-builder-24.6.4.tgz#e19b8305f7e1ea0b4faaa30382c81b9d6de39863"
+  integrity sha512-BNcHRc9CWEuI9qt0E655bUBU/j/3wUCYBVKGu1kVpbN5lcUdEJJJeiO0NHK3dgKmra6LUUZlo+mWqc+OCbi0zw==
   dependencies:
-    app-builder-lib "24.6.3"
+    app-builder-lib "24.6.4"
     builder-util "24.5.0"
     builder-util-runtime "9.2.1"
     fs-extra "^10.1.0"
@@ -7412,16 +7400,16 @@ electron-builder-notarize@1.5.1:
     js-yaml "^3.14.0"
     read-pkg-up "^7.0.0"
 
-electron-builder@24.6.3:
-  version "24.6.3"
-  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-24.6.3.tgz#f4f69dd4fae9f80bc9c1ec74d6fe47565ec50cd5"
-  integrity sha512-O6PqhRXwfxCNTXI4BlhELSeYYO6/tqlxRuy+4+xKBokQvwDDjDgZMMoSgAmanVSCuzjE7MZldI9XYrKFk+EQDw==
+electron-builder@24.6.4:
+  version "24.6.4"
+  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-24.6.4.tgz#c51271e49b9a02c9a3ec444f866b6008c4d98a1d"
+  integrity sha512-uNWQoU7pE7qOaIQ6CJHpBi44RJFVG8OHRBIadUxrsDJVwLLo8Nma3K/EEtx5/UyWAQYdcK4nVPYKoRqBb20hbA==
   dependencies:
-    app-builder-lib "24.6.3"
+    app-builder-lib "24.6.4"
     builder-util "24.5.0"
     builder-util-runtime "9.2.1"
     chalk "^4.1.2"
-    dmg-builder "24.6.3"
+    dmg-builder "24.6.4"
     fs-extra "^10.1.0"
     is-ci "^3.0.0"
     lazy-val "^1.0.5"
@@ -7513,10 +7501,10 @@ electron-to-chromium@^1.4.431:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.442.tgz#455f4c5bd6ae73afb634dcffee6f356c26c8e294"
   integrity sha512-RkrZF//Ya+0aJq2NM3OdisNh5ZodZq1rdXOS96G8DdDgpDKqKE81yTbbQ3F/4CKm1JBPsGu1Lp/akkna2xO06Q==
 
-electron-updater@6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-6.1.1.tgz#4ede9b560936957b2b87181736f98b1621fa26fd"
-  integrity sha512-IBT3zJ4yO5UZMF2gOTC9HrlmG4OYSRtOiHKzNAShJvfuicdx6UaXoa6AvhcTxdx6zf/rJyFMRBISS9jhVwTfow==
+electron-updater@6.1.4:
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-6.1.4.tgz#86f7e1fc4353f578456c34304b48df7d976cf348"
+  integrity sha512-yYAJc6RQjjV4WtInZVn+ZcLyXRhbVXoomKEfUUwDqIk5s2wxzLhWaor7lrNgxODyODhipjg4SVPMhJHi5EnsCA==
   dependencies:
     builder-util-runtime "9.2.1"
     fs-extra "^10.1.0"
@@ -7525,12 +7513,12 @@ electron-updater@6.1.1:
     lodash.escaperegexp "^4.1.2"
     lodash.isequal "^4.5.0"
     semver "^7.3.8"
-    typed-emitter "^2.1.0"
+    tiny-typed-emitter "^2.1.0"
 
-electron@26.1.0:
-  version "26.1.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-26.1.0.tgz#d26fefba5a5c68069b07a117d87aee1c4e5d172d"
-  integrity sha512-qEh19H09Pysn3ibms5nZ0haIh5pFoOd7/5Ww7gzmAwDQOulRi8Sa2naeueOyIb1GKpf+6L4ix3iceYRAuA5r5Q==
+electron@27.0.2:
+  version "27.0.2"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-27.0.2.tgz#5465475e4e5c4de7371dc06e1872b46265a340f0"
+  integrity sha512-4fbcHQ40ZDlqhr5Pamm+M5BF7ry2lGqjFTWTJ/mrBwuiPWu6xhV/RWgUhKBaLqKNfAaNl3eMxV3Jc82gv6JauQ==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^18.11.18"
@@ -15676,7 +15664,7 @@ rxjs@6:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.5.1, rxjs@^7.5.2, rxjs@^7.5.5:
+rxjs@^7.5.1, rxjs@^7.5.5:
   version "7.8.1"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
   integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
@@ -17149,6 +17137,11 @@ tiny-invariant@^1.0.2:
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.1.tgz#8560808c916ef02ecfd55e66090df23a4b7aa642"
   integrity sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw==
 
+tiny-typed-emitter@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-typed-emitter/-/tiny-typed-emitter-2.1.0.tgz#b3b027fdd389ff81a152c8e847ee2f5be9fad7b5"
+  integrity sha512-qVtvMxeXbVej0cQWKqVSSAHmKZEHAvxdF8HEUBFWts8h+xEo5m/lEiPakuyZ3BnCBjOD8i24kzNOiOLLgsSxhA==
+
 tiny-warning@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
@@ -17463,13 +17456,6 @@ typed-assert@^1.0.8:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/typed-assert/-/typed-assert-1.0.9.tgz#8af9d4f93432c4970ec717e3006f33f135b06213"
   integrity sha512-KNNZtayBCtmnNmbo5mG47p1XsCyrx6iVqomjcZnec/1Y5GGARaxPs6r49RnSPeUP3YjNYiU9sQHAtY4BBvnZwg==
-
-typed-emitter@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/typed-emitter/-/typed-emitter-2.1.0.tgz#ca78e3d8ef1476f228f548d62e04e3d4d3fd77fb"
-  integrity sha512-g/KzbYKbH5C2vPkaXGu8DJlHrGKHLsM25Zg9WuC9pMGfuvT+X25tZQWo5fK1BjBm8+UrVE9LDCvaY0CQk+fXDA==
-  optionalDependencies:
-    rxjs "^7.5.2"
 
 typedarray-to-buffer@^3.1.5:
   version "3.1.5"

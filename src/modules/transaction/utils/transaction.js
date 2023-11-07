@@ -1,5 +1,7 @@
 /* eslint-disable complexity */
 /* eslint-disable max-lines */
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { transactions, cryptography, codec } from '@liskhq/lisk-client';
 import { to } from 'await-to-js';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
@@ -9,9 +11,11 @@ import { getTransactionSignatureStatus } from '@wallet/components/signMultisigVi
 import { getKeys } from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
 import { convertToBaseDenom } from '@token/fungible/utils/helpers';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import routes from 'src/routes/routes';
 import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
-import { joinModuleAndCommand } from './moduleCommand';
+import { joinModuleAndCommand, splitModuleAndCommand } from './moduleCommand';
 
 const { transfer, transferCrossChain, stake, reclaimLSK, registerMultisignature } =
   MODULE_COMMANDS_NAME_MAP;
@@ -99,6 +103,47 @@ const getTransactionAmount = ({ module, command, params = {} }) => {
   }
 
   return '0';
+};
+
+export const getTransactionValue = (transactionJSON, token) => {
+  const { params, moduleCommand, id } = transactionJSON;
+
+  const getTokenWithSymbol = (tokenInBaseDenom) => (
+    <TokenAmount val={tokenInBaseDenom} token={token} />
+  );
+
+  const genrateLink = (text, href) => (
+    <Link to={href} onClick={(e) => e.stopPropagation()}>
+      {text}
+    </Link>
+  );
+
+  const trasnactionValueMap = {
+    [MODULE_COMMANDS_NAME_MAP.changeCommission]: () => `${+params.newCommission / 100}%`,
+    [MODULE_COMMANDS_NAME_MAP.claimRewards]: () => null,
+    [MODULE_COMMANDS_NAME_MAP.unlock]: () => null,
+    [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: () =>
+      genrateLink(
+        `${params.numberOfSignatures} Signator${params.numberOfSignatures > 1 ? 'ies' : 'y'}`,
+        `${routes.transactionDetails.path}?transactionID=${id}&showParams=true`
+      ),
+    [MODULE_COMMANDS_NAME_MAP.registerValidator]: () => params.name,
+    [MODULE_COMMANDS_NAME_MAP.reclaimLSK]: (data) => getTokenWithSymbol(getTransactionAmount(data)),
+    [MODULE_COMMANDS_NAME_MAP.stake]: (data) => getTokenWithSymbol(getTransactionAmount(data)),
+    [MODULE_COMMANDS_NAME_MAP.transfer]: (data) => getTokenWithSymbol(getTransactionAmount(data)),
+    [MODULE_COMMANDS_NAME_MAP.transferCrossChain]: (data) =>
+      getTokenWithSymbol(getTransactionAmount(data)),
+  };
+
+  const [module, command] = splitModuleAndCommand(moduleCommand);
+
+  return (
+    trasnactionValueMap[moduleCommand]?.({
+      module,
+      command,
+      params,
+    }) || '-'
+  );
 };
 
 /* istanbul ignore next */
@@ -281,6 +326,7 @@ const signTransactionUsingHW = async (
   return { ...signedTransaction, id };
 };
 
+// eslint-disable-next-line max-statements
 export const sign = async (
   wallet,
   schema,
@@ -290,11 +336,28 @@ export const sign = async (
   senderAccount,
   options
 ) => {
+  const moduleCommand = joinModuleAndCommand(transaction);
   if (wallet.metadata?.isHW) {
     return signTransactionUsingHW(wallet, schema, chainID, transaction, senderAccount, options);
   }
 
-  if (options?.txInitiatorAccount?.numberOfSignatures > 0) {
+  const isMultiSignatureAccount = options?.txInitiatorAccount?.numberOfSignatures > 0;
+  const isRegisterMultisignature =
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const paramSignatures = transaction.params.signatures;
+  const areParamsSignaturesFullySigned =
+    isMultiSignatureAccount &&
+    paramSignatures?.filter((sig) => sig.length !== 64 || Buffer.from(sig).equals(Buffer.alloc(64)))
+      .length === 0 &&
+    paramSignatures?.length ===
+      transaction.params.mandatoryKeys?.length + transaction.params.optionalKeys?.length;
+
+  const isEditRegisterMultiSignature = isRegisterMultisignature && isMultiSignatureAccount;
+
+  if (
+    (isMultiSignatureAccount && !isRegisterMultisignature) ||
+    (isEditRegisterMultiSignature && areParamsSignaturesFullySigned)
+  ) {
     return signMultisigUsingPrivateKey(
       schema,
       chainID,

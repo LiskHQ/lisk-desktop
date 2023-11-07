@@ -17,6 +17,7 @@ const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@auth/hooks/queries');
 jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('@account/hooks', () => ({
+  ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
 
@@ -87,7 +88,20 @@ describe('Multisignature Summary component', () => {
       moduleCommand: 'auth:registerMultisignature',
       fields: { token: { ...mockAppsTokens.data[0], availableBalance: '1000000000' } },
     },
+    authQuery: {
+      isFetching: false,
+      isFetched: true,
+      data: {
+        data: {
+          numberOfSignatures: 1,
+          mandatoryKeys: [],
+          optionalKeys: [],
+        },
+      },
+    },
   };
+
+  const config = { queryClient: true };
 
   beforeEach(() => {
     hwManager.signTransactionByHW.mockResolvedValue({});
@@ -103,7 +117,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should call props.nextStep', async () => {
-    smartRender(Summary, props);
+    smartRender(Summary, props, config);
     await waitFor(() => {
       fireEvent.click(screen.getByText('Sign'));
     });
@@ -119,7 +133,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should call props.prevStep', async () => {
-    smartRender(Summary, props);
+    smartRender(Summary, props, config);
     await waitFor(() => {
       fireEvent.click(screen.getByText('Edit'));
     });
@@ -127,12 +141,21 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should render properly', () => {
-    smartRender(Summary, props);
+    smartRender(Summary, props, config);
     expect(screen.queryAllByTestId('member-info').length).toEqual(
       props.transactionJSON.params.mandatoryKeys.length +
         props.transactionJSON.params.optionalKeys.length
     );
     expect(screen.getByText('0.02 LSK')).toBeInTheDocument();
+  });
+
+  it('Should be in edit mode', () => {
+    smartRender(
+      Summary,
+      { ...props, authQuery: { data: { data: { numberOfSignatures: 3 } } } },
+      config
+    );
+    expect(screen.getByText('Edit multisignature account')).toBeTruthy();
   });
 
   it('Should not call props.nextStep when signedTransaction is empty', () => {
@@ -145,7 +168,7 @@ describe('Multisignature Summary component', () => {
         signedTransaction: {},
       },
     };
-    smartRender(Summary, newProps);
+    smartRender(Summary, newProps, config);
     expect(props.nextStep).not.toHaveBeenCalledWith();
   });
 });

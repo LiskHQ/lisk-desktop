@@ -7,11 +7,13 @@ export const accountMenu = ({
   hasNetworkError,
   isLoadingNetwork,
   hasAvailableTokenBalance,
+  address,
 }) => [
   {
     component: 'accountDetails',
     icon: 'profileOutline',
     label: 'Account details',
+    data: { address },
   },
   {
     component: 'switchAccount',
@@ -37,8 +39,8 @@ export const accountMenu = ({
         }
       : {},
     icon: 'multiSignatureOutline',
-    label: 'Register multisignature account',
-    isHidden: authData?.data?.numberOfSignatures > 0 || hasNetworkError || isLoadingNetwork,
+    isHidden: hasNetworkError || isLoadingNetwork,
+    label: `${authData?.data?.numberOfSignatures > 0 ? 'Edit' : 'Register'} multisignature account`,
   },
   {
     component: 'removeSelectedAccount',

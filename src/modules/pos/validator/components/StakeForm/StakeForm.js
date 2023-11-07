@@ -127,7 +127,11 @@ const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken)
   return { messages, error: !!messages.length };
 };
 
-const getRewards = async ({ moduleCommandSchemas, transactionJSON, currentAccount }) => {
+export const getRewards = async ({
+  moduleCommandSchemas,
+  transactionJSON,
+  currentAccountAddress,
+}) => {
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const paramsSchema = moduleCommandSchemas[moduleCommand];
   const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
@@ -145,7 +149,7 @@ const getRewards = async ({ moduleCommandSchemas, transactionJSON, currentAccoun
       if (
         name === 'rewardsAssigned' &&
         module === 'pos' &&
-        data.stakerAddress === currentAccount.metadata.address
+        data.stakerAddress === currentAccountAddress
       ) {
         return {
           ...result,
@@ -194,7 +198,7 @@ const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, 
       const { rewards, error } = await getRewards({
         transactionJSON,
         moduleCommandSchemas,
-        currentAccount,
+        currentAccountAddress: currentAccount.metadata.address,
       });
       setIsLoading(false);
       setDryRunError(error);

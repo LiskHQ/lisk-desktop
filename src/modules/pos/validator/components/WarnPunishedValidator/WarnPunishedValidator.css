@@ -12,7 +12,7 @@
   font-size: 18px;
 
   &:global(.dark) {
-    color: var(--color-zodiac-blue);
+    color: var(--color-constant-zodiac-blue);
   }
 }
 
@@ -27,14 +27,10 @@
   margin-left: 12px;
   border-radius: 5px;
   border-color: var(--color-zodiac-blue);
-  color: var(--color-zodiac-blue);
+  color: var(--color-constant-zodiac-blue);
 
   &.primary {
     background-color: var(--color-ink-blue);
-
-    &:global(.dark) {
-      color: var(--color-zodiac-blue);
-    }
   }
 }
 
