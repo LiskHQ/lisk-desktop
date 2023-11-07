@@ -215,9 +215,9 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
               </BoxInfoText>
               <label className={styles.fieldGroup}>
                 <p className={styles.availableBalance}>
-                  <span>{t('Available balance: ')}</span>
+                  <span>{t('Usable balance: ')}</span>
                   <span>
-                    <TokenAmount token={token} val={token.availableBalance} />
+                    <TokenAmount isStake token={token} val={token.availableBalance} />
                   </span>
                 </p>
                 <AmountField
