@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import DiscreetMode from 'src/modules/common/components/discreetMode';
 import FormattedNumber from 'src/modules/common/components/FormattedNumber';
@@ -24,6 +24,7 @@ const TokenAmount = ({
   val,
   showRounded,
   showInt,
+  isStake,
   token = {},
   convert = true,
   Wrapper = DiscreetMode,
@@ -31,14 +32,21 @@ const TokenAmount = ({
   if (val === undefined) return <span />;
 
   const converted = isLsk ? convertFromBaseDenom(val) : convertFromBaseDenom(val, token);
-  let value = !convert ? val : converted;
 
-  if (showInt) value = getInt(value);
-  else if (showRounded) value = trim(value);
+  const amountValue = useMemo(() => {
+    let value = !convert ? val : converted;
+
+    if (showInt) value = getInt(value);
+    else if (showRounded) value = trim(value);
+
+    if (isStake) return +value - (+value % 10);
+
+    return value;
+  }, [converted, token, isStake]);
 
   return (
     <Wrapper {...(className && { className })}>
-      <FormattedNumber val={value} />
+      <FormattedNumber val={amountValue} />
       {isLsk ? ' LSK' : ` ${token?.symbol || ''}`}
     </Wrapper>
   );
