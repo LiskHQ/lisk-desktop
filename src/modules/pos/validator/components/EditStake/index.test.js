@@ -113,7 +113,7 @@ describe('EditStake', () => {
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
     expect(screen.getByText('Commission :')).toBeTruthy();
     expect(screen.getByText('Shared rewards :')).toBeTruthy();
-    expect(screen.getByText('Available balance:')).toBeTruthy();
+    expect(screen.getByText('Usable balance:')).toBeTruthy();
     expect(
       screen.getByText(`${convertCommissionToPercentage(validator.commission)}%`)
     ).toBeTruthy();
