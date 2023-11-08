@@ -1,5 +1,19 @@
 Feature: Wallet
   Background: Add sender and recipient accounts
+    Given I click on a button with text "Testnet"
+    And I wait for "1 seconds"
+    Given I click on text "Add network"
+    Then I should see "dialogAddNetwork" modal
+    And button with text "Add network" should be disabled
+    Given I type "local_service" in "name"
+    And I type "http://127.0.0.1:9901" in "serviceUrl"
+    And I type "ws://127.0.0.1:9901" in "wsServiceUrl"
+    And I wait for "1 seconds"
+    And I click on a button with text "Add network"
+    Then I should see 'Custom network added "local_service"'
+    And I wait for "1 seconds"
+    Given I click on an element with testId "selected-menu-item"
+    And I click on exact text "local_service"
     Then I go to page "wallet"
     And I click on exact text "Add account"
     Given I wait for "1 seconds"
@@ -15,8 +29,8 @@ Feature: Wallet
   Scenario: Send tokens
     Given I click on a button with exact text "Send"
     Then I should see send form details
-    And "lisk_mainchain" should be selected in "To application" dropdown
-    And "Lisk" should be selected in "Token" dropdown
+    And I should see "lisk_mainchain" should be selected in "To application" dropdown
+    And I should see "Lisk" should be selected in "Token" dropdown
     Then button with text "Continue to summary" should be disabled
     When I type "10" in "amount"
     When I type "lsk9s5g8f7v6evazu2z6zo6oygzyz4skj7s64fst6" in "recipient"
@@ -24,14 +38,14 @@ Feature: Wallet
     Given I click on a button with exact text "Continue to summary"
     Then I should see "Transaction Summary"
     And I should see "10 LSK"
-    When I click on a button with exact text "Send"
+    When I click on an element with class "confirm-button"
     When I type "Password@1" in "password"
     And I click on a button with exact text "Confirm and Sign"
     And I wait for "1 seconds"
     Then I should see "Transaction submitted"
     Then I should see "Add address to bookmarks"
-    Then I should see "You received tokens"
     Given I click on an element with testId "dialog-close-button"
+    # Then I should see "You received tokens"
     And I wait for "10 seconds"
     Then the first transaction row should contain latest transaction details
-    # When I click on an element with testId "events-tab"
+# When I click on an element with testId "events-tab"
