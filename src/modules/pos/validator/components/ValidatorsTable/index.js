@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useSort } from 'src/modules/common/hooks';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
-import { useValidators } from '../../hooks/queries';
-import { useGenerators } from '../../hooks/queries/useGenerators';
+import styles from '@block/components/blocks/blocks.css';
+import { useGeneratorsWithUpdate, useValidators } from '../../hooks/queries';
 import ValidatorRow from './ValidatorRow';
 import header from './TableHeader';
 import { ROUND_LENGTH } from '../../consts';
@@ -15,12 +15,9 @@ import { ROUND_LENGTH } from '../../consts';
 const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
   const { t } = useTranslation();
   const watchList = useSelector((state) => state.watchList);
-  const queryHook = activeTab === 'active' ? useGenerators : useValidators;
-  const { data: { data: latestBlocks = [] } = {} } = useBlocks({
+  const queryHook = activeTab === 'active' ? useGeneratorsWithUpdate : useValidators;
+  const { refetch, data: { data: latestBlocks = [] } = {} } = useBlocks({
     config: { params: { limit: 100 } },
-    options: {
-      refetchInterval: 10000,
-    },
   });
   const { sort, toggleSort } = useSort();
   const forgedBlocksInRound = latestBlocks[0]?.height % ROUND_LENGTH;
@@ -37,9 +34,6 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
           ...(activeTab === 'sanctioned' && { status: 'punished,banned' }),
           ...(activeTab === 'watched' && { address: watchList?.toString() }),
         },
-      },
-      options: {
-        refetchInterval: activeTab === 'active' ? 10000 : false,
       },
     }),
     [activeTab, sort, filters]
@@ -95,6 +89,11 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
   return (
     <QueryTable
       showHeader
+      button={{
+        label: t('Refresh'),
+        onClick: refetch,
+        className: styles.loadLatestBtn,
+      }}
       queryHook={queryHook}
       queryConfig={queryConfig}
       transformResponse={transformResponse}

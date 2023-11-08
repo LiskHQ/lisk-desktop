@@ -66,11 +66,6 @@ const Blocks = () => {
     setParams(transformParams(sortData));
   };
 
-  /* istanbul ignore next */
-  const loadLastBlocks = () => {
-    applyBlockFilters(filters);
-  };
-
   return (
     <div>
       <BlocksOverview t={t} />
