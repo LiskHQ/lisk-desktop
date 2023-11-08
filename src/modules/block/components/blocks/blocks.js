@@ -85,7 +85,6 @@ const Blocks = () => {
             showHeader
             button={{
               label: t('New blocks'),
-              onClick: loadLastBlocks,
               className: styles.loadLatestBtn,
             }}
             queryHook={useBlocks}
