@@ -6,7 +6,7 @@ import { QueryTable } from 'src/theme/QueryTable';
 import { useSort } from 'src/modules/common/hooks';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import styles from '@block/components/blocks/blocks.css';
-import { useGeneratorsWithUpdate, useValidators } from '../../hooks/queries';
+import { useGeneratorsWithUpdate, useValidators } from '@pos/validator/hooks/queries';
 import ValidatorRow from './ValidatorRow';
 import header from './TableHeader';
 import { ROUND_LENGTH } from '../../consts';
@@ -15,7 +15,11 @@ import { ROUND_LENGTH } from '../../consts';
 const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
   const { t } = useTranslation();
   const watchList = useSelector((state) => state.watchList);
-  const queryHook = activeTab === 'active' ? useGeneratorsWithUpdate : useValidators;
+  const queryHook = (queryConfigArg) => {
+    const validators = useValidators(queryConfigArg);
+    const generatorsWithUpdate = useGeneratorsWithUpdate(queryConfigArg);
+    return activeTab === 'active' ? generatorsWithUpdate : validators;
+  };
   const { refetch, data: { data: latestBlocks = [] } = {} } = useBlocks({
     config: { params: { limit: 100 } },
   });
