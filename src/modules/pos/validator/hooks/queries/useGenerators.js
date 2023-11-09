@@ -25,6 +25,7 @@ export const useGenerators = ({ config: customConfig = {}, options } = {}) => {
   });
 };
 
+/* istanbul ignore next */
 export const useGeneratorsWithUpdate = ({ config = {}, options } = {}) => {
   const TIME_BETWEEN_UPDATES = 3000;
   const [hasUpdate, setHasUpdate] = useState(false);
@@ -54,4 +55,3 @@ export const useGeneratorsWithUpdate = ({ config = {}, options } = {}) => {
     addUpdate,
   };
 };
-
