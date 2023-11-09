@@ -28,6 +28,18 @@ Then(
 );
 
 Then('the first transaction row should contain latest transaction details', async () => {
-  await expect(fixture.page.locator('.transactions-row').nth(0).toContainText('Token transfer'));
-  await expect(fixture.page.locator('.transactions-row').nth(0).toContainText('Today at'));
+  await expect(fixture.page.locator('.transactions-row').nth(0)).toContainText(/Token transfer/i);
+  await expect(fixture.page.locator('.transactions-row').nth(0)).toContainText(/Today at/i);
+});
+
+Then('I should see event table details', async () => {
+  await expect(
+    fixture.page.locator('.transaction-events-header').filter({ hasText: 'Block height' })
+  ).toBeVisible();
+  await expect(
+    fixture.page.locator('.transaction-events-header').filter({ hasText: 'Transaction ID' })
+  ).toBeVisible();
+  await expect
+    .poll(() => fixture.page.locator('.transaction-events-box').count())
+    .toBeGreaterThan(0);
 });

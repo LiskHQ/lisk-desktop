@@ -37,7 +37,7 @@ Feature: Wallet
     Then button with text "Continue to summary" should be enabled
     Given I click on a button with exact text "Continue to summary"
     Then I should see "Transaction Summary"
-    And I should see "10 LSK"
+    And I should see "10 LSK" in element with class "summary"
     When I click on an element with class "confirm-button"
     When I type "Password@1" in "password"
     And I click on a button with exact text "Confirm and Sign"
@@ -45,7 +45,7 @@ Feature: Wallet
     Then I should see "Transaction submitted"
     Then I should see "Add address to bookmarks"
     Given I click on an element with testId "dialog-close-button"
-    # Then I should see "You received tokens"
     And I wait for "10 seconds"
     Then the first transaction row should contain latest transaction details
-# When I click on an element with testId "events-tab"
+    When I click on an element with testId "events-tab"
+    Then I should see event table details

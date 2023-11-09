@@ -97,6 +97,21 @@ Then('I should see {string}', async function (textContent) {
   await expect(fixture.page.getByText(textContent, { exact: true })).toBeVisible();
 });
 
+Then('I should see {string} in element with testId {string}', async function (textContent, testId) {
+  await expect(
+    fixture.page.getByTestId(testId).getByText(textContent, { exact: true })
+  ).toBeVisible();
+});
+
+Then(
+  'I should see {string} in element with class {string}',
+  async function (textContent, className) {
+    await expect(
+      fixture.page.locator(`.${className}`).getByText(textContent, { exact: true })
+    ).toBeVisible();
+  }
+);
+
 Then('I should possibly see {string}', async function (textContent) {
   await expect(fixture.page.getByText(textContent)).toBeVisible();
 });
