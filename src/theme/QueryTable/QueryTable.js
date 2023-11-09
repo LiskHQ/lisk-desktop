@@ -30,13 +30,12 @@ export const QueryTable = ({
   const handleClick = () => {
     // When the header is fixed at the top, the position is 50px
     // Therefore the page should only scroll into the view if the header is not at the top
-    if (
-      document.querySelector(`.${styles.header}`).getBoundingClientRect().top - window.scrollY <=
-      50
-    ) {
+    const headerTop = document.querySelector(`.${styles.header}`)?.getBoundingClientRect()?.top;
+    if (headerTop && headerTop - window.scrollY <= 50) {
       document.querySelector(scrollToSelector).scrollIntoView(true);
     }
     addUpdate();
+    button?.onClick?.();
   };
 
   const subHeader =

@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import { GENERATOR } from 'src/const/queries';
-import { LIMIT as limit, API_VERSION } from 'src/const/config';
+import { API_VERSION, LIMIT as limit } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
@@ -22,4 +23,35 @@ export const useGenerators = ({ config: customConfig = {}, options } = {}) => {
     config,
     options,
   });
+};
+
+/* istanbul ignore next */
+export const useGeneratorsWithUpdate = ({ config = {}, options } = {}) => {
+  const TIME_BETWEEN_UPDATES = 3000;
+  const [hasUpdate, setHasUpdate] = useState(false);
+
+  const response = useGenerators({
+    config,
+    options,
+  });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setHasUpdate(true);
+    }, TIME_BETWEEN_UPDATES);
+  }, []);
+
+  function addUpdate() {
+    setHasUpdate(false);
+    response.refetch();
+    setTimeout(() => {
+      setHasUpdate(true);
+    }, TIME_BETWEEN_UPDATES);
+  }
+
+  return {
+    ...response,
+    hasUpdate,
+    addUpdate,
+  };
 };

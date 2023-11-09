@@ -66,11 +66,6 @@ const Blocks = () => {
     setParams(transformParams(sortData));
   };
 
-  /* istanbul ignore next */
-  const loadLastBlocks = () => {
-    applyBlockFilters(filters);
-  };
-
   return (
     <div>
       <BlocksOverview t={t} />
@@ -90,7 +85,6 @@ const Blocks = () => {
             showHeader
             button={{
               label: t('New blocks'),
-              onClick: loadLastBlocks,
               className: styles.loadLatestBtn,
             }}
             queryHook={useBlocks}
