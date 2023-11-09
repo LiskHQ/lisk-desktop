@@ -87,15 +87,15 @@ export const getValidatorDetailsClass = (activeTab) => {
 // eslint-disable-next-line complexity
 export default (activeTab, changeSort, t) => [
   {
-    title: t('Validator'),
+    title: activeTab === 'active' ? t('Generator') : t('Validator'),
     classList: getValidatorDetailsClass(activeTab),
   },
   {
-    title: t('Validator weight'),
+    title: activeTab === 'active' ? t('Generator weight') : t('Validator weight'),
     classList: getValidatorWeightClass(activeTab),
     tooltip: {
-      title: t('Validator weight'),
-      message: t('The total amount of stakes received for a validator.'),
+      title: activeTab === 'active' ? t('Generator weight') : t('Validator weight'),
+      message: t('The total amount of stakes received by a validator.'),
       position: 'top',
     },
   },
