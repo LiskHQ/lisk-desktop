@@ -16,8 +16,8 @@ const TokenRow = ({ data: token }) => {
   const chainLogo = getLogo({ logo });
 
   return (
-    <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
-      <div className={`transaction-event-row ${styles.container}`}>
+    <div data-testid="token-row-wrapper" className={styles.rowWrapper}>
+      <div className={`token-row ${styles.container}`}>
         <Token chainName={chainName} chainLogo={chainLogo} tokenSymbol={tokenSymbol} />
         <Balance
           amount={numeral(

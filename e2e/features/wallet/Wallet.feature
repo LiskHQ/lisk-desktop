@@ -49,3 +49,23 @@ Feature: Wallet
     Then the first transaction row should contain latest transaction details
     When I click on an element with testId "events-tab"
     Then I should see event table details
+    Given I click on an element with class "account-management-dropdown"
+    And I click on text "Switch account"
+    Given I select account "recipient_0" in switch account modal
+    And I click on exact text "View all tokens"
+    And I wait for "1 seconds"
+    Then I should see token table details
+    And token balance should be greater than 0
+
+  Scenario: Filter transactions and events
+    Given I click on an element with testId "events-tab"
+    When I click on the first row of transaction events
+    And I copy the first detail on the page
+    Given I go back to the previous page
+    And I wait for "1 seconds"
+    And I click on an element with testId "events-tab"
+    Given I click on a button with text "Filter"
+    Then I should see event filter details
+    When I fill in copied detail for "Block ID"
+    And I click on a button with exact text "Apply filters"
+    Then I should see event table details

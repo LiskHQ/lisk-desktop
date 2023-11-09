@@ -50,6 +50,13 @@ Given(
   }
 );
 
+Given('I select account {string} in switch account modal', async function (accountName) {
+  await fixture.page
+    .locator('.account-list-wrapper')
+    .getByText(accountName, { exact: true })
+    .click();
+});
+
 Given('I click on a button with text {string}', async function (buttonText) {
   await fixture.page.getByRole('button', { name: buttonText }).click();
 });

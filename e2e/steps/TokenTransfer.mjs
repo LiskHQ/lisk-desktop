@@ -40,6 +40,27 @@ Then('I should see event table details', async () => {
     fixture.page.locator('.transaction-events-header').filter({ hasText: 'Transaction ID' })
   ).toBeVisible();
   await expect
-    .poll(() => fixture.page.locator('.transaction-events-box').count())
+    .poll(() => fixture.page.locator('.transaction-event-row').count())
     .toBeGreaterThan(0);
+});
+
+Then('I should see token table details', async () => {
+  await expect(
+    fixture.page.locator('.token-table-header').filter({ hasText: 'Token balance' })
+  ).toBeVisible();
+  await expect(
+    fixture.page.locator('.token-table-header').filter({ hasText: 'Available balance' })
+  ).toBeVisible();
+  await expect(
+    fixture.page.locator('.token-table-header').filter({ hasText: 'Locked balance' })
+  ).toBeVisible();
+  await expect(
+    fixture.page.locator('.token-table-header').filter({ hasText: 'Fiat balance' })
+  ).toBeVisible();
+  await expect.poll(() => fixture.page.locator('.token-row').count()).toBeGreaterThan(0);
+});
+
+Then('token balance should be greater than {int}', async (minBalance) => {
+  const currentBalance = await fixture.page.locator('.token-row > div:nth-child(2)').innerText();
+  expect(parseFloat(currentBalance)).toBeGreaterThan(minBalance);
 });
