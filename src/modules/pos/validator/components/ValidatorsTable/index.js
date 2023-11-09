@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useSort } from 'src/modules/common/hooks';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
-import styles from '@block/components/blocks/blocks.css';
 import { useGeneratorsWithUpdate, useValidators } from '@pos/validator/hooks/queries';
 import ValidatorRow from './ValidatorRow';
 import header from './TableHeader';
 import { ROUND_LENGTH } from '../../consts';
+import styles from './ValidatorsTable.css';
 
 // eslint-disable-next-line max-statements
 const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {

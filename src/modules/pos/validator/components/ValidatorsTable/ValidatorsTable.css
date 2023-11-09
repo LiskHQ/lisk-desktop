@@ -1,0 +1,21 @@
+.loadLatestBtn {
+  display: flex;
+  position: absolute;
+  top: 30px;
+  z-index: 4;
+  left: 50%;
+  height: 44px !important;
+}
+
+@media (--large-viewport) {
+  .loadLatestBtn {
+    top: 42px;
+    height: 32px !important;
+    padding: 0 20px !important;
+    box-shadow: var(--box-shadow-standard), 0 0 0 8px var(--color-body-bg);
+
+    &:hover {
+      box-shadow: var(--box-shadow-standard), 0 0 0 8px var(--color-body-bg);
+    }
+  }
+}
