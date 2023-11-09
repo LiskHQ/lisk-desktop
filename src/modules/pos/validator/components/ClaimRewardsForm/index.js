@@ -66,7 +66,6 @@ const ClaimRewardsForm = ({ nextStep }) => {
           <div className={styles.tableContainer}>
             <Table
               showHeader
-              emptyPlaceholder="-"
               isLoading={!validatorRewardsWithToken}
               header={rewardsClaimableHeader}
               additionalRowProps={{ rewardsClaimableHeader }}
