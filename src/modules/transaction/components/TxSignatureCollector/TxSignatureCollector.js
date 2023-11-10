@@ -108,12 +108,14 @@ const TxSignatureCollector = ({
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) => {
-    const paramsSchema = moduleCommandSchemas[moduleCommand];
-    const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
-    const buffer = encodeTransaction(transaction, paramsSchema);
-    const transactionHex = cryptography.utils.hash(buffer).toString('hex');
-    if (isTransactionAuthor) {
-      incrementNonce(transactionHex);
+    if (transactionJSON.nonce) {
+      const paramsSchema = moduleCommandSchemas[moduleCommand];
+      const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
+      const buffer = encodeTransaction(transaction, paramsSchema);
+      const transactionHex = cryptography.utils.hash(buffer).toString('hex');
+      if (isTransactionAuthor) {
+        incrementNonce(transactionHex);
+      }
     }
     txVerification(privateKey, currentAccount?.metadata.pubkey);
   };
