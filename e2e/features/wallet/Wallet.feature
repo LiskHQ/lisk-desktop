@@ -1,6 +1,6 @@
 Feature: Wallet
   Background: Add sender and recipient accounts
-    Given I click on a button with text "Testnet"
+    Given I click on a button with text "CustomNode"
     And I wait for "1 seconds"
     Given I click on text "Add network"
     Then I should see "dialogAddNetwork" modal

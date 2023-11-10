@@ -33,7 +33,7 @@ Feature: Request Token
     Given I type "10" in "amount"
     Then button with text "Copy link" should be enabled
     And Element 'qrContainer' should not contain class 'disabled'
-    Given I click on a button with exact text "Add message (Optional)"
+    Given I click on a button with text "Add message (Optional)"
     And I type "hello" in "reference-field"
     And I click on a button with exact text "Copy link"
     Then Clipboard should contain "lisk://wallet?modal=send&recipient=lskm9syv4wrjcjczpegz65zqxhk2cp9dkejs5wbjb&amount=10&reference=hello&token=0400000000000000&recipientChain=04000000"
