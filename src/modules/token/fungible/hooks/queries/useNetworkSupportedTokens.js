@@ -4,8 +4,7 @@ import { Client } from 'src/utils/api/client';
 
 // eslint-disable-next-line max-statements
 export const useNetworkSupportedTokens = (application) => {
-  const client = useRef(new Client());
-  client.current.create(application?.serviceURLs?.[0]);
+  const client = useRef(new Client({ http: application?.serviceURLs?.[0] }));
 
   const tokensSupported = useTokenSummary({ client: client.current });
   const isSupportAllTokens = tokensSupported.data?.data?.supportedTokens?.isSupportAllTokens;
