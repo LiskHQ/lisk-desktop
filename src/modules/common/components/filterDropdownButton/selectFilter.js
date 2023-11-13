@@ -19,10 +19,12 @@ const SelectFilter = ({
 
   if (isLoading) return null;
 
-  const options = Object.keys(moduleCommandSchemas).map((key) => ({
-    value: key,
-    label: getModuleCommandTitle()[key],
-  }));
+  const options = Object.keys(moduleCommandSchemas)
+    .map((key) => ({
+      value: key,
+      label: getModuleCommandTitle()[key],
+    }))
+    .filter((option) => option.label);
 
   options.unshift({ value: '', label: placeholder });
 
