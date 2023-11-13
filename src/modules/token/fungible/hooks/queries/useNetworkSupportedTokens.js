@@ -1,10 +1,14 @@
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppsMetaTokens, useTokenSummary } from '@token/fungible/hooks/queries';
 import { Client } from 'src/utils/api/client';
 
 // eslint-disable-next-line max-statements
 export const useNetworkSupportedTokens = (application) => {
-  const client = useRef(new Client({ http: application?.serviceURLs?.[0] }));
+  const [client, setClient] = useState(new Client());
+
+  useEffect(() => {
+    setClient(client.create(application?.serviceURLs?.[0]));
+  }, [application?.serviceURLs?.[0]]);
 
   const tokensSupported = useTokenSummary({ client: client.current });
   const isSupportAllTokens = tokensSupported.data?.data?.supportedTokens?.isSupportAllTokens;

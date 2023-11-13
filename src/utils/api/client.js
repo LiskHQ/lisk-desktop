@@ -63,6 +63,8 @@ export class Client {
       request.interceptors.response.use((res) => res.data);
       this.http = request;
     }
+
+    return this;
   }
 }
 
