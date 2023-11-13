@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { TertiaryButton } from 'src/theme/buttons';
+import Feedback from 'src/theme/feedback/feedback';
 import { Input } from 'src/theme';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import TxComposer from '@transaction/components/TxComposer';
@@ -77,6 +78,7 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
     getInitialSignaturesState(prevState)
   );
   const [members, setMembers] = useState(() => getInitialMembersState(prevState));
+  const [requiredSignatureError, setRequiredSignatureError] = useState('');
 
   const [currentAccount] = useCurrentAccount();
   const [currentApplication] = useCurrentApplication();
@@ -124,6 +126,12 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
   const changeNumberOfSignatures = (e) => {
     const value = e.target.value ? Number(e.target.value) : undefined;
 
+    if (value > MAX_MULTI_SIG_MEMBERS) {
+      setRequiredSignatureError(`Cannot have more than ${MAX_MULTI_SIG_MEMBERS} required signature`);
+      return;
+    }
+
+    setRequiredSignatureError('');
     setNumberOfSignatures(value);
   };
 
@@ -226,6 +234,9 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
                 autoComplete="off"
                 name="required-signatures"
               />
+              {!!requiredSignatureError && (
+                <Feedback message={requiredSignatureError} status="error" />
+              )}
             </div>
             <div className={`${styles.membersControls} multisignature-members-controls`}>
               <span>{t('Members')}</span>

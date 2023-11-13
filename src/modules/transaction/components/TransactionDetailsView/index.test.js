@@ -81,6 +81,7 @@ describe('TransactionDetailsView', () => {
   it('should display Transaction Events properly', async () => {
     expect(screen.getByText('Type')).toBeTruthy();
     expect(screen.getByText('Sender')).toBeTruthy();
+    expect(screen.getByText('Recipient')).toBeTruthy();
     expect(screen.getByText('Fee')).toBeTruthy();
     expect(screen.getByText('Date')).toBeTruthy();
     expect(screen.getByText('Nonce')).toBeTruthy();

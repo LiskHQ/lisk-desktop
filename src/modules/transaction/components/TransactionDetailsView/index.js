@@ -58,6 +58,7 @@ const TransactionDetails = () => {
       fee,
       block = {},
       executionStatus,
+      meta,
     } = transactionData;
     const [txModule, txType] = splitModuleAndCommand(moduleCommand);
 
@@ -70,6 +71,11 @@ const TransactionDetails = () => {
       {
         label: t('Sender'),
         value: sender,
+        type: 'address',
+      },
+      meta?.recipient && {
+        label: t('Recipient'),
+        value: meta.recipient,
         type: 'address',
       },
       {
@@ -113,7 +119,7 @@ const TransactionDetails = () => {
         label: t('Parameters'),
         type: 'expand',
       },
-    ];
+    ].filter((value) => value);
   }, [transactionData]);
 
   if (error || (isEmpty(transactionMetaData) && !isFetching)) {
