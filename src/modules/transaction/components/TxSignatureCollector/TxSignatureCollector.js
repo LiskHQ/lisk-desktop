@@ -10,6 +10,7 @@ import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 import useNonceSync from '@auth/hooks/useNonceSync';
 import HWSigning from '@hardwareWallet/components/HWSigning/HWSigning';
+import { TRANSACTION_SIGNING_TYPES } from 'src/modules/wallet/configuration/constants';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand, fromTransactionJSON, encodeTransaction } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
@@ -30,7 +31,7 @@ const TxSignatureCollector = ({
   fees,
   selectedPriority,
   confirmText,
-  type = 'transaction',
+  type = TRANSACTION_SIGNING_TYPES.TRANSACTION,
 }) => {
   const [currentAccount] = useCurrentAccount();
   const { moduleCommandSchemas, messagesSchemas } = useCommandSchema();
@@ -108,12 +109,14 @@ const TxSignatureCollector = ({
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) => {
-    const paramsSchema = moduleCommandSchemas[moduleCommand];
-    const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
-    const buffer = encodeTransaction(transaction, paramsSchema);
-    const transactionHex = cryptography.utils.hash(buffer).toString('hex');
-    if (isTransactionAuthor) {
-      incrementNonce(transactionHex);
+    if (type !== TRANSACTION_SIGNING_TYPES.MESSAGE) {
+      const paramsSchema = moduleCommandSchemas[moduleCommand];
+      const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
+      const buffer = encodeTransaction(transaction, paramsSchema);
+      const transactionHex = cryptography.utils.hash(buffer).toString('hex');
+      if (isTransactionAuthor) {
+        incrementNonce(transactionHex);
+      }
     }
     txVerification(privateKey, currentAccount?.metadata.pubkey);
   };

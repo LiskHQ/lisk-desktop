@@ -64,7 +64,7 @@
     }
 
     & > *:last-child {
-      justify-content: center;
+      margin-left: auto;
     }
 
     @media (--medium-viewport) {
@@ -107,8 +107,8 @@
     }
 
     & > *:nth-child(5) {
-      flex-basis: 8.33333333%;
-      max-width: 8.33333333%;
+      flex-basis: 16.66666667%;
+      max-width: 16.66666667%;
     }
 
     & > *:first-child {

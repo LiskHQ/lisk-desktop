@@ -36,7 +36,7 @@ const transaction = (index) => ({
   executionStatus: 'pending',
   meta: {
     recipient: {
-      address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
+      address: 'lsktk7bj2yadx5vq3f87gh5cwca7ptpk5djpxhhc3',
       publicKey: '2ca9a7...c23079',
       name: 'genesis_49',
     },
