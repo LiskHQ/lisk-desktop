@@ -86,7 +86,7 @@ const TransactionDetails = () => {
       },
       {
         label: t('Value'),
-        value: getTransactionValue(transactionData, token),
+        value: getTransactionValue(transactionData, feeToken),
       },
       {
         label: t('Date'),
