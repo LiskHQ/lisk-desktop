@@ -50,7 +50,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     lastCertificateHeight,
     lastUpdated,
     logo,
-    depositedLsk = 0,
+    escrowedLSK = '0',
   } = aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
 
@@ -145,7 +145,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
           ) : (
             <ValueAndLabel label={t('Deposited:')} direction="horizontal">
               <span className={styles.value}>
-                <TokenAmount val={depositedLsk} isLsk />
+                <TokenAmount val={escrowedLSK} isLsk />
               </span>
             </ValueAndLabel>
           )}

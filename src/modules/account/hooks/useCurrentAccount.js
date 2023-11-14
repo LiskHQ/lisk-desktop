@@ -24,32 +24,42 @@ export function useCurrentAccount() {
     // clear stakes list during login or accounts switch
     const relativeUrlPath = referrer || routes.wallet.path;
 
-    if (pendingStakes.length) {
-      const onCancel = /* istanbul ignore next */ () =>
-        removeSearchParamsFromUrl(history, ['modal']);
-      const onConfirm = /* istanbul ignore next */ () => {
-        dispatch(setCurrentAccount(encryptedAccount));
-
-        dispatch(stakesReset());
-        history.push(relativeUrlPath);
-      };
-      const state = createConfirmSwitchState({
-        mode: 'pendingStakes',
-        type: 'account',
-        onCancel,
-        onConfirm,
+    function pushUrlState() {
+      const { pathname, search } = new URL(relativeUrlPath, window.location.origin);
+      history.push({
+        pathname,
+        search,
+        state: urlState,
       });
-      removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
+    }
+
+    if (pendingStakes.length) {
+      if (urlState) {
+        dispatch(setCurrentAccount(encryptedAccount));
+        dispatch(stakesReset());
+        pushUrlState();
+      }else {
+        const onCancel = /* istanbul ignore next */ () =>
+          removeSearchParamsFromUrl(history, ['modal']);
+        const onConfirm = /* istanbul ignore next */ () => {
+          dispatch(setCurrentAccount(encryptedAccount));
+
+          dispatch(stakesReset());
+          history.push(relativeUrlPath);
+        };
+        const state = createConfirmSwitchState({
+          mode: 'pendingStakes',
+          type: 'account',
+          onCancel,
+          onConfirm,
+        });
+        removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
+      }
     } else {
       dispatch(setCurrentAccount(encryptedAccount));
       if (redirect) {
         if (urlState) {
-          const { pathname, search } = new URL(relativeUrlPath, window.location.origin);
-          history.push({
-            pathname,
-            search,
-            state: urlState,
-          });
+          pushUrlState();
         } else {
           history.push(relativeUrlPath);
         }

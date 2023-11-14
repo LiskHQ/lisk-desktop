@@ -26,7 +26,7 @@ const AddApplicationRow = ({ data, className }) => (
       data={{ chainId: data.chainID, mode: 'addApplication' }}
     >
       <ChainName title={data.chainName} logo={getLogo(data)} />
-      <DepositAmount amount={data.depositedLsk} />
+      <DepositAmount amount={data.escrowedLSK} />
     </DialogLink>
   </div>
 );
