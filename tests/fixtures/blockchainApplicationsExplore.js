@@ -11,7 +11,7 @@ const blockchainApplicationsExplore = [
     },
     lastCertificateHeight: 1000,
     lastUpdated: 1666566000000,
-    depositedLsk: 50000000,
+    escrowedLSK: 50000000,
   },
   {
     chainName: 'Colecti',
@@ -28,7 +28,7 @@ const blockchainApplicationsExplore = [
     },
     lastCertificateHeight: 900,
     lastUpdated: 1666566000000,
-    depositedLsk: 500000000,
+    escrowedLSK: 500000000,
   },
 ];
 
