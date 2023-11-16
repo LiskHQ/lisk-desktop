@@ -7,6 +7,8 @@ import Box from 'src/theme/box';
 import Icon from 'src/theme/Icon';
 import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import Illustration from '@common/components/illustration';
+import { joinModuleAndCommand, toTransactionJSON } from '@transaction/utils';
+import moduleCommandSchemas from '@tests/constants/schemas';
 import styles from './styles.css';
 
 const errorData = (t) => ({
@@ -41,8 +43,10 @@ const RequestSignStatus = (props) => {
 
   const onCopy = () => {
     setCopied(true);
-    const signatures = transactions.signedTransaction?.signatures.map((sig) => sig.toString('hex'));
-    const payload = JSON.stringify(signatures?.[0]);
+    const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
+    const paramSchema = moduleCommandSchemas[moduleCommand];
+    const transactionJSON = toTransactionJSON(transactions.signedTransaction, paramSchema);
+    const payload = JSON.stringify(transactionJSON);
     copyToClipboard(payload);
     // inform to the application
     respond({ payload });
