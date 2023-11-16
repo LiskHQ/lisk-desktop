@@ -711,7 +711,6 @@
   "Token": "Token",
   "Token balance": "Token balance",
   "Token balance is not enough to register a multisignature account.": "Token balance is not enough to register a multisignature account.",
-  "Token balance is not enough to register a validator.": "Token balance is not enough to register a validator.",
   "Token balance is not enough to stake a validator.": "Token balance is not enough to stake a validator.",
   "Token transfer": "Token transfer",
   "Tokens": "Tokens",

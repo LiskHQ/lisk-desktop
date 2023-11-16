@@ -22,6 +22,7 @@ import { ROUND_LENGTH } from '@pos/validator/consts';
 import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import SwippableInfoBanner from '@common/components/infoBanner/swippableInfoBanner';
+import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
 import ValidatorsOverview from '../Overview/ValidatorsOverview';
 import GeneratingDetails from '../Overview/GeneratingDetails';
 import ValidatorsTable from '../ValidatorsTable';
@@ -32,6 +33,27 @@ import styles from './Validators.css';
 const ValidatorActionButton = ({ address, isValidator }) => {
   const { t } = useTranslation();
   const tokenBalances = useTokenBalances({ options: { enabled: !isValidator || !address } });
+  const hasTokenBalances = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => !!BigInt(availableBalance)
+  );
+
+  const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
+
+  const getInSuffienctBalanceMessage = () => {
+    if (!hasTokenBalances) {
+      return {
+        message: t('Token balance is not enough to stake a validator.'),
+      };
+    }
+
+    if (!hasSufficientBalanceForFee) {
+      return {
+        message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
+      };
+    }
+
+    return {};
+  };
 
   if (!address) return null;
 
@@ -43,14 +65,12 @@ const ValidatorActionButton = ({ address, isValidator }) => {
     );
   }
 
-  const hasTokenBalances = tokenBalances.data?.data?.some(
-    ({ availableBalance }) => !!BigInt(availableBalance)
-  );
-
   return (
     <DialogLink
-      data={{ message: t('Token balance is not enough to register a validator.') }}
-      component={hasTokenBalances ? 'registerValidator' : 'noTokenBalance'}
+      data={{ ...getInSuffienctBalanceMessage() }}
+      component={
+        hasTokenBalances && hasSufficientBalanceForFee ? 'registerValidator' : 'noTokenBalance'
+      }
     >
       <PrimaryButton
         className="register-validator"
