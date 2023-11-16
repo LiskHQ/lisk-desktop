@@ -24,9 +24,8 @@ jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
 
-jest.mock('@token/fungible/hooks/queries');
-jest.mock('@pos/reward/hooks/queries');
-jest.mock('src/modules/common/hooks');
+jest.mock('@token/fungible/hooks/queries/useTokenBalances');
+jest.mock('@pos/reward/hooks/queries/useRewardsClaimable');
 jest.mock('../../hooks/queries');
 jest.mock('@pos/validator/hooks/usePosToken');
 const mockRefetchSentStakes = jest.fn();
@@ -39,6 +38,7 @@ describe('SentStakes', () => {
 
   useRewardsClaimable.mockReturnValue({ data: mockRewardsClaimable });
   usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
+  useTokenBalances.mockReturnValue({ data: mockAppsTokens });
 
   useValidators.mockImplementation(({ config }) => ({
     data: getMockValidators(config.params?.address),
