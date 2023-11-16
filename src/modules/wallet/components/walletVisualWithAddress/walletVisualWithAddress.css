@@ -5,11 +5,13 @@
 
   & > div:first-child > div:first-child {
     display: flex;
+    align-items: center;
   }
 
   & .detailsWrapper {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     margin-left: 10px;
     color: var(--color-content-light);
   }

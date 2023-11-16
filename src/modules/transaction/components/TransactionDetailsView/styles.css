@@ -5,6 +5,7 @@
   display: block;
   padding: 0 var(--horizontal-padding-l);
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 .wrapper {
@@ -69,6 +70,10 @@
   padding: 12px 8px;
   box-sizing: border-box;
   font-size: var(--paragraph-font-size-s);
+
+  & > div:first-child {
+    overflow-x: auto;
+  }
 
   &.shrink {
     display: none;

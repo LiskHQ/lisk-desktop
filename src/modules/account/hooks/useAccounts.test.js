@@ -1,13 +1,26 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import actionTypes from '@account/store/actionTypes';
+import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { useAccounts } from './useAccounts';
+
+const txHex = 'a24f94966cf213deb90854c41cf1f27906135b7001a49e53a9722ebf5fc67481';
+const accountNonce = 2;
+const { chainID, chainName } = mockApplications[0];
+const networkChainIDKey = `${chainName}:${chainID}`;
 
 const mockDispatch = jest.fn();
 const accountStateObject = { [mockSavedAccounts[0].metadata.address]: mockSavedAccounts[0] };
 const mockState = {
   account: {
     list: accountStateObject,
+    localNonce: {
+      [mockSavedAccounts[0].metadata.address]: {
+        [networkChainIDKey]: {
+          [txHex]: accountNonce,
+        },
+      },
+    },
   },
 };
 jest.mock('react-redux', () => ({
@@ -69,5 +82,33 @@ describe('useAccount hook', () => {
     });
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
+  });
+
+  it('setNonceByAccount should dispatch an action', async () => {
+    const { setNonceByAccount } = result.current;
+    const expectedAction = {
+      type: actionTypes.setAccountNonce,
+      address: mockSavedAccounts[0].metadata.address,
+      nonce: 2,
+      transactionHex: txHex,
+      networkChainIDKey,
+    };
+    act(() => {
+      setNonceByAccount(mockSavedAccounts[0].metadata.address, 2, txHex, networkChainIDKey);
+    });
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
+  });
+
+  it('getNonceByAccount should retrieve stored nonce', async () => {
+    const { getNonceByAccount } = result.current;
+    const storedNonce = getNonceByAccount(mockSavedAccounts[0].metadata.address, networkChainIDKey);
+    expect(storedNonce).toEqual(accountNonce);
+  });
+
+  it('getNonceByAccount should retrieve 0 if no stored nonce', async () => {
+    const { getNonceByAccount } = result.current;
+    const storedNonce = getNonceByAccount(mockSavedAccounts[1].metadata.address, networkChainIDKey);
+    expect(storedNonce).toEqual(0);
   });
 });

@@ -1,4 +1,4 @@
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { smartRender } from 'src/utils/testHelpers';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { mockAppTokens } from '@tests/fixtures/token';
@@ -15,8 +15,10 @@ import { mockAppsTokens } from '../../__fixtures__';
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@auth/hooks/queries');
 jest.mock('@account/hooks', () => ({
+  ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
+const config = { queryClient: true, renderType: 'mount' };
 
 describe('Summary', () => {
   let wrapper;
@@ -72,7 +74,7 @@ describe('Summary', () => {
         },
       },
     };
-    wrapper = mountWithRouter(Summary, { ...props });
+    wrapper = smartRender(Summary, props, config).wrapper;
   });
   useAuth.mockReturnValue({ data: mockAuth });
 
@@ -98,21 +100,25 @@ describe('Summary', () => {
   });
 
   it('should show props.fields.recipient.title if it is present', () => {
-    wrapper = mountWithRouter(Summary, {
-      ...{
-        ...props,
-        formProps: {
-          ...props.formProps,
-          params: {
-            ...props.formProps.params,
-            recipient: {
-              ...props.formProps.params.recipient,
-              title,
+    wrapper = smartRender(
+      Summary,
+      {
+        ...{
+          ...props,
+          formProps: {
+            ...props.formProps,
+            params: {
+              ...props.formProps.params,
+              recipient: {
+                ...props.formProps.params.recipient,
+                title,
+              },
             },
           },
         },
       },
-    });
+      config
+    ).wrapper;
     expect(wrapper.find('.recipient-address')).toIncludeText(
       props.transactionJSON.params.recipientAddress
     );

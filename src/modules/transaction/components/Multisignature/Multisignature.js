@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import { cryptography } from '@liskhq/lisk-client';
 import Illustration from 'src/modules/common/components/illustration';
 import routes from 'src/routes/routes';
@@ -17,6 +17,7 @@ import WarningNotification from '@common/components/warningNotification';
 import AccountRow from '@account/components/AccountRow';
 import classNames from 'classnames';
 import { getNextAccountToSign } from '@transaction/utils/multisignatureUtils';
+import generateUniqueId from 'src/utils/generateUniqueId';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
@@ -28,15 +29,18 @@ export const PartiallySignedActions = ({
   transactionJSON,
   reset,
 }) => {
-  const [, setCurrentAccount] = useCurrentAccount();
+  const [currentAccount, setCurrentAccount] = useCurrentAccount();
 
   const handleSwitchAccount = () => {
     const stringifiedTransaction = encodeURIComponent(JSON.stringify(transactionJSON));
+    const uniqueUrlIdToPreventHashError = generateUniqueId();
     setCurrentAccount(
       nextAccountToSign,
-      `/wallet?modal=signMultiSignTransaction&stringifiedTransaction=${stringifiedTransaction}`,
+      `/wallet?modal=signMultiSignTransaction&prevAccount=${currentAccount.metadata.address}&uniqueId=${uniqueUrlIdToPreventHashError}`,
       true,
-      { stringifiedTransaction }
+      {
+        stringifiedTransaction,
+      }
     );
     reset?.();
   };
@@ -193,12 +197,12 @@ const Multisignature = ({
       )}
       <div className={styles.primaryActions}>
         {status.code === txStatusTypes.broadcastSuccess && !noBackButton ? (
-          <PrimaryButton
+          <TertiaryButton
             className={`${styles.backToWallet} back-to-wallet-button`}
             onClick={goToWallet}
           >
             {t('Back to wallet')}
-          </PrimaryButton>
+          </TertiaryButton>
         ) : null}
         {status.code === txStatusTypes.broadcastError ? (
           <ErrorActions

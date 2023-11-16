@@ -1,4 +1,4 @@
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import accounts from '@tests/constants/wallets';
@@ -11,6 +11,7 @@ const mockedCurrentAccount = mockSavedAccounts[0];
 
 jest.mock('@auth/hooks/queries');
 jest.mock('@account/hooks', () => ({
+  ...jest.requireActual('@account/hooks'),
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
 jest.mock('@pos/validator/hooks/usePosToken');
@@ -151,13 +152,13 @@ describe('StakingQueue.Summary', () => {
   usePosToken.mockReturnValue({ token: mockAppsTokens.data[0] });
 
   it('renders properly', () => {
-    const wrapper = mountWithRouter(Summary, props);
+    const wrapper = mountWithRouterAndQueryClient(Summary, props);
 
     expect(wrapper).toContainMatchingElement('StakeStats');
   });
 
   it('renders properly when only new stakes are present', () => {
-    const wrapper = mountWithRouter(Summary, {
+    const wrapper = mountWithRouterAndQueryClient(Summary, {
       ...props,
       added,
     });
@@ -166,7 +167,7 @@ describe('StakingQueue.Summary', () => {
   });
 
   it('renders properly when only removed stakes are present', () => {
-    const wrapper = mountWithRouter(Summary, {
+    const wrapper = mountWithRouterAndQueryClient(Summary, {
       ...props,
       removed,
     });
@@ -175,7 +176,7 @@ describe('StakingQueue.Summary', () => {
   });
 
   it('renders properly when only edited stakes are present', () => {
-    const wrapper = mountWithRouter(Summary, {
+    const wrapper = mountWithRouterAndQueryClient(Summary, {
       ...props,
       edited,
     });
@@ -184,7 +185,7 @@ describe('StakingQueue.Summary', () => {
   });
 
   it('renders properly when a mixture of stakes are present', () => {
-    const wrapper = mountWithRouter(Summary, {
+    const wrapper = mountWithRouterAndQueryClient(Summary, {
       ...props,
       edited,
       removed,
@@ -195,7 +196,7 @@ describe('StakingQueue.Summary', () => {
   });
 
   it('should render rewards', () => {
-    const wrapper = mountWithRouter(Summary, { ...props, edited, removed, added });
+    const wrapper = mountWithRouterAndQueryClient(Summary, { ...props, edited, removed, added });
     const addedItemList = wrapper.find('[data-testid="stake-item"]').at(0);
     const editedItemList = wrapper.find('[data-testid="stake-item"]').at(4);
     const removedItemList = wrapper.find('[data-testid="stake-item"]').at(9);
@@ -205,7 +206,7 @@ describe('StakingQueue.Summary', () => {
   });
 
   it('calls props.nextStep with properties when confirm button is clicked', () => {
-    const wrapper = mountWithRouter(Summary, props);
+    const wrapper = mountWithRouterAndQueryClient(Summary, props);
     wrapper.find('button.confirm-button').simulate('click');
 
     expect(props.nextStep).toHaveBeenCalledWith({
@@ -221,7 +222,7 @@ describe('StakingQueue.Summary', () => {
   });
 
   it('calls props.nextStep when transaction is confirmed', () => {
-    const wrapper = mountWithRouter(Summary, {
+    const wrapper = mountWithRouterAndQueryClient(Summary, {
       ...props,
       added,
       removed,

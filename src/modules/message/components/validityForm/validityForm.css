@@ -11,9 +11,11 @@
 
 .header {
   padding: var(--horizontal-modal-padding-l) 0 var(--horizontal-padding-m) !important;
+  height: auto !important;
 
   & > h1 {
     font-size: var(--font-size-h3) !important;
+    line-height: var(--font-size-h3) !important;
   }
 }
 
@@ -22,6 +24,10 @@
 
   & > div {
     font-size: var(--font-size-h6);
+  }
+
+  & > label {
+    margin-top: 12px;
   }
 }
 

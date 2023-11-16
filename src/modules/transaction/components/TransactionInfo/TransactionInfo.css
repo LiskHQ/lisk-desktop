@@ -194,3 +194,13 @@
     margin-left: 10px;
   }
 }
+
+.warning {
+  vertical-align: bottom;
+  margin-right: 5px;
+}
+
+.reset {
+  vertical-align: text-bottom;
+  cursor: pointer;
+}

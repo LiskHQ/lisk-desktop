@@ -48,7 +48,6 @@ const DialogAddNetwork = () => {
   });
   const formValues = watch();
   const networkCheck = useNetworkCheck(formValues.serviceUrl);
-  const isNetworkUrlOk = networkCheck.isOffchainOK && networkCheck.isOnchainOK;
 
   async function onTryNetworkUrl() {
     networkCheck.refetch();
@@ -141,7 +140,7 @@ const DialogAddNetwork = () => {
               })}
             />
 
-            {networkCheck.isError && !!formValues.serviceUrl && !networkCheck.isFetching && (
+            {!networkCheck.isNetworkOK && !!formValues.serviceUrl && !networkCheck.isFetching && (
               <span className={styles.connectionFailed}>
                 <span className={styles.errorText}>
                   {t(
@@ -171,7 +170,10 @@ const DialogAddNetwork = () => {
             />
             <PrimaryButton
               disabled={
-                !isDirty || !isNetworkUrlOk || networkCheck.isFetching || networkCheck.isError
+                !isDirty ||
+                !networkCheck.isNetworkOK ||
+                networkCheck.isFetching ||
+                networkCheck.isError
               }
               type="submit"
               className={`${styles.button}`}

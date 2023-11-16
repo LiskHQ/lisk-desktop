@@ -16,8 +16,7 @@ import Status from '../signMultisigStatus';
 const SignMultisigView = ({ history }) => {
   const [currentStep, setCurrentStep] = useState();
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const stringifiedTransaction = queryParams.get('stringifiedTransaction');
+  const stringifiedTransaction = location.state?.stringifiedTransaction;
 
   const onMultiStepChange = useCallback(({ step: { current } }) => {
     setCurrentStep(current);

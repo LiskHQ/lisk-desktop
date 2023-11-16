@@ -1,10 +1,10 @@
 /* eslint-disable max-statements */
-import React, { useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import ReactJson from 'react-json-view';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'src/utils/helpers';
-import { parseSearchParams } from 'src/utils/searchParams';
+import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Heading from 'src/modules/common/components/Heading';
@@ -20,13 +20,16 @@ import TransactionEvents from '../TransactionEvents';
 import { useFees, useTransactions } from '../../hooks/queries';
 import TransactionDetailRow from '../TransactionDetailRow';
 import header from './headerMap';
-import { splitModuleAndCommand } from '../../utils';
+import { getTransactionValue, splitModuleAndCommand } from '../../utils';
 
 const TransactionDetails = () => {
   const { search } = useLocation();
+  const history = useHistory();
+  const paramsJsonViewRef = useRef();
   const transactionID = parseSearchParams(search).transactionID;
+  const showParams = JSON.parse(parseSearchParams(search).showParams || 'false');
   const { t } = useTranslation();
-  const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
+  const [isParamsCollapsed, setIsParamsCollapsed] = useState(showParams);
   const { data: fees } = useFees();
   const feeTokenID = fees?.data?.feeTokenID;
   const { data: token } = useAppsMetaTokens({
@@ -57,6 +60,7 @@ const TransactionDetails = () => {
       fee,
       block = {},
       executionStatus,
+      meta,
     } = transactionData;
     const [txModule, txType] = splitModuleAndCommand(moduleCommand);
 
@@ -71,9 +75,18 @@ const TransactionDetails = () => {
         value: sender,
         type: 'address',
       },
+      meta?.recipient && {
+        label: t('Recipient'),
+        value: meta.recipient,
+        type: 'address',
+      },
       {
         label: t('Fee'),
         value: <TokenAmount val={fee} token={feeToken} />,
+      },
+      {
+        label: t('Value'),
+        value: getTransactionValue(transactionData, feeToken),
       },
       {
         label: t('Date'),
@@ -112,12 +125,18 @@ const TransactionDetails = () => {
         label: t('Parameters'),
         type: 'expand',
       },
-    ];
+    ].filter((value) => value);
   }, [transactionData]);
 
   if (error || (isEmpty(transactionMetaData) && !isFetching)) {
     return <NotFound t={t} />;
   }
+
+  useEffect(() => {
+    if (showParams && paramsJsonViewRef.current) paramsJsonViewRef.current.scrollIntoView();
+
+    setIsParamsCollapsed(showParams);
+  }, [showParams]);
 
   return (
     <div className={styles.wrapper}>
@@ -136,15 +155,23 @@ const TransactionDetails = () => {
               headerClassName={styles.tableHeader}
               additionalRowProps={{
                 isParamsCollapsed,
-                onToggleJsonView: () => setIsParamsCollapsed((state) => !state),
+                onToggleJsonView: () => {
+                  setIsParamsCollapsed((state) => {
+                    if (state) removeSearchParamsFromUrl(history, ['showParams']);
+                    return !state;
+                  });
+                },
               }}
             />
-            <div
-              data-testid="transaction-param-json-viewer"
-              className={`${styles.jsonContainer} ${!isParamsCollapsed ? styles.shrink : ''}`}
-            >
-              <ReactJson name={false} src={transactionData.params} theme={jsonViewerTheme} />
-            </div>
+            {!isLoading && (
+              <div
+                ref={paramsJsonViewRef}
+                data-testid="transaction-param-json-viewer"
+                className={`${styles.jsonContainer} ${!isParamsCollapsed ? styles.shrink : ''}`}
+              >
+                <ReactJson name={false} src={transactionData.params} theme={jsonViewerTheme} />
+              </div>
+            )}
           </BoxContent>
         </Box>
         <Box isLoading={isLoading} className={styles.container}>

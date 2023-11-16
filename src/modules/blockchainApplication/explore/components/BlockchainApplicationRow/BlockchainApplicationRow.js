@@ -68,7 +68,7 @@ const BlockchainApplicationRow = ({ data, className, t }) => {
         <ChainName title={application.chainName} logo={getLogo(application)} />
         <ChainId id={application.chainID} />
         <ChainStatus status={application.status} t={t} />
-        <DepositAmount amount={application.depositedLsk} />
+        <DepositAmount amount={application.escrowedLSK} />
       </DialogLink>
     </div>
   );

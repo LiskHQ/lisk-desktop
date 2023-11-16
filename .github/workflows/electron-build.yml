@@ -1,0 +1,78 @@
+name: 'electron-build'
+
+on:
+  push:
+    tags:
+      - v3.*
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, desktop-build]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup node js runtime
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
+
+      - uses: actions/setup-python@v4 #Install awscli on all platform
+        with:
+          python-version: '3.10'
+      - name: Install AWSCLI Package
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade pip
+          pip install awscli
+
+      - name: Configure AWS cli
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Download fonts from S3
+        run: |
+          aws s3 sync s3://lisk-desktop-files/fonts ./setup/react/assets/fonts/
+
+      - name: Prepare for mac os app notarization
+        if: startsWith(matrix.os, 'macos')
+        # Import Apple API key for app notarization on macOS
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+
+      - name: Install cpx
+        if: startsWith(matrix.os, 'desktop-build')
+        run: npm install -g cpx
+
+      - name: Build and pack windows app
+        if: startsWith(matrix.os, 'desktop-build')
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          build_script_name: pack:win
+          github_token: ${{ secrets.github_token }}
+
+      - name: Build and pack mac app
+        if: startsWith(matrix.os, 'macos')
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          build_script_name: pack
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
+          github_token: ${{ secrets.github_token }}
+        env:
+          # macOS notarization API key
+          API_KEY_ID: ${{ secrets.api_key_id }}
+          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}

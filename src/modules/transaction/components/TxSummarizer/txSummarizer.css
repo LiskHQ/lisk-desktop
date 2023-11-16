@@ -221,3 +221,30 @@
     margin-top: 16px;
   }
 }
+
+.nonceWarning {
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  background-color: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  border-radius: 5px;
+  margin-bottom: -20px;
+
+  & > p {
+    @mixin contentNormal;
+
+    margin: 0;
+    font-size: 14px;
+    line-height: 18px;
+    color: var(--color-constant-zodiac-blue);
+    text-align: left;
+  }
+
+  & > img {
+    align-self: flex-start;
+    margin-right: 10px;
+    width: 20px;
+    height: 16px;
+  }
+}

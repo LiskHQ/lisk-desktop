@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "3.0.0-rc.2",
+  "version": "3.0.0-rc.3",
   "author": "Lisk Foundation <admin@lisk.com>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
   "productName": "Lisk",
@@ -30,7 +30,7 @@
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux --x64 --publish onTag",
     "pack": "yarn && yarn build && yarn clean:dist && yarn dist",
-    "pack:win": "cmd /c yarn && yarn install:electron:dependencies && yarn clean:build && yarn copy:files && yarn build:prod && yarn build:electron && yarn clean:dist && yarn dist:win",
+    "pack:win": "cmd /c yarn && yarn install:electron:dependencies && yarn copy:files && yarn build:prod && yarn build:electron && yarn dist:win && yarn clean:dist:win",
     "test": "jest --config ./setup/jest.config.js",
     "test:live": "yarn test -- --watch",
     "cypress:open": "cypress open --project tests/cypress",
@@ -42,9 +42,11 @@
     "analyze:bundles": "webpack  --config ./setup/config/webpack.config.analyze",
     "copy:files": "cpx \"./setup/react/{index.html,assets/**/*}\" \"./app/build/\"",
     "clean:build": "rm -rf app/build",
+    "clean:build:win": "rmdir /s /q \"app\build\"",
     "copy:files:e2e": "cpx \"./setup/react/{index.html,assets/**/*}\" \"./app/${BUILD_NAME}/\"",
     "clean:build:e2e": "rm -rf app/${BUILD_NAME}",
     "clean:dist": "rm -rf dist",
+    "clean:dist:win": "rmdir /s /q \"dist\"",
     "postinstall": "patch-package && electron-builder install-app-deps",
     "cucumber:playwright:open": "cucumber-js test -c cucumber.js"
   },
@@ -74,7 +76,9 @@
     },
     "win": {
       "target": "nsis",
-      "publisherName": "Lisk Stiftung"
+      "publisherName": "Lisk Stiftung",
+      "sign": "./scripts/sign.js",
+      "certificateSubjectName": "key_480054267"
     },
     "mac": {
       "hardenedRuntime": true,
@@ -117,7 +121,7 @@
   "dependencies": {
     "@hookform/resolvers": "2.8.8",
     "@ledgerhq/hw-transport-node-hid": "6.27.17-next.0",
-    "@liskhq/lisk-client": "6.0.0-rc.3",
+    "@liskhq/lisk-client": "6.0.0-rc.4",
     "@tanstack/react-query": "4.0.10",
     "@tanstack/react-query-devtools": "4.2.1",
     "@walletconnect/sign-client": "2.9.0",
@@ -219,7 +223,7 @@
     "cypress-failed-log": "2.9.2",
     "cypress-pipe": "2.0.0",
     "cypress-terminal-report": "3.4.1",
-    "electron": "27.0.0",
+    "electron": "27.0.2",
     "electron-builder": "24.6.4",
     "electron-builder-notarize": "1.5.1",
     "electron-devtools-installer": "3.2.0",

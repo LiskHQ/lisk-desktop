@@ -3,6 +3,7 @@ import { Client } from 'src/utils/api/client';
 import { useNetworkStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { useDebounce } from 'src/modules/search/hooks/useDebounce';
+import { useValidServiceUrl } from '@blockchainApplication/manage/hooks/useValidServiceUrl';
 
 export const DEFAULT_NETWORK_FORM_STATE = {
   name: '',
@@ -72,17 +73,22 @@ export function useNetworkCheck(serviceUrl) {
     client,
   });
 
+  const serviceUrls = blockchainAppsMeta?.data?.data[0]?.serviceURLs;
+  const { validServiceUrl, isLoading } = useValidServiceUrl(serviceUrls);
+  const hasValidServiceUrl = !!validServiceUrl;
+
   const handleRefetch = () => {
     networkStatus.refetch();
     blockchainAppsMeta.refetch();
   };
 
   return {
-    isNetworkOK: !!networkStatus?.data?.data && !!blockchainAppsMeta?.data?.data,
+    isNetworkOK:
+      !!networkStatus?.data?.data && !!blockchainAppsMeta?.data?.data && hasValidServiceUrl,
     isOnchainOK: !!networkStatus?.data?.data,
     isOffchainOK: !!blockchainAppsMeta?.data?.data,
-    isFetching: networkStatus?.isFetching || blockchainAppsMeta?.isFetching,
-    isError: networkStatus?.isError || blockchainAppsMeta?.isError,
+    isFetching: networkStatus?.isFetching || blockchainAppsMeta?.isFetching || isLoading,
+    isError: networkStatus?.isError || blockchainAppsMeta?.isError || !hasValidServiceUrl,
     refetch: handleRefetch,
   };
 }

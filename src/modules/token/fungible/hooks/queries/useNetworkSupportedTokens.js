@@ -1,18 +1,18 @@
-import { useRef } from 'react';
+import { useMemo } from 'react';
 import { useAppsMetaTokens, useTokenSummary } from '@token/fungible/hooks/queries';
 import { Client } from 'src/utils/api/client';
 
 // eslint-disable-next-line max-statements
 export const useNetworkSupportedTokens = (application) => {
-  const client = useRef(new Client());
-  client.current.create(application?.serviceURLs?.[0]);
+  const serviceUrl = application?.serviceURLs?.[0].http;
+  const client = useMemo(() => serviceUrl && new Client({ http: serviceUrl }), [serviceUrl]);
 
-  const tokensSupported = useTokenSummary({ client: client.current });
+  const tokensSupported = useTokenSummary({ client });
   const isSupportAllTokens = tokensSupported.data?.data?.supportedTokens?.isSupportAllTokens;
 
   const appsMetaTokens = useAppsMetaTokens({
     config: { params: { chainID: undefined, network: application?.networkType } },
-    client: client.current,
+    client,
   });
   const isLoading = tokensSupported.isLoading || appsMetaTokens.isLoading;
   const isFetched = tokensSupported.isFetched && appsMetaTokens.isFetched;

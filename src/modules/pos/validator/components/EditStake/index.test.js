@@ -111,9 +111,9 @@ describe('EditStake', () => {
     expect(screen.getByText(validator.address)).toBeTruthy();
     expect(screen.getByText(validator.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
-    expect(screen.getByText('Validator commission:')).toBeTruthy();
+    expect(screen.getByText('Commission :')).toBeTruthy();
     expect(screen.getByText('Shared rewards :')).toBeTruthy();
-    expect(screen.getByText('Available balance:')).toBeTruthy();
+    expect(screen.getByText('Usable balance:')).toBeTruthy();
     expect(
       screen.getByText(`${convertCommissionToPercentage(validator.commission)}%`)
     ).toBeTruthy();
@@ -129,7 +129,7 @@ describe('EditStake', () => {
         'Input your Stake amount. This value shows how much trust you have in this validator.'
       )
     ).toBeTruthy();
-    expect(screen.getByText('Stake amount')).toBeTruthy();
+    expect(screen.getByText('Stake amount (LSK)')).toBeTruthy();
   });
 
   it('should add stake to the stakes queue', async () => {
@@ -175,12 +175,12 @@ describe('EditStake', () => {
     expect(
       screen.getByText('Edit your stake by modifying stake amount or removing existing stake.')
     ).toBeTruthy();
-    expect(screen.getByText('Stake amount')).toBeTruthy();
+    expect(screen.getByText('Stake amount (LSK)')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Remove stake'));
 
-    expect(screen.getByText('Stake added to queue')).toBeTruthy();
-    expect(screen.getByText('Your stake has been added to your staking queue')).toBeTruthy();
+    expect(screen.getByText('Stake added')).toBeTruthy();
+    expect(screen.getByText('Stake has been added to your staking queue')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Continue staking'));
     expect(props.history.push).toHaveBeenCalled();
@@ -207,7 +207,7 @@ describe('EditStake', () => {
     expect(
       screen.getByText('Edit your stake by modifying stake amount or removing existing stake.')
     ).toBeTruthy();
-    expect(screen.getByText('Stake amount')).toBeTruthy();
+    expect(screen.getByText('Stake amount (LSK)')).toBeTruthy();
 
     const stakingField = screen.getByTestId('stake');
 
@@ -223,8 +223,8 @@ describe('EditStake', () => {
       ]);
     });
 
-    expect(screen.getByText('Stake added to queue')).toBeTruthy();
-    expect(screen.getByText('Your stake has been added to your staking queue')).toBeTruthy();
+    expect(screen.getByText('Stake added')).toBeTruthy();
+    expect(screen.getByText('Stake has been added to your staking queue')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Continue staking'));
     expect(props.history.push).toHaveBeenCalled();
