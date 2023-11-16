@@ -16,6 +16,7 @@ import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
+import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
 import routes from 'src/routes/routes';
@@ -61,6 +62,7 @@ const Overview = ({ isWalletRoute, history }) => {
     refetch,
   } = useTokenBalances({ config: { params: { address } } });
   const { data: myTokenBalances } = useTokenBalances();
+  const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
   const hasTokenWithBalance = myTokenBalances?.data?.some(
     (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
   );
@@ -101,6 +103,20 @@ const Overview = ({ isWalletRoute, history }) => {
 
   useEffect(showWarning, [isWalletRoute, host, address, pomHeights]);
 
+  const getInsufficientMessageValue = () => {
+    if (!hasTokenWithBalance) {
+      return { message: t('There are no tokens to send at this moment.') };
+    }
+
+    if (!hasSufficientBalanceForFee) {
+      return {
+        message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
+      };
+    }
+
+    return {};
+  };
+
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
@@ -128,12 +144,10 @@ const Overview = ({ isWalletRoute, history }) => {
           </div>
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
             <DialogLink
-              data={
-                !hasTokenWithBalance
-                  ? { message: t('There are no tokens to send at this moment.') }
-                  : {}
+              data={getInsufficientMessageValue()}
+              component={
+                hasTokenWithBalance && hasSufficientBalanceForFee ? 'send' : 'noTokenBalance'
               }
-              component={hasTokenWithBalance ? 'send' : 'noTokenBalance'}
             >
               <PrimaryButton>{t('Send')}</PrimaryButton>
             </DialogLink>

@@ -9,7 +9,9 @@ import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstr
 import { accountMenu } from '@account/const';
 import { useAuth } from '@auth/hooks/queries';
 import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
+import { useValidateFeeBalance } from 'src/modules/token/fungible/hooks/queries/useValidateFeeBalance';
 
+// eslint-disable-next-line max-statements
 const AccountMenuListing = ({ className, onItemClicked }) => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
@@ -23,6 +25,11 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
     config: { params: { address } },
   });
 
+  const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
+  const hasAvailableTokenBalance = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => BigInt(availableBalance) > 0
+  );
+
   function getDialogProps(component, data) {
     if (component === 'removeSelectedAccount' && currentAccount?.metadata?.address) {
       return {
@@ -33,6 +40,22 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
     return { component, data };
   }
 
+  const getInSuffienctBalanceMessage = () => {
+    if (!hasAvailableTokenBalance) {
+      return {
+        message: t('Token balance is not enough to register a multisignature account.'),
+      };
+    }
+
+    if (!hasSufficientBalanceForFee) {
+      return {
+        message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
+      };
+    }
+
+    return {};
+  };
+
   return (
     <ul className={className}>
       {accountMenu({
@@ -41,9 +64,7 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
         address,
         hasNetworkError,
         isLoadingNetwork,
-        hasAvailableTokenBalance: tokenBalances.data?.data?.some(
-          ({ availableBalance }) => BigInt(availableBalance) > 0
-        ),
+        insuffientBalanceMessage: getInSuffienctBalanceMessage(),
       }).map(
         ({ path, icon, label, component, isHidden, data }) =>
           !isHidden && (
