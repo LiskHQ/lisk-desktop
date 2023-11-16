@@ -85,6 +85,7 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
               state
             );
           } else {
+            dispatch(stakesReset());
             setValue(selectedNetwork);
           }
         }
