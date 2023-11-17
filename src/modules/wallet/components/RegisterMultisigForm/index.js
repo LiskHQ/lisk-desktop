@@ -127,7 +127,9 @@ const Form = ({ nextStep, prevState = {}, onNext, authQuery }) => {
     const value = e.target.value ? Number(e.target.value) : undefined;
 
     if (value > MAX_MULTI_SIG_MEMBERS) {
-      setRequiredSignatureError(`Cannot have more than ${MAX_MULTI_SIG_MEMBERS} required signature`);
+      setRequiredSignatureError(
+        `Cannot have more than ${MAX_MULTI_SIG_MEMBERS} required signature`
+      );
       return;
     }
 
