@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { selectCurrentAccount } from '@account/store/selectors';
 import { selectStaking } from 'src/redux/selectors';
 import { stakesReset } from '@pos/validator/store/actions/staking';
@@ -38,7 +39,7 @@ export function useCurrentAccount() {
         dispatch(setCurrentAccount(encryptedAccount));
         dispatch(stakesReset());
         pushUrlState();
-      }else {
+      } else {
         const onCancel = /* istanbul ignore next */ () =>
           removeSearchParamsFromUrl(history, ['modal']);
         const onConfirm = /* istanbul ignore next */ () => {
@@ -53,7 +54,12 @@ export function useCurrentAccount() {
           onCancel,
           onConfirm,
         });
-        removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
+        removeThenAppendSearchParamsToUrl(
+          history,
+          { modal: 'confirmationDialog' },
+          ['modal'],
+          state
+        );
       }
     } else {
       dispatch(setCurrentAccount(encryptedAccount));
@@ -65,7 +71,10 @@ export function useCurrentAccount() {
         }
       }
     }
+    // Remove toast between account switches
+    toast.dismiss();
   };
+
   const currentAccount = useSelector(selectCurrentAccount);
 
   return [currentAccount, setAccount];
