@@ -10,6 +10,7 @@ import { accountMenu } from '@account/const';
 import { useAuth } from '@auth/hooks/queries';
 import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 import { useValidateFeeBalance } from 'src/modules/token/fungible/hooks/queries/useValidateFeeBalance';
+import { INSUFFICENT_TOKEN_BALANCE_MESSAGE } from 'src/modules/common/constants';
 
 // eslint-disable-next-line max-statements
 const AccountMenuListing = ({ className, onItemClicked }) => {
@@ -43,15 +44,13 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
   const getInSufficientBalanceMessage = () => {
     if (!hasAvailableTokenBalance) {
       return {
-        message: t('Token balance is not enough to register a multisignature account.'),
+        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.registerMultiSignature,
       };
     }
 
     if (!hasSufficientBalanceForFee) {
       return {
-        message: t('There are no {{feetokenSymbol}} tokens to pay for fees', {
-          feeTokenSymbol: feeToken?.symbol,
-        }),
+        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
       };
     }
 

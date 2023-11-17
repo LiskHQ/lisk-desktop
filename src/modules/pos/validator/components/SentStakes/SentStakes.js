@@ -16,6 +16,7 @@ import { useMyTransactions } from '@transaction/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import Badge from '@common/components/badge';
 import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
+import { INSUFFICENT_TOKEN_BALANCE_MESSAGE } from 'src/modules/common/constants';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
@@ -37,7 +38,7 @@ function ClaimRewardsDialogButton({ address }) {
   const getInSufficientBalanceMessage = () => {
     if (!hasSufficientBalanceForFee) {
       return {
-        message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
+        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
       };
     }
 
@@ -68,7 +69,7 @@ function UnlockDialogButton({ hasUnlocks }) {
   const getInSufficientBalanceMessage = () => {
     if (!hasSufficientBalanceForFee) {
       return {
-        message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
+        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
       };
     }
 

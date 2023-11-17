@@ -17,7 +17,7 @@ import useFilter from '@common/hooks/useFilter';
 import DialogLink from '@theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
 import Icon from '@theme/Icon';
-import { INFO_BANNERS } from '@common/constants';
+import { INFO_BANNERS, INSUFFICENT_TOKEN_BALANCE_MESSAGE } from '@common/constants';
 import { ROUND_LENGTH } from '@pos/validator/consts';
 import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
@@ -42,13 +42,13 @@ const ValidatorActionButton = ({ address, isValidator }) => {
   const getInSufficientBalanceMessage = () => {
     if (!hasTokenBalances) {
       return {
-        message: t('Token balance is not enough to stake a validator.'),
+        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.registerValidator,
       };
     }
 
     if (!hasSufficientBalanceForFee) {
       return {
-        message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
+        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
       };
     }
 

@@ -18,6 +18,7 @@ import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
 import { selectSearchParamValue } from 'src/utils/searchParams';
+import { INSUFFICENT_TOKEN_BALANCE_MESSAGE } from 'src/modules/common/constants';
 import { useAuth } from '@auth/hooks/queries';
 import routes from 'src/routes/routes';
 import styles from './overview.css';
@@ -110,7 +111,7 @@ const Overview = ({ isWalletRoute, history }) => {
 
     if (!hasSufficientBalanceForFee) {
       return {
-        message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
+        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
       };
     }
 

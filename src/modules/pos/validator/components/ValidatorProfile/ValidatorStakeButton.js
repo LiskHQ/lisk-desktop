@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import DialogLink from 'src/theme/dialog/link';
 import { selectStaking } from 'src/redux/selectors';
 import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
+import { INSUFFICENT_TOKEN_BALANCE_MESSAGE } from 'src/modules/common/constants';
 
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useSentStakes } from '../../hooks/queries';
@@ -29,13 +30,13 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, h
   const getInSufficientBalanceMessage = () => {
     if (!hasTokenBalance) {
       return {
-        message: t('Token balance is not enough to stake a validator.'),
+        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.stakeValidator,
       };
     }
 
     if (!hasSufficientBalanceForFee) {
       return {
-        message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
+        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
       };
     }
 
