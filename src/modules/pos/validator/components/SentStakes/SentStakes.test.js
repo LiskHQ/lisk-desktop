@@ -1,6 +1,6 @@
 import { fireEvent, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTokenBalances, useValidateFeeBalance } from '@token/fungible/hooks/queries';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { getMockValidators, mockSentStakes, mockUnlocks } from '@pos/validator/__fixtures__';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
@@ -13,6 +13,7 @@ import usePosToken from '@pos/validator/hooks/usePosToken';
 import routes from 'src/routes/routes';
 import { mockTransactions } from '@transaction/__fixtures__';
 import * as useMyTransactionsSpy from '@transaction/hooks/queries/useMyTransactions';
+import * as searchParamUtils from 'src/utils/searchParams';
 import SentStakes from './SentStakes';
 import tableHeaderMap from './tableHeaderMap';
 import { usePosConstants, useSentStakes, useUnlocks, useValidators } from '../../hooks/queries';
@@ -25,6 +26,7 @@ jest.mock('@account/hooks', () => ({
 }));
 
 jest.mock('@token/fungible/hooks/queries/useTokenBalances');
+jest.mock('@token/fungible/hooks/queries/useValidateFeeBalance');
 jest.mock('@pos/reward/hooks/queries/useRewardsClaimable');
 jest.mock('../../hooks/queries');
 jest.mock('@pos/validator/hooks/usePosToken');
@@ -46,6 +48,11 @@ describe('SentStakes', () => {
   useSentStakes.mockReturnValue({ data: mockSentStakes, refetch: mockRefetchSentStakes });
   useUnlocks.mockReturnValue({ data: mockUnlocks, refetch: jest.fn() });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
+  useValidateFeeBalance.mockReturnValue({
+    hasSufficientBalanceForFee: true,
+    isLoading: false,
+    feeToken: mockAppsTokens.data[0],
+  });
 
   it('should display properly', async () => {
     renderWithRouterAndQueryClient(SentStakes, props);
@@ -112,5 +119,34 @@ describe('SentStakes', () => {
     useRewardsClaimable.mockReturnValue({ data: {} });
     renderWithRouterAndQueryClient(SentStakes, props);
     expect(screen.queryByTestId('notification')).not.toBeInTheDocument();
+  });
+
+  it('Should show the insufficient balance for fee modal', () => {
+    useValidateFeeBalance.mockReturnValue({
+      hasSufficientBalanceForFee: false,
+      isLoading: false,
+      feeToken: mockAppsTokens.data[0],
+    });
+
+    const mockAddSearchParamsToUrl = jest
+      .spyOn(searchParamUtils, 'addSearchParamsToUrl')
+      .mockReturnValue({});
+
+    useRewardsClaimable.mockReturnValue({ data: {} });
+
+    renderWithRouterAndQueryClient(SentStakes, props);
+
+    fireEvent.click(screen.getByText('Claim rewards'));
+    expect(mockAddSearchParamsToUrl).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ modal: 'noTokenBalance' })
+    );
+    jest.resetAllMocks();
+
+    fireEvent.click(screen.getByText('Unlock stakes'));
+    expect(mockAddSearchParamsToUrl).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ modal: 'noTokenBalance' })
+    );
   });
 });
