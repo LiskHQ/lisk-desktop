@@ -105,40 +105,46 @@ const getTransactionAmount = ({ module, command, params = {} }) => {
   return '0';
 };
 
-export const getTransactionValue = (transactionJSON, token) => {
+export const getTransactionValue = (transactionJSON, feeToken, appsMetaTokens) => {
   const { params, moduleCommand, id } = transactionJSON;
 
-  const getTokenWithSymbol = (tokenInBaseDenom) => (
+  const getTokenWithSymbol = (tokenInBaseDenom, token) => (
     <TokenAmount val={tokenInBaseDenom} token={token} />
   );
 
-  const genrateLink = (text, href) => (
+  const generateLink = (text, href) => (
     <Link to={href} onClick={(e) => e.stopPropagation()}>
       {text}
     </Link>
   );
 
-  const trasnactionValueMap = {
+  const transactionValueMap = {
     [MODULE_COMMANDS_NAME_MAP.changeCommission]: () => `${+params.newCommission / 100}%`,
     [MODULE_COMMANDS_NAME_MAP.claimRewards]: () => null,
     [MODULE_COMMANDS_NAME_MAP.unlock]: () => null,
     [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: () =>
-      genrateLink(
+      generateLink(
         `${params.numberOfSignatures} Signator${params.numberOfSignatures > 1 ? 'ies' : 'y'}`,
         `${routes.transactionDetails.path}?transactionID=${id}&showParams=true`
       ),
     [MODULE_COMMANDS_NAME_MAP.registerValidator]: () => params.name,
-    [MODULE_COMMANDS_NAME_MAP.reclaimLSK]: (data) => getTokenWithSymbol(getTransactionAmount(data)),
-    [MODULE_COMMANDS_NAME_MAP.stake]: (data) => getTokenWithSymbol(getTransactionAmount(data)),
-    [MODULE_COMMANDS_NAME_MAP.transfer]: (data) => getTokenWithSymbol(getTransactionAmount(data)),
+    [MODULE_COMMANDS_NAME_MAP.reclaimLSK]: (data) =>
+      getTokenWithSymbol(getTransactionAmount(data), feeToken),
+    [MODULE_COMMANDS_NAME_MAP.stake]: (data) =>
+      getTokenWithSymbol(getTransactionAmount(data), feeToken),
+    [MODULE_COMMANDS_NAME_MAP.transfer]: (data) =>
+      getTokenWithSymbol(getTransactionAmount(data), feeToken),
     [MODULE_COMMANDS_NAME_MAP.transferCrossChain]: (data) =>
-      getTokenWithSymbol(getTransactionAmount(data)),
+      getTokenWithSymbol(
+        getTransactionAmount(data),
+        appsMetaTokens?.find((t) => t.tokenID === data.params.tokenID)
+      ),
   };
 
   const [module, command] = splitModuleAndCommand(moduleCommand);
 
   return (
-    trasnactionValueMap[moduleCommand]?.({
+    transactionValueMap[moduleCommand]?.({
       module,
       command,
       params,

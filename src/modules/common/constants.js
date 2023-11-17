@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import routes from 'src/routes/routes';
 
 export const INFO_BANNERS = {
@@ -106,4 +107,12 @@ export const INFO_BANNERS = {
     infoLink: `${routes.wallet.path}?modal=manageApplications`,
     infoLinkText: 'Explore',
   },
+};
+
+export const INSUFFICENT_TOKEN_BALANCE_MESSAGE = {
+  registerMultiSignature: i18next.t(
+    'Token balance is not enough to register a multisignature account.'
+  ),
+  registerValidator: i18next.t('Token balance is not enough to register a validator profile.'),
+  stakeValidator: i18next.t('Token balance is not enough to stake a validator.'),
 };

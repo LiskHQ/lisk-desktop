@@ -15,6 +15,8 @@ import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { useMyTransactions } from '@transaction/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import Badge from '@common/components/badge';
+import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
@@ -31,12 +33,23 @@ function useStakerAddress(searchParam) {
 function ClaimRewardsDialogButton({ address }) {
   const { t } = useTranslation();
   const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
+  const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
+
   const hasClaimableRewards =
     rewardsClaimable?.data?.length &&
     rewardsClaimable?.data?.reduce((acc, curr) => BigInt(curr.reward) + acc, BigInt(0)) > BigInt(0);
 
   return (
-    <DialogLink component="claimRewardsView">
+    <DialogLink
+      data={{
+        ...getTokenBalanceErrorMessage({
+          hasSufficientBalanceForFee,
+          feeTokenSymbol: feeToken?.symbol,
+          t,
+        }),
+      }}
+      component={hasSufficientBalanceForFee ? 'claimRewardsView' : 'noTokenBalance'}
+    >
       <SecondaryButton disabled={!hasClaimableRewards}>
         {t('Claim rewards')}
         {!!hasClaimableRewards && <Badge />}
@@ -48,8 +61,19 @@ function ClaimRewardsDialogButton({ address }) {
 function UnlockDialogButton({ hasUnlocks }) {
   const { t } = useTranslation();
 
+  const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
+
   return (
-    <DialogLink component="lockedBalance">
+    <DialogLink
+      data={{
+        ...getTokenBalanceErrorMessage({
+          hasSufficientBalanceForFee,
+          feeTokenSymbol: feeToken?.symbol,
+          t,
+        }),
+      }}
+      component={hasSufficientBalanceForFee ? 'lockedBalance' : 'noTokenBalance'}
+    >
       <PrimaryButton disabled={!hasUnlocks}>{t('Unlock stakes')}</PrimaryButton>
     </DialogLink>
   );
