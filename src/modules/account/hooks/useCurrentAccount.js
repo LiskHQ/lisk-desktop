@@ -19,7 +19,7 @@ export function useCurrentAccount() {
     (stake) => stake.confirmed !== stake.unconfirmed
   );
 
-  function switchAccount({ encryptedAccount, relativeUrlPath, redirect, urlState }) {
+  const switchAccount = ({ encryptedAccount, relativeUrlPath, redirect, urlState }) => {
     dispatch(setCurrentAccount(encryptedAccount));
     dispatch(stakesReset());
     if (redirect) {
@@ -34,7 +34,7 @@ export function useCurrentAccount() {
         history.push(relativeUrlPath);
       }
     }
-  }
+  };
 
   // eslint-disable-next-line max-statements
   const setAccount = (encryptedAccount, referrer, redirect = true, urlState) => {
