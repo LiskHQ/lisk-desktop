@@ -31,6 +31,8 @@ export function useCurrentApplication() {
         client.create(applicationNode || application.serviceURLs[0]);
 
         dispatch(stakesReset());
+        // Remove toast between application switches
+        toast.dismiss();
         removeSearchParamsFromUrl(history, ['modal']);
       };
       const onCancel = /* istanbul ignore next */ () =>
@@ -41,8 +43,6 @@ export function useCurrentApplication() {
         onConfirm,
         onCancel,
       });
-      // Remove toast between application switches
-      toast.dismiss();
       removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
     } else {
       dispatch(setCurrentApplication(application));

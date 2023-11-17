@@ -46,6 +46,8 @@ export function useCurrentAccount() {
           dispatch(setCurrentAccount(encryptedAccount));
 
           dispatch(stakesReset());
+          // Remove toast between account switches
+          toast.dismiss();
           history.push(relativeUrlPath);
         };
         const state = createConfirmSwitchState({
@@ -63,6 +65,8 @@ export function useCurrentAccount() {
       }
     } else {
       dispatch(setCurrentAccount(encryptedAccount));
+      // Remove toast between account switches
+      toast.dismiss();
       if (redirect) {
         if (urlState) {
           pushUrlState();
@@ -71,8 +75,6 @@ export function useCurrentAccount() {
         }
       }
     }
-    // Remove toast between account switches
-    toast.dismiss();
   };
 
   const currentAccount = useSelector(selectCurrentAccount);

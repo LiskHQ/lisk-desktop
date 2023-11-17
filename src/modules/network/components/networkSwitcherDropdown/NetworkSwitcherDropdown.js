@@ -71,6 +71,8 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
               setValue(selectedNetwork);
 
               dispatch(stakesReset());
+              // Remove toast between network switches
+              toast.dismiss();
               removeSearchParamsFromUrl(history, ['modal']);
             };
             const state = createConfirmSwitchState({
@@ -79,8 +81,6 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
               onCancel,
               onConfirm,
             });
-            // Remove toast between network switches
-            toast.dismiss();
             removeThenAppendSearchParamsToUrl(
               history,
               { modal: 'confirmationDialog' },
@@ -88,9 +88,9 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
               state
             );
           } else {
+            setValue(selectedNetwork);
             // Remove toast between network switches
             toast.dismiss();
-            setValue(selectedNetwork);
           }
         }
       });
