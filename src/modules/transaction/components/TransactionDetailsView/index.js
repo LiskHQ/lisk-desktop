@@ -128,15 +128,15 @@ const TransactionDetails = () => {
     ].filter((value) => value);
   }, [transactionData]);
 
-  if (error || (isEmpty(transactionMetaData) && !isFetching)) {
-    return <NotFound t={t} />;
-  }
-
   useEffect(() => {
     if (showParams && paramsJsonViewRef.current) paramsJsonViewRef.current.scrollIntoView();
 
     setIsParamsCollapsed(showParams);
   }, [showParams]);
+
+  if (error || (isEmpty(transactionMetaData) && !isFetching)) {
+    return <NotFound t={t} />;
+  }
 
   return (
     <div className={styles.wrapper}>
