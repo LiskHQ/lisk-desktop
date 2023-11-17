@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import client from 'src/utils/api/client';
 import { selectStaking } from 'src/redux/selectors';
 import { stakesReset } from 'src/redux/actions';
@@ -40,9 +41,13 @@ export function useCurrentApplication() {
         onConfirm,
         onCancel,
       });
+      // Remove toast between application switches
+      toast.dismiss();
       removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
     } else {
       dispatch(setCurrentApplication(application));
+      // Remove toast between application switches
+      toast.dismiss();
       /* istanbul ignore next */
       client.create(applicationNode || application.serviceURLs[0]);
     }
