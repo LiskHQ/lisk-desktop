@@ -4,7 +4,7 @@ import { useCurrentAccount } from '@account/hooks';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCommandSchema } from '@network/hooks';
 import { mockCommandParametersSchemas } from '@common/__fixtures__';
-import {useValidatorRewardsWithToken} from "@pos/reward/hooks/queries/useValidatorRewardsWithToken";
+import { useValidatorRewardsWithToken } from '@pos/reward/hooks/queries/useValidatorRewardsWithToken';
 
 jest.useRealTimers();
 

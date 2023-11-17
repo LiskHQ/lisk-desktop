@@ -45,7 +45,12 @@ const useNonceSync = () => {
       if (isMultiSig) {
         const currentAccountNonce = getNonceByAccount(currentAccountAddress, networkChainIDKey);
         const localNonce = BigInt(Math.max(currentAccountNonce, Number(accountNonce))) + BigInt(1);
-        setNonceByAccount(currentAccountAddress, localNonce.toString(), transactionHex, networkChainIDKey);
+        setNonceByAccount(
+          currentAccountAddress,
+          localNonce.toString(),
+          transactionHex,
+          networkChainIDKey
+        );
       }
     },
     [isMultiSig, networkChainIDKey]

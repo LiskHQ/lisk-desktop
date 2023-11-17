@@ -166,7 +166,7 @@ export const illustrations = {
   emptyValidatorsIllustration,
   emptyWalletConnectionsIllustration,
   emptyStakingQueueIllustration,
-  liskMigrationIllustration
+  liskMigrationIllustration,
 };
 
 const Illustration = ({ name, className, noTheme, ...props }) => {

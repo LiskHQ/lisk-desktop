@@ -39,7 +39,7 @@ const RegisterMultisigView = ({ history }) => {
         onChange={onMultiStepChange}
       >
         <Form authQuery={authQuery} />
-        <Summary authQuery={authQuery}/>
+        <Summary authQuery={authQuery} />
         <TxSignatureCollector />
         <Status authQuery={authQuery} />
       </MultiStep>
