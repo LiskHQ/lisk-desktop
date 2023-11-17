@@ -32,9 +32,7 @@ const Members = ({ members = [], t, isMultisignature, isRegisterMultisigature })
 
   return (
     <div className={styles.membersContainer}>
-      <p>
-        {isMultisignature && isRegisterMultisigature ? t('Registering members') : t('Members')}
-      </p>
+      <p>{isMultisignature && isRegisterMultisigature ? t('Registering members') : t('Members')}</p>
       <div>
         {leftColumn.map((member, i) => (
           <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />
