@@ -16,7 +16,7 @@ import { useMyTransactions } from '@transaction/hooks/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import Badge from '@common/components/badge';
 import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
-import { INSUFFICENT_TOKEN_BALANCE_MESSAGE } from 'src/modules/common/constants';
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
@@ -35,22 +35,19 @@ function ClaimRewardsDialogButton({ address }) {
   const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
   const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
 
-  const getInSufficientBalanceMessage = () => {
-    if (!hasSufficientBalanceForFee) {
-      return {
-        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
-      };
-    }
-
-    return {};
-  };
   const hasClaimableRewards =
     rewardsClaimable?.data?.length &&
     rewardsClaimable?.data?.reduce((acc, curr) => BigInt(curr.reward) + acc, BigInt(0)) > BigInt(0);
 
   return (
     <DialogLink
-      data={{ ...getInSufficientBalanceMessage() }}
+      data={{
+        ...getTokenBalanceErrorMessage({
+          hasSufficientBalanceForFee,
+          feeTokenSymbol: feeToken?.symbol,
+          t,
+        }),
+      }}
       component={hasSufficientBalanceForFee ? 'claimRewardsView' : 'noTokenBalance'}
     >
       <SecondaryButton disabled={!hasClaimableRewards}>
@@ -66,19 +63,15 @@ function UnlockDialogButton({ hasUnlocks }) {
 
   const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
 
-  const getInSufficientBalanceMessage = () => {
-    if (!hasSufficientBalanceForFee) {
-      return {
-        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
-      };
-    }
-
-    return {};
-  };
-
   return (
     <DialogLink
-      data={{ ...getInSufficientBalanceMessage() }}
+      data={{
+        ...getTokenBalanceErrorMessage({
+          hasSufficientBalanceForFee,
+          feeTokenSymbol: feeToken?.symbol,
+          t,
+        }),
+      }}
       component={hasSufficientBalanceForFee ? 'lockedBalance' : 'noTokenBalance'}
     >
       <PrimaryButton disabled={!hasUnlocks}>{t('Unlock stakes')}</PrimaryButton>

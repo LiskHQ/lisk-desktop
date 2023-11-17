@@ -10,7 +10,7 @@ import { accountMenu } from '@account/const';
 import { useAuth } from '@auth/hooks/queries';
 import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
 import { useValidateFeeBalance } from 'src/modules/token/fungible/hooks/queries/useValidateFeeBalance';
-import { INSUFFICENT_TOKEN_BALANCE_MESSAGE } from 'src/modules/common/constants';
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 
 // eslint-disable-next-line max-statements
 const AccountMenuListing = ({ className, onItemClicked }) => {
@@ -41,22 +41,6 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
     return { component, data };
   }
 
-  const getInSufficientBalanceMessage = () => {
-    if (!hasAvailableTokenBalance) {
-      return {
-        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.registerMultiSignature,
-      };
-    }
-
-    if (!hasSufficientBalanceForFee) {
-      return {
-        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
-      };
-    }
-
-    return {};
-  };
-
   return (
     <ul className={className}>
       {accountMenu({
@@ -65,7 +49,12 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
         address,
         hasNetworkError,
         isLoadingNetwork,
-        insuffientBalanceMessage: getInSufficientBalanceMessage(),
+        insuffientBalanceMessage: getTokenBalanceErrorMessage({
+          hasAvailableTokenBalance,
+          hasSufficientBalanceForFee,
+          feeTokenSymbol: feeToken?.symbol,
+          t,
+        }),
       }).map(
         ({ path, icon, label, component, isHidden, data }) =>
           !isHidden && (

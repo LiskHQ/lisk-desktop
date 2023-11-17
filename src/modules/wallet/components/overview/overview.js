@@ -18,7 +18,7 @@ import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { INSUFFICENT_TOKEN_BALANCE_MESSAGE } from 'src/modules/common/constants';
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 import { useAuth } from '@auth/hooks/queries';
 import routes from 'src/routes/routes';
 import styles from './overview.css';
@@ -104,20 +104,6 @@ const Overview = ({ isWalletRoute, history }) => {
 
   useEffect(showWarning, [isWalletRoute, host, address, pomHeights]);
 
-  const getInsufficientMessageValue = () => {
-    if (!hasTokenWithBalance) {
-      return { message: t('There are no tokens to send at this moment.') };
-    }
-
-    if (!hasSufficientBalanceForFee) {
-      return {
-        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
-      };
-    }
-
-    return {};
-  };
-
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
@@ -145,7 +131,12 @@ const Overview = ({ isWalletRoute, history }) => {
           </div>
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
             <DialogLink
-              data={getInsufficientMessageValue()}
+              data={getTokenBalanceErrorMessage({
+                hasSufficientBalanceForFee,
+                feeTokenSymbol: feeToken?.symbol,
+                hasAvailableTokenBalance: hasTokenWithBalance,
+                t,
+              })}
               component={
                 hasTokenWithBalance && hasSufficientBalanceForFee ? 'send' : 'noTokenBalance'
               }

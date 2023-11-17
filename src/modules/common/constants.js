@@ -115,16 +115,4 @@ export const INSUFFICENT_TOKEN_BALANCE_MESSAGE = {
   ),
   registerValidator: i18next.t('Token balance is not enough to register a validator profile'),
   stakeValidator: i18next.t('Token balance is not enough to stake a validator.'),
-  fees: (feeTokenSymbol) => {
-    console.log(
-      '>>>>',
-      feeTokenSymbol,
-      i18next.t('There are no {{feetokenSymbol}} tokens to pay for fees', {
-        feeTokenSymbol,
-      })
-    );
-    return i18next.t('There are no {{feetokenSymbol}} tokens to pay for fees', {
-      feeTokenSymbol,
-    });
-  },
 };

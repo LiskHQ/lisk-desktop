@@ -17,12 +17,13 @@ import useFilter from '@common/hooks/useFilter';
 import DialogLink from '@theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
 import Icon from '@theme/Icon';
-import { INFO_BANNERS, INSUFFICENT_TOKEN_BALANCE_MESSAGE } from '@common/constants';
+import { INFO_BANNERS } from '@common/constants';
 import { ROUND_LENGTH } from '@pos/validator/consts';
 import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import SwippableInfoBanner from '@common/components/infoBanner/swippableInfoBanner';
 import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 import ValidatorsOverview from '../Overview/ValidatorsOverview';
 import GeneratingDetails from '../Overview/GeneratingDetails';
 import ValidatorsTable from '../ValidatorsTable';
@@ -39,22 +40,6 @@ const ValidatorActionButton = ({ address, isValidator }) => {
 
   const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
 
-  const getInSufficientBalanceMessage = () => {
-    if (!hasTokenBalances) {
-      return {
-        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.registerValidator,
-      };
-    }
-
-    if (!hasSufficientBalanceForFee) {
-      return {
-        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
-      };
-    }
-
-    return {};
-  };
-
   if (!address) return null;
 
   if (isValidator) {
@@ -67,7 +52,14 @@ const ValidatorActionButton = ({ address, isValidator }) => {
 
   return (
     <DialogLink
-      data={{ ...getInSufficientBalanceMessage() }}
+      data={{
+        ...getTokenBalanceErrorMessage({
+          hasSufficientBalanceForFee,
+          feeTokenSymbol: feeToken?.symbol,
+          hasAvailableTokenBalance: hasTokenBalances,
+          t,
+        }),
+      }}
       component={
         hasTokenBalances && hasSufficientBalanceForFee ? 'registerValidator' : 'noTokenBalance'
       }

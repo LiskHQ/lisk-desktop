@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import DialogLink from 'src/theme/dialog/link';
 import { selectStaking } from 'src/redux/selectors';
 import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
-import { INSUFFICENT_TOKEN_BALANCE_MESSAGE } from 'src/modules/common/constants';
-
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useSentStakes } from '../../hooks/queries';
 
@@ -27,27 +26,16 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, h
 
   const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
 
-  const getInSufficientBalanceMessage = () => {
-    if (!hasTokenBalance) {
-      return {
-        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.stakeValidator,
-      };
-    }
-
-    if (!hasSufficientBalanceForFee) {
-      return {
-        message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.fees(feeToken?.symbol),
-      };
-    }
-
-    return {};
-  };
-
   return (
     <DialogLink
       data={{
         validatorAddress: address,
-        ...getInSufficientBalanceMessage(),
+        ...getTokenBalanceErrorMessage({
+          hasSufficientBalanceForFee,
+          feeTokenSymbol: feeToken?.symbol,
+          hasAvailableTokenBalance: hasTokenBalance,
+          t,
+        }),
       }}
       component={hasTokenBalance && hasSufficientBalanceForFee ? 'editStake' : 'noTokenBalance'}
     >
