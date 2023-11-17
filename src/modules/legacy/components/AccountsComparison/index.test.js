@@ -85,7 +85,7 @@ describe('Reclaim balance screen', () => {
     wrapper.find('.link').at(0).simulate('click');
     expect(window.open).toHaveBeenNthCalledWith(
       1,
-      'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
+      'https://lisk.com/blog/posts/reclaiming-a-lisk-account',
       '_blank',
       'rel=noopener noreferrer'
     );
