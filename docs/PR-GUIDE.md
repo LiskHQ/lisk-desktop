@@ -15,7 +15,6 @@
 
 - The PR has an issue.
 - All conflicts are resolved.
-- The PR follows our [Test guide](/docs/TEST_GUIDE.md).
 - The PR follows our [CSS guide](/docs/CSS_GUIDE.md).
 
 When you're done, submit a pull request and one of the maintainers will check it out. You will be informed if there are any problems or changes that may need to be considered.
