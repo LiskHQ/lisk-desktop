@@ -2,7 +2,7 @@ import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { calculateRemainingAndSignedMembers } from '@wallet/utils/account';
 
-function getRemainingTxParamMembers(transactionJSON, isRegisterMultisignature) {
+export function getRemainingTxParamMembers(transactionJSON, isRegisterMultisignature) {
   const transactionParamKeys = {
     optionalKeys: transactionJSON.params.optionalKeys || [],
     mandatoryKeys: transactionJSON.params.mandatoryKeys || [],
@@ -46,6 +46,14 @@ function getRemainingMember(members, getAccountByPublicKey) {
   return remainingMember;
 }
 
+export function isEditRegisterMultisignature(transactionJSON, txInitiatorAccount) {
+  const isRegisterMultisignature =
+    joinModuleAndCommand(transactionJSON) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+
+  const isMultiSignatureAccount = txInitiatorAccount?.numberOfSignatures > 0;
+  return isRegisterMultisignature && isMultiSignatureAccount;
+}
+
 // eslint-disable-next-line complexity,max-statements
 export const getNextAccountToSign = ({
   getAccountByPublicKey,
@@ -58,7 +66,10 @@ export const getNextAccountToSign = ({
     joinModuleAndCommand(transactionJSON) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   const isMultiSignatureAccount = txInitiatorAccount?.numberOfSignatures > 0;
-  const isEditRegisterMultiSignature = isRegisterMultisignature && isMultiSignatureAccount;
+  const isEditRegisterMultiSignature = isEditRegisterMultisignature(
+    transactionJSON,
+    txInitiatorAccount
+  );
 
   const remainingTxParamMembers = getRemainingTxParamMembers(
     transactionJSON,
