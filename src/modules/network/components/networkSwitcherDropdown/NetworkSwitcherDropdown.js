@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import MenuSelect from '@wallet/components/MenuSelect';
 import Icon from '@theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
@@ -70,6 +71,8 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
               setValue(selectedNetwork);
 
               dispatch(stakesReset());
+              // Remove toast between network switches
+              toast.dismiss();
               removeSearchParamsFromUrl(history, ['modal']);
             };
             const state = createConfirmSwitchState({
@@ -87,6 +90,8 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
           } else {
             dispatch(stakesReset());
             setValue(selectedNetwork);
+            // Remove toast between network switches
+            toast.dismiss();
           }
         }
       });

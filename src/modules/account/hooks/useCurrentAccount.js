@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { selectCurrentAccount } from '@account/store/selectors';
 import { selectStaking } from 'src/redux/selectors';
 import { stakesReset } from '@pos/validator/store/actions/staking';
@@ -22,6 +23,7 @@ export function useCurrentAccount() {
   const switchAccount = ({ encryptedAccount, relativeUrlPath, redirect, urlState }) => {
     dispatch(setCurrentAccount(encryptedAccount));
     dispatch(stakesReset());
+    toast.dismiss();
     if (redirect) {
       if (urlState) {
         const { pathname, search } = new URL(relativeUrlPath, window.location.origin);
@@ -60,6 +62,7 @@ export function useCurrentAccount() {
       switchAccount({ encryptedAccount, relativeUrlPath, redirect, urlState });
     }
   };
+
   const currentAccount = useSelector(selectCurrentAccount);
 
   return [currentAccount, setAccount];
