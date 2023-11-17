@@ -18,19 +18,19 @@ export const TransactionID = ({ id }) => (
 );
 
 export const BlockHeight = ({ height, id }) => (
-  <div className={`event-hash ${styles.blockHeight} ${grid['col-xs-2']}`}>
+  <div className={`event-block-height ${styles.blockHeight} ${grid['col-xs-2']}`}>
     <Link to={`/block?id=${id}`}>{height}</Link>
   </div>
 );
 
 export const EventName = ({ name, isWallet }) => (
-  <div className={`${grid[`col-xs-${isWallet ? 3 : 4}`]} event-action ${styles.eventAction}`}>
+  <div className={`${grid[`col-xs-${isWallet ? 3 : 4}`]} event-name ${styles.eventAction}`}>
     {name || '-'}
   </div>
 );
 
 export const EventModule = ({ module, isWallet }) => (
-  <div className={`${grid[`col-xs-${isWallet ? 3 : 4}`]} event-action ${styles.eventAction}`}>
+  <div className={`${grid[`col-xs-${isWallet ? 3 : 4}`]} event-module ${styles.eventAction}`}>
     {module || '-'}
   </div>
 );

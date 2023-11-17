@@ -107,7 +107,7 @@ const TransactionEvents = ({ address, transactionID = '', blockID = '', isWallet
           isLoading={isFetching}
           row={TransactionEventRow}
           header={header(t, isWallet)}
-          headerClassName={styles.tableHeader}
+          headerClassName={`${styles.tableHeader} transaction-events-header`}
           canLoadMore={hasNextPage}
           loadData={fetchNextPage}
           additionalRowProps={{

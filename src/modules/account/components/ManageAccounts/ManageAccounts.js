@@ -52,7 +52,7 @@ export const ManageAccountsContent = ({
       <div className={styles.headerWrapper}>
         <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
       </div>
-      <Box className={styles.accountListWrapper}>
+      <Box className={`${styles.accountListWrapper} account-list-wrapper`}>
         <>
           {accounts.map((account) => (
             <AccountRow
