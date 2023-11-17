@@ -683,7 +683,7 @@
   "There are no transactions for this block.": "There are no transactions for this block.",
   "There are no transactions for this chain.": "There are no transactions for this chain.",
   "There are no transactions requested from Lisk Desktop yet.": "There are no transactions requested from Lisk Desktop yet.",
-  "There are no {{feeTokenSymbol}} tokens to pay for fees": "There are no {{feeTokenSymbol}} tokens to pay for fees",
+  "There are no {{feeTokenSymbol}} tokens to pay for fees.": "There are no {{feeTokenSymbol}} tokens to pay for fees.",
   "There was an error signing your transaction. please close this dialog and try again.": "There was an error signing your transaction. please close this dialog and try again.",
   "This account does not have any staker for the given address.": "This account does not have any staker for the given address.",
   "This account does not have any stakers.": "This account does not have any stakers.",
