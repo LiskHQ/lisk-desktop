@@ -12,7 +12,7 @@ describe('Reclaim balance Introduction screen', () => {
     const wrapper = mount(<Introduction {...props} />);
     wrapper.find('.link').first().simulate('click');
     expect(window.open).toHaveBeenCalledWith(
-      'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration',
+      'https://lisk.com/blog/posts/announcing-lisk-mainnet-v4-migration',
       '_blank',
       'rel=noopener noreferrer'
     );

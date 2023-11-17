@@ -1,4 +1,6 @@
-# How to use the Ledger hardware wallet
+# How to use the Ledger hardware wallet (Dev Mode)
+
+Note: This guide is only for development purpose, for production usage please download the Lisk App from Ledger Live.
 
 ## Step 1: Manually add the Lisk ledger app to your Ledger hardware wallet
 
