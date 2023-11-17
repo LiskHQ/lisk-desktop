@@ -15,6 +15,8 @@ import {
   truncateTransactionID,
   extractAddressFromPublicKey,
 } from '@wallet/utils/account';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import { useNetworkSupportedTokens } from '@token/fungible/hooks/queries';
 import Spinner from 'src/theme/Spinner';
 import routes from 'src/routes/routes';
 import { getModuleCommandTitle } from '@transaction/utils';
@@ -147,7 +149,9 @@ export const Date = ({ t }) => {
 
 export const Amount = () => {
   const { data, token } = useContext(TransactionRowContext);
-  return <span className={styles.amount}>{getTransactionValue(data, token)}</span>;
+  const [currentApplication] = useCurrentApplication();
+  const { data: appsMetaTokens } = useNetworkSupportedTokens(currentApplication);
+  return <span className={styles.amount}>{getTransactionValue(data, token, appsMetaTokens)}</span>;
 };
 
 export const Fee = ({ t }) => {
