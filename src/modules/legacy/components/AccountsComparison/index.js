@@ -75,7 +75,7 @@ const AccountsComparison = ({ t }) => {
                     className={`${styles.link} link`}
                     onClick={() => {
                       window.open(
-                        'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
+                        'https://lisk.com/blog/posts/reclaiming-a-lisk-account',
                         '_blank',
                         'rel=noopener noreferrer'
                       );
