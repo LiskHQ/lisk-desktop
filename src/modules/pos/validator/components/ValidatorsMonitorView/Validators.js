@@ -39,7 +39,7 @@ const ValidatorActionButton = ({ address, isValidator }) => {
 
   const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
 
-  const getInSuffienctBalanceMessage = () => {
+  const getInSufficientBalanceMessage = () => {
     if (!hasTokenBalances) {
       return {
         message: t('Token balance is not enough to stake a validator.'),
@@ -67,7 +67,7 @@ const ValidatorActionButton = ({ address, isValidator }) => {
 
   return (
     <DialogLink
-      data={{ ...getInSuffienctBalanceMessage() }}
+      data={{ ...getInSufficientBalanceMessage() }}
       component={
         hasTokenBalances && hasSufficientBalanceForFee ? 'registerValidator' : 'noTokenBalance'
       }

@@ -34,7 +34,7 @@ function ClaimRewardsDialogButton({ address }) {
   const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
   const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
 
-  const getInSuffienctBalanceMessage = () => {
+  const getInSufficientBalanceMessage = () => {
     if (!hasSufficientBalanceForFee) {
       return {
         message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
@@ -49,7 +49,7 @@ function ClaimRewardsDialogButton({ address }) {
 
   return (
     <DialogLink
-      data={{ ...getInSuffienctBalanceMessage() }}
+      data={{ ...getInSufficientBalanceMessage() }}
       component={hasSufficientBalanceForFee ? 'claimRewardsView' : 'noTokenBalance'}
     >
       <SecondaryButton disabled={!hasClaimableRewards}>
@@ -65,7 +65,7 @@ function UnlockDialogButton({ hasUnlocks }) {
 
   const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
 
-  const getInSuffienctBalanceMessage = () => {
+  const getInSufficientBalanceMessage = () => {
     if (!hasSufficientBalanceForFee) {
       return {
         message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
@@ -77,7 +77,7 @@ function UnlockDialogButton({ hasUnlocks }) {
 
   return (
     <DialogLink
-      data={{ ...getInSuffienctBalanceMessage() }}
+      data={{ ...getInSufficientBalanceMessage() }}
       component={hasSufficientBalanceForFee ? 'lockedBalance' : 'noTokenBalance'}
     >
       <PrimaryButton disabled={!hasUnlocks}>{t('Unlock stakes')}</PrimaryButton>

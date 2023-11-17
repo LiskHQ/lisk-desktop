@@ -40,7 +40,7 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
     return { component, data };
   }
 
-  const getInSuffienctBalanceMessage = () => {
+  const getInSufficientBalanceMessage = () => {
     if (!hasAvailableTokenBalance) {
       return {
         message: t('Token balance is not enough to register a multisignature account.'),
@@ -49,7 +49,9 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
 
     if (!hasSufficientBalanceForFee) {
       return {
-        message: t(`There are no ${feeToken?.symbol} tokens to pay for fees`),
+        message: t('There are no {{feetokenSymbol}} tokens to pay for fees', {
+          feeTokenSymbol: feeToken?.symbol,
+        }),
       };
     }
 
@@ -64,7 +66,7 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
         address,
         hasNetworkError,
         isLoadingNetwork,
-        insuffientBalanceMessage: getInSuffienctBalanceMessage(),
+        insuffientBalanceMessage: getInSufficientBalanceMessage(),
       }).map(
         ({ path, icon, label, component, isHidden, data }) =>
           !isHidden && (

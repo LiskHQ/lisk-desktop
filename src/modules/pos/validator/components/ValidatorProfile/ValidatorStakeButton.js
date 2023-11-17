@@ -26,7 +26,7 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, h
 
   const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
 
-  const getInSuffienctBalanceMessage = () => {
+  const getInSufficientBalanceMessage = () => {
     if (!hasTokenBalance) {
       return {
         message: t('Token balance is not enough to stake a validator.'),
@@ -46,7 +46,7 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, h
     <DialogLink
       data={{
         validatorAddress: address,
-        ...getInSuffienctBalanceMessage(),
+        ...getInSufficientBalanceMessage(),
       }}
       component={hasTokenBalance && hasSufficientBalanceForFee ? 'editStake' : 'noTokenBalance'}
     >
