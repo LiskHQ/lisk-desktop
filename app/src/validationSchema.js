@@ -30,7 +30,7 @@ export const requestTokenSchema = {
     reference: {
       dataType: 'string',
       minLength: 0,
-      maxLength: 20,
+      maxLength: 64,
     },
   },
 };

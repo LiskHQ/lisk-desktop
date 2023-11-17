@@ -9,7 +9,7 @@
   }
 
   & > div:last-child {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 }
 

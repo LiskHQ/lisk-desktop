@@ -5,6 +5,7 @@
   display: block;
   padding: 0 var(--horizontal-padding-l);
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 .wrapper {

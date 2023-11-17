@@ -51,7 +51,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep, history }) => 
     lastCertificateHeight,
     lastUpdated,
     projectPage,
-    depositedLsk = 0,
+    escrowedLSK = "0",
   } = application;
 
   const reloadAppDetails = () => {
@@ -182,7 +182,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep, history }) => 
             <div className={styles.balanceRow}>
               <span>{t('Deposited:')}</span>
               <span>
-                <TokenAmount isLsk val={depositedLsk} />
+                <TokenAmount isLsk val={escrowedLSK} />
               </span>
             </div>
           )}

@@ -17,7 +17,7 @@ const Introduction = ({ t, nextStep }) => (
         className={styles.link}
         onClick={() => {
           window.open(
-            'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration',
+            'https://lisk.com/blog/posts/announcing-lisk-mainnet-v4-migration',
             '_blank',
             'rel=noopener noreferrer'
           );

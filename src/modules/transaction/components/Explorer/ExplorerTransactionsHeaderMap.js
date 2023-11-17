@@ -3,7 +3,7 @@ import styles from './ExplorerTransactions.css';
 
 export default (t, activeToken, changeSort) => [
   {
-    title: t('Recipient'),
+    title: t('Sender'),
     classList: `${grid['col-xs-3']} ${styles.transactionTitle}`,
   },
   {
