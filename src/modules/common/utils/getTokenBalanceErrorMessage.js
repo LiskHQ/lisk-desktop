@@ -14,7 +14,7 @@ export function getTokenBalanceErrorMessage({
 
   if (!hasSufficientBalanceForFee) {
     return {
-      message: t('There are no {{feeTokenSymbol}} tokens to pay for fees', {
+      message: t('There are no {{feeTokenSymbol}} tokens to pay for fees.', {
         feeTokenSymbol,
       }),
     };
