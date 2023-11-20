@@ -54,6 +54,7 @@ const ValidatorActionButton = ({ address, isValidator }) => {
     <DialogLink
       data={{
         ...getTokenBalanceErrorMessage({
+          errorType: 'registerValidator',
           hasSufficientBalanceForFee,
           feeTokenSymbol: feeToken?.symbol,
           hasAvailableTokenBalance: hasTokenBalances,

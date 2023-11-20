@@ -132,6 +132,7 @@ const Overview = ({ isWalletRoute, history }) => {
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
             <DialogLink
               data={getTokenBalanceErrorMessage({
+                errorType: 'sendToken',
                 hasSufficientBalanceForFee,
                 feeTokenSymbol: feeToken?.symbol,
                 hasAvailableTokenBalance: hasTokenWithBalance,
