@@ -11,6 +11,7 @@ import { useCurrentAccount } from '@account/hooks';
 import useNonceSync from '@auth/hooks/useNonceSync';
 import HWSigning from '@hardwareWallet/components/HWSigning/HWSigning';
 import { TRANSACTION_SIGNING_TYPES } from 'src/modules/wallet/configuration/constants';
+import { getRemainingTxParamMembers } from '@transaction/utils/multisignatureUtils';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand, fromTransactionJSON, encodeTransaction } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
@@ -109,12 +110,14 @@ const TxSignatureCollector = ({
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) => {
-    if (type !== TRANSACTION_SIGNING_TYPES.MESSAGE) {
+    if (type !== TRANSACTION_SIGNING_TYPES.MESSAGE && isRegisterMultisignature) {
       const paramsSchema = moduleCommandSchemas[moduleCommand];
       const transaction = fromTransactionJSON(transactionJSON, paramsSchema);
       const buffer = encodeTransaction(transaction, paramsSchema);
       const transactionHex = cryptography.utils.hash(buffer).toString('hex');
-      if (isTransactionAuthor) {
+
+      const remainingTxParamMembers = getRemainingTxParamMembers(transactionJSON, true);
+      if (isTransactionAuthor && !isEmpty(remainingTxParamMembers)) {
         incrementNonce(transactionHex);
       }
     }

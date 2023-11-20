@@ -16,7 +16,9 @@ import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
+import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
 import { selectSearchParamValue } from 'src/utils/searchParams';
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 import { useAuth } from '@auth/hooks/queries';
 import routes from 'src/routes/routes';
 import styles from './overview.css';
@@ -61,6 +63,7 @@ const Overview = ({ isWalletRoute, history }) => {
     refetch,
   } = useTokenBalances({ config: { params: { address } } });
   const { data: myTokenBalances } = useTokenBalances();
+  const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
   const hasTokenWithBalance = myTokenBalances?.data?.some(
     (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
   );
@@ -128,12 +131,15 @@ const Overview = ({ isWalletRoute, history }) => {
           </div>
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
             <DialogLink
-              data={
-                !hasTokenWithBalance
-                  ? { message: t('There are no tokens to send at this moment.') }
-                  : {}
+              data={getTokenBalanceErrorMessage({
+                hasSufficientBalanceForFee,
+                feeTokenSymbol: feeToken?.symbol,
+                hasAvailableTokenBalance: hasTokenWithBalance,
+                t,
+              })}
+              component={
+                hasTokenWithBalance && hasSufficientBalanceForFee ? 'send' : 'noTokenBalance'
               }
-              component={hasTokenWithBalance ? 'send' : 'noTokenBalance'}
             >
               <PrimaryButton>{t('Send')}</PrimaryButton>
             </DialogLink>

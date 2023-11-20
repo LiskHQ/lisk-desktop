@@ -45,6 +45,7 @@ export function useCurrentApplication() {
       });
       removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
     } else {
+      dispatch(stakesReset());
       dispatch(setCurrentApplication(application));
       // Remove toast between application switches
       toast.dismiss();

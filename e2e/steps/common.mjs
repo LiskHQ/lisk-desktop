@@ -1,12 +1,9 @@
 /* eslint-disable new-cap, prefer-arrow-callback */
 import { Given, Then, When } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
-import routes from '../fixtures/routes.mjs';
 import { fixture } from '../fixtures/page.mjs';
 
 const initAccountSetup = async function (passphrase, browserFixture) {
-  await browserFixture.page.goto(`${process.env.PW_BASE_URL}${routes.wallet}`);
-  await browserFixture.page.getByText('Add account', { exact: true }).click();
   await browserFixture.page.getByText('Secret recovery phrase', { exact: true }).click();
 
   const phrases = passphrase.split(' ');
@@ -53,6 +50,13 @@ Given(
   }
 );
 
+Given('I select account {string} in switch account modal', async function (accountName) {
+  await fixture.page
+    .locator('.account-list-wrapper')
+    .getByText(accountName, { exact: true })
+    .click();
+});
+
 Given('I click on a button with text {string}', async function (buttonText) {
   await fixture.page.getByRole('button', { name: buttonText }).click();
 });
@@ -68,6 +72,10 @@ Then('Clipboard should contain {string}', async function (clipboardText) {
 
 Given('I click on an element with testId {string}', async function (testId) {
   await fixture.page.getByTestId(testId).click();
+});
+
+Given('I click on an element with class {string}', async function (className) {
+  await fixture.page.locator(`.${className}`).click();
 });
 
 Given('I click on text {string}', async function (text) {
@@ -95,6 +103,21 @@ Given('I wait for {string}', async function (timeout) {
 Then('I should see {string}', async function (textContent) {
   await expect(fixture.page.getByText(textContent, { exact: true })).toBeVisible();
 });
+
+Then('I should see {string} in element with testId {string}', async function (textContent, testId) {
+  await expect(
+    fixture.page.getByTestId(testId).getByText(textContent, { exact: true })
+  ).toBeVisible();
+});
+
+Then(
+  'I should see {string} in element with class {string}',
+  async function (textContent, className) {
+    await expect(
+      fixture.page.locator(`.${className}`).getByText(textContent, { exact: true })
+    ).toBeVisible();
+  }
+);
 
 Then('I should possibly see {string}', async function (textContent) {
   await expect(fixture.page.getByText(textContent)).toBeVisible();

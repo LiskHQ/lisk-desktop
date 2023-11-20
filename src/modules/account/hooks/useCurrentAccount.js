@@ -20,60 +20,46 @@ export function useCurrentAccount() {
     (stake) => stake.confirmed !== stake.unconfirmed
   );
 
+  const switchAccount = ({ encryptedAccount, relativeUrlPath, redirect, urlState }) => {
+    dispatch(setCurrentAccount(encryptedAccount));
+    dispatch(stakesReset());
+    toast.dismiss();
+    if (redirect) {
+      if (urlState) {
+        const { pathname, search } = new URL(relativeUrlPath, window.location.origin);
+        history.push({
+          pathname,
+          search,
+          state: urlState,
+        });
+      } else {
+        history.push(relativeUrlPath);
+      }
+    }
+  };
+
   // eslint-disable-next-line max-statements
   const setAccount = (encryptedAccount, referrer, redirect = true, urlState) => {
     // clear stakes list during login or accounts switch
     const relativeUrlPath = referrer || routes.wallet.path;
 
-    function pushUrlState() {
-      const { pathname, search } = new URL(relativeUrlPath, window.location.origin);
-      history.push({
-        pathname,
-        search,
-        state: urlState,
+    const showConfirmAccountSwitchDialog = pendingStakes.length && !urlState;
+
+    if (showConfirmAccountSwitchDialog) {
+      const onCancel = /* istanbul ignore next */ () =>
+        removeSearchParamsFromUrl(history, ['modal']);
+      const onConfirm = /* istanbul ignore next */ () => {
+        switchAccount({ encryptedAccount, relativeUrlPath, redirect, urlState });
+      };
+      const state = createConfirmSwitchState({
+        mode: 'pendingStakes',
+        type: 'account',
+        onCancel,
+        onConfirm,
       });
-    }
-
-    if (pendingStakes.length) {
-      if (urlState) {
-        dispatch(setCurrentAccount(encryptedAccount));
-        dispatch(stakesReset());
-        pushUrlState();
-      } else {
-        const onCancel = /* istanbul ignore next */ () =>
-          removeSearchParamsFromUrl(history, ['modal']);
-        const onConfirm = /* istanbul ignore next */ () => {
-          dispatch(setCurrentAccount(encryptedAccount));
-
-          dispatch(stakesReset());
-          // Remove toast between account switches
-          toast.dismiss();
-          history.push(relativeUrlPath);
-        };
-        const state = createConfirmSwitchState({
-          mode: 'pendingStakes',
-          type: 'account',
-          onCancel,
-          onConfirm,
-        });
-        removeThenAppendSearchParamsToUrl(
-          history,
-          { modal: 'confirmationDialog' },
-          ['modal'],
-          state
-        );
-      }
+      removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
     } else {
-      dispatch(setCurrentAccount(encryptedAccount));
-      // Remove toast between account switches
-      toast.dismiss();
-      if (redirect) {
-        if (urlState) {
-          pushUrlState();
-        } else {
-          history.push(relativeUrlPath);
-        }
-      }
+      switchAccount({ encryptedAccount, relativeUrlPath, redirect, urlState });
     }
   };
 

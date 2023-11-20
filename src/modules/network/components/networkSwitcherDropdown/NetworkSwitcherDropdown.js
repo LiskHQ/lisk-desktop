@@ -88,6 +88,7 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
               state
             );
           } else {
+            dispatch(stakesReset());
             setValue(selectedNetwork);
             // Remove toast between network switches
             toast.dismiss();
