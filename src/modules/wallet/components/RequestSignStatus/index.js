@@ -29,12 +29,21 @@ const successData = (t) => ({
   ),
 });
 
+const getStringifiedTransactionJSON = (signedTransaction) => {
+  const moduleCommand = joinModuleAndCommand(signedTransaction);
+  const paramSchema = moduleCommandSchemas[moduleCommand];
+  const transactionJSON = toTransactionJSON(signedTransaction, paramSchema);
+  return JSON.stringify(transactionJSON);
+};
+
+// eslint-disable-next-line max-statements
 const RequestSignStatus = (props) => {
   const { t } = useTranslation();
   const ref = useRef();
   const [copied, setCopied] = useState(false);
   const transactions = useSelector((state) => state.transactions);
   const { respond } = useSession();
+  const stringifiedTransactionJSON = getStringifiedTransactionJSON(transactions.signedTransaction);
 
   const data =
     !transactions.txSignatureError && transactions.signedTransaction?.signatures?.length
@@ -43,17 +52,15 @@ const RequestSignStatus = (props) => {
 
   const onCopy = () => {
     setCopied(true);
-    const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
-    const paramSchema = moduleCommandSchemas[moduleCommand];
-    const transactionJSON = toTransactionJSON(transactions.signedTransaction, paramSchema);
-    const payload = JSON.stringify(transactionJSON);
-    copyToClipboard(payload);
-    // inform to the application
-    respond({ payload });
+    copyToClipboard(stringifiedTransactionJSON);
     ref.current = setTimeout(() => setCopied(false), 1000);
   };
 
   useEffect(() => () => clearTimeout(ref.current), []);
+
+  useEffect(() => {
+    respond({ payload: stringifiedTransactionJSON });
+  }, []);
 
   return (
     <Box className={`${styles.wrapper} transaction-status`}>
