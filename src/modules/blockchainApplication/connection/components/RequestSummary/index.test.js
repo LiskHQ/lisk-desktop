@@ -214,4 +214,15 @@ describe('RequestSummary', () => {
     expect(screen.queryByText('Signature request')).toBeFalsy();
     expect(screen.queryByText('test app')).toBeFalsy();
   });
+
+  it('Should call history.push when clicking Add account', () => {
+    useAccounts.mockReturnValue({
+      getAccountByAddress: () => null,
+      accounts: mockSavedAccounts,
+    });
+    renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
+    const button = screen.getByText('Add account');
+    fireEvent.click(button);
+    expect(history.push).toHaveBeenCalled();
+  });
 });
