@@ -1,5 +1,5 @@
 import { getTransactionBaseFees } from '@transaction/api';
-import { mockTokensBalance, mockTokenSummary } from '@token/fungible/__fixtures__/mockTokens';
+import { mockAppsTokens, mockTokensBalance, mockTokenSummary } from '@token/fungible/__fixtures__/mockTokens';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -17,6 +17,7 @@ import {
   useGetMinimumMessageFee,
   useTokenBalances,
   useTokenSummary,
+  useValidateFeeBalance,
 } from '../../hooks/queries';
 import { useTransferableTokens } from '../../hooks';
 
@@ -62,6 +63,11 @@ useGetInitializationFees.mockReturnValue({
   data: { data: { escrowAccount: 165000, userAccount: 165000 } },
 });
 useGetMinimumMessageFee.mockReturnValue({ data: { data: { fee: 5000000 } } });
+useValidateFeeBalance.mockReturnValue({
+  hasSufficientBalanceForFee: true,
+  isLoading: false,
+  feeToken: mockAppsTokens.data[0],
+});
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,

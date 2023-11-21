@@ -114,5 +114,6 @@ export const INSUFFICENT_TOKEN_BALANCE_MESSAGE = {
     'Token balance is not enough to register a multisignature account.'
   ),
   registerValidator: i18next.t('Token balance is not enough to register a validator profile.'),
+  sendToken: i18next.t('There are no tokens to send at this moment.'),
   stakeValidator: i18next.t('Token balance is not enough to stake a validator.'),
 };
