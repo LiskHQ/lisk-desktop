@@ -4,11 +4,12 @@ export function getTokenBalanceErrorMessage({
   hasAvailableTokenBalance = true,
   hasSufficientBalanceForFee = true,
   feeTokenSymbol,
+  errorType,
   t,
 }) {
   if (!hasAvailableTokenBalance) {
     return {
-      message: INSUFFICENT_TOKEN_BALANCE_MESSAGE.registerMultiSignature,
+      message: INSUFFICENT_TOKEN_BALANCE_MESSAGE[errorType || 'sendToken'],
     };
   }
 

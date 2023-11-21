@@ -31,6 +31,7 @@ function ValidatorStakeButton({ address, isBanned, currentAddress, isDisabled, h
       data={{
         validatorAddress: address,
         ...getTokenBalanceErrorMessage({
+          errorType: 'stakeValidator',
           hasSufficientBalanceForFee,
           feeTokenSymbol: feeToken?.symbol,
           hasAvailableTokenBalance: hasTokenBalance,

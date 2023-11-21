@@ -11,7 +11,7 @@ import { validateAmount } from 'src/utils/validators';
 import styles from './TransactionPriority.css';
 
 const getCustomFeeStatus = ({ customFeeInput, minFee, minRequiredBalance, token }) => {
-  if (!customFeeInput || !token || !minRequiredBalance) return undefined;
+  if (!customFeeInput?.length || !token) return undefined;
 
   const { message } = validateAmount({
     amount: customFeeInput.toString(),
