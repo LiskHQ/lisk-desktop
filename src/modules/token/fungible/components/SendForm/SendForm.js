@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
+import { useHistory } from 'react-router-dom';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import AmountField from '@common/components/amountField';
 import TokenAmount from '@token/fungible/components/tokenAmount';
@@ -16,6 +17,8 @@ import {
 } from '@blockchainApplication/manage/hooks';
 import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import TxComposer from '@transaction/components/TxComposer';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
@@ -23,6 +26,7 @@ import { useTransferableTokens } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
 import styles from './form.css';
 import MessageField from '../MessageField';
+import { useTokenBalances, useValidateFeeBalance } from '../../hooks/queries';
 
 const getInitialData = (formProps, initialValue) => formProps?.params.data || initialValue || '';
 const getInitialAmount = (formProps, initialValue, token) =>
@@ -53,6 +57,7 @@ const getInitialToken = (transactionData, initialTokenId, tokens) => {
 // eslint-disable-next-line max-statements
 const SendForm = (props) => {
   const { prevState, t, bookmarks, nextStep } = props;
+  const history = useHistory();
   const [recipientChain, setRecipientChain] = useState({});
   const [token, setToken] = useState({});
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
@@ -75,6 +80,12 @@ const SendForm = (props) => {
     )
   );
   const { applications: managedApps } = useApplicationManagement();
+  const tokenBalanceQuery = useTokenBalances();
+  const {
+    hasSufficientBalanceForFee,
+    feeToken,
+    isLoading: isLoadingFeeBalance,
+  } = useValidateFeeBalance();
 
   const mainChainApplication = useMemo(
     () => managedApps.find(({ chainID }) => /0{4}$/.test(chainID)),
@@ -114,6 +125,26 @@ const SendForm = (props) => {
     const isTokenValid = !!token && !!Object.keys(token).length;
     return areFieldsValid && isTokenValid;
   }, [amount, recipient, reference, recipientChain, sendingChain, token]);
+
+  useEffect(() => {
+    if (!isLoadingFeeBalance && !tokenBalanceQuery.isLoading) {
+      const hasTokenWithBalance = tokenBalanceQuery.data?.data?.some(
+        (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
+      );
+
+      const tokenBalanceError = getTokenBalanceErrorMessage({
+        errorType: 'sendToken',
+        hasSufficientBalanceForFee,
+        feeTokenSymbol: feeToken?.symbol,
+        hasAvailableTokenBalance: hasTokenWithBalance,
+        t,
+      });
+
+      if (Object.values(tokenBalanceError).length) {
+        addSearchParamsToUrl(history, { modal: 'noTokenBalance', ...tokenBalanceError });
+      }
+    }
+  }, [isLoadingFeeBalance, tokenBalanceQuery.isLoading]);
 
   useEffect(() => {
     setToken(getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens));

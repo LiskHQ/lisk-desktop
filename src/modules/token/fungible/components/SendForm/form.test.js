@@ -35,6 +35,7 @@ import {
   useGetMinimumMessageFee,
   useTokenBalances,
   useTokenSummary,
+  useValidateFeeBalance,
 } from '../../hooks/queries';
 import { useTransferableTokens } from '../../hooks';
 
@@ -125,6 +126,12 @@ describe('Form', () => {
   useSettings.mockReturnValue({
     mainChainNetwork: { name: 'devnet' },
     toggleSetting: jest.fn(),
+  });
+
+  useValidateFeeBalance.mockReturnValue({
+    hasSufficientBalanceForFee: true,
+    isLoading: false,
+    feeToken: mockAppsTokens.data[0],
   });
 
   beforeEach(() => {
