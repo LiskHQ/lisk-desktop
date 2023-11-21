@@ -9,7 +9,7 @@ export function getTokenBalanceErrorMessage({
 }) {
   if (!hasAvailableTokenBalance) {
     return {
-      message: INSUFFICENT_TOKEN_BALANCE_MESSAGE[errorType || 'registerMultiSignature'],
+      message: INSUFFICENT_TOKEN_BALANCE_MESSAGE[errorType || 'sendToken'],
     };
   }
 
