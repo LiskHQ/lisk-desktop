@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import routes from 'src/routes/routes';
 import MultiStep from '@common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
