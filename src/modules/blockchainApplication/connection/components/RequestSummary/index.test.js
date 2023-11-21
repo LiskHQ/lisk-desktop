@@ -94,6 +94,7 @@ useEvents.mockReturnValue({
 
 describe('RequestSummary', () => {
   const reject = jest.fn();
+  const mockRespond = jest.fn();
   beforeEach(() => {
     useBlockchainApplicationMeta.mockReturnValue({
       data: {
@@ -114,7 +115,11 @@ describe('RequestSummary', () => {
   jest
     .spyOn(accountUtils, 'extractAddressFromPublicKey')
     .mockReturnValue(mockCurrentAccount.metadata.address);
-  useSession.mockReturnValue({ reject, sessionRequest: defaultContext.sessionRequest });
+  useSession.mockReturnValue({
+    reject,
+    sessionRequest: defaultContext.sessionRequest,
+    respond: mockRespond,
+  });
   codec.codec.decode.mockReturnValue({});
 
   it('Display the requesting app information', () => {
@@ -125,11 +130,11 @@ describe('RequestSummary', () => {
     expect(screen.getByRole('link')).toHaveAttribute('href', 'http://example.com');
   });
 
-  it('Reject the request if the reject button is clicked', () => {
+  it('Reject the request if the reject button is clicked', async () => {
     renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
     const button = screen.getAllByRole('button')[0];
     fireEvent.click(button);
-    expect(history.push).toHaveBeenCalled();
+    expect(mockRespond).toHaveBeenCalled();
   });
 
   it('Normalize the rawTx object and send it to the next step', () => {
