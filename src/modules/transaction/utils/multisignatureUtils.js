@@ -22,6 +22,7 @@ function getRemainingRootMembers(transactionJSON, txInitiatorAccount) {
     numberOfSignatures: txInitiatorAccount?.keys?.numberOfSignatures || 0,
   };
 
+  // TODO: This could lead to bug, as keys should be passed based on register/update multisignature logic over using multisig account to sign the transaction
   const { remaining: remainingRootMembers = [] } = calculateRemainingAndSignedMembers(
     accountKeys,
     transactionJSON,
