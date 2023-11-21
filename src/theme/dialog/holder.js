@@ -83,7 +83,7 @@ const DialogHolder = ({ history }) => {
       if (modalName !== 'reclaimBalance') {
         removeSearchParamsFromUrl(history, ['modal'], true);
       }
-      if (modalName === 'requestView') {
+      if (modalName === 'requestView' || modalName === 'requestSignMessageDialog') {
         const proposalEvents = events?.find((ev) => ev.name === EVENTS.SESSION_REQUEST);
         if (!isEmpty(proposalEvents)) {
           await respond({ event: proposalEvents, payload: USER_REJECT_ERROR });

@@ -14,6 +14,7 @@ import MultiStep from '@common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import SignedMessage from '@message/components/signedMessage';
 import { RequestSignMessageConfirmation } from '@blockchainApplication/connection/components/RequestSignMessageDialog/RequestSignMessageConfirmation';
+import { USER_REJECT_ERROR } from '@libs/wcm/utils/jsonRPCFormat';
 import styles from './RequestSignMessageDialog.css';
 import RequestSummary from '../RequestSummary';
 
@@ -23,7 +24,7 @@ const RequestSignMessageDialog = () => {
   const [isErrorView, setIsErrorView] = useState(false);
   const { t } = useTranslation();
   const { events } = useEvents();
-  const { sessionRequest } = useSession();
+  const { sessionRequest, respond } = useSession();
   const [currentAccount] = useCurrentAccount();
   const history = useHistory();
   const reduxDispatch = useDispatch();
@@ -52,12 +53,20 @@ const RequestSignMessageDialog = () => {
     reduxDispatch(emptyTransactionsData());
   }, []);
 
+  const onCloseIcon = async () => {
+    const isStatusView = multiStepPosition === 3;
+    if (!isStatusView) {
+      await respond({ payload: USER_REJECT_ERROR });
+    }
+  };
+
   return (
     <Dialog
       className={classNames(styles.RequestSignMessageDialog, {
         [styles.passwordStep]: isPasswordStep,
       })}
       hasClose
+      onCloseIcon={onCloseIcon}
       size={isErrorView && 'sm'}
     >
       {!isPasswordStep && !isErrorView && (

@@ -15,6 +15,13 @@ const MainRouter = ({ history }) => {
   const { events } = useEvents();
   const routesList = Object.keys(routes);
 
+  const showRequestModal = (modalName, event) => {
+    removeSearchParamsFromUrl(history, ['modal', 'eventId']);
+    setTimeout(() => {
+      addSearchParamsToUrl(history, { modal: modalName, eventId: event.meta.id });
+    }, 100);
+  };
+
   useEffect(() => {
     const event = events.length && events[events.length - 1];
 
@@ -22,12 +29,9 @@ const MainRouter = ({ history }) => {
       const method = event.meta?.params?.request?.method;
 
       if (method === 'sign_message') {
-        addSearchParamsToUrl(history, { modal: 'requestSignMessageDialog' });
+        showRequestModal('requestSignMessageDialog', event);
       } else {
-        removeSearchParamsFromUrl(history, ['modal', 'eventId']);
-        setTimeout(() => {
-          addSearchParamsToUrl(history, { modal: 'requestView', eventId: event.meta.id });
-        }, 100);
+        showRequestModal('requestView', event);
       }
     }
   }, [events]);
