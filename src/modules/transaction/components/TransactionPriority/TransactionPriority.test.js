@@ -70,6 +70,13 @@ describe('TransactionPriority', () => {
     expect(wrapper).toContainMatchingElement('.transaction-priority');
     expect(wrapper).toContainMatchingElement('.priority-selector');
     expect(wrapper).toContainMatchingElement('.fee-container');
+
+    const customProps = { ...props, minRequiredBalance: 0n };
+    wrapper = mount(<TransactionPriority {...customProps} />);
+
+    expect(wrapper).toContainMatchingElement('.transaction-priority');
+    expect(wrapper).toContainMatchingElement('.priority-selector');
+    expect(wrapper).toContainMatchingElement('.fee-container');
   });
 
   it('renders low, medium and high processing speed options', () => {
