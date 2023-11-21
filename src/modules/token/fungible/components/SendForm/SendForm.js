@@ -86,9 +86,6 @@ const SendForm = (props) => {
     feeToken,
     isLoading: isLoadingFeeBalance,
   } = useValidateFeeBalance();
-  const hasTokenWithBalance = tokenBalanceQuery.data?.data?.some(
-    (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
-  );
 
   const mainChainApplication = useMemo(
     () => managedApps.find(({ chainID }) => /0{4}$/.test(chainID)),
@@ -131,6 +128,10 @@ const SendForm = (props) => {
 
   useEffect(() => {
     if (!isLoadingFeeBalance && !tokenBalanceQuery.isLoading) {
+      const hasTokenWithBalance = tokenBalanceQuery.data?.data?.some(
+        (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
+      );
+
       const tokenBalanceError = getTokenBalanceErrorMessage({
         errorType: 'sendToken',
         hasSufficientBalanceForFee,
