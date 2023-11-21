@@ -4,6 +4,7 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 
 const DialogLink = ({ children, component, className, history, data }) => {
   const linkEl = useRef(null);
+
   const onClick = () => {
     addSearchParamsToUrl(history, { modal: component, ...data });
   };

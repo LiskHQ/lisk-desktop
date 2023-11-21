@@ -134,7 +134,7 @@ describe('SideBar', () => {
     );
     expect(wrapper.find('Badge.badge')).toExist();
   });
-  
+
   it('should render notification when there is a reward and the side bar is collapsed', () => {
     const Component = (props) => (
       <ApplicationBootstrapContext.Provider

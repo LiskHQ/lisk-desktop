@@ -11,9 +11,10 @@ import Heading from 'src/modules/common/components/Heading';
 import BoxHeader from 'src/theme/box/header';
 import Table from 'src/theme/table';
 import { useTheme } from 'src/theme/Theme';
-import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
-import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
-import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
+import { useNetworkSupportedTokens } from '@token/fungible/hooks/queries/useNetworkSupportedTokens';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import DateTimeFromTimestamp from '@common/components/timestamp';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import NotFound from './notFound';
 import styles from './styles.css';
 import TransactionEvents from '../TransactionEvents';
@@ -32,10 +33,9 @@ const TransactionDetails = () => {
   const [isParamsCollapsed, setIsParamsCollapsed] = useState(showParams);
   const { data: fees } = useFees();
   const feeTokenID = fees?.data?.feeTokenID;
-  const { data: token } = useAppsMetaTokens({
-    config: { params: { tokenID: feeTokenID }, options: { enabled: !!feeTokenID } },
-  });
-  const feeToken = token?.data[0];
+  const [currentApplication] = useCurrentApplication();
+  const { data: appsMetaTokens } = useNetworkSupportedTokens(currentApplication);
+  const feeToken = appsMetaTokens?.find((token) => token.tokenID === feeTokenID);
 
   const theme = useTheme();
   const jsonViewerTheme = theme === 'dark' ? 'tomorrow' : 'rjv-default';
@@ -86,7 +86,7 @@ const TransactionDetails = () => {
       },
       {
         label: t('Value'),
-        value: getTransactionValue(transactionData, feeToken),
+        value: getTransactionValue(transactionData, feeToken, appsMetaTokens),
       },
       {
         label: t('Date'),
@@ -128,15 +128,15 @@ const TransactionDetails = () => {
     ].filter((value) => value);
   }, [transactionData]);
 
-  if (error || (isEmpty(transactionMetaData) && !isFetching)) {
-    return <NotFound t={t} />;
-  }
-
   useEffect(() => {
     if (showParams && paramsJsonViewRef.current) paramsJsonViewRef.current.scrollIntoView();
 
     setIsParamsCollapsed(showParams);
   }, [showParams]);
+
+  if (error || (isEmpty(transactionMetaData) && !isFetching)) {
+    return <NotFound t={t} />;
+  }
 
   return (
     <div className={styles.wrapper}>

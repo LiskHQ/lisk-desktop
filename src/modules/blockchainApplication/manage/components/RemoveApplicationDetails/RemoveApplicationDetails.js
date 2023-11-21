@@ -51,7 +51,7 @@ const RemoveApplicationDetails = ({ location, onCancel, nextStep, history }) => 
     lastCertificateHeight,
     lastUpdated,
     projectPage,
-    escrowedLSK = "0",
+    escrowedLSK = '0',
   } = application;
 
   const reloadAppDetails = () => {
