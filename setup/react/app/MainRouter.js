@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-import { addSearchParamsToUrl } from 'src/utils/searchParams';
+import { addSearchParamsToUrl, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import routesMap from 'src/routes/routesMap';
@@ -24,7 +24,10 @@ const MainRouter = ({ history }) => {
       if (method === 'sign_message') {
         addSearchParamsToUrl(history, { modal: 'requestSignMessageDialog' });
       } else {
-        addSearchParamsToUrl(history, { modal: 'requestView' });
+        removeSearchParamsFromUrl(history, ['modal', 'eventId']);
+        setTimeout(() => {
+          addSearchParamsToUrl(history, { modal: 'requestView', eventId: event.meta.id });
+        }, 100);
       }
     }
   }, [events]);
