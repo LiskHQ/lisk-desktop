@@ -10,9 +10,6 @@ import RequestSummary from '../RequestSummary';
 import RequestView from './RequestView';
 
 jest.mock('@libs/wcm/hooks/usePairings');
-jest.mock('@libs/wcm/hooks/useSession', () => ({
-  respond: jest.fn(),
-}));
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn((str) => str),
 }));
