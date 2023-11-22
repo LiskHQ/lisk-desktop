@@ -40,7 +40,11 @@ const SignMultisigView = ({ history }) => {
   }
 
   return (
-    <Dialog hasClose className={styles.dialogWrapper} size={currentStep === 2 && 'sm'}>
+    <Dialog
+      hasClose
+      className={currentStep === 3 ? styles.dialogWrapper : undefined}
+      size={currentStep === 2 && 'sm'}
+    >
       <MultiStep
         key="sign-multisignature-transaction"
         finalCallback={closeModal}
@@ -72,7 +76,11 @@ function SignMultisigViewSimple({
   const formProps = { moduleCommand };
 
   return (
-    <Dialog hasClose className={styles.dialogWrapper} size={currentStep === 1 && 'sm'}>
+    <Dialog
+      hasClose
+      className={currentStep === 2 ? styles.dialogWrapper : undefined}
+      size={currentStep === 1 && 'sm'}
+    >
       <MultiStep
         key="sign-multisignature-transaction-short"
         finalCallback={closeModal}
