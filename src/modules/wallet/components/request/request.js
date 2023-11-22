@@ -101,7 +101,7 @@ const Request = () => {
               fieldName === 'recipientChain' ? field.value.chainID : field.value
             )}`
           : link;
-      }, `lisk://wallet?modal=send&recipient=${address}`),
+      }, `${LISK_DOMAIN}?recipient=${address}`),
     [address, state]
   );
 
