@@ -11,6 +11,7 @@ import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { statusMessages } from '@transaction/configuration/statusConfig';
 import getIllustration from '@transaction/components/TxBroadcaster/illustrationsMap';
 import Icon from '@theme/Icon';
+import { useSession } from '@libs/wcm/hooks/useSession';
 import styles from './signedMessage.css';
 
 const Error = ({ t, error, reset }) => {
@@ -56,11 +57,13 @@ const Success = ({ t, signature, copied, copy, onPrev }) => {
   );
 };
 
+// eslint-disable-next-line max-statements
 const SignedMessage = ({ signature, error, onPrev, reset }) => {
   const history = useHistory();
+  const ref = useRef();
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
-  const ref = useRef();
+  const { respond } = useSession();
 
   const copy = () => {
     setCopied(true);
@@ -68,6 +71,10 @@ const SignedMessage = ({ signature, error, onPrev, reset }) => {
   };
 
   useEffect(() => () => clearTimeout(ref.current), []);
+
+  useEffect(() => {
+    respond({ payload: error || signature });
+  }, []);
 
   if (error) {
     return <Error t={t} error={error} reset={reset} />;

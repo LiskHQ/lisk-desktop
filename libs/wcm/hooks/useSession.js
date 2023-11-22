@@ -72,8 +72,8 @@ export const useSession = ({ isEnabled = true } = {}) => {
     }
   }, []);
 
-  const respond = useCallback(async ({ payload }) => {
-    const requestEvent = events.find((e) => e.name === EVENTS.SESSION_REQUEST);
+  const respond = useCallback(async ({ payload, event }) => {
+    const requestEvent = event || events.find((e) => e.name === EVENTS.SESSION_REQUEST);
     const topic = requestEvent.meta.topic;
     const response = formatJsonRpcResult(requestEvent.meta.id, payload);
 
@@ -82,6 +82,8 @@ export const useSession = ({ isEnabled = true } = {}) => {
         topic,
         response,
       });
+      setSessionRequest(null);
+      removeEvent(requestEvent);
       return {
         status: STATUS.SUCCESS,
         data,

@@ -2,9 +2,23 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import accounts from '@tests/constants/wallets';
+import { useSession } from '@libs/wcm/hooks/useSession';
 import Status from '.';
 
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn((str) => str),
+}));
+jest.mock('@libs/wcm/hooks/useSession');
+
 describe('Sign Message: Status', () => {
+  const proposal = {};
+  const respond = jest.fn(() => ({
+    status: 'SUCCESS',
+    data: proposal,
+  }));
+
+  useSession.mockReturnValue({ respond });
+
   const baseProps = {
     account: accounts.genesis,
     t: (str) => str,
