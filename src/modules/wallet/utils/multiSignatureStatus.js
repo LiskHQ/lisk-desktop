@@ -49,7 +49,6 @@ export const getMultiSignatureStatus = ({
     };
 
     if (isRegisterMultisignature && isInitiatorAccountMultiSig) {
-      // TODO: This could lead to bug, as keys should be passed based on register/update multisignature logic over using multisig account to sign the transaction
       const { remaining: paramsTxSignaturesRemaining } = calculateRemainingAndSignedMembers(
         transactionKeys,
         transactionJSON,
