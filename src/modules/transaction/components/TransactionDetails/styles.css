@@ -160,10 +160,12 @@
 
 .signedAndRemainingMembersList {
   grid-area: signedAndRemainingMembersList;
+  width: 100%;
 }
 
 .signedAndRemainingSignatureList {
   grid-area: signedAndRemainingSignatureList;
+  width: 100%;
 }
 
 .genericParams {

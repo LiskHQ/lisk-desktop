@@ -172,7 +172,9 @@ const Multisignature = ({
     history.push(routes.wallet.path);
   };
 
-  useEffect(() => resetTransactionResult, []);
+  useEffect(() => {
+    resetTransactionResult();
+  }, []);
   useEffect(() => () => clearTimeout(ref.current), []);
 
   return (
@@ -201,7 +203,7 @@ const Multisignature = ({
           <AccountRow className={classNames(styles.accountRow)} account={nextAccountToSign} />
         </div>
       )}
-      {!nextAccountToSign && status.code !== txStatusTypes.multisigSignatureSuccess && (
+      {!nextAccountToSign && status.code === txStatusTypes.multisigSignaturePartialSuccess && (
         <TransactionDetailsContext.Provider
           value={{
             wallet: txInitiatorAccount,
