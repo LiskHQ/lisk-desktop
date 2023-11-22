@@ -54,6 +54,13 @@ export const formatJsonRpcError = (id, error) => ({
   error: formatErrorMessage(error),
 });
 
+export const USER_REJECT_ERROR = JSON.stringify({
+  error: {
+    code: 5000,
+    message: 'User rejected.',
+  },
+});
+
 export const formatJsonRpcResult = (id, result) => ({
   id,
   jsonrpc: '2.0',
