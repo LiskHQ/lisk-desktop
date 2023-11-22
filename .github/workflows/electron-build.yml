@@ -1,9 +1,6 @@
 name: 'electron-build'
 
-on:
-  push:
-    tags:
-      - v3.*
+on: push
 
 jobs:
   release:
