@@ -5,6 +5,9 @@ import accounts from '@tests/constants/wallets';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import Status from '.';
 
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn((str) => str),
+}));
 jest.mock('@libs/wcm/hooks/useSession');
 
 describe('Sign Message: Status', () => {
