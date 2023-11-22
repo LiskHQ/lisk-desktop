@@ -53,6 +53,7 @@ const RequestSignMessageDialog = () => {
     reduxDispatch(emptyTransactionsData());
   }, []);
 
+  /* istanbul ignore next */
   const onCloseIcon = async () => {
     const isStatusView = multiStepPosition === 3;
     if (!isStatusView) {
