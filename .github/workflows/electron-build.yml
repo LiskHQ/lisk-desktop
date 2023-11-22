@@ -71,6 +71,6 @@ jobs:
           github_token: ${{ secrets.github_token }}
         env:
           # macOS notarization API key
-          API_KEY: ${{ secrets.api_key }}
+          API_KEY: ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
