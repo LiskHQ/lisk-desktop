@@ -8,8 +8,10 @@ import { MODULE_COMMANDS_NAME_MAP } from './moduleCommand';
 
 export const statusMessages = (t) => ({
   [txStatusTypes.multisigSignaturePartialSuccess]: {
-    title: t('Your signature was successful'),
-    message: t('You can download or copy the transaction and share it with other members.'),
+    title: t('The transaction is partially signed'),
+    message: t(
+      'Your signature has been successfully included in the transaction. Kindly copy or download the partially signed transaction and share it with the remaining members to collect all required signatures before broadcasting.'
+    ),
   },
   [txStatusTypes.multisigSignatureSuccess]: {
     title: t('The transaction is now fully signed'),

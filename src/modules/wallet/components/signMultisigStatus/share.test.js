@@ -137,8 +137,9 @@ describe('Sign Multisignature Tx Status component', () => {
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'signMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS' },
-      title: 'Your signature was successful',
-      message: 'You can download or copy the transaction and share it with other members.',
+      title: 'The transaction is partially signed',
+      message:
+        'Your signature has been successfully included in the transaction. Kindly copy or download the partially signed transaction and share it with the remaining members to collect all required signatures before broadcasting.',
       className: 'content',
     });
   });
