@@ -49,8 +49,7 @@ jobs:
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
-          cat ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
-
+       
       - name: Install cpx
         if: startsWith(matrix.os, 'desktop-build')
         run: npm install -g cpx
@@ -72,5 +71,6 @@ jobs:
           github_token: ${{ secrets.github_token }}
         env:
           # macOS notarization API key
-          API_KEY_ID: ${{ secrets.api_key_id }}
-          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+          APPLE_API_KEY: ${{ secrets.API_k}}
+          APPLE_API_KEY_ID: ${{ secrets.API_kEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.API_KEY_ISSUER_ID }}
