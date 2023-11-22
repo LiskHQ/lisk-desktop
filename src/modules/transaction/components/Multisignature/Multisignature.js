@@ -172,9 +172,7 @@ const Multisignature = ({
     history.push(routes.wallet.path);
   };
 
-  useEffect(() => {
-    resetTransactionResult();
-  }, []);
+  useEffect(() => resetTransactionResult, []);
   useEffect(() => () => clearTimeout(ref.current), []);
 
   return (
