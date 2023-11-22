@@ -7,8 +7,7 @@ import Box from 'src/theme/box';
 import Icon from 'src/theme/Icon';
 import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import Illustration from '@common/components/illustration';
-import { joinModuleAndCommand, toTransactionJSON } from '@transaction/utils';
-import moduleCommandSchemas from '@tests/constants/schemas';
+import { toTransactionJSON } from '@transaction/utils';
 import styles from './styles.css';
 
 const errorData = (t) => ({
@@ -29,10 +28,8 @@ const successData = (t) => ({
   ),
 });
 
-const getStringifiedTransactionJSON = (signedTransaction) => {
-  const moduleCommand = joinModuleAndCommand(signedTransaction);
-  const paramSchema = moduleCommandSchemas[moduleCommand];
-  const transactionJSON = toTransactionJSON(signedTransaction, paramSchema);
+const getStringifiedTransactionJSON = (signedTransaction, schema) => {
+  const transactionJSON = toTransactionJSON(signedTransaction, schema);
   return JSON.stringify(transactionJSON);
 };
 
@@ -43,7 +40,10 @@ const RequestSignStatus = (props) => {
   const [copied, setCopied] = useState(false);
   const transactions = useSelector((state) => state.transactions);
   const { respond } = useSession();
-  const stringifiedTransactionJSON = getStringifiedTransactionJSON(transactions.signedTransaction);
+  const stringifiedTransactionJSON = getStringifiedTransactionJSON(
+    transactions.signedTransaction,
+    props.formProps.schema
+  );
 
   const data =
     !transactions.txSignatureError && transactions.signedTransaction?.signatures?.length
@@ -74,7 +74,7 @@ const RequestSignStatus = (props) => {
         >
           <span className={styles.buttonContent}>
             <Icon name="copy" />
-            <span>{copied ? t('Copied') : t('Copy signature')}</span>
+            <span>{copied ? t('Copied') : t('Copy signed transaction')}</span>
           </span>
         </PrimaryButton>
       )}
