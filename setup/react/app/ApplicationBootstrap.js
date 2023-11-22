@@ -109,7 +109,7 @@ const ApplicationBootstrap = ({ children }) => {
   useReduxStateModifier();
   const { data: rewardsData } = useRewardsClaimable({
     config: { params: { address: accountAddress } },
-    options: { enabled: !!accountAddress },
+    options: { enabled: !!accountAddress, refetchInterval: 300000 },
   });
 
   return (
