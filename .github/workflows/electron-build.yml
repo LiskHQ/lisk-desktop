@@ -53,16 +53,15 @@ jobs:
         with:
           build_script_name: pack:win
           github_token: ${{ secrets.github_token }}
-
+          
       - name: Build and pack mac app
         if: startsWith(matrix.os, 'macos')
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack
-          mac_certs: ${{ secrets.mac_certs }}
-          mac_certs_password: ${{ secrets.mac_certs_password }}
+          CSC_LINK: ${{ secrets.mac_certs }}
+          CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
           github_token: ${{ secrets.github_token }}
         env:
-          APPLE_ID: ${{ secrets.apple_id }}
-          APPLE_ID_PASSWORD: ${{ secrets.apple_app_specific_password }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.apple_app_specific_password }}
+          APPLEID: ${{ secrets.apple_id }}
+          APPLEIDPASS: ${{ secrets.apple_id_password }}
