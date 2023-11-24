@@ -61,7 +61,7 @@ const signTransaction = async ({ wallet: account, schema, chainID, transaction }
 /* eslint-disable max-statements, complexity */
 const updateTransactionSignatures = (wallet, senderAccount, transaction, signature, options) => {
   const { mandatoryKeys, optionalKeys } = senderAccount;
-  const isAccountMultisignature = mandatoryKeys.length + optionalKeys.length > 0;
+  const isAccountMultisignature = mandatoryKeys?.length + optionalKeys?.length > 0;
 
   // Add signature when signing from a regular account
   if (!isAccountMultisignature) {
