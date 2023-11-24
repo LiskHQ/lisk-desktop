@@ -23,6 +23,7 @@ import RequestWrapper from './requestWrapper';
 import styles from './request.css';
 import WalletVisual from '../walletVisual';
 
+const restrictedCharacters = ['&'];
 const requestInitState = {
   amount: {
     error: false,
@@ -90,7 +91,6 @@ const Request = () => {
   const networkSupportedTokens = useNetworkSupportedTokens(state.recipientChain.value);
   const { recipientChain, token, amount, reference } = state;
   const selectedToken = networkSupportedTokens.data?.find(({ tokenID }) => tokenID === token.value);
-
   const shareLink = useMemo(
     () =>
       Object.keys(state).reduce((link, fieldName) => {
@@ -104,7 +104,6 @@ const Request = () => {
       }, `lisk://wallet?modal=send&recipient=${address}`),
     [address, state]
   );
-
   const mainChainApplication = useMemo(
     () => applications.find(({ chainID }) => /0{4}$/.test(chainID)),
     [applications]
@@ -119,7 +118,7 @@ const Request = () => {
 
   const handleFieldChange = ({ target }) => {
     const byteCount = sizeOfString(target.value);
-    const error =
+    let error =
       target.name === 'amount'
         ? validateAmount({
             amount: target.value,
@@ -135,7 +134,19 @@ const Request = () => {
       target.value = leadingPoint.test(target.value) ? `0${target.value}` : target.value;
       feedback = error || feedback;
     } else if (target.name === 'reference' && byteCount > 0) {
-      feedback = t('{{length}} bytes left', { length: maxMessageLength - byteCount });
+      const hasRestirctedChar = restrictedCharacters.some((character) =>
+        target.value?.includes(character)
+      );
+
+      if (hasRestirctedChar) {
+        error = true;
+        feedback = `${restrictedCharacters.join(',')} ${
+          restrictedCharacters.length ? 'are' : 'is'
+        } restricted characters`;
+      } else {
+        error = false;
+        feedback = t('{{length}} bytes left', { length: maxMessageLength - byteCount });
+      }
     }
 
     dispatch({
@@ -143,8 +154,8 @@ const Request = () => {
         ...state[target.name],
         feedback,
         error: !!error,
-        value: target.value,
         loading: false,
+        value: target.value,
       },
     });
   };

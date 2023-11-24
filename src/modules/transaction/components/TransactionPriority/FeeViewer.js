@@ -18,7 +18,7 @@ const getCustomFeeStatus = ({ customFeeInput, minFee, minRequiredBalance, token 
     token,
     accountBalance: BigInt(token.availableBalance) - BigInt(minRequiredBalance),
     minValue: minFee,
-    checklist: ['FORMAT', 'ZERO', 'MAX_ACCURACY', 'FEE_RANGE', 'MAX_ACCURACY'],
+    checklist: ['FORMAT', 'ZERO', 'MAX_ACCURACY', 'FEE_RANGE'],
   });
 
   return message;
@@ -118,10 +118,9 @@ const FeesViewer = ({
     }));
 
     setCustomFee((state) => ({
-      value: {
-        ...state.value,
-        [label]: customFeeInput,
-      },
+      ...(!customFeeStatus && {
+        value: { ...state.value, [label]: customFeeInput },
+      }),
       feedback: { ...state.feedback, [label]: customFeeStatus },
       error: { ...state.error, [label]: !!customFeeStatus },
     }));
