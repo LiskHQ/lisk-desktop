@@ -118,10 +118,9 @@ const FeesViewer = ({
     }));
 
     setCustomFee((state) => ({
-      value: {
-        ...state.value,
-        [label]: customFeeInput,
-      },
+      ...(!customFeeStatus && {
+        value: { ...state.value, [label]: customFeeInput },
+      }),
       feedback: { ...state.feedback, [label]: customFeeStatus },
       error: { ...state.error, [label]: !!customFeeStatus },
     }));
