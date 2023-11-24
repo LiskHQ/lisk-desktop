@@ -234,7 +234,7 @@ const Multisignature = ({
         ) : null}
         {status.code !== txStatusTypes.broadcastSuccess &&
           status.code !== txStatusTypes.broadcastError &&
-          !nextAccountToSign && (
+          (!nextAccountToSign || status.code === txStatusTypes.multisigSignatureSuccess) && (
             <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
               <span className={styles.buttonContent}>
                 <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />
