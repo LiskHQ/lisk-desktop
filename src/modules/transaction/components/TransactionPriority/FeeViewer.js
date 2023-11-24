@@ -18,7 +18,7 @@ const getCustomFeeStatus = ({ customFeeInput, minFee, minRequiredBalance, token 
     token,
     accountBalance: BigInt(token.availableBalance) - BigInt(minRequiredBalance),
     minValue: minFee,
-    checklist: ['FORMAT', 'ZERO', 'MAX_ACCURACY', 'FEE_RANGE'],
+    checklist: ['FORMAT', 'ZERO', 'MAX_ACCURACY', 'FEE_RANGE', 'MAX_ACCURACY'],
   });
 
   return message;
