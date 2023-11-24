@@ -42,13 +42,6 @@ jobs:
       - name: Download fonts from S3
         run: |
           aws s3 sync s3://lisk-desktop-files/fonts ./setup/react/assets/fonts/
-
-      - name: Prepare for mac os app notarization
-        if: startsWith(matrix.os, 'macos')
-        # Import Apple API key for app notarization on macOS
-        run: |
-          mkdir -p ~/private_keys/
-          echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
        
       - name: Install cpx
         if: startsWith(matrix.os, 'desktop-build')
@@ -70,11 +63,6 @@ jobs:
           mac_certs_password: ${{ secrets.mac_certs_password }}
           github_token: ${{ secrets.github_token }}
         env:
-          # macOS notarization API key
-          #APPLE_API_KEY: ${{ secrets.api_key }}
-          #APPLE_API_KEY_ID: ${{ secrets.api_key_id }}
-          #APPLE_API_ISSUER: ${{ secrets.api_key_issuer_id }}
           APPLE_ID: ${{ secrets.apple_id }}
-          APPLE_ID_PASSWORD: ${{ secrets.apple_id_password }}
-          APPLEIDPASS: ${{ secrets.apple_id_password }}
-
+          APPLE_ID_PASSWORD: ${{ secrets.apple_app_specific_password }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.apple_app_specific_password }}
