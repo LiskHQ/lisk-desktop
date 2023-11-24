@@ -141,10 +141,9 @@ const Request = () => {
       if (hasRestirctedChar) {
         error = true;
         feedback = `${restrictedCharacters.join(',')} ${
-          restrictedCharacters.length > 1 ? 'are' : 'is'
+          restrictedCharacters.length > 1 ? 'are' : 'is a'
         } restricted characters`;
       } else {
-        error = false;
         feedback = t('{{length}} bytes left', { length: maxMessageLength - byteCount });
       }
     }
