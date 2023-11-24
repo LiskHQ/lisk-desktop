@@ -101,7 +101,7 @@ const Request = () => {
               fieldName === 'recipientChain' ? field.value.chainID : field.value
             )}`
           : link;
-      }, `${LISK_DOMAIN}?recipient=${address}`),
+      }, `${LISK_DOMAIN}/send?recipient=${address}`),
     [address, state]
   );
 
