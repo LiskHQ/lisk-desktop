@@ -141,7 +141,7 @@ const Request = () => {
       if (hasRestirctedChar) {
         error = true;
         feedback = `${restrictedCharacters.join(',')} ${
-          restrictedCharacters.length ? 'are' : 'is'
+          restrictedCharacters.length > 1 ? 'are' : 'is'
         } restricted characters`;
       } else {
         error = false;
