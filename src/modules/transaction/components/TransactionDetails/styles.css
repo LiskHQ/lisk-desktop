@@ -161,11 +161,15 @@
 .signedAndRemainingMembersList {
   grid-area: signedAndRemainingMembersList;
   width: 100%;
+  box-sizing: border-box;
+  padding: var(--horizontal-padding-l) var(--horizontal-padding-s);
 }
 
 .signedAndRemainingSignatureList {
   grid-area: signedAndRemainingSignatureList;
   width: 100%;
+  box-sizing: border-box;
+  padding: var(--horizontal-padding-l) var(--horizontal-padding-s);
 }
 
 .genericParams {
