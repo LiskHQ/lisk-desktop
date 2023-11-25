@@ -6,17 +6,24 @@ import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstr
 const IndexingNotification = () => {
   const { t } = useTranslation();
   const {
-    indexStatus: { percentageIndexed },
+    indexStatus: { percentageIndexed, isIndexingInProgress },
   } = useContext(ApplicationBootstrapContext);
 
   useEffect(() => {
     if (percentageIndexed < 100) {
-      toast.info(<div>{t(`Network currently indexing... Progress - ${percentageIndexed}%`)}</div>, {
-        autoClose: false,
-        draggable: false,
-        closeButton: false,
-        toastId: 'indexStatus',
-      });
+      toast.info(
+        <div>
+          {t(`Blockchain client syncing: ${isIndexingInProgress}`)}
+          <br /> {t(`Service indexing progress: ${percentageIndexed}%`)}
+        </div>,
+        {
+          autoClose: false,
+          draggable: false,
+          closeButton: false,
+          delay: 1000,
+          toastId: 'indexStatus',
+        }
+      );
     }
   }, [percentageIndexed]);
 
