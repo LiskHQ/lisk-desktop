@@ -8,6 +8,7 @@ import routesMap from 'src/routes/routesMap';
 import NotFound from '@common/components/NotFound';
 import CustomRoute from '@common/components/customRoute';
 import RewardsNotification from '@common/components/notification/rewardsNotification';
+import IndexingNotification from '@common/components/notification/indexingNotification';
 import routes from 'src/routes/routes';
 import styles from './app.css';
 
@@ -39,6 +40,7 @@ const MainRouter = ({ history }) => {
   return (
     <div className={`${styles.mainContent} ${styles.mainBox}`}>
       <RewardsNotification />
+      <IndexingNotification />
       <Switch>
         {routesList.map((route) => (
           <CustomRoute
