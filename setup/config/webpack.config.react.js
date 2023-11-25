@@ -103,7 +103,7 @@ const config = {
     }),
     new DefinePlugin({
       VERSION: `"${bundleVersion}"`,
-      LISK_DOMAIN: '"https://staging.lisk.com"',
+      LISK_DOMAIN: '"https://lisk.com"',
       REACT_APP_DEFAULT_NETWORK: `"${process.env.DEFAULT_NETWORK}"`,
     }),
     new StyleLintPlugin({
