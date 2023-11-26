@@ -3,14 +3,15 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
 
+/* istanbul ignore file */
 const IndexingNotification = () => {
   const { t } = useTranslation();
   const {
-    indexStatus: { percentageIndexed, isIndexingInProgress },
+    indexStatus: { percentageIndexed, isIndexingInProgress, chainLength, numBlocksIndexed },
   } = useContext(ApplicationBootstrapContext);
 
   useEffect(() => {
-    if (percentageIndexed < 100) {
+    if (chainLength - numBlocksIndexed >= 5) {
       toast.info(
         <div>
           {t(`Blockchain client syncing: ${isIndexingInProgress}`)}
