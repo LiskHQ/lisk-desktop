@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
+import styles from './styles.css';
 
 /* istanbul ignore file */
 const IndexingNotification = () => {
@@ -13,9 +14,9 @@ const IndexingNotification = () => {
   useEffect(() => {
     if (chainLength - numBlocksIndexed >= 5) {
       toast.info(
-        <div>
-          {t(`Blockchain client syncing: ${isIndexingInProgress}`)}
-          <br /> {t(`Service indexing progress: ${percentageIndexed}%`)}
+        <div className={styles.indexingInfo}>
+          <p>{t(`Blockchain client syncing: ${isIndexingInProgress}`)}</p>
+          <p>{t(`Service indexing progress: ${percentageIndexed}%`)}</p>
         </div>,
         {
           autoClose: false,
