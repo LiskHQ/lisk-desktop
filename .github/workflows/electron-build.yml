@@ -47,6 +47,14 @@ jobs:
         if: startsWith(matrix.os, 'desktop-build')
         run: npm install -g cpx
 
+      - name: Prepare for app notarization
+        if: startsWith(matrix.os, 'macos')
+        # Import Apple API key for app notarization on macOS
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+          echo '${{ secrets.mac_certs }}' | base64 -d > applecert.p12
+
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
         uses: samuelmeuli/action-electron-builder@v1
@@ -59,9 +67,8 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack
-          CSC_IDENTITY_AUTO_DISCOVERY: FALSE
-          CSC_LINK: ${{ secrets.mac_certs }}
-          CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
           github_token: ${{ secrets.github_token }}
         env:
           APPLE_ID: ${{ secrets.apple_id }}
