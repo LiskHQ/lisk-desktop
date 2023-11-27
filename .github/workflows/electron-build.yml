@@ -59,8 +59,9 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack
-          MAC_CERTS: ${{ secrets.mac_certs }}
-          MAC_CERTS_PASSWORD: ${{ secrets.mac_certs_password }}
+          CSC_IDENTITY_AUTO_DISCOVERY: FALSE
+          CSC_LINK: ${{ secrets.mac_certs }}
+          CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
           github_token: ${{ secrets.github_token }}
         env:
           APPLE_ID: ${{ secrets.apple_id }}
