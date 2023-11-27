@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
 import styles from './styles.css';
 
-/* istanbul ignore file */
 const IndexingNotification = () => {
   const { t } = useTranslation();
   const {
