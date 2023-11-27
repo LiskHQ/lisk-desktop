@@ -1,5 +1,9 @@
 import { getTransactionBaseFees } from '@transaction/api';
-import { mockAppsTokens, mockTokensBalance, mockTokenSummary } from '@token/fungible/__fixtures__/mockTokens';
+import {
+  mockAppsTokens,
+  mockTokensBalance,
+  mockTokenSummary,
+} from '@token/fungible/__fixtures__/mockTokens';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import mockSavedAccounts from '@tests/fixtures/accounts';
