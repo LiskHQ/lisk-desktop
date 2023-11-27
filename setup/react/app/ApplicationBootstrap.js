@@ -123,7 +123,7 @@ const ApplicationBootstrap = ({ children }) => {
         isLoadingNetwork:
           (blockchainAppsMeta.isFetching && !blockchainAppsMeta.data) ||
           (networkStatus.isFetching && !networkStatus.data),
-        indexStatus: indexStatus?.data?.data,
+        indexStatus: indexStatus?.data?.data || {},
         error: networkStatus.error || blockchainAppsMeta.error,
         refetchNetwork: blockchainAppsMeta.refetch,
         appEvents: { transactions: { rewards: rewardsData?.data ?? [] } },
