@@ -70,7 +70,7 @@ jobs:
         with:
           build_script_name: pack
           mac_certs: ${{ env.CERTIFICATE_PATH }}
-          mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
+          mac_certs_password: ${{ secrets.CSC_KEY_PASSWORD }}
           github_token: ${{ secrets.github_token }}
         env:
           API_KEY: ${{ env.API_KEY_PATH }}
