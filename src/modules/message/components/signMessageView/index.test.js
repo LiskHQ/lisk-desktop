@@ -3,6 +3,10 @@ import { shallow } from 'enzyme';
 import accounts from '@tests/constants/wallets';
 import SignMessage from './index';
 
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn((str) => str),
+}));
+
 describe('Sign Message Component', () => {
   const props = {
     account: accounts.genesis,

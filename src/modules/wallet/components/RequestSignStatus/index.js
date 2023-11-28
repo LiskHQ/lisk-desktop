@@ -7,8 +7,7 @@ import Box from 'src/theme/box';
 import Icon from 'src/theme/Icon';
 import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import Illustration from '@common/components/illustration';
-import { joinModuleAndCommand, toTransactionJSON } from '@transaction/utils';
-import moduleCommandSchemas from '@tests/constants/schemas';
+import { toTransactionJSON } from '@transaction/utils';
 import styles from './styles.css';
 
 const errorData = (t) => ({
@@ -29,12 +28,22 @@ const successData = (t) => ({
   ),
 });
 
+const getStringifiedTransactionJSON = (signedTransaction, schema) => {
+  const transactionJSON = toTransactionJSON(signedTransaction, schema);
+  return JSON.stringify(transactionJSON);
+};
+
+// eslint-disable-next-line max-statements
 const RequestSignStatus = (props) => {
   const { t } = useTranslation();
   const ref = useRef();
   const [copied, setCopied] = useState(false);
   const transactions = useSelector((state) => state.transactions);
   const { respond } = useSession();
+  const stringifiedTransactionJSON = getStringifiedTransactionJSON(
+    transactions.signedTransaction,
+    props.formProps.schema
+  );
 
   const data =
     !transactions.txSignatureError && transactions.signedTransaction?.signatures?.length
@@ -43,17 +52,15 @@ const RequestSignStatus = (props) => {
 
   const onCopy = () => {
     setCopied(true);
-    const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
-    const paramSchema = moduleCommandSchemas[moduleCommand];
-    const transactionJSON = toTransactionJSON(transactions.signedTransaction, paramSchema);
-    const payload = JSON.stringify(transactionJSON);
-    copyToClipboard(payload);
-    // inform to the application
-    respond({ payload });
+    copyToClipboard(stringifiedTransactionJSON);
     ref.current = setTimeout(() => setCopied(false), 1000);
   };
 
   useEffect(() => () => clearTimeout(ref.current), []);
+
+  useEffect(() => {
+    respond({ payload: stringifiedTransactionJSON });
+  }, []);
 
   return (
     <Box className={`${styles.wrapper} transaction-status`}>
@@ -67,7 +74,7 @@ const RequestSignStatus = (props) => {
         >
           <span className={styles.buttonContent}>
             <Icon name="copy" />
-            <span>{copied ? t('Copied') : t('Copy signature')}</span>
+            <span>{copied ? t('Copied') : t('Copy signed transaction')}</span>
           </span>
         </PrimaryButton>
       )}

@@ -21,6 +21,11 @@ import generateUniqueId from 'src/utils/generateUniqueId';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
+import {
+  SignedAndRemainingMembersList,
+  SignedAndRemainingSignatureList,
+} from '../TransactionDetails';
+import TransactionDetailsContext from '../../context/transactionDetailsContext';
 
 export const PartiallySignedActions = ({
   onDownload,
@@ -128,6 +133,7 @@ const Multisignature = ({
   const moduleCommand = joinModuleAndCommand(transactions.signedTransaction);
   const paramSchema = moduleCommandSchemas[moduleCommand];
   const transactionJSON = toTransactionJSON(transactions.signedTransaction, paramSchema);
+  const isRegisterMultisigature = moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   const { txInitiatorAccount } = useTxInitiatorAccount({
     senderPublicKey: transactionJSON.senderPublicKey,
@@ -195,6 +201,19 @@ const Multisignature = ({
           <AccountRow className={classNames(styles.accountRow)} account={nextAccountToSign} />
         </div>
       )}
+      {!nextAccountToSign && status.code === txStatusTypes.multisigSignaturePartialSuccess && (
+        <TransactionDetailsContext.Provider
+          value={{
+            wallet: txInitiatorAccount,
+            transaction: transactionJSON,
+          }}
+        >
+          <>
+            {isRegisterMultisigature && <SignedAndRemainingMembersList />}
+            <SignedAndRemainingSignatureList />
+          </>
+        </TransactionDetailsContext.Provider>
+      )}
       <div className={styles.primaryActions}>
         {status.code === txStatusTypes.broadcastSuccess && !noBackButton ? (
           <TertiaryButton
@@ -215,7 +234,7 @@ const Multisignature = ({
         ) : null}
         {status.code !== txStatusTypes.broadcastSuccess &&
           status.code !== txStatusTypes.broadcastError &&
-          !nextAccountToSign && (
+          (!nextAccountToSign || status.code === txStatusTypes.multisigSignatureSuccess) && (
             <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
               <span className={styles.buttonContent}>
                 <Icon name={copied ? 'transactionStatusSuccessful' : 'copy'} />

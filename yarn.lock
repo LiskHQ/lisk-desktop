@@ -2128,10 +2128,10 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@liskhq/lisk-api-client@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-api-client/-/lisk-api-client-6.0.0.tgz#2d0fbf128f4341b394154bd1987a688008c38578"
-  integrity sha512-IdApCNokD8TBbxf3ovuQ9Htd1VkhUkifWVt3bM000VAI7Qg7JxZismLvH3P/fhEIEh4xzdyj1bMP7TdZWF0v7Q==
+"@liskhq/lisk-api-client@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-api-client/-/lisk-api-client-6.0.1.tgz#5b78a48c3c98b047391e07114eb05887709a6f85"
+  integrity sha512-eyyZz0ZAUiGKCX9armNkEpYVmb/yz2JhKL6OygDUtbPO7X7V6Ofu7XH+mBoPdtPEyNhi59idSnJuOclpZ5kWtw==
   dependencies:
     "@liskhq/lisk-codec" "^0.4.0"
     "@liskhq/lisk-cryptography" "^4.0.0"
@@ -2141,12 +2141,12 @@
     ws "8.11.0"
     zeromq "6.0.0-beta.6"
 
-"@liskhq/lisk-client@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@liskhq/lisk-client/-/lisk-client-6.0.0.tgz#ad107bad739a90d38b91243fc453f0050079eb75"
-  integrity sha512-+z9WozvWRj9l0rKIPYeVyBv9jvaiWhrJPLwgx+paAbypD50PUzFsEXMSOfsHR6hjwfnvfTBbhCD5eGvWRdBA9Q==
+"@liskhq/lisk-client@6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@liskhq/lisk-client/-/lisk-client-6.0.1.tgz#17e1727ae829b98b1ddca4393785987c015bf7e8"
+  integrity sha512-RdaFHNuCmjVLZbzAqF/BboszZJCpgqOUpb5SKsQOyHBLZA2/x76sZURb0DA0XBRbb1vxDh3GC2F9a3OrWf7sKQ==
   dependencies:
-    "@liskhq/lisk-api-client" "^6.0.0"
+    "@liskhq/lisk-api-client" "^6.0.1"
     "@liskhq/lisk-codec" "^0.4.0"
     "@liskhq/lisk-cryptography" "^4.0.0"
     "@liskhq/lisk-passphrase" "^4.0.0"
