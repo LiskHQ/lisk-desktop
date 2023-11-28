@@ -54,6 +54,8 @@ jobs:
           mkdir -p ~/private_keys/
           echo '${{ secrets.api_key }}' > ~/private_keys/SubscriptionKey_${{ secrets.api_key_id }}.p8
           echo '${{ secrets.mac_certs }}' | base64 -d > Certificates_desktop2025.p12
+          export CERTIFICATE_PATH=~/private_keys/Certificates_desktop2025.p12
+          export API_KEY_PATH=~/private_keys/SubscriptionKey_${{ secrets.api_key_id }}.p8
 
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
@@ -67,11 +69,13 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack
-          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs: ${{ env.CERTIFICATE_PATH }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
           github_token: ${{ secrets.github_token }}
         env:
-          APPLE_ID: ${{ secrets.apple_id }}
-          APPLE_ID_PASSWORD: ${{  secrets.apple_id_password }}
-          APPLEID: ${{ secrets.apple_id }}
-          APPLEIDPASS: ${{ secrets.apple_id_password }}
+          API_KEY: ${{ env.API_KEY_PATH }}
+          API_KEY_ID: ${{ secrets.api_key_id }}
+          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+          
+          
+          
