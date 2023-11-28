@@ -56,7 +56,8 @@ jobs:
           echo "${{ secrets.MAC_CERTS }}" | base64 --decode > ~/private_keys/Certificates_desktop2025.p12
           echo CERTIFICATE_PATH=~/private_keys/Certificates_desktop2025.p12 >> $GITHUB_ENV
           echo API_KEY_PATH=~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8 >> $GITHUB_ENV
-
+          echo ${{ secrets.CSC_KEY_PASSWORD }}
+          
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
         uses: samuelmeuli/action-electron-builder@v1
