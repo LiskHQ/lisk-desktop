@@ -52,10 +52,10 @@ jobs:
         # Import the Apple API key for app notarization on macOS
         run: |
           mkdir -p ~/private_keys/
-          echo '${{ secrets.api_key }}' > ~/private_keys/SubscriptionKey_${{ secrets.api_key_id }}.p8
-          echo '${{ secrets.mac_certs }}' | base64 -d > Certificates_desktop2025.p12
-          export CERTIFICATE_PATH=~/private_keys/Certificates_desktop2025.p12
-          export API_KEY_PATH=~/private_keys/SubscriptionKey_${{ secrets.api_key_id }}.p8
+          echo '${{ secrets.API_KEY }}' > ~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8
+          echo '${{ secrets.MAC_CERTS }}' | base64 -d > ~/private_keys/Certificates_desktop2025.p12
+          echo CERTIFICATE_PATH=~/private_keys/Certificates_desktop2025.p12 >> $GITHUB_ENV
+          echo API_KEY_PATH=~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8 >> $GITHUB_ENV
 
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
@@ -70,12 +70,12 @@ jobs:
         with:
           build_script_name: pack
           mac_certs: ${{ env.CERTIFICATE_PATH }}
-          mac_certs_password: ${{ secrets.mac_certs_password }}
+          mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
           github_token: ${{ secrets.github_token }}
         env:
           API_KEY: ${{ env.API_KEY_PATH }}
-          API_KEY_ID: ${{ secrets.api_key_id }}
-          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+          API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
           
           
           
