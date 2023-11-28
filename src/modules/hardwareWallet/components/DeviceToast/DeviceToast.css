@@ -3,7 +3,7 @@
   white-space: pre;
 
   & .label {
-    color: var(--color-constant-white);
+    color: var(--color-white);
   }
 
   & .resetButtonStyles {

@@ -11,8 +11,7 @@ import { useAccounts } from '@account/hooks/useAccounts';
 import { emptyTransactionsData } from 'src/redux/actions';
 import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
-import { EVENTS, ERROR_CASES } from '@libs/wcm/constants/lifeCycle';
-import { formatJsonRpcError } from '@libs/wcm/utils/jsonRPCFormat';
+import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 import { toTransactionJSON } from '@transaction/utils/encoding';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
@@ -26,12 +25,12 @@ import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
-import { getSdkError } from '@walletconnect/utils';
 import { decodeTransaction } from '@transaction/utils';
 import Box from 'src/theme/box';
 import routes from 'src/routes/routes';
 import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
 import WarningNotification from '@common/components/warningNotification';
+import { USER_REJECT_ERROR } from '@libs/wcm/utils/jsonRPCFormat';
 import { ReactComponent as SwitchIcon } from '../../../../../../setup/react/assets/images/icons/switch-icon.svg';
 import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
@@ -39,12 +38,6 @@ import styles from './requestSummary.css';
 const getTitle = (key, t) =>
   Object.values(SIGNING_METHODS).find((item) => item.key === key)?.title ?? t('Method not found.');
 const defaultToken = { symbol: 'LSK' };
-
-export const rejectLiskRequest = (request) => {
-  const { id } = request;
-
-  return formatJsonRpcError(id, getSdkError(ERROR_CASES.USER_REJECTED_METHODS).message);
-};
 
 // eslint-disable-next-line max-statements
 const RequestSummary = ({ nextStep, history, message }) => {
@@ -56,7 +49,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
   const [transaction, setTransaction] = useState(null);
   const [senderAccount, setSenderAccount] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const { sessionRequest } = useSession({ isEnabled: !message });
+  const { sessionRequest, respond } = useSession({ isEnabled: !message });
   const reduxDispatch = useDispatch();
   const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
@@ -114,8 +107,8 @@ const RequestSummary = ({ nextStep, history, message }) => {
       });
     }
   };
-  const rejectHandler = () => {
-    rejectLiskRequest(request);
+  const rejectHandler = async () => {
+    await respond({ payload: USER_REJECT_ERROR });
     removeSearchParamsFromUrl(history, ['modal', 'status', 'name', 'action']);
   };
 
