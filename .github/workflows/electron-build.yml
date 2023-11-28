@@ -53,7 +53,7 @@ jobs:
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.API_KEY }}' > ~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8
-          echo '${{ secrets.MAC_CERTS }}' | base64 -d > ~/private_keys/Certificates_desktop2025.p12
+          echo "${{ secrets.MAC_CERTS }}" | base64 --decode > ~/private_keys/Certificates_desktop2025.p12
           echo CERTIFICATE_PATH=~/private_keys/Certificates_desktop2025.p12 >> $GITHUB_ENV
           echo API_KEY_PATH=~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8 >> $GITHUB_ENV
 
