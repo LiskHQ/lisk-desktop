@@ -53,8 +53,6 @@ jobs:
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.API_KEY }}' > ~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8
-          echo "${{ secrets.MAC_CERTS }}" | base64 --decode > ~/private_keys/Certificates_desktop2025.p12
-          echo CERTIFICATE_PATH=~/private_keys/Certificates_desktop2025.p12 >> $GITHUB_ENV
           echo API_KEY_PATH=~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8 >> $GITHUB_ENV
           
       - name: Build and pack windows app
@@ -69,8 +67,8 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack
-          mac_certs: ${{ env.CERTIFICATE_PATH }}
-          mac_certs_password: ${{ secrets.CSC_KEY_PASSWORD }}
+          mac_certs: ${{ secrets.MAC_CERTS }}
+          mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
           github_token: ${{ secrets.github_token }}
         env:
           API_KEY: ${{ env.API_KEY_PATH }}
