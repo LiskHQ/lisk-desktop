@@ -75,10 +75,12 @@ jobs:
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
         run: |
+          set -x
+          
           echo "$mac_certs" | base64 --decode > certificate.p12
-          security create-keychain -p $mac_certs_password build.keychain
+          security create-keychain -p "$mac_certs_password" build.keychain
           security default-keychain -s build.keychain
-          security unlock-keychain -p $mac_certs_password build.keychain
-          security import certificate.p12 -k build.keychain -P $mac_certs_password -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $mac_certs_password build.keychain
+          security unlock-keychain -p "$mac_certs_password" build.keychain
+          security import certificate.p12 -k build.keychain -P "$mac_certs_password" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$mac_certs_password" build.keychain
           /usr/bin/codesign --force -s $DEVELOPER_ID ../../app -v
