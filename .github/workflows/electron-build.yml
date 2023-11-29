@@ -5,6 +5,7 @@ on: push
 jobs:
   release:
     runs-on: ${{ matrix.os }}
+    environment: MACOS
 
     strategy:
       matrix:
@@ -65,23 +66,15 @@ jobs:
           
       - name: Build and pack mac app
         if: startsWith(matrix.os, 'macos')
-        env:
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
           build_script_name: pack
-          mac_certs: ${{ secrets.MAC_CERTS }}
-          mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
-          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-          DEVELOPER_ID:  ${{ secrets.DEVELOPER_ID }}
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
           github_token: ${{ secrets.github_token }}
+        env:
+          # macOS notarization API key
           API_KEY: ${{ env.API_KEY_PATH }}
-          API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-        run: |
-          set -x
-          
-          echo "$mac_certs" | base64 --decode > certificate.p12
-          security create-keychain -p "$mac_certs_password" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "$mac_certs_password" build.keychain
-          security import certificate.p12 -k build.keychain -P "$CSC_KEY_PASSWORD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$mac_certs_password" build.keychain
-          /usr/bin/codesign --force -s $DEVELOPER_ID ../../app -v
+          API_KEY_ID: ${{ secrets.api_key_id }}
+          API_ISSUER: ${{ secrets.api_key_issuer_id }}
+
