@@ -76,5 +76,5 @@ jobs:
           # macOS notarization API key
           API_KEY: ${{ env.API_KEY_PATH }}
           API_KEY_ID: ${{ secrets.api_key_id }}
-          API_ISSUER: ${{ secrets.api_key_issuer_id }}
+          API_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
 
