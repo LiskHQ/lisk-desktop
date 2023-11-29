@@ -69,6 +69,7 @@ jobs:
           build_script_name: pack
           mac_certs: ${{ secrets.MAC_CERTS }}
           mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
           DEVELOPER_ID:  ${{ secrets.DEVELOPER_ID }}
           github_token: ${{ secrets.github_token }}
           API_KEY: ${{ env.API_KEY_PATH }}
@@ -81,6 +82,6 @@ jobs:
           security create-keychain -p "$mac_certs_password" build.keychain
           security default-keychain -s build.keychain
           security unlock-keychain -p "$mac_certs_password" build.keychain
-          security import certificate.p12 -k build.keychain -P "$mac_certs_password" -T /usr/bin/codesign
+          security import certificate.p12 -k build.keychain -P "$CSC_KEY_PASSWORD" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$mac_certs_password" build.keychain
           /usr/bin/codesign --force -s $DEVELOPER_ID ../../app -v
