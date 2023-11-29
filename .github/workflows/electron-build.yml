@@ -57,7 +57,7 @@ jobs:
           
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
-        # codesigning
+        # codesigning 
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack:win
