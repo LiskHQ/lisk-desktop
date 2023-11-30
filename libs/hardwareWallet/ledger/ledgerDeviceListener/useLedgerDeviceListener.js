@@ -80,7 +80,7 @@ export function useLedgerDeviceListener() {
 
       if (isDeviceAdded) {
         const addedDevice = [...hwDevices].pop();
-        const label = `${addedDevice.manufacturer} ${addedDevice.product} connected. `;
+        const label = `${addedDevice.manufacturer} ${addedDevice.product} inserted. `;
 
         toast.info(
           <DeviceToast
