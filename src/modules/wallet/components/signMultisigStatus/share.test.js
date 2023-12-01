@@ -6,6 +6,8 @@ import { mockAuth } from '@auth/__fixtures__';
 import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { mockValidators } from '@pos/validator/__fixtures__';
+import DialogLink from '@theme/dialog/link';
+import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import Status from './status';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
@@ -107,6 +109,37 @@ describe('Sign Multisignature Tx Status component', () => {
       title: 'Transaction submitted',
       className: 'content',
     });
+  });
+
+  it('should shows bookmark', () => {
+    const propsSuccess = {
+      ...props,
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: null,
+        signedTransaction: {},
+      },
+      transactionJSON: {
+        senderPublicKey: accounts.genesis.summary.publicKey,
+        signatures: [accounts.genesis.summary.publicKey],
+        nonce: '20',
+        fee: '164000',
+        module: 'token',
+        command: 'transfer',
+        params: {
+          tokenID: mockAppsTokens.data[0].tokenID,
+          amount: 1000000,
+          recipientAddress: accounts.genesis.summary.address,
+          data: '',
+        },
+      },
+      bookmarks: {
+        LSK: [],
+      },
+    };
+
+    const wrapper = shallow(<Status {...propsSuccess} />);
+    expect(wrapper.find(DialogLink));
   });
 
   it('passes correct props to TxBroadcaster when transaction broadcast fails', () => {

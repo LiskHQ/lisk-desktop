@@ -68,6 +68,7 @@ const Status = ({ transactions, t, transactionJSON, reset, bookmarks, account, t
     shouldShowBookmark(bookmarks, account, transactionJSON, token) &&
     moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer;
   const template = statusMessages(t)[status.code];
+
   return (
     <section>
       <Box className={styles.boxContainer}>
