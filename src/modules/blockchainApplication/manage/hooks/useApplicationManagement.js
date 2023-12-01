@@ -8,10 +8,12 @@ import { usePinBlockchainApplication } from './usePinBlockchainApplication';
 import { useApplicationExploreAndMetaData } from './useApplicationExploreAndMetaData';
 
 // eslint-disable-next-line max-statements
-export function useApplicationManagement() {
+export function useApplicationManagement({ queryClient }) {
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
-  const { applications: defaultApplications, isLoading } = useApplicationExploreAndMetaData();
+  const { applications: defaultApplications, isLoading } = useApplicationExploreAndMetaData({
+    options: { ...(queryClient && { client: queryClient }) },
+  });
   const { mainChainNetwork = {} } = useSettings('mainChainNetwork');
 
   const { checkPinByChainId, pins } = usePinBlockchainApplication();

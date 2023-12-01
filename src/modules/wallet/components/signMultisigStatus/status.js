@@ -12,6 +12,8 @@ import {
   isTxStatusError,
 } from '@transaction/configuration/statusConfig';
 import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
+import { joinModuleAndCommand } from '@transaction/utils';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { selectModuleCommandSchemas } from 'src/redux/selectors';
 import { shouldShowBookmark } from 'src/modules/common/constants';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -58,9 +60,13 @@ const Status = ({ transactions, t, transactionJSON, reset, bookmarks, account, t
     canSenderSignTx,
   });
 
+  const moduleCommand = joinModuleAndCommand(transactionJSON);
+
   const isBroadcastError = isTxStatusError(status.code);
   const showBookmark =
-    !isBroadcastError && shouldShowBookmark(bookmarks, account, transactionJSON, token);
+    !isBroadcastError &&
+    shouldShowBookmark(bookmarks, account, transactionJSON, token) &&
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer;
   const template = statusMessages(t)[status.code];
   return (
     <section>
