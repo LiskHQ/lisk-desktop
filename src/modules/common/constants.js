@@ -117,3 +117,13 @@ export const INSUFFICENT_TOKEN_BALANCE_MESSAGE = {
   sendToken: i18next.t('There are no tokens to send at this moment.'),
   stakeValidator: i18next.t('Token balance is not enough to stake a validator.'),
 };
+
+export const shouldShowBookmark = (bookmarks, account, transactionJSON, token) => {
+  if (account.summary.address === transactionJSON.params.recipientAddress) {
+    return false;
+  }
+
+  return !bookmarks[token].find(
+    (bookmark) => bookmark.address === transactionJSON.params.recipientAddress
+  );
+};

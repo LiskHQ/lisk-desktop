@@ -126,6 +126,9 @@ const Multisignature = ({
   moduleCommandSchemas,
   application,
   reset,
+  children,
+  account,
+  illustration,
 }) => {
   const [copied, setCopied] = useState(false);
   const ref = useRef();
@@ -175,11 +178,21 @@ const Multisignature = ({
   useEffect(() => resetTransactionResult, []);
   useEffect(() => () => clearTimeout(ref.current), []);
 
+  const getChildrentToRender = () => {
+    if (status.code !== txStatusTypes.broadcastSuccess) return null;
+
+    if (typeof children === 'function')
+      children({ transactions, network, account, status, illustration });
+
+    return children;
+  };
+
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <Illustration name={getIllustration(status.code, 'signMultisignature')} />
       <h6 className="result-box-header">{title}</h6>
       {!nextAccountToSign && <p className="transaction-status body-message">{message}</p>}
+      {getChildrentToRender()}
       {nextAccountToSign && status.code !== txStatusTypes.multisigSignatureSuccess && (
         <div className={styles.requiredAccountSection}>
           <WarningNotification
