@@ -103,7 +103,9 @@ const Overview = ({ isWalletRoute, history }) => {
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
+      <div
+        className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.accountDetailsWrapper}`}
+      >
         <DialogLink component="accountDetails" data={{ address }}>
           <WalletVisualWithAddress
             copy
