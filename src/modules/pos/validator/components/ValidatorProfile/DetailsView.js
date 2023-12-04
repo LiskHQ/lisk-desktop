@@ -18,10 +18,10 @@ import styles from './ValidatorProfile.css';
 import { convertCommissionToPercentage } from '../../utils';
 import usePosToken from '../../hooks/usePosToken';
 
-const DetailsView = ({ data, isMyProfile }) => {
+const DetailsView = ({ data, isMyProfile, address }) => {
   const { name, rank, validatorWeight, commission, lastGeneratedHeight } = data;
   const { data: pooledTransactionsData } = useTransactionsFromPool({
-    customConfig: { commission },
+    address,
   });
   const hasChangeCommission = pooledTransactionsData?.data?.some(
     (pooledTransaction) => pooledTransaction.command === 'changeCommission'

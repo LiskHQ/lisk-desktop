@@ -5,17 +5,21 @@ import { selectModuleCommandSchemas } from 'src/redux/selectors';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus, isTxStatusError } from '@transaction/configuration/statusConfig';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
+import { useQueryClient } from '@tanstack/react-query';
+import { INVOKE } from 'src/const/queries';
 import statusMessages from './statusMessages';
 import styles from './ChangeCommissionStatus.css';
 
 const ChangeCommissionStatus = ({ transactions, account, history, prevStep }) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const moduleCommandSchemas = useSelector(selectModuleCommandSchemas);
   const status = getTransactionStatus(account, transactions, { moduleCommandSchemas });
   const template = statusMessages(t)[status.code];
   const isBroadcastError = isTxStatusError(status.code);
 
   const onSuccessClick = async () => {
+    await queryClient.invalidateQueries(INVOKE);
     removeSearchParamsFromUrl(history, ['modal']);
   };
 

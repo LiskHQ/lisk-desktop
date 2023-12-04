@@ -136,7 +136,7 @@ const ValidatorProfile = ({ history }) => {
         isLoading={isLoadingValidators}
         className={`${grid.row} ${styles.statsContainer} stats-container`}
       >
-        <DetailsView data={validator} isMyProfile={isMyProfile} />
+        <DetailsView data={validator} isMyProfile={isMyProfile} address={address} />
         <PerformanceView data={{ ...validator, producedBlocks: generatedBlocks?.meta?.total }} />
       </Box>
       <ValidatorStakesView address={address} />

@@ -1,9 +1,10 @@
 import { useInvokeQuery } from 'src/modules/common/hooks';
 
-export const useTransactionsFromPool = ({ options = {}, customConfig = {} } = {}) => {
+export const useTransactionsFromPool = ({ options = {}, address, customConfig = {} } = {}) => {
   const config = {
     data: {
       endpoint: 'txpool_getTransactionsFromPool',
+      params: { address },
     },
     ...customConfig,
   };
