@@ -52,10 +52,12 @@ export const applications = (
 
     case actionTypes.cleanupApplications: {
       const applicationsByNetwork = Object.keys(state).reduce((accumulator, networkName) => {
+        const sideChains = Object.values(state[networkName]).filter(
+          (application) => application?.chainID && application?.chainName
+        );
+
         const networkSideChains = {
-          [networkName]: Object.values(state[networkName]).filter(
-            (application) => application?.status
-          ),
+          [networkName]: sideChains.reduce((acc, init) => ({ ...acc, [init.chainID]: init }), {}),
         };
         return { ...accumulator, ...networkSideChains };
       }, {});
