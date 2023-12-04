@@ -119,6 +119,7 @@ const ApplicationBootstrap = ({ children }) => {
   return (
     <ApplicationBootstrapContext.Provider
       value={{
+        queryClient,
         hasNetworkError: isError && !blockchainAppsMeta.isFetching,
         isLoadingNetwork:
           (blockchainAppsMeta.isFetching && !blockchainAppsMeta.data) ||
