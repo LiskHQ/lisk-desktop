@@ -38,7 +38,7 @@ export const useTransactionUpdate = (isLoading) => {
           const isSameChain = query[0][1]?.length && query[0][1] === currentApplicationData.current;
           const isSameRecipient =
             params.address === newTransactions.data[0].meta?.recipient.address;
-          const isSameSender = params.address === newTransactions.data[0].sender.address;
+          const isSameSender = params.address === newTransactions.data[0].sender?.address;
           const isMyAddress = isSameRecipient || isSameSender;
           const latestTxnDate = newTransactions.data[0].block.timestamp;
           const isWithinDateRange = dateRangeCompare(params.timestamp, latestTxnDate);
