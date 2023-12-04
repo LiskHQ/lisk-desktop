@@ -31,6 +31,7 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
   }
 };
 
+// eslint-disable-next-line max-statements
 export const applications = (
   state = initialState.applications,
   { type, app, apps, chainId, network, currentName, newName, networks }
@@ -47,6 +48,19 @@ export const applications = (
         }),
         { ...state }
       );
+    }
+
+    case actionTypes.cleanupApplications: {
+      const applicationsByNetwork = Object.keys(state).reduce((accumulator, networkName) => {
+        const networkSideChains = {
+          [networkName]: Object.values(state[networkName]).filter(
+            (application) => application?.status
+          ),
+        };
+        return { ...accumulator, ...networkSideChains };
+      }, {});
+
+      return applicationsByNetwork;
     }
 
     case actionTypes.deleteNetworksInApplications: {
