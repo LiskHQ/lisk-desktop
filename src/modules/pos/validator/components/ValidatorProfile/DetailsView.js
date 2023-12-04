@@ -59,6 +59,9 @@ const DetailsView = ({ data, isMyProfile }) => {
       onEdit: !isMyProfile
         ? undefined
         : () => addSearchParamsToUrl(history, { modal: 'changeCommission' }),
+      onView: !isMyProfile
+        ? undefined
+        : () => addSearchParamsToUrl(history, { modal: 'commissionHistory' }),
     },
     {
       icon: 'calendar',
@@ -83,12 +86,17 @@ const DetailsView = ({ data, isMyProfile }) => {
         <h1 className={styles.heading}>{t('Details')}</h1>
       </BoxHeader>
       <BoxContent className={`${styles.details} details`}>
-        {displayList.map(({ icon, label, value, onEdit }) => (
+        {displayList.map(({ icon, label, value, onView, onEdit }) => (
           <div key={label} className={`${grid.row} ${styles.itemContainer}`}>
             <Icon name={icon} className={styles.icon} />
             <div className={`${grid.col} ${styles.item}`}>
               <div className={`${styles.title} ${theme}`}>
                 <span>{label} </span>
+                {onView && typeof onView === 'function' && (
+                  <button onClick={onView} className={styles.editBtn}>
+                    <Icon name="history" />
+                  </button>
+                )}
                 {onEdit &&
                   typeof onEdit === 'function' &&
                   (hasChangeCommission ? (
