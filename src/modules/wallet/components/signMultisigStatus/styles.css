@@ -22,3 +22,15 @@
     }
   }
 }
+
+.boxContainer {
+  & .bookmarkBtn {
+    position: relative;
+    margin-top: 20px;
+
+    & > div:first-child {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
