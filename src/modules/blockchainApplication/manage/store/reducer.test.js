@@ -58,6 +58,17 @@ describe('BlockchainApplication reducer', () => {
       expect(changedState).toHaveProperty('devnet', applicationsMap);
     });
 
+    it('should cleanup invalid applications', async () => {
+      const actionData = {
+        type: actionTypes.cleanupApplications,
+      };
+      const invalidState = { ...applicationsMap, undefined: {}, null: {}, dummy: {} };
+      expect(Object.keys(invalidState).filter((a) => a === 'undefined')).toHaveLength(1);
+      const changedState = applications({ devnet: invalidState }, actionData);
+      expect(changedState).toHaveProperty('devnet', applicationsMap);
+      expect(Object.keys(changedState.devnet).filter((a) => a === 'undefined')).toHaveLength(0);
+    });
+
     it('should return list of applications without the removed one', async () => {
       const actionData = {
         type: actionTypes.deleteApplicationByChainId,

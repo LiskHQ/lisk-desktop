@@ -54,6 +54,10 @@ export const updateNetworkNameInApplications = (currentName, newName) => ({
   newName,
 });
 
+export const cleanupApplication = () => ({
+  type: actionTypes.cleanupApplications,
+});
+
 /**
  * Trigger this action to set current blockchain application
  *
