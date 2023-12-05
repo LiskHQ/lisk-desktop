@@ -92,36 +92,38 @@ const DetailsView = ({ data, isMyProfile }) => {
             <div className={`${grid.col} ${styles.item}`}>
               <div className={`${styles.title} ${theme}`}>
                 <span>{label} </span>
-                {onView && typeof onView === 'function' && (
-                  <button onClick={onView} className={styles.editBtn}>
-                    <Icon name="history" />
-                  </button>
-                )}
-                {onEdit &&
-                  typeof onEdit === 'function' &&
-                  (hasChangeCommission ? (
-                    <Tooltip
-                      className={classNames(styles.editDisabledIcon, styles.editBtn)}
-                      tooltipClassName={`${styles.tooltipClassNameProp}`}
-                      size="maxContent"
-                      position="bottom"
-                      content={<Icon name="editDisabled" />}
-                    >
-                      <p>
-                        {t(
-                          'You have to wait for your current commission change to finalize before you can edit again.'
-                        )}
-                      </p>
-                    </Tooltip>
-                  ) : (
-                    <button
-                      onClick={onEdit}
-                      className={styles.editBtn}
-                      disabled={hasChangeCommission}
-                    >
-                      <Icon name="editActiveIcon" />
+                <span>
+                  {onView && typeof onView === 'function' && (
+                    <button onClick={onView} className={styles.editBtn}>
+                      <Icon name="history" />
                     </button>
-                  ))}
+                  )}
+                  {onEdit &&
+                    typeof onEdit === 'function' &&
+                    (hasChangeCommission ? (
+                      <Tooltip
+                        className={classNames(styles.editDisabledIcon, styles.editBtn)}
+                        tooltipClassName={`${styles.tooltipClassNameProp}`}
+                        size="maxContent"
+                        position="bottom"
+                        content={<Icon name="editDisabled" />}
+                      >
+                        <p>
+                          {t(
+                            'You have to wait for your current commission change to finalize before you can edit again.'
+                          )}
+                        </p>
+                      </Tooltip>
+                    ) : (
+                      <button
+                        onClick={onEdit}
+                        className={styles.editBtn}
+                        disabled={hasChangeCommission}
+                      >
+                        <Icon name="editActiveIcon" />
+                      </button>
+                    ))}
+                </span>
               </div>
               <div
                 className={classNames({

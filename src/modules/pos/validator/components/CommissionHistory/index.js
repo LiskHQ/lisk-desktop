@@ -20,7 +20,7 @@ const CommissionHistory = () => {
       <Box className={`${grid.col} ${styles.historyContainer} history-container`}>
         <BoxHeader className={styles.header}>
           <h1>{t('Commission history')}</h1>
-          <h6>{t('Below are the commission history for this validator.')}</h6>
+          <h6>{t('Below is the commission history for this validator.')}</h6>
         </BoxHeader>
         <BoxContent className={styles.wrapper}>
           <QueryTable
@@ -37,6 +37,9 @@ const CommissionHistory = () => {
             header={header(t)}
             headerClassName={`${grid.row} ${styles.historyDetailsContainer} history-details-container`}
             row={CommissionHistoryRow}
+            emptyState={{
+              message: 'No commission change history found',
+            }}
           />
         </BoxContent>
       </Box>
