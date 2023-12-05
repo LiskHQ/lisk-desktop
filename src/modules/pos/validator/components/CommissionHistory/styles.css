@@ -34,13 +34,31 @@
       font-size: var(--font-size-small-secondary);
       font-weight: var(--font-weight-semi-bold);
       color: var(--color-zodiac-blue);
+      padding: 0;
+
+      & div {
+        padding: 0;
+
+        &:last-child {
+          text-align: left;
+          justify-content: left;
+        }
+      }
+
+      &::after {
+        background-color: white;
+      }
     }
   }
 
   & .historyDetailsRow {
-    margin-top: 16px;
+    margin: 16px 0 0 0;
     padding-bottom: 16px;
     font-size: 14px;
+
+    & div {
+      padding: 0;
+    }
 
     & .timestamp {
       color: var(--color-zodiac-blue);
