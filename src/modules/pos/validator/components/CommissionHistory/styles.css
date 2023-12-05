@@ -1,24 +1,40 @@
 .historyContainer {
+  margin-bottom: 0;
   padding: var(--horizontal-modal-padding-l);
+  width: auto !important;
 
-  & h1 {
-    margin-bottom: 8px;
-    font-size: var(--font-size-h3);
-    font-weight: var(--font-weight-very-bold);
-    color: var(--color-zodiac-blue);
-  }
-
-  & h3 {
+  & .header {
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    padding: 0;
     margin-bottom: 24px;
-    font-size: var(--font-size-h6);
-    line-height: 24px;
-    color: var(--color-slate-gray);
+    height: auto;
+
+    & h1 {
+      margin-bottom: 8px;
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-very-bold);
+      color: var(--color-zodiac-blue);
+    }
+
+    & h6 {
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: var(--font-size-h6);
+      line-height: 24px;
+      color: var(--color-slate-gray);
+    }
   }
 
-  & .historyDetailsContainer {
-    font-size: var(--font-size-small-secondary);
-    font-weight: var(--font-weight-semi-bold);
-    color: var(--color-zodiac-blue);
+  & .wrapper {
+    padding: 0;
+
+    & .historyDetailsContainer {
+      font-size: var(--font-size-small-secondary);
+      font-weight: var(--font-weight-semi-bold);
+      color: var(--color-zodiac-blue);
+    }
   }
 
   & .historyDetailsRow {
@@ -32,6 +48,11 @@
 
     & .commission {
       color: var(--color-slate-gray);
+    }
+
+    & .latest {
+      color: var(--color-ultramarine-blue);
+      font-weight: var(--font-weight-semi-bold);
     }
   }
 }

@@ -10,19 +10,17 @@ import styles from './styles.css';
 
 const CommissionHistory = () => {
   const { t } = useTranslation();
-  const timestamp = 'new time';
+  const timestamp = '20 Nov 2023, 10:12:28 AM';
   const oldCommission = '100';
   const newCommission = '90';
   return (
-    <Dialog hasClose size="sm">
-      <Box
-        className={`${grid.col} ${grid['col-xs-12']} ${grid['col-md-3']} ${styles.historyContainer} history-container`}
-      >
-        <BoxHeader>
+    <Dialog hasClose>
+      <Box className={`${grid.col} ${styles.historyContainer} history-container`}>
+        <BoxHeader className={styles.header}>
           <h1>{t('Commission history')}</h1>
           <h6>{t('Below are the commission history for this validator.')}</h6>
         </BoxHeader>
-        <BoxContent>
+        <BoxContent className={styles.wrapper}>
           <div
             className={`${grid.row} ${styles.historyDetailsContainer} history-details-container`}
           >
@@ -38,6 +36,7 @@ const CommissionHistory = () => {
             timestamp={timestamp}
             oldCommission={oldCommission}
             newCommission={newCommission}
+            isLatest
           />
         </BoxContent>
       </Box>
