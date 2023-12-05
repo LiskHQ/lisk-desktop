@@ -1,11 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import DialogLink from '@theme/dialog/link';
-import { TertiaryButton } from '@theme/buttons';
-import Icon from '@theme/Icon';
-import { getLogo } from '@token/fungible/utils/helpers';
+// import { TertiaryButton } from '@theme/buttons';
+// import Icon from '@theme/Icon';
 import styles from './BlockchainApplicationRow.css';
 
 const DepositAmount = ({ amount }) => (
@@ -28,29 +27,29 @@ const ChainStatus = ({ status, t }) => (
 
 const ChainName = ({ title, logo }) => (
   <div className={`chain-name ${grid['col-xs-4']} ${styles.chainName}`}>
-    <img src={logo} />
+    {logo ? <img src={logo} /> : <div className={styles.chainInitials}>{title?.[0]?.toUpperCase()}</div>}
     <span>{title}</span>
   </div>
 );
 
-const Pin = ({ isPinned, onTogglePin }) => (
-  <div className={`${styles.pinWrapper} ${isPinned ? styles.show : ''}`}>
-    <TertiaryButton onClick={onTogglePin} className="blockchain-application-pin-button">
-      <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
-    </TertiaryButton>
-  </div>
-);
+// const Pin = ({ isPinned, onTogglePin }) => (
+//   <div className={`${styles.pinWrapper} ${isPinned ? styles.show : ''}`}>
+//     <TertiaryButton onClick={onTogglePin} className="blockchain-application-pin-button">
+//       <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
+//     </TertiaryButton>
+//   </div>
+// );
 
 const BlockchainApplicationRow = ({ data, className, t }) => {
-  const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
+  const { checkPinByChainId } = usePinBlockchainApplication();
 
-  const handleTogglePin = useCallback(
-    (event) => {
-      event.stopPropagation();
-      togglePin(data.chainID);
-    },
-    [togglePin]
-  );
+  // const handleTogglePin = useCallback(
+  //   (event) => {
+  //     event.stopPropagation();
+  //     togglePin(data.chainID);
+  //   },
+  //   [togglePin]
+  // );
 
   const application = {
     ...data,
@@ -64,8 +63,11 @@ const BlockchainApplicationRow = ({ data, className, t }) => {
         component="blockChainApplicationDetails"
         data={{ chainId: application.chainID }}
       >
-        <Pin isPinned={application.isPinned} onTogglePin={handleTogglePin} />
-        <ChainName title={application.chainName} logo={getLogo(application)} />
+        {/* <Pin isPinned={application.isPinned} onTogglePin={handleTogglePin} /> */}
+        <ChainName
+          title={application.chainName}
+          logo={application?.logo?.svg || application?.logo?.png}
+        />
         <ChainId id={application.chainID} />
         <ChainStatus status={application.status} t={t} />
         <DepositAmount amount={application.escrowedLSK} />

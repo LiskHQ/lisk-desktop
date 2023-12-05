@@ -88,11 +88,19 @@
   margin-left: 15px;
   padding-left: 20px;
 
-  & img {
+  & img,
+  & .chainInitials {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+  }
+
+  & .chainInitials {
+    background-color: var(--color-periwinkle-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
