@@ -20,7 +20,7 @@ export function useApplicationManagement({ queryClient } = {}) {
   const applicationsObject = useSelector(selectApplications)[mainChainNetwork.name] || {};
 
   const applications = useMemo(() => {
-    const appsList = Object.values(applicationsObject);
+    const appsList = Object.values(applicationsObject).filter((app) => app?.status);
     // Sort apps list by pinned apps and terminated apps such that
     // pinned apps are at the beginning while terminated apps are at the end of the array
     return appsList

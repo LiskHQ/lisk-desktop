@@ -1,8 +1,12 @@
+/* eslint-disable no-console */
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectApplications } from '@blockchainApplication/manage/store/selectors';
 import networks from '@network/configuration/networks';
-import { deleteNetworksInApplications } from '@blockchainApplication/manage/store/action';
+import {
+  deleteNetworksInApplications,
+  cleanupApplication,
+} from '@blockchainApplication/manage/store/action';
 import useSettings from '@settings/hooks/useSettings';
 
 const useReduxStateModifier = () => {
@@ -38,9 +42,14 @@ const useReduxStateModifier = () => {
     }
   };
 
+  const handleCleanupApplication = () => {
+    dispatch(cleanupApplication());
+  };
+
   useEffect(() => {
     removeDeadApplicationNetworkDomains();
     removeCircularMainChainNetwork();
+    handleCleanupApplication();
   }, []);
 };
 
