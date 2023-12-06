@@ -44,7 +44,7 @@ export const Height = ({ t }) => {
 
   const isPending = data.executionStatus === 'pending';
   if (isPending || !data.block?.height) {
-    return <Spinner completed={isPending || data.block.isFinal} label={t('Pending...')} />;
+    return <Spinner completed={isPending || data.block?.isFinal} label={t('Pending...')} />;
   }
 
   return <span>{data.block?.height || '-'}</span>;
@@ -142,7 +142,7 @@ export const Date = ({ t }) => {
   const isPending = data.executionStatus === 'pending';
 
   if (isPending || !data.block?.timestamp) {
-    return <Spinner completed={isPending || data.block.isFinal} label={t('Pending...')} />;
+    return <Spinner completed={isPending || data.block?.isFinal} label={t('Pending...')} />;
   }
 
   return (
