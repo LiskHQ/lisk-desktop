@@ -91,7 +91,7 @@ const BlockchainApplicationRow = ({ data, className, t }) => {
         <>
           <ChainName
             title={application.chainName}
-            logo={application?.logo?.svg || application?.logo?.png}
+            logo={application.logo?.svg || application.logo?.png}
           />
           <ChainId id={application.chainID} />
           <ChainStatus status={application.status} t={t} />
