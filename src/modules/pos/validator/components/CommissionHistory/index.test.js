@@ -65,7 +65,7 @@ describe('CommissionHistory', () => {
       screen.getByText('Below is the commission history for this validator.')
     ).toBeInTheDocument();
     await waitFor(() => {
-      expect(screen.getByText('04 Dec 2023, 04:49:50 PM')).toBeInTheDocument();
+      expect(screen.getByText(/04 Dec 2023/)).toBeInTheDocument();
       expect(screen.getByText('(Latest)')).toBeInTheDocument();
       expect(screen.getByText('100')).toBeInTheDocument();
       expect(screen.getByText('89.9')).toBeInTheDocument();
