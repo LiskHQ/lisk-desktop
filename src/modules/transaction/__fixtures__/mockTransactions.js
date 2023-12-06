@@ -33,7 +33,7 @@ const transaction = (index) => ({
     isFinal: true,
   },
   confirmations: 22 + index,
-  executionStatus: 'pending',
+  executionStatus: 'Final',
   meta: {
     recipient: {
       address: 'lsktk7bj2yadx5vq3f87gh5cwca7ptpk5djpxhhc3',
