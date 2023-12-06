@@ -101,6 +101,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+
+    & > svg {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      width: 19px;
+
+      & path {
+        fill: var(--color-warning-border);
+      }
+    }
   }
 }
 

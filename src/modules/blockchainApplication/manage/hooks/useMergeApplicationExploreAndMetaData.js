@@ -15,7 +15,7 @@ const useMergeApplicationExploreAndMetaData = (appOnChainData = [], isUnion = fa
   let filteredOnChainData = appOnChainData;
 
   if (!isUnion) {
-    filteredOnChainData = appOnChainData.filter(({ chainID }) =>
+    filteredOnChainData = filteredOnChainData.filter(({ chainID }) =>
       appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
     );
   }

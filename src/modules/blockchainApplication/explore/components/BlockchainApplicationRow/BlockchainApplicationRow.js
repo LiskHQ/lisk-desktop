@@ -3,9 +3,13 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import DialogLink from '@theme/dialog/link';
-// import { TertiaryButton } from '@theme/buttons';
-// import Icon from '@theme/Icon';
+import FlashMessageHolder from 'src/theme/flashMessage/holder';
+import { ReactComponent as CautionIcon } from '../../../../../../setup/react/assets/images/icons/caution-icon-filled.svg';
 import styles from './BlockchainApplicationRow.css';
+import WarnMissingAppMetaData from '../BlockchainApplications/WarnMissingAppMetaData';
+
+const sideChainRegistrationLink =
+  'https://lisk.com/documentation/beta/build-blockchain/register-sidechain.html#register-off-chain-data-in-the-app-registry';
 
 const DepositAmount = ({ amount }) => (
   <span className={`deposit-amount ${styles.amount} ${grid['col-xs-3']}`}>
@@ -27,51 +31,73 @@ const ChainStatus = ({ status, t }) => (
 
 const ChainName = ({ title, logo }) => (
   <div className={`chain-name ${grid['col-xs-4']} ${styles.chainName}`}>
-    {logo ? <img src={logo} /> : <div className={styles.chainInitials}>{title?.[0]?.toUpperCase()}</div>}
+    {logo ? (
+      <img src={logo} />
+    ) : (
+      <div className={styles.chainInitials}>
+        {title?.[0]?.toUpperCase()}
+        <CautionIcon />
+      </div>
+    )}
     <span>{title}</span>
   </div>
 );
 
-// const Pin = ({ isPinned, onTogglePin }) => (
-//   <div className={`${styles.pinWrapper} ${isPinned ? styles.show : ''}`}>
-//     <TertiaryButton onClick={onTogglePin} className="blockchain-application-pin-button">
-//       <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
-//     </TertiaryButton>
-//   </div>
-// );
-
 const BlockchainApplicationRow = ({ data, className, t }) => {
   const { checkPinByChainId } = usePinBlockchainApplication();
-
-  // const handleTogglePin = useCallback(
-  //   (event) => {
-  //     event.stopPropagation();
-  //     togglePin(data.chainID);
-  //   },
-  //   [togglePin]
-  // );
 
   const application = {
     ...data,
     isPinned: checkPinByChainId(data.chainID),
   };
 
+  const registerApplication = () => {
+    window.open(sideChainRegistrationLink, '_blank');
+  };
+
+  const showFlashMessage = () => {
+    FlashMessageHolder.addMessage(
+      <WarnMissingAppMetaData registerApplication={registerApplication} />,
+      'WarnMissingAppMetaData'
+    );
+  };
+
+  const RowWrapper = ({ children }) => {
+    if (application.serviceURLs) {
+      return (
+        <DialogLink
+          className={`${grid.row} ${className} ${styles.dialogLink} blockchain-application-row`}
+          component="blockChainApplicationDetails"
+          data={{ chainId: application.chainID }}
+        >
+          {children}
+        </DialogLink>
+      );
+    }
+
+    return (
+      <div
+        className={`${grid.row} ${className} ${styles.dialogLink} blockchain-application-row`}
+        onClick={showFlashMessage}
+      >
+        {children}
+      </div>
+    );
+  };
+
   return (
     <div data-testid="applications-row" className={`application-row ${styles.container}`}>
-      <DialogLink
-        className={`${grid.row} ${className} ${styles.dialogLink} blockchain-application-row`}
-        component="blockChainApplicationDetails"
-        data={{ chainId: application.chainID }}
-      >
-        {/* <Pin isPinned={application.isPinned} onTogglePin={handleTogglePin} /> */}
-        <ChainName
-          title={application.chainName}
-          logo={application?.logo?.svg || application?.logo?.png}
-        />
-        <ChainId id={application.chainID} />
-        <ChainStatus status={application.status} t={t} />
-        <DepositAmount amount={application.escrowedLSK} />
-      </DialogLink>
+      <RowWrapper>
+        <>
+          <ChainName
+            title={application.chainName}
+            logo={application?.logo?.svg || application?.logo?.png}
+          />
+          <ChainId id={application.chainID} />
+          <ChainStatus status={application.status} t={t} />
+          <DepositAmount amount={application.escrowedLSK} />
+        </>
+      </RowWrapper>
     </div>
   );
 };
