@@ -39,9 +39,15 @@ export const ID = ({ isWallet }) => {
   );
 };
 
-export const Height = () => {
+export const Height = ({ t }) => {
   const { data } = useContext(TransactionRowContext);
-  return <span>{data.block.height}</span>;
+
+  const isPending = data.executionStatus === 'pending';
+  if (isPending || !data.block?.height) {
+    return <Spinner completed={isPending || data.block.isFinal} label={t('Pending...')} />;
+  }
+
+  return <span>{data.block?.height || '-'}</span>;
 };
 
 export const Round = () => {
@@ -133,9 +139,10 @@ export const Counterpart = () => {
 
 export const Date = ({ t }) => {
   const { data } = useContext(TransactionRowContext);
+  const isPending = data.executionStatus === 'pending';
 
-  if (!data.block.timestamp) {
-    return <Spinner completed={data.block.isFinal} label={t('Pending...')} />;
+  if (isPending || !data.block?.timestamp) {
+    return <Spinner completed={isPending || data.block.isFinal} label={t('Pending...')} />;
   }
 
   return (
