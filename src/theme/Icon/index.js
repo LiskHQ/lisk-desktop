@@ -237,6 +237,7 @@ import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transacti
 import commissionIcon from '@setup/react/assets/images/icons/commission.svg';
 import editActiveIcon from '@setup/react/assets/images/icons/editActive.svg';
 import editDisabled from '@setup/react/assets/images/icons/edit-disabled.svg';
+import history from '@setup/react/assets/images/icons/history.svg';
 import hardwareWalletIcon from '@setup/react/assets/images/icons/hardware-wallet-icon.svg';
 
 export const icons = {
@@ -471,6 +472,7 @@ export const icons = {
   commissionIcon,
   editActiveIcon,
   editDisabled,
+  history,
   arrowBlueRight,
   arrowBlueDown,
   multisigKeys,
