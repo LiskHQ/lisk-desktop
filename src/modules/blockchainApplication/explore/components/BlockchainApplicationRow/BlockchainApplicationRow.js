@@ -3,10 +3,10 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import DialogLink from '@theme/dialog/link';
-import { ReactComponent as CautionIcon } from '@setup/react/assets/images/icons/caution-icon-filled.svg';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import styles from './BlockchainApplicationRow.css';
 import WarnMissingAppMetaData from '../BlockchainApplications/WarnMissingAppMetaData';
+import { ReactComponent as CautionIcon } from '../../../../../../setup/react/assets/images/icons/caution-icon-filled.svg';
 
 const DepositAmount = ({ amount }) => (
   <span className={`deposit-amount ${styles.amount} ${grid['col-xs-3']}`}>
