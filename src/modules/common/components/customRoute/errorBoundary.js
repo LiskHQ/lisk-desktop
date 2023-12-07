@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import Piwik from 'src/utils/piwik';
+import { IPC_RELOAD_URL } from 'src/const/ipcGlobal';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from './errorBoundary.css';
@@ -19,7 +20,7 @@ class ErrorBoundary extends React.Component {
 
   reloadPage() {
     Piwik.trackingEvent('ErrorBoundary', 'button', 'Reload page');
-    window.location.reload();
+    window.ipc[IPC_RELOAD_URL]();
   }
 
   render() {
