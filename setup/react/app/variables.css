@@ -147,6 +147,7 @@ or "warn/action" ineastd of "red/green"
   --color-very-light-gray: #dfe6f2;
   --color-very-light-gray-20: rgba(223, 230, 242, 0.2);
   --color-extra-light-gray: #dbe1ee;
+  --color-slate-manatee-gray: var(--color-slate-gray);
   --color-content-grayblue: #7383a7;
   --color-background-wrapper: var(--color-mystic);
   --color-background-header: #fbfcfd;
@@ -300,6 +301,7 @@ or "warn/action" ineastd of "red/green"
   --color-zodiac-blue: #fff;
   --color-zodiac-blue--satin-deep-black: var(--color-satin-deep-black);
   --color-periwinkle-blue--manatee-gray: var(--color-manatee-gray);
+  --color-slate-manatee-gray: var(--color-manatee-gray);
   --color-search-container: var(--color-body-bg);
   --color-stake-item-bg: var(--color-mystic);
   --color-tooltip-bg: rgb(35, 35, 37, 0.7);

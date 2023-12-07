@@ -17,6 +17,7 @@ import { storage, setConfig, readConfig } from './modules/storage';
 import { canExecuteDeepLinking, setRendererPermissions } from './utils';
 import {
   IPC_OPEN_URL,
+  IPC_RELOAD_URL,
   IPC_RETRIEVE_CONFIG,
   IPC_SET_LOCALE,
   IPC_STORE_CONFIG,
@@ -141,6 +142,10 @@ ipcMain.on(IPC_SET_LOCALE, (event, locale) => {
       checkForUpdates,
     });
   }
+});
+
+ipcMain.on(IPC_RELOAD_URL, () => {
+  win.browser.webContents.reload();
 });
 
 ipcMain.on('request-locale', () => {
