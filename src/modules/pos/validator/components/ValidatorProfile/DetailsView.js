@@ -14,6 +14,8 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Tooltip from '@theme/Tooltip';
 import { useTransactionsFromPool } from '@transaction/hooks/queries';
+import { ReactComponent as EditActiveIcon } from '@setup/react/assets/images/icons/editActive.svg';
+import { ReactComponent as HistoryIcon } from '@setup/react/assets/images/icons/history.svg';
 import styles from './ValidatorProfile.css';
 import { convertCommissionToPercentage } from '../../utils';
 import usePosToken from '../../hooks/usePosToken';
@@ -95,7 +97,7 @@ const DetailsView = ({ data, isMyProfile }) => {
                 <span>
                   {onView && typeof onView === 'function' && (
                     <button onClick={onView} className={styles.editBtn}>
-                      <Icon name="history" />
+                      <HistoryIcon />
                     </button>
                   )}
                   {onEdit &&
@@ -120,7 +122,7 @@ const DetailsView = ({ data, isMyProfile }) => {
                         className={styles.editBtn}
                         disabled={hasChangeCommission}
                       >
-                        <Icon name="editActiveIcon" />
+                        <EditActiveIcon />
                       </button>
                     ))}
                 </span>
