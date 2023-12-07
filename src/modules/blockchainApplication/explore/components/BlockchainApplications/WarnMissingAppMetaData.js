@@ -24,6 +24,7 @@ const WarnMissingAppMetaData = (props) => {
           <div className={styles.btnContainer}>
             <a
               href={sideChainRegistrationLink}
+              rel="noopener noreferrer"
               target="_blank"
               onClick={props.registerApplication}
               className={classNames(styles.button, { [theme]: theme === 'dark' })}
