@@ -24,7 +24,7 @@
       margin-bottom: 0;
       font-size: var(--font-size-h6);
       line-height: 24px;
-      color: var(--color-slate-gray);
+      color: var(--color-slate-manatee-gray);
     }
   }
 
@@ -67,7 +67,7 @@
     }
 
     & .commission {
-      color: var(--color-slate-gray);
+      color: var(--color-slate-manatee-gray);
     }
 
     & .latest {
