@@ -43,6 +43,7 @@ usePinBlockchainApplication.mockReturnValue({
 
 useApplicationManagement.mockReturnValue({
   setApplication: mockSetApplication,
+  applications: [],
 });
 const aggregatedApplicationData = {
   ...mockBlockchainApp.data[0],
@@ -54,7 +55,7 @@ describe('BlockchainApplicationDetails', () => {
     search: 'chainId=test-chain-id',
   };
   const props = {
-    history: { location },
+    history: { location, push: jest.fn() },
     location,
   };
 
@@ -144,7 +145,7 @@ describe('BlockchainApplicationDetails', () => {
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
   });
 
-  it('should display add application button if in add application mode', () => {
+  it('should display add application button if application is not yet managed and is fully registered', () => {
     const updatedLocation = {
       ...props.location,
       search: 'chainId=test-chain-id&mode=addApplication',
@@ -154,9 +155,14 @@ describe('BlockchainApplicationDetails', () => {
       history: { location: updatedLocation },
       location: updatedLocation,
     };
+    useApplicationManagement.mockReturnValue({
+      setApplication: mockSetApplication,
+      applications: [mockBlockchainAppMeta.data[0]],
+    });
+
     rerenderWithRouterAndQueryClient(BlockchainApplicationDetails, updatedProps);
-    expect(screen.getByTestId('add-application-button')).toBeTruthy();
-    fireEvent.click(screen.getByTestId('add-application-button'));
+    expect(screen.getAllByTestId('add-application-button').at(0)).toBeTruthy();
+    fireEvent.click(screen.getAllByTestId('add-application-button').at(0));
     expect(mockSetApplication).toHaveBeenCalledWith(aggregatedApplicationData);
   });
 });
