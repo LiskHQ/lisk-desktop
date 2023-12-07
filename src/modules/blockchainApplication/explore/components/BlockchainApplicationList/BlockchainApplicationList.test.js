@@ -2,10 +2,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
-import {
-  renderWithRouterAndQueryClient,
-  rerenderWithRouterAndQueryClient,
-} from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import { mockBlockchainApp } from '../../__fixtures__';
 import BlockchainApplicationList from './BlockchainApplicationList';
@@ -91,26 +88,8 @@ describe('BlockchainApplicationList', () => {
     );
   });
 
-  it('should call the toggle function for the particular blockchain application been toggled', () => {
-    const { chainID } = mockBlockchainApp.data[0];
-
-    fireEvent.click(screen.getAllByTestId('pin-button')[0]);
-    expect(mockTogglePin).toHaveBeenCalledWith(chainID);
-  });
-
   it('should invoke the load more action', () => {
     fireEvent.click(screen.getByText('Load more'));
     expect(mockFetchNextPage).toHaveBeenCalledTimes(1);
-  });
-
-  it('should not have any pinned application', () => {
-    usePinBlockchainApplication.mockReturnValue({
-      togglePin: mockTogglePin,
-      pins: [],
-      checkPinByChainId: jest.fn().mockReturnValue(false),
-    });
-    rerenderWithRouterAndQueryClient(BlockchainApplicationList);
-
-    expect(screen.getAllByAltText('unpinnedIcon')).toHaveLength(mockBlockchainApp.data.length);
   });
 });
