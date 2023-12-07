@@ -2,7 +2,7 @@
   margin-bottom: 0;
   padding: var(--horizontal-modal-padding-l);
   width: auto !important;
-  overflow: scroll;
+  overflow: auto;
 
   & .header {
     flex-direction: column;
