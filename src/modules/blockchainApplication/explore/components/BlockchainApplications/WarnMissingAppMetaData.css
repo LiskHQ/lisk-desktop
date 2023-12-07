@@ -1,3 +1,5 @@
+@import '../../../../../theme/buttons/css/base.css';
+
 .flashContainer {
   background-color: var(--color-warning-bg);
   border-color: var(--color-warning-border);
@@ -22,6 +24,9 @@
 }
 
 .button {
+  @mixin buttonBasics;
+  @mixin buttonSecondary;
+
   height: auto !important;
   padding: 15px 20px !important;
   margin-left: 12px;
@@ -29,22 +34,11 @@
   border-color: var(--color-zodiac-blue);
   color: var(--color-constant-zodiac-blue);
 
+  &:hover {
+    text-decoration: none;
+  }
+
   &.primary {
     background-color: var(--color-ink-blue);
   }
-}
-
-.stakeWarning {
-  background-color: var(--color-warning-bg);
-  border: solid 1px var(--color-warning-border);
-  border-radius: 5px;
-  display: flex;
-  align-items: flex-start;
-  font-size: 18px;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-.rightSpace {
-  margin-right: 10px;
 }

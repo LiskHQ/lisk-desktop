@@ -1,13 +1,15 @@
 import React from 'react';
-import { useTranslation, withTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from 'src/theme/Theme';
-import { SecondaryButton } from 'src/theme/buttons';
+import classNames from 'classnames';
 import FlashMessage from 'src/theme/flashMessage/flashMessage';
 import Icon from 'src/theme/Icon';
 import styles from './WarnMissingAppMetaData.css';
 
-const WarnMissingAppMetaData = ({ registerApplication, ...props }) => {
+const sideChainRegistrationLink =
+  'https://lisk.com/documentation/beta/build-blockchain/register-sidechain.html#register-off-chain-data-in-the-app-registry';
+
+const WarnMissingAppMetaData = (props) => {
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -20,13 +22,14 @@ const WarnMissingAppMetaData = ({ registerApplication, ...props }) => {
             "Kindly provide your sidechain's off-chain metadata to empower sidechain users in seamlessly managing the application within their wallets."
           )}
           <div className={styles.btnContainer}>
-            <SecondaryButton
-              className={`${styles.button} ${theme === 'dark' ? theme : ''}`}
-              size="s"
-              onClick={registerApplication}
+            <a
+              href={sideChainRegistrationLink}
+              target="_blank"
+              onClick={props.registerApplication}
+              className={classNames(styles.button, { [theme]: theme === 'dark' })}
             >
               {t('Complete registration')}
-            </SecondaryButton>
+            </a>
           </div>
         </div>
       </FlashMessage.Content>
@@ -34,8 +37,4 @@ const WarnMissingAppMetaData = ({ registerApplication, ...props }) => {
   );
 };
 
-WarnMissingAppMetaData.propTypes = {
-  registerApplication: PropTypes.func.isRequired,
-};
-
-export default withTranslation()(WarnMissingAppMetaData);
+export default WarnMissingAppMetaData;

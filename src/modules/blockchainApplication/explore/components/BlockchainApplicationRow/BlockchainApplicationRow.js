@@ -3,13 +3,10 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import DialogLink from '@theme/dialog/link';
+import { ReactComponent as CautionIcon } from '@setup/react/assets/images/icons/caution-icon-filled.svg';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
-import { ReactComponent as CautionIcon } from '../../../../../../setup/react/assets/images/icons/caution-icon-filled.svg';
 import styles from './BlockchainApplicationRow.css';
 import WarnMissingAppMetaData from '../BlockchainApplications/WarnMissingAppMetaData';
-
-const sideChainRegistrationLink =
-  'https://lisk.com/documentation/beta/build-blockchain/register-sidechain.html#register-off-chain-data-in-the-app-registry';
 
 const DepositAmount = ({ amount }) => (
   <span className={`deposit-amount ${styles.amount} ${grid['col-xs-3']}`}>
@@ -43,6 +40,29 @@ const ChainName = ({ title, logo }) => (
   </div>
 );
 
+const RowWrapper = ({ application, children, className, handleShowFlashMessage }) => {
+  if (application.serviceURLs) {
+    return (
+      <DialogLink
+        className={`${grid.row} ${className} ${styles.dialogLink} blockchain-application-row`}
+        component="blockChainApplicationDetails"
+        data={{ chainId: application.chainID }}
+      >
+        {children}
+      </DialogLink>
+    );
+  }
+
+  return (
+    <div
+      className={`${grid.row} ${className} ${styles.dialogLink} blockchain-application-row`}
+      onClick={handleShowFlashMessage}
+    >
+      {children}
+    </div>
+  );
+};
+
 const BlockchainApplicationRow = ({ data, className, t }) => {
   const { checkPinByChainId } = usePinBlockchainApplication();
 
@@ -52,42 +72,23 @@ const BlockchainApplicationRow = ({ data, className, t }) => {
   };
 
   const registerApplication = () => {
-    window.open(sideChainRegistrationLink, '_blank');
+    FlashMessageHolder.deleteMessage('WarnMissingAppMetaData');
   };
 
-  const showFlashMessage = () => {
+  const handleShowFlashMessage = () => {
     FlashMessageHolder.addMessage(
       <WarnMissingAppMetaData registerApplication={registerApplication} />,
       'WarnMissingAppMetaData'
     );
   };
 
-  const RowWrapper = ({ children }) => {
-    if (application.serviceURLs) {
-      return (
-        <DialogLink
-          className={`${grid.row} ${className} ${styles.dialogLink} blockchain-application-row`}
-          component="blockChainApplicationDetails"
-          data={{ chainId: application.chainID }}
-        >
-          {children}
-        </DialogLink>
-      );
-    }
-
-    return (
-      <div
-        className={`${grid.row} ${className} ${styles.dialogLink} blockchain-application-row`}
-        onClick={showFlashMessage}
-      >
-        {children}
-      </div>
-    );
-  };
-
   return (
     <div data-testid="applications-row" className={`application-row ${styles.container}`}>
-      <RowWrapper>
+      <RowWrapper
+        application={application}
+        className={className}
+        handleShowFlashMessage={handleShowFlashMessage}
+      >
         <>
           <ChainName
             title={application.chainName}
