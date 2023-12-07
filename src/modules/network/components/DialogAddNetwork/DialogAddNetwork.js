@@ -116,7 +116,7 @@ const DialogAddNetwork = () => {
             <Input
               size="l"
               label="Name"
-              placeholder={t('Enter network name')}
+              placeholder={t('Enter network name, e.g Testnet')}
               feedback={errors.name?.message}
               status={errors.name?.message ? 'error' : undefined}
               {...register('name', {
@@ -127,9 +127,7 @@ const DialogAddNetwork = () => {
             <Input
               size="l"
               label="Service URL"
-              placeholder={t(
-                'Enter service URL, e.g. https://service.lisk.com or http://localhost:9901'
-              )}
+              placeholder={t('Enter service URL, e.g. https://testnet-service.lisk.com')}
               value={formValues.serviceUrl}
               feedback={errors.serviceUrl?.message}
               status={errors.serviceUrl?.message ? 'error' : undefined}
@@ -161,7 +159,7 @@ const DialogAddNetwork = () => {
             <Input
               size="l"
               label="Websocket URL (Optional)"
-              placeholder={t('Enter websocket service URL, e.g. wss://mainnet-service.lisk.com')}
+              placeholder={t('Enter websocket service URL, e.g. wss://testnet-service.lisk.com')}
               feedback={errors.wsServiceUrl?.message}
               status={errors.wsServiceUrl?.message ? 'error' : undefined}
               {...register('wsServiceUrl', {

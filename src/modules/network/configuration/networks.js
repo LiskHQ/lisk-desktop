@@ -13,8 +13,8 @@ const networks = {
   [networkKeys.mainnet]: {
     name: networkKeys.mainnet,
     label: 'Mainnet',
-    serviceUrl: 'https://mainnet-service.lisk.com',
-    wsServiceUrl: 'wss://mainnet-service.lisk.com',
+    serviceUrl: 'https://service.lisk.com',
+    wsServiceUrl: 'wss://service.lisk.com',
     isAvailable: true,
   },
   [networkKeys.alphanet]: {
@@ -43,7 +43,7 @@ const networks = {
     label: 'Testnet',
     serviceUrl: 'https://testnet-service.lisk.com',
     wsServiceUrl: 'wss://testnet-service.lisk.com',
-    isAvailable: true,
+    isAvailable: false,
   },
   [networkKeys.customNode]: {
     name: networkKeys.customNode,
