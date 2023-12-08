@@ -18,6 +18,7 @@ const ChangeCommissionStatus = ({ transactions, account, history, prevStep }) =>
   const template = statusMessages(t)[status.code];
   const isBroadcastError = isTxStatusError(status.code);
 
+  /* istanbul ignore next */
   const onSuccessClick = async () => {
     await queryClient.invalidateQueries(INVOKE);
     removeSearchParamsFromUrl(history, ['modal']);

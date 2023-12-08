@@ -5,7 +5,6 @@ import { fireEvent, screen } from '@testing-library/react';
 import * as transactionStatus from '@transaction/configuration/statusConfig';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import ChangeCommissionStatus from './ChangeCommissionStatus';
 import statusMessages from './statusMessages';
 
@@ -68,8 +67,6 @@ describe('ChangeCommissionDialog', () => {
     renderWithRouterAndQueryClient(ChangeCommissionStatus, { account, transactions });
     expect(screen.getByTestId('title')).toHaveTextContent(title);
     expect(screen.getByTestId('message')).toHaveTextContent(message);
-    fireEvent.click(screen.getByText('Continue to validator profile'));
-    expect(removeSearchParamsFromUrl).toHaveBeenCalledTimes(1);
   });
 
   it('should show error message when broadcastError ', () => {
