@@ -72,8 +72,14 @@ export const useSession = ({ isEnabled = true } = {}) => {
     }
   }, []);
 
+  // eslint-disable-next-line max-statements
   const respond = useCallback(async ({ payload, event }) => {
     const requestEvent = event || events.find((e) => e.name === EVENTS.SESSION_REQUEST);
+    if (!requestEvent) {
+      return {
+        status: STATUS.FAILURE,
+      };
+    }
     const topic = requestEvent.meta.topic;
     const response = formatJsonRpcResult(requestEvent.meta.id, payload);
 

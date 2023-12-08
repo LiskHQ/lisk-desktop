@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import TabsContainer from '@theme/tabs/tabsContainer/tabsContainer';
 import BlockchainApplicationList from '@blockchainApplication/explore/components/BlockchainApplicationList';
 import SwippableInfoBanner from '@common/components/infoBanner/swippableInfoBanner';
+import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics';
 import styles from './BlockchainApplications.css';
 import banners from './banners';
@@ -13,6 +14,7 @@ const BlockchainApplications = ({ applications, statistics, applyFilters, filter
 
   return (
     <div className={styles.wrapper}>
+      <FlashMessageHolder />
       <SwippableInfoBanner banners={banners} name="blockchainApplicationsPageBanner" />
       <div className={styles.contentWrapper}>
         <div className={styles.content}>

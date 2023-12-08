@@ -52,7 +52,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     logo,
     escrowedLSK = '0',
   } = aggregatedApplicationData;
-  const { setApplication } = useApplicationManagement();
+  const { setApplication, applications } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -179,18 +179,20 @@ const BlockchainApplicationDetails = ({ history, location }) => {
                 </ValueAndLabel>
               ))}
         </Box>
-        {mode === 'addApplication' ? (
-          <Box className={styles.footerButton}>
-            <PrimaryButton
-              size="l"
-              className={`${styles.addButton} add-application-button`}
-              data-testid="add-application-button"
-              onClick={addNewApplication}
-            >
-              {t('Add application')}
-            </PrimaryButton>
-          </Box>
-        ) : null}
+        {offChainData?.data?.[0] &&
+          onChainData?.data?.[0] &&
+          !applications.some((managedApplication) => managedApplication.chainID === chainId) && (
+            <Box className={styles.footerButton}>
+              <PrimaryButton
+                size="l"
+                className={`${styles.addButton} add-application-button`}
+                data-testid="add-application-button"
+                onClick={addNewApplication}
+              >
+                {t('Add application')}
+              </PrimaryButton>
+            </Box>
+          )}
       </div>
     </Dialog>
   );
