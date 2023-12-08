@@ -59,9 +59,9 @@ const DetailsView = ({ data, isMyProfile }) => {
       onEdit: !isMyProfile
         ? undefined
         : () => addSearchParamsToUrl(history, { modal: 'changeCommission' }),
-      onView: !isMyProfile
-        ? undefined
-        : () => addSearchParamsToUrl(history, { modal: 'commissionHistory' }),
+      onView: commission
+        ? () => addSearchParamsToUrl(history, { modal: 'commissionHistory' })
+        : undefined,
     },
     {
       icon: 'calendar',

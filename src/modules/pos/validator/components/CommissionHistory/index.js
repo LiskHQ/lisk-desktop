@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useCurrentAccount } from '@account/hooks';
 import { useTransactionEvents } from '@transaction/hooks/queries';
@@ -8,13 +9,18 @@ import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import { QueryTable } from '@theme/QueryTable';
+import { selectSearchParamValue } from 'src/utils/searchParams';
 import header from './header';
 import CommissionHistoryRow from './CommissionHistoryRow';
 import styles from './styles.css';
 
 const CommissionHistory = () => {
   const { t } = useTranslation();
-  const [currentAccount] = useCurrentAccount();
+  const history = useHistory();
+  /* istanbul ignore next */
+  const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
+  const address =
+    selectSearchParamValue(history.location.search, 'validatorAddress') || currentAddress;
   return (
     <Dialog hasClose>
       <Box className={`${grid.col} ${styles.historyContainer} history-container`}>
@@ -29,7 +35,7 @@ const CommissionHistory = () => {
             queryConfig={{
               config: {
                 params: {
-                  senderAddress: currentAccount.metadata.address,
+                  senderAddress: address,
                   name: 'commissionChange',
                 },
               },
