@@ -27,10 +27,17 @@
   }
 
   & > div {
-    font-size: 14px;
+    font-size: 16px;
+    position: absolute;
+    left: 50%;
+    top: calc(57% + 16px);
+    margin: 0;
+    transform: translateX(-50%) translateY(-50%);
 
     & > span {
-      color: var(--color-zodiac-blue);
+      color: var(--color-ultramarine-blue);
+      font-weight: var(--font-weight-semi-bold);
+      font-style: italic;
     }
   }
 }

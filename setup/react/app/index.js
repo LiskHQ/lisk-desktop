@@ -39,7 +39,7 @@ const AppContent = () => {
   const { percentageIndexed, isIndexingInProgress, chainLength, numBlocksIndexed } = indexStatus;
   const shouldShowIndexingLoader = chainLength - numBlocksIndexed >= 5 && isIndexingInProgress;
 
-  if (isLoadingNetwork) return <PageLoader progress={10} />;
+  if (isLoadingNetwork) return <PageLoader />;
 
   if (shouldShowIndexingLoader) return <PageLoader progress={percentageIndexed} />;
 
