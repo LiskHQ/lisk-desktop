@@ -17,12 +17,12 @@ const networks = {
     wsServiceUrl: 'wss://service.lisk.com',
     isAvailable: true,
   },
-  [networkKeys.alphanet]: {
-    name: networkKeys.alphanet,
-    label: 'Alphanet',
-    serviceUrl: 'http://alphanet-service.liskdev.net',
-    wsServiceUrl: 'ws://alphanet-service.liskdev.net',
-    isAvailable: false,
+  [networkKeys.testnet]: {
+    name: networkKeys.testnet,
+    label: 'Testnet',
+    serviceUrl: 'https://testnet-service.lisk.com',
+    wsServiceUrl: 'wss://testnet-service.lisk.com',
+    isAvailable: true,
   },
   [networkKeys.betanet]: {
     name: networkKeys.betanet,
@@ -31,18 +31,18 @@ const networks = {
     wsServiceUrl: 'wss://betanet-service.lisk.com',
     isAvailable: false,
   },
+  [networkKeys.alphanet]: {
+    name: networkKeys.alphanet,
+    label: 'Alphanet',
+    serviceUrl: 'http://alphanet-service.liskdev.net',
+    wsServiceUrl: 'ws://alphanet-service.liskdev.net',
+    isAvailable: false,
+  },
   [networkKeys.devnet]: {
     name: networkKeys.devnet,
     label: 'Devnet',
     serviceUrl: 'http://devnet-service.liskdev.net:9901',
     wsServiceUrl: 'ws://devnet-service.liskdev.net:9901',
-    isAvailable: false,
-  },
-  [networkKeys.testnet]: {
-    name: networkKeys.testnet,
-    label: 'Testnet',
-    serviceUrl: 'https://testnet-service.lisk.com',
-    wsServiceUrl: 'wss://testnet-service.lisk.com',
     isAvailable: false,
   },
   [networkKeys.customNode]: {
