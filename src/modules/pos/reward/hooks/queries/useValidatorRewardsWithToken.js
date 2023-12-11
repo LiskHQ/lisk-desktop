@@ -37,6 +37,7 @@ export const useValidatorRewardsWithToken = () => {
         module,
         command,
         nonce: authNonce,
+        fee: 180000,
         senderPublicKey: pubkey,
         params: {},
         signatures: [],
