@@ -3,8 +3,8 @@ import { getDuplicateNetworkFields } from './index';
 describe('getDuplicateNetworkFields', () => {
   const MAINNET = {
     name: 'Mainnet',
-    serviceUrl: 'https://mainnet-service.lisk.com',
-    wsServiceUrl: 'wss://mainnet-service.lisk.com',
+    serviceUrl: 'https://service.lisk.com',
+    wsServiceUrl: 'wss://service.lisk.com',
   };
 
   const CUSTOM = {
