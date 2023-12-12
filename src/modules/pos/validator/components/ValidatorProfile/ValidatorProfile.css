@@ -504,6 +504,10 @@
 }
 
 .editBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -523,8 +527,5 @@
 }
 
 .editDisabledIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: initial;
 }

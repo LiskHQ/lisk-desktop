@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { selectModuleCommandSchemas } from 'src/redux/selectors';
@@ -7,6 +7,7 @@ import { getTransactionStatus, isTxStatusError } from '@transaction/configuratio
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { useQueryClient } from '@tanstack/react-query';
 import { INVOKE } from 'src/const/queries';
+import { txStatusTypes } from '@transaction/configuration/txStatus';
 import statusMessages from './statusMessages';
 import styles from './ChangeCommissionStatus.css';
 
@@ -20,9 +21,16 @@ const ChangeCommissionStatus = ({ transactions, account, history, prevStep }) =>
 
   /* istanbul ignore next */
   const onSuccessClick = async () => {
-    await queryClient.invalidateQueries(INVOKE);
     removeSearchParamsFromUrl(history, ['modal']);
   };
+
+  useEffect(() => {
+    if (status.code === txStatusTypes.broadcastSuccess) {
+      (async () => {
+        await queryClient.invalidateQueries(INVOKE);
+      })();
+    }
+  }, [status.code]);
 
   return (
     <div className={`${styles.wrapper} status-container`}>
