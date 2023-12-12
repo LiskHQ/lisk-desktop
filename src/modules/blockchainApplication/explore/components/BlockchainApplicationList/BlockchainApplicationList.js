@@ -70,7 +70,9 @@ const BlockchainApplicationList = () => {
           showHeader
           queryHook={useBlockchainApplicationExplore}
           queryConfig={blockchainApplicationExploreQueryConfig}
-          transformResponse={useMergeApplicationExploreAndMetaData}
+          transformResponse={(applications) =>
+            useMergeApplicationExploreAndMetaData(applications, true)
+          }
           row={BlockchainApplicationRow}
           header={header(t)}
           headerClassName={styles.tableHeader}

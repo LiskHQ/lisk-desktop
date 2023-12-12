@@ -117,6 +117,7 @@ module.exports = {
     'src/modules/wallet/components/multisignatureMembers/index.js',
     'src/modules/pos/validator/components/WarnPunishedValidator/WarnPunishedValidator.js',
     'src/modules/pos/validator/components/WarnPunishedValidator/index.js',
+    'src/modules/blockchainApplication/explore/components/BlockchainApplications/WarnMissingAppMetaData.js',
     'src/modules/pos/validator/components/WarnPunishedValidator/StakeWarning.js',
     'src/theme/tabs/tabsContainer/tabsContainer.js',
     'src/modules/common/components/copyToClipboard/index.js',
