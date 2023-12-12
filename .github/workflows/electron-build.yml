@@ -53,8 +53,7 @@ jobs:
         # Import the Apple API key for app notarization on macOS
         run: |
           mkdir -p ~/private_keys/
-          echo '${{ secrets.API_KEY }}' > ~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8
-          echo API_KEY_PATH=~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8 >> $GITHUB_ENV
+          echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
 
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
@@ -82,4 +81,5 @@ jobs:
         if: failure() && startsWith(matrix.os, 'macos')
         run: |
           echo "Notarization failed. Outputting notarization-error.log..."
+          cat /Users/runner/work/lisk-desktop/lisk-desktop/notarization-error.log
           cat $GITHUB_WORKSPACE/notarization-error.log
