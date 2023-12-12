@@ -185,7 +185,7 @@ Note: The following layout structure may not appear exactly as shown below due t
 │   ├── theme/                     # Themed components (Button, Input, etc.).
 │   ├── utils/                     # Global utility functions used throughout the app.
         ├── i18n/                  # Localization setup.
-└──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit tests that live in /src.
+└──e2e/                            # E2E tests written with Playwright and Cucumber; also some helpers used by unit tests that live in /src.
 ```
 
 ## Contributors

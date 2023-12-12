@@ -12,17 +12,8 @@ import { PrimaryButton } from '@theme/buttons';
 import DialogLink from '@theme/dialog/link';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { selectModuleCommandSchemas } from 'src/redux/selectors';
+import { shouldShowBookmark } from 'src/modules/common/constants';
 import styles from './status.css';
-
-const shouldShowBookmark = (bookmarks, account, transactionJSON, token) => {
-  if (account.summary.address === transactionJSON.params.recipientAddress) {
-    return false;
-  }
-
-  return !bookmarks[token].find(
-    (bookmark) => bookmark.address === transactionJSON.params.recipientAddress
-  );
-};
 
 const getMessagesDetails = (transactions, status, t) => {
   const messages = statusMessages(t);

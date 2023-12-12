@@ -40,7 +40,7 @@ export const getMultiSignatureStatus = ({
     const isRegisterMultisignature =
       joinModuleAndCommand(transactionJSON) === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
-    const isInitatorAccountMultiSig = senderAccount.numberOfSignatures > 1;
+    const isInitiatorAccountMultiSig = senderAccount.numberOfSignatures > 1;
 
     const transactionKeys = {
       optionalKeys: transactionJSON.params.optionalKeys,
@@ -48,7 +48,7 @@ export const getMultiSignatureStatus = ({
       numberOfSignatures: transactionJSON.params.numberOfSignatures,
     };
 
-    if (isRegisterMultisignature && isInitatorAccountMultiSig) {
+    if (isRegisterMultisignature && isInitiatorAccountMultiSig) {
       const { remaining: paramsTxSignaturesRemaining } = calculateRemainingAndSignedMembers(
         transactionKeys,
         transactionJSON,

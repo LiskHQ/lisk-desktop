@@ -1,6 +1,8 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import Piwik from 'src/utils/piwik';
+import { IPC_RELOAD_URL } from 'src/const/ipcGlobal';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from './errorBoundary.css';
@@ -18,18 +20,17 @@ class ErrorBoundary extends React.Component {
 
   reloadPage() {
     Piwik.trackingEvent('ErrorBoundary', 'button', 'Reload page');
-    window.location.reload();
+    window.ipc[IPC_RELOAD_URL]();
   }
 
   render() {
-    const { t } = this.props;
+    const { t, history } = this.props;
     const getMailReference = () => {
       const recipient = 'desktopdev@lisk.com';
       const subject = `User Reported Error - Lisk - ${VERSION}`; // eslint-disable-line no-undef
-      const body = `${this.state.error}:%0A${this.state.info.componentStack.replace(
-        /\s{4}/g,
-        '%0A'
-      )}`;
+      const body = `${this.state.error} found on route "${
+        history.location.pathname
+      }":%0A${this.state.info.componentStack.replace(/\s{4}/g, '%0A')}`;
       return `mailto:${recipient}?&subject=${subject}&body=${body}`;
     };
 
@@ -65,4 +66,4 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-export default withTranslation()(ErrorBoundary);
+export default withRouter(withTranslation()(ErrorBoundary));

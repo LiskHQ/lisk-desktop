@@ -65,16 +65,6 @@ const validators = [
     },
     message: (t) => t('Duplicate public keys detected.'),
   },
-  {
-    pattern: (mandatory, optional, numberOfSignatures, currentAccount) => {
-      const index = [...mandatory, ...optional].findIndex(
-        (key) => key === currentAccount.metadata?.pubkey
-      );
-      return index >= 0 && numberOfSignatures === 1;
-    },
-    message: (t) =>
-      t('Please add a member beyond yourself for registering multisignature account.'),
-  },
 ];
 
 export default validators;

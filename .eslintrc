@@ -6,6 +6,7 @@
     "ipc": true,
     "LISK_ENABLE_DEV_TOOL": true,
     "PRODUCTION": true,
+    "LISK_DOMAIN": true,
     "REACT_APP_DEFAULT_NETWORK": true
   },
   "env": {

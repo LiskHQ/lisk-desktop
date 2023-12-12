@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { SignedAndRemainingMembers } from '@wallet/components/multisignatureMembers';
 import { calculateRemainingAndSignedMembers } from '@wallet/utils/account';
@@ -6,8 +7,9 @@ import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import { joinModuleAndCommand } from '../../utils';
 
-const SignedAndRemainingMembersList = ({ t }) => {
+const SignedAndRemainingMembersList = () => {
   const { transaction, wallet } = React.useContext(TransactionDetailsContext);
+  const { t } = useTranslation();
 
   const moduleCommand = joinModuleAndCommand(transaction);
   const isMultisignatureRegistration =

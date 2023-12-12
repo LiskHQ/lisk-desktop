@@ -16,7 +16,6 @@ blockchain_explorer.db.gz
 reports
 .history
 .env
-cypress.log
 yarn-error.log
 *.tgz
 
@@ -24,10 +23,7 @@ yarn-error.log
 setup/react/assets/fonts/basierCircle/
 setup/react/assets/fonts/gilroy/
 
-## Cypress
-tests/cypress/cypress
-tests/cypress/screenshots
-tests/cypress/videos
+## Playwright
 /playwright-report/
 /playwright/.cache/
 /e2e/assets/

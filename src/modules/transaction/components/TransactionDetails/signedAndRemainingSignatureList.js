@@ -1,11 +1,13 @@
 import React, { useMemo, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SignedAndRemainingMembers } from '@wallet/components/multisignatureMembers';
 import { calculateRemainingAndSignedMembers } from '@wallet/utils/account';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 
 // eslint-disable-next-line max-statements
-const SignedAndRemainingSignatureList = ({ t }) => {
+const SignedAndRemainingSignatureList = () => {
+  const { t } = useTranslation();
   const { transaction, wallet } = useContext(TransactionDetailsContext);
   const keys = wallet.keys;
   const transactionKeys = {

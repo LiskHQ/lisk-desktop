@@ -9,6 +9,12 @@
     min-width: 320px;
   }
 
+  & .accountDetailsWrapper {
+    & > div {
+      width: fit-content;
+    }
+  }
+
   & .walletVisualWrapper {
     & div > div {
       cursor: pointer;

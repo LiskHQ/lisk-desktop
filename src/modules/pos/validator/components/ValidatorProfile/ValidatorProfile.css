@@ -510,6 +510,16 @@
   border: solid 1px var(--color-edit-button-border);
   background-color: var(--color-edit-button-background);
   cursor: pointer;
+  padding: 0;
+
+  &:not(:last-child) {
+    margin-right: 16px;
+    vertical-align: top;
+  }
+
+  & img {
+    width: 12px;
+  }
 }
 
 .editDisabledIcon {

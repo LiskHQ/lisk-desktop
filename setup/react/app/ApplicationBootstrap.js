@@ -7,7 +7,7 @@ import {
   useApplicationManagement,
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
-import { useNetworkStatus } from '@network/hooks/queries';
+import { useNetworkStatus, useIndexStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import { Client } from 'src/utils/api/client';
@@ -37,6 +37,10 @@ const ApplicationBootstrap = ({ children }) => {
 
   useTransactionUpdate();
   const networkStatus = useNetworkStatus({
+    options: { enabled: !!mainChainNetwork },
+    client: queryClient.current,
+  });
+  const indexStatus = useIndexStatus({
     options: { enabled: !!mainChainNetwork },
     client: queryClient.current,
   });
@@ -109,16 +113,18 @@ const ApplicationBootstrap = ({ children }) => {
   useReduxStateModifier();
   const { data: rewardsData } = useRewardsClaimable({
     config: { params: { address: accountAddress } },
-    options: { enabled: !!accountAddress },
+    options: { enabled: !!accountAddress, refetchInterval: 300000 },
   });
 
   return (
     <ApplicationBootstrapContext.Provider
       value={{
+        queryClient,
         hasNetworkError: isError && !blockchainAppsMeta.isFetching,
         isLoadingNetwork:
           (blockchainAppsMeta.isFetching && !blockchainAppsMeta.data) ||
           (networkStatus.isFetching && !networkStatus.data),
+        indexStatus: indexStatus?.data?.data || {},
         error: networkStatus.error || blockchainAppsMeta.error,
         refetchNetwork: blockchainAppsMeta.refetch,
         appEvents: { transactions: { rewards: rewardsData?.data ?? [] } },

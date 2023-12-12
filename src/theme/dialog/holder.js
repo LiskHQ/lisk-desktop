@@ -14,6 +14,8 @@ import { selectActiveToken } from 'src/redux/selectors';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { ACTIONS, EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
+import { USER_REJECT_ERROR } from '@libs/wcm/utils/jsonRPCFormat';
+import { isEmpty } from 'src/utils/helpers';
 import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements
@@ -22,7 +24,7 @@ const DialogHolder = ({ history }) => {
   const [currentAccount] = useCurrentAccount();
   const isAuthenticated = Object.keys(currentAccount).length > 0;
   const activeToken = useSelector(selectActiveToken);
-  const { reject } = useSession();
+  const { reject, respond } = useSession();
   const { events } = useEvents();
   const networkIsSet = useSelector((state) => !!state.network.name);
 
@@ -75,10 +77,17 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
+  // eslint-disable-next-line max-statements
   const onBackDropClick = async (e) => {
     if (e.target === backdropRef.current) {
       if (modalName !== 'reclaimBalance') {
         removeSearchParamsFromUrl(history, ['modal'], true);
+      }
+      if (modalName === 'requestView' || modalName === 'requestSignMessageDialog') {
+        const proposalEvents = events?.find((ev) => ev.name === EVENTS.SESSION_REQUEST);
+        if (!isEmpty(proposalEvents)) {
+          await respond({ event: proposalEvents, payload: USER_REJECT_ERROR });
+        }
       }
       if (modalName === 'connectionSummary') {
         const proposalEvents = events.find((ev) => ev.name === EVENTS.SESSION_PROPOSAL);

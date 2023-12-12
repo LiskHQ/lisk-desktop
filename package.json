@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "3.0.1-rc1",
+  "version": "3.0.1",
   "author": "Lisk Foundation <admin@lisk.com>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
   "productName": "Lisk",
@@ -33,8 +33,6 @@
     "pack:win": "cmd /c yarn && yarn install:electron:dependencies && yarn copy:files && yarn build:prod && yarn build:electron && yarn dist:win && yarn clean:dist:win",
     "test": "jest --config ./setup/jest.config.js",
     "test:live": "yarn test -- --watch",
-    "cypress:open": "cypress open --project tests/cypress",
-    "cypress:run": "cypress run --project tests/cypress",
     "lint": "eslint --ignore-path .eslintignore -c .eslintrc .",
     "lint:fix": "eslint -c .eslintrc . --fix",
     "format": "prettier --write '**/*'",
@@ -114,14 +112,10 @@
       }
     }
   },
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true,
-    "stepDefinitions": "features/"
-  },
   "dependencies": {
     "@hookform/resolvers": "2.8.8",
     "@ledgerhq/hw-transport-node-hid": "6.27.17-next.0",
-    "@liskhq/lisk-client": "6.0.0",
+    "@liskhq/lisk-client": "6.0.1",
     "@tanstack/react-query": "4.0.10",
     "@tanstack/react-query-devtools": "4.2.1",
     "@walletconnect/sign-client": "2.9.0",
@@ -129,7 +123,7 @@
     "@zondax/ledger-lisk": "0.0.2",
     "async-await-queue": "2.1.3",
     "await-to-js": "2.1.1",
-    "axios": "0.27.2",
+    "axios": "1.6.0",
     "bignumber.js": "8.0.1",
     "browser-or-node": "1.1.0",
     "chart.js": "2.9.4",
@@ -218,11 +212,6 @@
     "cpx": "1.5.0",
     "cross-env": "7.0.3",
     "css-loader": "5.2.4",
-    "cypress": "8.7.0",
-    "cypress-cucumber-preprocessor": "4.3.0",
-    "cypress-failed-log": "2.9.2",
-    "cypress-pipe": "2.0.0",
-    "cypress-terminal-report": "3.4.1",
     "electron": "27.1.0",
     "electron-builder": "24.6.4",
     "electron-builder-notarize": "1.5.1",
@@ -237,7 +226,6 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-import-resolver-alias": "1.1.2",
     "eslint-plugin-babel": "5.3.0",
-    "eslint-plugin-cypress": "2.1.2",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jest": "27.2.2",
     "eslint-plugin-jsx-a11y": "6.4.1",

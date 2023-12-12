@@ -225,6 +225,7 @@ const AccountDetails = () => {
                       onClick={updateAccountName}
                       className={`account-cancel-button ${styles.cancelBtn}`}
                       size="m"
+                      type="button"
                     >
                       {t('Cancel')}
                     </TertiaryButton>

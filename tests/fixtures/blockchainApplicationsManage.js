@@ -3,7 +3,7 @@ const blockchainApplicationsManage = [
     chainName: 'Lisk',
     chainID: '00000001',
     status: 'active',
-    serviceURLs: [{ rest: 'http://mainnet-service.lisk.com', ws: 'ws://mainnet-service.lisk.com' }],
+    serviceURLs: [{ rest: 'http://service.lisk.com', ws: 'ws://service.lisk.com' }],
     address: 'lsk24cd35u49jd8szo3pnsqe5dsxwrnazyqqqg5eu',
     logo: {
       png: 'https://lisk-qa.ams3.digitaloceanspaces.com/Artboard%201%20copy%2019.png',

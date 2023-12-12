@@ -50,6 +50,7 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
         hasNetworkError,
         isLoadingNetwork,
         insuffientBalanceMessage: getTokenBalanceErrorMessage({
+          errorType: 'registerMultiSignature',
           hasAvailableTokenBalance,
           hasSufficientBalanceForFee,
           feeTokenSymbol: feeToken?.symbol,

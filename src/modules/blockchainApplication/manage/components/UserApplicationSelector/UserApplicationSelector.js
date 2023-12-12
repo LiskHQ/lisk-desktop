@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useApplicationManagement } from '@blockchainApplication/manage/hooks';
@@ -7,6 +7,8 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ApplicationManagementRow from '@blockchainApplication/manage/components/ApplicationManagementRow';
 import { OutlineButton } from '@theme/buttons';
 import Icon from '@theme/Icon';
+import useSettings from '@settings/hooks/useSettings';
+import { Client } from 'src/utils/api/client';
 import Skeleton from 'src/modules/common/components/skeleton';
 import classNames from 'classnames';
 import styles from './UserApplicationSelector.css';
@@ -14,7 +16,10 @@ import styles from './UserApplicationSelector.css';
 const UserApplicationSelector = ({ className }) => {
   const history = useHistory();
   const { t } = useTranslation();
-  const { applications, isLoading } = useApplicationManagement();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
+  const queryClient = useRef(new Client({ http: mainChainNetwork.serviceUrl }));
+  const { applications, isLoading } = useApplicationManagement({ queryClient });
+
   const { hasNetworkError, isLoadingNetwork } = useContext(ApplicationBootstrapContext);
 
   const handleAddApplication = useCallback(() => {
