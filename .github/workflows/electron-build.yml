@@ -66,16 +66,15 @@ jobs:
           
       - name: Build and pack mac app
         if: startsWith(matrix.os, 'macos')
-        uses: lando/code-sign-action@v2
+        uses: samuelmeuli/action-electron-builder@v1
         with:
-          file: app
           build_script_name: pack
-          certificate-data: ${{ secrets.mac_certs }}
-          certificate-password: ${{ secrets.mac_certs_password }}
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
           github_token: ${{ secrets.github_token }}
         env:
           # macOS notarization API key
-          API_KEY: ${{ env.API_KEY_PATH }}
+          API_KEY: ${{ secrets.api_key }}
           API_KEY_ID: ${{ secrets.api_key_id }}
-          options: --options runtime --entitlements entitlements.xml
+          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
 
