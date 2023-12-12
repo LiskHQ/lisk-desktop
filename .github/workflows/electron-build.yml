@@ -44,7 +44,7 @@ jobs:
         run: |
           aws s3 sync s3://lisk-desktop-files/fonts ./setup/react/assets/fonts/
 
-      - name: Prepare for mac os app notarization
+      - name: Prepare for macOS app notarization
         if: startsWith(matrix.os, 'macos')
         # Import Apple API key for app notarization on macOS
         run: |
@@ -62,7 +62,7 @@ jobs:
           build_script_name: pack:win
           github_token: ${{ secrets.github_token }}
 
-      - name: Build and pack mac app
+      - name: Build and pack macOS app
         if: startsWith(matrix.os, 'macos')
         uses: samuelmeuli/action-electron-builder@v1
         with:
@@ -74,3 +74,9 @@ jobs:
           # macOS notarization API key
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+
+      - name: Output Notarization Error Log
+        if: failure() && startsWith(matrix.os, 'macos')
+        run: |
+          echo "Notarization failed. Outputting notarization-error.log..."
+          cat /Users/runner/work/lisk-desktop/lisk-desktop/notarization-error.log
