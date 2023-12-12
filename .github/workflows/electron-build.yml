@@ -1,13 +1,11 @@
 name: 'electron-build'
 
-on:
-  push:
-    tags:
-      - v3.*
-
+on: push
+  
 jobs:
   release:
     runs-on: ${{ matrix.os }}
+    environment: MACOS
 
     strategy:
       matrix:
