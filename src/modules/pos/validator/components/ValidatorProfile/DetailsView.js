@@ -17,6 +17,7 @@ import { useTransactionsFromPool } from '@transaction/hooks/queries';
 import styles from './ValidatorProfile.css';
 import { convertCommissionToPercentage } from '../../utils';
 import usePosToken from '../../hooks/usePosToken';
+import { MAX_VALIDATOR_COMMISSION } from '../../consts';
 
 const DetailsView = ({ data, isMyProfile, address }) => {
   const { name, rank, validatorWeight, commission, lastGeneratedHeight } = data;
@@ -59,9 +60,10 @@ const DetailsView = ({ data, isMyProfile, address }) => {
       onEdit: !isMyProfile
         ? undefined
         : () => addSearchParamsToUrl(history, { modal: 'changeCommission' }),
-      onView: !isMyProfile
-        ? undefined
-        : () => addSearchParamsToUrl(history, { modal: 'commissionHistory' }),
+      onView:
+        commission < MAX_VALIDATOR_COMMISSION
+          ? () => addSearchParamsToUrl(history, { modal: 'commissionHistory' })
+          : undefined,
     },
     {
       icon: 'calendar',
