@@ -77,3 +77,9 @@ jobs:
           API_KEY: ${{ secrets.api_key }}
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+
+      - name: Output Notarization Error Log
+        if: failure() && startsWith(matrix.os, 'macos')
+        run: |
+          echo "Notarization failed. Outputting notarization-error.log..."
+          cat $GITHUB_WORKSPACE/notarization-error.log
