@@ -13,14 +13,14 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Read .nvmrc
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
         id: nvm
 
       - name: Setup node js runtime
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
 
@@ -43,7 +43,7 @@ jobs:
       - name: Download fonts from S3
         run: |
           aws s3 sync s3://lisk-desktop-files/fonts ./setup/react/assets/fonts/
-       
+
       - name: Install cpx
         if: startsWith(matrix.os, 'desktop-build')
         run: npm install -g cpx
@@ -55,15 +55,15 @@ jobs:
           mkdir -p ~/private_keys/
           echo '${{ secrets.API_KEY }}' > ~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8
           echo API_KEY_PATH=~/private_keys/SubscriptionKey_${{ secrets.API_KEY_ID }}.p8 >> $GITHUB_ENV
-          
+
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
-        # codesigning 
+        # codesigning
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack:win
           github_token: ${{ secrets.github_token }}
-          
+
       - name: Build and pack mac app
         if: startsWith(matrix.os, 'macos')
         uses: samuelmeuli/action-electron-builder@v1
@@ -77,4 +77,3 @@ jobs:
           API_KEY: ${{ secrets.api_key }}
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
-
