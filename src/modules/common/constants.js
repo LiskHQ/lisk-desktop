@@ -127,3 +127,7 @@ export const shouldShowBookmark = (bookmarks, account, transactionJSON, token) =
     (bookmark) => bookmark.address === transactionJSON.params.recipientAddress
   );
 };
+
+export const WEB_SOCKET_EVENTS = {
+  indexStatus: 'update.index.status',
+};

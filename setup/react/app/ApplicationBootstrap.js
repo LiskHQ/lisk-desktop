@@ -33,7 +33,10 @@ const ApplicationBootstrap = ({ children }) => {
   const accountAddress = currentAccount?.metadata?.address;
   const queryClient = useRef();
 
-  queryClient.current = new Client({ http: mainChainNetwork?.serviceUrl });
+  queryClient.current = new Client({
+    http: mainChainNetwork?.serviceUrl,
+    ws: mainChainNetwork?.wsServiceUrl,
+  });
 
   useTransactionUpdate();
   const networkStatus = useNetworkStatus({
@@ -41,7 +44,9 @@ const ApplicationBootstrap = ({ children }) => {
     client: queryClient.current,
   });
   const indexStatus = useIndexStatus({
-    options: { enabled: !!mainChainNetwork },
+    options: {
+      enabled: !!mainChainNetwork,
+    },
     client: queryClient.current,
   });
 
