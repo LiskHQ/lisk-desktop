@@ -23,12 +23,16 @@ export const useIndexStatus = ({ config: customConfig = {}, options, client } = 
   });
 
   useEffect(() => {
-    client.socket?.on(WEB_SOCKET_EVENTS.indexStatus, async (data) => {
-      queryClient.setQueriesData({ queryKey: [INDEX_STATUS] }, () => data);
-    });
+    if (client) {
+      client.socket?.on(WEB_SOCKET_EVENTS.indexStatus, async (data) => {
+        queryClient.setQueriesData({ queryKey: [INDEX_STATUS] }, () => data);
+      });
+    }
 
     return () => {
-      client.socket?.off(WEB_SOCKET_EVENTS.indexStatus);
+      if (client) {
+        client.socket?.off(WEB_SOCKET_EVENTS.indexStatus);
+      }
     };
   }, []);
 
