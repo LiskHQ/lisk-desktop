@@ -22,8 +22,7 @@ import { MAX_VALIDATOR_COMMISSION } from '../../consts';
 const DetailsView = ({ data, isMyProfile, address }) => {
   const { name, rank, validatorWeight, commission, lastGeneratedHeight } = data;
   const { data: pooledTransactionsData } = useTransactionsFromPool({
-    customConfig: { commission },
-    address,
+    customConfig: { params: { address }, commission },
   });
   const hasChangeCommission = pooledTransactionsData?.data?.some(
     (pooledTransaction) => pooledTransaction.command === 'changeCommission'
