@@ -14,6 +14,7 @@ import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { useCurrentAccount } from '@account/hooks/useCurrentAccount';
 import wallets from '@tests/constants/wallets';
 import { useAccounts } from '@account/hooks';
+import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { context as defaultContext } from '../../__fixtures__/requestSummary';
 import RequestSummary from './index';
@@ -60,8 +61,10 @@ jest.spyOn(codec.codec, 'decode');
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 jest.spyOn(validator.validator, 'validate').mockReturnValue(true);
 jest.mock('@account/hooks/useCurrentAccount');
+jest.mock('@blockchainApplication/manage/hooks');
 
 useCurrentAccount.mockReturnValue([mockCurrentAccount, mockSetCurrentAccount]);
+useCurrentApplication.mockReturnValue([mockApplicationsManage[0]]);
 useCommandSchema.mockReturnValue({
   moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
@@ -195,6 +198,21 @@ describe('RequestSummary', () => {
     expect(
       screen.getByText(
         '” to Lisk Desktop and re-initiate the transaction signing from the external application.'
+      )
+    ).toBeTruthy();
+  });
+
+  it('Should display an error if signing application is not present', () => {
+    useCurrentApplication.mockReturnValue([mockApplicationsManage[1]]);
+
+    renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
+
+    expect(
+      screen.getByText('Invalid transaction initiated from another application/network.')
+    ).toBeTruthy();
+    expect(
+      screen.getByText(
+        'Please switch application/network to selected value during connection initialization'
       )
     ).toBeTruthy();
   });
