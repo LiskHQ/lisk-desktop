@@ -53,7 +53,7 @@ jobs:
         # Import the Apple API key for app notarization on macOS
         run: |
           mkdir -p ~/private_keys/
-          echo "${{ secrets.api_key }}" > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+          echo "${{ secrets.api_key_new }}" > ~/private_keys/SubscriptionKey_${{ secrets.api_key_id_new }}.p8
 
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
@@ -73,8 +73,8 @@ jobs:
           github_token: ${{ secrets.github_token }}
         env:
           # macOS for notarization API key
-          API_KEY: ${{ secrets.api_key }}
-          API_KEY_ID: ${{ secrets.api_key_id }}
+          API_KEY: ${{ secrets.api_key_new }}
+          API_KEY_ID: ${{ secrets.api_key_id_new }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
 
       - name: Output Notarization Error Log
