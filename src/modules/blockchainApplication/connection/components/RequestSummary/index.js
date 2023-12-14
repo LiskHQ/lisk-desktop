@@ -121,11 +121,19 @@ const RequestSummary = ({ nextStep, history, message }) => {
 
   useEffect(() => {
     const event = events.find((e) => e.name === EVENTS.SESSION_REQUEST);
-    if (event?.meta?.params?.request?.params) {
-      setRequest({
-        id: event.meta.id,
-        ...event.meta.params,
-      });
+    const hasRequest = event?.meta?.params?.request?.params;
+    if (hasRequest) {
+      const eventChainId = event?.meta?.params?.chainId?.replace('lisk:', '');
+      if (currentApplication.chainID !== eventChainId) {
+        setErrorMessage(
+          t('Please switch application/network to selected value during connection initialization')
+        );
+      } else {
+        setRequest({
+          id: event.meta.id,
+          ...event.meta.params,
+        });
+      }
     }
   }, []);
 
@@ -141,13 +149,6 @@ const RequestSummary = ({ nextStep, history, message }) => {
           transactionObj = decodeTransaction(Buffer.from(payload, 'hex'), schema);
           validator.validator.validate(schema, transactionObj.params);
           setTransaction(transactionObj);
-        }
-        if (currentApplication.chainID !== sendingChainID) {
-          throw new Error(
-            t(
-              'Please switch application/network to selected value during connection initialization'
-            )
-          );
         }
 
         const senderPublicKey = !message ? transactionObj.senderPublicKey : publicKey;
