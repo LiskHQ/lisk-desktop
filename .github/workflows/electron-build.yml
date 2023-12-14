@@ -53,7 +53,7 @@ jobs:
         # Import the Apple API key for app notarization on macOS
         run: |
           mkdir -p ~/private_keys/
-          echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+          echo "${{ secrets.api_key }}" > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
 
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
