@@ -50,7 +50,7 @@ jobs:
 
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
-        # Import the Apple API key for app notarization on macOS
+        # Import Apple API key for app notarization on macOS
         run: |
           mkdir -p ~/private_keys/
           echo "${{ secrets.api_key_new }}" > ~/private_keys/AuthKey_${{ secrets.api_key_id_new }}.p8
