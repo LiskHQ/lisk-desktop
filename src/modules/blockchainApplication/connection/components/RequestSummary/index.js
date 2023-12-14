@@ -166,7 +166,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
     }
   }, [request]);
 
-  if ((!sessionRequest || !request) && !message) {
+  if ((!sessionRequest || !request) && !message && !errorMessage) {
     return <EmptyState history={history} />;
   }
 
