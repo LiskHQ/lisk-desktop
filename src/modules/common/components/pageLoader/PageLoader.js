@@ -15,7 +15,7 @@ function PageLoader({ progress }) {
           ))}
         </div>
       </figure>
-      {progress && (
+      {!!progress && (
         <div>
           Loading <span>{progress}%</span>
         </div>
