@@ -57,7 +57,10 @@ const ApplicationBootstrap = ({ children }) => {
     client: queryClient.current,
   });
 
-  const serviceUrls = blockchainAppsMeta.data?.data[0]?.serviceURLs;
+  const serviceUrls = blockchainAppsMeta.data?.data.find(
+    ({ chainID }) => networkStatus.data?.data?.chainID === chainID
+  )?.serviceURLs;
+
   const { validServiceUrl } = useValidServiceUrl(serviceUrls);
 
   const mainChainApplication = blockchainAppsMeta.data?.data?.find(
