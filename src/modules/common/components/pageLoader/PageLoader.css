@@ -25,6 +25,21 @@
       animation: pulse 3s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     }
   }
+
+  & > div {
+    font-size: 16px;
+    position: absolute;
+    left: 50%;
+    top: calc(57% + 16px);
+    margin: 0;
+    transform: translateX(-50%) translateY(-50%);
+
+    & > span {
+      color: var(--color-ultramarine-blue);
+      font-weight: var(--font-weight-semi-bold);
+      font-style: italic;
+    }
+  }
 }
 
 @keyframes pulse {
