@@ -8,6 +8,7 @@ import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLa
 import AccountRow from '@account/components/AccountRow';
 import { useCurrentAccount } from '@account/hooks';
 import { useAccounts } from '@account/hooks/useAccounts';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { emptyTransactionsData } from 'src/redux/actions';
 import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
@@ -44,6 +45,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
   const { t } = useTranslation();
   const { getAccountByAddress, accounts } = useAccounts();
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
+  const [currentApplication] = useCurrentApplication();
   const { events } = useEvents();
   const [request, setRequest] = useState(null);
   const [transaction, setTransaction] = useState(null);
@@ -71,6 +73,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
     config: { params: { chainID: sendingChainID } },
   });
 
+  /* istanbul ignore next */
   const navigateToAddAccountFlow = () => {
     history.push(routes.addAccountOptions.path);
   };
@@ -118,11 +121,19 @@ const RequestSummary = ({ nextStep, history, message }) => {
 
   useEffect(() => {
     const event = events.find((e) => e.name === EVENTS.SESSION_REQUEST);
-    if (event?.meta?.params?.request?.params) {
-      setRequest({
-        id: event.meta.id,
-        ...event.meta.params,
-      });
+    const hasRequest = event?.meta?.params?.request?.params;
+    if (hasRequest) {
+      const eventChainId = event?.meta?.params?.chainId?.replace('lisk:', '');
+      if (currentApplication.chainID !== eventChainId) {
+        setErrorMessage(
+          t('Please switch application/network to selected value during connection initialization')
+        );
+      } else {
+        setRequest({
+          id: event.meta.id,
+          ...event.meta.params,
+        });
+      }
     }
   }, []);
 
@@ -155,7 +166,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
     }
   }, [request]);
 
-  if ((!sessionRequest || !request) && !message) {
+  if ((!sessionRequest || !request) && !message && !errorMessage) {
     return <EmptyState history={history} />;
   }
 
@@ -174,6 +185,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
     value: chain.replace(/\D+/g, ''),
   }));
 
+  /* istanbul ignore next */
   const handleSwitchAccount = () => {
     setCurrentAccount(
       encryptedSenderAccount,
@@ -209,7 +221,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
               </span>
             ) : (
               <div className={styles.invalidTransactionTextContainer}>
-                <span>{t('Invalid transaction initiated from another application.')}</span>
+                <span>{t('Invalid transaction initiated from another application/network.')}</span>
                 <span className={styles.errorMessage}>{errorMessage}</span>
               </div>
             )}
