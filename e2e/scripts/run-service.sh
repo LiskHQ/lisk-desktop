@@ -12,7 +12,7 @@ if [[ ! -z $LISK_SERVICE_FILE_PATH ]]
 
     echo LISK_APP_WS=ws://host.docker.internal:7887 >>${LISK_SERVICE_FILE_PATH}/.env
 
-    make -C ${LISK_SERVICE_FILE_PATH} build
+    make -C ${LISK_SERVICE_FILE_PATH} build-images
     make -C ${LISK_SERVICE_FILE_PATH} up
     docker ps
 fi

@@ -33,11 +33,14 @@ if (MOCK_SERVICE_WORKER) {
 }
 
 const AppContent = () => {
-  const { hasNetworkError, refetchNetwork, error, isLoadingNetwork } = useContext(
+  const { hasNetworkError, refetchNetwork, error, isLoadingNetwork, indexStatus } = useContext(
     ApplicationBootstrapContext
   );
+  const { percentageIndexed, chainLength, numBlocksIndexed } = indexStatus;
+  const shouldShowIndexingLoader = chainLength - numBlocksIndexed >= 5;
 
   if (isLoadingNetwork) return <PageLoader />;
+  if (shouldShowIndexingLoader) return <PageLoader progress={percentageIndexed} />;
 
   return hasNetworkError ? <NetworkError onRetry={refetchNetwork} error={error} /> : <MainRouter />;
 };

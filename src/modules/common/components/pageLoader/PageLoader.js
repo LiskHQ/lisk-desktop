@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './PageLoader.css';
 
-function PageLoader() {
+function PageLoader({ progress }) {
   return (
     <div className={styles.splashScreen}>
       <figure className={styles.logo}>
@@ -15,6 +15,11 @@ function PageLoader() {
           ))}
         </div>
       </figure>
+      {!!progress && (
+        <div>
+          Loading <span>{progress}%</span>
+        </div>
+      )}
     </div>
   );
 }

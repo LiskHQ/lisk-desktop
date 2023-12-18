@@ -8,4 +8,12 @@ describe('PageLoader', () => {
 
     expect(screen.getByAltText('logo')).toBeTruthy();
   });
+
+  it('should renders progress', () => {
+    render(<PageLoader progress={20} />);
+
+    expect(screen.getByAltText('logo')).toBeTruthy();
+    expect(screen.getByText('Loading')).toBeTruthy();
+    expect(screen.getByText('20%')).toBeTruthy();
+  });
 });
