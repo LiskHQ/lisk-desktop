@@ -14,7 +14,9 @@ import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { useCurrentAccount } from '@account/hooks/useCurrentAccount';
 import wallets from '@tests/constants/wallets';
 import { useAccounts } from '@account/hooks';
+import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { context as defaultContext } from '../../__fixtures__/requestSummary';
 import RequestSummary from './index';
 
@@ -60,8 +62,14 @@ jest.spyOn(codec.codec, 'decode');
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 jest.spyOn(validator.validator, 'validate').mockReturnValue(true);
 jest.mock('@account/hooks/useCurrentAccount');
+jest.mock('@blockchainApplication/manage/hooks');
+jest.mock('src/utils/searchParams', () => ({
+  ...jest.requireActual('src/utils/searchParams'),
+  addSearchParamsToUrl: jest.fn(),
+}));
 
 useCurrentAccount.mockReturnValue([mockCurrentAccount, mockSetCurrentAccount]);
+useCurrentApplication.mockReturnValue([mockApplicationsManage[0]]);
 useCommandSchema.mockReturnValue({
   moduleCommandSchemas: mockCommandParametersSchemas.data.commands.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
@@ -173,7 +181,10 @@ describe('RequestSummary', () => {
       accounts: mockSavedAccounts,
     });
 
-    renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
+    renderWithQueryClientAndWC(RequestSummary, {
+      nextStep,
+      history,
+    });
 
     expect(screen.queryByText('Switch to signing account')).toBeFalsy();
     expect(screen.queryByText('switch-icon')).toBeFalsy();
@@ -199,6 +210,25 @@ describe('RequestSummary', () => {
     ).toBeTruthy();
   });
 
+  it('Should display an error if signing application is not present', () => {
+    useCurrentApplication.mockReturnValue([mockApplicationsManage[1]]);
+
+    renderWithQueryClientAndWC(RequestSummary, {
+      nextStep,
+      history,
+      message: 'X3CUgCGzyn43DTAbUKnTMDzcGWMooJT2hPSZinjfN1QUgVNYYfeoJ5zg6i4Nc5oon83a2VWEZCW',
+    });
+
+    expect(
+      screen.getByText('Invalid transaction initiated from another application/network.')
+    ).toBeTruthy();
+    expect(
+      screen.getByText(
+        'Please switch application/network to selected value during connection initialization'
+      )
+    ).toBeTruthy();
+  });
+
   it('Should not display content', () => {
     jest
       .spyOn(accountUtils, 'extractAddressFromPublicKey')
@@ -220,9 +250,29 @@ describe('RequestSummary', () => {
       getAccountByAddress: () => null,
       accounts: mockSavedAccounts,
     });
-    renderWithQueryClientAndWC(RequestSummary, { nextStep, history });
+    renderWithQueryClientAndWC(RequestSummary, {
+      nextStep,
+      history,
+      message: 'X3CUgCGzyn43DTAbUKnTMDzcGWMooJT2hPSZinjfN1QUgVNYYfeoJ5zg6i4Nc5oon83a2VWEZCW',
+    });
     const button = screen.getByText('Add account');
     fireEvent.click(button);
     expect(history.push).toHaveBeenCalled();
+  });
+
+  it('redirects to NoAccountView if no account is found', () => {
+    useAccounts.mockReturnValue({
+      getAccountByAddress: () => null,
+      accounts: [],
+    });
+    renderWithQueryClientAndWC(RequestSummary, {
+      nextStep,
+      history,
+      message: 'X3CUgCGzyn43DTAbUKnTMDzcGWMooJT2hPSZinjfN1QUgVNYYfeoJ5zg6i4Nc5oon83a2VWEZCW',
+    });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(history, {
+      modal: 'NoAccountView',
+      mode: 'EMPTY_ACCOUNT_LIST',
+    });
   });
 });
