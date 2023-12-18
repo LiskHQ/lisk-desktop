@@ -8,6 +8,7 @@ on:
 jobs:
   release:
     runs-on: ${{ matrix.os }}
+    environment: MACOS
 
     strategy:
       matrix:
@@ -15,14 +16,14 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Read .nvmrc
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
         id: nvm
 
       - name: Setup node js runtime
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
 
@@ -46,19 +47,20 @@ jobs:
         run: |
           aws s3 sync s3://lisk-desktop-files/fonts ./setup/react/assets/fonts/
 
-      - name: Prepare for mac os app notarization
-        if: startsWith(matrix.os, 'macos')
-        # Import Apple API key for app notarization on macOS
-        run: |
-          mkdir -p ~/private_keys/
-          echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
-
       - name: Install cpx
         if: startsWith(matrix.os, 'desktop-build')
         run: npm install -g cpx
 
+      - name: Prepare for app notarization
+        if: startsWith(matrix.os, 'macos')
+        # Import Apple API key for app notarization on macOS
+        run: |
+          mkdir -p ~/private_keys/
+          echo "${{ secrets.api_key_new }}" > ~/private_keys/AuthKey_${{ secrets.api_key_id_new }}.p8
+
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
+        # codesigning
         uses: samuelmeuli/action-electron-builder@v1
         with:
           build_script_name: pack:win
@@ -73,6 +75,13 @@ jobs:
           mac_certs_password: ${{ secrets.mac_certs_password }}
           github_token: ${{ secrets.github_token }}
         env:
-          # macOS notarization API key
-          API_KEY_ID: ${{ secrets.api_key_id }}
+          # macOS for notarization API key
+          API_KEY: ${{ secrets.api_key_new }}
+          API_KEY_ID: ${{ secrets.api_key_id_new }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+
+      - name: Output Notarization Error Log
+        if: failure() && startsWith(matrix.os, 'macos')
+        run: |
+          echo "Notarization failed. Outputting notarization-error.log..."
+          cat /Users/runner/work/lisk-desktop/lisk-desktop/notarization-error.log
