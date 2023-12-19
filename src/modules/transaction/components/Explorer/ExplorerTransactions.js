@@ -35,6 +35,9 @@ const Transactions = ({ activeToken, address }) => {
     amountTo: (value) => `< ${value}`,
   };
 
+  const shouldRefetchTransactions = (data) =>
+    data?.data?.some((queryData) => queryData.block.executionStatus === 'pending');
+
   return (
     <Box main className={`${styles.wrapper} transactions-box`}>
       <BoxHeader>
@@ -69,6 +72,7 @@ const Transactions = ({ activeToken, address }) => {
           header={header(t, activeToken, toggleSort)}
           headerClassName={styles.tableHeader}
           currentSort={sort}
+          checkRefetch={shouldRefetchTransactions}
           emptyState={{
             message: t('There are no transactions for this account.'),
             illustration: 'emptyTransactionsIllustration',
