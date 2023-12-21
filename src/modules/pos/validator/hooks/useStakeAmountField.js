@@ -22,6 +22,7 @@ const getAmountFeedbackAndError = (
   token,
   previouslyConfirmedStake
 ) => {
+  console.log({ balance });
   const stakedValue = convertToBaseDenom(inputValue, token) - previouslyConfirmedStake;
 
   const stakeAmountChecklist = stakedValue > 0 ? ['INSUFFICIENT_STAKE_FUNDS', 'MIN_BALANCE'] : [];
@@ -51,7 +52,7 @@ const getAmountFeedbackAndError = (
 };
 
 // eslint-disable-next-line max-statements
-const useStakeAmountField = (initialValue) => {
+const useStakeAmountField = (initialValue, pendingStakeAmount = 0) => {
   const { token, isLoading: isGettingPosToken } = usePosToken();
 
   const { i18n } = useTranslation();
@@ -91,7 +92,7 @@ const useStakeAmountField = (initialValue) => {
       isLoading: true,
     });
     const feedback = getAmountFeedbackAndError(
-      balance,
+      balance - pendingStakeAmount,
       -1 * convertFromBaseDenom(previouslyConfirmedStake, token),
       value,
       token,
