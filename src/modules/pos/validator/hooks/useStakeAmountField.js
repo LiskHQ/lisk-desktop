@@ -22,7 +22,6 @@ const getAmountFeedbackAndError = (
   token,
   previouslyConfirmedStake
 ) => {
-  console.log({ balance });
   const stakedValue = convertToBaseDenom(inputValue, token) - previouslyConfirmedStake;
 
   const stakeAmountChecklist = stakedValue > 0 ? ['INSUFFICIENT_STAKE_FUNDS', 'MIN_BALANCE'] : [];
