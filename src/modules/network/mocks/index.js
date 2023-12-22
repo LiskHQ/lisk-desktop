@@ -1,10 +1,16 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
-import { mockPeers, mockNetworkStatus, mockNetworkStatistics } from '@network/__fixtures__';
+import {
+  mockPeers,
+  mockNetworkStatus,
+  mockNetworkStatistics,
+  mockIndexStatus,
+} from '@network/__fixtures__';
 
 export const networkStatus = rest.get(`*/api/${API_VERSION}/network/status`, (_, res, ctx) =>
   res(ctx.json(mockNetworkStatus))
 );
+
 export const networkStatistics = rest.get(
   `*/api/${API_VERSION}/network/statistics`,
   (_, res, ctx) => res(ctx.json(mockNetworkStatistics))
@@ -23,3 +29,7 @@ export const peers = rest.get(`*/api/${API_VERSION}/network/peers`, async (req, 
   };
   return res(ctx.delay(20), ctx.json(response));
 });
+
+export const indexStatus = rest.get(`*/api/${API_VERSION}/index/status`, (_, res, ctx) =>
+  res(ctx.json(mockIndexStatus))
+);

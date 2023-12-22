@@ -9,6 +9,7 @@ import { useLocation } from 'react-router';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useDeprecatedAccount } from '@account/hooks';
 import { joinModuleAndCommand } from '@transaction/utils';
+import styles from './styles.css';
 import Form from '../signMultisigForm';
 import Summary from '../signMultisigSummary';
 import Status from '../signMultisigStatus';
@@ -39,7 +40,11 @@ const SignMultisigView = ({ history }) => {
   }
 
   return (
-    <Dialog hasClose size={currentStep === 2 && 'sm'}>
+    <Dialog
+      hasClose
+      className={currentStep === 3 ? styles.dialogWrapper : undefined}
+      size={currentStep === 2 && 'sm'}
+    >
       <MultiStep
         key="sign-multisignature-transaction"
         finalCallback={closeModal}
@@ -71,7 +76,11 @@ function SignMultisigViewSimple({
   const formProps = { moduleCommand };
 
   return (
-    <Dialog hasClose size={currentStep === 1 && 'sm'}>
+    <Dialog
+      hasClose
+      className={currentStep === 2 ? styles.dialogWrapper : undefined}
+      size={currentStep === 1 && 'sm'}
+    >
       <MultiStep
         key="sign-multisignature-transaction-short"
         finalCallback={closeModal}

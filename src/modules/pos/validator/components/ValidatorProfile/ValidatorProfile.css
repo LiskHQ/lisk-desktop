@@ -504,17 +504,28 @@
 }
 
 .editBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   width: 24px;
   height: 24px;
   border-radius: 50%;
   border: solid 1px var(--color-edit-button-border);
   background-color: var(--color-edit-button-background);
   cursor: pointer;
+  padding: 0;
+
+  &:not(:last-child) {
+    margin-right: 16px;
+    vertical-align: top;
+  }
+
+  & img {
+    width: 12px;
+  }
 }
 
 .editDisabledIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: initial;
 }

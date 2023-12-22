@@ -24,6 +24,7 @@ import editStakeManager from '@pos/validator/manager/editStakeManager';
 import StakingQueue from '@pos/validator/manager/stakingQueueManager';
 import ConfirmationDialog from '@common/components/ConfirmationDialog';
 import { ChangeCommissionDialog } from '@pos/validator/components/ChangeCommission/Dialog';
+import CommissionHistory from '@pos/validator/components/CommissionHistory';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
@@ -120,6 +121,7 @@ export default {
   connectionSummary: ConnectionSummary,
   connectionStatus: ConnectionStatus,
   changeCommission: ChangeCommissionDialog,
+  commissionHistory: CommissionHistory,
   dialogAddNetwork: DialogAddNetwork,
   dialogRemoveNetwork: DialogRemoveNetwork,
   noTokenBalance: NoTokenBalanceDialog,

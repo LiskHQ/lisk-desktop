@@ -51,7 +51,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
   }, []);
 
   if (!error && !renderData.length) {
-    return <NoTokenBalance onRequestToken={onRequestToken} />;
+    return <NoTokenBalance onClick={onRequestToken} />;
   }
 
   if (error) {

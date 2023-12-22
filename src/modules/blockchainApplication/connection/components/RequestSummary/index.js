@@ -8,11 +8,11 @@ import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLa
 import AccountRow from '@account/components/AccountRow';
 import { useCurrentAccount } from '@account/hooks';
 import { useAccounts } from '@account/hooks/useAccounts';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { emptyTransactionsData } from 'src/redux/actions';
 import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/account';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
-import { EVENTS, ERROR_CASES } from '@libs/wcm/constants/lifeCycle';
-import { formatJsonRpcError } from '@libs/wcm/utils/jsonRPCFormat';
+import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 import { toTransactionJSON } from '@transaction/utils/encoding';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
@@ -26,12 +26,12 @@ import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
-import { getSdkError } from '@walletconnect/utils';
 import { decodeTransaction } from '@transaction/utils';
 import Box from 'src/theme/box';
 import routes from 'src/routes/routes';
 import BlockchainAppDetailsHeader from '@blockchainApplication/explore/components/BlockchainAppDetailsHeader';
 import WarningNotification from '@common/components/warningNotification';
+import { USER_REJECT_ERROR } from '@libs/wcm/utils/jsonRPCFormat';
 import { ReactComponent as SwitchIcon } from '../../../../../../setup/react/assets/images/icons/switch-icon.svg';
 import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
@@ -40,23 +40,18 @@ const getTitle = (key, t) =>
   Object.values(SIGNING_METHODS).find((item) => item.key === key)?.title ?? t('Method not found.');
 const defaultToken = { symbol: 'LSK' };
 
-export const rejectLiskRequest = (request) => {
-  const { id } = request;
-
-  return formatJsonRpcError(id, getSdkError(ERROR_CASES.USER_REJECTED_METHODS).message);
-};
-
 // eslint-disable-next-line max-statements
 const RequestSummary = ({ nextStep, history, message }) => {
   const { t } = useTranslation();
   const { getAccountByAddress, accounts } = useAccounts();
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
+  const [currentApplication] = useCurrentApplication();
   const { events } = useEvents();
   const [request, setRequest] = useState(null);
   const [transaction, setTransaction] = useState(null);
   const [senderAccount, setSenderAccount] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const { sessionRequest } = useSession({ isEnabled: !message });
+  const { sessionRequest, respond } = useSession({ isEnabled: !message });
   const reduxDispatch = useDispatch();
   const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
@@ -78,6 +73,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
     config: { params: { chainID: sendingChainID } },
   });
 
+  /* istanbul ignore next */
   const navigateToAddAccountFlow = () => {
     history.push(routes.addAccountOptions.path);
   };
@@ -114,8 +110,8 @@ const RequestSummary = ({ nextStep, history, message }) => {
       });
     }
   };
-  const rejectHandler = () => {
-    rejectLiskRequest(request);
+  const rejectHandler = async () => {
+    await respond({ payload: USER_REJECT_ERROR });
     removeSearchParamsFromUrl(history, ['modal', 'status', 'name', 'action']);
   };
 
@@ -125,11 +121,19 @@ const RequestSummary = ({ nextStep, history, message }) => {
 
   useEffect(() => {
     const event = events.find((e) => e.name === EVENTS.SESSION_REQUEST);
-    if (event?.meta?.params?.request?.params) {
-      setRequest({
-        id: event.meta.id,
-        ...event.meta.params,
-      });
+    const hasRequest = event?.meta?.params?.request?.params;
+    if (hasRequest) {
+      const eventChainId = event?.meta?.params?.chainId?.replace('lisk:', '');
+      if (currentApplication.chainID !== eventChainId) {
+        setErrorMessage(
+          t('Please switch application/network to selected value during connection initialization')
+        );
+      } else {
+        setRequest({
+          id: event.meta.id,
+          ...event.meta.params,
+        });
+      }
     }
   }, []);
 
@@ -162,7 +166,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
     }
   }, [request]);
 
-  if ((!sessionRequest || !request) && !message) {
+  if ((!sessionRequest || !request) && !message && !errorMessage) {
     return <EmptyState history={history} />;
   }
 
@@ -181,6 +185,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
     value: chain.replace(/\D+/g, ''),
   }));
 
+  /* istanbul ignore next */
   const handleSwitchAccount = () => {
     setCurrentAccount(
       encryptedSenderAccount,
@@ -216,7 +221,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
               </span>
             ) : (
               <div className={styles.invalidTransactionTextContainer}>
-                <span>{t('Invalid transaction initiated from another application.')}</span>
+                <span>{t('Invalid transaction initiated from another application/network.')}</span>
                 <span className={styles.errorMessage}>{errorMessage}</span>
               </div>
             )}

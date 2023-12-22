@@ -9,7 +9,10 @@ import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstr
 import { accountMenu } from '@account/const';
 import { useAuth } from '@auth/hooks/queries';
 import { useTokenBalances } from 'src/modules/token/fungible/hooks/queries';
+import { useValidateFeeBalance } from 'src/modules/token/fungible/hooks/queries/useValidateFeeBalance';
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 
+// eslint-disable-next-line max-statements
 const AccountMenuListing = ({ className, onItemClicked }) => {
   const { t } = useTranslation();
   const [currentAccount] = useCurrentAccount();
@@ -22,6 +25,11 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
   const { data: authData } = useAuth({
     config: { params: { address } },
   });
+
+  const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
+  const hasAvailableTokenBalance = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => BigInt(availableBalance) > 0
+  );
 
   function getDialogProps(component, data) {
     if (component === 'removeSelectedAccount' && currentAccount?.metadata?.address) {
@@ -41,9 +49,13 @@ const AccountMenuListing = ({ className, onItemClicked }) => {
         address,
         hasNetworkError,
         isLoadingNetwork,
-        hasAvailableTokenBalance: tokenBalances.data?.data?.some(
-          ({ availableBalance }) => BigInt(availableBalance) > 0
-        ),
+        insuffientBalanceMessage: getTokenBalanceErrorMessage({
+          errorType: 'registerMultiSignature',
+          hasAvailableTokenBalance,
+          hasSufficientBalanceForFee,
+          feeTokenSymbol: feeToken?.symbol,
+          t,
+        }),
       }).map(
         ({ path, icon, label, component, isHidden, data }) =>
           !isHidden && (

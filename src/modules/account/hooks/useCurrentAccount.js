@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { selectCurrentAccount } from '@account/store/selectors';
 import { selectStaking } from 'src/redux/selectors';
 import { stakesReset } from '@pos/validator/store/actions/staking';
@@ -19,19 +20,36 @@ export function useCurrentAccount() {
     (stake) => stake.confirmed !== stake.unconfirmed
   );
 
+  const switchAccount = ({ encryptedAccount, relativeUrlPath, redirect, urlState }) => {
+    dispatch(setCurrentAccount(encryptedAccount));
+    dispatch(stakesReset());
+    toast.dismiss();
+    if (redirect) {
+      if (urlState) {
+        const { pathname, search } = new URL(relativeUrlPath, window.location.origin);
+        history.push({
+          pathname,
+          search,
+          state: urlState,
+        });
+      } else {
+        history.push(relativeUrlPath);
+      }
+    }
+  };
+
   // eslint-disable-next-line max-statements
   const setAccount = (encryptedAccount, referrer, redirect = true, urlState) => {
     // clear stakes list during login or accounts switch
     const relativeUrlPath = referrer || routes.wallet.path;
 
-    if (pendingStakes.length) {
+    const showConfirmAccountSwitchDialog = pendingStakes.length && !urlState;
+
+    if (showConfirmAccountSwitchDialog) {
       const onCancel = /* istanbul ignore next */ () =>
         removeSearchParamsFromUrl(history, ['modal']);
       const onConfirm = /* istanbul ignore next */ () => {
-        dispatch(setCurrentAccount(encryptedAccount));
-
-        dispatch(stakesReset());
-        history.push(relativeUrlPath);
+        switchAccount({ encryptedAccount, relativeUrlPath, redirect, urlState });
       };
       const state = createConfirmSwitchState({
         mode: 'pendingStakes',
@@ -41,21 +59,10 @@ export function useCurrentAccount() {
       });
       removeThenAppendSearchParamsToUrl(history, { modal: 'confirmationDialog' }, ['modal'], state);
     } else {
-      dispatch(setCurrentAccount(encryptedAccount));
-      if (redirect) {
-        if (urlState) {
-          const { pathname, search } = new URL(relativeUrlPath, window.location.origin);
-          history.push({
-            pathname,
-            search,
-            state: urlState,
-          });
-        } else {
-          history.push(relativeUrlPath);
-        }
-      }
+      switchAccount({ encryptedAccount, relativeUrlPath, redirect, urlState });
     }
   };
+
   const currentAccount = useSelector(selectCurrentAccount);
 
   return [currentAccount, setAccount];

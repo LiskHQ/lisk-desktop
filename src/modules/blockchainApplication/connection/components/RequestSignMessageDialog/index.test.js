@@ -14,6 +14,7 @@ import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import mockApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
+import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
 import { codec, cryptography } from '@liskhq/lisk-client';
 import * as accountUtils from '@wallet/utils/account';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
@@ -51,6 +52,7 @@ useAccounts.mockReturnValue({
   setNonceByAccount: jest.fn(),
   getNonceByAccount: () => 1,
 });
+jest.mock('@blockchainApplication/manage/hooks');
 
 useBlockchainApplicationMeta.mockReturnValue({
   data: { data: [appManage1, appManage2] },
@@ -58,6 +60,7 @@ useBlockchainApplicationMeta.mockReturnValue({
   isFetching: false,
 });
 
+useCurrentApplication.mockReturnValue([mockApplicationsManage[0]]);
 useSession.mockReturnValue({ reject, sessionRequest: defaultContext.sessionRequest });
 useEvents.mockReturnValue({
   events: [

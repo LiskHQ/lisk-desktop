@@ -3,7 +3,7 @@ import moment from 'moment';
 import { MemoryRouter } from 'react-router';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { truncateAddress } from '@wallet/utils/account';
-import { useTokenBalances, useAppsMetaTokens } from '@token/fungible/hooks/queries';
+import { useTokenBalances, useNetworkSupportedTokens } from '@token/fungible/hooks/queries';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import i18n from 'src/utils/i18n/i18n';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -15,6 +15,7 @@ import { useTransactionEvents, useTransactions, useFees } from '../../hooks/quer
 jest.mock('../../hooks/queries');
 jest.mock('@token/fungible/hooks/queries/useAppsMetaTokens');
 jest.mock('@token/fungible/hooks/queries/useTokenBalances');
+jest.mock('@token/fungible/hooks/queries/useNetworkSupportedTokens');
 
 describe('TransactionDetailsView', () => {
   let wrapper;
@@ -30,7 +31,7 @@ describe('TransactionDetailsView', () => {
     data: { data: { feeTokenID: '0000000100000000' }, meta: {} },
   });
 
-  useAppsMetaTokens.mockReturnValue({ data: mockAppsTokens });
+  useNetworkSupportedTokens.mockReturnValue({ data: mockAppsTokens.data });
 
   useTransactionEvents.mockReturnValue({
     data: { data: mockEvents.data.slice(0, 20) },
@@ -81,6 +82,7 @@ describe('TransactionDetailsView', () => {
   it('should display Transaction Events properly', async () => {
     expect(screen.getByText('Type')).toBeTruthy();
     expect(screen.getByText('Sender')).toBeTruthy();
+    expect(screen.getByText('Recipient')).toBeTruthy();
     expect(screen.getByText('Fee')).toBeTruthy();
     expect(screen.getByText('Date')).toBeTruthy();
     expect(screen.getByText('Nonce')).toBeTruthy();

@@ -8,8 +8,10 @@ import { MODULE_COMMANDS_NAME_MAP } from './moduleCommand';
 
 export const statusMessages = (t) => ({
   [txStatusTypes.multisigSignaturePartialSuccess]: {
-    title: t('Your signature was successful'),
-    message: t('You can download or copy the transaction and share it with other members.'),
+    title: t('The transaction is partially signed'),
+    message: t(
+      'Your signature has been successfully included in the transaction. Kindly copy or download the partially signed transaction and share it with the remaining members to collect all required signatures before broadcasting.'
+    ),
   },
   [txStatusTypes.multisigSignatureSuccess]: {
     title: t('The transaction is now fully signed'),
@@ -153,18 +155,26 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
     const isRegisterMultisignature =
       moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
     const isMultisignature = account?.summary?.isMultisignature || options.isMultisignature;
-    const isInitatorAccountMultiSig = account?.numberOfSignatures > 0;
+    const isInitiatorAccountMultiSig = account?.numberOfSignatures > 0;
+
+    const keys = isRegisterMultisignature
+      ? {
+          optionalKeys: transactions.signedTransaction.params.optionalKeys,
+          mandatoryKeys: transactions.signedTransaction.params.mandatoryKeys,
+          numberOfSignatures: transactions.signedTransaction.params.numberOfSignatures,
+        }
+      : account?.keys;
 
     const hasRemainingMandatorySignatures = getHasRemainingMandatorySignatures(
       transactions.signedTransaction,
-      account?.keys
+      keys
     );
 
     let nonEmptySignatures = transactions.signedTransaction.signatures.filter(
       (sig) => sig.length > 0
     ).length;
 
-    if (isRegisterMultisignature && !isInitatorAccountMultiSig) {
+    if (isRegisterMultisignature && !isInitiatorAccountMultiSig) {
       nonEmptySignatures = transactions.signedTransaction.params.signatures.filter(
         (sig) => sig.compare(Buffer.alloc(64)) > 0
       ).length;
@@ -177,7 +187,7 @@ export const getTransactionStatus = (account, transactions, options = {}) => {
         nonEmptySignatures === numberOfSignatures &&
         !options.canSenderSignTx &&
         isRegisterMultisignature &&
-        !isInitatorAccountMultiSig)
+        !isInitiatorAccountMultiSig)
     ) {
       return { code: txStatusTypes.multisigSignaturePartialSuccess };
     }

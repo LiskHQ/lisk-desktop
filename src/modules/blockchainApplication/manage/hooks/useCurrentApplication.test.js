@@ -95,7 +95,7 @@ describe('useCurrentApplication hook', () => {
       ws: expect.stringMatching('ws'),
       rest: expect.stringMatching('http'),
     });
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledTimes(2);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
   });
 });

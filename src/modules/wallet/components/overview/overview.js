@@ -103,7 +103,9 @@ const Overview = ({ isWalletRoute, history }) => {
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
+      <div
+        className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.accountDetailsWrapper}`}
+      >
         <DialogLink component="accountDetails" data={{ address }}>
           <WalletVisualWithAddress
             copy
@@ -127,14 +129,7 @@ const Overview = ({ isWalletRoute, history }) => {
             )}
           </div>
           <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
-            <DialogLink
-              data={
-                !hasTokenWithBalance
-                  ? { message: t('There are no tokens to send at this moment.') }
-                  : {}
-              }
-              component={hasTokenWithBalance ? 'send' : 'noTokenBalance'}
-            >
+            <DialogLink component="send">
               <PrimaryButton>{t('Send')}</PrimaryButton>
             </DialogLink>
           </div>

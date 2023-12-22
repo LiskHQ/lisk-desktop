@@ -50,9 +50,9 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     lastCertificateHeight,
     lastUpdated,
     logo,
-    depositedLsk = 0,
+    escrowedLSK = '0',
   } = aggregatedApplicationData;
-  const { setApplication } = useApplicationManagement();
+  const { setApplication, applications } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -145,7 +145,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
           ) : (
             <ValueAndLabel label={t('Deposited:')} direction="horizontal">
               <span className={styles.value}>
-                <TokenAmount val={depositedLsk} isLsk />
+                <TokenAmount val={escrowedLSK} isLsk />
               </span>
             </ValueAndLabel>
           )}
@@ -179,18 +179,20 @@ const BlockchainApplicationDetails = ({ history, location }) => {
                 </ValueAndLabel>
               ))}
         </Box>
-        {mode === 'addApplication' ? (
-          <Box className={styles.footerButton}>
-            <PrimaryButton
-              size="l"
-              className={`${styles.addButton} add-application-button`}
-              data-testid="add-application-button"
-              onClick={addNewApplication}
-            >
-              {t('Add application')}
-            </PrimaryButton>
-          </Box>
-        ) : null}
+        {offChainData?.data?.[0] &&
+          onChainData?.data?.[0] &&
+          !applications.some((managedApplication) => managedApplication.chainID === chainId) && (
+            <Box className={styles.footerButton}>
+              <PrimaryButton
+                size="l"
+                className={`${styles.addButton} add-application-button`}
+                data-testid="add-application-button"
+                onClick={addNewApplication}
+              >
+                {t('Add application')}
+              </PrimaryButton>
+            </Box>
+          )}
       </div>
     </Dialog>
   );

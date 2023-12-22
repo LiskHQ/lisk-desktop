@@ -1,18 +1,14 @@
-# Lisk Desktop Epic Specificaiton Guideline
+# Lisk Desktop Epic Specification Guideline
 
 Lisk Desktop team will gather community enhancement proposals in the backlog of the project.
 
-Once a substantial ammount of proposals have been identified as belonging to the same type/category of enhancemnt, an epic will be created to handle the development journey towards it's implementation.
+Once a substantial amount of proposals have been identified as belonging to the same type/category of enhancement, an epic will be created to handle the development journey towards it's implementation.
 
 ## Table Of Contents
 
 1. [Requirements](#requirements)
 1. [Epic creation best practices](#epic-creation-best-practices)
 1. [Epic workflow](#epic-workflow)
-
-## Requirements
-
-Install [ZenHub](https://www.zenhub.com/) browser extension to your browser (Chrome and Firefox supported) to be able to access the Epic feature of ZenHub in Github
 
 ## Epic creation best practices
 

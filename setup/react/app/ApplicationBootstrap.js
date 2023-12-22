@@ -7,7 +7,7 @@ import {
   useApplicationManagement,
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
-import { useNetworkStatus } from '@network/hooks/queries';
+import { useNetworkStatus, useIndexStatus } from '@network/hooks/queries';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import { Client } from 'src/utils/api/client';
@@ -33,11 +33,20 @@ const ApplicationBootstrap = ({ children }) => {
   const accountAddress = currentAccount?.metadata?.address;
   const queryClient = useRef();
 
-  queryClient.current = new Client({ http: mainChainNetwork?.serviceUrl });
+  queryClient.current = new Client({
+    http: mainChainNetwork?.serviceUrl,
+    ws: mainChainNetwork?.wsServiceUrl,
+  });
 
   useTransactionUpdate();
   const networkStatus = useNetworkStatus({
     options: { enabled: !!mainChainNetwork },
+    client: queryClient.current,
+  });
+  const indexStatus = useIndexStatus({
+    options: {
+      enabled: !!mainChainNetwork,
+    },
     client: queryClient.current,
   });
 
@@ -53,7 +62,10 @@ const ApplicationBootstrap = ({ children }) => {
     client: queryClient.current,
   });
 
-  const serviceUrls = blockchainAppsMeta.data?.data[0]?.serviceURLs;
+  const serviceUrls = blockchainAppsMeta.data?.data.find(
+    ({ chainID }) => networkStatus.data?.data?.chainID === chainID
+  )?.serviceURLs;
+
   const { validServiceUrl } = useValidServiceUrl(serviceUrls);
 
   const mainChainApplication = blockchainAppsMeta.data?.data?.find(
@@ -109,16 +121,18 @@ const ApplicationBootstrap = ({ children }) => {
   useReduxStateModifier();
   const { data: rewardsData } = useRewardsClaimable({
     config: { params: { address: accountAddress } },
-    options: { enabled: !!accountAddress },
+    options: { enabled: !!accountAddress, refetchInterval: 300000 },
   });
 
   return (
     <ApplicationBootstrapContext.Provider
       value={{
+        queryClient,
         hasNetworkError: isError && !blockchainAppsMeta.isFetching,
         isLoadingNetwork:
           (blockchainAppsMeta.isFetching && !blockchainAppsMeta.data) ||
           (networkStatus.isFetching && !networkStatus.data),
+        indexStatus: indexStatus?.data?.data || {},
         error: networkStatus.error || blockchainAppsMeta.error,
         refetchNetwork: blockchainAppsMeta.refetch,
         appEvents: { transactions: { rewards: rewardsData?.data ?? [] } },

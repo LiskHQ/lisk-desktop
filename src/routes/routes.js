@@ -276,6 +276,10 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  commissionHistory: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   noTokenBalance: {
     isPrivate: true,
     forbiddenTokens: [],

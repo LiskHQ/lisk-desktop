@@ -22,6 +22,8 @@ import { ROUND_LENGTH } from '@pos/validator/consts';
 import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import SwippableInfoBanner from '@common/components/infoBanner/swippableInfoBanner';
+import { useValidateFeeBalance } from '@token/fungible/hooks/queries/useValidateFeeBalance';
+import { getTokenBalanceErrorMessage } from 'src/modules/common/utils/getTokenBalanceErrorMessage';
 import ValidatorsOverview from '../Overview/ValidatorsOverview';
 import GeneratingDetails from '../Overview/GeneratingDetails';
 import ValidatorsTable from '../ValidatorsTable';
@@ -32,6 +34,11 @@ import styles from './Validators.css';
 const ValidatorActionButton = ({ address, isValidator }) => {
   const { t } = useTranslation();
   const tokenBalances = useTokenBalances({ options: { enabled: !isValidator || !address } });
+  const hasTokenBalances = tokenBalances.data?.data?.some(
+    ({ availableBalance }) => !!BigInt(availableBalance)
+  );
+
+  const { hasSufficientBalanceForFee, feeToken } = useValidateFeeBalance();
 
   if (!address) return null;
 
@@ -43,14 +50,20 @@ const ValidatorActionButton = ({ address, isValidator }) => {
     );
   }
 
-  const hasTokenBalances = tokenBalances.data?.data?.some(
-    ({ availableBalance }) => !!BigInt(availableBalance)
-  );
-
   return (
     <DialogLink
-      data={{ message: t('Token balance is not enough to register a validator.') }}
-      component={hasTokenBalances ? 'registerValidator' : 'noTokenBalance'}
+      data={{
+        ...getTokenBalanceErrorMessage({
+          errorType: 'registerValidator',
+          hasSufficientBalanceForFee,
+          feeTokenSymbol: feeToken?.symbol,
+          hasAvailableTokenBalance: hasTokenBalances,
+          t,
+        }),
+      }}
+      component={
+        hasTokenBalances && hasSufficientBalanceForFee ? 'registerValidator' : 'noTokenBalance'
+      }
     >
       <PrimaryButton
         className="register-validator"

@@ -1,5 +1,6 @@
 export const BLOCKS = 'GET_BLOCKS';
 export const NETWORK_STATUS = 'GET_NETWORK_STATUS';
+export const INDEX_STATUS = 'GET_INDEX_STATUS';
 export const LEGACY = 'GET_LEGACY';
 export const TOKENS_BALANCE = 'GET_TOKENS_BALANCE';
 export const TOKENS_SUPPORTED = 'GET_TOKENS_SUPPORTED';

@@ -30,6 +30,7 @@ const IPC_DOWNLOAD_UPDATE_PROGRESS = 'IPC_DOWNLOAD_UPDATE_PROGRESS';
 const IPC_DOWNLOAD_UPDATE_COMPLETED = 'IPC_DOWNLOAD_UPDATE_COMPLETED';
 const IPC_UPDATE_QUIT_AND_INSTALL = 'IPC_UPDATE_QUIT_AND_INSTALL';
 const IPC_OPEN_URL = 'IPC_OPEN_URL';
+const IPC_RELOAD_URL = 'IPC_RELOAD_URL';
 const IPC_STORE_CONFIG = 'IPC_STORE_CONFIG';
 const IPC_CONFIG_RETRIEVED = 'IPC_CONFIG_RETRIEVED';
 const IPC_RETRIEVE_CONFIG = 'IPC_RETRIEVE_CONFIG';
@@ -120,6 +121,9 @@ contextBridge.exposeInMainWorld('ipc', {
     ipcRenderer.on(IPC_OPEN_URL, (event, ...args) => {
       func(event, ...args);
     });
+  },
+  [IPC_RELOAD_URL]: () => {
+    ipcRenderer.send(IPC_RELOAD_URL);
   },
   [IPC_CONFIG_RETRIEVED]: (func) => {
     ipcRenderer.on(IPC_CONFIG_RETRIEVED, (event, ...args) => {

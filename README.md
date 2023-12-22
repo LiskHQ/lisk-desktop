@@ -185,7 +185,7 @@ Note: The following layout structure may not appear exactly as shown below due t
 │   ├── theme/                     # Themed components (Button, Input, etc.).
 │   ├── utils/                     # Global utility functions used throughout the app.
         ├── i18n/                  # Localization setup.
-└──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit tests that live in /src.
+└──e2e/                            # E2E tests written with Playwright and Cucumber; also some helpers used by unit tests that live in /src.
 ```
 
 ## Contributors
@@ -194,7 +194,7 @@ See [contributors section](https://github.com/LiskHQ/lisk-desktop/graphs/contrib
 
 ## License
 
-Copyright © 2016-2023 Lisk Foundation
+Copyright © 2016-2024 Lisk Foundation
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

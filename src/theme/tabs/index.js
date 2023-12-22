@@ -13,6 +13,7 @@ const Tabs = ({ tabs, active, onClick, className, isActive, wrapperClassName }) 
           active === filter.value || isActive(filter.value) ? `${styles.active} active` : '',
         ].join(' ')}
         onClick={() => onClick(filter)}
+        data-testid={`${filter.value}-tab`}
       >
         {filter.name}
       </li>
