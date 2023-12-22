@@ -51,7 +51,7 @@ const getAmountFeedbackAndError = (
 };
 
 // eslint-disable-next-line max-statements
-const useStakeAmountField = (initialValue) => {
+const useStakeAmountField = (initialValue, pendingStakeAmount = 0) => {
   const { token, isLoading: isGettingPosToken } = usePosToken();
 
   const { i18n } = useTranslation();
@@ -91,7 +91,7 @@ const useStakeAmountField = (initialValue) => {
       isLoading: true,
     });
     const feedback = getAmountFeedbackAndError(
-      balance,
+      balance - pendingStakeAmount,
       -1 * convertFromBaseDenom(previouslyConfirmedStake, token),
       value,
       token,
