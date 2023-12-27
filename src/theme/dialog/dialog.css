@@ -212,3 +212,8 @@
   max-width: 520px;
   min-width: 450px;
 }
+
+.md {
+  min-width: 520px;
+  max-width: 600px;
+}

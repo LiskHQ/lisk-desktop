@@ -20,7 +20,7 @@ export const ChangeCommission = () => {
   };
 
   return (
-    <Dialog hasClose size={currentStep === 1 && 'sm'}>
+    <Dialog hasClose size={currentStep === 1 ? 'md' : 'sm'}>
       <MultiStep prevPage={history.goBack} onChange={onMultiStepChange} backButtonLabel={t('Back')}>
         <Form />
         <Summary />
