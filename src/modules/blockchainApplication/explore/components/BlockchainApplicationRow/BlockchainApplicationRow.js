@@ -40,8 +40,15 @@ const ChainName = ({ title, logo }) => (
   </div>
 );
 
-const RowWrapper = ({ application, children, className, handleShowFlashMessage }) => {
+const RowWrapper = ({
+  application,
+  children,
+  className,
+  handleShowFlashMessage,
+  registerApplication,
+}) => {
   if (application.serviceURLs) {
+    registerApplication();
     return (
       <DialogLink
         className={`${grid.row} ${className} ${styles.dialogLink} blockchain-application-row`}
@@ -88,6 +95,7 @@ const BlockchainApplicationRow = ({ data, className, t }) => {
         application={application}
         className={className}
         handleShowFlashMessage={handleShowFlashMessage}
+        registerApplication={registerApplication}
       >
         <>
           <ChainName
