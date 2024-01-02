@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -13,10 +13,15 @@ import Status from '../Status';
 export const ChangeCommission = () => {
   const history = useHistory();
   const { t } = useTranslation();
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const onMultiStepChange = ({ step: { current } }) => {
+    setCurrentStep(current);
+  };
 
   return (
-    <Dialog hasClose size="sm">
-      <MultiStep prevPage={history.goBack} backButtonLabel={t('Back')}>
+    <Dialog hasClose size={currentStep === 1 ? 'md' : 'sm'}>
+      <MultiStep prevPage={history.goBack} onChange={onMultiStepChange} backButtonLabel={t('Back')}>
         <Form />
         <Summary />
         <TxSignatureCollector confirmText={t('Confirm and sign')} />
