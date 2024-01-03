@@ -18,27 +18,27 @@ const useMergeApplicationExploreAndMetaData = (appOnChainData = [], isUnion = fa
         appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
       );
 
-  return isLoading
-    ? filteredOnChainData
-    : (() => {
-        const appsWithMetadata = appOnChainData.filter(({ chainID }) =>
-          appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
-        );
+  const mergeOnChainOffChainData = () => {
+    const appsWithMetaData = appOnChainData.filter(({ chainID }) =>
+      appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
+    );
 
-        const appsWithoutMetadata = appOnChainData.filter(
-          ({ chainID }) =>
-            !appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
-        );
+    const appsWithoutMetaData = appOnChainData.filter(
+      ({ chainID }) =>
+        !appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
+    );
 
-        const appsWithMetadataMerged = appsWithMetadata.map((onChainData) => {
-          const metadata = appMetaData.find(
-            ({ chainID: metaDataChainId }) => metaDataChainId === onChainData.chainID
-          );
-          return lodashMerge(metadata, onChainData);
-        });
+    const appsWithMetaDataMerged = appsWithMetaData.map((onChainData) => {
+      const metadata = appMetaData.find(
+        ({ chainID: metaDataChainId }) => metaDataChainId === onChainData.chainID
+      );
+      return lodashMerge(metadata, onChainData);
+    });
 
-        return appsWithMetadataMerged.concat(appsWithoutMetadata);
-      })();
+    return appsWithMetaDataMerged.concat(appsWithoutMetaData);
+  };
+
+  return isLoading ? filteredOnChainData : mergeOnChainOffChainData();
 };
 
 export default useMergeApplicationExploreAndMetaData;
