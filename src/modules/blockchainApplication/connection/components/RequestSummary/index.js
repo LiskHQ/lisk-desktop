@@ -18,8 +18,9 @@ import { toTransactionJSON } from '@transaction/utils/encoding';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
-import { signMessage } from '@message/store/action';
+import { signMessage, signClaimMessage } from '@message/store/action';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from 'src/utils/searchParams';
+import { sizeOfString } from 'src/utils/helpers';
 import { validator } from '@liskhq/lisk-client';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
@@ -36,12 +37,12 @@ import { ReactComponent as SwitchIcon } from '../../../../../../setup/react/asse
 import EmptyState from './EmptyState';
 import styles from './requestSummary.css';
 
-const getTitle = (key, t) =>
+export const getTitle = (key, t) =>
   Object.values(SIGNING_METHODS).find((item) => item.key === key)?.title ?? t('Method not found.');
 const defaultToken = { symbol: 'LSK' };
 
 // eslint-disable-next-line max-statements
-const RequestSummary = ({ nextStep, history, message }) => {
+const RequestSummary = ({ nextStep, history, message, portalMessage }) => {
   const { t } = useTranslation();
   const { getAccountByAddress, accounts } = useAccounts();
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
@@ -86,6 +87,12 @@ const RequestSummary = ({ nextStep, history, message }) => {
         actionFunction: (formProps, _, privateKey) =>
           reduxDispatch(signMessage({ message, nextStep, privateKey, currentAccount })),
       });
+    } else if (portalMessage) {
+      nextStep({
+        portalMessage,
+        actionFunction: (formProps, _, privateKey) =>
+          reduxDispatch(signClaimMessage({ portalMessage, nextStep, privateKey, currentAccount })),
+      });
     } else {
       const moduleCommand = joinModuleAndCommand(transaction);
       const transactionJSON = toTransactionJSON(transaction, request?.request?.params.schema);
@@ -110,6 +117,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
       });
     }
   };
+
   const rejectHandler = async () => {
     await respond({ payload: USER_REJECT_ERROR });
     removeSearchParamsFromUrl(history, ['modal', 'status', 'name', 'action']);
@@ -144,14 +152,19 @@ const RequestSummary = ({ nextStep, history, message }) => {
         const { payload, schema, address: publicKey } = request.request.params;
         let transactionObj;
 
-        if (!message) {
+        // Validate portal message
+        if (portalMessage && sizeOfString(portalMessage) === 84) {
+          setErrorMessage('');
+        } else if (portalMessage && sizeOfString(portalMessage) !== 84) {
+          setErrorMessage('Claim message of invalid size received.');
+        } else if (!message) {
           validator.validator.validateSchema(schema);
           transactionObj = decodeTransaction(Buffer.from(payload, 'hex'), schema);
           validator.validator.validate(schema, transactionObj.params);
           setTransaction(transactionObj);
         }
-
-        const senderPublicKey = !message ? transactionObj.senderPublicKey : publicKey;
+        const senderPublicKey =
+          !message && !portalMessage ? transactionObj.senderPublicKey : publicKey;
         const address = extractAddressFromPublicKey(senderPublicKey);
         const account = getAccountByAddress(address);
         setSenderAccount({
@@ -203,7 +216,7 @@ const RequestSummary = ({ nextStep, history, message }) => {
 
   return (
     <div className={`${styles.wrapper}`}>
-      {!message && (
+      {!message && !portalMessage && (
         <BlockchainAppDetailsHeader
           headerText={getTitle(request?.request?.method, t)}
           application={application}

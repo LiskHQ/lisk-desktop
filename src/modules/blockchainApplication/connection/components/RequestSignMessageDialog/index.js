@@ -16,7 +16,7 @@ import SignedMessage from '@message/components/signedMessage';
 import { RequestSignMessageConfirmation } from '@blockchainApplication/connection/components/RequestSignMessageDialog/RequestSignMessageConfirmation';
 import { USER_REJECT_ERROR } from '@libs/wcm/utils/jsonRPCFormat';
 import styles from './RequestSignMessageDialog.css';
-import RequestSummary from '../RequestSummary';
+import RequestSummary, { getTitle } from '../RequestSummary';
 
 // eslint-disable-next-line max-statements
 const RequestSignMessageDialog = () => {
@@ -31,7 +31,8 @@ const RequestSignMessageDialog = () => {
 
   const { peer, requiredNamespaces } = sessionRequest || {};
   const event = events?.find((e) => e.name === EVENTS.SESSION_REQUEST);
-  const { message, address } = event?.meta?.params?.request?.params || {};
+  const { method, params: { message, address, portalMessage } = {} } =
+    event?.meta?.params?.request || {};
   const { icons, name, url } = peer?.metadata || {};
 
   /* istanbul ignore next */
@@ -73,7 +74,10 @@ const RequestSignMessageDialog = () => {
       {!isPasswordStep && !isErrorView && (
         <BlockchainAppDetailsHeader
           className={styles.blockchainAppDetailsHeaderProp}
-          headerText={multiStepPosition === 2 ? t('Signed message') : t('Sign message')}
+          headerText={
+            // eslint-disable-next-line no-nested-ternary
+            isPasswordStep ? t('Signed message') : method ? getTitle(method, t) : 'Sign message'
+          }
           application={{
             data: {
               name,
@@ -93,7 +97,7 @@ const RequestSignMessageDialog = () => {
         })}
         onChange={onMultiStepChange}
       >
-        <RequestSummary history={history} message={message} />
+        <RequestSummary history={history} message={message} portalMessage={portalMessage} />
         <RequestSignMessageConfirmation message={message} address={address} />
         <TxSignatureCollector
           type="message"

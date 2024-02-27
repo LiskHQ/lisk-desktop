@@ -178,6 +178,7 @@
     "socket.io-client": "4.7.0",
     "stream-browserify": "3.0.0",
     "swiper": "8.4.2",
+    "tweetnacl": "1.0.3",
     "usb": "2.9.0",
     "yup": "0.32.11"
   },

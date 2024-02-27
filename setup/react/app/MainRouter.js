@@ -28,7 +28,7 @@ const MainRouter = ({ history }) => {
     if (event.name === EVENTS.SESSION_REQUEST) {
       const method = event.meta?.params?.request?.method;
 
-      if (method === 'sign_message') {
+      if (method === 'sign_message' || method === 'sign_claim_message') {
         showRequestModal('requestSignMessageDialog', event);
       } else {
         showRequestModal('requestView', event);
