@@ -74,10 +74,7 @@ const RequestSignMessageDialog = () => {
       {!isPasswordStep && !isErrorView && (
         <BlockchainAppDetailsHeader
           className={styles.blockchainAppDetailsHeaderProp}
-          headerText={
-            // eslint-disable-next-line no-nested-ternary
-            isPasswordStep ? t('Signed message') : method ? getTitle(method, t) : 'Sign message'
-          }
+          headerText={method ? getTitle(method, t) : 'Signed message'}
           application={{
             data: {
               name,
