@@ -16,10 +16,6 @@ const portalProps = {
     '0xe4dbb94d0f19e47b0cff8206bebc1fcf8d892325ab851e1a5bdab954711d926e000000000000000000',
 };
 
-// beforeEach(() => {
-//   render(<RequestSignMessageConfirmation {...props} />);
-// });
-
 describe('RequestSignMessageConfirmation', () => {
   it('should render properly when message is passed', async () => {
     render(<RequestSignMessageConfirmation {...props} />);
