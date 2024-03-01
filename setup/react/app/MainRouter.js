@@ -29,10 +29,7 @@ const MainRouter = ({ history }) => {
     if (event.name === EVENTS.SESSION_REQUEST) {
       const method = event.meta?.params?.request?.method;
 
-      if (
-        method === SIGNING_METHODS.SIGN_RAW_MESSAGE ||
-        method === SIGNING_METHODS.SIGN_CLAIM_MESSAGE
-      ) {
+      if (method === SIGNING_METHODS.SIGN_MESSAGE || method === SIGNING_METHODS.SIGN_RAW_MESSAGE) {
         showRequestModal('requestSignMessageDialog', event);
       } else {
         showRequestModal('requestView', event);
