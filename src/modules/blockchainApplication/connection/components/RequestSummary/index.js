@@ -234,7 +234,9 @@ const RequestSummary = ({ nextStep, history, message, portalMessage }) => {
               </span>
             ) : (
               <div className={styles.invalidTransactionTextContainer}>
-                <span>{t('Invalid transaction initiated from another application/network.')}</span>
+                <span>
+                  {t('Invalid signature request initiated from another application/network.')}
+                </span>
                 <span className={styles.errorMessage}>{errorMessage}</span>
               </div>
             )}
