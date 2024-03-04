@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import routesMap from 'src/routes/routesMap';
 import NotFound from '@common/components/NotFound';
 import CustomRoute from '@common/components/customRoute';
@@ -28,7 +29,7 @@ const MainRouter = ({ history }) => {
     if (event.name === EVENTS.SESSION_REQUEST) {
       const method = event.meta?.params?.request?.method;
 
-      if (method === 'sign_message') {
+      if (method === SIGNING_METHODS.SIGN_MESSAGE || method === SIGNING_METHODS.SIGN_RAW_MESSAGE) {
         showRequestModal('requestSignMessageDialog', event);
       } else {
         showRequestModal('requestView', event);

@@ -330,7 +330,7 @@
   "Invalid amount": "Invalid amount",
   "Invalid dates": "Invalid dates",
   "Invalid network name": "Invalid network name",
-  "Invalid transaction initiated from another application/network.": "Invalid transaction initiated from another application/network.",
+  "Invalid signature request initiated from another application/network.": "Invalid signature request initiated from another application/network.",
   "Invalid websocket URL": "Invalid websocket URL",
   "Is the problem persisting?": "Is the problem persisting?",
   "Keep it safe as it is the only way to access your wallet.": "Keep it safe as it is the only way to access your wallet.",
