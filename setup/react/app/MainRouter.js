@@ -30,8 +30,8 @@ const MainRouter = ({ history }) => {
       const method = event.meta?.params?.request?.method;
 
       if (
-        method === SIGNING_METHODS.SIGN_MESSAGE.method ||
-        method === SIGNING_METHODS.SIGN_RAW_MESSAGE.method
+        method === SIGNING_METHODS.SIGN_MESSAGE.key ||
+        method === SIGNING_METHODS.SIGN_RAW_MESSAGE.key
       ) {
         showRequestModal('requestSignMessageDialog', event);
       } else {
