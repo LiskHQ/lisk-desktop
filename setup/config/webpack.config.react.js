@@ -105,6 +105,7 @@ const config = {
       VERSION: `"${bundleVersion}"`,
       LISK_DOMAIN: '"https://lisk.com"',
       REACT_APP_DEFAULT_NETWORK: `"${process.env.DEFAULT_NETWORK}"`,
+      REACT_APP_MAPBOX_ACCESS_TOKEN: `"${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}"`,
     }),
     new StyleLintPlugin({
       context: `${path.resolve(__dirname, '../../src')}`,

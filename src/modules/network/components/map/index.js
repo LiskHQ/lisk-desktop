@@ -52,7 +52,7 @@ const getAttributionLinks = () => {
 
 const getTiles = () =>
   L.tileLayer(
-    'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFudWxpZ2h0Y3VydmUiLCJhIjoiY2x1Nm8ybTVmMG9zMDJqbnZzNWoyZzc0bSJ9.4upFBJwPjObUVkzNwChDEw',
+    `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${REACT_APP_MAPBOX_ACCESS_TOKEN}`,
     {
       id: 'mapbox/streets-v11',
       tileSize: 512,

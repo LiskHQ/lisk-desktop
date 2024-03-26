@@ -15,7 +15,7 @@ app/app.js
 blockchain_explorer.db.gz
 reports
 .history
-.env
+.env.local
 yarn-error.log
 *.tgz
 
