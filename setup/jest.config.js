@@ -346,6 +346,7 @@ module.exports = {
     TEST: true,
     VERSION: '',
     REACT_APP_DEFAULT_NETWORK: 'undefined',
+    REACT_APP_MAPBOX_ACCESS_TOKEN: 'pk.eyJ1Ij',
     LISK_ENABLE_DEV_TOOL: false,
     LISK_DOMAIN: 'https://lisk.com',
   },
