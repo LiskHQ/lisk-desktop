@@ -15,6 +15,7 @@ import {
 const {
   GET_CONNECTED_DEVICES,
   GET_SIGNED_MESSAGE,
+  GET_SIGNED_RAW_MESSAGE,
   GET_PUB_KEY,
   GET_MULTIPLE_ADDRESSES,
   GET_SIGNED_TRANSACTION,
@@ -32,6 +33,12 @@ export const ledgerLiskAppIPCChannel = () => {
 
   createIpcMainChannel(GET_SIGNED_MESSAGE, async (data) => {
     const id = `${GET_SIGNED_MESSAGE}-${Date.now()}`;
+    const result = await getSequentiallyQueuedData(myq, id, () => getSignedMessage(data));
+    return result;
+  });
+
+  createIpcMainChannel(GET_SIGNED_RAW_MESSAGE, async (data) => {
+    const id = `${GET_SIGNED_RAW_MESSAGE}-${Date.now()}`;
     const result = await getSequentiallyQueuedData(myq, id, () => getSignedMessage(data));
     return result;
   });
