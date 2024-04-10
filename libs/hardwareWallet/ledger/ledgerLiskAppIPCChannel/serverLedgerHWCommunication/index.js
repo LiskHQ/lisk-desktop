@@ -90,6 +90,28 @@ export async function getSignedMessage({ devicePath, accountIndex, unsignedMessa
   }
 }
 
+export async function getSignedRawMessage({ devicePath, accountIndex, unsignedMessage }) {
+  let transport;
+  try {
+    transport = await TransportNodeHid.open(devicePath);
+    const liskLedger = new LiskApp(transport);
+    const ledgerAccount = getLedgerAccount(accountIndex);
+    const message = isHexString(unsignedMessage)
+      ? Buffer.from(unsignedMessage, 'hex')
+      : Buffer.from(unsignedMessage);
+    const response = await liskLedger.claimMessage(ledgerAccount.derivePath(), message);
+    await transport?.close();
+
+    if (response?.error_message === 'No errors') {
+      return response;
+    }
+    return Promise.reject(response.return_code);
+  } catch (error) {
+    if (transport) await transport.close();
+    return Promise.reject(error);
+  }
+}
+
 export async function getConnectedDevices() {
   try {
     const devicePaths = await TransportNodeHid.list();

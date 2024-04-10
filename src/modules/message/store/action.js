@@ -50,7 +50,7 @@ export const signClaimMessage =
       const [error, signature] = await to(
         signClaimMessageUsingHW({
           account: currentAccount,
-          message: getUnsignedNonProtocolMessage(portalMessage),
+          message: portalMessage,
         })
       );
 

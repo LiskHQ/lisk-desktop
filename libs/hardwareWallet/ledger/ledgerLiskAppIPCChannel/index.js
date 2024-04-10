@@ -8,6 +8,7 @@ import {
   getPubKey,
   getConnectedDevices,
   getSignedMessage,
+  getSignedRawMessage,
   getSignedTransaction,
   getMultipleAddresses,
 } from './serverLedgerHWCommunication';
@@ -39,7 +40,7 @@ export const ledgerLiskAppIPCChannel = () => {
 
   createIpcMainChannel(GET_SIGNED_RAW_MESSAGE, async (data) => {
     const id = `${GET_SIGNED_RAW_MESSAGE}-${Date.now()}`;
-    const result = await getSequentiallyQueuedData(myq, id, () => getSignedMessage(data));
+    const result = await getSequentiallyQueuedData(myq, id, () => getSignedRawMessage(data));
     return result;
   });
 
