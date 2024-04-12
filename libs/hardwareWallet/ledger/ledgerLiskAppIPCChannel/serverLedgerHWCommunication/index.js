@@ -96,8 +96,8 @@ export async function getSignedRawMessage({ devicePath, accountIndex, unsignedMe
     transport = await TransportNodeHid.open(devicePath);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(accountIndex);
-    const message = isHexString(unsignedMessage)
-      ? Buffer.from(unsignedMessage, 'hex')
+    const message = isHexString(unsignedMessage.substring(2))
+      ? Buffer.from(unsignedMessage.substring(2), 'hex')
       : Buffer.from(unsignedMessage);
     const response = await liskLedger.claimMessage(ledgerAccount.derivePath(), message);
     await transport?.close();
