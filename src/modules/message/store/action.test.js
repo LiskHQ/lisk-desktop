@@ -1,5 +1,5 @@
 import { cryptography } from '@liskhq/lisk-client';
-import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
+import { mockHWAccounts, mockHWCurrentDevice } from '@hardwareWallet/__fixtures__';
 import * as signMessageUtil from '@wallet/utils/signMessage';
 import * as signMessageWithPrivateKeyUtils from '../utils/signMessageWithPrivateKey';
 import { signMessage, signClaimMessage } from './action';
@@ -7,6 +7,7 @@ import { signMessage, signClaimMessage } from './action';
 jest.spyOn(cryptography.ed, 'signAndPrintMessage');
 jest.spyOn(cryptography.ed, 'printSignedMessage');
 jest.spyOn(signMessageUtil, 'signMessageUsingHW');
+jest.spyOn(signMessageUtil, 'signClaimMessageUsingHW');
 jest.spyOn(signMessageWithPrivateKeyUtils, 'signClaimMessageWithPrivateKey');
 
 const privateKey =
@@ -78,11 +79,38 @@ describe('signClaimMessage', () => {
       pubkey: '5bb1138c01b7762318f5e8a8799573077caadb1c7333a5c631773a2ade4bbdb5',
     },
   };
+  const mockHWCurrentAccount = {
+    hw: mockHWCurrentDevice,
+    metadata: {
+      pubkey: '5bb1138c01b7762318f5e8a8799573077caadb1c7333a5c631773a2ade4bbdb5',
+    },
+  };
   const portalMessage =
     '0xe4dbb94d0f19e47b0cff8206bebc1fcf8d892325ab851e1a5bdab954711d926e000000000000000000';
   afterEach(() => jest.clearAllMocks());
 
-  it('should call next step with signature', async () => {
+  it('should call next step with signature for hardware wallet accounts', async () => {
+    const claimResult =
+      '15e546e6df7a17960c00c80cb42a3968ca004f2d8efd044cb2bb14e83ba173b02fc4c40ad47b0eca722f3022d5d82874fad25a7c0264d8a31e20f17741a4e602';
+    signMessageUtil.signClaimMessageUsingHW.mockResolvedValue(claimResult);
+
+    const signedClaim = {
+      data: {
+        pubKey: '5bb1138c01b7762318f5e8a8799573077caadb1c7333a5c631773a2ade4bbdb5',
+        r: '0x15e546e6df7a17960c00c80cb42a3968ca004f2d8efd044cb2bb14e83ba173b0',
+        s: '0x2fc4c40ad47b0eca722f3022d5d82874fad25a7c0264d8a31e20f17741a4e602',
+      },
+    };
+    await signClaimMessage({
+      nextStep,
+      portalMessage,
+      privateKey,
+      currentAccount: mockHWCurrentAccount,
+    })();
+    expect(nextStep).toHaveBeenCalledWith({ signature: signedClaim, portalMessage });
+  });
+
+  it('should call next step with signature for regular accounts', async () => {
     const claimResult =
       '15e546e6df7a17960c00c80cb42a3968ca004f2d8efd044cb2bb14e83ba173b02fc4c40ad47b0eca722f3022d5d82874fad25a7c0264d8a31e20f17741a4e602';
     signMessageWithPrivateKeyUtils.signClaimMessageWithPrivateKey.mockReturnValue(claimResult);
@@ -101,5 +129,21 @@ describe('signClaimMessage', () => {
       currentAccount: mockCurrentAccount,
     })();
     expect(nextStep).toHaveBeenCalledWith({ signature: signedClaim, portalMessage });
+  });
+
+  it('should call nextStep with error for hardware wallet accounts', async () => {
+    const error = { name: 'An error' };
+    signMessageUtil.signClaimMessageUsingHW.mockRejectedValue(error);
+    await signClaimMessage({
+      nextStep,
+      privateKey,
+      portalMessage,
+      currentAccount: mockHWCurrentAccount,
+    })();
+
+    expect(nextStep).toHaveBeenCalledWith({
+      error,
+      portalMessage,
+    });
   });
 });
