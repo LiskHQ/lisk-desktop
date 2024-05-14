@@ -8,7 +8,7 @@ pipeline {
 		ansiColor('xterm')
 	}
 	parameters {
-		string(name: 'CORE_VERSION', defaultValue: '4.0.1')
+		string(name: 'CORE_VERSION', defaultValue: '4.0.2')
 		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'development')
 	}
 	stages {

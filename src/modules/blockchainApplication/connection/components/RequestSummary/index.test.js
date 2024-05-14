@@ -220,7 +220,7 @@ describe('RequestSummary', () => {
     });
 
     expect(
-      screen.getByText('Invalid transaction initiated from another application/network.')
+      screen.getByText('Invalid signature request initiated from another application/network.')
     ).toBeTruthy();
     expect(
       screen.getByText(

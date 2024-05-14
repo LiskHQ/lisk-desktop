@@ -1,7 +1,10 @@
 import { to } from 'await-to-js';
 import { cryptography } from '@liskhq/lisk-client';
 import { signMessageUsingHW } from '@wallet/utils/signMessage';
-import { signMessageWithPrivateKey } from '../utils/signMessageWithPrivateKey';
+import {
+  signMessageWithPrivateKey,
+  signClaimMessageWithPrivateKey,
+} from '../utils/signMessageWithPrivateKey';
 
 export const getUnsignedNonProtocolMessage = (message) =>
   Buffer.concat([
@@ -38,4 +41,22 @@ export const signMessage =
     });
 
     return nextStep({ signature, message });
+  };
+
+export const signClaimMessage =
+  ({ nextStep, portalMessage, privateKey, currentAccount }) =>
+  async () => {
+    const signature = signClaimMessageWithPrivateKey({
+      message: portalMessage,
+      privateKey,
+    });
+    const portalSignature = {
+      data: {
+        pubKey: currentAccount.metadata.pubkey,
+        r: `0x${signature.substring(0, 64)}`,
+        s: `0x${signature.substring(64)}`,
+      },
+    };
+
+    return nextStep({ signature: portalSignature, portalMessage });
   };

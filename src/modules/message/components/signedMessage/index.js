@@ -82,7 +82,7 @@ const SignedMessage = ({ signature, error, onPrev, reset }) => {
   return (
     <Success
       t={t}
-      signature={signature}
+      signature={typeof signature === 'string' ? signature : JSON.stringify(signature, null, '\t')}
       copied={copied}
       copy={copy}
       history={history}

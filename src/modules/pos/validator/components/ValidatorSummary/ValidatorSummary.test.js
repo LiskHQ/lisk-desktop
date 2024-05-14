@@ -1,7 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { screen } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { mockValidators } from '../../__fixtures__';
 import ValidatorSummary from './ValidatorSummary';
 import { convertCommissionToPercentage } from '../../utils';
@@ -16,6 +17,7 @@ jest.mock('react-i18next', () => ({
 }));
 
 jest.mock('../../hooks/queries/usePosConstants');
+jest.mock('src/utils/searchParams');
 
 describe('ValidatorSummary', () => {
   let wrapper;
@@ -74,5 +76,16 @@ describe('ValidatorSummary', () => {
         'This validator is among the first {{roundLength}} validators in validator weight ranking.'
       )
     ).toBeTruthy();
+  });
+
+  it('should directly open validator staking modal', async () => {
+    props.status = { className: 'active', value: 'Active' };
+    wrapper.rerender(
+      <MemoryRouter>
+        <ValidatorSummary {...props} />
+      </MemoryRouter>
+    );
+    fireEvent.click(screen.getByText('Stake'));
+    expect(addSearchParamsToUrl).toHaveBeenCalled();
   });
 });
