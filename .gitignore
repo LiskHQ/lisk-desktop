@@ -15,9 +15,12 @@ app/app.js
 blockchain_explorer.db.gz
 reports
 .history
-.env.*
 yarn-error.log
 *.tgz
+
+## Local environment files
+.env.*
+!.env.example
 
 ## Commercial fonts
 setup/react/assets/fonts/basierCircle/

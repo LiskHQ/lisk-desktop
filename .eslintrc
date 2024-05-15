@@ -8,7 +8,7 @@
     "PRODUCTION": true,
     "LISK_DOMAIN": true,
     "REACT_APP_DEFAULT_NETWORK": true,
-    "REACT_APP_MAPBOX_ACCESS_TOKEN": true,
+    "REACT_APP_MAPBOX_ACCESS_TOKEN": true
   },
   "env": {
     "es2020": true,
