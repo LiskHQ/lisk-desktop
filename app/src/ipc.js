@@ -8,6 +8,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 const REQUEST = 'REQUEST';
 const RESPONSE = 'RESPONSE';
 const GET_SIGNED_MESSAGE = 'GET_SIGNED_MESSAGE';
+const GET_SIGNED_RAW_MESSAGE = 'GET_SIGNED_RAW_MESSAGE';
 const GET_SIGNED_TRANSACTION = 'GET_SIGNED_TRANSACTION';
 const GET_PUB_KEY = 'GET_PUB_KEY';
 const GET_MULTIPLE_ADDRESSES = 'GET_MULTIPLE_ADDRESSES';
@@ -61,6 +62,9 @@ contextBridge.exposeInMainWorld('ipc', {
   [`${GET_SIGNED_MESSAGE}.${REQUEST}`]: (title) => {
     ipcRenderer.send(`${GET_SIGNED_MESSAGE}.${REQUEST}`, title);
   },
+  [`${GET_SIGNED_RAW_MESSAGE}.${REQUEST}`]: (title) => {
+    ipcRenderer.send(`${GET_SIGNED_RAW_MESSAGE}.${REQUEST}`, title);
+  },
   [`${GET_CONNECTED_DEVICES}.${RESPONSE}`]: (func) => {
     ipcRenderer.once(`${GET_CONNECTED_DEVICES}.${RESPONSE}`, (event, ...args) => {
       func(event, ...args);
@@ -88,6 +92,11 @@ contextBridge.exposeInMainWorld('ipc', {
   },
   [`${GET_SIGNED_MESSAGE}.${RESPONSE}`]: (func) => {
     ipcRenderer.once(`${GET_SIGNED_MESSAGE}.${RESPONSE}`, (event, ...args) => {
+      func(event, ...args);
+    });
+  },
+  [`${GET_SIGNED_RAW_MESSAGE}.${RESPONSE}`]: (func) => {
+    ipcRenderer.once(`${GET_SIGNED_RAW_MESSAGE}.${RESPONSE}`, (event, ...args) => {
       func(event, ...args);
     });
   },

@@ -12,15 +12,33 @@ const useMergeApplicationExploreAndMetaData = (appOnChainData = [], isUnion = fa
     client: new Client({ http: mainChainNetwork?.serviceUrl }),
   });
 
-  let filteredOnChainData = appOnChainData;
+  const filteredOnChainData = isUnion
+    ? appOnChainData
+    : appOnChainData.filter(({ chainID }) =>
+        appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
+      );
 
-  if (!isUnion) {
-    filteredOnChainData = filteredOnChainData.filter(({ chainID }) =>
+  const mergeOnChainOffChainData = () => {
+    const appsWithMetaData = appOnChainData.filter(({ chainID }) =>
       appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
     );
-  }
 
-  return isLoading ? filteredOnChainData : lodashMerge(filteredOnChainData, appMetaData);
+    const appsWithoutMetaData = appOnChainData.filter(
+      ({ chainID }) =>
+        !appMetaData.some(({ chainID: metaDataChainId }) => metaDataChainId === chainID)
+    );
+
+    const appsWithMetaDataMerged = appsWithMetaData.map((onChainData) => {
+      const metadata = appMetaData.find(
+        ({ chainID: metaDataChainId }) => metaDataChainId === onChainData.chainID
+      );
+      return lodashMerge(metadata, onChainData);
+    });
+
+    return appsWithMetaDataMerged.concat(appsWithoutMetaData);
+  };
+
+  return isLoading ? filteredOnChainData : mergeOnChainOffChainData();
 };
 
 export default useMergeApplicationExploreAndMetaData;
