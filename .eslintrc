@@ -8,7 +8,8 @@
     "PRODUCTION": true,
     "LISK_DOMAIN": true,
     "REACT_APP_DEFAULT_NETWORK": true,
-    "REACT_APP_MAPBOX_ACCESS_TOKEN": true
+    "REACT_APP_MAPBOX_ACCESS_TOKEN": true,
+    "APPLE_TEAM_ID": true
   },
   "env": {
     "es2020": true,
