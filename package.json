@@ -51,7 +51,7 @@
   "build": {
     "asar": true,
     "appId": "io.lisk.hub",
-    "copyright": "Copyright © 2016-2023 Lisk",
+    "copyright": "Copyright © 2016-2024 Lisk",
     "afterSign": "electron-builder-notarize",
     "protocols": {
       "name": "lisk",
