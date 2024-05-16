@@ -106,6 +106,7 @@ const config = {
       LISK_DOMAIN: '"https://lisk.com"',
       REACT_APP_DEFAULT_NETWORK: `"${process.env.DEFAULT_NETWORK}"`,
       REACT_APP_MAPBOX_ACCESS_TOKEN: `"${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}"`,
+      APPLE_TEAM_ID: `"${process.env.APPLE_TEAM_ID}"`,
     }),
     new StyleLintPlugin({
       context: `${path.resolve(__dirname, '../../src')}`,

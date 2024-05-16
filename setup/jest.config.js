@@ -347,6 +347,7 @@ module.exports = {
     VERSION: '',
     REACT_APP_DEFAULT_NETWORK: 'undefined',
     REACT_APP_MAPBOX_ACCESS_TOKEN: 'pk.eyJ1Ij',
+    APPLE_TEAM_ID: '',
     LISK_ENABLE_DEV_TOOL: false,
     LISK_DOMAIN: 'https://lisk.com',
   },

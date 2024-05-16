@@ -84,7 +84,7 @@
       "entitlements": "build/entitlements.plist",
       "entitlementsInherit": "build/entitlements.plist",
       "notarize": {
-        "teamId": ""
+        "teamId": "${APPLE_TEAM_ID}"
       },
       "target": {
         "target": "default",
