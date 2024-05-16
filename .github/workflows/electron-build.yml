@@ -79,6 +79,7 @@ jobs:
           API_KEY: ${{ secrets.api_key_new }}
           API_KEY_ID: ${{ secrets.api_key_id_new }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+          APPLE_TEAM_ID: ${{ secrets.apple_team_id }}
 
       - name: Output Notarization Error Log
         if: failure() && startsWith(matrix.os, 'macos')
