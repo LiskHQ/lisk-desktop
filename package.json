@@ -83,6 +83,9 @@
       "gatekeeperAssess": false,
       "entitlements": "build/entitlements.plist",
       "entitlementsInherit": "build/entitlements.plist",
+      "notarize": {
+        "teamId": ""
+      },
       "target": {
         "target": "default",
         "arch": [
