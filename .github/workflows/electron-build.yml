@@ -47,16 +47,15 @@ jobs:
         run: |
           aws s3 sync s3://lisk-desktop-files/fonts ./setup/react/assets/fonts/
 
+      - name: Update package.json
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          jq '.build.mac.notarize.teamId = "${{ secrets.APPLE_TEAM_ID }}"' package.json > package_temp.json
+          mv package_temp.json package.json
+
       - name: Install cpx
         if: startsWith(matrix.os, 'desktop-build')
         run: npm install -g cpx
-
-      - name: Prepare for app notarization
-        if: startsWith(matrix.os, 'macos')
-        # Import Apple API key for app notarization on macOS
-        run: |
-          mkdir -p ~/private_keys/
-          echo "${{ secrets.api_key_new }}" > ~/private_keys/AuthKey_${{ secrets.api_key_id_new }}.p8
 
       - name: Build and pack windows app
         if: startsWith(matrix.os, 'desktop-build')
@@ -76,10 +75,8 @@ jobs:
           github_token: ${{ secrets.github_token }}
         env:
           # macOS for notarization API key
-          API_KEY: ${{ secrets.api_key_new }}
-          API_KEY_ID: ${{ secrets.api_key_id_new }}
-          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
-          APPLE_TEAM_ID: ${{ secrets.apple_team_id }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
 
       - name: Output Notarization Error Log
         if: failure() && startsWith(matrix.os, 'macos')
