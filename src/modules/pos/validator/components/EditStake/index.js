@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 /* eslint-disable complexity */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { selectSearchParamValue, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
@@ -104,8 +104,21 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
     return stakes.find(({ address: stakerAddress }) => stakerAddress === address);
   }, [sentStakes, address, staking]);
 
+  // Find cumulative sum of the difference between unconfirmed and confirmed votes
+  // and subtract from available balance
+  const getPendingStakeAmount = useCallback(() => {
+    const pendingStakeAmounts = Object.keys(staking).reduce(
+      (amount, accountAddress) =>
+        amount + (staking[accountAddress].unconfirmed - staking[accountAddress].confirmed),
+      0
+    );
+    return pendingStakeAmounts;
+  }, [staking]);
+  const pendingStakeBalance = getPendingStakeAmount();
+
   const [stakeAmount, setStakeAmount, isGettingPosToken] = useStakeAmountField(
-    convertFromBaseDenom(staking[address]?.unconfirmed || validatorStake?.amount || 0, token)
+    convertFromBaseDenom(staking[address]?.unconfirmed || validatorStake?.amount || 0, token),
+    pendingStakeBalance
   );
   const mode = validatorStake || staking[address] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
@@ -217,7 +230,11 @@ const EditStake = ({ history, stakeEdited, network, staking }) => {
                 <p className={styles.availableBalance}>
                   <span>{t('Usable balance: ')}</span>
                   <span>
-                    <TokenAmount isStake token={token} val={token.availableBalance} />
+                    <TokenAmount
+                      isStake
+                      token={token}
+                      val={token.availableBalance - pendingStakeBalance}
+                    />
                   </span>
                 </p>
                 <AmountField

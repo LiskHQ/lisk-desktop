@@ -109,6 +109,9 @@ const Transactions = () => {
     clearFilters();
   };
 
+  const shouldRefetchTransactions = (data) =>
+    data?.data?.some((queryData) => queryData.block.executionStatus === 'pending');
+
   return (
     <Box main className="transactions-box">
       <StickyHeader
@@ -154,6 +157,7 @@ const Transactions = () => {
           header={removeSortOnAmount(header(toggleSort, t), filters)}
           headerClassName={styles.tableHeader}
           currentSort={sort}
+          checkRefetch={shouldRefetchTransactions}
           emptyState={{
             message: t('There are no transactions for this chain.'),
             illustration: 'emptyTransactionsIllustration',

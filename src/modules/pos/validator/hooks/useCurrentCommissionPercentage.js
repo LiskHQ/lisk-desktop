@@ -8,7 +8,7 @@ export const useCurrentCommissionPercentage = (address) => {
   const config = { params: { address: address ?? currentAccount?.metadata?.address } };
   const { data, ...others } = useValidators({ config });
   const currentCommission = useMemo(
-    () => convertCommissionToPercentage(data?.data[0].commission),
+    () => convertCommissionToPercentage(data?.data[0]?.commission),
     [data]
   );
 
