@@ -10,6 +10,8 @@ const isHexString = (data) => {
   return data === '' || /^([0-9a-f]{2})+$/i.test(data);
 };
 
+const NO_ERRORS = 'No errors';
+
 export async function getPubKey({ devicePath, accountIndex, showOnDevice }) {
   let transport;
   try {
@@ -20,7 +22,7 @@ export async function getPubKey({ devicePath, accountIndex, showOnDevice }) {
       ? await liskLedger.showAddressAndPubKey(ledgerAccount.derivePath())
       : await liskLedger.getAddressAndPubKey(ledgerAccount.derivePath());
     await transport?.close();
-    if (response?.error_message === 'No errors') {
+    if (response?.error_message === NO_ERRORS) {
       return response?.pubKey;
     }
     return Promise.reject(response.return_code);
@@ -37,7 +39,7 @@ export async function getMultipleAddresses({ devicePath, accountIndexes }) {
     const liskLedger = new LiskApp(transport);
     const response = await liskLedger.getMultipleAddresses(accountIndexes);
     await transport?.close();
-    if (response?.error_message === 'No errors') {
+    if (response?.error_message === NO_ERRORS) {
       return response?.addr;
     }
     return Promise.reject(response.return_code);
@@ -58,7 +60,7 @@ export async function getSignedTransaction({ devicePath, accountIndex, unsignedM
       Buffer.from(unsignedMessage, 'hex')
     );
     if (transport && transport.close) await transport.close();
-    if (response?.error_message === 'No errors') {
+    if (response?.error_message === NO_ERRORS) {
       return response;
     }
     return Promise.reject(response.return_code);
@@ -80,7 +82,29 @@ export async function getSignedMessage({ devicePath, accountIndex, unsignedMessa
     const response = await liskLedger.signMessage(ledgerAccount.derivePath(), message);
     await transport?.close();
 
-    if (response?.error_message === 'No errors') {
+    if (response?.error_message === NO_ERRORS) {
+      return response;
+    }
+    return Promise.reject(response.return_code);
+  } catch (error) {
+    if (transport) await transport.close();
+    return Promise.reject(error);
+  }
+}
+
+export async function getSignedRawMessage({ devicePath, accountIndex, unsignedMessage }) {
+  let transport;
+  try {
+    transport = await TransportNodeHid.open(devicePath);
+    const liskLedger = new LiskApp(transport);
+    const ledgerAccount = getLedgerAccount(accountIndex);
+    const message = isHexString(unsignedMessage.substring(2))
+      ? Buffer.from(unsignedMessage.substring(2), 'hex')
+      : Buffer.from(unsignedMessage);
+    const response = await liskLedger.claimMessage(ledgerAccount.derivePath(), message);
+    await transport?.close();
+
+    if (response?.error_message === NO_ERRORS) {
       return response;
     }
     return Promise.reject(response.return_code);
