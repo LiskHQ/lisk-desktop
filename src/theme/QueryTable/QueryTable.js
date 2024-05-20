@@ -11,6 +11,7 @@ export const QueryTable = ({
   transformResponse,
   onFetched,
   onQueryChange,
+  checkRefetch,
   ...props
 }) => {
   const data = queryHook(queryConfig);
@@ -52,6 +53,11 @@ export const QueryTable = ({
       </LoadNewButton>
     ));
 
+  const tableUpdate = (queryData, dataRefetch) => {
+    const shouldRefetch = checkRefetch?.(queryData);
+    if (shouldRefetch) dataRefetch();
+  };
+
   useEffect(() => {
     if (isFetched && typeof onFetched === 'function') {
       onFetched(response);
@@ -61,6 +67,10 @@ export const QueryTable = ({
   useEffect(() => {
     onQueryChange?.(data);
   }, [data]);
+
+  useEffect(() => {
+    tableUpdate(response, refetch);
+  }, [response]);
 
   return (
     <Table
