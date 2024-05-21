@@ -8,8 +8,6 @@ import { PrimaryButton } from 'src/theme/buttons';
 import stylesPrimaryButton from '@theme/buttons/css/primaryButton.css';
 import routes from 'src/routes/routes';
 import stylesSecondary from '@theme/buttons/css/secondaryButton.css';
-import InfoBanner from '@common/components/infoBanner/infoBanner';
-import { INFO_BANNERS } from '@common/constants';
 import styles from './WelcomeView.css';
 
 function AccountUniqueValueProposition({ className, valueProposition, bulletPointNr }) {
@@ -47,18 +45,6 @@ export default function WelcomeView() {
 
   return (
     <div className={styles.wrapper}>
-      <InfoBanner
-        t={t}
-        show
-        name="walletPageBanner"
-        className={styles.bannerWrapper}
-        infoLabel={INFO_BANNERS.liskMigration.infoLabel(t)}
-        infoMessage={INFO_BANNERS.liskMigration.infoMessage(t)}
-        infoDescription={INFO_BANNERS.liskMigration.infoDescription(t)}
-        illustrationName={INFO_BANNERS.liskMigration.illustrationName}
-        infoLink={INFO_BANNERS.liskMigration.infoLink}
-        infoLinkText={INFO_BANNERS.liskMigration.infoLinkText}
-      />
       <section className={styles.welcomeView}>
         <header className={styles.welcomeHeader}>
           <div className={styles.logoContainer}>

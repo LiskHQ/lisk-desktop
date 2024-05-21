@@ -2,7 +2,6 @@
 import { INFO_BANNERS } from 'src/modules/common/constants';
 
 const banners = [
-  INFO_BANNERS.liskMigration,
   INFO_BANNERS.accountManagement,
   INFO_BANNERS.blockchainExploring,
   INFO_BANNERS.hardwareWalletManagement,
