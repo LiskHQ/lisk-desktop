@@ -110,7 +110,7 @@ const Transactions = () => {
   };
 
   const shouldRefetchTransactions = (data) =>
-    data?.data?.some((queryData) => queryData.block.executionStatus === 'pending');
+    data?.data?.some((queryData) => queryData.executionStatus === 'pending');
 
   return (
     <Box main className="transactions-box">

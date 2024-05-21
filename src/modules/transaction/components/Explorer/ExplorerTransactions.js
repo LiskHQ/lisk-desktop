@@ -36,7 +36,7 @@ const Transactions = ({ activeToken, address }) => {
   };
 
   const shouldRefetchTransactions = (data) =>
-    data?.data?.some((queryData) => queryData.block.executionStatus === 'pending');
+    data?.data?.some((queryData) => queryData.executionStatus === 'pending');
 
   return (
     <Box main className={`${styles.wrapper} transactions-box`}>
