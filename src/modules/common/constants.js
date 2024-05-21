@@ -2,17 +2,6 @@ import i18next from 'i18next';
 import routes from 'src/routes/routes';
 
 export const INFO_BANNERS = {
-  liskMigration: {
-    infoMessage: (t) => t('Lisk v4 Migration'),
-    infoLabel: (t) => t('Announcement'),
-    infoDescription: (t) =>
-      t(
-        'This announcement is intended for all validators and node operators. Please ensure that you correctly migrate your nodes to the new network to avoid missing any blocks after the network hard fork.'
-      ),
-    illustrationName: 'liskMigrationIllustration',
-    infoLink: 'https://lisk.com/documentation/lisk-core/v4/management/migration.html',
-    infoLinkText: 'Migration guide',
-  },
   proofOfStake: {
     infoMessage: (t) => t('Introducing proof of stake'),
     infoDescription: (t) =>

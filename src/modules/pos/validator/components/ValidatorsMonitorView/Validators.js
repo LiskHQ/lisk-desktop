@@ -179,7 +179,7 @@ const ValidatorsMonitor = ({ watchList }) => {
     <Box>
       <SwippableInfoBanner
         className={styles.swippableBanner}
-        banners={[INFO_BANNERS.liskMigration, INFO_BANNERS.proofOfStake]}
+        banners={[INFO_BANNERS.proofOfStake]}
         name="validatorsPageBanner"
       />
       <BoxHeader className={`${styles.validatorPageWrapper}`}>
