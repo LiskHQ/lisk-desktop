@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { selectCurrentAccount } from '@account/store/selectors';
 import { selectStaking } from 'src/redux/selectors';
-import { stakesReset } from '@pos/validator/store/actions/staking';
 import {
   removeThenAppendSearchParamsToUrl,
   removeSearchParamsFromUrl,
@@ -22,7 +21,6 @@ export function useCurrentAccount() {
 
   const switchAccount = ({ encryptedAccount, relativeUrlPath, redirect, urlState }) => {
     dispatch(setCurrentAccount(encryptedAccount));
-    dispatch(stakesReset());
     toast.dismiss();
     if (redirect) {
       if (urlState) {
@@ -41,7 +39,7 @@ export function useCurrentAccount() {
   // eslint-disable-next-line max-statements
   const setAccount = (encryptedAccount, referrer, redirect = true, urlState) => {
     // clear stakes list during login or accounts switch
-    const relativeUrlPath = referrer || routes.wallet.path;
+    const relativeUrlPath = referrer || routes.blockchainApplications.path;
 
     const showConfirmAccountSwitchDialog = pendingStakes.length && !urlState;
 

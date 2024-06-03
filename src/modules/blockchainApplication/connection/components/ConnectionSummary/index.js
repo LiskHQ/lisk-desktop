@@ -10,7 +10,7 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { useEvents } from '@libs/wcm/hooks/useEvents';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import classNames from 'classnames';
-import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { getLogo } from '@token/fungible/utils/helpers';
 import Icon from '@theme/Icon';
 import BlockchainAppDetailsHeader from '../../../explore/components/BlockchainAppDetailsHeader';
@@ -40,18 +40,10 @@ function ChainListingItem({ app }) {
   );
 }
 
-function ChainListing({ chainIds }) {
-  const chainIDs = chainIds?.join(',');
-  const blockchainApplicationMeta = useBlockchainApplicationMeta({
-    config: { params: { chainID: chainIDs } },
-    options: { enabled: !!chainIDs?.length },
-  });
-
+function ChainListing({ app }) {
   return (
     <div className={styles.ChainListing}>
-      {blockchainApplicationMeta?.data?.data?.map((app) => (
-        <ChainListingItem key={app.chainID} app={app} />
-      ))}
+      <ChainListingItem key={app.chainId} app={app} />
     </div>
   );
 }
@@ -79,6 +71,7 @@ function CollapsableRow({ label, children }) {
 // eslint-disable-next-line max-statements
 const ConnectionSummary = () => {
   const history = useHistory();
+  const [currentApp] = useCurrentApplication();
   const [addresses, setAddresses] = useState([]);
   const { t } = useTranslation();
   const { events } = useEvents();
@@ -98,8 +91,6 @@ const ConnectionSummary = () => {
       icon: proposer.metadata.icons[0],
     },
   };
-
-  const liskChainIds = requiredNamespaces.lisk.chains.map((chain) => chain.replace(/\D+/g, ''));
 
   const connectHandler = async () => {
     const result = await approve(addresses);
@@ -142,7 +133,7 @@ const ConnectionSummary = () => {
       <div className={styles.wrapper}>
         <section className={styles.section}>
           <CollapsableRow label={t('Chains connecting')}>
-            <ChainListing chainIds={liskChainIds} />
+            <ChainListing app={currentApp} />
           </CollapsableRow>
         </section>
         <section className={styles.section}>

@@ -39,7 +39,6 @@ import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
-import BlockchainApplications from '@blockchainApplication/explore/components/BlockchainApplications/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
@@ -106,7 +105,7 @@ export default {
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
-  blockchainApplications: BlockchainApplications,
+  blockchainApplications: SessionManager,
   blockChainApplicationDetails: BlockchainApplicationDetails,
   addApplicationList: AddApplicationList,
   addApplicationSuccess: AddApplicationSuccess,

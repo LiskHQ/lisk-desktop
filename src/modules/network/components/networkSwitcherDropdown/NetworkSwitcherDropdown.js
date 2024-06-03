@@ -1,102 +1,31 @@
 /* eslint-disable complexity, max-statements */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import MenuSelect from '@wallet/components/MenuSelect';
-import Icon from '@theme/Icon';
 import useSettings from '@settings/hooks/useSettings';
-import { Client } from 'src/utils/api/client';
-import DialogLink from '@theme/dialog/link';
-import { selectStaking } from 'src/redux/selectors';
-import { stakesReset } from 'src/redux/actions';
-import {
-  removeSearchParamsFromUrl,
-  removeThenAppendSearchParamsToUrl,
-} from 'src/utils/searchParams';
-import { createConfirmSwitchState } from '@common/utils/createConfirmSwitchState';
-import stylesSecondaryButton from '@theme/buttons/css/secondaryButton.css';
-import classNames from 'classnames';
 import NetworkMenuItem from '@network/components/networkSwitcherDropdown/networkMenuItem/NetworkMenuItem';
 import networks from '../../configuration/networks';
-import { useNetworkStatus } from '../../hooks/queries';
 import styles from './NetworkSwitcherDropdown.css';
 
 function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
-  const history = useHistory();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const { setValue, mainChainNetwork } = useSettings('mainChainNetwork');
   const [selectedNetwork, setSelectedNetwork] = useState(mainChainNetwork);
-  const { customNetworks } = useSettings('customNetworks');
   const {
     mainChainNetwork: { name: currentNetworkName },
   } = useSettings('mainChainNetwork');
-  const flaggedCustomNetworks = customNetworks.map((network) => ({ ...network, isCustom: true }));
-  const networksWithCustomNetworks = [...Object.values(networks), ...flaggedCustomNetworks];
-  const stakingQueue = useSelector(selectStaking);
-  const pendingStakes = Object.values(stakingQueue).filter(
-    (stake) => stake.confirmed !== stake.unconfirmed
-  );
+  const networksWithCustomNetworks = [...Object.values(networks)];
 
-  const queryClient = useRef(new Client({ http: selectedNetwork.serviceUrl }));
 
-  const networkStatus = useNetworkStatus({
-    options: {
-      retry: false,
-    },
-    client: queryClient.current,
-  });
+  const networkStatus = {
+    isSuccess: true,
+    isFetching: false,
+  };
 
-  const handleChangeNetwork = useCallback(
-    (network) => {
-      queryClient.current.create({
-        http: network.serviceUrl,
-      });
-      setSelectedNetwork(network);
-    },
-    [networkStatus]
-  );
-
-  useEffect(() => {
-    if (selectedNetwork.serviceUrl) {
-      networkStatus?.refetch?.()?.then((res) => {
-        if (!res.error) {
-          // clear stakes list during network switch
-          if (pendingStakes.length) {
-            const onCancel = /* istanbul ignore next */ () =>
-              removeSearchParamsFromUrl(history, ['modal']);
-            const onConfirm = /* istanbul ignore next */ () => {
-              setValue(selectedNetwork);
-
-              dispatch(stakesReset());
-              // Remove toast between network switches
-              toast.dismiss();
-              removeSearchParamsFromUrl(history, ['modal']);
-            };
-            const state = createConfirmSwitchState({
-              mode: 'pendingStakes',
-              type: 'network',
-              onCancel,
-              onConfirm,
-            });
-            removeThenAppendSearchParamsToUrl(
-              history,
-              { modal: 'confirmationDialog' },
-              ['modal'],
-              state
-            );
-          } else {
-            dispatch(stakesReset());
-            setValue(selectedNetwork);
-            // Remove toast between network switches
-            toast.dismiss();
-          }
-        }
-      });
-    }
-  }, [selectedNetwork.serviceUrl]);
+  const handleChangeNetwork = (network) => {
+    setSelectedNetwork(network);
+    setValue(network);
+  }
 
   useEffect(() => {
     const isSuccess = networkStatus.isSuccess && !networkStatus.isFetching;
@@ -113,8 +42,7 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
           onChange={handleChangeNetwork}
           popupClassName={styles.networksPopup}
           className={styles.menuSelect}
-          isLoading={networkStatus.isLoading}
-          isValid={!networkStatus.isError && networkStatus.isFetched}
+          isLoading={false}
         >
           {Object.keys(networksWithCustomNetworks)
             .filter((networkKey) => networksWithCustomNetworks[networkKey].isAvailable)
@@ -139,13 +67,6 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
           <span onClick={networkStatus.refetch}>{t('Try again')}</span>
         </div>
       )}
-      <DialogLink
-        className={classNames(styles.addNetworkBtn, stylesSecondaryButton.button)}
-        component="dialogAddNetwork"
-      >
-        <Icon name="plusBlueIcon" />
-        <span>{t('Add network')}</span>
-      </DialogLink>
     </div>
   );
 }

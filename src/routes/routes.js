@@ -139,7 +139,7 @@ export const modals = {
     forbiddenTokens: [],
   },
   signMessage: {
-    isPrivate: true,
+    isPrivate: false,
     forbiddenTokens: [],
   },
   verifyMessage: {
