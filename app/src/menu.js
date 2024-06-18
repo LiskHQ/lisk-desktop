@@ -130,7 +130,7 @@ const menu = {
           click: menu.onClickLink.bind(
             null,
             electron,
-            'https://discord.com/channels/405002561775599619/1123912726507438151'
+            'https://klayr.chat'
           ),
         },
         {

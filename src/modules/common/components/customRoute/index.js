@@ -56,6 +56,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, histo
       routes.addAccountOptions.path,
       routes.addAccountByFile.path,
       routes.addAccountBySecretRecovery.path,
+      routes.addAccountByPrivateKey.path,
     ].includes(history.location.pathname) &&
     isAuthenticated
   ) {

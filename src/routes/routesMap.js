@@ -34,6 +34,7 @@ import AccountDetails from '@wallet/components/AccountDetails';
 import ManageAccounts from '@account/components/ManageAccounts';
 import AddAccountOptions from '@account/components/AddAccountOptions';
 import AddAccountBySecretRecovery from '@account/components/AddAccountBySecretRecovery';
+import AddAccountByPrivateKey from '@account/components/AddAccountByPrivateKey';
 import AddAccountByFile from '@account/components/AddAccountByFile';
 import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
@@ -103,6 +104,7 @@ export default {
   switchAccount: SwitchAccount,
   selectNode: SelectNode,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
+  addAccountByPrivateKey: AddAccountByPrivateKey,
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
   blockchainApplications: SessionManager,
