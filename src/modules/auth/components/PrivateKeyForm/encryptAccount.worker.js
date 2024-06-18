@@ -13,8 +13,5 @@ self.onmessage = (message) => {
     privateKey: privateKey?.value,
   })
     .then(self.postMessage)
-    .catch((e) => {
-      console.log("EEE", e)
-      self.postMessage({ error: true })
-    });
+    .catch(() => self.postMessage({ error: true }));
 };

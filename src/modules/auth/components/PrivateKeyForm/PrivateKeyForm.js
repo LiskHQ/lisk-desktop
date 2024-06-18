@@ -11,6 +11,7 @@ import CheckBox from '@theme/CheckBox';
 import Tooltip from '@theme/Tooltip';
 import { regex } from 'src/const/regex';
 import { useAccounts } from '@account/hooks';
+import nacl from 'tweetnacl';
 import styles from './PrivateKeyForm.css';
 
 const setPasswordFormSchema = yup
@@ -90,16 +91,19 @@ function PrivateKeyForm({
       toast.error(t('Failed to setup password'));
       setIsLoading(false);
     };
-    console.log(privateKey, "test")
+    if (privateKey?.value.length === 64) {
+      const privateKeyBytes = Buffer.from(privateKey.value, 'hex');
+      const publicKeyBytes = nacl.sign.keyPair.fromSeed(privateKeyBytes.subarray(0, 32)).publicKey;
+
+      privateKey.value = Buffer.concat([privateKeyBytes, publicKeyBytes]).toString('hex');
+    }
     encryptAccountWorker.postMessage({
       privateKey,
       ...values,
     });
 
     encryptAccountWorker.onmessage = ({ data: { error, result } }) => {
-      console.log(result, "result", error)
       if (error) return showEncryptAccountError();
-      console.log(result)
       onSubmit?.(result);
       encryptAccountWorker.terminate();
       return setIsLoading(false);
