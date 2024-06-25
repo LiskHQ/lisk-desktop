@@ -1,7 +1,4 @@
-import React from 'react';
 import { createEvent, fireEvent, screen } from '@testing-library/react';
-import { renderWithStore } from 'src/utils/testHelpers';
-import ImportPrivateKeyForm from '.';
 
 jest.mock('react-i18next');
 
@@ -10,13 +7,8 @@ const props = {
   onAddAccount: jest.fn(),
 };
 
-let accountFormInstance = null;
-
 beforeEach(() => {
   props.onAddAccount.mockReset();
-  accountFormInstance = renderWithStore(ImportPrivateKeyForm, props, {
-    settings: {},
-  });
 });
 
 describe('ImportPrivateKeyForm', () => {
