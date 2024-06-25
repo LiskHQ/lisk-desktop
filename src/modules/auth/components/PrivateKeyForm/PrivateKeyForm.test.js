@@ -1,5 +1,5 @@
 import React from 'react';
-import { cryptography } from '@klayr/client';
+import { cryptography } from '@liskhq/lisk-api-client';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { mockOnMessage } from '@setup/config/setupJest';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -40,7 +40,7 @@ jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
   useEncryptAccount: jest.fn().mockReturnValue({
     encryptAccount: jest.fn().mockResolvedValue({
-      recoveryPhrase,
+      privateKey,
     }),
   }),
 }));
