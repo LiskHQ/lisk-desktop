@@ -5,6 +5,8 @@ import { Redirect, Route } from 'react-router-dom';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import Piwik from 'src/utils/piwik';
 import routes from 'src/routes/routes';
+import useSettings from '@settings/hooks/useSettings';
+import networks from '@network/configuration/networks';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import { useCheckLegacyAccount } from '@legacy/hooks/queries';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +23,10 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, histo
   const { isMigrated } = useCheckLegacyAccount(pubkey);
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
+  const { setValue: setMainChainNetwork } = useSettings('mainChainNetwork');
+  if (!isNetworkSet) {
+    setMainChainNetwork(networks.mainnet);
+  }
 
   Piwik.tracking(history, token);
 
