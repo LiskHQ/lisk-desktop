@@ -12,7 +12,7 @@ const BackupRecoveryPhraseFlow = () => {
   const [passphrase, setPassphrase] = useState('');
 
   const onEnterPasswordSuccess = ({ recoveryPhrase }) => {
-    setPassphrase(recoveryPhrase);
+    setPassphrase(recoveryPhrase || '');
     multiStepRef.current.next();
   };
 

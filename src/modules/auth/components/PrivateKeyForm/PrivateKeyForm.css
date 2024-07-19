@@ -1,0 +1,103 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.container {
+  background-color: var(--color-surface);
+  box-shadow: 0px 4px 15px var(--box-shadow-standard);
+  border-radius: 16px;
+  padding: 20px 20px 23px 20px;
+  box-sizing: border-box;
+  max-width: 652px;
+  min-width: 350px;
+  width: 90%;
+}
+
+.titleHolder {
+  text-align: center;
+  margin-bottom: 16px;
+
+  & > .stepsLabel {
+    @mixin contentSmallest;
+
+    color: var(--color-slate-gray);
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  & h1 {
+    @mixin headingLarge very-bold;
+
+    display: inline-block;
+    margin: 10px 0px 16px;
+    font-size: var(--font-size-h3);
+  }
+
+  & button {
+    min-width: 30px;
+    padding: 0 !important;
+    margin: 10px auto;
+    height: 40px !important;
+  }
+
+  & > p {
+    @mixin contentLargest;
+
+    font-size: var(--font-size-small-secondary);
+    color: var(--color-slate-gray);
+    margin: 0;
+    letter-spacing: 1px;
+
+    & > a {
+      margin: 0;
+    }
+  }
+}
+
+.checkBoxWrapper {
+  width: auto;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px 32px 24px 0px;
+
+  & > span {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+    cursor: pointer;
+    user-select: none;
+    margin-left: 10px;
+    font-size: var(--subtitle-font-size-s);
+    text-align: left;
+  }
+}
+
+form {
+  & > .password-label-wrapper {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.fieldWrapper {
+  & label {
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+}
+
+.submitWrapper {
+  width: 100%;
+  box-sizing: border-box;
+
+  & button {
+    width: 100%;
+
+    &.submitButton {
+      margin-bottom: 8px;
+    }
+  }
+}
