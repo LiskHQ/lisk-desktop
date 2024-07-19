@@ -7,13 +7,11 @@ const ARGON2 = {
   MEMORY: 65536,
 };
 
-export const encryptPrivateKeyAccount = async ({
-                                                 privateKey,
-                                                 password,
-                                                 name,
-                                               }) => {
+export const encryptPrivateKeyAccount = async ({ privateKey, password, name }) => {
   try {
-    const publicKey = (await cryptography.ed.getPublicKeyFromPrivateKey(Buffer.from(privateKey, "hex"))).toString('hex');
+    const publicKey = (
+      await cryptography.ed.getPublicKeyFromPrivateKey(Buffer.from(privateKey, 'hex'))
+    ).toString('hex');
     const address = extractAddressFromPublicKey(publicKey);
     const plainText = JSON.stringify({ privateKey });
     const encryptOptions = {
@@ -26,7 +24,7 @@ export const encryptPrivateKeyAccount = async ({
     const crypto = await cryptography.encrypt.encryptMessageWithPassword(
       plainText,
       password,
-      encryptOptions,
+      encryptOptions
     );
 
     return {
@@ -45,16 +43,15 @@ export const encryptPrivateKeyAccount = async ({
   } catch {
     return { error: true };
   }
-
 };
 // eslint-disable-next-line max-statements
 export const encryptAccount = async ({
-                                       recoveryPhrase,
-                                       password,
-                                       name,
-                                       derivationPath,
-                                       enableAccessToLegacyAccounts = false,
-                                     }) => {
+  recoveryPhrase,
+  password,
+  name,
+  derivationPath,
+  enableAccessToLegacyAccounts = false,
+}) => {
   const options = {
     passphrase: recoveryPhrase,
     enableAccessToLegacyAccounts,
@@ -80,7 +77,7 @@ export const encryptAccount = async ({
     const crypto = await cryptography.encrypt.encryptMessageWithPassword(
       plainText,
       password,
-      encryptOptions,
+      encryptOptions
     );
     return {
       error: false,
@@ -106,7 +103,7 @@ export const decryptAccount = async (crypto, password) => {
     const plainText = await cryptography.encrypt.decryptMessageWithPassword(
       crypto,
       password,
-      'utf-8',
+      'utf-8'
     );
     return {
       error: null,

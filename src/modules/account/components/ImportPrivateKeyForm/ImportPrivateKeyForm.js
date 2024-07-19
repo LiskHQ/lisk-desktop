@@ -25,12 +25,7 @@ const ImportPrivateKeyForm = ({ settings, onAddAccount }) => {
   return <AddAccountFormContainer {...props} />;
 };
 
-const AddAccountFormContainer = ({
-  privateKey,
-  onAddAccount,
-  isSubmitDisabled,
-                                   setPrivateKey,
-}) => {
+const AddAccountFormContainer = ({ privateKey, onAddAccount, isSubmitDisabled, setPrivateKey }) => {
   const { t } = useTranslation();
 
   const onFormSubmit = (e) => {
@@ -51,25 +46,22 @@ const AddAccountFormContainer = ({
         <form onSubmit={onFormSubmit}>
           <div className={styles.inputFields}>
             <fieldset>
-
               <Input
                 size="l"
                 secureTextEntry
                 onChange={(e) => setPrivateKey(e.target.value)}
-                // feedback={errors.password?.message}
-                // status={errors.password ? 'error' : undefined}
                 placeholder={t('Enter private key')}
                 label={
                   <span className="password-label-wrapper">
-                {t('Private key')}
+                    {t('Private key')}
                     <Tooltip position="right" title={t('Requirements')}>
-                  <p>
-                    {t(
-                      'Private key should be represented as a hexadecimal string with length of 64 characters.'
-                    )}
-                  </p>
-                </Tooltip>
-              </span>
+                      <p>
+                        {t(
+                          'Private key should be represented as a hexadecimal string with length of 64 characters.'
+                        )}
+                      </p>
+                    </Tooltip>
+                  </span>
                 }
               />
             </fieldset>
