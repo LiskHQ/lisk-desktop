@@ -5,7 +5,6 @@ import { truncateAddress, truncateAccountName } from '@wallet/utils/account';
 import { mockHWAccounts } from '@hardwareWallet/__fixtures__';
 import { mockAppsTokens } from '@token/fungible/__fixtures__';
 import { useAppsMetaTokens, useTokenBalances } from '@token/fungible/hooks/queries';
-import * as searchParamUtils from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
 import { useFees } from '@transaction/hooks/queries';
 import AccountManagementDropdown from './AccountManagementDropdown';
@@ -52,7 +51,6 @@ describe('AccountManagementDropdown', () => {
     expect(screen.getByText('Switch account')).toBeInTheDocument();
     expect(screen.getByText('Backup account')).toBeInTheDocument();
     expect(screen.getByText('Add new account')).toBeInTheDocument();
-    expect(screen.getByText('Register multisignature account')).toBeInTheDocument();
     expect(screen.getByText('Remove account')).toBeInTheDocument();
   });
 
@@ -88,83 +86,6 @@ describe('AccountManagementDropdown', () => {
     renderWithRouterAndQueryClient(AccountManagementDropdown, props);
     fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
     fireEvent.click(screen.getByText('Backup account'));
-    expect(screen.getByText('Register multisignature account')).toBeVisible();
-  });
-
-  it('Should have edit register multisignature enabled', () => {
-    useAuth.mockReturnValue({
-      data: { data: { numberOfSignatures: 3 } },
-    });
-    useFees.mockReturnValue({
-      data: { data: { feeTokenID: mockAppsTokens.data[0].tokenID } },
-      isLoading: true,
-    });
-
-    const props = {
-      currentAccount: mockHWAccounts[0],
-      onMenuClick: mockOnMenuClick,
-    };
-    renderWithRouterAndQueryClient(AccountManagementDropdown, props);
-    fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
-    fireEvent.click(screen.getByText('Backup account'));
-    expect(screen.getByText('Edit multisignature account')).toBeVisible();
-  });
-
-  it('Should render insufficient token error', () => {
-    useTokenBalances.mockReturnValue({
-      data: { data: mockAppsTokens.data.map((data) => ({ ...data, availableBalance: 0 })) },
-      isLoading: true,
-    });
-    useAppsMetaTokens.mockReturnValue({ data: mockAppsTokens, isLoading: false });
-    useFees.mockReturnValue({
-      data: { data: { feeTokenID: mockAppsTokens.data[0].tokenID } },
-      isLoading: true,
-    });
-
-    const mockAddSearchParamsToUrl = jest
-      .spyOn(searchParamUtils, 'addSearchParamsToUrl')
-      .mockReturnValue({});
-
-    const props = {
-      currentAccount: mockHWAccounts[0],
-      onMenuClick: mockOnMenuClick,
-    };
-
-    renderWithRouterAndQueryClient(AccountManagementDropdown, props);
-    fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
-    fireEvent.click(screen.getByText('Edit multisignature account'));
-    expect(mockAddSearchParamsToUrl).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.objectContaining({ modal: 'noTokenBalance' })
-    );
-  });
-
-  it('Should render insufficient balance for fee error', () => {
-    useTokenBalances.mockReturnValue({
-      data: { data: mockAppsTokens.data.map((data) => ({ ...data, availableBalance: 10000 })) },
-      isLoading: true,
-    });
-    useAppsMetaTokens.mockReturnValue({ data: mockAppsTokens, isLoading: false });
-    useFees.mockReturnValue({
-      data: { data: { feeTokenID: mockAppsTokens.data[0].tokenID } },
-      isLoading: true,
-    });
-
-    const mockAddSearchParamsToUrl = jest
-      .spyOn(searchParamUtils, 'addSearchParamsToUrl')
-      .mockReturnValue({});
-
-    const props = {
-      currentAccount: mockHWAccounts[0],
-      onMenuClick: mockOnMenuClick,
-    };
-
-    renderWithRouterAndQueryClient(AccountManagementDropdown, props);
-    fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
-    fireEvent.click(screen.getByText('Edit multisignature account'));
-    expect(mockAddSearchParamsToUrl).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.objectContaining({ modal: 'noTokenBalance' })
-    );
+    expect(screen.getByText('Account details')).toBeVisible();
   });
 });

@@ -27,7 +27,10 @@ const ConnectionProposal = () => {
     .join(',')
     .replace(/lisk:/g, '');
 
-  const invalidRequestChainID = requestingChainIDs !== '00000000' && requestingChainIDs !== '01000000';
+  const invalidRequestChainID =
+    requestingChainIDs !== '00000000' &&
+    requestingChainIDs !== '01000000' &&
+    requestingChainIDs !== '';
 
   // eslint-disable-next-line max-statements
   const clickHandler = async () => {
@@ -111,11 +114,7 @@ const ConnectionProposal = () => {
             )}
             <PrimaryButton
               onClick={clickHandler}
-              disabled={
-                nameSpaceError ||
-                wcUri.length === 0 ||
-                status.isPending
-              }
+              disabled={nameSpaceError || wcUri.length === 0 || status.isPending}
             >
               {t('Connect')}
             </PrimaryButton>
