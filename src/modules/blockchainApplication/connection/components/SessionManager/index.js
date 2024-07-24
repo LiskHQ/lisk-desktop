@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useSession } from '@libs/wcm/hooks/useSession';
 import DialogLink from '@theme/dialog/link';
 import { useAccounts } from '@account/hooks';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import Table from 'src/theme/table';
@@ -18,7 +20,7 @@ const SessionManager = () => {
   const { accounts } = useAccounts();
 
   return (
-    <div className={`${styles.wrapper} pairings-list-box`}>
+    <Box className={`${styles.wrapper} pairings-list-box`}>
       <div className={styles.contentWrapper}>
         <div className={styles.addButtonWrapper}>
           <DialogLink
@@ -33,7 +35,7 @@ const SessionManager = () => {
             </PrimaryButton>
           </DialogLink>
         </div>
-        <div className={`${styles.content} pairings-list`}>
+        <BoxContent className={`${styles.content} pairings-list`}>
           <Table
             showHeader
             headerClassName={styles.tableHeader}
@@ -51,9 +53,9 @@ const SessionManager = () => {
               illustration: 'emptyWalletConnectionsIllustration',
             }}
           />
-        </div>
+        </BoxContent>
       </div>
-    </div>
+    </Box>
   );
 };
 
