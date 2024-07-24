@@ -32,6 +32,7 @@ describe('Add Account Choice', () => {
     expect(screen.getByText('Don’t have a Lisk account yet?')).toBeTruthy();
     expect(screen.getByText('Restore from backup')).toBeTruthy();
     expect(screen.getByText('Secret recovery phrase')).toBeTruthy();
+    expect(screen.getByText('Import private key')).toBeTruthy();
   });
 
   it('should redirect to /account/add/secret-recovery', async () => {
@@ -41,6 +42,11 @@ describe('Add Account Choice', () => {
 
   it('should redirect to /account/add/add/by-file', async () => {
     fireEvent.click(screen.getByText('Restore from backup'));
+    expect(props.history.push).toBeCalled();
+  });
+
+  it('should redirect to /account/add/add-private-key', async () => {
+    fireEvent.click(screen.getByText('Import private key'));
     expect(props.history.push).toBeCalled();
   });
 });

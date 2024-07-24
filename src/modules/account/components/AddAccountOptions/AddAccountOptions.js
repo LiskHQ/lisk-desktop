@@ -20,6 +20,11 @@ const addAccountOptions = (t) => [
     iconName: 'accountUpload',
     pathname: routes.addAccountByFile.path,
   },
+  {
+    text: t('Import private key'),
+    iconName: 'secretPassphrase',
+    pathname: routes.addAccountByPrivateKey.path,
+  },
 ];
 
 const AddAccountOptionButton = ({ iconName, text, onClick }) => (
