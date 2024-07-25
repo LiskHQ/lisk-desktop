@@ -8,7 +8,6 @@ import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import routesMap from 'src/routes/routesMap';
 import NotFound from '@common/components/NotFound';
 import CustomRoute from '@common/components/customRoute';
-import RewardsNotification from '@common/components/notification/rewardsNotification';
 import routes from 'src/routes/routes';
 import styles from './app.css';
 
@@ -42,7 +41,6 @@ const MainRouter = ({ history }) => {
 
   return (
     <div className={`${styles.mainContent} ${styles.mainBox}`}>
-      <RewardsNotification />
       <Switch>
         {routesList.map((route) => (
           <CustomRoute

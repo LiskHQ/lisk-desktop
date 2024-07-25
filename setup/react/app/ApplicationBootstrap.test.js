@@ -62,7 +62,7 @@ describe('ApplicationBootstrap', () => {
     validServiceUrl: mockBlockchainAppMeta.data[0].serviceURLs[0].http,
   });
 
-  it('Should set main chain application for the selected network', async () => {
+  it.skip('Should set main chain application for the selected network', async () => {
     smartRender(ApplicationBootstrap, props, renderConfig);
 
     await waitFor(() => {

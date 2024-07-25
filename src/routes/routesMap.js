@@ -34,12 +34,12 @@ import AccountDetails from '@wallet/components/AccountDetails';
 import ManageAccounts from '@account/components/ManageAccounts';
 import AddAccountOptions from '@account/components/AddAccountOptions';
 import AddAccountBySecretRecovery from '@account/components/AddAccountBySecretRecovery';
+import AddAccountByPrivateKey from '@account/components/AddAccountByPrivateKey';
 import AddAccountByFile from '@account/components/AddAccountByFile';
 import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
-import BlockchainApplications from '@blockchainApplication/explore/components/BlockchainApplications/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
@@ -104,9 +104,10 @@ export default {
   switchAccount: SwitchAccount,
   selectNode: SelectNode,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
+  addAccountByPrivateKey: AddAccountByPrivateKey,
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
-  blockchainApplications: BlockchainApplications,
+  blockchainApplications: SessionManager,
   blockChainApplicationDetails: BlockchainApplicationDetails,
   addApplicationList: AddApplicationList,
   addApplicationSuccess: AddApplicationSuccess,

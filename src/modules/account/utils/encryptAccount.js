@@ -7,6 +7,43 @@ const ARGON2 = {
   MEMORY: 65536,
 };
 
+export const encryptPrivateKeyAccount = async ({ privateKey, password, name }) => {
+  try {
+    const publicKey = (
+      await cryptography.ed.getPublicKeyFromPrivateKey(Buffer.from(privateKey, 'hex'))
+    ).toString('hex');
+    const address = extractAddressFromPublicKey(publicKey);
+    const plainText = JSON.stringify({ privateKey });
+    const encryptOptions = {
+      kdf: cryptography.encrypt.KDF.ARGON2,
+      kdfparams: {
+        iterations: ARGON2.ITERATIONS,
+        memorySize: ARGON2.MEMORY,
+      },
+    };
+    const crypto = await cryptography.encrypt.encryptMessageWithPassword(
+      plainText,
+      password,
+      encryptOptions
+    );
+
+    return {
+      error: false,
+      result: {
+        crypto,
+        metadata: {
+          name,
+          pubkey: publicKey,
+          address,
+          creationTime: new Date().toISOString(),
+        },
+        version: 1,
+      },
+    };
+  } catch {
+    return { error: true };
+  }
+};
 // eslint-disable-next-line max-statements
 export const encryptAccount = async ({
   recoveryPhrase,
@@ -42,7 +79,6 @@ export const encryptAccount = async ({
       password,
       encryptOptions
     );
-
     return {
       error: false,
       result: {

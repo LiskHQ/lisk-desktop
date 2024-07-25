@@ -2,9 +2,13 @@
   position: relative;
 
   & .content {
-    padding: 0;
     margin-top: 10px;
   }
+}
+
+.content {
+  flex: 1;
+  padding-top: 20px;
 }
 
 .sessionRow {
@@ -15,9 +19,8 @@
 
 .addButtonWrapper {
   max-width: 300px;
-  position: absolute;
-  right: 0;
-  top: -60px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
   & .buttonContent {
     display: flex;

@@ -1,4 +1,10 @@
 export default {
+  addAccountByPrivateKey: {
+    path: '/account/add/add-private-key',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
   addAccountBySecretRecovery: {
     path: '/account/add/secret-recovery',
     isPrivate: false,
@@ -139,7 +145,7 @@ export const modals = {
     forbiddenTokens: [],
   },
   signMessage: {
-    isPrivate: true,
+    isPrivate: false,
     forbiddenTokens: [],
   },
   verifyMessage: {

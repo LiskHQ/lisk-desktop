@@ -1,12 +1,11 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import routes from 'src/routes/routes';
 import { useCurrentAccount } from '@account/hooks';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useRewardsClaimable } from '@pos/reward/hooks/queries';
 import { mockRewardsClaimable } from '@pos/reward/__fixtures__';
-import { ApplicationBootstrapContext } from '@setup/react/app/ApplicationBootstrap';
-import { mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
+import menuLinks from './menuLinks';
 import SideBar from './index';
 
 const mockCurrentAccount = mockSavedAccounts[0];
@@ -40,6 +39,7 @@ describe('SideBar', () => {
     },
     t: (val) => val,
   };
+  const menuItems = menuLinks(myProps.t);
 
   beforeEach(() => {
     mockAppState = {
@@ -62,8 +62,8 @@ describe('SideBar', () => {
     wrapper = mountWithRouter(SideBar, myProps);
   });
 
-  it('renders 7 menu items elements', () => {
-    expect(wrapper).toContainMatchingElements(7, 'a');
+  it(`renders ${menuItems.length} menu items elements`, () => {
+    expect(wrapper).toContainMatchingElements(menuLinks.length, 'a');
   });
 
   it('shows sidebar toggle info on hover', () => {
@@ -73,22 +73,14 @@ describe('SideBar', () => {
     expect(wrapper.find('SidebarToggle').exists()).toBeFalsy();
   });
 
-  describe('renders 7 menu items', () => {
+  describe(`renders ${menuItems.length} menu items`, () => {
     it('without labels if sideBarExpanded is false', () => {
-      expect(wrapper).toContainMatchingElements(7, 'a');
+      expect(wrapper).toContainMatchingElements(menuLinks.length, 'a');
       wrapper.find('a').forEach((link) => expect(link).not.toContain(/\w*/));
     });
 
     it('without labels if sideBarExpanded is true', () => {
-      const expectedLinks = [
-        'Wallet',
-        'Applications',
-        'Transactions',
-        'Blocks',
-        'Validators',
-        'Accounts',
-        'Network',
-      ];
+      const expectedLinks = ['Applications'];
 
       mockAppState.settings = { ...mockAppState.settings, sideBarExpanded: true };
       wrapper = mountWithRouter(SideBar, myProps);
@@ -96,7 +88,7 @@ describe('SideBar', () => {
     });
   });
 
-  it('renders 7 disabled menu items on Initialization screen', () => {
+  it(`renders ${menuItems.length} disabled menu items on Initialization screen`, () => {
     wrapper = mountWithRouter(SideBar, {
       ...myProps,
       isUserLogout: false,
@@ -104,55 +96,9 @@ describe('SideBar', () => {
         pathname: routes.reclaim.path,
       },
     });
-    expect(wrapper).toContainMatchingElements(7, 'a');
-    expect(wrapper.find('a').at(0)).toHaveClassName('disabled');
-    expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
-    expect(wrapper.find('a').at(2)).toHaveClassName('disabled');
-    expect(wrapper.find('a').at(3)).toHaveClassName('disabled');
-    expect(wrapper.find('a').at(4)).toHaveClassName('disabled');
-    expect(wrapper.find('a').at(5)).toHaveClassName('disabled');
-    expect(wrapper.find('a').at(6)).toHaveClassName('disabled');
-  });
-
-  it('should render notification when there is a reward and the side bar is shrunk', () => {
-    const Component = (props) => (
-      <ApplicationBootstrapContext.Provider
-        value={{ appEvents: { transactions: { rewards: [{ reward: 10000 }] } } }}
-      >
-        <SideBar {...props} />
-      </ApplicationBootstrapContext.Provider>
-    );
-
-    wrapper = mountWithRouterAndStore(
-      Component,
-      {
-        ...myProps,
-        isUserLogout: false,
-        location: { pathname: routes.reclaim.path },
-      },
-      { settings: { sideBarExpanded: false } }
-    );
-    expect(wrapper.find('Badge.badge')).toExist();
-  });
-
-  it('should render notification when there is a reward and the side bar is collapsed', () => {
-    const Component = (props) => (
-      <ApplicationBootstrapContext.Provider
-        value={{ appEvents: { transactions: { rewards: [{ reward: 10000 }] } } }}
-      >
-        <SideBar {...props} />
-      </ApplicationBootstrapContext.Provider>
-    );
-
-    wrapper = mountWithRouterAndStore(
-      Component,
-      {
-        ...myProps,
-        isUserLogout: false,
-        location: { pathname: routes.reclaim.path },
-      },
-      { settings: { sideBarExpanded: true } }
-    );
-    expect(wrapper.find('Badge.badge')).toExist();
+    expect(wrapper).toContainMatchingElements(menuLinks.length, 'a');
+    menuItems[0].forEach((_, index) => {
+      expect(wrapper.find('a').at(index)).toHaveClassName('disabled');
+    });
   });
 });

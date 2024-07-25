@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
-import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { PrimaryButton } from 'src/theme/buttons';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { Input } from 'src/theme';
@@ -28,10 +27,10 @@ const ConnectionProposal = () => {
     .join(',')
     .replace(/lisk:/g, '');
 
-  const blockchainAppsMeta = useBlockchainApplicationMeta({
-    config: { params: { chainID: requestingChainIDs } },
-    options: { enabled: !!requestingChainIDs },
-  });
+  const invalidRequestChainID =
+    requestingChainIDs !== '00000000' &&
+    requestingChainIDs !== '01000000' &&
+    requestingChainIDs !== '';
 
   // eslint-disable-next-line max-statements
   const clickHandler = async () => {
@@ -61,14 +60,12 @@ const ConnectionProposal = () => {
     // istanbul ignore else
     const cleanUpFn = () => {};
 
-    if (blockchainAppsMeta.isFetching || blockchainAppsMeta.isLoading) return cleanUpFn;
-
     const nameSpaceKeys = requiredNamespaces && Object.keys(requiredNamespaces);
     const hasNameSpaceError =
       !nameSpaceKeys || nameSpaceKeys.length > 1 || !nameSpaceKeys.includes('lisk');
     const isSessionProposal = event?.name === EVENTS.SESSION_PROPOSAL;
 
-    if (!blockchainAppsMeta.data?.data?.length || blockchainAppsMeta.isError) {
+    if (invalidRequestChainID) {
       setNameSpaceError(t('Connection request contains unsupported chainIDs.'));
 
       return cleanUpFn;
@@ -82,7 +79,7 @@ const ConnectionProposal = () => {
     }
 
     return cleanUpFn;
-  }, [events, blockchainAppsMeta.isFetching]);
+  }, [events]);
 
   const onInputChange = ({ target }) => {
     setNameSpaceError('');
@@ -103,7 +100,7 @@ const ConnectionProposal = () => {
               onChange={onInputChange}
               value={wcUri}
               className={styles.input}
-              isLoading={blockchainAppsMeta.isFetching}
+              isLoading={false}
               placeholder={t('Enter connection URI')}
             />
             {nameSpaceError && (
@@ -117,13 +114,7 @@ const ConnectionProposal = () => {
             )}
             <PrimaryButton
               onClick={clickHandler}
-              disabled={
-                nameSpaceError ||
-                wcUri.length === 0 ||
-                status.isPending ||
-                blockchainAppsMeta.isFetching ||
-                blockchainAppsMeta.isError
-              }
+              disabled={nameSpaceError || wcUri.length === 0 || status.isPending}
             >
               {t('Connect')}
             </PrimaryButton>

@@ -20,39 +20,41 @@ const SessionManager = () => {
   const { accounts } = useAccounts();
 
   return (
-    <Box main isLoading={!hasLoaded} className={`${styles.wrapper} pairings-list-box`}>
-      <div className={styles.addButtonWrapper}>
-        <DialogLink
-          history={history}
-          component={accounts.length > 0 ? 'connectionProposal' : 'NoAccountView'}
-        >
-          <PrimaryButton className="add-button">
-            <span className={styles.buttonContent}>
-              <Icon name="plus" />
-              <span>{t('Connect Wallet')}</span>
-            </span>
-          </PrimaryButton>
-        </DialogLink>
+    <Box className={`${styles.wrapper} pairings-list-box`}>
+      <div className={styles.contentWrapper}>
+        <div className={styles.addButtonWrapper}>
+          <DialogLink
+            history={history}
+            component={accounts.length > 0 ? 'connectionProposal' : 'NoAccountView'}
+          >
+            <PrimaryButton className="add-button">
+              <span className={styles.buttonContent}>
+                <Icon name="plus" />
+                <span>{t('Connect Wallet')}</span>
+              </span>
+            </PrimaryButton>
+          </DialogLink>
+        </div>
+        <BoxContent className={`${styles.content} pairings-list`}>
+          <Table
+            showHeader
+            headerClassName={styles.tableHeader}
+            data={sessions}
+            isLoading={!hasLoaded}
+            row={SessionRow}
+            header={header(t)}
+            canLoadMore={false}
+            additionalRowProps={{
+              t,
+              disconnect,
+            }}
+            emptyState={{
+              message: t("You haven't paired with any applications yet."),
+              illustration: 'emptyWalletConnectionsIllustration',
+            }}
+          />
+        </BoxContent>
       </div>
-      <BoxContent className={`${styles.content} pairings-list`}>
-        <Table
-          showHeader
-          headerClassName={styles.tableHeader}
-          data={sessions}
-          isLoading={!hasLoaded}
-          row={SessionRow}
-          header={header(t)}
-          canLoadMore={false}
-          additionalRowProps={{
-            t,
-            disconnect,
-          }}
-          emptyState={{
-            message: t("You haven't paired with any applications yet."),
-            illustration: 'emptyWalletConnectionsIllustration',
-          }}
-        />
-      </BoxContent>
     </Box>
   );
 };

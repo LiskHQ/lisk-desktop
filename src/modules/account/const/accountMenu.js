@@ -1,11 +1,9 @@
 import routes from 'src/routes/routes';
 
 export const accountMenu = ({
-  authData,
   isHW,
   hasNetworkError,
   isLoadingNetwork,
-  insuffientBalanceMessage,
   address,
 }) => [
   {
@@ -29,15 +27,6 @@ export const accountMenu = ({
     path: routes.addAccountOptions.path,
     icon: 'plus',
     label: 'Add new account',
-  },
-  {
-    component: !Object.values(insuffientBalanceMessage).length
-      ? 'multiSignature'
-      : 'noTokenBalance',
-    data: insuffientBalanceMessage,
-    icon: 'multiSignatureOutline',
-    isHidden: hasNetworkError || isLoadingNetwork,
-    label: `${authData?.data?.numberOfSignatures > 0 ? 'Edit' : 'Register'} multisignature account`,
   },
   {
     component: 'removeSelectedAccount',
