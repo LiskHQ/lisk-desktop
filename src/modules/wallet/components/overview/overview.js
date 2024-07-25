@@ -14,7 +14,6 @@ import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress'
 import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
-import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
@@ -118,22 +117,6 @@ const Overview = ({ isWalletRoute, history }) => {
             isMultisig={authData?.data?.numberOfSignatures > 0}
           />
         </DialogLink>
-      </div>
-      <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
-        <div className={`${grid.row} ${styles.actionButtons}`}>
-          <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
-            {!searchAddress && (
-              <DialogLink component="request">
-                <SecondaryButton>{t('Request')}</SecondaryButton>
-              </DialogLink>
-            )}
-          </div>
-          <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
-            <DialogLink component="send">
-              <PrimaryButton>{t('Send')}</PrimaryButton>
-            </DialogLink>
-          </div>
-        </div>
       </div>
       <div className={styles.tokenCarouselWrapper}>
         <div className={styles.contentWrapper}>
