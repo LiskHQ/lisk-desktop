@@ -66,14 +66,16 @@ const Overview = ({ isWalletRoute, history }) => {
     refetch,
   } = useLiskLegacy({ config: { params: { address } }, client: legacyClient });
   const tokenLegacyBalance = liskLegacy
-    ? {
-        ...liskLegacy.token,
-        symbol: 'LSK',
-        logo: {
-          svg: 'https://raw.githubusercontent.com/LiskHQ/app-registry/main/testnet/Lisk/images/tokens/lisk.svg',
+    ? [
+        {
+          ...liskLegacy.token,
+          symbol: 'LSK',
+          logo: {
+            svg: 'https://raw.githubusercontent.com/LiskHQ/app-registry/main/testnet/Lisk/images/tokens/lisk.svg',
+          },
         },
-      }
-    : {};
+      ]
+    : [{}];
   const { data: myTokenBalances } = useTokenBalances();
   const hasTokenWithBalance = myTokenBalances?.data?.some(
     (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
@@ -155,7 +157,7 @@ const Overview = ({ isWalletRoute, history }) => {
             )}
           </div>
           <TokenCarousel
-            data={[tokenLegacyBalance] ?? []}
+            data={tokenLegacyBalance.length ? tokenLegacyBalance : []}
             error={error}
             isLoading={isLoading}
             renderItem={renderTokenCard}
