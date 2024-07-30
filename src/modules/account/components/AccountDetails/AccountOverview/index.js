@@ -1,24 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useCurrentAccount } from '@account/hooks';
 import Overview from '@wallet/components/overview/overviewManager';
 import { selectActiveToken, selectSettings, selectTransactions } from 'src/redux/selectors';
 import SwippableInfoBanner from '@common/components/infoBanner/swippableInfoBanner';
 import banners from './banners';
 
 // eslint-disable-next-line max-statements
-export default function AccountOverview({ address: searchAddress }) {
+export default function AccountOverview() {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed } = useSelector(selectTransactions);
-  const [
-    {
-      metadata: { address: currentAddress },
-    },
-  ] = useCurrentAccount();
-
-  const accountAddress = searchAddress ?? currentAddress;
-  console.log({ accountAddress });
 
   return (
     <section>
