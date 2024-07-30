@@ -8,3 +8,4 @@ export * from './useGetMinimumMessageFee';
 export * from './useAppsMetaTokens';
 export * from './useNetworkSupportedTokens';
 export * from './useValidateFeeBalance';
+export * from './useLiskLegacy';

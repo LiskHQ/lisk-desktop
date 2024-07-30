@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import { useTokenBalances, useLiskLegacy } from '@token/fungible/hooks/queries';
 import TokenCard from '@wallet/components/TokenCard';
 import TokenCarousel from '@wallet/components/TokenCarousel/TokenCarousel';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
@@ -14,10 +14,13 @@ import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress'
 import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
+import { Client } from 'src/utils/api/client';
 import routes from 'src/routes/routes';
+import { downloadJSON } from 'src/modules/transaction/utils';
 import styles from './overview.css';
 
 // 6: blocks per minute, 60: minutes, 24: hours
@@ -53,12 +56,24 @@ const Overview = ({ isWalletRoute, history }) => {
 
   const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
+  const legacyClient = new Client();
+  legacyClient.create({ http: 'https://legacy.lisk.com/' });
+
   const {
-    data: tokenBalances,
+    data: liskLegacy,
     isLoading,
     error,
     refetch,
-  } = useTokenBalances({ config: { params: { address } } });
+  } = useLiskLegacy({ config: { params: { address } }, client: legacyClient });
+  const tokenLegacyBalance = liskLegacy
+    ? {
+        ...liskLegacy.token,
+        symbol: 'LSK',
+        logo: {
+          svg: 'https://raw.githubusercontent.com/LiskHQ/app-registry/main/testnet/Lisk/images/tokens/lisk.svg',
+        },
+      }
+    : {};
   const { data: myTokenBalances } = useTokenBalances();
   const hasTokenWithBalance = myTokenBalances?.data?.some(
     (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
@@ -100,6 +115,10 @@ const Overview = ({ isWalletRoute, history }) => {
 
   useEffect(showWarning, [isWalletRoute, host, address, pomHeights]);
 
+  const downloadAccountHistory = () => {
+    downloadJSON(liskLegacy, `${accountName}_account_history`);
+  };
+
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <div
@@ -118,6 +137,13 @@ const Overview = ({ isWalletRoute, history }) => {
           />
         </DialogLink>
       </div>
+      <div
+        className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.actionButtons}`}
+      >
+        <PrimaryButton onClick={downloadAccountHistory}>
+          {t('Download account history')}
+        </PrimaryButton>
+      </div>
       <div className={styles.tokenCarouselWrapper}>
         <div className={styles.contentWrapper}>
           <div className={`${styles.carouselHeader}`}>
@@ -129,7 +155,7 @@ const Overview = ({ isWalletRoute, history }) => {
             )}
           </div>
           <TokenCarousel
-            data={tokenBalances?.data ?? []}
+            data={[tokenLegacyBalance] ?? []}
             error={error}
             isLoading={isLoading}
             renderItem={renderTokenCard}

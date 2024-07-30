@@ -16,7 +16,6 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   } = useSettings('mainChainNetwork');
   const networksWithCustomNetworks = [...Object.values(networks)];
 
-
   const networkStatus = {
     isSuccess: true,
     isFetching: false,
@@ -25,7 +24,7 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
   const handleChangeNetwork = (network) => {
     setSelectedNetwork(network);
     setValue(network);
-  }
+  };
 
   useEffect(() => {
     const isSuccess = networkStatus.isSuccess && !networkStatus.isFetching;
