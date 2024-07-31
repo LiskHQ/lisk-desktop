@@ -18,6 +18,8 @@ import { PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
+import useSettings from 'src/modules/settings/hooks/useSettings';
+import networks from 'src/modules/network/configuration/networks';
 import { Client } from 'src/utils/api/client';
 import routes from 'src/routes/routes';
 import { downloadJSON } from 'src/modules/transaction/utils';
@@ -41,6 +43,8 @@ const Overview = ({ isWalletRoute, history }) => {
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const { t } = useTranslation();
   const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
+  const isTestnet = mainChainNetwork.serviceUrl === networks.testnet.serviceUrl;
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: validators } = useValidators({ config: { params: { address } } });
@@ -65,6 +69,14 @@ const Overview = ({ isWalletRoute, history }) => {
     error,
     refetch,
   } = useLiskLegacy({ config: { params: { address } }, client: legacyClient });
+  const defaultLegacyBalance = {
+    availableBalance: '0',
+    lockedBalances: [{ module: 'pos', amount: '0' }],
+    symbol: 'LSK',
+    logo: {
+      svg: 'https://raw.githubusercontent.com/LiskHQ/app-registry/main/testnet/Lisk/images/tokens/lisk.svg',
+    },
+  };
   const tokenLegacyBalance = liskLegacy
     ? [
         {
@@ -75,7 +87,7 @@ const Overview = ({ isWalletRoute, history }) => {
           },
         },
       ]
-    : [{}];
+    : [defaultLegacyBalance];
   const { data: myTokenBalances } = useTokenBalances();
   const hasTokenWithBalance = myTokenBalances?.data?.some(
     (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
@@ -139,13 +151,15 @@ const Overview = ({ isWalletRoute, history }) => {
           />
         </DialogLink>
       </div>
-      <div
-        className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.actionButtons}`}
-      >
-        <PrimaryButton onClick={downloadAccountHistory}>
-          {t('Download account history')}
-        </PrimaryButton>
-      </div>
+      {!isTestnet && (
+        <div
+          className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.actionButtons}`}
+        >
+          <PrimaryButton onClick={downloadAccountHistory}>
+            {t('Download account history')}
+          </PrimaryButton>
+        </div>
+      )}
       <div className={styles.tokenCarouselWrapper}>
         <div className={styles.contentWrapper}>
           <div className={`${styles.carouselHeader}`}>

@@ -19,6 +19,8 @@ export function useApplicationManagement({ queryClient } = {}) {
   const { checkPinByChainId, pins } = usePinBlockchainApplication();
   const applicationsObject = useSelector(selectApplications)[mainChainNetwork.name] || {};
 
+  const networkApplications = useSelector(selectApplications) || {};
+
   const applications = useMemo(() => {
     const appsList = Object.values(applicationsObject).filter((app) => app?.status);
     // Sort apps list by pinned apps and terminated apps such that
@@ -63,6 +65,7 @@ export function useApplicationManagement({ queryClient } = {}) {
   return {
     isLoading,
     applications,
+    networkApplications,
     setApplication,
     setApplications,
     getApplicationByChainId,

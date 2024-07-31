@@ -4,6 +4,10 @@ import { useTranslation } from 'react-i18next';
 import MenuSelect from '@wallet/components/MenuSelect';
 import useSettings from '@settings/hooks/useSettings';
 import NetworkMenuItem from '@network/components/networkSwitcherDropdown/networkMenuItem/NetworkMenuItem';
+import {
+  useApplicationManagement,
+  useCurrentApplication,
+} from '@blockchainApplication/manage/hooks';
 import networks from '../../configuration/networks';
 import styles from './NetworkSwitcherDropdown.css';
 
@@ -15,15 +19,24 @@ function NetworkSwitcherDropdown({ noLabel, onNetworkSwitchSuccess }) {
     mainChainNetwork: { name: currentNetworkName },
   } = useSettings('mainChainNetwork');
   const networksWithCustomNetworks = [...Object.values(networks)];
+  const { networkApplications } = useApplicationManagement();
+  const [, setCurrentApplication] = useCurrentApplication();
 
   const networkStatus = {
     isSuccess: true,
     isFetching: false,
   };
 
+  const liskChains = {
+    mainnet: '00000000',
+    testnet: '01000000',
+  };
+
   const handleChangeNetwork = (network) => {
+    const selectedNetworkApplication = networkApplications[network.name][liskChains[network.name]];
     setSelectedNetwork(network);
     setValue(network);
+    setCurrentApplication(selectedNetworkApplication);
   };
 
   useEffect(() => {
