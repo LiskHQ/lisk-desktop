@@ -21,7 +21,9 @@ export function useApplicationManagement({ queryClient } = {}) {
   const applicationsObject = useSelector(selectApplications)[mainChainNetwork.name] || {};
 
   const liskApplications = { mainnet: liskMainnetApplication, testnet: liskTestnetApplication };
-  const networkApplications = useSelector(selectApplications) || { liskApplications };
+  const networkApplications = Object.keys(useSelector(selectApplications)).length
+    ? useSelector(selectApplications)
+    : { ...liskApplications };
 
   const applications = useMemo(() => {
     const appsList = Object.values(applicationsObject).filter((app) => app?.status);

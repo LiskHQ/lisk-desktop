@@ -3,6 +3,14 @@ import routes from 'src/routes/routes';
 const menuLinks = (t) => [
   [
     {
+      icon: 'walletIcon',
+      id: 'wallet',
+      label: t('Wallet'),
+      path: routes.wallet.path,
+    },
+  ],
+  [
+    {
       icon: 'applicationsIcon',
       id: 'blockchainApplications',
       label: t('Applications'),
