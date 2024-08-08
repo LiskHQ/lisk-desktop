@@ -1,9 +1,9 @@
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import { useCustomQuery } from 'src/modules/common/hooks';
-import { LISK_LEGACY_ACCOUNT } from 'src/const/queries';
+import { LISK_LEGACY_HISTORY } from 'src/const/queries';
 import defaultClient from 'src/utils/api/client';
 
-export const useLiskLegacyAccount = ({
+export const useLiskLegacyHistory = ({
   config: customConfig = {},
   options,
   client = defaultClient,
@@ -11,13 +11,13 @@ export const useLiskLegacyAccount = ({
   const [currentAccount] = useCurrentAccount();
   const address = customConfig.params?.address || currentAccount.metadata?.address;
   const config = {
-    url: `/accounts/${address}.json`,
+    url: `/histories/${address}.csv`,
     method: 'get',
     ...customConfig,
   };
 
   return useCustomQuery({
-    keys: [LISK_LEGACY_ACCOUNT],
+    keys: [LISK_LEGACY_HISTORY],
     config,
     options,
     client,

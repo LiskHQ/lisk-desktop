@@ -1,10 +1,14 @@
-/* eslint-disable max-statements */
+/* eslint-disable max-statements, complexity */
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { useTokenBalances, useLiskLegacy } from '@token/fungible/hooks/queries';
+import {
+  useTokenBalances,
+  useLiskLegacyAccount,
+  useLiskLegacyHistory,
+} from '@token/fungible/hooks/queries';
 import TokenCard from '@wallet/components/TokenCard';
 import TokenCarousel from '@wallet/components/TokenCarousel/TokenCarousel';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
@@ -22,7 +26,7 @@ import useSettings from 'src/modules/settings/hooks/useSettings';
 import networks from 'src/modules/network/configuration/networks';
 import { Client } from 'src/utils/api/client';
 import routes from 'src/routes/routes';
-import { downloadJSON } from 'src/modules/transaction/utils';
+import { downloadCSV } from 'src/modules/transaction/utils';
 import styles from './overview.css';
 
 // 6: blocks per minute, 60: minutes, 24: hours
@@ -44,7 +48,7 @@ const Overview = ({ isWalletRoute, history }) => {
   const { t } = useTranslation();
   const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
   const { mainChainNetwork } = useSettings('mainChainNetwork');
-  const isTestnet = mainChainNetwork.serviceUrl === networks.testnet.serviceUrl;
+  const isMainnet = mainChainNetwork.serviceUrl === networks.mainnet.serviceUrl;
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: validators } = useValidators({ config: { params: { address } } });
@@ -64,11 +68,16 @@ const Overview = ({ isWalletRoute, history }) => {
   legacyClient.create({ http: 'https://legacy.lisk.com/' });
 
   const {
-    data: liskLegacy,
-    isLoading,
-    error,
+    data: liskLegacyAccount,
+    isLoading: isLoadingLegacyAccount,
+    error: errorLegacyAccount,
     refetch,
-  } = useLiskLegacy({ config: { params: { address } }, client: legacyClient });
+  } = useLiskLegacyAccount({ config: { params: { address } }, client: legacyClient });
+  const {
+    data: liskLegacyHistory,
+    isLoading: isLoadingLegacyHistory,
+    error: errorLegacyHistory,
+  } = useLiskLegacyHistory({ config: { params: { address } }, client: legacyClient });
   const defaultLegacyBalance = {
     availableBalance: '0',
     lockedBalances: [{ module: 'pos', amount: '0' }],
@@ -77,10 +86,10 @@ const Overview = ({ isWalletRoute, history }) => {
       svg: 'https://raw.githubusercontent.com/LiskHQ/app-registry/main/testnet/Lisk/images/tokens/lisk.svg',
     },
   };
-  const tokenLegacyBalance = liskLegacy
+  const tokenLegacyBalance = liskLegacyAccount
     ? [
         {
-          ...liskLegacy.token,
+          ...liskLegacyAccount.token,
           symbol: 'LSK',
           logo: {
             svg: 'https://raw.githubusercontent.com/LiskHQ/app-registry/main/testnet/Lisk/images/tokens/lisk.svg',
@@ -130,7 +139,7 @@ const Overview = ({ isWalletRoute, history }) => {
   useEffect(showWarning, [isWalletRoute, host, address, pomHeights]);
 
   const downloadAccountHistory = () => {
-    downloadJSON(liskLegacy, `${accountName}_account_history`);
+    downloadCSV(liskLegacyHistory, `${accountName}_account_history`);
   };
 
   return (
@@ -151,7 +160,7 @@ const Overview = ({ isWalletRoute, history }) => {
           />
         </DialogLink>
       </div>
-      {!isTestnet && (
+      {isMainnet && !isLoadingLegacyHistory && !errorLegacyHistory && (
         <div
           className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.actionButtons}`}
         >
@@ -172,8 +181,8 @@ const Overview = ({ isWalletRoute, history }) => {
           </div>
           <TokenCarousel
             data={tokenLegacyBalance.length ? tokenLegacyBalance : []}
-            error={error}
-            isLoading={isLoading}
+            error={errorLegacyAccount}
+            isLoading={isLoadingLegacyAccount}
             renderItem={renderTokenCard}
             onRetry={refetch}
           />
