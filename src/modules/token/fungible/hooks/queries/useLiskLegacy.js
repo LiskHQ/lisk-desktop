@@ -3,7 +3,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
 import { LISK_LEGACY } from 'src/const/queries';
 import defaultClient from 'src/utils/api/client';
 
-export const useLiskLegacy = ({
+export const useLiskLegacyAccount = ({
   config: customConfig = {},
   options,
   client = defaultClient,
