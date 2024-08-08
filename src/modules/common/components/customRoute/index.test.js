@@ -61,6 +61,7 @@ describe('CustomRoute', () => {
     useSettings.mockReturnValue({
       mainChainNetwork: { name: 'devnet' },
       toggleSetting: mockToggleSetting,
+      setValue: jest.fn(),
     });
   });
 

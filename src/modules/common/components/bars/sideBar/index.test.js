@@ -63,7 +63,8 @@ describe('SideBar', () => {
   });
 
   it(`renders ${menuItems.length} menu items elements`, () => {
-    expect(wrapper).toContainMatchingElements(menuLinks.length, 'a');
+    // Last two menu items are not anchor tags
+    expect(wrapper).toContainMatchingElements(menuItems.length - 2, 'a');
   });
 
   it('shows sidebar toggle info on hover', () => {
@@ -75,12 +76,13 @@ describe('SideBar', () => {
 
   describe(`renders ${menuItems.length} menu items`, () => {
     it('without labels if sideBarExpanded is false', () => {
-      expect(wrapper).toContainMatchingElements(menuLinks.length, 'a');
+      // Last two menu items are not anchor tags
+      expect(wrapper).toContainMatchingElements(menuItems.length - 2, 'a');
       wrapper.find('a').forEach((link) => expect(link).not.toContain(/\w*/));
     });
 
     it('without labels if sideBarExpanded is true', () => {
-      const expectedLinks = ['Applications'];
+      const expectedLinks = ['Wallet', 'Applications'];
 
       mockAppState.settings = { ...mockAppState.settings, sideBarExpanded: true };
       wrapper = mountWithRouter(SideBar, myProps);
@@ -96,7 +98,8 @@ describe('SideBar', () => {
         pathname: routes.reclaim.path,
       },
     });
-    expect(wrapper).toContainMatchingElements(menuLinks.length, 'a');
+    // Last two menu items are not anchor tags
+    expect(wrapper).toContainMatchingElements(menuItems.length - 2, 'a');
     menuItems[0].forEach((_, index) => {
       expect(wrapper.find('a').at(index)).toHaveClassName('disabled');
     });
