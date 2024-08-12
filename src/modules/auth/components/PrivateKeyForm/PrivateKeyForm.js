@@ -44,11 +44,7 @@ const setPasswordFormSchema = yup
   })
   .required();
 
-function PrivateKeyForm({
-  prevStep,
-  onSubmit,
-  privateKey,
-}) {
+function PrivateKeyForm({ prevStep, onSubmit, privateKey }) {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
   const {
@@ -91,8 +87,8 @@ function PrivateKeyForm({
       toast.error(t('Failed to setup password'));
       setIsLoading(false);
     };
-    if (privateKey?.value.length === 64) {
-      const privateKeyBytes = Buffer.from(privateKey.value, 'hex');
+    if (privateKey?.value.length === 64 || privateKey?.value.length === 128) {
+      const privateKeyBytes = Buffer.from(privateKey.value.slice(0, 64), 'hex');
       const publicKeyBytes = nacl.sign.keyPair.fromSeed(privateKeyBytes.subarray(0, 32)).publicKey;
 
       privateKey.value = Buffer.concat([privateKeyBytes, publicKeyBytes]).toString('hex');
