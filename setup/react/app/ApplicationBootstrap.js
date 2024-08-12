@@ -2,9 +2,11 @@
 /* eslint-disable max-statements */
 import React, { createContext } from 'react';
 import { useCurrentAccount } from 'src/modules/account/hooks';
+import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
 import { useReduxStateModifier } from 'src/utils/useReduxStateModifier';
 import { useLedgerDeviceListener } from '@libs/hardwareWallet/ledger/ledgerDeviceListener/useLedgerDeviceListener';
 import { useRewardsClaimable } from 'src/modules/pos/reward/hooks/queries';
+import { liskMainnetApplication } from 'src/modules/blockchainApplication/manage/const/liskApplications';
 
 export const ApplicationBootstrapContext = createContext({
   hasNetworkError: false,
@@ -17,6 +19,10 @@ export const ApplicationBootstrapContext = createContext({
 const ApplicationBootstrap = ({ children }) => {
   const [currentAccount] = useCurrentAccount();
   const accountAddress = currentAccount?.metadata?.address;
+  const [currentApplication, setCurrentApplication] = useCurrentApplication();
+  if (!Object.keys(currentApplication).length) {
+    setCurrentApplication(liskMainnetApplication['00000000']);
+  }
 
   useLedgerDeviceListener();
   useReduxStateModifier();

@@ -2,12 +2,14 @@ import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import numeral from 'numeral';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import {
+  useTokenBalances,
+  useLiskLegacyAccount,
+  useLiskLegacyHistory,
+} from '@token/fungible/hooks/queries';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
-import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 
 import { mockBlocks } from '@block/__fixtures__';
 import { mockValidators } from '@pos/validator/__fixtures__';
@@ -26,6 +28,13 @@ jest.mock('@account/hooks', () => ({
 }));
 
 jest.mock('@token/fungible/hooks/queries');
+jest.mock('@settings/hooks/useSettings', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    mainChainNetwork: { name: 'mainnet' },
+    setValue: jest.fn(),
+  })),
+}));
 jest.mock('@account/hooks');
 jest.mock('@pos/validator/hooks/queries', () => ({
   useValidators: jest.fn(),
@@ -37,11 +46,6 @@ jest.mock('src/modules/common/hooks/useFiatRates');
 
 describe('Overview', () => {
   const history = { location: { search: '' } };
-
-  const mergedTokens = mockAppsTokens.data.map((token, index) => ({
-    ...mockTokensBalance.data[index],
-    ...token,
-  }));
 
   useFiatRates.mockReturnValue({ LSK: { USD: 1, EUR: 1 } });
 
@@ -59,6 +63,27 @@ describe('Overview', () => {
       isLoading: false,
       isSuccess: true,
     });
+    useLiskLegacyAccount.mockReturnValue({
+      data: {
+        token: {
+          availableBalance: '1586739386',
+          lockedBalances: [
+            {
+              module: 'pos',
+              amount: '1000000000000',
+            },
+          ],
+          symbol: 'LSK',
+        },
+      },
+      isLoading: false,
+      isSuccess: true,
+    });
+    useLiskLegacyHistory.mockReturnValue({
+      data: "Version,Block Height,Date,Sender Address,Amount,Transaction ID,Transaction Type,Transaction Fee,Success,Recipient Address,Additional Information,Comment,\nv1,2199158,2017-02-28 12:32:40 +0000 UTC,lskgtrrftvoxhtknhamjab5wenfauk32z9pzk79uj,2500000000,16167385358120905513,token_transfer,0,true,lskervnyptonqvc4byqz5jsnded4gd264tacqzx9p,,3766202724911711412L's new address is lskervnyptonqvc4byqz5jsnded4gd264tacqzx9p.",
+      isLoading: false,
+      isSuccess: true,
+    });
     useAuth.mockReturnValue({ data: mockAuth });
     useValidators.mockReturnValue({ data: mockValidators });
     useBlocks.mockReturnValue({ data: mockBlocks });
@@ -73,40 +98,14 @@ describe('Overview', () => {
       </QueryClientProvider>
     );
 
-    expect(screen.getByText('Request')).toBeTruthy();
-    expect(screen.getByText('Send')).toBeTruthy();
     expect(screen.getByText('Tokens')).toBeTruthy();
     expect(screen.getByText(mockAuth.meta.address)).toBeTruthy();
     expect(screen.getByText(mockedCurrentAccount.metadata.name)).toBeTruthy();
     expect(screen.getByText('View all tokens')).toBeTruthy();
 
-    expect(screen.getAllByTestId('token-card')).toHaveLength(mergedTokens.length);
+    expect(screen.getAllByTestId('token-card')).toHaveLength(1);
 
-    mergedTokens.forEach(({ symbol, availableBalance, lockedBalances }) => {
-      const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
-
-      expect(
-        screen.queryByText(
-          `${numeral(convertFromBaseDenom(lockedBalance, mockAppsTokens.data[0])).format(
-            '0'
-          )} ${symbol.toUpperCase()}`
-        )
-      );
-      expect(
-        screen.queryByText(
-          `${numeral(convertFromBaseDenom(availableBalance, mockAppsTokens.data[0])).format(
-            '0,0.00'
-          )}`
-        )
-      );
-      expect(
-        screen.queryByText(
-          `${numeral(
-            convertFromBaseDenom(+availableBalance + lockedBalance, mockAppsTokens.data[0])
-          ).format('0,0.00')}`
-        )
-      );
-      expect(screen.getByAltText(symbol)).toBeTruthy();
-    });
+    expect(screen.getByText('15.86739386 LSK')).toBeTruthy();
+    expect(screen.getByText('10,000 LSK')).toBeTruthy();
   });
 });

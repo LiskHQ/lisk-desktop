@@ -27,7 +27,12 @@ const TokenCard = ({ token, searchAddress }) => {
         <img alt={symbol} className={styles.tokenLogo} src={getLogo(token)} />
       </div>
       <div>
-        <TokenAmount className={styles.tokenAmount} val={availableBalance} token={token} />
+        <TokenAmount
+          className={styles.tokenAmount}
+          val={availableBalance}
+          token={token}
+          isLsk={token.symbol === 'LSK'}
+        />
         {symbol === 'LSK' && (
           <Converter
             className={styles.fiatBalance}
@@ -41,7 +46,7 @@ const TokenCard = ({ token, searchAddress }) => {
             to={`${routes.sentStakes.path}/?modal=lockedBalance`}
           >
             <Icon name="lock" />
-            <TokenAmount val={totalLockedBalance} token={token} />
+            <TokenAmount val={totalLockedBalance} token={token} isLsk={token.symbol === 'LSK'} />
           </Link>
         )}
       </div>

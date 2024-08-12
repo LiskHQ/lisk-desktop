@@ -15,7 +15,6 @@ import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { useAppsMetaTokens } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 import { toTransactionJSON } from '@transaction/utils/encoding';
-import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { convertFromBaseDenom } from '@token/fungible/utils/helpers';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { signMessage, signClaimMessage } from '@message/store/action';
@@ -54,7 +53,6 @@ const RequestSummary = ({ nextStep, history, message, portalMessage }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const { sessionRequest, respond } = useSession({ isEnabled: !message });
   const reduxDispatch = useDispatch();
-  const metaData = useBlockchainApplicationMeta();
   useDeprecatedAccount(senderAccount);
   useSchemas();
 
@@ -309,11 +307,7 @@ const RequestSummary = ({ nextStep, history, message, portalMessage }) => {
             className={styles.button}
             onClick={!encryptedSenderAccount ? navigateToAddAccountFlow : approveHandler}
             data-testid="approve-button"
-            disabled={
-              !metaData.data ||
-              errorMessage ||
-              (!isSenderCurrentAccount && !!encryptedSenderAccount)
-            }
+            disabled={errorMessage || (!isSenderCurrentAccount && !!encryptedSenderAccount)}
           >
             {!encryptedSenderAccount ? t('Add account') : t('Continue')}
           </PrimaryButton>

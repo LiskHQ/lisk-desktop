@@ -25,7 +25,12 @@ describe('TokenCarousel', () => {
     const props = {
       renderItem: ({ item }) => `render-item-${item}`,
       data: [...new Array(2).keys()].map((item) => ({ item })),
-      error: 'error',
+      error: {
+        message: 'error',
+        response: {
+          status: 500,
+        },
+      },
     };
     wrapper = render(<TokenCarousel {...props} />);
 
@@ -34,7 +39,12 @@ describe('TokenCarousel', () => {
       expect(screen.queryByText(`render-item-${item}`)).toBeFalsy();
     });
 
-    props.error = { message: 'error' };
+    props.error = {
+      message: 'error',
+      response: {
+        status: 500,
+      },
+    };
     wrapper.rerender(<TokenCarousel {...props} />);
 
     expect(screen.queryByText('error')).toBeTruthy();
@@ -43,6 +53,23 @@ describe('TokenCarousel', () => {
     props.data.forEach(({ item }) => {
       expect(screen.queryByText(`render-item-${item}`)).toBeFalsy();
     });
+  });
+
+  it('should not display an error for HTTP 404 status', async () => {
+    const props = {
+      renderItem: ({ item }) => `render-item-${item}`,
+      data: [...new Array(2).keys()].map((item) => ({ item })),
+      error: {
+        message: 'error',
+        response: {
+          status: 404,
+        },
+      },
+    };
+    wrapper = render(<TokenCarousel {...props} />);
+
+    expect(screen.queryByText('error')).toBeFalsy();
+    expect(screen.queryByText('Retry')).toBeFalsy();
   });
 
   it('should display a loading state skeleton', async () => {

@@ -163,6 +163,14 @@ const downloadJSON = (data, name) => {
   anchor.click();
 };
 
+/* istanbul ignore next */
+const downloadCSV = (data, name) => {
+  const anchor = document.createElement('a');
+  anchor.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURIComponent(data)}`);
+  anchor.setAttribute('download', `${name}.csv`);
+  anchor.click();
+};
+
 /**
  * Removes the excess signatures from optional members
  * to open up room for the mandatory ones
@@ -488,6 +496,7 @@ const normalizeNumberRange = (distributions) => {
 export {
   containsTransactionType,
   downloadJSON,
+  downloadCSV,
   getTransactionAmount,
   getUnsignedBytes,
   getNumberOfSignatures,

@@ -6,6 +6,7 @@ import { selectApplications } from '../store/selectors';
 import { useCurrentApplication } from './useCurrentApplication';
 import { usePinBlockchainApplication } from './usePinBlockchainApplication';
 import { useApplicationExploreAndMetaData } from './useApplicationExploreAndMetaData';
+import { liskMainnetApplication, liskTestnetApplication } from '../const/liskApplications';
 
 // eslint-disable-next-line max-statements
 export function useApplicationManagement({ queryClient } = {}) {
@@ -18,6 +19,11 @@ export function useApplicationManagement({ queryClient } = {}) {
 
   const { checkPinByChainId, pins } = usePinBlockchainApplication();
   const applicationsObject = useSelector(selectApplications)[mainChainNetwork.name] || {};
+
+  const liskApplications = { mainnet: liskMainnetApplication, testnet: liskTestnetApplication };
+  const networkApplications = Object.keys(useSelector(selectApplications)).length
+    ? useSelector(selectApplications)
+    : { ...liskApplications };
 
   const applications = useMemo(() => {
     const appsList = Object.values(applicationsObject).filter((app) => app?.status);
@@ -63,6 +69,7 @@ export function useApplicationManagement({ queryClient } = {}) {
   return {
     isLoading,
     applications,
+    networkApplications,
     setApplication,
     setApplications,
     getApplicationByChainId,

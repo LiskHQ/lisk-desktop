@@ -3,6 +3,10 @@ import useSettings from '@settings/hooks/useSettings';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import { rerenderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import NetworkSwitcherDropdown from '@network/components/networkSwitcherDropdown/NetworkSwitcherDropdown';
+import {
+  useApplicationManagement,
+  useCurrentApplication,
+} from '@blockchainApplication/manage/hooks';
 import { mockNetworkStatus } from '../../__fixtures__';
 import { useNetworkStatus } from '../../hooks/queries';
 
@@ -32,6 +36,16 @@ describe('NetworkSwitcherDropdown', () => {
     isError: false,
     isFetched: true,
     refetch: jest.fn(),
+  });
+  useCurrentApplication.mockReturnValue([mockBlockchainAppMeta.data[0], jest.fn()]);
+  useApplicationManagement.mockReturnValue({
+    networkApplications: [
+      {
+        devnet: {
+          '04000000': mockBlockchainAppMeta.data[0],
+        },
+      },
+    ],
   });
 
   it('should render properly', () => {

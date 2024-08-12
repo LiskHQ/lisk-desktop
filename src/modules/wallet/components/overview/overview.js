@@ -1,10 +1,14 @@
-/* eslint-disable max-statements */
+/* eslint-disable max-statements, complexity */
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { useTokenBalances } from '@token/fungible/hooks/queries';
+import {
+  useTokenBalances,
+  useLiskLegacyAccount,
+  useLiskLegacyHistory,
+} from '@token/fungible/hooks/queries';
 import TokenCard from '@wallet/components/TokenCard';
 import TokenCarousel from '@wallet/components/TokenCarousel/TokenCarousel';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
@@ -14,11 +18,15 @@ import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress'
 import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
-import { SecondaryButton, PrimaryButton } from '@theme/buttons';
+import { PrimaryButton } from '@theme/buttons';
 import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
+import useSettings from 'src/modules/settings/hooks/useSettings';
+import networks from 'src/modules/network/configuration/networks';
+import { Client } from 'src/utils/api/client';
 import routes from 'src/routes/routes';
+import { downloadCSV } from 'src/modules/transaction/utils';
 import styles from './overview.css';
 
 // 6: blocks per minute, 60: minutes, 24: hours
@@ -39,6 +47,8 @@ const Overview = ({ isWalletRoute, history }) => {
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const { t } = useTranslation();
   const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
+  const { mainChainNetwork } = useSettings('mainChainNetwork');
+  const isMainnet = mainChainNetwork.serviceUrl === networks.mainnet.serviceUrl;
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: validators } = useValidators({ config: { params: { address } } });
@@ -54,12 +64,39 @@ const Overview = ({ isWalletRoute, history }) => {
 
   const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
+  const legacyClient = new Client();
+  legacyClient.create({ http: 'https://legacy.lisk.com/' });
+
   const {
-    data: tokenBalances,
-    isLoading,
-    error,
+    data: liskLegacyAccount,
+    isLoading: isLoadingLegacyAccount,
+    error: errorLegacyAccount,
     refetch,
-  } = useTokenBalances({ config: { params: { address } } });
+  } = useLiskLegacyAccount({ config: { params: { address } }, client: legacyClient });
+  const {
+    data: liskLegacyHistory,
+    isLoading: isLoadingLegacyHistory,
+    error: errorLegacyHistory,
+  } = useLiskLegacyHistory({ config: { params: { address } }, client: legacyClient });
+  const defaultLegacyBalance = {
+    availableBalance: '0',
+    lockedBalances: [{ module: 'pos', amount: '0' }],
+    symbol: 'LSK',
+    logo: {
+      svg: 'https://raw.githubusercontent.com/LiskHQ/app-registry/main/testnet/Lisk/images/tokens/lisk.svg',
+    },
+  };
+  const tokenLegacyBalance = liskLegacyAccount
+    ? [
+        {
+          ...liskLegacyAccount.token,
+          symbol: 'LSK',
+          logo: {
+            svg: 'https://raw.githubusercontent.com/LiskHQ/app-registry/main/testnet/Lisk/images/tokens/lisk.svg',
+          },
+        },
+      ]
+    : [defaultLegacyBalance];
   const { data: myTokenBalances } = useTokenBalances();
   const hasTokenWithBalance = myTokenBalances?.data?.some(
     (tokenBalance) => BigInt(tokenBalance?.availableBalance || 0) > BigInt(0)
@@ -101,6 +138,10 @@ const Overview = ({ isWalletRoute, history }) => {
 
   useEffect(showWarning, [isWalletRoute, host, address, pomHeights]);
 
+  const downloadAccountHistory = () => {
+    downloadCSV(liskLegacyHistory, `${accountName}_account_history`);
+  };
+
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <div
@@ -110,7 +151,7 @@ const Overview = ({ isWalletRoute, history }) => {
           <WalletVisualWithAddress
             copy
             size={50}
-            address={authData?.meta?.address}
+            address={authData?.meta?.address ?? currentAddress}
             accountName={accountName}
             className={styles.walletVisualWrapper}
             detailsClassName={styles.accountSummary}
@@ -119,22 +160,15 @@ const Overview = ({ isWalletRoute, history }) => {
           />
         </DialogLink>
       </div>
-      <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
-        <div className={`${grid.row} ${styles.actionButtons}`}>
-          <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
-            {!searchAddress && (
-              <DialogLink component="request">
-                <SecondaryButton>{t('Request')}</SecondaryButton>
-              </DialogLink>
-            )}
-          </div>
-          <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
-            <DialogLink component="send">
-              <PrimaryButton>{t('Send')}</PrimaryButton>
-            </DialogLink>
-          </div>
+      {isMainnet && !isLoadingLegacyHistory && !errorLegacyHistory && (
+        <div
+          className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.actionButtons}`}
+        >
+          <PrimaryButton onClick={downloadAccountHistory}>
+            {t('Download account history')}
+          </PrimaryButton>
         </div>
-      </div>
+      )}
       <div className={styles.tokenCarouselWrapper}>
         <div className={styles.contentWrapper}>
           <div className={`${styles.carouselHeader}`}>
@@ -146,9 +180,9 @@ const Overview = ({ isWalletRoute, history }) => {
             )}
           </div>
           <TokenCarousel
-            data={tokenBalances?.data ?? []}
-            error={error}
-            isLoading={isLoading}
+            data={tokenLegacyBalance.length ? tokenLegacyBalance : []}
+            error={errorLegacyAccount}
+            isLoading={isLoadingLegacyAccount}
             renderItem={renderTokenCard}
             onRetry={refetch}
           />
