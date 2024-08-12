@@ -12243,7 +12243,7 @@ num2fraction@^1.2.2:
 
 "numeral@git+https://github.com/LiskHQ/Numeral-js.git":
   version "2.0.6"
-  resolved "git+https://github.com/LiskHQ/Numeral-js.git#195af9768f998c4e4acde3ec86388b17c7c0254b"
+  resolved "git+https://github.com/LiskHQ/Numeral-js.git#3673d4898e8b58c609b104e5c4e615d4e429f66d"
 
 nwsapi@^2.0.7, nwsapi@^2.2.2:
   version "2.2.5"
