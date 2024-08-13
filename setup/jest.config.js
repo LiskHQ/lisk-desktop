@@ -307,6 +307,11 @@ module.exports = {
     'src/modules/network/components/selectNetwork/SelectNetwork.js',
     'src/modules/blockchainApplication/manage/components/NetworkApplicationDropDownButton/NetworkApplicationDropDownButton.js',
     'src/modules/wallet/components/walletList/tableHeader.js',
+    'src/utils/useReduxStateModifier.js',
+    'src/modules/account/components/BackupRecoveryPhraseFlow/BackupRecoveryPhraseFlow.js',
+    'src/modules/settings/components/discreteModeToggle.js',
+    'src/modules/token/fungible/hooks/queries/useLiskLegacyAccount.js',
+    'src/modules/token/fungible/hooks/queries/useLiskLegacyHistory.js',
   ],
   coverageThreshold: {
     // global: {

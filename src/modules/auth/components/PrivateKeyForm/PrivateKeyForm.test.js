@@ -1,5 +1,5 @@
 import React from 'react';
-import { cryptography } from '@liskhq/lisk-api-client';
+import { cryptography } from '@liskhq/lisk-client';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { mockOnMessage } from '@setup/config/setupJest';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -32,6 +32,18 @@ jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue
     privateKey,
   })
 );
+jest.mock('tweetnacl', () => ({
+  sign: {
+    keyPair: {
+      fromSeed: jest.fn(() => ({
+        publicKey: Buffer.from(
+          'dd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d',
+          'hex'
+        ),
+      })),
+    },
+  },
+}));
 jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
@@ -48,7 +60,8 @@ jest.mock('@account/hooks', () => ({
 const props = {
   onSubmit: jest.fn((value) => value),
   privateKey: {
-    value: 'e005805e731d324ec6f083f7ec31967e60cda674cd09f51c323fce63a933e0dadd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d',
+    value:
+      'e005805e731d324ec6f083f7ec31967e60cda674cd09f51c323fce63a933e0dadd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d',
     isValid: true,
   },
   prevStep: jest.fn(),
@@ -183,7 +196,8 @@ describe('Set Password Form validation should work', () => {
         password: 'Password1$',
         privateKey: {
           isValid: true,
-          value: 'e005805e731d324ec6f083f7ec31967e60cda674cd09f51c323fce63a933e0dadd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d',
+          value:
+            'e005805e731d324ec6f083f7ec31967e60cda674cd09f51c323fce63a933e0dadd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d',
         },
       });
     });
