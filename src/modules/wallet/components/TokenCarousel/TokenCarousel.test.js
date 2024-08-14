@@ -55,14 +55,14 @@ describe('TokenCarousel', () => {
     });
   });
 
-  it('should not display an error for HTTP 404 status', async () => {
+  it('should not display an error for HTTP 403 status', async () => {
     const props = {
       renderItem: ({ item }) => `render-item-${item}`,
       data: [...new Array(2).keys()].map((item) => ({ item })),
       error: {
         message: 'error',
         response: {
-          status: 404,
+          status: 403,
         },
       },
     };

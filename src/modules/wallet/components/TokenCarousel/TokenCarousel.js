@@ -54,7 +54,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
     return <NoTokenBalance onClick={onRequestToken} />;
   }
 
-  if (error && error.response.status !== 404) {
+  if (error && error.response.status !== 403) {
     return (
       <div className={styles.errorWrapper}>
         <p>{error?.message || error}</p>
