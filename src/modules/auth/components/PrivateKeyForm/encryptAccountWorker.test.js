@@ -1,4 +1,4 @@
-import { encryptAccount } from '../../../account/utils';
+import { encryptPrivateKeyAccount } from '../../../account/utils';
 import './encryptAccount.worker';
 
 window.self.postMessage = jest.fn();
@@ -12,14 +12,14 @@ describe('encrypt account worker', () => {
     accountName: 'test-account-name',
   };
 
-  it('should invoke encryptAccount method', async () => {
-    encryptAccount.mockResolvedValue({});
+  it('should invoke encryptPrivateKeyAccount method', async () => {
+    encryptPrivateKeyAccount.mockResolvedValue({});
     window.self.onmessage({ data });
-    expect(encryptAccount).toHaveBeenCalled();
+    expect(encryptPrivateKeyAccount).toHaveBeenCalled();
 
     jest.resetAllMocks();
-    encryptAccount.mockRejectedValue({});
+    encryptPrivateKeyAccount.mockRejectedValue({});
     window.self.onmessage({ data });
-    expect(encryptAccount).toHaveBeenCalled();
+    expect(encryptPrivateKeyAccount).toHaveBeenCalled();
   });
 });

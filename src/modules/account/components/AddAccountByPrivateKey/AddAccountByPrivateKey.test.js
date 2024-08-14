@@ -1,9 +1,22 @@
-import { createEvent, fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockOnMessage } from '@setup/config/setupJest';
 import * as reactRedux from 'react-redux';
 import { renderWithCustomRouter } from 'src/utils/testHelpers';
 import AddAccountByPrivateKey from './AddAccountByPrivateKey';
+
+jest.mock('tweetnacl', () => ({
+  sign: {
+    keyPair: {
+      fromSeed: jest.fn(() => ({
+        publicKey: Buffer.from(
+          'dd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d',
+          'hex'
+        ),
+      })),
+    },
+  },
+}));
 
 const privateKey =
   'e005805e731d324ec6f083f7ec31967e60cda674cd09f51c323fce63a933e0dadd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d';
@@ -39,21 +52,18 @@ beforeEach(() => {
 describe('Add account by private key flow', () => {
   it('Should successfully go though the flow', async () => {
     expect(screen.getByText('Add your account')).toBeTruthy();
-    expect(
-      screen.getByText('Enter your private key to manage your account.')
-    ).toBeTruthy();
+    expect(screen.getByText('Enter your private key to manage your account.')).toBeTruthy();
     expect(screen.getByText('Continue to set password')).toBeTruthy();
     expect(screen.getByText('Go back')).toBeTruthy();
 
-    const inputField = screen.getByTestId('recovery-1');
-    const pasteEvent = createEvent.paste(inputField, {
-      clipboardData: {
-        getData: () =>
+    const inputField = screen.getByPlaceholderText('Enter private key');
+
+    fireEvent.change(inputField, {
+      target: {
+        value:
           'e005805e731d324ec6f083f7ec31967e60cda674cd09f51c323fce63a933e0dadd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d',
       },
     });
-
-    fireEvent(inputField, pasteEvent);
     fireEvent.click(screen.getByText('Continue to set password'));
 
     const password = screen.getByTestId('password');
@@ -71,13 +81,12 @@ describe('Add account by private key flow', () => {
       expect(mockOnMessage).toHaveBeenCalledWith({
         accountName: 'user1',
         cPassword: 'Password1$',
-        customDerivationPath: "m/44'/134'/0'",
-        enableAccessToLegacyAccounts: undefined,
         hasAgreed: true,
         password: 'Password1$',
         privateKey: {
           isValid: true,
-          value: 'e005805e731d324ec6f083f7ec31967e60cda674cd09f51c323fce63a933e0dadd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d',
+          value:
+            'e005805e731d324ec6f083f7ec31967e60cda674cd09f51c323fce63a933e0dadd2df9b2b007bd8a2387f4e652517d6e094cdb54edf0c67b06d4786f5ecf964d',
         },
       });
     });

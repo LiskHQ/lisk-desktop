@@ -22,7 +22,7 @@ const ImportPrivateKeyForm = ({ settings, onAddAccount }) => {
 
   const props = { settings, onAddAccount, setPrivateKey, privateKey };
 
-  return <AddAccountFormContainer {...props} />;
+  return <AddAccountFormContainer {...props} isSubmitDisabled={!privateKey.value.length} />;
 };
 
 const AddAccountFormContainer = ({ privateKey, onAddAccount, isSubmitDisabled, setPrivateKey }) => {
