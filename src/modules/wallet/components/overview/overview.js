@@ -72,12 +72,20 @@ const Overview = ({ isWalletRoute, history }) => {
     isLoading: isLoadingLegacyAccount,
     error: errorLegacyAccount,
     refetch,
-  } = useLiskLegacyAccount({ config: { params: { address } }, client: legacyClient });
+  } = useLiskLegacyAccount({
+    config: { params: { address } },
+    options: { enabled: isMainnet },
+    client: legacyClient,
+  });
   const {
     data: liskLegacyHistory,
     isLoading: isLoadingLegacyHistory,
     error: errorLegacyHistory,
-  } = useLiskLegacyHistory({ config: { params: { address } }, client: legacyClient });
+  } = useLiskLegacyHistory({
+    config: { params: { address } },
+    options: { enabled: isMainnet },
+    client: legacyClient,
+  });
   const defaultLegacyBalance = {
     availableBalance: '0',
     lockedBalances: [{ module: 'pos', amount: '0' }],
@@ -173,7 +181,7 @@ const Overview = ({ isWalletRoute, history }) => {
         <div className={styles.contentWrapper}>
           <div className={`${styles.carouselHeader}`}>
             <div>{t('Tokens')}</div>
-            {!searchAddress && hasTokenWithBalance && (
+            {!searchAddress && hasTokenWithBalance && isMainnet && (
               <div>
                 <Link to={`${routes.allTokens.path}`}>{t('View all tokens')}</Link>
               </div>
@@ -182,7 +190,7 @@ const Overview = ({ isWalletRoute, history }) => {
           <TokenCarousel
             data={tokenLegacyBalance.length ? tokenLegacyBalance : []}
             error={errorLegacyAccount}
-            isLoading={isLoadingLegacyAccount}
+            isLoading={isLoadingLegacyAccount && isMainnet}
             renderItem={renderTokenCard}
             onRetry={refetch}
           />
